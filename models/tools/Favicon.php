@@ -84,7 +84,7 @@ class Favicon extends Model
 				}
 			
 				if ($this->email) {
-					$mail = Yii::$app->mailer
+					Yii::$app->mailer
 						->compose(['html' => 'faviconRequester'])
 						->setTo($this->email)
 						->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name])
