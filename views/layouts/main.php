@@ -61,6 +61,7 @@ $this->beginPage();
 		<p class="pull-right">
 			<?= Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) ?>
 			<?= Html::a('Credits', ['/site/credits'], ['class' => 'label label-primary']) ?>
+			<?= Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary visible-md-inline visible-lg-inline']) ?>
 			<?= Html::a('RSS', ['/tech/rss'], ['class' => 'label label-warning visible-md-inline visible-lg-inline', 'target' => '_blank']) ?>
 		</p>
 	</div>

@@ -48,6 +48,11 @@ class SiteController extends Controller
 		]);
 	}
 
+	public function actionChangelog()
+	{
+		return $this->render('changelog');
+	}
+
 	public function actionContact()
 	{
 		$model = new Contact;
