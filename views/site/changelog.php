@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 	$limit = (isset(Yii::$app->params['rssItemCount']) && is_int(Yii::$app->params['rssItemCount'])) ? Yii::$app->params['rssItemCount'] : 10;
 	$items = Feed::find()
-		->where(['feed' => 'github'])
+		->where(['feed' => 'GitHub'])
 		->orderBy('time DESC')
 		->limit($limit)
 		->all();
@@ -21,10 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	foreach ($items as $item) {
 		$x++;
 		echo '<div class="row">';
-		echo '<div class="col-lg-3"><time datetime="'.date(DATE_W3C, $item['time']).'">'.General::timeAgo($item['time']).'</time></div>';
-		echo '<div class="col-lg-1">'.substr($item['title'], 0, 7).'</div>';
-		echo '<div class="col-lg-8">'.$item['description'].'</div>';
+		echo Html::tag('div', substr($item['title'], 0, 7), ['class' => 'col-lg-1']);
+		echo Html::tag('div', $item['description'], ['class' => 'col-lg-8']);
+		echo Html::tag('div', Html::tag('time', General::timeAgo($item['time']), ['datetime' => date(DATE_W3C, $item['time'])]), ['class' => 'col-lg-3 text-right']);
 		echo '</div>';
-		if ($x !== count($items)) echo '<div class="row"><div class="col-lg-12"><hr class="twelve" /></div></div>';
 	}
 ?>

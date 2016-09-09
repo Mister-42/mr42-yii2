@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		['jQuery UI', 'http://jqueryui.com/'],
 		['Less.php', 'http://lessphp.typesettercms.com', 'Josh Schmidt'],
 		['Bluefish', 'http://bluefish.openoffice.nl/'],
-		['Let’s Encrypt', 'https://letsencrypt.org/'],
+		['GitHub', 'https://github.com/'],
 		['ScienceDaily', 'https://www.sciencedaily.com/'],
 		['Last.fm', 'http://www.last.fm/'],
 		['ImageMagick', 'http://imagemagick.org/'],

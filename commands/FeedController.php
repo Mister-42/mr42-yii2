@@ -47,41 +47,6 @@ class FeedController extends Controller
 	}
 
 	/**
-	 * Retrieves and stores an Atom feed.
-	*/
-	public function actionAtom($name, $url) {
-		$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 25;
-		$c = curl_init();
-		curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($c, CURLOPT_URL, $url);
-		curl_setopt($c, CURLOPT_USERAGENT, Yii::$app->name . ' 0.1');
-		$file = curl_exec($c);
-		curl_close($c);
-
-		if ($file === false)
-			return Controller::EXIT_CODE_ERROR;
-
-		$json = json_decode($file);
-		$count = 0;
-		Feed::deleteAll(['feed' => $name]);
-		foreach($json as $item) {
-			$rssItem = new Feed();
-			$rssItem->feed = $name;
-			$rssItem->title = (string) $item->sha;
-			$rssItem->url = (string) $item->html_url;
-			$rssItem->description = General::cleanInput($item->commit->message, false);
-			$rssItem->time = strtotime($item->commit->committer->date);
-			$rssItem->save();
-
-			$count++;
-			if ($count === $limit)
-				break;
-		}
-
-		return Controller::EXIT_CODE_NORMAL;
-	}
-
-	/**
 	 * Retrieves and stores Recent Tracks from Last.fm.
 	*/
 	public function actionLastfmRecent() {

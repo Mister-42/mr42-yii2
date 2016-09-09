@@ -8,10 +8,6 @@ class AppAsset extends AssetBundle
 {
 	public $sourcePath = '@app/static/css';
 
-#	public $basePath = '@assetsPath';
-
-#	public $baseUrl = '@assetsUrl';
-
 	public $css = [
 		'site.less',
 	];
