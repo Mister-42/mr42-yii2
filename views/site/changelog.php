@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 	$limit = (isset(Yii::$app->params['rssItemCount']) && is_int(Yii::$app->params['rssItemCount'])) ? Yii::$app->params['rssItemCount'] : 10;
 	$items = Feed::find()
-		->where(['feed' => 'GitHub'])
+		->where(['feed' => 'changelog'])
 		->orderBy('time DESC')
 		->limit($limit)
 		->all();

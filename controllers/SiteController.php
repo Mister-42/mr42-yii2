@@ -83,7 +83,7 @@ class SiteController extends Controller
 			Feed::deleteAll(['feed' => $name]);
 			foreach($json as $item) {
 				$rssItem = new Feed();
-				$rssItem->feed = $name;
+				$rssItem->feed = 'changelog';
 				$rssItem->title = (string) $item->sha;
 				$rssItem->url = (string) $item->html_url;
 				$rssItem->description = General::cleanInput($item->commit->message, false);
