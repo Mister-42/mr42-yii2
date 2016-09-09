@@ -47,6 +47,7 @@ class LyricsController extends Controller
 
 	public function actionIndex()
 	{
+		Yii::$app->view->registerMetaTag(['name' => 'robots', 'content' => 'noindex']);
 		Yii::$app->view->registerMetaTag(['name' => 'google', 'content' => 'notranslate']);
 		$urlData	= Yii::$app->request->get();
 

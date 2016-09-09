@@ -17,6 +17,7 @@ $this->beginPage();
 <?= $this->registerMetaTag(['charset' => Yii::$app->charset]) ?>
 <?= $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]) ?>
 <?= $this->registerMetaTag(['name' => 'description', 'content' => Html::encode(Yii::$app->params['description'])]) ?>
+<?= $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex']) ?>
 <?= $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']) ?>
 <?= $this->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(Url::current(), true)]) ?>
 <?= $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/tech/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]) ?>

@@ -31,14 +31,6 @@ class SiteController extends Controller
 		return [
 			[
 				'class' => HttpCache::className(),
-				'only' => ['changelog'],
-				'lastModified' => function (Object $action, $params) {
-					$lastUpdate = Feed::find()->select(['updated' => 'max(time)'])->where(['feed' => 'changelog'])->asArray()->one();
-					return $lastUpdate['updated'];
-				},
-			],
-			[
-				'class' => HttpCache::className(),
 				'only' => ['credits'],
 				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
