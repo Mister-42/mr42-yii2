@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
+use app\models\Feed;
 use app\models\post\Post;
 use app\models\site\Contact;
 use yii\bootstrap\Alert;
