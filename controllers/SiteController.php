@@ -80,7 +80,7 @@ class SiteController extends Controller
 
 			$json = json_decode($file);
 			$count = 0;
-			Feed::deleteAll(['feed' => $name]);
+			Feed::deleteAll(['feed' => 'changelog']);
 			foreach($json as $item) {
 				$rssItem = new Feed();
 				$rssItem->feed = 'changelog';

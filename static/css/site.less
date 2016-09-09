@@ -91,8 +91,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site- {
+	&changelog .row {
+		&:not(:first-child) {
+			padding-top: 2px;
+		}
+
+		&:not(:last-child) {
+			border-bottom: 1px solid @middleBlue;
+			padding-bottom: 2px;
+		}
+	}
+
 	&credits div {
 		line-height: 1.7;
+	}
+
+	&headers .row {
+		&:not(:first-child) {
+			padding-top: 10px;
+		}
+
+		&:not(:last-child) {
+			border-bottom: 1px solid @middleBlue;
+			padding-bottom: 10px;
+		}
 	}
 
 	&lyrics {
@@ -108,11 +130,6 @@ hr {
 	&.ten {
 			margin-bottom: 10px;
 			margin-top: 10px;	
-	}
-
-	&.twelve {
-			margin-bottom: 12px;
-			margin-top: 12px;	
 	}
 }
 
