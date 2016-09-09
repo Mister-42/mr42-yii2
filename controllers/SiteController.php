@@ -67,7 +67,7 @@ class SiteController extends Controller
 			if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
 				throw new NotFoundHttpException('Action not found.');
 
-			$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 25;
+			$limit = (isset(Yii::$app->params['changelogCount']) && is_int(Yii::$app->params['changelogCount'])) ? Yii::$app->params['changelogCount'] : 25;
 			$c = curl_init();
 			curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($c, CURLOPT_URL, str_replace('{/sha}', '', $payload->repository->commits_url));

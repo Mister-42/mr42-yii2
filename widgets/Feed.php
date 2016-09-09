@@ -12,7 +12,7 @@ class Feed extends Widget
 
 	public function run()
 	{
-		$limit = (isset(Yii::$app->params['rssItemCount']) && is_int(Yii::$app->params['rssItemCount'])) ? Yii::$app->params['rssItemCount'] : 10;
+		$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 10;
 		$limit = (isset($this->limit)) ? $this->limit : $limit;
 		$items = FeedModel::find()
 			->where(['feed' => $this->name])

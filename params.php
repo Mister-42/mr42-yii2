@@ -1,6 +1,7 @@
 <?php
 return [
 	'adminEmail' => $secrets['params']['adminEmail'],
+	'changelogCount' => 20,
 	'description' => 'Sharing beautiful knowledge of the world.',
 	'favicon' => 'favicon57d0525c66373.ico',
 	'feedItemCount' => 10,

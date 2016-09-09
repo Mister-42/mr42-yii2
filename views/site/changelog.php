@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= Html::tag('h1', Html::encode($this->title)) ?>
 
 <?php
-	$limit = (isset(Yii::$app->params['rssItemCount']) && is_int(Yii::$app->params['rssItemCount'])) ? Yii::$app->params['rssItemCount'] : 10;
+	$limit = (isset(Yii::$app->params['changelogCount']) && is_int(Yii::$app->params['changelogCount'])) ? Yii::$app->params['changelogCount'] : 10;
 	$items = Feed::find()
 		->where(['feed' => 'changelog'])
 		->orderBy('time DESC')
