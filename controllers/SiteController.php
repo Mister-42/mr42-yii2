@@ -62,7 +62,7 @@ class SiteController extends Controller
 			Yii::$app->response->format = Response::FORMAT_JSON;
 			$payload = json_decode(Yii::$app->request->post('payload'));
 
-			if ($_SERVER['X-GitHub-Event'] !== 'push')
+			if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
 				throw new NotFoundHttpException('Action not found.');
 
 			$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 25;
