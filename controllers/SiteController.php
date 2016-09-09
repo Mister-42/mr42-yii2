@@ -67,7 +67,6 @@ class SiteController extends Controller
 			if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
 				throw new NotFoundHttpException('Action not found.');
 
-			$limit = (isset(Yii::$app->params['changelogCount']) && is_int(Yii::$app->params['changelogCount'])) ? Yii::$app->params['changelogCount'] : 25;
 			$c = curl_init();
 			curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($c, CURLOPT_URL, str_replace('{/sha}', '', $payload->repository->commits_url));
@@ -79,7 +78,6 @@ class SiteController extends Controller
 				throw new ServerErrorHttpException('Unknown error');
 
 			$json = json_decode($file);
-			$count = 0;
 			Feed::deleteAll(['feed' => 'changelog']);
 			foreach($json as $item) {
 				$rssItem = new Feed();
@@ -89,10 +87,6 @@ class SiteController extends Controller
 				$rssItem->description = General::cleanInput($item->commit->message, false);
 				$rssItem->time = strtotime($item->commit->committer->date);
 				$rssItem->save();
-
-				$count++;
-				if ($count === $limit)
-					break;
 			}
 
 			return ['status' => 'success', 'message' => 'Successfully updated.'];
