@@ -24,6 +24,7 @@ class MenuItems
 					['label' => 'Code Playground', 'url' => ['/tech/playground'], 'visible' => $isAdmin],
 					['label' => 'Browser Headers', 'url' => ['/tools/headers']],
 					['label' => 'Favicon Converter', 'url' => ['/tools/favicon']],
+					['label' => 'NATO Phonetic Alphabet Translator', 'url' => ['/tools/nato']],
 					['label' => 'Password Generator', 'url' => ['/tools/password']],
 					['label' => 'WPA PSK Calculator', 'url' => ['/tools/wpapsk']],
 				],

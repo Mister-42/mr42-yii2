@@ -2,6 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\tools\Favicon;
+use app\models\tools\Nato;
 use yii\base\Object;
 use yii\filters\HttpCache;
 use yii\web\Controller;
@@ -25,6 +26,11 @@ class ToolsController extends Controller
 		];
 	}
 
+	public function actionIndex()
+	{
+		return $this->goHome();
+	}
+
 	public function actionHeaders()
 	{
 		return $this->render('headers');
@@ -37,7 +43,7 @@ class ToolsController extends Controller
 		if ($model->load(Yii::$app->request->post())) {
 			$model->sourceImage = UploadedFile::getInstance($model, 'sourceImage');
 			if ($model->convertImage()) {
- 				return $this->refresh();
+				return $this->refresh();
 			}
 		}
 
@@ -46,9 +52,19 @@ class ToolsController extends Controller
 		]);
 	}
 
-	public function actionIndex()
+	public function actionNato()
 	{
-		return $this->goHome();
+		$model = new Nato;
+
+		if ($model->load(Yii::$app->request->post())) {
+			if ($model->convertText()) {
+				return $this->refresh();
+			}
+		}
+
+		return $this->render('nato', [
+			'model' => $model,
+		]);
 	}
 
 	public function actionPassword()
