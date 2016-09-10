@@ -5,7 +5,7 @@ return [
 	'aliases' => [
 		'@app' => __DIR__,
 		'@assetsPath' => __DIR__ . '/../me.mr42.s',
-		'@assetsUrl' => '//s.mr42.me',
+		'@assetsUrl' => '/assets',
 	],
 	'basePath' => __DIR__,
 	'bootstrap' => ['log'],
@@ -79,11 +79,10 @@ return [
 #				'port' => '587',
 #				'encryption' => 'tls',
 #			],
-#			'useFileTransport' => true,
 		],
 		'pdf' => [
 			'class' => \kartik\mpdf\Pdf::classname(),
-#			'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
+			'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
 		],
 		'urlManager' => [
 			'enablePrettyUrl' => true,
