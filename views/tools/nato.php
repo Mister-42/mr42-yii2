@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\web\View;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
 

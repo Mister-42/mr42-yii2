@@ -9,14 +9,14 @@ $config = [
 			'class'   => \yii\authclient\Collection::className(),
 			'clients' => [
 				'github' => [
-					'class'        => 'dektrium\user\clients\GitHub',
-					'clientId'     => $secrets['github']['Id'],
-					'clientSecret' => $secrets['github']['Secret'],
+					'class'			=> 'dektrium\user\clients\GitHub',
+					'clientId'		=> $secrets['github']['Id'],
+					'clientSecret'	=> $secrets['github']['Secret'],
 				],
 				'google' => [
-					'class'        => 'dektrium\user\clients\Google',
-					'clientId'     => $secrets['google']['Id'],
-					'clientSecret' => $secrets['google']['Secret'],
+					'class'			=> 'dektrium\user\clients\Google',
+					'clientId'		=> $secrets['google']['Id'],
+					'clientSecret'	=> $secrets['google']['Secret'],
 				],
 			],
 		],
