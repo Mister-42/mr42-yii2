@@ -31,6 +31,13 @@ class SiteController extends Controller
 		return [
 			[
 				'class' => HttpCache::className(),
+				'only' => ['changelog'],
+				'lastModified' => function (Object $action, $params) {
+					$lastUpdate = Feed::find()->select(['updated' => 'max(time)'])->where(['feed' => 'changelog'])->asArray()->one();
+					return $lastUpdate['updated'];
+				},
+			], [
+				'class' => HttpCache::className(),
 				'only' => ['credits'],
 				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
@@ -78,15 +85,16 @@ class SiteController extends Controller
 				throw new ServerErrorHttpException('Unknown error');
 
 			$json = json_decode($file);
-			Feed::deleteAll(['feed' => 'changelog']);
 			foreach($json as $item) {
-				$rssItem = new Feed();
-				$rssItem->feed = 'changelog';
-				$rssItem->title = (string) $item->sha;
-				$rssItem->url = (string) $item->html_url;
-				$rssItem->description = General::cleanInput($item->commit->message, false);
-				$rssItem->time = strtotime($item->commit->committer->date);
-				$rssItem->save();
+				if (empty(Feed::find()->where(['feed' => 'changelog', 'time' => strtotime($item->commit->committer->date)])->all())) {
+					$rssItem = new Feed();
+					$rssItem->feed = 'changelog';
+					$rssItem->title = (string) $item->sha;
+					$rssItem->url = (string) $item->html_url;
+					$rssItem->description = General::cleanInput($item->commit->message, false);
+					$rssItem->time = strtotime($item->commit->committer->date);
+					$rssItem->save();
+				}
 			}
 
 			return ['status' => 'success', 'message' => 'Successfully updated.'];
