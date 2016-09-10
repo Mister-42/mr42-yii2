@@ -85,7 +85,7 @@ class PostController extends Controller
 
 		$query = Post::find()->orderBy('id DESC');
 		if ($action === "tag" && !empty($tag)) {
-			$query->where(['like', 'tags', '%'.$tag, false]);
+			$query->where(['like', 'tags', '%'.$tag.'%', false]);
 		} elseif ($action === "search" && !empty($q)) {
 			Yii::$app->view->registerMetaTag(['name' => 'robots', 'content' => 'noindex']);
 			$query->where(['or like', 'title', $q]);
