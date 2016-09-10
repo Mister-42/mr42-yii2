@@ -71,6 +71,9 @@ class SiteController extends Controller
 			Yii::$app->response->format = Response::FORMAT_JSON;
 			$payload = json_decode(Yii::$app->request->post('payload'));
 
+			if ($_SERVER['HTTP_X_GITHUB_EVENT'] === 'ping')
+				return ['status' => 'success', 'message' => 'Pong!'];
+
 			if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
 				throw new NotFoundHttpException('Action not found.');
 
