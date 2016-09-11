@@ -1,7 +1,6 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\General;
 use app\models\Feed;
 use app\models\post\Post;
 use app\models\site\Contact;
@@ -94,7 +93,7 @@ class SiteController extends Controller
 					$rssItem->feed = 'changelog';
 					$rssItem->title = (string) $item->sha;
 					$rssItem->url = (string) $item->html_url;
-					$rssItem->description = General::cleanInput($item->commit->message, false);
+					$rssItem->description = $item->commit->message;
 					$rssItem->time = strtotime($item->commit->committer->date);
 					$rssItem->save();
 				}

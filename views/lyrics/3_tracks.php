@@ -41,7 +41,7 @@ foreach($tracks as $track) :
 	if (strlen($track['trackLyrics']) !== 0) {
 		echo '<div class="row"><div class="col-lg-12"><hr class="ten" />';
 		echo Html::a(null, null, ['name' => $track['trackNumber']]);
-		echo '<h4>' . implode(' · ', [$track['trackNumber'], $track['trackName']]) . '</h4>';
+		echo Html::tag('h4', implode(' · ', [$track['trackNumber'], $track['trackName']]));
 		echo General::cleanInput($track['trackLyrics'], 'gfm-comment');
 		echo '</div></div>';
 	}
