@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 use DateTime;
+use Yii;
 use yii\helpers\HtmlPurifier;
 use yii\helpers\Markdown;
 
@@ -22,27 +23,26 @@ class General
 		$end = new DateTime();
 
 		$interval = $end->diff($start);
-		$doPlural = function($nb, $str){ return $nb > 1 ? $str.'s' : $str; };
    
 		$format = [];
 		if($interval->y !== 0)
-			$format[] = "%y ".$doPlural($interval->y, "year");
+			$format[] = Yii::t('app', '{delta, plural, =1{1 year} other{# years}}', ['delta' => $interval->y]);
 		if($interval->m !== 0)
-			$format[] = "%m ".$doPlural($interval->m, "month");
+			$format[] = Yii::t('app', '{delta, plural, =1{1 month} other{# months}}', ['delta' => $interval->m]);
 		if($interval->d !== 0)
-			$format[] = "%d ".$doPlural($interval->d, "day");
+			$format[] = Yii::t('app', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $interval->d]);
 		if($interval->h !== 0)
-			$format[] = "%h ".$doPlural($interval->h, "hour");
+			$format[] = Yii::t('app', '{delta, plural, =1{1 hour} other{# hours}}', ['delta' => $interval->h]);
 		if($interval->i !== 0)
-			$format[] = "%i ".$doPlural($interval->i, "minute");
+			$format[] = Yii::t('app', '{delta, plural, =1{1 minute} other{# minutes}}', ['delta' => $interval->i]);
 		if($interval->s !== 0) {
 			if(!count($format)) {
-				return "less than a minute ago";
+				return Yii::t('app', 'just now');
 			}
-			$format[] = "%s ".$doPlural($interval->s, "second");
+			$format[] = Yii::t('app', '{delta, plural, =1{1 second} other{# seconds}}', ['delta' => $interval->s]);
 		}
 
-		$format = (count($format) > 1) ? array_shift($format)." and ".array_shift($format) : array_pop($format);
+		$format = (count($format) > 1) ? array_shift($format).' and '.array_shift($format) : array_pop($format);
 		return $interval->format($format) . ' ago';
 	}
 }
