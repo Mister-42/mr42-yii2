@@ -34,7 +34,7 @@ class RecentTracks extends ActiveRecord
 			Html::tag('p', 'No items to display.') :
 			Html::tag('div',
 				Html::tag('span', Html::tag('strong', 'Total tracks played:'), ['class' => 'pull-left']) .
-				Html::tag('span', Html::tag('strong', number_format($recentTracks[0]['count'])), ['class' => 'pull-right'])
+				Html::tag('span', Html::tag('strong', Yii::$app->formatter->asInteger($recentTracks[0]['count'])), ['class' => 'pull-right'])
 			, ['class' => 'clearfix']);
 	}
 }

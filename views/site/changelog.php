@@ -13,7 +13,7 @@ foreach (Feed::find()->where(['feed' => 'changelog'])->orderBy('time DESC')->all
 	echo '<div class="row">';
 	echo Html::tag('div', substr($item['title'], 0, 7), ['class' => 'col-lg-1']);
 	echo Html::tag('div', $item['description'], ['class' => 'col-lg-8']);
-	echo Html::tag('div', Html::tag('time', date('F j, Y H:i:s', $item['time']), ['datetime' => date(DATE_W3C, $item['time'])]), ['class' => 'col-lg-3 text-right']);
+	echo Html::tag('div', Html::tag('time', Yii::$app->formatter->asDatetime($item['time'], 'medium'), ['datetime' => date(DATE_W3C, $item['time'])]), ['class' => 'col-lg-3 text-right']);
 	echo '</div>';
 }
 echo '</div>';

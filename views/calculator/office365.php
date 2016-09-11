@@ -16,13 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<?php
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
-			$lic = ($flash['count'] == 1) ? 'license' : 'licenses';
 			$txt = '<p><strong>This action is not allowed.</strong> Subscriptions have a maximum end date of 3 years into the future.</p>';
-			$txt .= '<p>Theoratically the subscription with <strong>' . $flash['count'] . ' user ' . $lic . '</strong> would approximately expire on <strong>' . $flash['date']->format('D, d M Y') . '</strong>.</p>';
+			$txt .= '<p>Theoretically the subscription with <strong>' . Yii::t('app', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> would approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';
 			echo Alert::widget(['options' => ['class' => 'alert-danger'], 'body' => $txt]);
 		} elseif ($flash = Yii::$app->session->getFlash('office365-success')) {
-			$lic = ($flash['count'] == 1) ? 'license' : 'licenses';
-			$txt = '<p>The subscription with <strong>' . $flash['count'] . ' user ' . $lic . '</strong> will approximately expire on <strong>' . $flash['date']->format('D, d M Y') . '</strong>.</p>';
+			$txt = '<p>The subscription with <strong>' . Yii::t('app', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> will approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';
 			echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $txt]);
 		}
 
