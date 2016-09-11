@@ -35,7 +35,7 @@ foreach ($comments as $comment): ?>
 			$comment->name = (empty($profile->name) ? Html::encode($profile->user->username) : Html::encode($profile->name));
 			$comment->website = $profile->website;
 		}
-		echo '<span class="glyphicon glyphicon-time text-muted"></span> <time datetime="'.date(DATE_W3C, $comment->created).'">'.General::timeAgo($comment->created).'</time>';
+		echo '<span class="glyphicon glyphicon-time text-muted"></span> <time datetime="'.date(DATE_W3C, $comment->created).'">'.Yii::$app->formatter->asRelativeTime($comment->created).'</time>';
 		echo ' &middot; <span class="glyphicon glyphicon-user text-muted"></span> <span class="author">' . $comment->name . '</span>';
 		if ($mainmodel->author === $comment->user) { echo ' <span class="badge">Article Author</span>'; }
 		echo empty($comment->website) ? '' : ' &middot; <span class="glyphicon glyphicon-globe text-muted"></span> ' . Html::a($comment->website, $comment->website);

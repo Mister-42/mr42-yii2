@@ -69,9 +69,9 @@ use yii\helpers\Html;
 			echo ' '.Tags::array2string($tagArray);
 		}
 
-		echo ' &middot; <span class="glyphicon glyphicon-time text-muted"></span> <time datetime="'.date(DATE_W3C, $model->created).'">'.General::timeAgo($model->created).'</time>';
+		echo ' &middot; <span class="glyphicon glyphicon-time text-muted"></span> <time datetime="'.date(DATE_W3C, $model->created).'">'.Yii::$app->formatter->asRelativeTime($model->created).'</time>';
 		if($model->updated - $model->created > 3600)
-			echo ' &middot; updated <time datetime="'.date(DATE_W3C, $model->updated).'">'.General::timeAgo($model->updated).'</time>';
+			echo ' &middot; updated <time datetime="'.date(DATE_W3C, $model->updated).'">'.Yii::$app->formatter->asRelativeTime($model->updated).'</time>';
 
 		$user = new User();
 		$profile = $user->finder->findProfileById($model->user->id);
