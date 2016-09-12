@@ -40,7 +40,7 @@ class Profile extends BaseProfile
 	{
 		$name = empty($user->name) ? Html::encode($user->user->username) : Html::encode($user->name);
 		$replace_array = array('%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y);
-		$imgUrl = Url::to('@assetsUrl/images/william-morris-letters/'.strtolower($name[0])).'.png';
+		$imgUrl = Url::to('@web/assets/images/william-morris-letters/'.strtolower($name[0])).'.png';
 		$imgTag = Html::img($imgUrl, ['alt' => $name, 'class' => 'inline-left pull-left']);
 		$user->bio = General::cleanInput($imgTag . '**'.substr($name, 1).'** '.strtr($user->bio, $replace_array), 'gfm-comment', true);
 		return (empty($user->bio)) ? false : Html::tag('div', $user->bio, ['class' => 'profile']);

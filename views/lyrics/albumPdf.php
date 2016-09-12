@@ -41,7 +41,7 @@ foreach($tracks as $track) {
 	if (strlen($track['trackLyrics']) !== 0) {
 		echo General::cleanInput($track['trackLyrics'], 'gfm-comment');
 	} else {
-		echo Html::img(Url::to('@assetsUrl/images/TrebleClef.png'));
+		echo Html::img(Url::to('@web/assets/images/TrebleClef.png'));
 		echo Html::tag('strong', 'Instrumental');
 	}
 }

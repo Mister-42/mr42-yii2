@@ -51,7 +51,7 @@ class TechController extends Controller
 				'class' => HttpCache::className(),
 				'only' => ['faviconico'],
 				'lastModified' => function (Object $action, $params) {
-					return filemtime(Yii::getAlias('@assetsPath/images/'.Yii::$app->params['favicon']));
+					return filemtime(Yii::getAlias('@webroot/assets/images/'.Yii::$app->params['favicon']));
 				},
 			],
 			[
@@ -74,7 +74,7 @@ class TechController extends Controller
 
 	public function actionFaviconico()
 	{
-		Yii::$app->response->sendFile(Yii::getAlias('@assetsPath/images/'.Yii::$app->params['favicon']), 'favicon.ico', ['inline' => true]);
+		Yii::$app->response->sendFile(Yii::getAlias('@webroot/assets/images/'.Yii::$app->params['favicon']), 'favicon.ico', ['inline' => true]);
 	}
 
 	public function actionOffline()
