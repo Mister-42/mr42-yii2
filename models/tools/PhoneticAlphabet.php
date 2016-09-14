@@ -31,12 +31,11 @@ class PhoneticAlphabet extends Model
 		if ($this->validate()) {
 			$className = 'app\\models\\tools\\PhoneticAlphabet\\' . $this->alphabet;
 			$alphabet = new $className();
-			$replaceArray = $alphabet->replaceArray();
 
 			$this->text = preg_replace('/[^a-z0-9. -]+/i', '', $this->text);
 			$text = strtolower($this->text);
 			$text = preg_replace("/(.)/i","\${1} ", $text);
-			$text = strtr($text, $replaceArray);
+			$text = strtr($text, $alphabet->replaceArray());
 			$text = trim($text);
 
 			return Yii::$app->getSession()->setFlash('phonetic-alphabet-success', $text);
@@ -46,13 +45,11 @@ class PhoneticAlphabet extends Model
 
 	public function listAlphabets($type = 'map', $name = null)
 	{
-		$alphabetFiles = FileHelper::findFiles(Yii::getAlias('@app/models/tools/PhoneticAlphabet/'), ['only'=>['*.php'], 'recursive' => false]);
+		$alphabetFiles = FileHelper::findFiles(__DIR__ . '/PhoneticAlphabet/', ['only'=>['*.php'], 'recursive' => false]);
 		sort($alphabetFiles);
 
 		foreach ($alphabetFiles as $file) {
-			$file = str_replace(Yii::getAlias('@app/models/tools/PhoneticAlphabet/'), '', $file);
-			$file = str_replace('.php', '', $file);
-
+			$file = basename($file, '.php');
 			$className = 'app\\models\\tools\\PhoneticAlphabet\\' . $file;
 			$alphabet = new $className();
 			

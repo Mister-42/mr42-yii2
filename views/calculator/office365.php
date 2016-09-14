@@ -56,12 +56,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo $form->field($model, 'action')->dropDownList([
 			'renew' => 'I am renewing these licenses',
 			'add' => 'I am adding these licenses',
-		]);
+		], ['tabindex' => 5]);
 		?>
 
 		<div class="form-group text-right">
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 6]) ?>
-			<?= Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 5]) ?>
+			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) ?>
+			<?= Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 6]) ?>
 		</div>
 
 		<?php ActiveForm::end(); ?>

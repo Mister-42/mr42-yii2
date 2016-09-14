@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-comment"></span></span>{input}</div>{error}',
 			])->textInput(['tabindex' => 1]);
 
-		echo $form->field($model, 'alphabet')->dropDownList(PhoneticAlphabet::listAlphabets());
+		echo $form->field($model, 'alphabet')->dropDownList(PhoneticAlphabet::listAlphabets(), ['tabindex' => 2]);
 		
 		echo '<div class="form-group text-right">';
 		echo Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) . ' ';
