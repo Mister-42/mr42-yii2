@@ -2,7 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\tools\Favicon;
-use app\models\tools\Nato;
+use app\models\tools\PhoneticAlphabet;
 use yii\base\Object;
 use yii\filters\HttpCache;
 use yii\web\Controller;
@@ -52,9 +52,14 @@ class ToolsController extends Controller
 		]);
 	}
 
-	public function actionNato()
+	public function actionPassword()
 	{
-		$model = new Nato;
+		return $this->render('password');
+	}
+
+	public function actionPhoneticAlphabet()
+	{
+		$model = new PhoneticAlphabet;
 
 		if ($model->load(Yii::$app->request->post())) {
 			if ($model->convertText()) {
@@ -62,14 +67,9 @@ class ToolsController extends Controller
 			}
 		}
 
-		return $this->render('nato', [
+		return $this->render('phonetic-alphabet', [
 			'model' => $model,
 		]);
-	}
-
-	public function actionPassword()
-	{
-		return $this->render('password');
 	}
 
 	public function actionWpapsk()
