@@ -1,29 +1,28 @@
 @charset 'UTF-8';
+@import "bootstrap.scss";
 
-@tardisBlue: #003E67;
-@middleBlue: #6FACCF;
-@lighterBlue: lighten(spin(@middleBlue, 10), 20%);
-@lightBlue: lighten(spin(@middleBlue, 5), 10%);
-@darkBlue: darken(spin(@middleBlue, -5), 10%);
-@darkerBlue: darken(spin(@middleBlue, -10), 20%);
+$tardisBlue: #003E67;
+$middleBlue: #6FACCF;
+$lighterBlue: lighten(adjust_hue($middleBlue, 10), 20%);
+$lightBlue: lighten(adjust_hue($middleBlue, 5), 10%);
+$darkBlue: darken(adjust_hue($middleBlue, -5), 10%);
+$darkerBlue: darken(adjust_hue($middleBlue, -10), 20%);
 
-.headerFont() {
+@mixin headerFont {
 	font-family: 'DS Etienne Regular', Arial, Helvetica, sans-serif;
 }
 
 @font-face {
 	font-family: 'DS Etienne Regular';
-	src:	url('@{icon-font-path}dsetienne.eot');
-	src:	url('@{icon-font-path}dsetienne.eot?#iefix') format('embedded-opentype'),
-			url('@{icon-font-path}dsetienne.woff2') format('woff2'),
-			url('@{icon-font-path}dsetienne.woff') format('woff'),
-			url('@{icon-font-path}dsetienne.ttf') format('truetype'),
-			url('@{icon-font-path}dsetienne.svg#ds_etienneregular') format('svg');
+	src:	url('#{$icon-font-path}dsetienne.eot');
+	src:	url('#{$icon-font-path}dsetienne.eot?#iefix') format('embedded-opentype'),
+			url('#{$icon-font-path}dsetienne.woff2') format('woff2'),
+			url('#{$icon-font-path}dsetienne.woff') format('woff'),
+			url('#{$icon-font-path}dsetienne.ttf') format('truetype'),
+			url('#{$icon-font-path}dsetienne.svg#ds_etienneregular') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
-
-@import "bootstrap.less";
 
 html,
 body {
@@ -32,15 +31,15 @@ body {
 }
 
 a {
-	color: @darkerBlue;
+	color: $darkerBlue;
 
 	&:hover {
-		color: @darkBlue;
+		color: $darkBlue;
 	}
 }
 
 h1, h2, h3, h4, h5, h6 {
-	.headerFont();
+	@include headerFont;
 	text-align: left;
 }
 
@@ -57,36 +56,36 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar {
-	background-color: @tardisBlue;
+	background-color: $tardisBlue;
 	border: 0;
 
 	.navbar-brand {
-		.headerFont();
-		color: @darkBlue;
+		@include headerFont;
+		color: $darkBlue;
 		font-size: 30px;
 		text-shadow: 2px 2px 2px #777;
 
 		&:focus, &:hover {
-			color: @darkerBlue;
+			color: $darkerBlue;
 			text-shadow: 2px 2px 2px #444;
 		}
 	}
 
 	.nav > li {
 		> a {
-			color: @lightBlue;
+			color: $lightBlue;
 		}
 
 		&.active > a,
 		> a:focus,
 		> a:hover {
 			background-color: #286090;
-			color: @middleBlue;
+			color: $middleBlue;
 		}
 	}
 
 	&-toggle .icon-bar {
-		background: @darkerBlue;	
+		background: $darkerBlue;	
 	}
 }
 
@@ -97,7 +96,7 @@ h1, h2, h3, h4, h5, h6 {
 		}
 
 		&:not(:last-child) {
-			border-bottom: 1px solid @middleBlue;
+			border-bottom: 1px solid $middleBlue;
 			padding-bottom: 2px;
 		}
 	}
@@ -112,7 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 		}
 
 		&:not(:last-child) {
-			border-bottom: 1px solid @middleBlue;
+			border-bottom: 1px solid $middleBlue;
 			padding-bottom: 10px;
 		}
 	}
@@ -165,7 +164,7 @@ aside {
 
 	.recent-tracks {
 		a {
-			color: @tardisBlue;
+			color: $tardisBlue;
 		}
 
 		span {
@@ -174,11 +173,11 @@ aside {
 
 		.track {
 			&:nth-child(even) {
-				background-color: @lighterBlue;
+				background-color: $lighterBlue;
 			}
 
 			&:nth-child(odd) {
-				background-color: @lightBlue;
+				background-color: $lightBlue;
 			}
 		}
 	}
@@ -278,13 +277,13 @@ form {
 
 .footer {
 	height: 40px;
-	background-color: @lighterBlue;
+	background-color: $lighterBlue;
 	padding-top: 10px;
 }
 
 @media (max-width: 767px) {
 	.dropdown-menu > li > a {
-		color: @lightBlue;
+		color: $lightBlue;
 	}
 }
 
