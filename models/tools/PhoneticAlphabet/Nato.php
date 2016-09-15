@@ -9,6 +9,11 @@ class Nato extends Alphabet
 		return 'NATO phonetic alphabet';
 	}
 
+	public function sortOrder()
+	{
+		return 0;
+	}
+
 	public function replaceArray()
 	{
 		return [	'a' => 'Alfa',

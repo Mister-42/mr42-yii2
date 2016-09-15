@@ -2,11 +2,16 @@
 namespace app\models\tools\PhoneticAlphabet;
 use app\models\tools\PhoneticAlphabet as Alphabet;
 
-class _zzzuseless extends Alphabet
+class Useless extends Alphabet
 {
 	public function name()
 	{
 		return 'The Non-Phonetic Alphabet (Use at your own risk!)';
+	}
+
+	public function sortOrder()
+	{
+		return 'Z';
 	}
 
 	public function replaceArray()

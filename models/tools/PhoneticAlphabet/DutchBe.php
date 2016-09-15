@@ -2,11 +2,16 @@
 namespace app\models\tools\PhoneticAlphabet;
 use app\models\tools\PhoneticAlphabet as Alphabet;
 
-class _nlBE extends Alphabet
+class DutchBe extends Alphabet
 {
 	public function name()
 	{
 		return 'Dutch (Belgium)';
+	}
+
+	public function sortOrder()
+	{
+		return self::name();
 	}
 
 	public function replaceArray()

@@ -46,15 +46,15 @@ class PhoneticAlphabet extends Model
 	public function listAlphabets($type = 'map', $name = null)
 	{
 		$alphabetFiles = FileHelper::findFiles(__DIR__ . '/PhoneticAlphabet/', ['only'=>['*.php'], 'recursive' => false]);
-		sort($alphabetFiles);
 
 		foreach ($alphabetFiles as $file) {
 			$file = basename($file, '.php');
 			$className = 'app\\models\\tools\\PhoneticAlphabet\\' . $file;
 			$alphabet = new $className();
 			
-			$alphabetOptions[] = ['file' => $file, 'name' => $alphabet->name()];
+			$alphabetOptions[] = ['sort' => $alphabet->sortOrder(), 'file' => $file, 'name' => $alphabet->name()];
 		}
+		ArrayHelper::multisort($alphabetOptions, 'sort');
 
 		switch ($type) {
 			case 'map'		:	return ArrayHelper::map($alphabetOptions, 'file', 'name');
