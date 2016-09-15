@@ -37,11 +37,12 @@ if ($this->beginCache('feedRss', ['dependency' => $dependency, 'duration' => 0])
 	$channel->appendChild($doc->createElement('lastBuildDate', date(DATE_RSS, $posts[0]->updated)));
 		$rssImage = $doc->createElement('image');
 		$rssImage->appendChild($doc->createElement('title', Html::encode(Yii::$app->name)));
-		$rssImage->appendChild($doc->createElement('url', Url::to('@web/assets/images/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http')));
+		$rssImage->appendChild($doc->createElement('url', Url::to(Yii::$app->assetManager->baseUrl.'/images/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http')));
 		$rssImage->appendChild($doc->createElement('link', Url::to(['site/index'], true)));
 		$rssImage->appendChild($doc->createElement('description', Html::encode(Yii::$app->params['description'])));
-		$rssImage->appendChild($doc->createElement('height', 30));
-		$rssImage->appendChild($doc->createElement('width', 144));
+		list($width, $height, $type, $attr) = getimagesize(Yii::$app->assetManager->basePath.'/images/logo.png');
+		$rssImage->appendChild($doc->createElement('height', $height));
+		$rssImage->appendChild($doc->createElement('width', $width));
 	$channel->appendChild($rssImage);
 	$rss->appendChild($channel);
 

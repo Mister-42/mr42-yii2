@@ -7,7 +7,7 @@ class General
 {
 	public static function cleanInput($data, $markdown = 'original', $allowHtml = false)
 	{
-		$data = ($allowHtml) ? Yii::$app->formatter->asHtml($data) : Yii::$app->formatter->asHtml($data, ['HTML.Allowed' => '']);
+		$data = ($allowHtml) ? Yii::$app->formatter->asRaw($data) : Yii::$app->formatter->asHtml($data, ['HTML.Allowed' => '']);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
 		if ($allowHtml)

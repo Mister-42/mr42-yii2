@@ -18,7 +18,8 @@ $this->beginPage() ?>
 	</div>
 
 	<p>Thank you for visiting <?= Html::encode(Yii::$app->name) ?><br />
-	<?= Html::a('<img src="'.$message->embed(Yii::getAlias('@web/assets/images/logo.png')).'" alt="'.Html::encode(Yii::$app->name).'" height="30" width="144">', BaseUrl::home(true)) ?><br />
+	<?php list($width, $height, $type, $attr) = getimagesize(Yii::$app->assetManager->basePath.'/images/logo.png'); ?>
+	<?php echo Html::a('<img src="'.$message->embed(Yii::$app->assetManager->basePath.'/images/logo.png').'" alt="'.Html::encode(Yii::$app->name).'" '.$attr.'>', BaseUrl::home(true)) ?><br />
 	<?= Html::a(BaseUrl::home(true), BaseUrl::home(true)) ?></p>
 	<?php $this->endBody() ?>
 </body>
