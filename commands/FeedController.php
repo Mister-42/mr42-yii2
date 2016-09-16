@@ -1,6 +1,5 @@
 <?php
 namespace app\commands;
-use SimpleXMLElement;
 use Yii;
 use app\models\General;
 use app\models\Feed;
@@ -8,6 +7,7 @@ use app\models\user\RecentTracks;
 use dektrium\user\models\Profile;
 use dektrium\user\models\User;
 use yii\console\Controller;
+use yii\httpclient\Client;
 
 /**
  * Handles feeds
@@ -20,16 +20,20 @@ class FeedController extends Controller
 	 * Retrieves and stores an RSS feed.
 	*/
 	public function actionRss($name, $url, $urlField = 'link') {
+		$client = new Client();
 		$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 25;
-		$file = @file_get_contents($url);
 
-		if ($file === false)
+		$response = $client->createRequest()
+			->setMethod('get')
+			->setUrl($url)
+			->send();
+
+		if (!$response->isOK)
 			return Controller::EXIT_CODE_ERROR;
 
-		$xml = new SimpleXMLElement($file);
 		$count = 0;
 		Feed::deleteAll(['feed' => $name]);
-		foreach($xml->channel->item as $item) {
+		foreach($response->data['channel']['item'] as $item) {
 			$rssItem = new Feed();
 			$rssItem->feed = $name;
 			$rssItem->title = (string) $item->title;
@@ -50,26 +54,30 @@ class FeedController extends Controller
 	 * Retrieves and stores Recent Tracks from Last.fm.
 	*/
 	public function actionLastfmRecent() {
+		$client = new Client(['baseUrl' => 'https://ws.audioscrobbler.com/2.0/']);
 		$limit = (isset(Yii::$app->params['recentTracksCount']) && is_int(Yii::$app->params['recentTracksCount'])) ? Yii::$app->params['recentTracksCount'] : 25;
-		$users = User::find()->where(['blocked_at' => null])->all();
-		foreach ($users as $user) {
+
+		foreach (User::find()->where(['blocked_at' => null])->all() as $user) {
 			$profile = Profile::find()->where(['user_id' => $user->id])->one();
 			if (isset($profile->lastfm)) {
-				$file = @file_get_contents('https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' . $profile->lastfm . '&limit=' . $limit . '&api_key=' . Yii::$app->params['LastFMAPI']);
-				if ($file === false)
+				$response = $client->createRequest()
+					->setMethod('get')
+					->setUrl('?method=user.getrecenttracks&user=' . $profile->lastfm . '&limit=' . $limit . '&api_key=' . Yii::$app->params['LastFMAPI'])
+					->send();
+
+				if (!$response->isOK)
 					continue;
 
-				$xml = new SimpleXMLElement($file);
-				$playcount = (int) $xml->recenttracks['total'];
+				$playcount = (int) $response->data['@attributes']['total'];
 				$count = 0;
 				RecentTracks::deleteAll(['userid' => $user->id]);
-				foreach($xml->recenttracks->track as $track) {
+				foreach($response->data['recenttracks']['track'] as $track) {
 					$addTrack = new RecentTracks();
 					$addTrack->userid = $user->id;
 					$addTrack->artist = (string) $track->artist;
 					$addTrack->track = (string) $track->name;
 					$addTrack->count = $playcount--;
-					$addTrack->time = ($track['nowplaying']) ? 0 : $track->date['uts'];
+					$addTrack->time = ((bool) $track['nowplaying']) ? 0 : (int) $track->date['uts'];
 					$addTrack->save();
 
 					$count++;
