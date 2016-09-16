@@ -9,10 +9,6 @@ use yii\base\Object;
 use yii\filters\HttpCache;
 use yii\web\Controller;
 use yii\web\ErrorAction;
-use yii\web\Response;
-use yii\web\NotFoundHttpException;
-use yii\web\ServerErrorHttpException;
-use yii\web\UnauthorizedHttpException;
 
 class SiteController extends Controller
 {
@@ -62,46 +58,6 @@ class SiteController extends Controller
 
 	public function actionChangelog()
 	{
-		if (Yii::$app->request->post()) {
-			list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2);
-			if (!hash_equals($hash, hash_hmac($algo, file_get_contents('php://input'), Yii::$app->params['GitHubHook'])))
-				throw new UnauthorizedHttpException('Access denied!');
-
-			Yii::$app->response->format = Response::FORMAT_JSON;
-			$payload = json_decode(Yii::$app->request->post('payload'));
-
-			if ($_SERVER['HTTP_X_GITHUB_EVENT'] === 'ping')
-				return ['status' => 'success', 'message' => 'Pong!'];
-
-			if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
-				throw new NotFoundHttpException('Action not found.');
-
-			$c = curl_init();
-			curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($c, CURLOPT_URL, str_replace('{/sha}', '', $payload->repository->commits_url));
-			curl_setopt($c, CURLOPT_USERAGENT, Yii::$app->name . ' 0.1');
-			$file = curl_exec($c);
-			curl_close($c);
-
-			if ($file === false)
-				throw new ServerErrorHttpException('Unknown error');
-
-			$json = json_decode($file);
-			foreach($json as $item) {
-				if (empty(Feed::find()->where(['feed' => 'changelog', 'time' => strtotime($item->commit->committer->date)])->all())) {
-					$rssItem = new Feed();
-					$rssItem->feed = 'changelog';
-					$rssItem->title = (string) $item->sha;
-					$rssItem->url = (string) $item->html_url;
-					$rssItem->description = $item->commit->message;
-					$rssItem->time = strtotime($item->commit->committer->date);
-					$rssItem->save();
-				}
-			}
-
-			return ['status' => 'success', 'message' => 'Successfully updated.'];
-		}
-
 		return $this->render('changelog');
 	}
 
@@ -119,14 +75,5 @@ class SiteController extends Controller
 	public function actionCredits()
 	{
 		return $this->render('credits');
-	}
-
-	public function beforeAction($action)
-	{
-		if ($action->id == 'changelog') {
-			$this->enableCsrfValidation = false;
-		}
-
-		return parent::beforeAction($action);
 	}
 }
