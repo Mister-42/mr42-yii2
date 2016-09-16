@@ -6,12 +6,12 @@ class Nato extends Alphabet
 {
 	public function name()
 	{
-		return 'NATO phonetic alphabet';
+		return 'ICAO/NATO phonetic alphabet';
 	}
 
 	public function sortOrder()
 	{
-		return 0;
+		return '0';
 	}
 
 	public function replaceArray()

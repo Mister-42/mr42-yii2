@@ -6,7 +6,6 @@ use Yii;
 use app\models\General;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 class Profile extends BaseProfile
 {
