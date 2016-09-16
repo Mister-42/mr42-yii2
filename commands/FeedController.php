@@ -7,6 +7,7 @@ use app\models\user\RecentTracks;
 use dektrium\user\models\Profile;
 use dektrium\user\models\User;
 use yii\console\Controller;
+use yii\helpers\Url;
 use yii\httpclient\Client;
 
 /**
@@ -24,6 +25,7 @@ class FeedController extends Controller
 		$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 25;
 
 		$response = $client->createRequest()
+			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
 			->setMethod('get')
 			->setUrl($url)
 			->send();
@@ -61,6 +63,7 @@ class FeedController extends Controller
 			$profile = Profile::find()->where(['user_id' => $user->id])->one();
 			if (isset($profile->lastfm)) {
 				$response = $client->createRequest()
+					->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
 					->setMethod('get')
 					->setUrl('?method=user.getrecenttracks&user=' . $profile->lastfm . '&limit=' . $limit . '&api_key=' . Yii::$app->params['LastFMAPI'])
 					->send();
@@ -68,7 +71,7 @@ class FeedController extends Controller
 				if (!$response->isOK)
 					continue;
 
-				$playcount = (int) $response->data['@attributes']['total'];
+				$playcount = (int) $response->data['recenttracks']['@attributes']['total'];
 				$count = 0;
 				RecentTracks::deleteAll(['userid' => $user->id]);
 				foreach($response->data['recenttracks']['track'] as $track) {

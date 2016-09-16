@@ -2,6 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\Feed;
+use yii\helpers\Url;
 use yii\httpclient\Client;
 use yii\web\Controller;
 use yii\web\Response;
@@ -27,7 +28,7 @@ class WebhookController extends Controller
 		$client = new Client();
 		$payload = json_decode(Yii::$app->request->post('payload'));
 		$response = $client->createRequest()
-			->addHeaders(['user-agent' => Yii::$app->name])
+			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
 			->setMethod('get')
 			->setUrl(str_replace('{/sha}', '', $payload->repository->commits_url))
 			->send();
