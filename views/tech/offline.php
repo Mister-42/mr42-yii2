@@ -5,4 +5,4 @@ $this->title = 'Offline';
 
 echo Html::tag('h1', Html::encode($this->title));
 ?>
-This website is temporary offline for maintainance.
+This website is temporarily offline for maintenance.

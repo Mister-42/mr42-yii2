@@ -34,7 +34,6 @@ return [
 		],
 		'fileCache' => [
 			'class' => 'yii\caching\FileCache',
-			'cacheFileSuffix' => '.ser',
 			'directoryLevel' => 0,
 		],
 		'db' => [

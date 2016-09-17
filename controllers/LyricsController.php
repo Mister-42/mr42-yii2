@@ -40,7 +40,7 @@ class LyricsController extends Controller
 						return Lyrics3Tracks::lastUpdate($urlData['artist'], $urlData['year'], $urlData['album']);
 					}
 				},
-				'only' => ['index'],
+				'only' => ['index', 'albumpdf'],
 			],
 		];
 	}

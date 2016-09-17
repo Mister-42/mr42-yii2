@@ -11,7 +11,7 @@ class Pdf
 		$created = (isset($params['created'])) ? $params['created'] : $updated;
 		if (!file_exists($filename) || filemtime($filename) < $updated) {
 			if (!file_exists(dirname($filename)))
-				mkdir(dirname($filename), 0777, true);
+				mkdir(dirname($filename), 0775, true);
 
 			$pdf = Yii::$app->pdf;
 			$pdf->api->SetCreator(Yii::$app->name);
