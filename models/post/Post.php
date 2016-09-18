@@ -2,8 +2,8 @@
 namespace app\models\post;
 use Yii;
 use dektrium\user\models\User;
+use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
-use yii\helpers\Html;
 use yii\web\AccessDeniedHttpException;
 
 class Post extends ActiveRecord

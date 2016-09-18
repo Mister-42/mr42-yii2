@@ -3,7 +3,7 @@ namespace app\widgets;
 use Yii;
 use app\models\post\Tags;
 use yii\base\Widget;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 class TagCloud extends Widget
 {

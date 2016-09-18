@@ -1,8 +1,8 @@
 <?php
 use dektrium\user\helpers\Timezone;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\web\View;
 
@@ -31,23 +31,23 @@ $this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length
 		]);
 
 		echo $form->field($model, 'name', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 		])->textInput(['tabindex' => 1]);
 
 		echo $form->field($model, 'website', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
 		])->textInput(['tabindex' => 2]);
 
 		echo $form->field($model, 'lastfm', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-music"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('music').'</span>{input}</div>{error}',
 		])->textInput(['tabindex' => 3]);
 
 		echo $form->field($model, 'location', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('map-marker').'</span>{input}</div>{error}',
 		])->textInput(['tabindex' => 4]);
 
 		echo $form->field($model, 'birthday', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
 		])->widget(DatePicker::classname(), [
 			'clientOptions' => [
 				'changeMonth' => true,
@@ -63,13 +63,13 @@ $this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length
 		]);
 
 		echo $form->field($model, 'bio', [
-				'template' => '{label}<div class="col-lg-9"><div id="chars" class="pull-right"></div></div><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></span>{input}</div> <div class="col-lg-offset-3 col-lg-9">{hint} {error}</div>'
+				'template' => '{label}<div class="col-lg-9"><div id="chars" class="pull-right"></div></div><div class="input-group"><span class="input-group-addon">'.Html::icon('info-sign').'</span>{input}</div> <div class="col-lg-offset-3 col-lg-9">{hint} {error}</div>'
 			]) 
 			->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => 6])
 			->hint('You may use ' . Html::a('Markdown Syntax', ['/post/index', 'id' => 4], ['target' => '_blank']) . ' and <code>%age%</code> to show your age, calculated from <nobr>' . Html::tag('code', $model->getAttributeLabel('birthday')) . '</nobr>. HTML is not allowed.');
 
 		echo $form->field($model, 'timezone', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
 		])->dropDownList(ArrayHelper::map(Timezone::getAll(), 'timezone', 'name'), ['tabindex' => 7]); ?>
 
 		<div class="form-group">

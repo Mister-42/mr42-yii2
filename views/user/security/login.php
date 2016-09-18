@@ -1,7 +1,7 @@
 <?php
 use dektrium\user\widgets\Connect;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = 'User';
@@ -25,12 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		echo $form->field($model, 'login', [
 			'inputOptions' => ['autofocus' => true, 'class' => 'form-control', 'tabindex' => '1'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 		]);
 
 		echo $form->field($model, 'password', [
 			'inputOptions' => ['class' => 'form-control', 'tabindex' => '2'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 		])->passwordInput()
 		->label('Password' . ($module->enablePasswordRecovery ? ' (' . Html::a('Forgot password?', ['/user/recovery/request'], ['tabindex' => '5']) . ')' : ''));
 

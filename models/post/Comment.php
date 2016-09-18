@@ -2,8 +2,8 @@
 namespace app\models\post;
 use Yii;
 use app\models\General;
+use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
-use yii\helpers\Html;
 use yii\web\AccessDeniedHttpException;
 
 class Comment extends ActiveRecord
@@ -79,7 +79,7 @@ class Comment extends ActiveRecord
 	public function showApprovalButton()
 	{
 		return Html::a(
-				($this->active) ? '<span class="glyphicon glyphicon-thumbs-down"></span> Renounce' : '<span class="glyphicon glyphicon-thumbs-up"></span> Approve',
+				($this->active) ? Html::icon('thumbs-down').' Renounce' : Html::icon('thumbs-up').' Approve',
 				['commentstatus', 'id' => $this->id, 'action' => 'toggleapproval'],
 				['class' => ($this->active) ? 'btn btn-xs btn-warning' : 'btn btn-xs btn-success', 'style' => 'margin-top:25px;']
 			);

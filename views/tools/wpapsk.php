@@ -2,7 +2,7 @@
 use app\assets\ClipboardJsAsset;
 use yii\base\DynamicModel;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\web\View;
 
 $this->title = 'WPA PSK Calculator';
@@ -40,13 +40,13 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 		]); ?>
 
 		<?= $form->field($model, 'ssid', [
-				'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-signal"></span></span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('signal').'</span>{input}</div>{error}',
 			])
 			->label('SSID')
 			->textInput(['autofocus' => true, 'id' => 'ssid', 'tabindex' => 1]) ?>
 
 		<?= $form->field($model, 'pass', [
-				'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 			])
 			->label('WPA Passphrase')
 			->textInput(['id' => 'pass', 'tabindex' => 2]) ?>
@@ -58,7 +58,7 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 					<?= Html::tag('div', 'Javascript is disabled in your web browser. This tool does not work without Javascript.', ['id' => 'psk']) ?>
 				</div>
 				<div class="col-md-1 text-right">
-					<button class="btn btn-sm btn-primary clipboard-js-init hidden" data-clipboard-target="#psk" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" type="button"><span class="glyphicon glyphicon-copy"></span></button>
+					<button class="btn btn-sm btn-primary clipboard-js-init hidden" data-clipboard-target="#psk" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" type="button"><?= Html::icon('copy') ?></button>
 				</div>
 			</div>
 		</div>

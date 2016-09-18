@@ -52,6 +52,14 @@ return [
 			'queryCache' => 'fileCache',
 			'queryCacheDuration' => 60*60*24*2,
 		],
+		'i18n' => [
+			'translations' => [
+				'site' => [
+					'class' => 'yii\i18n\PhpMessageSource',
+					'sourceLanguage' => 'en',
+				],
+			],
+		],
 		'log' => [
 			'traceLevel' => YII_DEBUG ? 3 : 0,
 			'targets' => [

@@ -1,7 +1,7 @@
 <?php
 use app\models\General;
-use yii\helpers\Html;
 use yii\bootstrap\Carousel;
+use yii\bootstrap\Html;
 
 $this->title = Yii::$app->name;
 

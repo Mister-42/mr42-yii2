@@ -1,6 +1,6 @@
 <?php
 use dektrium\user\widgets\Connect;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 $this->title = 'Social Networks';
 $this->params['breadcrumbs'][] = $this->title;

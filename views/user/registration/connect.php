@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Sign in';
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		]) ?>
 
 		<?= $form->field($model, 'username', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html:icon('user').'</span>{input}</div>{error}',
 		]) ?>
 
 		<?= Html::submitButton('Continue', ['class' => 'btn btn-primary btn-block']) ?>

@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\jui\DatePicker;
 
 $this->title = 'Date to Date';
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			$tab++;
 			echo $form->field($model, $field, [
 				'options' => ['class' => 'col-xs-6'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
 			])->widget(DatePicker::classname(), [
 				'clientOptions' => [
 					'changeMonth' => true,

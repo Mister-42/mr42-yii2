@@ -1,8 +1,8 @@
 <?php
 use dektrium\user\helpers\Timezone;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\jui\DatePicker;
 
 $this->beginContent('@dektrium/user/views/admin/update.php', ['user' => $user]);

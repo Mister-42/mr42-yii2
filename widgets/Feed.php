@@ -2,7 +2,7 @@
 namespace app\widgets;
 use Yii;
 use yii\base\Widget;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use app\models\Feed as FeedModel;
 
 class Feed extends Widget

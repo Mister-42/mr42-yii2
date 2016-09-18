@@ -1,8 +1,10 @@
 <?php
+use yii\helpers\Url;
+
 $this->beginContent('@app/views/layouts/main.php');
 
-$username = explode('/', yii\helpers\Url::current());
-$url = (Yii::$app->urlManager->parseRequest(Yii::$app->request)[0] === 'user/profile/show') ? '/user/recenttracks/' . $username[3] : '/lyrics/recenttracks';
+$username = explode('/', Url::current());
+$url = (Yii::$app->urlManager->parseRequest(Yii::$app->request)[0] === 'user/profile/show') ? '/user/recenttracks/' . end($username) : '/lyrics/recenttracks';
 $this->registerJs('(function refresh(){$(\'.recent-tracks .tracks\').load(\'' . $url . '\');setTimeout(refresh,60000)})();');
 ?>
 <div class="row">

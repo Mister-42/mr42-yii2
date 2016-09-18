@@ -1,9 +1,9 @@
 <?php
-use yii\helpers\Html;
-use yii\web\View;
 use yii\bootstrap\ActiveForm;
-use yii\widgets\Pjax;
+use yii\bootstrap\Html;
 use yii\captcha\Captcha;
+use yii\web\View;
+use yii\widgets\Pjax;
 
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,7 +23,7 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [
 					'options' => ['class' => 'col-xs-6 form-group'],
-					'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>{input}</div>{error}',
+					'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 				])->textInput(['tabindex' => 1]);
 
 				echo $form->field($model, 'email', [
@@ -33,19 +33,19 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 			echo '</div>';
 
 			echo $form->field($model, 'title', [
-					'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-header"></span></span>{input}</div>{error}',
+					'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('header').'</span>{input}</div>{error}',
 				])->textInput(['tabindex' => 3]);
 
 			echo $form->field($model, 'content',[
 				'template' => "{label} <div id=\"chars\" class=\"pull-right\"></div> {input} {hint} {error}",
-				'template' => '{label} <div id="chars" class="pull-right"></div><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-comment"></span></span>{input}</div> {hint} {error}'
+				'template' => '{label} <div id="chars" class="pull-right"></div><div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div> {hint} {error}'
 			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => 4]);
 
 			echo $form->field($model, 'captcha')->widget(Captcha::className(), [
 				'captchaAction' => '/tech/captcha',
 				'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 				'options' => ['class' => 'form-control', 'tabindex' => 5],
-				'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-dashboard"></span></span>{input}</div></div> {image}</div>',
+				'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
 			])->hint('Click on the image to retrieve a new verification code.');
 
 			echo '<div class="form-group text-right">';

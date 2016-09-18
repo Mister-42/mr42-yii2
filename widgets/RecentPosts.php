@@ -3,7 +3,7 @@ namespace app\widgets;
 use Yii;
 use app\models\post\Post;
 use yii\base\Widget;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 class RecentPosts extends Widget
 {

@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\jui\DatePicker;
 
 $this->title = 'Microsoft® Office 365® End Date';
@@ -17,10 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?php
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
 			$txt = '<p><strong>This action is not allowed.</strong> Subscriptions have a maximum end date of 3 years into the future.</p>';
-			$txt .= '<p>Theoretically the subscription with <strong>' . Yii::t('app', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> would approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';
+			$txt .= '<p>Theoretically the subscription with <strong>' . Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> would approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';
 			echo Alert::widget(['options' => ['class' => 'alert-danger'], 'body' => $txt]);
 		} elseif ($flash = Yii::$app->session->getFlash('office365-success')) {
-			$txt = '<p>The subscription with <strong>' . Yii::t('app', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> will approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';
+			$txt = '<p>The subscription with <strong>' . Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> will approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';
 			echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $txt]);
 		}
 
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			echo '<div class="row">';
 			echo $form->field($model, $field.'date', [
 				'options' => ['class' => 'col-xs-6'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
 			])->widget(DatePicker::classname(), [
 				'clientOptions' => [
 					'changeMonth' => true,
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			$tab++;
 			echo $form->field($model, $field.'count', [
 				'options' => ['class' => 'col-xs-6'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 			])
 			->textInput(['class' => 'form-control', 'tabindex' => $tab]);
 			echo '</div>';

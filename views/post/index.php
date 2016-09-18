@@ -2,23 +2,16 @@
 use kop\y2sp\ScrollPager;
 use yii\widgets\ListView;
 
-$results = ($dataProvider->totalCount === 0) ? 'No' : $dataProvider->totalCount;
-$articleName = ($results === 1) ? 'article' : 'articles';
-$resultName = ($results === 1) ? 'result' : 'results';
-
 switch ($action) {
 	case 'tag'		:	$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
-							$breadcrumb = $results . ' ' . $articleName . ' with tag "' . $tag . '"';
-							$this->title = implode(' ∷ ', [$breadcrumb, 'Articles']);
+							$this->title = Yii::t('site', '{results, plural, =0{No articles} =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $dataProvider->totalCount, 'tag' => $tag]);
 							break;
 	case 'search'	:	$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
-							$breadcrumb = $results . ' search ' . $resultName . ' for "' . $q . '"';
-							$this->title = implode(' ∷ ', [$breadcrumb, 'Articles']);
+							$this->title = Yii::t('site', '{results, plural, =0{No search results} =1{1 search result} other{# search results}} for "{query}"', ['results' => $dataProvider->totalCount, 'query' => $q]);
 							break;
-	default			:	$breadcrumb = 'Articles';
-							$this->title = 'Articles';
+	default			:	$this->title = 'Articles';
 }
-$this->params['breadcrumbs'][] = $breadcrumb;
+$this->params['breadcrumbs'][] = $this->title;
 
 echo ListView::widget([
 	'dataProvider' => $dataProvider,

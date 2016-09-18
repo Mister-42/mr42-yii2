@@ -1,7 +1,7 @@
 <?php
 use Yii;
 use app\models\Feed;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 $this->title = 'Changelog';
 $this->params['breadcrumbs'][] = $this->title;

@@ -3,7 +3,7 @@ use app\models\General;
 use app\models\user\Profile;
 use app\models\post\Tags;
 use dektrium\user\models\User;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 ?>
 <article class="article">
 	<div class="clearfix">
@@ -14,14 +14,14 @@ use yii\helpers\Html;
 		<div class="pull-right">
 			<?php if ($model->belongsToViewer()): ?>
 				<?= Html::a('<span class="glyphicon glyphicon-edit"></span> Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-xs btn-primary', 'style' => 'margin-top:25px;']) ?>
-				<?php echo Html::a('<span class="glyphicon glyphicon-remove"></span> Delete', ['delete', 'id' => $model->id], [
+				<?php echo Html::a(Html::icon('remove').' Delete', ['delete', 'id' => $model->id], [
 					'class' => 'btn btn-xs btn-danger',
 					'data-confirm' => 'Are you sure you want to delete this article?',
 					'data-method' => 'post',
 					'style' => 'margin-top:25px;',
 				]); ?>
 			<?php endif; ?>
-			<?= Html::a('<span class="glyphicon glyphicon-save"></span> PDF', ['pdf', 'id' => $model->id, 'title' => $model->title], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']) ?>
+			<?= Html::a(Html::icon('save').' PDF', ['pdf', 'id' => $model->id, 'title' => $model->title], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']) ?>
 		</div>
 	</div>
 
@@ -45,15 +45,9 @@ use yii\helpers\Html;
 		if ($model->active == 0)
 			echo Html::tag('div', 'Not published.', ['class' => 'well well-sm alert-warning']);
 
-		echo '<span class="glyphicon glyphicon-link text-muted"></span> ' . Html::a('permalink', ['index', 'id' => $model->id]).' &middot; ';
-		$commentCount = count($model->comments);
-		switch ($commentCount) {
-			case 0:	$commentText = 'no comments yet'; break;
-			case 1:	$commentText = '1 comment'; break;
-			default:	$commentText = $commentCount.' comments';
-		}
-		$commentText = (count($model->comments) === 1) ? '1 comment' : count($model->comments).' comments';
-		echo '<span class="glyphicon glyphicon-comment text-muted"></span> ' . Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->title, '#' => 'comments']);
+		echo Html::icon('link', ['class' => 'text-muted']) . ' ' . Html::a('permalink', ['index', 'id' => $model->id]).' &middot; ';
+		$commentText = Yii::t('site', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
+		echo Html::icon('comment', ['class' => 'text-muted']) . ' ' . Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->title, '#' => 'comments']);
 
 		$tags = Tags::string2array($model->tags);
 		if (count($tags) > 0) {
@@ -61,21 +55,17 @@ use yii\helpers\Html;
 			foreach($tags as $tag) {
 				$tagArray[] = Html::a($tag, ['index', 'action' => 'tag', 'tag' => $tag]);
 			}
-			if (count($tags) === 1) {
-				echo '<span class="glyphicon glyphicon-tag text-muted"></span>';
-			} else {
-				echo '<span class="glyphicon glyphicon-tags text-muted"></span>';
-			}
+			echo (count($tags) === 1) ? Html::icon('tag', ['class' => 'text-muted']) : Html::icon('tags', ['class' => 'text-muted']);
 			echo ' '.Tags::array2string($tagArray);
 		}
 
-		echo ' &middot; <span class="glyphicon glyphicon-time text-muted"></span> <time datetime="'.date(DATE_W3C, $model->created).'">'.Yii::$app->formatter->asRelativeTime($model->created).'</time>';
+		echo ' &middot; '.Html::icon('time', ['class' => 'text-muted']).' <time datetime="'.date(DATE_W3C, $model->created).'">'.Yii::$app->formatter->asRelativeTime($model->created).'</time>';
 		if($model->updated - $model->created > 3600)
 			echo ' &middot; updated <time datetime="'.date(DATE_W3C, $model->updated).'">'.Yii::$app->formatter->asRelativeTime($model->updated).'</time>';
 
 		$user = new User();
 		$profile = $user->finder->findProfileById($model->user->id);
-		echo ' &middot; <span class="glyphicon glyphicon-user text-muted"></span> <span class="author">' . (empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name)) . '</span>';
+		echo ' &middot; '.Html::icon('user', ['class' => 'text-muted']).' <span class="author">' . (empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name)) . '</span>';
 
 		if (isset($view) && $view == 'full ') {
 			if (!empty($profile['bio']) && $author = Profile::show($profile)) {

@@ -1,6 +1,6 @@
 <?php
 use app\models\lyrics\Lyrics3Tracks;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 $this->title = $albums[0]['artistName'];
 $this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
@@ -15,7 +15,7 @@ foreach ($albums as $album) :
 	echo '</h3>';
 	if ((int) $album['active'] === 0) { echo ' <span class="badge">unpublished</span>'; }
 	echo '</div><div class="pull-right">';
-	echo Html::a('<span class="glyphicon glyphicon-save"></span> PDF', ['albumpdf', 'artist' => $album['artistUrl'], 'year' => $album['albumYear'], 'album' => $album['albumUrl']], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']);	
+	echo Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album['artistUrl'], 'year' => $album['albumYear'], 'album' => $album['albumUrl']], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']);	
 	echo '</div></div></div>';
 
 	$x=0; $y=0;

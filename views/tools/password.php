@@ -1,6 +1,6 @@
 <?php
 use app\assets\ClipboardJsAsset;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\web\View;
 
 $this->title = 'Random Password Generator';
@@ -22,7 +22,7 @@ $this->registerJs('$("#length").change(function(){get();}).change();', View::POS
 				<label class="control-label" for="length">Password Length</label>
 				<div class="input-group">
 					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-dashboard"></span>
+						<?= Html::icon('dashboard') ?>
 					</span>
 					<select id="length" class="form-control">
 						<?php for ($x=6; $x<=64; $x++) { echo '<option value="'.$x.'"'; if ($x==12) { echo ' selected'; } echo '>'.$x.'</option>'; } ?>
@@ -37,7 +37,7 @@ $this->registerJs('$("#length").change(function(){get();}).change();', View::POS
 						<div id="password">Javascript is disabled in your web browser. This tool does not work without Javascript.</div>
 					</div>
 					<div class="col-md-1 text-right">
-						<button class="btn btn-sm btn-primary clipboard-js-init" data-clipboard-target="#password" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" type="button"><span class="glyphicon glyphicon-copy"></span></button>
+						<button class="btn btn-sm btn-primary clipboard-js-init" data-clipboard-target="#password" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" type="button"><?= Html::icon('copy') ?></button>
 					</div>
 				</div>
 			</div>

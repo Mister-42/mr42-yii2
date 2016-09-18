@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Reset your password';
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		]); ?>
 
 		<?= $form->field($model, 'password', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 		])->passwordInput() ?>
 
 		<?= Html::submitButton('Finish', ['class' => 'btn btn-primary btn-block']) ?><br>

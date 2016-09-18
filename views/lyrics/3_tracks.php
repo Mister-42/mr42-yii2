@@ -1,6 +1,6 @@
 <?php
 use app\models\General;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 $this->title = implode(' - ', [$tracks[0]['artistName'], $tracks[0]['albumName']]);
 $this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
@@ -11,9 +11,8 @@ $this->params['breadcrumbs'][] = $tracks[0]['albumName'];
 	<div class="pull-left">
 		<?= Html::tag('h1', Html::encode(implode(' · ', [$tracks[0]['artistName'], $tracks[0]['albumName']]))) ?>
 	</div>
-
 	<div class="pull-right">
-		<?= Html::a('<span class="glyphicon glyphicon-save"></span> PDF', ['albumpdf', 'artist' => $tracks[0]['artistUrl'], 'year' => $tracks[0]['albumYear'], 'album' => $tracks[0]['albumUrl']], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']) ?>
+		<?= Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $tracks[0]['artistUrl'], 'year' => $tracks[0]['albumYear'], 'album' => $tracks[0]['albumUrl']], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']) ?>
 	</div>
 </div>
 

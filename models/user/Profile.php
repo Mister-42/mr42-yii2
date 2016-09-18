@@ -4,8 +4,8 @@ use dektrium\user\models\Profile as BaseProfile;
 use DateTime;
 use Yii;
 use app\models\General;
+use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
-use yii\helpers\Html;
 
 class Profile extends BaseProfile
 {

@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 $this->title = 'Favicon Converter';
 $this->params['breadcrumbs'][] = 'Tools';
@@ -47,11 +47,11 @@ echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover
 
 		<div class="input-group">
 			<span class="input-group-addon">
-				<span class="glyphicon glyphicon-picture"></span>
+				<?= Html::icon('picture') ?>
 			</span>
 			<input type="text" id="cover" class="form-control" placeholder="Select an image" onclick="$('input[id=sourceFile]').click();" readonly>
 			<span class="input-group-btn">
-				<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click();"><span class="glyphicon glyphicon-folder-open"></span></button>
+				<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click();"><?= Html::icon('folder-open') ?></button>
 			</span>
 		</div>
 

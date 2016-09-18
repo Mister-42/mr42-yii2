@@ -1,8 +1,8 @@
 <?php
 namespace app\models\user;
 use Yii;
+use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
-use yii\helpers\Html;
 
 class RecentTracks extends ActiveRecord
 {
@@ -25,7 +25,7 @@ class RecentTracks extends ActiveRecord
 			echo '<div class="clearfix track">';
 				echo Html::tag('span', $track['artist'], ['class' => 'pull-left']);
 				if ($track['time'] === 0)
-					echo Html::tag('span', '', ['class' => 'glyphicon glyphicon-volume-up', 'title' => 'Currently playing']);
+					echo Html::icon('volume-up', ['title' => 'Currently playing']);
 				echo Html::tag('span', $track['track'], ['class' => 'pull-right text-right']);
 			echo '</div>';
 		}

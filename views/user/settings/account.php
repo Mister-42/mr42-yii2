@@ -1,6 +1,6 @@
 <?php
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Html;
 
 $this->title = 'Account Settings';
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,17 +28,17 @@ $this->params['breadcrumbs'][] = $this->title;
 		]) ?>
 
 		<?= $form->field($model, 'username', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 		]) ?>
 
 		<?= $form->field($model, 'new_password', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 		])->passwordInput() ?>
 
 		<hr />
 
 		<?= $form->field($model, 'current_password', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 		])->passwordInput() ?>
 
 		<div class="form-group">

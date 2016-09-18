@@ -1,8 +1,8 @@
 <?php
 use app\models\tools\PhoneticAlphabet;
-use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
+use yii\bootstrap\Html;
 
 $this->title = 'Phonetic Alphabet Translator';
 $this->params['breadcrumbs'][] = 'Tools';
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		$form = ActiveForm::begin();
 
 		echo $form->field($model, 'text', [
-				'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-comment"></span></span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div>{error}',
 			])->textInput(['tabindex' => 1]);
 
 		echo $form->field($model, 'alphabet')->dropDownList(PhoneticAlphabet::listAlphabets(), ['tabindex' => 2]);

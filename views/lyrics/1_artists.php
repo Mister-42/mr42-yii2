@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 $this->title = 'Lyrics';
 $this->params['breadcrumbs'][] = $this->title;

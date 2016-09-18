@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 use yii\jui\DatePicker;
 
 $this->title = 'Date';
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo '<div class="row">';
 		echo $form->field($model, 'from', [
 			'options' => ['class' => 'col-xs-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
 		])->widget(DatePicker::classname(), [
 			'clientOptions' => [
 				'changeMonth' => true,
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		echo $form->field($model, 'days', [
 			'options' => ['class' => 'col-xs-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-plus"></span></span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('plus').'</span>{input}</div>{error}',
 		])->textInput(['tabindex' => 2]);
 		echo '</div>'; ?>
 

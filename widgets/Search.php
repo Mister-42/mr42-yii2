@@ -4,7 +4,7 @@ use Yii;
 use yii\base\DynamicModel;
 use yii\base\Widget;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
+use yii\bootstrap\Html;
 
 class Search extends Widget
 {
@@ -18,7 +18,7 @@ class Search extends Widget
 
 		$submit = Html::tag('span', Html::submitButton('Go!', ['class' => 'btn btn-primary']), ['class' => 'input-group-btn']);
 		echo $form->field($model, 'search_term', [
-				'template' => '<div class="input-group input-group-sm"><span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>{input}' . $submit . "</div>",
+				'template' => '<div class="input-group input-group-sm"><span class="input-group-addon">'.Html::icon('search').'</span>{input}' . $submit . "</div>",
 			])
 			->label(false)
 			->textInput(['class' => 'form-control', 'name' => 'q', 'placeholder' => 'Search...', 'value' => Yii::$app->request->get('q')])
