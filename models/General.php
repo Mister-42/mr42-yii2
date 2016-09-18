@@ -11,7 +11,7 @@ class General
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
 		if ($allowHtml)
-			$data = preg_replace('#@yt\[([a-z0-9.-]+)\]#i', '<div class="video"><iframe src="https://www.youtube.com/embed/$1?wmode=opaque" frameborder="0" allowfullscreen></iframe></div>', $data);
+			$data = preg_replace('#@yt\[([a-z0-9.-]+)\]#i', '<div class="embed-responsive"><iframe class="embed-responsive-item" src="https://www.youtube.com/embed/$1?wmode=opaque" frameborder="0" allowfullscreen></iframe></div>', $data);
 		return trim($data);
 	}
 }

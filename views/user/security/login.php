@@ -24,19 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
 		]);
 
 		echo $form->field($model, 'login', [
-			'inputOptions' => ['autofocus' => true, 'class' => 'form-control', 'tabindex' => '1'],
+			'inputOptions' => ['autofocus' => true, 'class' => 'form-control', 'tabindex' => 1],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 		]);
 
 		echo $form->field($model, 'password', [
-			'inputOptions' => ['class' => 'form-control', 'tabindex' => '2'],
+			'inputOptions' => ['class' => 'form-control', 'tabindex' => 2],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 		])->passwordInput()
-		->label('Password' . ($module->enablePasswordRecovery ? ' (' . Html::a('Forgot password?', ['/user/recovery/request'], ['tabindex' => '5']) . ')' : ''));
+		->label('Password' . ($module->enablePasswordRecovery ? ' (' . Html::a('Forgot password?', ['/user/recovery/request']) . ')' : ''));
 
-		echo $form->field($model, 'rememberMe')->checkbox(['tabindex' => '4']);
+		echo $form->field($model, 'rememberMe')->checkbox(['tabindex' => 3]);
 
-		echo Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block', 'tabindex' => '3']);
+		echo Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block', 'tabindex' => 4]);
 
 		ActiveForm::end();
 

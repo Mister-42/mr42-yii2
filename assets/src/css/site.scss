@@ -123,12 +123,18 @@ h1, h2, h3, h4, h5, h6 {
 			vertical-align: top;
 		}
 	}
-}
 
-hr {
-	&.ten {
-			margin-bottom: 10px;
-			margin-top: 10px;	
+	&lyrics-lyrics {
+		.row {
+			&:not(:first-child) {
+				padding-top: 10px;
+			}
+
+			&:not(:last-child) {
+				border-bottom: 1px solid $middleBlue;
+				padding-bottom: 10px;
+			}
+		}
 	}
 }
 
@@ -198,21 +204,6 @@ pre, code {
 
 textarea {
 	resize: none;
-}
-
-.video {
-	height: 0;
-	padding-bottom: 56.25%;
-	position: relative;
-	width: 100%;
-
-	iframe {
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
 }
 
 .progress-bar-light {

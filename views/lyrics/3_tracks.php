@@ -7,6 +7,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $tracks[0]['artistName'], 'url' => ['index', 'artist' => $tracks[0]['artistUrl']]];
 $this->params['breadcrumbs'][] = $tracks[0]['albumName'];
 ?>
+<div class="site-lyrics-lyrics">
 <div class="clearfix">
 	<div class="pull-left">
 		<?= Html::tag('h1', Html::encode(implode(' · ', [$tracks[0]['artistName'], $tracks[0]['albumName']]))) ?>
@@ -38,10 +39,12 @@ echo '</div>';
 
 foreach($tracks as $track) :
 	if (strlen($track['trackLyrics']) !== 0) {
-		echo '<div class="row"><div class="col-lg-12"><hr class="ten" />';
+		echo '<div class="row"><div class="col-lg-12">';
 		echo Html::a(null, null, ['name' => $track['trackNumber']]);
 		echo Html::tag('h4', implode(' · ', [$track['trackNumber'], $track['trackName']]));
 		echo General::cleanInput($track['trackLyrics'], 'gfm-comment');
 		echo '</div></div>';
 	}
 endforeach;
+
+echo '</div>';

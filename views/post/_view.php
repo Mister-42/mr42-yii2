@@ -1,9 +1,9 @@
 <?php
 use app\models\General;
 use app\models\user\Profile;
-use app\models\post\Tags;
 use dektrium\user\models\User;
 use yii\bootstrap\Html;
+use yii\helpers\StringHelper;
 ?>
 <article class="article">
 	<div class="clearfix">
@@ -49,14 +49,14 @@ use yii\bootstrap\Html;
 		$commentText = Yii::t('site', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
 		echo Html::icon('comment', ['class' => 'text-muted']) . ' ' . Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->title, '#' => 'comments']);
 
-		$tags = Tags::string2array($model->tags);
+		$tags = StringHelper::explode($model->tags);
 		if (count($tags) > 0) {
 			echo ' &middot; ';
 			foreach($tags as $tag) {
 				$tagArray[] = Html::a($tag, ['index', 'action' => 'tag', 'tag' => $tag]);
 			}
 			echo (count($tags) === 1) ? Html::icon('tag', ['class' => 'text-muted']) : Html::icon('tags', ['class' => 'text-muted']);
-			echo ' '.Tags::array2string($tagArray);
+			echo ' '.implode(', ', $tagArray);
 		}
 
 		echo ' &middot; '.Html::icon('time', ['class' => 'text-muted']).' <time datetime="'.date(DATE_W3C, $model->created).'">'.Yii::$app->formatter->asRelativeTime($model->created).'</time>';

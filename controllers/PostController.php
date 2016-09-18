@@ -5,14 +5,14 @@ use app\models\General;
 use app\models\Pdf;
 use app\models\post\Comment;
 use app\models\post\Post;
-use app\models\post\Tags;
 use dektrium\user\models\User;
 use yii\bootstrap\Alert;
+use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\StringHelper;
 use yii\web\Controller;
 use yii\web\ErrorAction;
 use yii\web\MethodNotAllowedHttpException;
@@ -117,7 +117,7 @@ class PostController extends Controller
 			$model->content = General::cleanInput($model->content, 'gfm', true);
 			$profile = $user->finder->findProfileById($model->user->id);
 			$name = (empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name));
-			$tags = (count(Tags::string2array($model->tags)) > 1) ? 'tags' : 'tag';
+			$tags = Yii::t('site', '{results, plural, =1{1 tag} other{# tags}}', ['results' => count(StringHelper::explode($model->tags))]);
 
 			$pdf = new Pdf();
 			$fileName = $pdf->create(
@@ -201,16 +201,6 @@ class PostController extends Controller
 
 		return false;
 	}
-
-/*
-	public function actionSuggestTags() {
-		if(isset($_GET['q']) && ($keyword=trim($_GET['q']))!=='') {
-			$tags=Tags::suggestTags($keyword);
-			if($tags!==array())
-				echo implode("\n",$tags);
-		}
-	}
-*/
 
 	protected function findComment($id)
 	{

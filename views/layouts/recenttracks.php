@@ -3,8 +3,7 @@ use yii\helpers\Url;
 
 $this->beginContent('@app/views/layouts/main.php');
 
-$username = explode('/', Url::current());
-$url = (Yii::$app->urlManager->parseRequest(Yii::$app->request)[0] === 'user/profile/show') ? '/user/recenttracks/' . end($username) : '/lyrics/recenttracks';
+$url = (Yii::$app->controller->id === 'profile' && Yii::$app->controller->action->id === 'show') ? '/user/recenttracks/' . basename(Url::current()) : '/lyrics/recenttracks';
 $this->registerJs('(function refresh(){$(\'.recent-tracks .tracks\').load(\'' . $url . '\');setTimeout(refresh,60000)})();');
 ?>
 <div class="row">
