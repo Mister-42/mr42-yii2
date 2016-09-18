@@ -74,7 +74,7 @@ class Favicon extends Model
 
 					foreach ($this->dimensions as $dimension) {
 						$tmpFiles[] = Yii::$app->assetManager->basePath.'/x/'.$rndFilename.'.'.$dimension.'.png';
-						exec('convert -scale '.$dimension.' '.$srcImg.' '.Yii::$app->assetManager->basePath.'/x/'.$rndFilename).'.'.$dimension.'.png');
+						exec('convert -scale '.$dimension.' '.$srcImg.' '.Yii::$app->assetManager->basePath.'/x/'.$rndFilename.'.'.$dimension.'.png');
 					}
 					exec('convert '.implode(' ', $tmpFiles).' '.Yii::$app->assetManager->basePath.'/x/'.$rndFilename.'.ico');
 					foreach ($tmpFiles as $file) {

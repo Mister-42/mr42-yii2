@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		]) ?>
 
 		<?= $form->field($model, 'username', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html:icon('user').'</span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 		]) ?>
 
 		<?= Html::submitButton('Continue', ['class' => 'btn btn-primary btn-block']) ?>

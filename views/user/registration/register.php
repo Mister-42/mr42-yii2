@@ -21,12 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo '<div class="row">';
 			echo $form->field($model, 'username', [
 				'options' => ['class' => 'col-xs-6 form-group'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html:icon('user').'</span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 			])->textInput(['tabindex' => 2]);
 
 			echo $form->field($model, 'password', [
 				'options' => ['class' => 'col-xs-6 form-group'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html:icon('lock').'</span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 			])->passwordInput(['tabindex' => 3]);
 		echo '</div>';
 
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'captchaAction' => '/tech/captcha',
 			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 			'options' => ['class' => 'form-control', 'tabindex' => 4],
-			'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html:icon('dashboard').'</span>{input}</div></div> {image}</div>',
+			'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
 		])->hint('Click on the image to retrieve a new verification code.');
 
 		echo Html::submitButton('Sign up', ['class' => 'btn btn-primary btn-block', 'tabindex' => 5]);
