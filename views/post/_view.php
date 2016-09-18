@@ -13,7 +13,7 @@ use yii\bootstrap\Html;
 
 		<div class="pull-right">
 			<?php if ($model->belongsToViewer()): ?>
-				<?= Html::a('<span class="glyphicon glyphicon-edit"></span> Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-xs btn-primary', 'style' => 'margin-top:25px;']) ?>
+				<?= Html::a(Html::icon('edit').' Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-xs btn-primary', 'style' => 'margin-top:25px;']) ?>
 				<?php echo Html::a(Html::icon('remove').' Delete', ['delete', 'id' => $model->id], [
 					'class' => 'btn btn-xs btn-danger',
 					'data-confirm' => 'Are you sure you want to delete this article?',

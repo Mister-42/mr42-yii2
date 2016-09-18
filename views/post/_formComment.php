@@ -1,9 +1,9 @@
 <?php
+use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
-use yii\web\View;
-use yii\widgets\ActiveForm;
-use yii\widgets\Pjax;
 use yii\captcha\Captcha;
+use yii\web\View;
+use yii\widgets\Pjax;
 
 $rules = $model->rules();
 $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this).val().length;char='.$rules['charCount']['max'].'-len;if(len>'.$rules['charCount']['max'].'){$(\'#chars\').text(\'You are \'+Math.abs(char)+\' characters over the limit.\').addClass(\'alert-danger\')}else{$(\'#chars\').text(\'You have \'+char+\' characters left\').removeClass(\'alert-danger\');}}).keyup();', View::POS_READY);
