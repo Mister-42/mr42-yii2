@@ -88,6 +88,9 @@ return [
 		'urlManager' => [
 			'baseUrl' => 'https://www.mr42.me/',
 			'enablePrettyUrl' => true,
+			'normalizer' => [
+				'class' => 'yii\web\UrlNormalizer',
+			],
 			'showScriptName' => false,
 			'rules' => [
 				''																	=> 'site/index',
