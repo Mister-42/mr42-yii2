@@ -86,7 +86,6 @@ return [
 			'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
 		],
 		'urlManager' => [
-			'baseUrl' => 'https://www.mr42.me/',
 			'enablePrettyUrl' => true,
 			'normalizer' => [
 				'class' => 'yii\web\UrlNormalizer',

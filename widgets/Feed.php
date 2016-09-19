@@ -1,8 +1,8 @@
 <?php
 namespace app\widgets;
 use Yii;
-use yii\base\Widget;
 use yii\bootstrap\Html;
+use yii\bootstrap\Widget;
 use app\models\Feed as FeedModel;
 
 class Feed extends Widget

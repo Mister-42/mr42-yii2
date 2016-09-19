@@ -2,8 +2,8 @@
 use Yii;
 use app\models\General;
 use app\models\post\Post;
+use yii\bootstrap\Html;
 use yii\caching\DbDependency;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 $dependency = [

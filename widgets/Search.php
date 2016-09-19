@@ -2,9 +2,9 @@
 namespace app\widgets;
 use Yii;
 use yii\base\DynamicModel;
-use yii\base\Widget;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
+use yii\bootstrap\Widget;
 
 class Search extends Widget
 {

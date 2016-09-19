@@ -11,7 +11,7 @@ use yii\helpers\Url;
 use yii\httpclient\Client;
 
 /**
- * Handles feeds
+ * Handles feeds.
  */
 class FeedController extends Controller
 {

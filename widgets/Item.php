@@ -1,6 +1,6 @@
 <?php
 namespace app\widgets;
-use yii\base\Widget;
+use yii\bootstrap\Widget;
 
 class Item extends Widget
 {
