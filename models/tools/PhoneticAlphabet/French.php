@@ -52,7 +52,6 @@ class French extends Alphabet
 					'7' => 'Sept',
 					'8' => 'Huit',
 					'9' => 'Neuf',
-					'-' => '<br />',
 		];
 	}
 }

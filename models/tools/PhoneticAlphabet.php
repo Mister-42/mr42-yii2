@@ -35,7 +35,13 @@ class PhoneticAlphabet extends Model
 			$this->text = preg_replace('/[^a-z0-9. -]+/i', '', $this->text);
 			$text = strtolower($this->text);
 			$text = preg_replace("/(.)/i","\${1} ", $text);
-			$text = strtr($text, $alphabet->replaceArray());
+			$text = strtr($text, ArrayHelper::merge(
+				$alphabet->replaceArray(), [
+					'   ' => ' · ',
+					' - ' => PHP_EOL,
+				]
+			));
+			$text = Yii::$app->formatter->asNtext($text);
 			$text = trim($text);
 
 			return Yii::$app->getSession()->setFlash('phonetic-alphabet-success', $text);

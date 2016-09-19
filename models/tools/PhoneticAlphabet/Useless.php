@@ -43,7 +43,6 @@ class Useless extends Alphabet
 					'y' => 'You',
 					'z' => 'Zero',
 					'0' => 'Oh',
-					'-' => '<br />',
 		];
 	}
 }

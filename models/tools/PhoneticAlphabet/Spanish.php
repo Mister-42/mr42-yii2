@@ -52,7 +52,6 @@ class Spanish extends Alphabet
 					'7' => 'Siete',
 					'8' => 'Ocho',
 					'9' => 'Nueve',
-					'-' => '<br />',
 		];
 	}
 }

@@ -52,7 +52,6 @@ class Lapd extends Alphabet
 					'7' => 'Seven',
 					'8' => 'Eight',
 					'9' => 'Niner',
-					'-' => '<br />',
 		];
 	}
 }

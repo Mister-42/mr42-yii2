@@ -12,6 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-md-offset-2 col-md-8">
 		<?php echo Html::tag('h1', Html::encode($this->title));
 
+		echo Html::tag('p', 'This Phonetic Alphabet Translator will phoneticise any text that you enter in the below box. Spelling alphabet, radio alphabet, or telephone alphabet is a set of words which are used to stand for the letters of an alphabet. Each word in the spelling alphabet typically replaces the name of the letter with which it starts.');
+
 		if ($flash = Yii::$app->session->getFlash('phonetic-alphabet-success')) {
 			echo Alert::widget(['options' => ['class' => 'alert-success'],'body' => $flash]);
 		}

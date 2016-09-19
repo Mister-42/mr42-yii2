@@ -2,7 +2,7 @@
 namespace app\models\tools\PhoneticAlphabet;
 use app\models\tools\PhoneticAlphabet as Alphabet;
 
-class Nato extends Alphabet
+class Icao extends Alphabet
 {
 	public function name()
 	{
@@ -25,7 +25,7 @@ class Nato extends Alphabet
 					'g' => 'Golf',
 					'h' => 'Hotel',
 					'i' => 'India',
-					'j' => 'Juliet',
+					'j' => 'Juliett',
 					'k' => 'Kilo',
 					'l' => 'Lima',
 					'm' => 'Mike',
@@ -52,7 +52,6 @@ class Nato extends Alphabet
 					'7' => 'Seven',
 					'8' => 'Eight',
 					'9' => 'Nine',
-					'-' => '<br />',
 		];
 	}
 }

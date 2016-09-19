@@ -52,7 +52,6 @@ class DutchBe extends Alphabet
 					'7' => 'Zeven',
 					'8' => 'Acht',
 					'9' => 'Negen',
-					'-' => '<br />',
 		];
 	}
 }

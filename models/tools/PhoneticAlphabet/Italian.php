@@ -42,7 +42,7 @@ class Italian extends Alphabet
 					'x' => 'Xilofono',
 					'y' => 'Yogurt',
 					'z' => 'Zara',
-					'0' => 'zero',
+					'0' => 'Zero',
 					'1' => 'Uno',
 					'2' => 'Due',
 					'3' => 'Tre',
@@ -52,7 +52,6 @@ class Italian extends Alphabet
 					'7' => 'Sette',
 					'8' => 'Otto',
 					'9' => 'Nove',
-					'-' => '<br />',
 		];
 	}
 }

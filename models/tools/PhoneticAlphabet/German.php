@@ -52,7 +52,6 @@ class German extends Alphabet
 					'7' => 'Sieben',
 					'8' => 'Acht',
 					'9' => 'Neun',
-					'-' => '<br />',
 		];
 	}
 }
