@@ -79,7 +79,6 @@ class TechController extends Controller
 
 	public function actionOffline()
 	{
-		$this->layout = '@app/views/layouts/offline.php';
 		Yii::$app->response->statusCode = 503;
 		Yii::$app->response->headers->add('Retry-After', 900);
 		return $this->render('offline');

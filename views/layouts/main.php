@@ -35,11 +35,13 @@ $this->beginPage();
 		],		
 	]);
 
-	echo Nav::widget([
-		'dropDownCaret' => '<strong class="caret"></strong>',
-		'options' => ['class' => 'navbar-nav navbar-right'],
-		'items' => MenuItems::menuArray(),
-	]);
+	if (Yii::$app->controller->id !== 'tech' && Yii::$app->controller->action->id !== 'offline') {
+		echo Nav::widget([
+			'dropDownCaret' => '<strong class="caret"></strong>',
+			'options' => ['class' => 'navbar-nav navbar-right'],
+			'items' => MenuItems::menuArray(),
+		]);
+	}
 
 	NavBar::end();
 	?>
@@ -57,12 +59,14 @@ $this->beginPage();
 <footer class="footer">
 	<div class="container">
 		<p class="pull-left">&copy; 2014-<?= date('Y') ?> <?= Yii::$app->name ?></p>
-		<p class="pull-right">
-			<?= Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) ?>
-			<?= Html::a('Credits', ['/site/credits'], ['class' => 'label label-primary']) ?>
-			<?= Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary visible-md-inline visible-lg-inline']) ?>
-			<?= Html::a('RSS', ['/tech/rss'], ['class' => 'label label-warning visible-md-inline visible-lg-inline', 'target' => '_blank']) ?>
-		</p>
+		<p class="pull-right"><?php
+			if (Yii::$app->controller->id !== 'tech' && Yii::$app->controller->action->id !== 'offline') {
+				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
+				echo Html::a('Credits', ['/site/credits'], ['class' => 'label label-primary']) . ' ';
+				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary visible-md-inline visible-lg-inline']) . ' ';
+				echo Html::a('RSS', ['/tech/rss'], ['class' => 'label label-warning visible-md-inline visible-lg-inline', 'target' => '_blank']);
+			}
+		?></p>
 	</div>
 	<?php echo Html::a(Html::tag('span', '&nbsp;&nbsp;^&nbsp;&nbsp;', ['title' => 'Scroll to top', 'data-toggle' => 'tooltip', 'data-placement' => 'top']), false, ['id' => 'btn-scrolltop']); ?>
 </footer>
