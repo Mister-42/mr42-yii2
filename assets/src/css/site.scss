@@ -1,16 +1,11 @@
-@charset 'UTF-8';
+$tardisBlue:					#003E67;
+$middleBlue:					#6FACCF;
+$lighterBlue:					lighten(adjust_hue($middleBlue, 10), 20%);
+$lightBlue:						lighten(adjust_hue($middleBlue, 5), 10%);
+$darkBlue:						darken(adjust_hue($middleBlue, -5), 10%);
+$darkerBlue:					darken(adjust_hue($middleBlue, -10), 20%);
+
 @import "bootstrap.scss";
-
-$tardisBlue: #003E67;
-$middleBlue: #6FACCF;
-$lighterBlue: lighten(adjust_hue($middleBlue, 10), 20%);
-$lightBlue: lighten(adjust_hue($middleBlue, 5), 10%);
-$darkBlue: darken(adjust_hue($middleBlue, -5), 10%);
-$darkerBlue: darken(adjust_hue($middleBlue, -10), 20%);
-
-@mixin headerFont {
-	font-family: 'DS Etienne Regular', Arial, Helvetica, sans-serif;
-}
 
 @font-face {
 	font-family: 'DS Etienne Regular';
@@ -30,16 +25,7 @@ body {
 	text-align: justify;
 }
 
-a {
-	color: $darkerBlue;
-
-	&:hover {
-		color: $darkBlue;
-	}
-}
-
 h1, h2, h3, h4, h5, h6 {
-	@include headerFont;
 	text-align: left;
 }
 
@@ -56,36 +42,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar {
-	background-color: $tardisBlue;
-	border: 0;
-
 	.navbar-brand {
-		@include headerFont;
-		color: $darkBlue;
+		font-family: $headings-font-family;
 		font-size: 30px;
 		text-shadow: 2px 2px 2px #777;
 
 		&:focus, &:hover {
-			color: $darkerBlue;
 			text-shadow: 2px 2px 2px #444;
 		}
-	}
-
-	.nav > li {
-		> a {
-			color: $lightBlue;
-		}
-
-		&.active > a,
-		> a:focus,
-		> a:hover {
-			background-color: #286090;
-			color: $middleBlue;
-		}
-	}
-
-	&-toggle .icon-bar {
-		background: $darkerBlue;	
 	}
 }
 
@@ -163,7 +127,7 @@ aside {
 	font-size: 12px;
 	text-align: left;
 
-	h1, .h1, h2, .h2, h3, .h3 {
+	h1, h2, h3 {
 		margin-bottom: 2px;
 		margin-top: 10px;
 	}
@@ -189,9 +153,8 @@ aside {
 	}
 }
 
-/*
 pre, code {
-	max-height: 300px;
+	max-height: $pre-scrollable-max-height;
 	white-space: nowrap;
 
 	code {
@@ -200,7 +163,6 @@ pre, code {
 		white-space: pre;
 	}
 }
-*/
 
 textarea {
 	resize: none;

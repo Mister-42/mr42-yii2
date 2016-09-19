@@ -31,11 +31,11 @@ $this->beginPage();
 		'brandLabel' => Yii::$app->name,
 		'brandUrl' => Yii::$app->homeUrl,
 		'options' => [
-			'class' => 'navbar-fixed-top',
+			'class' => 'navbar-default navbar-fixed-top',
 		],		
 	]);
 
-	if (Yii::$app->controller->id !== 'tech' && Yii::$app->controller->action->id !== 'offline') {
+	if (Yii::$app->controller->id !== 'tech' || Yii::$app->controller->action->id !== 'offline') {
 		echo Nav::widget([
 			'dropDownCaret' => '<strong class="caret"></strong>',
 			'options' => ['class' => 'navbar-nav navbar-right'],
@@ -60,7 +60,7 @@ $this->beginPage();
 	<div class="container">
 		<p class="pull-left">&copy; 2014-<?= date('Y') ?> <?= Yii::$app->name ?></p>
 		<p class="pull-right"><?php
-			if (Yii::$app->controller->id !== 'tech' && Yii::$app->controller->action->id !== 'offline') {
+			if (Yii::$app->controller->id !== 'tech' || Yii::$app->controller->action->id !== 'offline') {
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
 				echo Html::a('Credits', ['/site/credits'], ['class' => 'label label-primary']) . ' ';
 				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary visible-md-inline visible-lg-inline']) . ' ';
