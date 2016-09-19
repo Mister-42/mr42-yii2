@@ -87,7 +87,7 @@ class FeedController extends Controller
 					if ($count === $limit)
 						break;
 				}
-				sleep(1);
+				usleep(200000);
 			}
 		}
 		return Controller::EXIT_CODE_NORMAL;
