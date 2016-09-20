@@ -21,7 +21,7 @@ class ToolsController extends Controller
 				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
-				'only' => ['password', 'wpapsk'],
+				'only' => ['password'],
 			],
 		];
 	}
@@ -70,10 +70,5 @@ class ToolsController extends Controller
 		return $this->render('phonetic-alphabet', [
 			'model' => $model,
 		]);
-	}
-
-	public function actionWpapsk()
-	{
-		return $this->render('wpapsk');
 	}
 }

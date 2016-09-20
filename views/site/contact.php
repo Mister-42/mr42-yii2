@@ -16,7 +16,7 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 		<?php echo Html::tag('h1', Html::encode($this->title));
 
 		Pjax::begin(['enablePushState' => false, 'linkSelector' => ':submit']);
-			echo Html::tag('p', 'If you have inquiries or other questions, please fill out the following form to contact us. Thank you.');
+			echo Html::tag('p', 'If you have inquiries or other questions, please fill out the following form to contact ' . Yii::$app->name . '. Thank you.');
 
 			$form = ActiveForm::begin(['options' => ['data-pjax' => '']]);
 

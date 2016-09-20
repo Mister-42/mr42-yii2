@@ -5,7 +5,6 @@ use app\models\General;
 use app\models\post\Comment;
 use app\models\post\Post;
 use yii\bootstrap\Alert;
-use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

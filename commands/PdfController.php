@@ -2,7 +2,6 @@
 namespace app\commands;
 use Yii;
 use app\models\General;
-use app\models\lyrics\Lyrics1Artists;
 use app\models\lyrics\Lyrics2Albums;
 use app\models\lyrics\Lyrics3Tracks;
 use app\models\post\Post;

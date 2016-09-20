@@ -58,6 +58,11 @@ class CalculatorController extends Controller
 		]);
 	}
 
+	public function actionWpapsk()
+	{
+		return $this->render('wpapsk');
+	}
+
 	public function beforeAction($action) {
 		if (in_array($action->id, ['office365'])) {
 			$this->enableCsrfValidation = false;
