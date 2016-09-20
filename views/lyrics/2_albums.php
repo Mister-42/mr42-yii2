@@ -18,7 +18,7 @@ foreach ($albums as $album) :
 	echo Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album['artistUrl'], 'year' => $album['albumYear'], 'album' => $album['albumUrl']], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']);	
 	echo '</div></div></div>';
 
-	$x=0; $y=0;
+	$x = $y = 0;
 	$tracks = Lyrics3Tracks::tracksList($albums[0]['artistUrl'], $album['albumYear'], $album['albumUrl']);
 	foreach ($tracks as $track) :
 		$x++; $y++;

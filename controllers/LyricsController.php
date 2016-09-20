@@ -1,12 +1,10 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\Pdf;
 use app\models\lyrics\Lyrics1Artists;
 use app\models\lyrics\Lyrics2Albums;
 use app\models\lyrics\Lyrics3Tracks;
 use app\models\user\RecentTracks;
-use yii\bootstrap\Html;
 use yii\filters\HttpCache;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -89,24 +87,12 @@ class LyricsController extends Controller
 	{
 		$urlData	= Yii::$app->request->get();
 		$tracks = Lyrics3Tracks::tracksList($urlData['artist'], $urlData['year'], $urlData['album'], 'full');
+		$html = $this->renderPartial('albumPdf', ['tracks' => $tracks]);
 
 		if (count($tracks) === 0)
 			throw new NotFoundHttpException('Album not found.');
 
-		$pdf = new Pdf();
-		$fileName = $pdf->create(
-			'@runtime/pdf/lyrics/'.implode(' - ', [$tracks[0]['artistUrl'], $tracks[0]['albumYear'], $tracks[0]['albumUrl']]),
-			$this->renderPartial('albumPdf', ['tracks' => $tracks]),
-			Lyrics3Tracks::lastUpdate($tracks[0]['artistUrl'], $tracks[0]['albumYear'], $tracks[0]['albumUrl']),
-			[
-				'author' => $tracks[0]['artistName'],
-				'footer' => Html::a(Yii::$app->name, Url::to(Yii::$app->homeUrl, true)).'|'.$tracks[0]['albumYear'].'|Page {PAGENO} of {nb}',
-				'header' => $tracks[0]['artistName'].'||'.$tracks[0]['albumName'],
-				'keywords' => implode(', ', [$tracks[0]['artistName'], $tracks[0]['albumName'], 'lyrics']),
-				'subject' => $tracks[0]['artistName'].' - '.$tracks[0]['albumName'],
-				'title' => implode(' - ', [$tracks[0]['artistName'], $tracks[0]['albumName']]),
-			]		
-		);
+		$fileName = Lyrics2Albums::buildPdf($tracks, $html);
 		Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]['artistUrl'], $tracks[0]['albumYear'], $tracks[0]['albumUrl']]).'.pdf');
 	}
 }

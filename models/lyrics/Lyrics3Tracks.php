@@ -47,7 +47,6 @@ class Lyrics3Tracks extends ActiveRecord
 				'COALESCE('.Lyrics2Albums::tableName().'.`url`, ' . Lyrics2Albums::tableName().'.`name`)' => $name,
 			])
 			->join('RIGHT JOIN', Lyrics1Artists::tableName(), Lyrics2Albums::tableName().'.`parent` = ' . Lyrics1Artists::tableName().'.`id`')
-				->onCondition(!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin ? ['or', [Lyrics1Artists::tableName().'.`active`' => [Lyrics1Artists::STATUS_INACTIVE, Lyrics1Artists::STATUS_ACTIVE]]] : [Lyrics1Artists::tableName().'.`active`' => Lyrics1Artists::STATUS_ACTIVE])
 			->joinWith('album')
 			->joinWith('lyric')
 			->all();

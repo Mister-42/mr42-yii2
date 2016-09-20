@@ -35,14 +35,22 @@ class Lyrics1Artists extends ActiveRecord
 	public static function getAlbums()
 	{
 		return parent::hasMany(Lyrics2Albums::className(), ['parent' => 'id'])
-			->onCondition(!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin ? ['or', [Lyrics2Albums::tableName().'.`active`' => [self::STATUS_INACTIVE, self::STATUS_ACTIVE]]] : [Lyrics2Albums::tableName().'.`active`' => self::STATUS_ACTIVE])
+			->onCondition(
+				!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
+					? ['or', [Lyrics2Albums::tableName().'.`active`' => [self::STATUS_INACTIVE, self::STATUS_ACTIVE]]]
+					: [Lyrics2Albums::tableName().'.`active`' => self::STATUS_ACTIVE]
+			)
 		;
 	}
 
 	public static function find()
 	{
 		return parent::find()
-			->onCondition(!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin ? ['or', [self::tableName().'.`active`' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]] : [self::tableName().'.`active`' => Self::STATUS_ACTIVE])
+			->onCondition(
+				php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
+					? ['or', [self::tableName().'.`active`' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
+					: [self::tableName().'.`active`' => Self::STATUS_ACTIVE]
+				)
 		;
 	}
 }

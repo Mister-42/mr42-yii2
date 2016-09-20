@@ -2,6 +2,7 @@
 namespace app\models;
 use Yii;
 use kartik\mpdf\Pdf as PdfCreator;
+use yii\helpers\FileHelper;
 
 class Pdf
 {
@@ -10,10 +11,9 @@ class Pdf
 		$filename = Yii::getAlias($filename.'.pdf');
 		$created = (isset($params['created'])) ? $params['created'] : $updated;
 		if (!file_exists($filename) || filemtime($filename) < $updated) {
-			if (!file_exists(dirname($filename)))
-				mkdir(dirname($filename), 0775, true);
+			FileHelper::createDirectory(dirname($filename));
 
-			$pdf = Yii::$app->pdf;
+			$pdf = new PdfCreator();
 			$pdf->api->SetCreator(Yii::$app->name);
 			$pdf->content = $content;
 			$pdf->filename = $filename;

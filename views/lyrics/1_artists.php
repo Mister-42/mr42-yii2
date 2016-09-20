@@ -9,7 +9,7 @@ echo Html::tag('h1', Html::encode($this->title));
 <div class="site-lyrics">
 	<div class="row">
 <?php
-$x=0; $y=0;
+$x = $y = 0;
 foreach ($artists as $artist) :
 	$x++; $y++;
 	if ($x == 1) echo '<div class="col-sm-4 artists text-center text-nowrap">';

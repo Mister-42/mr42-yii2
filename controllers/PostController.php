@@ -2,17 +2,14 @@
 namespace app\controllers;
 use Yii;
 use app\models\General;
-use app\models\Pdf;
 use app\models\post\Comment;
 use app\models\post\Post;
-use dektrium\user\models\User;
 use yii\bootstrap\Alert;
 use yii\bootstrap\Html;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use yii\helpers\StringHelper;
 use yii\web\Controller;
 use yii\web\ErrorAction;
 use yii\web\MethodNotAllowedHttpException;
@@ -113,27 +110,10 @@ class PostController extends Controller
 			if (empty($title) || $title != $model->title)
 				$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->title], 301)->send();
 
-			$user = new User();
 			$model->content = General::cleanInput($model->content, 'gfm', true);
-			$profile = $user->finder->findProfileById($model->user->id);
-			$name = (empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name));
-			$tags = Yii::t('site', '{results, plural, =1{1 tag} other{# tags}}', ['results' => count(StringHelper::explode($model->tags))]);
+			$html = $this->renderPartial('pdf', ['model' => $model]);
 
-			$pdf = new Pdf();
-			$fileName = $pdf->create(
-				'@runtime/pdf/posts/'.sprintf('%05d', $model->id),
-				$this->renderPartial('pdf', ['model' => $model]),
-				$model->updated,
-				[
-					'author' => $name,
-					'created' => $model->created,
-					'footer' => $tags.': '.$model->tags.'|Author: '.$name.'|Page {PAGENO} of {nb}',
-					'header' => Html::a(Yii::$app->name, Url::to(Yii::$app->homeUrl, true)).'|'.Html::a($model->title, Url::to(['index', 'id' => $model->id], true)).'|' . date('D, j M Y', $model->updated),
-					'keywords' => $model->tags,
-					'subject' => $model->title,
-					'title' => implode(' ∷ ', [$model->title, Yii::$app->name]),
-				]		
-			);
+			$fileName = Post::buildPdf($model, $html);
 			Yii::$app->response->sendFile($fileName, Yii::$app->name.' - '.$model->id.' - '.$model->title.'.pdf');
 		}
 	}

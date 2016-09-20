@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $tracks[0]['albumName'];
 	</div>
 
 	<?php
-	$x=0; $y=0;
+	$x = $y = 0;
 	echo '<div class="row">';
 	foreach($tracks as $track) :
 		$x++; $y++;
