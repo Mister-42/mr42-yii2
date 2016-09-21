@@ -1,7 +1,6 @@
 <?php
 namespace app\models\user;
 use Yii;
-use app\models\Feed;
 use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;

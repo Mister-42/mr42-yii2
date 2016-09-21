@@ -44,14 +44,12 @@ class Contact extends Model
 	public function contact()
 	{
 		if ($this->validate()) {
-			Yii::$app->mailer->compose()
+			return Yii::$app->mailer->compose()
 				->setTo(Yii::$app->params['adminEmail'])
 				->setFrom([$this->email => $this->name])
 				->setSubject(Yii::$app->name . ' message ∷ ' . $this->title)
 				->setTextBody($this->content)
 				->send();
-
-			return true;
 		}
 		return false;
 	}

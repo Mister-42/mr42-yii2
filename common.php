@@ -65,21 +65,13 @@ return [
 			'targets' => [
 				[
 					'class' => 'yii\log\DbTarget',
-					'levels' => ['error', 'warning'],
+					'levels' => ['error'],
 					'logTable' => 'x_log',
 				],
 			],
 		],
 		'mailer' => [
 			'class' => 'yii\swiftmailer\Mailer',
-#			'transport' => [
-#				'class' => 'Swift_SmtpTransport',
-#				'host' => $secrets['email']['host'],
-#				'username' => $secrets['email']['user'],
-#				'password' => $secrets['email']['pass'],
-#				'port' => '587',
-#				'encryption' => 'tls',
-#			],
 		],
 		'pdf' => [
 			'class' => \kartik\mpdf\Pdf::classname(),
