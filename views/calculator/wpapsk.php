@@ -69,6 +69,5 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 		</div>
 
 		<?php ActiveForm::end(); ?>
-
 	</div>
 </div>

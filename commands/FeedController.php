@@ -56,37 +56,16 @@ class FeedController extends Controller
 	 * Retrieves and stores Recent Tracks from Last.fm.
 	*/
 	public function actionLastfmRecent() {
-		$client = new Client(['baseUrl' => 'https://ws.audioscrobbler.com/2.0/']);
-		$limit = (isset(Yii::$app->params['recentTracksCount']) && is_int(Yii::$app->params['recentTracksCount'])) ? Yii::$app->params['recentTracksCount'] : 25;
-
+		RecentTracks::deleteAll(['<=', 'seen', time()-300]);
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) {
 			$profile = Profile::find()->where(['user_id' => $user->id])->one();
 			if (isset($profile->lastfm)) {
-				$response = $client->createRequest()
-					->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
-					->setMethod('get')
-					->setUrl('?method=user.getrecenttracks&user=' . $profile->lastfm . '&limit=' . $limit . '&api_key=' . Yii::$app->params['LastFMAPI'])
-					->send();
+				$lastSeen = RecentTracks::lastSeen($user->id);
 
-				if (!$response->isOK)
+				if ($lastSeen === null)
 					continue;
 
-				$playcount = (int) $response->data['recenttracks']['@attributes']['total'];
-				$count = 0;
-				RecentTracks::deleteAll(['userid' => $user->id]);
-				foreach($response->data['recenttracks']['track'] as $track) {
-					$addTrack = new RecentTracks();
-					$addTrack->userid = $user->id;
-					$addTrack->artist = (string) $track->artist;
-					$addTrack->track = (string) $track->name;
-					$addTrack->count = $playcount--;
-					$addTrack->time = ((bool) $track['nowplaying']) ? 0 : (int) $track->date['uts'];
-					$addTrack->save();
-
-					$count++;
-					if ($count === $limit)
-						break;
-				}
+				RecentTracks::updateUser($lastSeen, $profile);
 				usleep(200000);
 			}
 		}
