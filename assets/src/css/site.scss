@@ -43,12 +43,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar {
 	.navbar-brand {
-		font-family: $headings-font-family;
 		font-size: 30px;
-		text-shadow: 2px 2px 2px #777;
+		font-weight: bold;
+		text-shadow: 2px 2px 2px #444;
 
 		&:focus, &:hover {
-			text-shadow: 2px 2px 2px #444;
+			text-shadow: 2px 2px 2px #777;
 		}
 	}
 }
