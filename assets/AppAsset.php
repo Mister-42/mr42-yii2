@@ -6,10 +6,10 @@ use yii\web\View;
 
 class AppAsset extends AssetBundle
 {
-	public $sourcePath = '@app/assets/src';
+	public $sourcePath = '@app/assets/src/css';
 
 	public $css = [
-		'css/site.scss',
+		'site.scss',
 	];
 
 	public $js = [

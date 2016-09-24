@@ -22,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		['HTML Purifier', 'http://htmlpurifier.org/'],
 		['PHP Markdown', 'https://michelf.ca/projects/php-markdown/', 'Michel Fortin'],
 		['yii2-user', 'https://yii2-user.dektrium.com/', 'Dmitry Erofeev'],
-		['DS Etienne Font', 'http://www.1001fonts.com/ds-etienne-font.html', 'Dieter Steffmann'],
 		['clipboard.js', 'https://clipboardjs.com/', 'Zeno Rocha'],
 		['pbkdf2.js', 'http://anandam.com/pbkdf2', 'Parvez Anandam'],
 		['sha1.js', 'http://pajhome.org.uk/crypt/md5', 'Paul Johnston'],

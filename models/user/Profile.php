@@ -6,6 +6,7 @@ use Yii;
 use app\models\General;
 use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 class Profile extends BaseProfile
 {
@@ -39,8 +40,8 @@ class Profile extends BaseProfile
 	public static function show($user)
 	{
 		$name = empty($user->name) ? Html::encode($user->user->username) : Html::encode($user->name);
-		$replace_array = array('%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y);
-		$imgUrl = Yii::$app->assetManager->baseUrl.'/images/william-morris-letters/'.strtolower($name[0]).'.png';
+		$replace_array = ['%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y];
+		$imgUrl = Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/william-morris/'.strtolower($name[0]).'.png');
 		$imgTag = Html::img($imgUrl, ['alt' => $name, 'class' => 'inline-left pull-left']);
 		$user->bio = General::cleanInput($imgTag . '**'.substr($name, 1).'** '.strtr($user->bio, $replace_array), 'gfm-comment', true);
 		return (empty($user->bio)) ? false : Html::tag('div', $user->bio, ['class' => 'profile']);

@@ -40,7 +40,7 @@ foreach($tracks as $track) {
 	if (strlen($track['trackLyrics']) !== 0) {
 		echo General::cleanInput($track['trackLyrics'], 'gfm-comment');
 	} else {
-		echo Html::img(Yii::$app->assetManager->baseUrl.'/images/TrebleClef.png');
+		echo Html::img(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/TrebleClef.png');
 		echo Html::tag('strong', 'Instrumental');
 	}
 }

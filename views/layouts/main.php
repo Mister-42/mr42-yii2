@@ -7,6 +7,7 @@ use app\models\MenuItems;
 use yii\widgets\Breadcrumbs;
 
 app\assets\AppAsset::register($this);
+app\assets\ImagesAsset::register($this);
 
 $this->beginPage();
 ?>
@@ -20,7 +21,7 @@ $this->beginPage();
 <?= $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']) ?>
 <?= $this->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(Url::current(), true)]) ?>
 <?= $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/tech/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]) ?>
-<?= $this->registerLinkTag(['rel' => 'icon', 'sizes' => '16x16 32x32 48x48 64x64', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->baseUrl.'/images/'.Yii::$app->params['favicon']]) ?>
+<?= $this->registerLinkTag(['rel' => 'icon', 'sizes' => '16x16 32x32 48x48 64x64', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/favicon.ico']) ?>
 <?= Html::csrfMetaTags() ?>
 <?= $this->head() ?></head>
 <body>

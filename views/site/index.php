@@ -23,6 +23,7 @@ foreach ($posts as $post) {
 
 echo Carousel::widget([
 	'clientOptions' => [
+		'interval' => 7500,
 		'keyboard' => false,
 	],
 	'controls' => false,

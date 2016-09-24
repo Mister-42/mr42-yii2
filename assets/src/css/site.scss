@@ -7,18 +7,6 @@ $darkerBlue:					darken(adjust_hue($middleBlue, -10), 20%);
 
 @import "bootstrap.scss";
 
-@font-face {
-	font-family: 'DS Etienne Regular';
-	src:	url('#{$icon-font-path}dsetienne.eot');
-	src:	url('#{$icon-font-path}dsetienne.eot?#iefix') format('embedded-opentype'),
-			url('#{$icon-font-path}dsetienne.woff2') format('woff2'),
-			url('#{$icon-font-path}dsetienne.woff') format('woff'),
-			url('#{$icon-font-path}dsetienne.ttf') format('truetype'),
-			url('#{$icon-font-path}dsetienne.svg#ds_etienneregular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
 html,
 body {
 	height: 100%;
