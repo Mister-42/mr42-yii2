@@ -22,7 +22,7 @@ class MenuItems
 			],
 			['label' => 'Tools', 'url' => null,
 				'items' => [
-					['label' => 'Code Playground', 'url' => ['/tech/playground'], 'visible' => $isAdmin],
+					['label' => 'Code Playground', 'url' => ['/site/playground'], 'visible' => $isAdmin],
 					['label' => 'Browser Headers', 'url' => ['/tools/headers']],
 					['label' => 'Favicon Converter', 'url' => ['/tools/favicon']],
 					['label' => 'Password Generator', 'url' => ['/tools/password']],

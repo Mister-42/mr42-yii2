@@ -3,7 +3,7 @@ use app\models\lyrics\Lyrics1Artists;
 use app\models\lyrics\Lyrics2Albums;
 use app\models\lyrics\Lyrics3Tracks;
 use app\models\post\Tags;
-use app\models\tech\Sitemap;
+use app\models\site\Sitemap;
 use yii\base\View;
 use yii\helpers\Url;
 

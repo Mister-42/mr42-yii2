@@ -17,7 +17,7 @@ class RegistrationForm extends BaseRegistrationForm
 	{
 		$rules = parent::rules();
 		$rules[] = ['captcha', 'required'];
-		$rules[] = ['captcha', 'captcha', 'captchaAction'=> 'tech/captcha'];
+		$rules[] = ['captcha', 'captcha'];
 		return $rules;
 	}
 }

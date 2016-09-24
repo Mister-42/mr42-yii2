@@ -20,7 +20,7 @@ class Contact extends Model
 			[['name'], 'string', 'max' => 25],
 			[['email'], 'string', 'max' => 50],
 			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
-			[['captcha'], 'captcha', 'captchaAction'=> 'tech/captcha'],
+			[['captcha'], 'captcha'],
 		];
 
 		if (!Yii::$app->request->post()) {

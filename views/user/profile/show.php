@@ -3,7 +3,7 @@ use app\models\user\Profile;
 use yii\bootstrap\Html;
 
 $title = empty($profile->name) ? Html::encode($profile->user->username) : Html::encode($profile->name);
-$this->title = $title . ' ∷ Profile';
+$this->title = $title;
 $this->params['breadcrumbs'][] = 'Profile';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

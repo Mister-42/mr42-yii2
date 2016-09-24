@@ -42,7 +42,6 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => 4]);
 
 			echo $form->field($model, 'captcha')->widget(Captcha::className(), [
-				'captchaAction' => '/tech/captcha',
 				'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 				'options' => ['class' => 'form-control', 'tabindex' => 5],
 				'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',

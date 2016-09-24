@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\Feed;
+use app\models\Changelog;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\web\NotFoundHttpException;
@@ -24,8 +24,8 @@ class WebhookController extends Controller
 
 		$payload = json_decode(Yii::$app->request->post('payload'));
 		foreach($payload->commits as $item) {
-			if (empty(Feed::find()->where(['feed' => 'changelog', 'time' => strtotime($item->timestamp)])->all())) {
-				$rssItem = new Feed();
+			if (empty(Changelog::find()->where(['time' => strtotime($item->timestamp)])->all())) {
+				$rssItem = new Changelog();
 				$rssItem->feed = 'changelog';
 				$rssItem->title = $item->id;
 				$rssItem->url = $item->url;

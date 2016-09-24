@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo '</div>';
 
 		echo $form->field($model, 'captcha')->widget(Captcha::className(), [
-			'captchaAction' => '/tech/captcha',
 			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 			'options' => ['class' => 'form-control', 'tabindex' => 4],
 			'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',

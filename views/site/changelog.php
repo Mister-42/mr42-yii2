@@ -1,6 +1,6 @@
 <?php
 use Yii;
-use app\models\Feed;
+use app\models\Changelog;
 use yii\bootstrap\Html;
 
 $this->title = 'Changelog';
@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
 echo Html::tag('h1', Html::encode($this->title));
 
 echo '<div class="site-changelog">';
-foreach (Feed::find()->where(['feed' => 'changelog'])->orderBy('time DESC')->all() as $item) {
+foreach (Changelog::find()->orderBy('time DESC')->all() as $item) {
 	echo '<div class="row">';
 	echo Html::tag('div', substr($item['title'], 0, 7), ['class' => 'col-lg-1']);
 	echo Html::tag('div', Yii::$app->formatter->asNText($item['description']), ['class' => 'col-lg-8']);

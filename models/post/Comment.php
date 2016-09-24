@@ -32,7 +32,7 @@ class Comment extends ActiveRecord
 		];
 
 		if (Yii::$app->user->isGuest) {
-			$rules[] = [['captcha'], 'captcha', 'captchaAction'=> '/tech/captcha'];
+			$rules[] = [['captcha'], 'captcha'];
 			$rules[] = [['name', 'email'], 'required'];
 			$rules[] = ['captcha', 'required'];
 		}
