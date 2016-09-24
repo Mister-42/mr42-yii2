@@ -24,7 +24,7 @@ return [
 			'converter' => [
 				'class' => 'yii\web\AssetConverter',
 				'commands' => [
-					'scss' => ['css', 'sass {from} {to} -C --sourcemap=none -t compressed -I ../../../vendor/bower/bootstrap-sass/assets/stylesheets'],
+					'scss' => ['css', 'sass {from} {to} -C --sourcemap=none -t compressed -I '.realpath(__DIR__.'/../vendor/bower/bootstrap-sass/assets/stylesheets')],
 				],
 			],
 			'linkAssets' => true,
