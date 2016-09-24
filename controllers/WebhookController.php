@@ -26,7 +26,6 @@ class WebhookController extends Controller
 		foreach($payload->commits as $item) {
 			if (empty(Changelog::find()->where(['time' => strtotime($item->timestamp)])->all())) {
 				$rssItem = new Changelog();
-				$rssItem->feed = 'changelog';
 				$rssItem->title = $item->id;
 				$rssItem->url = $item->url;
 				$rssItem->description = $item->message;

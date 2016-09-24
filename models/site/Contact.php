@@ -47,7 +47,7 @@ class Contact extends Model
 			return Yii::$app->mailer->compose()
 				->setTo(Yii::$app->params['adminEmail'])
 				->setFrom([$this->email => $this->name])
-				->setSubject(Yii::$app->name . ' message ∷ ' . $this->title)
+				->setSubject($this->title)
 				->setTextBody($this->content)
 				->send();
 		}

@@ -27,7 +27,7 @@ if ($this->beginCache('feedRss', ['dependency' => $dependency, 'duration' => 0])
 	$channel->appendChild($doc->createElement('link', Url::home(true)));
 	$channel->appendChild($doc->createElement('description', Html::encode(Yii::$app->params['description'])));
 		$atomSelfLink = $doc->createElement('atom:link');
-		$atomSelfLink->setAttribute('href', Url::to(['tech/rss'], true));
+		$atomSelfLink->setAttribute('href', Url::to(['site/rss'], true));
 		$atomSelfLink->setAttribute('rel', 'self');
 		$atomSelfLink->setAttribute('type', 'application/rss+xml');
 	$channel->appendChild($atomSelfLink);
@@ -38,7 +38,7 @@ if ($this->beginCache('feedRss', ['dependency' => $dependency, 'duration' => 0])
 		$rssImage = $doc->createElement('image');
 		$rssImage->appendChild($doc->createElement('title', Html::encode(Yii::$app->name)));
 		$rssImage->appendChild($doc->createElement('url', Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http')));
-		$rssImage->appendChild($doc->createElement('link', Url::to(['site/index'], true)));
+		$rssImage->appendChild($doc->createElement('link', Url::home(true)));
 		$rssImage->appendChild($doc->createElement('description', Html::encode(Yii::$app->params['description'])));
 		list($width, $height, $type, $attr) = getimagesize(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/logo.png');
 		$rssImage->appendChild($doc->createElement('height', $height));

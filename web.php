@@ -3,7 +3,7 @@ $secrets = require(__DIR__ . '/secrets.php');
 
 $config = [
 	'id' => 'mr42',
-#	'catchAll' => ['tech/offline'],
+#	'catchAll' => ['site/offline'],
 	'components' => [
 		'authClientCollection' => [
 			'class'   => \yii\authclient\Collection::className(),

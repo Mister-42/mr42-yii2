@@ -1,5 +1,5 @@
 <?php
-namespace app\models\tech;
+namespace app\models\site;
 use DOMDocument;
 use DOMElement;
 

@@ -3,11 +3,13 @@ use yii\bootstrap\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Url;
+use app\assets\AppAsset;
+use app\assets\ImagesAsset;
 use app\models\MenuItems;
 use yii\widgets\Breadcrumbs;
 
-app\assets\AppAsset::register($this);
-app\assets\ImagesAsset::register($this);
+AppAsset::register($this);
+ImagesAsset::register($this);
 
 $this->beginPage();
 ?>
@@ -36,7 +38,7 @@ $this->beginPage();
 		],		
 	]);
 
-	if (Yii::$app->controller->id !== 'tech' || Yii::$app->controller->action->id !== 'offline') {
+	if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 		echo Nav::widget([
 			'dropDownCaret' => '<strong class="caret"></strong>',
 			'options' => ['class' => 'navbar-nav navbar-right'],
@@ -61,7 +63,7 @@ $this->beginPage();
 	<div class="container">
 		<p class="pull-left">&copy; 2014-<?= date('Y') ?> <?= Yii::$app->name ?></p>
 		<p class="pull-right"><?php
-			if (Yii::$app->controller->id !== 'tech' || Yii::$app->controller->action->id !== 'offline') {
+			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
 				echo Html::a('Credits', ['/site/credits'], ['class' => 'label label-primary']) . ' ';
 				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary visible-md-inline visible-lg-inline']) . ' ';
