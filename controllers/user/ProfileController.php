@@ -2,7 +2,6 @@
 namespace app\controllers\user;
 use dektrium\user\controllers\ProfileController as BaseProfileController;
 use Yii;
-use app\models\user\RecentTracks;
 use yii\filters\HttpCache;
 use yii\helpers\ArrayHelper;
 use yii\web\MethodNotAllowedHttpException;
@@ -60,6 +59,8 @@ class ProfileController extends BaseProfileController
 		if (!Yii::$app->request->isAjax)
 			throw new MethodNotAllowedHttpException('Method Not Allowed.');
 
-		RecentTracks::display($user->id);
+		return $this->renderAjax('@app/views/lyrics/recentTracks', [
+			'userid' => $user->id,
+		]);
 	}
 }

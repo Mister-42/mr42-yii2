@@ -11,7 +11,7 @@ $this->registerJs('(function refresh(){$(\'.recent-tracks .tracks\').load(\'' . 
 		<?= $content; ?>
 	</div>
 
-	<aside class="hidden-sm col-md-4">
+	<aside class="hidden-xs hidden-sm col-md-4">
 		<div class="recent-tracks">
 			<h4>Recently Played Tracks</h4>
 			<div class="tracks"></div>

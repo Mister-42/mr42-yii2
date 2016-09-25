@@ -4,7 +4,6 @@ use Yii;
 use app\models\lyrics\Lyrics1Artists;
 use app\models\lyrics\Lyrics2Albums;
 use app\models\lyrics\Lyrics3Tracks;
-use app\models\user\RecentTracks;
 use yii\filters\HttpCache;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -80,7 +79,9 @@ class LyricsController extends Controller
 		if (!Yii::$app->request->isAjax)
 			throw new MethodNotAllowedHttpException('Method Not Allowed.');
 
-		RecentTracks::display(1);
+		return $this->renderAjax('recentTracks', [
+			'userid' => 1,
+		]);
 	}
 
 	public function actionAlbumpdf()

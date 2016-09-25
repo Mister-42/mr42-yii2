@@ -21,8 +21,8 @@ $this->beginPage();
 <?= $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]) ?>
 <?= $this->registerMetaTag(['name' => 'description', 'content' => Html::encode(Yii::$app->params['description'])]) ?>
 <?= $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']) ?>
-<?= $this->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(Url::current(), true)]) ?>
-<?= $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/tech/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]) ?>
+<?= $this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]) ?>
+<?= $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/site/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]) ?>
 <?= $this->registerLinkTag(['rel' => 'icon', 'sizes' => '16x16 32x32 48x48 64x64', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/favicon.ico']) ?>
 <?= Html::csrfMetaTags() ?>
 <?= $this->head() ?></head>
@@ -67,7 +67,7 @@ $this->beginPage();
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
 				echo Html::a('Credits', ['/site/credits'], ['class' => 'label label-primary']) . ' ';
 				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary visible-md-inline visible-lg-inline']) . ' ';
-				echo Html::a('RSS', ['/tech/rss'], ['class' => 'label label-warning visible-md-inline visible-lg-inline', 'target' => '_blank']);
+				echo Html::a('RSS', ['/site/rss'], ['class' => 'label label-warning visible-md-inline visible-lg-inline', 'target' => '_blank']);
 			}
 		?></p>
 	</div>
