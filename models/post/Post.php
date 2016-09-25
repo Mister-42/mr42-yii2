@@ -141,7 +141,7 @@ class Post extends ActiveRecord
 		if (!$model = $this->findNewerOne())
 			return null;
 
-		return Html::a('Next Article', ['post/index', 'id' => $model->id, 'title' => $model->title], ['title' => Html::encode($model->title), 'data-toggle' => 'tooltip', 'data-placement' => 'left']) . ' &raquo;';
+		return Html::a('Next Article &raquo;', ['post/index', 'id' => $model->id, 'title' => $model->title], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)]);
 	}
 
 	public function getOlderLink()
@@ -149,7 +149,7 @@ class Post extends ActiveRecord
 		if (!$model = $this->findOlderOne())
 			return null;
 
-		return '&laquo; ' . Html::a('Previous Article', ['post/index', 'id' => $model->id, 'title' => $model->title], ['title' => Html::encode($model->title), 'data-toggle' => 'tooltip', 'data-placement' => 'right']);
+		return Html::a('&laquo; Previous Article', ['post/index', 'id' => $model->id, 'title' => $model->title], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)]);
 	}
 
 	public function getUser()

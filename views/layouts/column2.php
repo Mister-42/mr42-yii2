@@ -6,6 +6,7 @@ use app\widgets\Item;
 use app\widgets\RecentPosts;
 use app\widgets\Search;
 use app\widgets\TagCloud;
+use yii\bootstrap\Html;
 use yii\caching\DbDependency;
 
 $this->beginContent('@app/views/layouts/main.php');
@@ -33,14 +34,12 @@ $dependency = [
 	if ($this->beginCache('postwidgets', ['dependency' => $dependency, 'duration' => 0])) {
 		echo Item::widget([
 			'body' => RecentPosts::widget(),
-			'header' => '<h3>Latest Articles</h3>',
-			'options' => ['class' => 'latest-posts'],
+			'header' => Html::tag('h4', 'Latest Articles'),
 		]);
 
 		echo Item::widget([
 			'body' => TagCloud::widget(),
-			'header' => '<h3>Tags</h3>',
-			'options' => ['class' => 'tagcloud'],
+			'header' => Html::tag('h4', 'Tags'),
 		]);
 
 		$this->endCache();
@@ -48,8 +47,7 @@ $dependency = [
 
 	echo Item::widget([
 		'body' => Feed::widget(['name' => 'ScienceDaily']),
-		'header' => '<h3>ScienceDaily</h3>',
-		'options' => ['class' => 'latest-posts'],
+		'header' => Html::tag('h4', 'ScienceDaily'),
 	]); ?>
 	</aside>
 </div>

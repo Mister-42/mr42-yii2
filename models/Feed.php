@@ -6,6 +6,6 @@ class Feed extends ActiveRecord
 {
 	public static function tableName()
 	{
-		return '{{%feed}}';
+		return 'x_feed';
 	}
 }

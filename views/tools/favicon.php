@@ -2,6 +2,9 @@
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
 use yii\bootstrap\Html;
+use nezhelskoy\highlight\HighlightAsset;
+
+HighlightAsset::register($this);
 
 $this->title = 'Favicon Converter';
 $this->params['breadcrumbs'][] = 'Tools';

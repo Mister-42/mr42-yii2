@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		['Swift Mailer', 'http://swiftmailer.org/'],
 		['HTML Purifier', 'http://htmlpurifier.org/'],
 		['PHP Markdown', 'https://michelf.ca/projects/php-markdown/', 'Michel Fortin'],
+		['highlight.js', 'https://highlightjs.org/', 'Ivan Sagalaev'],
 		['yii2-user', 'https://yii2-user.dektrium.com/', 'Dmitry Erofeev'],
 		['clipboard.js', 'https://clipboardjs.com/', 'Zeno Rocha'],
 		['pbkdf2.js', 'http://anandam.com/pbkdf2', 'Parvez Anandam'],

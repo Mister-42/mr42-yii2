@@ -2,8 +2,11 @@
 use app\models\General;
 use app\models\user\Profile;
 use dektrium\user\models\User;
+use nezhelskoy\highlight\HighlightAsset;
 use yii\bootstrap\Html;
 use yii\helpers\StringHelper;
+
+HighlightAsset::register($this);
 ?>
 <article class="article">
 	<div class="clearfix">

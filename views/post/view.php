@@ -6,14 +6,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->title;
 ?>
 <div class="articles-view">
-	<div class="clearfix">
-		<?php if ($olderLink = $model->olderLink): ?>
-			<div class="pull-left"><?= $olderLink; ?></div>
-		<?php endif; ?>
-		<?php if ($newerLink = $model->newerLink): ?>
-			<div class="pull-right"><?= $newerLink ?></div>
-		<?php endif; ?>
-	</div>
+	<div class="clearfix"><?php
+		if ($olderLink = $model->olderLink)
+			echo $olderLink;
+		if ($newerLink = $model->newerLink)
+			echo $newerLink;
+	?></div>
 
 	<?php echo $this->render('_view', ['model' => $model, 'view' => 'full']); ?>
 

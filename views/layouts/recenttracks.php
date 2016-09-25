@@ -13,7 +13,7 @@ $this->registerJs('(function refresh(){$(\'.recent-tracks .tracks\').load(\'' . 
 
 	<aside class="hidden-sm col-md-4">
 		<div class="recent-tracks">
-			<h3>Recently Played Tracks</h3>
+			<h4>Recently Played Tracks</h4>
 			<div class="tracks"></div>
 		</div>
 	</aside>
