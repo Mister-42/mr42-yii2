@@ -20,7 +20,7 @@ class PdfController extends Controller
 	*/
 	public function actionAll() {
 		self::actionAlbums();
-		self::actionPosts();
+		self::actionArticles();
 	}
 
 	/**
@@ -57,9 +57,9 @@ class PdfController extends Controller
 	}
 
 	/**
-	 * Builds all posts PDF files.
+	 * Builds all articles PDF files.
 	*/
-	public function actionPosts() {
+	public function actionArticles() {
 		$posts = Post::find()
 			->orderBy('created')
 			->all();

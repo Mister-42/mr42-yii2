@@ -1,9 +1,15 @@
 <?php
+use app\assets\FaviconAsset;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
 use yii\bootstrap\Html;
+use yii\helpers\FileHelper;
 use nezhelskoy\highlight\HighlightAsset;
 
+if (!file_exists(Yii::getAlias('@runtime/temp/favicon')))
+	FileHelper::createDirectory(Yii::getAlias('@runtime/temp/favicon'));
+
+FaviconAsset::register($this);
 HighlightAsset::register($this);
 
 $this->title = 'Favicon Converter';
@@ -33,7 +39,7 @@ echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover
 			echo Alert::widget(['options' => ['class' => 'alert-danger'],'body' => $flash]);
 		}
 		if ($icon = Yii::$app->session->getFlash('favicon-success')) {
-			$img = Html::img(Yii::$app->assetManager->baseUrl.'/x/'.$icon, ['alt' => 'favicon.ico', 'class' => 'inline-left pull-left', 'height' => 64, 'width' => 64]);
+			$img = Html::img(Yii::$app->assetManager->getBundle('app\assets\FaviconAsset')->baseUrl.'/'.$icon, ['alt' => 'favicon.ico', 'class' => 'inline-left pull-left', 'height' => 64, 'width' => 64]);
 			$txt = '<p>Your icon has been generated successfully. Save it to your website and add the code below between the &lt;head&gt; tags of your html. This will allow all major browsers to show the icon when the website is accessed and/or bookmarked.<br />';
 			$txt .= 'Do not link the icon directly to this website. Your icon will soon be automatically deleted.</p>';
 			$txt .= '<br /><pre><code>&lt;link rel="icon" href="/path/to/'.$icon.'" type="image/x-icon" sizes="'.implode(' ', $dimensions).'" /&gt;</code></pre>';

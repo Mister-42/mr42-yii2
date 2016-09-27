@@ -55,7 +55,7 @@ class Favicon extends Model
 						$clone->clear();
 					}
 					$srcImg->clear();
-					$icon->writeImages(Yii::$app->assetManager->basePath.'/x/'.$rndFilename.'.ico', true);
+					$icon->writeImages(Yii::getAlias('@runtime/temp/favicon/'.$rndFilename.'.ico'), true);
 					$icon->clear();
 				} else {
 					$srcImg = $this->sourceImage->tempName;
@@ -73,10 +73,10 @@ class Favicon extends Model
 					exec('convert -crop '.$tmpSize.'x'.$tmpSize.' '.$srcImg);
 
 					foreach ($this->dimensions as $dimension) {
-						$tmpFiles[] = Yii::$app->assetManager->basePath.'/x/'.$rndFilename.'.'.$dimension.'.png';
-						exec('convert -scale '.$dimension.' '.$srcImg.' '.Yii::$app->assetManager->basePath.'/x/'.$rndFilename.'.'.$dimension.'.png');
+						$tmpFiles[] = Yii::getAlias('@runtime/temp/'.$rndFilename.'.'.$dimension.'.png');
+						exec('convert -scale '.$dimension.' '.$srcImg.' '.end($tmpFiles));
 					}
-					exec('convert '.implode(' ', $tmpFiles).' '.Yii::$app->assetManager->basePath.'/x/'.$rndFilename.'.ico');
+					exec('convert '.implode(' ', $tmpFiles).' '.Yii::getAlias('@runtime/temp/favicon/'.$rndFilename.'.ico'));
 					foreach ($tmpFiles as $file) {
 						unlink($file);
 					}
@@ -89,7 +89,7 @@ class Favicon extends Model
 						->setTo($this->email)
 						->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name])
 						->setSubject('Your favicon file from '.Yii::$app->name)
-						->attach(Yii::$app->assetManager->basePath.'/x/'.$rndFilename.'.ico', ['fileName' => 'favicon.ico'])
+						->attach(Yii::getAlias('@runtime/temp/favicon/'.$rndFilename.'.ico'), ['fileName' => 'favicon.ico'])
 						->send()
 					;
 				}

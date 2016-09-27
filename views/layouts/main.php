@@ -53,7 +53,6 @@ $this->beginPage();
 		<?= Breadcrumbs::widget([
 			'homeLink' => ['label' => Yii::$app->name, 'url' => Yii::$app->homeUrl],
 			'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-			'tag' => 'ol',
 		]) ?>
 		<?= $content ?>
 	</div>

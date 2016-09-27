@@ -28,7 +28,6 @@ $dependency = [
 	<aside class="hidden-xs col-sm-3">
 	<?php echo Item::widget([
 		'body' => Search::widget(),
-		'options' => ['class' => 'search'],
 	]);
 
 	if ($this->beginCache('postwidgets', ['dependency' => $dependency, 'duration' => 0])) {
