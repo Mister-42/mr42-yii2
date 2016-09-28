@@ -20,13 +20,12 @@ $this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length
 		<?= Html::tag('h1', Html::encode($this->title)) ?>
 
 		<?php $form = ActiveForm::begin([
-			'id' => 'profile-form',
-			'options' => ['class' => 'form-horizontal'],
+			'enableAjaxValidation' => true,
+			'enableClientValidation' => false,
 			'fieldConfig' => [
 				'labelOptions' => ['class' => 'col-lg-3 control-label'],
 			],
-			'enableAjaxValidation' => true,
-			'enableClientValidation' => false,
+			'layout' => 'horizontal',
 			'validateOnBlur' => false,
 		]);
 

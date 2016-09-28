@@ -41,6 +41,7 @@ $this->beginPage();
 	if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 		echo Nav::widget([
 			'dropDownCaret' => '<strong class="caret"></strong>',
+			'encodeLabels' => false,
 			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => MenuItems::menuArray(),
 		]);

@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 use Yii;
+use yii\bootstrap\Html;
 
 class MenuItems
 {
@@ -11,8 +12,8 @@ class MenuItems
 
 		$menuItems = [
 			['label' => 'About', 'url' => ['/site/about'], 'visible' => 0],
-			['label' =>  'Articles', 'url' => ['/post/index'], 'visible' => 1],
-			['label' => 'Calculator', 'url' => null,
+			['label' => Html::icon('th-list').'Articles', 'url' => ['/post/index'], 'visible' => 1],
+			['label' => Html::icon('dashboard').'Calculator', 'url' => null,
 				'items' => [
 					['label' => 'Date (add/substract)', 'url' => ['/calculator/date']],
 					['label' => 'Date to Date (duration)', 'url' => ['/calculator/duration']],
@@ -20,7 +21,7 @@ class MenuItems
 					['label' => 'Wifi Protected Access Pre-Shared Key', 'url' => ['/calculator/wpapsk']],
 				],
 			],
-			['label' => 'Tools', 'url' => null,
+			['label' => Html::icon('wrench').' Tools', 'url' => null,
 				'items' => [
 					['label' => 'Code Playground', 'url' => ['/site/playground'], 'visible' => $isAdmin],
 					['label' => 'Browser Headers', 'url' => ['/tools/headers']],
@@ -29,11 +30,11 @@ class MenuItems
 					['label' => 'Phonetic Alphabet Translator', 'url' => ['/tools/phonetic-alphabet']],
 				],
 			],
-			['label' => 'Lyrics', 'url' => ['/lyrics/index'], 'visible' => 1],
+			['label' => Html::icon('cd').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => 1],
 			$isGuest ?
-				['label' => 'Login', 'url' => ['/user/security/login'], 'visible' => 1]
+				['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => 1]
 			:
-				['label' => $username, 'url' => null,
+				['label' => Html::icon('user').$username, 'url' => null,
 					'items' => [
 						['label' => 'Create Article', 'url' => ['/post/create'], 'visible' => $isAdmin],
 						['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],

@@ -13,14 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= Html::tag('h1', Html::encode($this->title)) ?>
 
 		<?php $form = ActiveForm::begin([
-			'id'          => 'account-form',
-			'options'     => ['class' => 'form-horizontal'],
+			'enableAjaxValidation' => true,
+			'enableClientValidation' => false,
 			'fieldConfig' => [
-				'template'     => "{label}\n<div class=\"col-lg-9\">{input}</div>\n<div class=\"col-sm-offset-3 col-lg-9\">{error}\n{hint}</div>",
+				'template' => "{label}\n<div class=\"col-lg-9\">{input}</div>\n<div class=\"col-sm-offset-3 col-lg-9\">{error}\n{hint}</div>",
 				'labelOptions' => ['class' => 'col-lg-3 control-label'],
 			],
-			'enableAjaxValidation'   => true,
-			'enableClientValidation' => false,
+			'layout' => 'horizontal',
 		]); ?>
 
 		<?= $form->field($model, 'email', [

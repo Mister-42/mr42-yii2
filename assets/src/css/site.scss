@@ -39,6 +39,11 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
+.nav > li > a > .glyphicon:after {
+	content: '\00a0';
+	font-family: $font-family-base;
+}
+
 .site- {
 	&changelog .row {
 		&:not(:first-child) {
