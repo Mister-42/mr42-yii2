@@ -1,32 +1,26 @@
 <?php
 use app\models\General;
-use yii\bootstrap\Carousel;
 use yii\bootstrap\Html;
 
 $this->title = Yii::$app->name;
 
-foreach ($posts as $post) {
-	$content = '<h2>'.Html::a(Html::encode($post['title']), ['post/index', 'id' => $post['id'], 'title' => $post['title']]).'</h2>';
-	$content .= '<div class="row"><div class="col-xs-12">';
+echo Html::tag('h2', 'Welcome to '.Yii::$app->name);
+echo Html::tag('p', 'This website is merely a hobby project. Some parts are created to make work or life a little bit easier, other parts are created for entertainment purposes only.');
+echo Html::tag('p', 'Below is an overview of the items in the menu for a quick overview.');
 
-	if (strpos($post['content'], '[readmore]')) {
-		$buttonText = 'Read full article';
-		$post['content'] = substr($post['content'], 0, strpos($post['content'], '[readmore]'));
-	} else { $buttonText = 'Read article'; }
-
-	$content .= General::cleanInput($post['content'], 'gfm', true);
-	$content .= Html::a($buttonText . ' &raquo;', ['post/index', 'id' => $post['id'], 'title' => $post['title']], ['class' => 'btn btn-default pull-right']);
-	$content .= '</div></div>';
-
-	$item[] = ['content' => $content];
-}
-
-echo Carousel::widget([
-	'clientOptions' => [
-		'interval' => 7500,
-		'keyboard' => false,
-	],
-	'controls' => false,
-	'items' => $item,
-	'showIndicators' => false
-]);
+echo '<ul>';
+foreach($pages as $menu) :
+	if (!isset($menu['visible']) || $menu['visible']) {
+		echo (isset($menu['url'])) ? Html::tag('li', Html::a(General::cleanInput($menu['label'], false), $menu['url'])) : Html::tag('li', General::cleanInput($menu['label'], false));
+		if ($menu['items']) {
+			echo '<ul>';
+			foreach($menu['items'] as $submenu) :
+				if (!isset($submenu['visible']) && isset($submenu['label'])) {
+					echo (isset($submenu['url'])) ? Html::tag('li', Html::a(General::cleanInput($submenu['label'], false), $submenu['url'])) : Html::tag('li', General::cleanInput($submenu['label'], false));
+				}
+			endforeach;
+			echo '</ul>';
+		}
+	}
+endforeach;
+echo '</ul>';

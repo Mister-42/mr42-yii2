@@ -1,11 +1,11 @@
 <?php
+use app\assets\AppAsset;
+use app\assets\ImagesAsset;
+use app\models\MenuItems;
 use yii\bootstrap\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Url;
-use app\assets\AppAsset;
-use app\assets\ImagesAsset;
-use app\models\MenuItems;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
@@ -40,10 +40,9 @@ $this->beginPage();
 
 	if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 		echo Nav::widget([
-			'dropDownCaret' => '<strong class="caret"></strong>',
 			'encodeLabels' => false,
-			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => MenuItems::menuArray(),
+			'options' => ['class' => 'navbar-nav navbar-right'],
 		]);
 	}
 

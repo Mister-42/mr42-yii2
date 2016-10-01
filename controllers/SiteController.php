@@ -85,15 +85,10 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
 		$this->layout = '@app/views/layouts/column2.php';
-		$model = new Post;
-		$limit = (isset(Yii::$app->params['recentPosts']) && is_int(Yii::$app->params['recentPosts'])) ? Yii::$app->params['recentPosts'] : 5;
 
 		return  $this->render('index', [
 			'model' => $model,
-			'posts' => Post::find()
-				->orderBy('id desc')
-				->limit($limit)
-				->all(),
+			'pages' => MenuItems::menuArray(),
 		]);
 	}
 

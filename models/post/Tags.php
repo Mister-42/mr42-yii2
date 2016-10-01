@@ -12,7 +12,7 @@ class Tags
 		foreach($tags as $key => $value)
 			$list[$key] = 8 + (int)(16 * $value / ($total + 10));
 
-		array_slice($array, 0, $limit);
+		array_slice($list, 0, $limit);
 		ksort($list, SORT_NATURAL | SORT_FLAG_CASE);
 		return ($total === 0) ? [] : $list;
 	}

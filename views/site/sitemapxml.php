@@ -16,7 +16,7 @@ $urlset->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 $urlset->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 $doc->appendChild($urlset);
 
-Sitemap::prioData($doc, $urlset, Url::home(true), 1, end($posts)->updated);
+Sitemap::prioData($doc, $urlset, Url::home(true), 1, filemtime(View::findViewFile('@app/views/site/index')));
 
 foreach($pages as $page)
 	Sitemap::ageData($doc, $urlset, Url::to([$page], true), filemtime(View::findViewFile('@app/views/' . $page)));

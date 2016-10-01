@@ -7,7 +7,7 @@ class MenuItems
 {
 	public static function menuArray() {
 		$isGuest = (Yii::$app->controller->action->id == 'sitemapxml') ? true : Yii::$app->user->isGuest;
-		$isAdmin = (!$isGuest && Yii::$app->user->identity->isAdmin) ? true : false;
+		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 		$username = $isGuest ? '' : Yii::$app->user->identity->username;
 
 		$menuItems = [
@@ -38,11 +38,13 @@ class MenuItems
 					'items' => [
 						['label' => 'Create Article', 'url' => ['/post/create'], 'visible' => $isAdmin],
 						['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
-						$isAdmin ? '<li class="divider"></li>' : '',
+						$isAdmin ? Html::tag('li', null, ['class' => 'divider']) : '',
+						['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => $username]],
+						Html::tag('li', null, ['class' => 'divider']),
 						['label' => 'Edit Profile', 'url' => ['/user/settings/profile']],
 						['label' => 'Account Settings', 'url' => ['/user/settings/account']],
 						['label' => 'Social Networks', 'url' => ['/user/settings/networks']],
-						'<li class="divider"></li>',
+						Html::tag('li', null, ['class' => 'divider']),
 						['label' => 'Logout', 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']],
 					],
 				]

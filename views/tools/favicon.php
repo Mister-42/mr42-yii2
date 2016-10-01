@@ -26,7 +26,7 @@ echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover
 		<p>A favicon (short for 'favorites icon'), are little icons associated with a particular website or webpage, shown next to the site's name in the URL bar or the page's title on the tab of all major browsers. Browse to the file's location on your computer to select the image and press the '<?= $model->getAttributeLabel('generate') ?>' button to generate a favicon for your site.</p>
 
 		<?php
-		$x=0; $dimensionList = '';
+		$x=0;
 		foreach ($model->dimensions as $dimension) {
 			$x++;
 			$dimensions[] = $dimension.'x'.$dimension;
