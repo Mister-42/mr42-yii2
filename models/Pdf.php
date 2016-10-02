@@ -9,7 +9,7 @@ class Pdf
 	public function create($filename, $content, $updated, $params)
 	{
 		$filename = Yii::getAlias($filename.'.pdf');
-		$created = (isset($params['created'])) ? $params['created'] : $updated;
+		$created = $params['created'] ?? $updated;
 		if (!file_exists($filename) || filemtime($filename) < $updated) {
 			FileHelper::createDirectory(dirname($filename));
 
@@ -40,9 +40,8 @@ class Pdf
 
 		while (!feof($reading)) {
 			$line = fgets($reading);
-			if (stristr($line, $search)) {
+			if (stristr($line, $search))
 				$line = $search . ' ' . $replace . PHP_EOL;
-			}
 			fputs($writing, $line);
 		}
 		fclose($reading); fclose($writing);

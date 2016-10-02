@@ -11,7 +11,6 @@ class MenuItems
 		$username = $isGuest ? '' : Yii::$app->user->identity->username;
 
 		$menuItems = [
-			['label' => 'About', 'url' => ['/site/about'], 'visible' => 0],
 			['label' => Html::icon('th-list').'Articles', 'url' => ['/post/index'], 'visible' => 1],
 			['label' => Html::icon('dashboard').'Calculator', 'url' => null,
 				'items' => [
@@ -61,10 +60,7 @@ class MenuItems
 	}
 
 	public static function urlList() {
-		$pages = [];
-		$menu = self::menuArray();
-
-		foreach ($menu as $item) {
+		foreach (self::menuArray() as $item) :
 			if (isset($item['visible'])) continue;
 
 			if (isset($item['url'])) {
@@ -72,15 +68,15 @@ class MenuItems
 			}
 
 			if (isset($item['items'])) {
-				foreach ($item['items'] as $subitem) {
+				foreach ($item['items'] as $subitem) :
 					if (isset($subitem['visible'])) continue;
 
 					if (isset($subitem['url'])) {
 						$pages[] = $subitem['url'][0];
 					}
-				}
+				endforeach;
 			}
-		}
+		endforeach;
 
 		return $pages;
 	}

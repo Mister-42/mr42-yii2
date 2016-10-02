@@ -138,6 +138,9 @@ class SiteController extends Controller
 	}
 
 	public function actionRss() {
+		if ($_SERVER[HTTP_USER_AGENT] !== 'FeedBurner')
+			$this->redirect('http://feed.mr42.me/Mr42')->send();
+
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/rss+xml');
 

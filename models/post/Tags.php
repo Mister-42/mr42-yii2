@@ -27,11 +27,10 @@ class Tags
 	}
 
 	private static function getTags() {
-		foreach (Post::find()->select('tags')->all() as $tag) {
-			foreach (StringHelper::explode($tag->tags) as $item) {
-				$list[$item] = (isset($list[$item])) ? $list[$item] + 1 : 1;
-			}
-		}
+		foreach (Post::find()->select('tags')->all() as $tag) :
+			foreach (StringHelper::explode($tag->tags) as $item)
+				$list[$item] = $list[$item] ? $list[$item] + 1 : 1;
+		endforeach;
 
 		return $list;
 	}

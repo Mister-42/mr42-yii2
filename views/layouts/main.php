@@ -52,7 +52,7 @@ $this->beginPage();
 	<div class="container">
 		<?= Breadcrumbs::widget([
 			'homeLink' => ['label' => Yii::$app->name, 'url' => Yii::$app->homeUrl],
-			'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+			'links' => $this->params['breadcrumbs'] ?? [],
 		]) ?>
 		<?= $content ?>
 	</div>
