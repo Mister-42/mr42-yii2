@@ -1,14 +1,11 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\calculator\Date;
-use app\models\calculator\Duration;
-use app\models\calculator\Office365;
+use app\models\calculator\{Date, Duration, Office365};
 use yii\base\Object;
-use yii\web\Controller;
 use yii\filters\HttpCache;
 
-class CalculatorController extends Controller
+class CalculatorController extends \yii\web\Controller
 {
 	public function behaviors()
 	{

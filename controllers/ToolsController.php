@@ -1,12 +1,10 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\tools\Favicon;
-use app\models\tools\PhoneticAlphabet;
+use app\models\tools\{Favicon, PhoneticAlphabet};
 use yii\base\Object;
 use yii\filters\HttpCache;
-use yii\web\Controller;
-use yii\web\UploadedFile;
+use yii\web\{Controller, UploadedFile};
 
 class ToolsController extends Controller
 {
@@ -42,9 +40,8 @@ class ToolsController extends Controller
 
 		if ($model->load(Yii::$app->request->post())) {
 			$model->sourceImage = UploadedFile::getInstance($model, 'sourceImage');
-			if ($model->convertImage()) {
+			if ($model->convertImage())
 				return $this->refresh();
-			}
 		}
 
 		return $this->render('favicon', [
@@ -62,9 +59,8 @@ class ToolsController extends Controller
 		$model = new PhoneticAlphabet;
 
 		if ($model->load(Yii::$app->request->post())) {
-			if ($model->convertText()) {
+			if ($model->convertText())
 				return $this->refresh();
-			}
 		}
 
 		return $this->render('phonetic-alphabet', [

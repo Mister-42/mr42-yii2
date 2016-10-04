@@ -1,14 +1,10 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\lyrics\Lyrics1Artists;
-use app\models\lyrics\Lyrics2Albums;
-use app\models\lyrics\Lyrics3Tracks;
+use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\filters\HttpCache;
 use yii\helpers\Url;
-use yii\web\Controller;
-use yii\web\MethodNotAllowedHttpException;
-use yii\web\NotFoundHttpException;
+use yii\web\{Controller, MethodNotAllowedHttpException, NotFoundHttpException};
 
 class LyricsController extends Controller
 {

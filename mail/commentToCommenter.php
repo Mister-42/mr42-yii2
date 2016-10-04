@@ -1,6 +1,5 @@
 <?php
-use yii\helpers\Html;
-use yii\helpers\Url;
+use yii\helpers\{Html, Url};
 ?>
 <p>Hello <?= Html::encode($comment->name) ?>,</p>
 

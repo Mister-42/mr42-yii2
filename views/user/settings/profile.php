@@ -1,7 +1,6 @@
 <?php
 use dektrium\user\helpers\Timezone;
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;
 use yii\jui\DatePicker;
 use yii\web\View;
@@ -25,7 +24,7 @@ $this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length
 			'fieldConfig' => [
 				'labelOptions' => ['class' => 'col-lg-3 control-label'],
 			],
-			'layout' => 'horizontal',
+			'options' => ['class' => 'form-horizontal'],
 			'validateOnBlur' => false,
 		]);
 

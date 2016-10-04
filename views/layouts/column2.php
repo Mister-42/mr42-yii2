@@ -1,11 +1,6 @@
 <?php
-use app\models\post\Comment;
-use app\models\post\Post;
-use app\widgets\Feed;
-use app\widgets\Item;
-use app\widgets\RecentPosts;
-use app\widgets\Search;
-use app\widgets\TagCloud;
+use app\models\post\{Comment, Post};
+use app\widgets\{Feed, Item, RecentPosts, Search, TagCloud};
 use yii\bootstrap\Html;
 use yii\caching\DbDependency;
 
@@ -46,7 +41,7 @@ $dependency = [
 
 	echo Item::widget([
 		'body' => Feed::widget(['name' => 'ScienceDaily']),
-		'header' => Html::tag('h4', 'ScienceDaily'),
+		'header' => Html::tag('h4', 'Science News'),
 	]); ?>
 	</aside>
 </div>

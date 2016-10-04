@@ -1,11 +1,9 @@
 <?php
 namespace app\models\tools;
 use Yii;
-use yii\base\Model;
-use yii\helpers\FileHelper;
-use yii\helpers\ArrayHelper;
+use yii\helpers\{ArrayHelper, FileHelper};
 
-class PhoneticAlphabet extends Model
+class PhoneticAlphabet extends \yii\base\Model
 {
 	public $text;
 	public $alphabet;
@@ -63,8 +61,8 @@ class PhoneticAlphabet extends Model
 		ArrayHelper::multisort($alphabetOptions, 'sort');
 
 		switch ($type) {
-			case 'map'		:	return ArrayHelper::map($alphabetOptions, 'file', 'name');
-			case 'column'	:	return ArrayHelper::getColumn($alphabetOptions, $name);
+			case 'map'		: return ArrayHelper::map($alphabetOptions, 'file', 'name');
+			case 'column'	: return ArrayHelper::getColumn($alphabetOptions, $name);
 		}
 	}
 }

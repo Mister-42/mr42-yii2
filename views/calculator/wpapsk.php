@@ -1,8 +1,7 @@
 <?php
 use app\assets\ClipboardJsAsset;
 use yii\base\DynamicModel;
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Html};
 use yii\web\View;
 
 $this->title = 'Wifi Protected Access Pre-Shared Key';

@@ -1,7 +1,5 @@
 <?php
-use app\models\lyrics\Lyrics1Artists;
-use app\models\lyrics\Lyrics2Albums;
-use app\models\lyrics\Lyrics3Tracks;
+use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use app\models\post\Tags;
 use app\models\site\Sitemap;
 use yii\base\View;
@@ -27,7 +25,7 @@ foreach($posts as $post) {
 	$lastUpdate = $post['updated'];
 	foreach ($post['comments'] as $comment)
 		$lastUpdate = max($lastUpdate, $comment['created']);
-	Sitemap::ageData($doc, $urlset, Url::to(['post/index', 'id' => $post['id'], 'title' => $post['title']], true), $lastUpdate);
+	Sitemap::ageData($doc, $urlset, Url::to(['post/index', 'id' => $post['id'], 'title' => $post['url']], true), $lastUpdate);
 }
 
 foreach($tags as $tag => $value) {

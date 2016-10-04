@@ -1,13 +1,12 @@
 <?php
 namespace app\models\user;
-use dektrium\user\models\Profile as BaseProfile;
 use DateTime;
 use Yii;
 use app\models\General;
 use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
 
-class Profile extends BaseProfile
+class Profile extends \dektrium\user\models\Profile
 {
 	public function attributeLabels()
 	{

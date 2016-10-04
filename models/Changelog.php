@@ -1,8 +1,7 @@
 <?php
 namespace app\models;
-use yii\db\ActiveRecord;
 
-class Changelog extends ActiveRecord
+class Changelog extends \yii\db\ActiveRecord
 {
 	public static function tableName()
 	{

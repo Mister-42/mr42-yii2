@@ -1,7 +1,6 @@
 <?php
 use dektrium\user\helpers\Timezone;
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;
 use yii\jui\DatePicker;
 

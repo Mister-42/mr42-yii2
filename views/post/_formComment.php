@@ -1,6 +1,5 @@
 <?php
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Html};
 use yii\captcha\Captcha;
 use yii\web\View;
 use yii\widgets\Pjax;

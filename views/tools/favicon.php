@@ -1,8 +1,6 @@
 <?php
 use app\assets\FaviconAsset;
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Alert;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\helpers\FileHelper;
 use nezhelskoy\highlight\HighlightAsset;
 

@@ -2,15 +2,12 @@
 namespace app\models\post;
 use Yii;
 use app\models\Pdf;
-use dektrium\user\models\Profile;
-use dektrium\user\models\User;
+use dektrium\user\models\{Profile, User};
 use yii\bootstrap\Html;
-use yii\db\ActiveRecord;
-use yii\helpers\StringHelper;
-use yii\helpers\Url;
+use yii\helpers\{StringHelper, Url};
 use yii\web\AccessDeniedHttpException;
 
-class Post extends ActiveRecord
+class Post extends \yii\db\ActiveRecord
 {
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
@@ -35,6 +32,7 @@ class Post extends ActiveRecord
 		return [
 			'id' => 'ID',
 			'title' => 'Title',
+			'url' => 'URL',
 			'content' => 'Content',
 			'tags' => 'Tags',
 			'created' => 'Created At',
@@ -52,14 +50,18 @@ class Post extends ActiveRecord
 	}
 
 	public function beforeDelete() {
-		if (!parent::beforeDelete()) {
+		if (!parent::beforeDelete())
 			return false;
-		}
 
 		if (!$this->belongsToViewer())
 			return false;
 
 		return true;
+	}
+
+	public function afterFind()
+	{
+		$this->url = $this->url ?? $this->title;
 	}
 
 	public function beforeSave($insert)
@@ -71,6 +73,7 @@ class Post extends ActiveRecord
 			return false;
 
 		$datetime = time();
+		$this->url = $this->url ?? null;
 
 		if ($insert) {
 			$this->author = Yii::$app->user->id;
@@ -141,7 +144,7 @@ class Post extends ActiveRecord
 		if (!$model = $this->findNewerOne())
 			return null;
 
-		return Html::a('Next Article &raquo;', ['post/index', 'id' => $model->id, 'title' => $model->title], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)]);
+		return Html::a('Next Article &raquo;', ['post/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)]);
 	}
 
 	public function getOlderLink()
@@ -149,7 +152,7 @@ class Post extends ActiveRecord
 		if (!$model = $this->findOlderOne())
 			return null;
 
-		return Html::a('&laquo; Previous Article', ['post/index', 'id' => $model->id, 'title' => $model->title], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)]);
+		return Html::a('&laquo; Previous Article', ['post/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)]);
 	}
 
 	public function getUser()

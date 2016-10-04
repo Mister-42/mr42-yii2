@@ -1,7 +1,6 @@
 <?php
 namespace app\assets;
-use yii\web\AssetBundle;
-use yii\web\View;
+use yii\web\{AssetBundle, View};
 
 class ClipboardJsAsset extends AssetBundle
 {

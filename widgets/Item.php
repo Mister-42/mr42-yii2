@@ -1,8 +1,7 @@
 <?php
 namespace app\widgets;
-use yii\bootstrap\Widget;
 
-class Item extends Widget
+class Item extends \yii\bootstrap\Widget
 {
 	public $header;
 	public $body;

@@ -1,8 +1,6 @@
 <?php
 use app\models\tools\PhoneticAlphabet;
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Alert;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Alert, Html};
 
 $this->title = 'Phonetic Alphabet Translator';
 $this->params['breadcrumbs'][] = 'Tools';

@@ -1,9 +1,8 @@
 <?php
 namespace app\models\site;
 use Yii;
-use yii\base\Model;
 
-class Contact extends Model
+class Contact extends \yii\base\Model
 {
 	public $name;
 	public $email;

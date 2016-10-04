@@ -1,10 +1,7 @@
 <?php
-use app\assets\AppAsset;
-use app\assets\ImagesAsset;
+use app\assets\{AppAsset, ImagesAsset};
 use app\models\MenuItems;
-use yii\bootstrap\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
+use yii\bootstrap\{Html, Nav, NavBar};
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 

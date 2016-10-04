@@ -2,11 +2,10 @@
 namespace app\models\user;
 use Yii;
 use yii\bootstrap\Html;
-use yii\db\ActiveRecord;
 use yii\helpers\Url;
 use yii\httpclient\Client;
 
-class RecentTracks extends ActiveRecord
+class RecentTracks extends \yii\db\ActiveRecord
 {
 	public static function tableName()
 	{

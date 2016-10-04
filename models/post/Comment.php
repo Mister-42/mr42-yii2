@@ -3,10 +3,9 @@ namespace app\models\post;
 use Yii;
 use app\models\General;
 use yii\bootstrap\Html;
-use yii\db\ActiveRecord;
 use yii\web\AccessDeniedHttpException;
 
-class Comment extends ActiveRecord
+class Comment extends \yii\db\ActiveRecord
 {
 	public $captcha;
 
@@ -94,8 +93,8 @@ class Comment extends ActiveRecord
 			->setTo([$model->user->email => $model->user->username])
 			->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name])
 			->setSubject('A new comment has been posted on "' . $model->title . '"')
-			->send()
-		;
+			->send();
+
 		if (Yii::$app->user->isGuest) {
 			Yii::$app->mailer->compose(
 					['html' => 'commentToCommenter'],
@@ -104,8 +103,7 @@ class Comment extends ActiveRecord
 				->setTo([$comment->email => $comment->name])
 				->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name])
 				->setSubject('Thank you for your reply on "' . $model->title . '"')
-				->send()
-			;
+				->send();
 		}
 	}
 

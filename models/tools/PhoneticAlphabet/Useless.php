@@ -1,8 +1,7 @@
 <?php
 namespace app\models\tools\PhoneticAlphabet;
-use app\models\tools\PhoneticAlphabet as Alphabet;
 
-class Useless extends Alphabet
+class Useless extends \app\models\tools\PhoneticAlphabet
 {
 	public function name()
 	{

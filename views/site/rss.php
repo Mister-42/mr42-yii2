@@ -39,15 +39,15 @@ $channel->appendChild($doc->createElement('lastBuildDate', date(DATE_RSS, $posts
 $channel->appendChild($rssImage);
 $rss->appendChild($channel);
 
-foreach($posts as $post) {
+foreach($posts as $post) :
 	if (strpos($post->content, '[readmore]')) {
 		$post->content = substr($post->content, 0, strpos($post->content, '[readmore]'));
-		$post->content .= Html::a('Read full article on our website', Url::to(['post/index', 'id'=>$post->id, 'title'=>$post->title], true)).' &raquo;';
+		$post->content .= Html::a('Read full article on our website', Url::to(['post/index', 'id'=>$post->id, 'title'=>$post->url], true)).' &raquo;';
 	}
 
 	$item = $doc->createElement('item');
 	$item->appendChild($doc->createElement('title', $post->title));
-	$item->appendChild($doc->createElement('link', Html::encode(Url::to(['post/index', 'id'=>$post->id, 'title'=>$post->title], true))));
+	$item->appendChild($doc->createElement('link', Html::encode(Url::to(['post/index', 'id'=>$post->id, 'title'=>$post->url], true))));
 		$description = $doc->createElement('description');
 		$description->appendChild($doc->createCDATASection(General::cleanInput($post->content, 'gfm')));
 	$item->appendChild($description);
@@ -58,6 +58,6 @@ foreach($posts as $post) {
 	$item->appendChild($guid);
 	$item->appendChild($doc->createElement('pubDate', date(DATE_RSS, $post->created)));
 	$channel->appendChild($item);
-}
+endforeach;
 
 echo $doc->saveXML();

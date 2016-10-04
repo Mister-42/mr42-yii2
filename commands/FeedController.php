@@ -1,11 +1,9 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\General;
-use app\models\Feed;
+use app\models\{Feed, General};
 use app\models\user\RecentTracks;
-use dektrium\user\models\Profile;
-use dektrium\user\models\User;
+use dektrium\user\models\{Profile, User};
 use yii\console\Controller;
 use yii\helpers\Url;
 use yii\httpclient\Client;
@@ -35,7 +33,7 @@ class FeedController extends Controller
 
 		$count = 0;
 		Feed::deleteAll(['feed' => $name]);
-		foreach($response->data['channel']['item'] as $item) {
+		foreach($response->data['channel']['item'] as $item) :
 			$rssItem = new Feed();
 			$rssItem->feed = $name;
 			$rssItem->title = (string) $item->title;
@@ -47,7 +45,7 @@ class FeedController extends Controller
 			$count++;
 			if ($count === $limit)
 				break;
-		}
+		endforeach;
 
 		return Controller::EXIT_CODE_NORMAL;
 	}
@@ -57,7 +55,7 @@ class FeedController extends Controller
 	*/
 	public function actionLastfmRecent() {
 		RecentTracks::deleteAll(['<=', 'seen', time()-300]);
-		foreach (User::find()->where(['blocked_at' => null])->all() as $user) {
+		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::find()->where(['user_id' => $user->id])->one();
 			if (isset($profile->lastfm)) {
 				$lastSeen = RecentTracks::lastSeen($user->id);
@@ -68,7 +66,8 @@ class FeedController extends Controller
 				RecentTracks::updateUser($lastSeen, $profile);
 				usleep(200000);
 			}
-		}
+		endforeach;
+
 		return Controller::EXIT_CODE_NORMAL;
 	}
 }

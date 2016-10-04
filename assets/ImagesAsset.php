@@ -1,8 +1,7 @@
 <?php
 namespace app\assets;
-use yii\web\AssetBundle;
 
-class ImagesAsset extends AssetBundle
+class ImagesAsset extends \yii\web\AssetBundle
 {
 	public $sourcePath = '@app/assets/src/images';
 }

@@ -1,23 +1,16 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\Feed;
-use app\models\MenuItems;
-use app\models\lyrics\Lyrics1Artists;
-use app\models\lyrics\Lyrics2Albums;
-use app\models\post\Post;
-use app\models\post\Tags;
+use app\models\{Feed, MenuItems};
+use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums};
+use app\models\post\{Post, Tags};
 use app\models\site\Contact;
 use yii\bootstrap\Alert;
 use yii\base\Object;
 use yii\captcha\CaptchaAction;
 use yii\db\Query;
-use yii\filters\AccessControl;
-use yii\filters\HttpCache;
-use yii\web\Controller;
-use yii\web\ErrorAction;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
+use yii\filters\{AccessControl, HttpCache};
+use yii\web\{Controller, ErrorAction, NotFoundHttpException, Response};
 
 class SiteController extends Controller
 {
@@ -138,7 +131,7 @@ class SiteController extends Controller
 	}
 
 	public function actionRss() {
-		if ($_SERVER[HTTP_USER_AGENT] !== 'FeedBurner')
+		if (strpos($_SERVER[HTTP_USER_AGENT], 'FeedBurner') !== 0)
 			$this->redirect('http://feed.mr42.me/Mr42')->send();
 
 		Yii::$app->response->format = Response::FORMAT_RAW;

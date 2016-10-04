@@ -4,10 +4,9 @@ use Yii;
 use app\models\Pdf;
 use app\models\lyrics\Lyrics3Tracks;
 use yii\bootstrap\Html;
-use yii\db\ActiveRecord;
 use yii\helpers\Url;
 
-class Lyrics2Albums extends ActiveRecord
+class Lyrics2Albums extends \yii\db\ActiveRecord
 {
 	public $artistName;
 	public $artistUrl;

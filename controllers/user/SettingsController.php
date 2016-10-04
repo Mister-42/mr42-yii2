@@ -24,6 +24,7 @@ class SettingsController extends BaseSettingsController
 			$this->trigger(self::EVENT_AFTER_PROFILE_UPDATE, $event);
 			return $this->refresh();
 		}
+
 		return $this->render('profile', [
 			'model' => $model,
 		]);

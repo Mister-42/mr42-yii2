@@ -1,7 +1,6 @@
 <?php
 use dektrium\user\widgets\Connect;
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Html};
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = 'User';

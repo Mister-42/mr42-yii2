@@ -3,9 +3,8 @@ namespace app\models\tools;
 use Imagick;
 use ImagickException;
 use Yii;
-use yii\base\Model;
 
-class Favicon extends Model
+class Favicon extends \yii\base\Model
 {
 	public $email;
 	public $sourceImage;
@@ -77,9 +76,8 @@ class Favicon extends Model
 						exec('convert -scale '.$dimension.' '.$srcImg.' '.end($tmpFiles));
 					}
 					exec('convert '.implode(' ', $tmpFiles).' '.Yii::getAlias('@runtime/temp/favicon/'.$rndFilename.'.ico'));
-					foreach ($tmpFiles as $file) {
+					foreach ($tmpFiles as $file)
 						unlink($file);
-					}
 					unlink($srcImg);
 				}
 			
@@ -90,8 +88,7 @@ class Favicon extends Model
 						->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name])
 						->setSubject('Your favicon file from '.Yii::$app->name)
 						->attach(Yii::getAlias('@runtime/temp/favicon/'.$rndFilename.'.ico'), ['fileName' => 'favicon.ico'])
-						->send()
-					;
+						->send();
 				}
 				Yii::$app->getSession()->setFlash('favicon-success', $rndFilename.'.ico');
 				return true;

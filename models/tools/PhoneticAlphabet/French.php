@@ -1,8 +1,7 @@
 <?php
 namespace app\models\tools\PhoneticAlphabet;
-use app\models\tools\PhoneticAlphabet as Alphabet;
 
-class French extends Alphabet
+class French extends \app\models\tools\PhoneticAlphabet
 {
 	public function name()
 	{

@@ -1,7 +1,5 @@
 <?php
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Alert;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\jui\DatePicker;
 
 $this->title = 'Date';

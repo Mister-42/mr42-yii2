@@ -2,8 +2,7 @@
 namespace app\widgets;
 use Yii;
 use app\models\post\Post;
-use yii\bootstrap\Html;
-use yii\bootstrap\Widget;
+use yii\bootstrap\{Html, Widget};
 
 class RecentPosts extends Widget
 {
@@ -23,7 +22,7 @@ class RecentPosts extends Widget
 	{
 		$items = [];
 		foreach ($posts as $post) {
-			$link = Html::a(Html::encode($post->title), ['post/index', 'id' => $post->id, 'title' => $post->title]);
+			$link = Html::a(Html::encode($post->title), ['post/index', 'id' => $post->id, 'title' => $post->url]);
 			$items[] = Html::tag('li', $link);
 		}
 

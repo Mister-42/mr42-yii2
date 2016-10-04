@@ -11,7 +11,7 @@ HighlightAsset::register($this);
 <article class="article">
 	<div class="clearfix">
 		<div class="pull-left">
-			<h2 class="article-title"><?= (isset($view) && $view == 'full') ? Html::encode($model->title) : Html::a(Html::encode($model->title), ['index', 'id' => $model->id, 'title' => $model->title]); ?></h2>
+			<h2 class="article-title"><?= (isset($view) && $view == 'full') ? Html::encode($model->title) : Html::a(Html::encode($model->title), ['index', 'id' => $model->id, 'title' => $model->url]); ?></h2>
 		</div>
 
 		<div class="pull-right">
@@ -24,7 +24,7 @@ HighlightAsset::register($this);
 					'style' => 'margin-top:25px;',
 				]); ?>
 			<?php endif; ?>
-			<?= Html::a(Html::icon('save').' PDF', ['pdf', 'id' => $model->id, 'title' => $model->title], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']) ?>
+			<?= Html::a(Html::icon('save').' PDF', ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']) ?>
 		</div>
 	</div>
 
@@ -35,7 +35,7 @@ HighlightAsset::register($this);
 				$model->content = str_replace('[readmore]', '', $model->content);
 			} else {
 				$model->content = substr($model->content, 0, strpos($model->content, '[readmore]'));
-				$model->content .= '<div class="clearfix"><div class="btn btn-default pull-right">'.Html::a('Read full article', ['index', 'id' => $model->id, 'title' => $model->title]).' &raquo;</div></div>';
+				$model->content .= '<div class="clearfix"><div class="btn btn-default pull-right">'.Html::a('Read full article', ['index', 'id' => $model->id, 'title' => $model->url]).' &raquo;</div></div>';
 			}
 		}
 
@@ -50,7 +50,7 @@ HighlightAsset::register($this);
 
 		echo Html::icon('link', ['class' => 'text-muted']) . ' ' . Html::a('permalink', ['index', 'id' => $model->id]).' &middot; ';
 		$commentText = Yii::t('site', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
-		echo Html::icon('comment', ['class' => 'text-muted']) . ' ' . Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->title, '#' => 'comments']);
+		echo Html::icon('comment', ['class' => 'text-muted']) . ' ' . Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);
 
 		$tags = StringHelper::explode($model->tags);
 		if (count($tags) > 0) {

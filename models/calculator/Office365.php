@@ -2,9 +2,8 @@
 namespace app\models\calculator;
 use DateTime;
 use Yii;
-use yii\base\Model;
 
-class Office365 extends Model
+class Office365 extends \yii\base\Model
 {
 	public $sourcedate;
 	public $sourcecount;

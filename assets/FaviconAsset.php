@@ -1,8 +1,7 @@
 <?php
 namespace app\assets;
-use yii\web\AssetBundle;
 
-class FaviconAsset extends AssetBundle
+class FaviconAsset extends \yii\web\AssetBundle
 {
 	public $sourcePath = '@runtime/temp/favicon';
 }

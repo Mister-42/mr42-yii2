@@ -1,9 +1,8 @@
 <?php
 namespace app\models\lyrics;
 use Yii;
-use yii\db\ActiveRecord;
 
-class Lyrics3Tracks extends ActiveRecord
+class Lyrics3Tracks extends \yii\db\ActiveRecord
 {
 	public $artistName;
 	public $artistUrl;

@@ -1,5 +1,4 @@
 <?php
-use Yii;
 use app\models\Changelog;
 use yii\bootstrap\Html;
 

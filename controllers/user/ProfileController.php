@@ -4,8 +4,7 @@ use dektrium\user\controllers\ProfileController as BaseProfileController;
 use Yii;
 use yii\filters\HttpCache;
 use yii\helpers\ArrayHelper;
-use yii\web\MethodNotAllowedHttpException;
-use yii\web\NotFoundHttpException;
+use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException};
 
 class ProfileController extends BaseProfileController
 {

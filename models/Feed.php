@@ -1,8 +1,7 @@
 <?php
 namespace app\models;
-use yii\db\ActiveRecord;
 
-class Feed extends ActiveRecord
+class Feed extends \yii\db\ActiveRecord
 {
 	public static function tableName()
 	{

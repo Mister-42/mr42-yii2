@@ -2,8 +2,7 @@
 namespace app\commands;
 use Yii;
 use app\models\General;
-use app\models\lyrics\Lyrics2Albums;
-use app\models\lyrics\Lyrics3Tracks;
+use app\models\lyrics\{Lyrics2Albums, Lyrics3Tracks};
 use app\models\post\Post;
 use yii\console\Controller;
 use yii\helpers\Console;

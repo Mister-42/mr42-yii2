@@ -2,18 +2,12 @@
 namespace app\controllers;
 use Yii;
 use app\models\General;
-use app\models\post\Comment;
-use app\models\post\Post;
+use app\models\post\{Comment, Post};
 use yii\bootstrap\Alert;
 use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
+use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\Url;
-use yii\web\Controller;
-use yii\web\ErrorAction;
-use yii\web\MethodNotAllowedHttpException;
-use yii\web\NotFoundHttpException;
-use yii\web\UnauthorizedHttpException;
+use yii\web\{Controller,ErrorAction, MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
 
 class PostController extends Controller
 {
@@ -69,10 +63,10 @@ class PostController extends Controller
 				return Alert::widget(['options' => ['class' => 'alert-danger'], 'body' => 'Something went wrong, Your comment has not been saved.', 'closeButton' => false]);
 			}
 
-			if (empty($title) || $title != $model->title)
-				$this->redirect(['index', 'id' => $model->id, 'title' => $model->title], 301)->send();
+			if (empty($title) || $title != $model->url)
+				$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
-			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->title], true), 'type' => 'application/pdf', 'title' => 'PDF']);
+			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
 			return $this->render('view', [
 				'model' => $model,
 				'comment' => $comment
@@ -106,14 +100,14 @@ class PostController extends Controller
 		if (isset($id) && !empty($id)) {
 			$model = $this->findModel($id);
 
-			if (empty($title) || $title != $model->title)
-				$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->title], 301)->send();
+			if (empty($title) || $title != $model->url)
+				$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
 			$model->content = General::cleanInput($model->content, 'gfm', true);
 			$html = $this->renderPartial('pdf', ['model' => $model]);
 
 			$fileName = Post::buildPdf($model, $html);
-			Yii::$app->response->sendFile($fileName, Yii::$app->name.' - '.$model->id.' - '.$model->title.'.pdf');
+			Yii::$app->response->sendFile($fileName, Yii::$app->name.' - '.$model->id.' - '.$model->url.'.pdf');
 		}
 	}
 
@@ -122,9 +116,8 @@ class PostController extends Controller
 		$this->layout = '@app/views/layouts/main.php';
 
 		$model = new Post;
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->title]);
-		}
+		if ($model->load(Yii::$app->request->post()) && $model->save())
+			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
 
 		return $this->render('create', [
 			'model' => $model,
@@ -136,13 +129,11 @@ class PostController extends Controller
 		$this->layout = '@app/views/layouts/main.php';
 
 		$model = $this->findModel($id);
-		if (!$model->belongsToViewer()) {
+		if (!$model->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this post.');
-		}
 
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->title]);
-		}
+		if ($model->load(Yii::$app->request->post()) && $model->save())
+			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
 
 		return $this->render('update', [
 			'model' => $model,
@@ -195,9 +186,8 @@ class PostController extends Controller
 			throw new NotFoundHttpException('Page not found.');
 
 		$post = $this->findModel($id);
-		if (!$post->belongsToViewer()) {
+		if (!$post->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
-		}
 
 		return $model;
 	}
@@ -209,9 +199,8 @@ class PostController extends Controller
 				->andWhere(Yii::$app->user->isGuest ? ['active' => Post::STATUS_ACTIVE] : ['or', ['active' => [Post::STATUS_INACTIVE, Post::STATUS_ACTIVE]]])
 				->with('user');
 
-		foreach ($withList as $with) {
+		foreach ($withList as $with)
 			$query->with($with);
-		}
 
 		$model = $query->one();
 

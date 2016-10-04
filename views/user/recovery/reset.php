@@ -1,6 +1,5 @@
 <?php
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
+use yii\bootstrap\{ActiveForm, Html};
 
 $this->title = 'Reset your password';
 $this->params['breadcrumbs'][] = 'User';

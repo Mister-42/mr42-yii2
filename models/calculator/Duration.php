@@ -2,9 +2,8 @@
 namespace app\models\calculator;
 use DateTime;
 use Yii;
-use yii\base\Model;
 
-class Duration extends Model
+class Duration extends \yii\base\Model
 {
 	public $from;
 	public $to;

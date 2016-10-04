@@ -2,10 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\Changelog;
-use yii\web\Controller;
-use yii\web\Response;
-use yii\web\NotFoundHttpException;
-use yii\web\UnauthorizedHttpException;
+use yii\web\{Controller, Response, NotFoundHttpException, UnauthorizedHttpException};
 
 class WebhookController extends Controller
 {
