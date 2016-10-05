@@ -61,6 +61,7 @@ class Post extends \yii\db\ActiveRecord
 
 	public function afterFind()
 	{
+		parent::afterFind();
 		$this->url = $this->url ?? $this->title;
 	}
 

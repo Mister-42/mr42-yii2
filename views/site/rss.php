@@ -1,9 +1,7 @@
 <?php
 use Yii;
 use app\models\General;
-use app\models\post\Post;
 use yii\bootstrap\Html;
-use yii\caching\DbDependency;
 use yii\helpers\Url;
 
 $doc=new DOMDocument('1.0', 'UTF-8');
