@@ -21,28 +21,27 @@ foreach($pages as $page)
 
 Sitemap::ageData($doc, $urlset, Url::to(['post/index'], true), end($posts)->updated, 0.8);
 
-foreach($posts as $post) {
+foreach($posts as $post) :
 	$lastUpdate = $post['updated'];
 	foreach ($post['comments'] as $comment)
 		$lastUpdate = max($lastUpdate, $comment['created']);
 	Sitemap::ageData($doc, $urlset, Url::to(['post/index', 'id' => $post['id'], 'title' => $post['url']], true), $lastUpdate);
-}
+endforeach;
 
-foreach($tags as $tag => $value) {
+foreach($tags as $tag => $value) :
 	$lastUpdate = Tags::lastUpdate($tag);
 	Sitemap::prioData($doc, $urlset, Url::to(['post/index', 'action' => 'tag', 'tag' => $tag], true), $tags[$tag] / max($tags) - 0.2, $lastUpdate);
-}
+endforeach;
 
-Sitemap::ageData($doc, $urlset, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpdate());
+Sitemap::ageData($doc, $urlset, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpdate(null));
 
-foreach($artists as $artist) {
-	$lastUpdate = Lyrics2Albums::lastUpdate($artist['artistUrl']);
-	Sitemap::ageData($doc, $urlset, Url::to(['lyrics/index', 'artist' => $artist['artistUrl']], true), $lastUpdate, 0.6);
-}
-
-foreach($albums as $album) {
-	$lastUpdate = Lyrics3Tracks::lastUpdate($album['artistUrl'], $album['albumYear'], $album['albumUrl']);
-	Sitemap::ageData($doc, $urlset, Url::to(['lyrics/index', 'artist' => $album['artistUrl'], 'year' => $album['albumYear'], 'album' => $album['albumUrl']], true), $lastUpdate, 0.5);
-}
+foreach($artists as $artist) :
+	$lastUpdate = Lyrics2Albums::lastUpdate($artist->url, $artist);
+	Sitemap::ageData($doc, $urlset, Url::to(['lyrics/index', 'artist' => $artist->url], true), $lastUpdate, 0.6);
+	foreach($artist->albums as $album) :
+		$lastUpdate = Lyrics3Tracks::lastUpdate($album->artist->url, $album->year, $album->url, $album);
+		Sitemap::ageData($doc, $urlset, Url::to(['lyrics/index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true), $lastUpdate, 0.5);
+	endforeach;
+endforeach;
 
 echo $doc->saveXML();

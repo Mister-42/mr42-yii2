@@ -16,22 +16,20 @@ class LyricsController extends Controller
 				'etagSeed' => function ($action, $params) {
 					$urlData	= Yii::$app->request->get();
 					if (!isset($urlData['artist']) && !isset($urlData['year']) && !isset($urlData['album'])) {
-						return serialize([YII_DEBUG, Yii::$app->user->id, Lyrics1Artists::lastUpdate()]);
+						return serialize([YII_DEBUG, Yii::$app->user->id, Lyrics1Artists::lastUpdate(null)]);
 					} elseif (isset($urlData['artist']) && !isset($urlData['year']) && !isset($urlData['album'])) {
 						return serialize([YII_DEBUG, Yii::$app->user->id, Lyrics2Albums::albumsList($urlData['artist'])]);
-					} elseif (isset($urlData['artist']) && isset($urlData['year']) && isset($urlData['album'])) {
+					} elseif (isset($urlData['artist']) && isset($urlData['year']) && isset($urlData['album']))
 						return serialize([YII_DEBUG, Yii::$app->user->id, $urlData['artist'], $urlData['year'], $urlData['album']]);
-					}
 				},
 				'lastModified' => function ($action, $params) {
 					$urlData	= Yii::$app->request->get();
 					if (!isset($urlData['artist']) && !isset($urlData['year']) && !isset($urlData['album'])) {
-						return Lyrics1Artists::lastUpdate();
+						return Lyrics1Artists::lastUpdate(null);
 					} elseif (isset($urlData['artist']) && !isset($urlData['year']) && !isset($urlData['album'])) {
 						return Lyrics2Albums::lastUpdate($urlData['artist']);
-					} elseif (isset($urlData['artist']) && isset($urlData['year']) && isset($urlData['album'])) {
+					} elseif (isset($urlData['artist']) && isset($urlData['year']) && isset($urlData['album']))
 						return Lyrics3Tracks::lastUpdate($urlData['artist'], $urlData['year'], $urlData['album']);
-					}
 				},
 				'only' => ['index', 'albumpdf'],
 			],
@@ -58,12 +56,12 @@ class LyricsController extends Controller
 					'albums' => $albums,
 			]);		
 		} elseif (isset($urlData['artist']) && isset($urlData['year']) && isset($urlData['album'])) {
-			$tracks = Lyrics3Tracks::tracksList($urlData['artist'], $urlData['year'], $urlData['album'], 'full');
+			$tracks = Lyrics3Tracks::tracksListFull($urlData['artist'], $urlData['year'], $urlData['album']);
 
 			if (count($tracks) === 0)
 				throw new NotFoundHttpException('Album not found.');
 
-			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $tracks[0]['artistUrl'], 'year' => $tracks[0]['albumYear'], 'album' => $tracks[0]['albumUrl']], true), 'type' => 'application/pdf', 'title' => 'PDF']);
+			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
 			return $this->render('3_tracks', [
 				'tracks' => $tracks,
 			]);
@@ -83,13 +81,13 @@ class LyricsController extends Controller
 	public function actionAlbumpdf()
 	{
 		$urlData	= Yii::$app->request->get();
-		$tracks = Lyrics3Tracks::tracksList($urlData['artist'], $urlData['year'], $urlData['album'], 'full');
+		$tracks = Lyrics3Tracks::tracksListFull($urlData['artist'], $urlData['year'], $urlData['album']);
 		$html = $this->renderPartial('albumPdf', ['tracks' => $tracks]);
 
 		if (count($tracks) === 0)
 			throw new NotFoundHttpException('Album not found.');
 
 		$fileName = Lyrics2Albums::buildPdf($tracks, $html);
-		Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]['artistUrl'], $tracks[0]['albumYear'], $tracks[0]['albumUrl']]).'.pdf');
+		Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]).'.pdf');
 	}
 }

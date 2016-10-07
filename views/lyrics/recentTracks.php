@@ -1,4 +1,2 @@
 <?php
-use app\models\user\RecentTracks;
-
-RecentTracks::display($userid);
+\app\models\user\RecentTracks::display($userid);

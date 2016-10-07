@@ -2,7 +2,7 @@
 namespace app\commands;
 use Yii;
 use app\models\General;
-use app\models\lyrics\{Lyrics2Albums, Lyrics3Tracks};
+use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use app\models\post\Post;
 use yii\console\Controller;
 use yii\helpers\Console;
@@ -26,30 +26,31 @@ class PdfController extends Controller
 	 * Builds all albums PDF files.
 	*/
 	public function actionAlbums() {
-		$albums = Lyrics2Albums::albumsList();
-		foreach($albums as $album) :
-			$artistName = $this->ansiFormat($album->artistName, Console::FG_PURPLE);
-			$albumYear = $this->ansiFormat($album->albumYear, Console::FG_GREEN);
-			$albumName = $this->ansiFormat($album->albumName, Console::FG_GREEN);
-			$this->stdout("$artistName");
-			for($x=0; $x<(3-floor(strlen($album->artistName)/8)); $x++) {
-				$this->stdout("\t");
-			}
-			$this->stdout("$albumYear\t\t$albumName");
-			for($x=0; $x<(7-floor(strlen($album->albumName)/8)); $x++) {
-				$this->stdout("\t");
-			}
+		foreach(Lyrics1Artists::albumsList() as $artist) :
+			$artistName = $this->ansiFormat($artist->name, Console::FG_PURPLE);
+			foreach($artist->albums as $album) :
+				$albumYear = $this->ansiFormat($album->year, Console::FG_GREEN);
+				$albumName = $this->ansiFormat($album->name, Console::FG_GREEN);
+				$this->stdout("$artistName");
+				for($x=0; $x<(3-floor(strlen($artist->name)/8)); $x++) {
+					$this->stdout("\t");
+				}
+				$this->stdout("$albumYear\t\t$albumName");
+				for($x=0; $x<(7-floor(strlen($album->name)/8)); $x++) {
+					$this->stdout("\t");
+				}
 
-			$tracks = Lyrics3Tracks::tracksList($album->artistUrl, $album->albumYear, $album->albumUrl, 'full');
-			$html = $this->renderPartial('@app/views/lyrics/albumPdf', ['tracks' => $tracks]);
-			$fileName = Lyrics2Albums::buildPdf($tracks, $html);
+				$tracks = Lyrics3Tracks::tracksListFull($album->artist->url, $album->year, $album->url);
+				$html = $this->renderPartial('@app/views/lyrics/albumPdf', ['tracks' => $tracks]);
+				$fileName = Lyrics2Albums::buildPdf($tracks, $html);
 
-			if ($fileName === false) {
-				$this->stdout($this->ansiFormat("ERROR!\n", Console::BOLD, Console::FG_RED));
-				continue;
-			}
+				if ($fileName === false) {
+					$this->stdout($this->ansiFormat("ERROR!\n", Console::BOLD, Console::FG_RED));
+					continue;
+				}
 
-			$this->stdout(Yii::$app->formatter->asShortSize(filesize($fileName), 2)."\t" . $this->ansiFormat("OK\n", Console::BOLD, Console::FG_GREEN));
+				$this->stdout(Yii::$app->formatter->asShortSize(filesize($fileName), 2)."\t" . $this->ansiFormat("OK\n", Console::BOLD, Console::FG_GREEN));
+			endforeach;
 		endforeach;
 
 		return Controller::EXIT_CODE_NORMAL;

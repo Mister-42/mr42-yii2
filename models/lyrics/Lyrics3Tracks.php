@@ -4,61 +4,56 @@ use Yii;
 
 class Lyrics3Tracks extends \yii\db\ActiveRecord
 {
-	public $artistName;
-	public $artistUrl;
-	public $albumName;
-	public $albumUrl;
-	public $albumYear;
-	public $trackNumber;
-	public $trackName;
-	public $trackLyrics;
-	public $updated;
-	public $active;
-
-	public static function tableName()
-	{
+	public static function tableName() {
 		return '{{%lyrics_3_tracks}}';
 	}
 
-	public static function lastUpdate($artist, $year, $name) {
-		$data = self::tracksList($artist, $year, $name, 'lastUpdate');
-		return $data[0]['updated'];
+	public function afterFind() {
+		parent::afterFind();
+		$this->track = sprintf('%02d', $this->track);
 	}
 
-	public static function tracksList($artist, $year, $name, $view = null) {
-		$data = self::find()
-			->select([
-				'artistName' => Lyrics1Artists::tableName() . '.`name`',
-				'artistUrl' => 'COALESCE('.Lyrics1Artists::tableName().'.`url`, ' . Lyrics1Artists::tableName().'.`name`)',
-				'albumName' => Lyrics2Albums::tableName().'.`name`',
-				'albumUrl' => 'COALESCE('.Lyrics2Albums::tableName().'.`url`, ' . Lyrics2Albums::tableName().'.`name`)',
-				'albumYear' => Lyrics2Albums::tableName().'.`year`',
-				'trackNumber' => self::tableName().'.`track`',
-				'trackName' => self::tableName().'.`name`',
-				'trackLyrics' => ($view == 'full') ? Lyrics4Lyrics::tableName().'.lyrics' : self::tableName().'.`lyricid`',
-				'updated' => ($view == 'lastUpdate') ? 'max(UNIX_TIMESTAMP('.Lyrics4Lyrics::tableName().'.`updated`))' : 'UNIX_TIMESTAMP('.Lyrics4Lyrics::tableName().'.`updated`)',
-				'active' => Lyrics2Albums::tableName().'.`active`',
-			])
-			->orderBy(self::tableName().'.`track`')
-			->where([
-				'COALESCE('.Lyrics1Artists::tableName().'.`url`, ' . Lyrics1Artists::tableName().'.`name`)' => $artist,
-				Lyrics2Albums::tableName().'.`year`' => $year,
-				'COALESCE('.Lyrics2Albums::tableName().'.`url`, ' . Lyrics2Albums::tableName().'.`name`)' => $name,
-			])
-			->join('RIGHT JOIN', Lyrics1Artists::tableName(), Lyrics2Albums::tableName().'.`parent` = ' . Lyrics1Artists::tableName().'.`id`')
-			->joinWith('album')
-			->joinWith('lyric')
+	public function baseList($artist, $year, $name, $view = null) {
+		return self::find()
+			->orderBy('track')
+			->joinWith('artist')
+			->with('album')
+			->where([Lyrics1Artists::tableName().'.name' => $artist])
+			->orWhere([Lyrics1Artists::tableName().'.url' => $artist])
+			->andWhere([Lyrics2Albums::tableName().'.year' => $year])
+			->andWhere([Lyrics2Albums::tableName().'.name' => $name])
+			->orWhere([Lyrics2Albums::tableName().'.url' => $name]);
+	}
+
+	public function tracksList($artist, $year, $name) {
+		return self::baseList($artist, $year, $name)
 			->all();
-		return $data;
 	}
 
-	public function getAlbum()
-	{
+	public function tracksListFull($artist, $year, $name) {
+		return self::baseList($artist, $year, $name)
+			->with('lyrics')
+			->all();
+	}
+
+	public function lastUpdate($artist, $year, $name, $data = null, $max = null) {
+		$data = $data ?? self::tracksList($artist, $year, $name);
+		foreach ($data as $item)
+			$max = max($max, $item->album->updated);
+		return $max;
+	}
+
+	public function getArtist() {
+		return $this->hasOne(Lyrics1Artists::className(), ['id' => 'parent'])
+			->viaTable(Lyrics2Albums::tableName(), ['id' => 'parent'])
+		;
+	}
+
+	public function getAlbum() {
 		return $this->hasOne(Lyrics2Albums::className(), ['id' => 'parent']);
 	}
-   
-	public function getLyric()
-	{
+
+	public function getLyrics() {
 		return $this->hasOne(Lyrics4Lyrics::className(), ['id' => 'lyricid']);
 	}
 }

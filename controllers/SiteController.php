@@ -162,16 +162,13 @@ class SiteController extends Controller
 
 		$tags = Tags::findTagWeights(-1);
 
-		$artists = Lyrics1Artists::artistsList();
-
-		$albums = Lyrics2Albums::albumsList();
+		$artists = Lyrics1Artists::albumsList();
 
 		return $this->renderPartial('sitemapxml', [
 			'pages' => $pages,
 			'posts' => $posts,
 			'tags' => $tags,
 			'artists' => $artists,
-			'albums' => $albums,
 		]);
 	}
 }
