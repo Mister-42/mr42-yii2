@@ -4,10 +4,8 @@ use Yii;
 use app\models\Changelog;
 use yii\web\{Controller, Response, NotFoundHttpException, UnauthorizedHttpException};
 
-class WebhookController extends Controller
-{
-	public function actionChangelog()
-	{
+class WebhookController extends Controller {
+	public function actionChangelog() {
 		list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2);
 		if (!hash_equals($hash, hash_hmac($algo, file_get_contents('php://input'), Yii::$app->params['GitHubHook'])))
 			throw new UnauthorizedHttpException('Access denied!');
@@ -34,8 +32,7 @@ class WebhookController extends Controller
 		return ['status' => 'success', 'message' => 'Successfully updated.'];
 	}
 
-	public function beforeAction($action)
-	{
+	public function beforeAction($action) {
 		$this->enableCsrfValidation = false;
 		return parent::beforeAction($action);
 	}

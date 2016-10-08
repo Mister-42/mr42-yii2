@@ -3,18 +3,15 @@ namespace app\models\tools\PhoneticAlphabet;
 
 class Lapd extends \app\models\tools\PhoneticAlphabet
 {
-	public function name()
-	{
+	public function name() {
 		return 'LAPD radio alphabet';
 	}
 
-	public function sortOrder()
-	{
+	public function sortOrder() {
 		return '3';
 	}
 
-	public function replaceArray()
-	{
+	public function replaceArray() {
 		return [	'a' => 'Adam',
 					'b' => 'Boy',
 					'c' => 'Charles',

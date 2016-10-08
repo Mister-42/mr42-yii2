@@ -10,8 +10,7 @@ class Contact extends \yii\base\Model
 	public $content;
 	public $captcha;
 
-	public function rules()
-	{
+	public function rules() {
 		$rules = [
 			[['name', 'email', 'title', 'content'], 'required'],
 			[['name', 'email', 'title', 'content'], 'trim'],
@@ -22,15 +21,13 @@ class Contact extends \yii\base\Model
 			[['captcha'], 'captcha'],
 		];
 
-		if (!Yii::$app->request->post()) {
+		if (!Yii::$app->request->post())
 			$rules[] = [['captcha'], 'required'];
-		}
 
 		return $rules;
 	}
 
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return [
 			'name' => 'Name',
 			'email' => 'Email Address',
@@ -40,8 +37,7 @@ class Contact extends \yii\base\Model
 		];
 	}
 
-	public function contact()
-	{
+	public function contact() {
 		if ($this->validate()) {
 			return Yii::$app->mailer->compose()
 				->setTo(Yii::$app->params['adminEmail'])

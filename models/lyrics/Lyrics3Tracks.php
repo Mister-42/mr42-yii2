@@ -2,8 +2,7 @@
 namespace app\models\lyrics;
 use Yii;
 
-class Lyrics3Tracks extends \yii\db\ActiveRecord
-{
+class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public static function tableName() {
 		return '{{%lyrics_3_tracks}}';
 	}
@@ -45,8 +44,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord
 
 	public function getArtist() {
 		return $this->hasOne(Lyrics1Artists::className(), ['id' => 'parent'])
-			->viaTable(Lyrics2Albums::tableName(), ['id' => 'parent'])
-		;
+			->viaTable(Lyrics2Albums::tableName(), ['id' => 'parent']);
 	}
 
 	public function getAlbum() {

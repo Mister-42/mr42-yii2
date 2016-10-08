@@ -3,18 +3,15 @@ namespace app\models\tools\PhoneticAlphabet;
 
 class German extends \app\models\tools\PhoneticAlphabet
 {
-	public function name()
-	{
+	public function name() {
 		return 'German';
 	}
 
-	public function sortOrder()
-	{
+	public function sortOrder() {
 		return self::name();
 	}
 
-	public function replaceArray()
-	{
+	public function replaceArray() {
 		return [	'a' => 'Anton',
 					'b' => 'Berta',
 					'c' => 'Cäsar',

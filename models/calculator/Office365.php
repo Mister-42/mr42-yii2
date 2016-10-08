@@ -3,16 +3,14 @@ namespace app\models\calculator;
 use DateTime;
 use Yii;
 
-class Office365 extends \yii\base\Model
-{
+class Office365 extends \yii\base\Model {
 	public $sourcedate;
 	public $sourcecount;
 	public $targetdate;
 	public $targetcount;
 	public $action;
 
-	public function rules()
-	{
+	public function rules() {
 		return [
 			[['sourcedate', 'sourcecount', 'targetcount', 'action'], 'required'],
 			[['sourcedate', 'targetdate'], 'date', 'format' => 'php:Y-m-d'],
@@ -20,8 +18,7 @@ class Office365 extends \yii\base\Model
 		];
 	}
 
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return [
 			'sourcedate' => 'Current End Date',
 			'sourcecount' => 'Current Amount of Licenses',
@@ -30,8 +27,7 @@ class Office365 extends \yii\base\Model
 		];
 	}
 
-	public function calcEndDate()
-	{
+	public function calcEndDate() {
 		if ($this->validate()) {
 			$this->targetdate = ($this->targetdate) ? $this->targetdate : date('Y-m-d');
 			$diff = (new DateTime($this->sourcedate))->diff(new DateTime($this->targetdate));
@@ -58,7 +54,6 @@ class Office365 extends \yii\base\Model
 			Yii::$app->getSession()->setFlash('office365-success', ['date' => $newDate, 'count' => $targetCount]);
 			return true;
 		}
-
 		return false;
 	}
 }

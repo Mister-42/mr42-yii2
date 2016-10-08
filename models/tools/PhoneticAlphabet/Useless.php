@@ -3,18 +3,15 @@ namespace app\models\tools\PhoneticAlphabet;
 
 class Useless extends \app\models\tools\PhoneticAlphabet
 {
-	public function name()
-	{
+	public function name() {
 		return 'The Non-Phonetic Alphabet (Use at your own risk!)';
 	}
 
-	public function sortOrder()
-	{
+	public function sortOrder() {
 		return 'Z';
 	}
 
-	public function replaceArray()
-	{
+	public function replaceArray() {
 		return [	'a' => 'Are',
 					'b' => 'Bee',
 					'c' => 'Cue',

@@ -5,10 +5,8 @@ use app\models\calculator\{Date, Duration, Office365};
 use yii\base\Object;
 use yii\filters\HttpCache;
 
-class CalculatorController extends \yii\web\Controller
-{
-	public function behaviors()
-	{
+class CalculatorController extends \yii\web\Controller {
+	public function behaviors() {
 		return [
 			[
 				'class' => HttpCache::className(),
@@ -55,15 +53,7 @@ class CalculatorController extends \yii\web\Controller
 		]);
 	}
 
-	public function actionWpapsk()
-	{
+	public function actionWpapsk() {
 		return $this->render('wpapsk');
-	}
-
-	public function beforeAction($action) {
-		if (in_array($action->id, ['office365'])) {
-			$this->enableCsrfValidation = false;
-		}
-		return parent::beforeAction($action);
 	}
 }

@@ -3,18 +3,15 @@ namespace app\models\tools\PhoneticAlphabet;
 
 class DutchNl extends \app\models\tools\PhoneticAlphabet
 {
-	public function name()
-	{
+	public function name() {
 		return 'Dutch (The Netherlands)';
 	}
 
-	public function sortOrder()
-	{
+	public function sortOrder() {
 		return self::name();
 	}
 
-	public function replaceArray()
-	{
+	public function replaceArray() {
 		return [	'a' => 'Anton',
 					'b' => 'Bernhard',
 					'c' => 'Cornelis',

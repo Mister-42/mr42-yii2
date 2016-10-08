@@ -5,20 +5,17 @@ use app\models\General;
 use yii\bootstrap\Html;
 use yii\web\AccessDeniedHttpException;
 
-class Comment extends \yii\db\ActiveRecord
-{
+class Comment extends \yii\db\ActiveRecord {
 	public $captcha;
 
 	const STATUS_INACTIVE = '0';
 	const STATUS_ACTIVE = '1';
 
-	public static function tableName()
-	{
+	public static function tableName() {
 		return '{{%article_comment}}';
 	}
 
-	public function rules()
-	{
+	public function rules() {
 		$rules = [
 			[['title', 'content'], 'required'],
 			[['name', 'email', 'website', 'title', 'content'], 'trim'],
@@ -35,12 +32,10 @@ class Comment extends \yii\db\ActiveRecord
 			$rules[] = [['name', 'email'], 'required'];
 			$rules[] = ['captcha', 'required'];
 		}
-
 		return $rules;
 	}
 
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return [
 			'id' => 'ID',
 			'parent' => 'Article ID',
@@ -59,13 +54,11 @@ class Comment extends \yii\db\ActiveRecord
 		if (!parent::beforeSave($insert))
 			return false;
 
-		if ($insert) {
+		if ($insert)
 			$this->created = time();
-		}
 
-		if (!$insert && Yii::$app->user->isGuest) {
+		if (!$insert && Yii::$app->user->isGuest)
 			throw new AccessDeniedHttpException('Please login.');
-		}
 
 		$this->content = General::cleanInput($this->content, false);
 		$this->name = ($this->name) ? $this->name : null;
@@ -75,8 +68,7 @@ class Comment extends \yii\db\ActiveRecord
 		return true;
 	}
 
-	public function showApprovalButton()
-	{
+	public function showApprovalButton() {
 		return Html::a(
 				($this->active) ? Html::icon('thumbs-down').' Renounce' : Html::icon('thumbs-up').' Approve',
 				['commentstatus', 'id' => $this->id, 'action' => 'toggleapproval'],
@@ -84,8 +76,7 @@ class Comment extends \yii\db\ActiveRecord
 			);
 	}
 
-	public function sendCommentMail($model, $comment)
-	{
+	public function sendCommentMail($model, $comment) {
 		Yii::$app->mailer->compose(
 				['text' => 'commentToAuthor'],
 				['model' => $model, 'comment' => $comment]
@@ -107,10 +98,11 @@ class Comment extends \yii\db\ActiveRecord
 		}
 	}
 
-	public static function find()
-	{
+	public static function find() {
 		return parent::find()
-			->where(Yii::$app->user->isGuest ? ['active' => Self::STATUS_ACTIVE] : ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]])
-		;
+			->where(Yii::$app->user->isGuest ?
+				['active' => Self::STATUS_ACTIVE] :
+				['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
+			);
 	}
 }

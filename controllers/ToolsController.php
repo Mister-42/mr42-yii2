@@ -6,10 +6,8 @@ use yii\base\Object;
 use yii\filters\HttpCache;
 use yii\web\{Controller, UploadedFile};
 
-class ToolsController extends Controller
-{
-	public function behaviors()
-	{
+class ToolsController extends Controller {
+	public function behaviors() {
 		return [
 			[
 				'class' => HttpCache::className(),
@@ -24,18 +22,15 @@ class ToolsController extends Controller
 		];
 	}
 
-	public function actionIndex()
-	{
+	public function actionIndex() {
 		return $this->goHome();
 	}
 
-	public function actionHeaders()
-	{
+	public function actionHeaders() {
 		return $this->render('headers');
 	}
 
-	public function actionFavicon()
-	{
+	public function actionFavicon() {
 		$model = new Favicon;
 
 		if ($model->load(Yii::$app->request->post())) {
@@ -49,13 +44,11 @@ class ToolsController extends Controller
 		]);
 	}
 
-	public function actionPassword()
-	{
+	public function actionPassword() {
 		return $this->render('password');
 	}
 
-	public function actionPhoneticAlphabet()
-	{
+	public function actionPhoneticAlphabet() {
 		$model = new PhoneticAlphabet;
 
 		if ($model->load(Yii::$app->request->post())) {

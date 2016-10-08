@@ -25,7 +25,7 @@ class Sitemap
 		if( $age > strtotime("-1 week") )		return 0.9;
 		elseif( $age > strtotime("-1 month") )	return 0.8;
 		elseif( $age > strtotime("-1 year") )	return 0.7;
-		else												return 0.5;
+		return 0.5;
 	}
 
 	private static function priority2Changefreq($priority) {
@@ -33,6 +33,6 @@ class Sitemap
 		elseif( $priority >= 0.8 )	return 'weekly';
 		elseif( $priority >= 0.7 )	return 'monthly';
 		elseif( $priority >= 0.6 )	return 'yearly';
-		else								return 'never';
+		return 'never';
 	}
 }

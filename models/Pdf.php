@@ -4,10 +4,8 @@ use Yii;
 use kartik\mpdf\Pdf as PdfCreator;
 use yii\helpers\FileHelper;
 
-class Pdf
-{
-	public function create($filename, $content, $updated, $params)
-	{
+class Pdf {
+	public function create($filename, $content, $updated, $params) {
 		$filename = Yii::getAlias($filename.'.pdf');
 		$created = $params['created'] ?? $updated;
 		if (!file_exists($filename) || filemtime($filename) < $updated) {
@@ -33,8 +31,7 @@ class Pdf
 		return $filename;
 	}
 
-	public function replaceLine($fileName, $search, $replace)
-	{
+	public function replaceLine($fileName, $search, $replace) {
 		$reading = fopen($fileName, 'r');
 		$writing = fopen($fileName.'.tmp', 'w');
 

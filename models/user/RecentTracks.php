@@ -2,18 +2,17 @@
 namespace app\models\user;
 use Yii;
 use yii\bootstrap\Html;
+use yii\db\Query;
 use yii\helpers\Url;
 use yii\httpclient\Client;
 
 class RecentTracks extends \yii\db\ActiveRecord
 {
-	public static function tableName()
-	{
+	public static function tableName() {
 		 return '{{%recenttracks}}';
 	}
 
-	public static function display($userid)
-	{
+	public static function display($userid) {
 		if (time()-self::lastSeen($userid) > 300) {
 			$profile = Profile::find()->where(['user_id' => $userid])->one();
 			self::updateUser(1, $profile);
@@ -27,14 +26,14 @@ class RecentTracks extends \yii\db\ActiveRecord
 			->limit($limit)
 			->all();
 
-		foreach ($recentTracks as $track) {
+		foreach ($recentTracks as $track) :
 			echo '<div class="clearfix track">';
 				echo Html::tag('span', $track['artist'], ['class' => 'pull-left']);
 				if ($track['time'] === 0)
 					echo Html::icon('volume-up', ['title' => 'Currently playing']);
 				echo Html::tag('span', $track['track'], ['class' => 'pull-right text-right']);
 			echo '</div>';
-		}
+		endforeach;
 
 		echo (empty($recentTracks)) ?
 			Html::tag('p', 'No items to display.') :
@@ -68,14 +67,14 @@ class RecentTracks extends \yii\db\ActiveRecord
 
 			$playcount = (int) $response->data['recenttracks']['@attributes']['total'];
 			$count = 0;
-			self::deleteAll(['userid' => $profile->user_id]);
 			foreach($response->data['recenttracks']['track'] as $track) {
-				$addTrack = new RecentTracks();
+				$time = (bool) $track['nowplaying'] ? 0 : (int) $track->date['uts'];
+				$addTrack = self::findOne(['userid' => $profile->user_id, 'time' => $time]) ?? new RecentTracks();
 				$addTrack->userid = $profile->user_id;
 				$addTrack->artist = (string) $track->artist;
 				$addTrack->track = (string) $track->name;
 				$addTrack->count = $playcount--;
-				$addTrack->time = ((bool) $track['nowplaying']) ? 0 : (int) $track->date['uts'];
+				$addTrack->time = $time;
 				$addTrack->seen = $lastSeen;
 				$addTrack->save();
 
@@ -83,6 +82,18 @@ class RecentTracks extends \yii\db\ActiveRecord
 				if ($count === $limit)
 					break;
 			}
+
+/* This version of MySQL doesn't yet support 'LIMIT & IN/ALL/ANY/SOME subquery' - 5.5.50-0+deb7u2
+			self::deleteAll(['and',
+				['userid' => $profile->user_id],
+				['not in', 'time',
+					(new Query())->select('time')->from(self::tableName())->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit($limit)
+				],
+			]);
+*/
+			$delete = self::find()->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit(999)->offset($limit)->all();
+			foreach ($delete as $item)
+				$item->delete();
 		}
 	}
 }

@@ -8,8 +8,7 @@ use yii\db\ActiveRecord;
 
 class Profile extends \dektrium\user\models\Profile
 {
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		$labels = parent::attributeLabels();
 		$labels['lastfm'] = 'Last.fm Username';
 		$labels['birthday'] = 'Date of Birth';
@@ -17,8 +16,7 @@ class Profile extends \dektrium\user\models\Profile
 		return $labels;
 	}
 
-	public function rules()
-	{
+	public function rules() {
 		$rules = parent::rules();
 		$rules['required'] = ['birthday', 'required'];
 		$rules['lastfm'] = ['lastfm', 'string', 'max' => 64];
@@ -27,16 +25,14 @@ class Profile extends \dektrium\user\models\Profile
 		return $rules;
 	}
 
-	public function beforeSave($insert)
-	{
+	public function beforeSave($insert) {
 		$this->bio = General::cleanInput($this->bio, false);
 		$this->bio = str_replace(['&lt;', '&gt;', '&amp;'], ['<', '>', '&'], $this->bio);
 		$this->setAttribute('bio', $this->bio);
 		return ActiveRecord::beforeSave($insert);
 	}
 
-	public static function show($user)
-	{
+	public static function show($user) {
 		$name = empty($user->name) ? Html::encode($user->user->username) : Html::encode($user->name);
 		$replace_array = ['%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y];
 		$imgUrl = Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/william-morris/'.strtolower($name[0]).'.png';

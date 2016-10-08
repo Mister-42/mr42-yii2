@@ -12,13 +12,11 @@ class Post extends \yii\db\ActiveRecord
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
 
-	public static function tableName()
-	{
+	public static function tableName() {
 		return '{{%article}}';
 	}
 
-	public function rules()
-	{
+	public function rules() {
 		return [
 			[['title', 'content'], 'required'],
 			[['content'], 'string'],
@@ -27,8 +25,7 @@ class Post extends \yii\db\ActiveRecord
 		];
 	}
 
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return [
 			'id' => 'ID',
 			'title' => 'Title',
@@ -41,8 +38,7 @@ class Post extends \yii\db\ActiveRecord
 		];
 	}
 
-	public function addComment(Comment $comment)
-	{
+	public function addComment(Comment $comment) {
 		$comment->parent = $this->id;
 		$comment->user = (Yii::$app->user->isGuest) ? null : Yii::$app->user->id;
 		$comment->active = (Yii::$app->user->isGuest) ? Self::STATUS_INACTIVE : Self::STATUS_ACTIVE;
@@ -59,14 +55,12 @@ class Post extends \yii\db\ActiveRecord
 		return true;
 	}
 
-	public function afterFind()
-	{
+	public function afterFind() {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->title;
 	}
 
-	public function beforeSave($insert)
-	{
+	public function beforeSave($insert) {
 		if (Yii::$app->user->isGuest)
 			throw new AccessDeniedHttpException('Please login.');
 
@@ -87,16 +81,14 @@ class Post extends \yii\db\ActiveRecord
 		return true;
 	}
 
-	public function belongsToViewer()
-	{
+	public function belongsToViewer() {
 		if (Yii::$app->user->isGuest)
 			return false;
 
 		return $this->author == Yii::$app->user->id;
 	}
 
-	public function buildPdf($model, $html)
-	{
+	public function buildPdf($model, $html) {
 		$user = new Profile();
 		$profile = $user->find($model->user->id)->one();
 		$name = (empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name));
@@ -119,45 +111,39 @@ class Post extends \yii\db\ActiveRecord
 		);
 	}
 
-	public function findNewerOne()
-	{
+	public function findNewerOne() {
 		return static::find()
-				->where('id > :id', [':id' => $this->id])
-				->orderBy('id asc')
-				->one();
+			->where('id > :id', [':id' => $this->id])
+			->orderBy('id asc')
+			->one();
 	}
 
-	public function findOlderOne()
-	{
+	public function findOlderOne() {
 		return static::find()
-				->where('id < :id', [':id' => $this->id])
-				->orderBy('id desc')
-				->one();
+			->where('id < :id', [':id' => $this->id])
+			->orderBy('id desc')
+			->one();
 	}
 
-	public function getComments()
-	{
+	public function getComments() {
 		return $this->hasMany(Comment::className(), ['parent' => 'id']);
 	}
 
-	public function getNewerLink()
-	{
+	public function getNewerLink() {
 		if (!$model = $this->findNewerOne())
 			return null;
 
 		return Html::a('Next Article &raquo;', ['post/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)]);
 	}
 
-	public function getOlderLink()
-	{
+	public function getOlderLink() {
 		if (!$model = $this->findOlderOne())
 			return null;
 
 		return Html::a('&laquo; Previous Article', ['post/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)]);
 	}
 
-	public function getUser()
-	{
+	public function getUser() {
 		return $this->hasOne(User::className(), ['id' => 'author']);
 	}
 }

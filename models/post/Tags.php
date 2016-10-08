@@ -22,7 +22,6 @@ class Tags
 			->select(['updated' => 'max(updated)'])
 			->where(['like', 'tags', $tag])
 			->one();
-
 		return $lastUpdate['updated'];
 	}
 

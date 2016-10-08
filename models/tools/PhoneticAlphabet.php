@@ -8,24 +8,21 @@ class PhoneticAlphabet extends \yii\base\Model
 	public $text;
 	public $alphabet;
 
-	public function rules()
-	{
+	public function rules() {
 		return [
 			[['text', 'alphabet'], 'required'],
 			['alphabet', 'in', 'range' => self::listAlphabets('column', 'file')],
 		];
 	}
 
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return [
 			'text' => 'Text to convert',
 			'alphabet' => 'Phonetic Alphabet to use',
 		];
 	}
 
-	public function convertText()
-	{
+	public function convertText() {
 		if ($this->validate()) {
 			$className = 'app\\models\\tools\\PhoneticAlphabet\\' . $this->alphabet;
 			$alphabet = new $className();
@@ -47,8 +44,7 @@ class PhoneticAlphabet extends \yii\base\Model
 		return false;
 	}
 
-	public function listAlphabets($type = 'map', $name = null)
-	{
+	public function listAlphabets($type = 'map', $name = null) {
 		$alphabetFiles = FileHelper::findFiles(__DIR__ . '/PhoneticAlphabet/', ['only'=>['*.php'], 'recursive' => false]);
 
 		foreach ($alphabetFiles as $file) {

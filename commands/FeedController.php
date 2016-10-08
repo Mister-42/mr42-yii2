@@ -11,8 +11,7 @@ use yii\httpclient\Client;
 /**
  * Handles feeds.
  */
-class FeedController extends Controller
-{
+class FeedController extends Controller {
 	public $defaultAction = 'rss';
 
 	/**

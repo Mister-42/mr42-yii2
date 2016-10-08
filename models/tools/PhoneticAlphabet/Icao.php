@@ -3,18 +3,15 @@ namespace app\models\tools\PhoneticAlphabet;
 
 class Icao extends \app\models\tools\PhoneticAlphabet
 {
-	public function name()
-	{
+	public function name() {
 		return 'ICAO/NATO phonetic alphabet';
 	}
 
-	public function sortOrder()
-	{
+	public function sortOrder() {
 		return '0';
 	}
 
-	public function replaceArray()
-	{
+	public function replaceArray() {
 		return [	'a' => 'Alfa',
 					'b' => 'Bravo',
 					'c' => 'Charlie',

@@ -3,28 +3,24 @@ namespace app\models\calculator;
 use DateTime;
 use Yii;
 
-class Duration extends \yii\base\Model
-{
+class Duration extends \yii\base\Model {
 	public $from;
 	public $to;
 
-	public function rules()
-	{
+	public function rules() {
 		return [
 			[['from', 'to'], 'date', 'format' => 'php:Y-m-d'],
 		];
 	}
 
-	public function attributeLabels()
-	{
+	public function attributeLabels() {
 		return [
 			'from' => 'Start Date',
 			'to' => 'End Date',
 		];
 	}
 
-	public function duration()
-	{
+	public function duration() {
 		if ($this->validate()) {
 			$this->from = ($this->from) ? $this->from : date('Y-m-d');
 			$this->to = ($this->to) ? $this->to : date('Y-m-d');
@@ -32,7 +28,6 @@ class Duration extends \yii\base\Model
 			Yii::$app->getSession()->setFlash('duration-success', $diff);
 			return true;
 		}
-
 		return false;
 	}
 }

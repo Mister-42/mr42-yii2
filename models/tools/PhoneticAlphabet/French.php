@@ -3,18 +3,15 @@ namespace app\models\tools\PhoneticAlphabet;
 
 class French extends \app\models\tools\PhoneticAlphabet
 {
-	public function name()
-	{
+	public function name() {
 		return 'French';
 	}
 
-	public function sortOrder()
-	{
+	public function sortOrder() {
 		return self::name();
 	}
 
-	public function replaceArray()
-	{
+	public function replaceArray() {
 		return [	'a' => 'Anatole',
 					'b' => 'Berthe',
 					'c' => 'Célestine',

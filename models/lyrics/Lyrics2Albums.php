@@ -5,8 +5,7 @@ use app\models\Pdf;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 
-class Lyrics2Albums extends \yii\db\ActiveRecord
-{
+class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public static function tableName() {
 		return '{{%lyrics_2_albums}}';
 	}
@@ -35,8 +34,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
 		return $max;
 	}
 
-	public function buildPdf($tracks, $html)
-	{
+	public function buildPdf($tracks, $html) {
 		$pdf = new Pdf();
 		return $pdf->create(
 			'@runtime/PDF/lyrics/'.implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]),

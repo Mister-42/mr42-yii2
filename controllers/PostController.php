@@ -9,12 +9,10 @@ use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\Url;
 use yii\web\{Controller,ErrorAction, MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
 
-class PostController extends Controller
-{
+class PostController extends Controller {
 	public $layout = '@app/views/layouts/column2.php';
 
-	public function actions()
-	{
+	public function actions() {
 		return [
 			'error' => [
 				'class' => ErrorAction::className(),
@@ -22,8 +20,7 @@ class PostController extends Controller
 		];
 	}
 
-	public function behaviors()
-	{
+	public function behaviors() {
 		return [
 			'access' => [
 				'class' => AccessControl::className(),
@@ -45,8 +42,7 @@ class PostController extends Controller
 		];
 	}
 
-	public function actionIndex($id = '', $title = '', $page = '', $action = '', $tag = '', $q = '')
-	{
+	public function actionIndex($id = '', $title = '', $page = '', $action = '', $tag = '', $q = '') {
 		if (isset($id) && !empty($id)) {
 			$model = $this->findModel($id, ['comments']);
 			$comment = new Comment;
@@ -95,8 +91,7 @@ class PostController extends Controller
 		]);
 	}
 
-	public function actionPdf($id = '', $title = '')
-	{
+	public function actionPdf($id = '', $title = '') {
 		if (isset($id) && !empty($id)) {
 			$model = $this->findModel($id);
 
@@ -111,8 +106,7 @@ class PostController extends Controller
 		}
 	}
 
-	public function actionCreate()
-	{
+	public function actionCreate() {
 		$this->layout = '@app/views/layouts/main.php';
 
 		$model = new Post;
@@ -124,8 +118,7 @@ class PostController extends Controller
 		]);
 	}
 
-	public function actionUpdate($id)
-	{
+	public function actionUpdate($id) {
 		$this->layout = '@app/views/layouts/main.php';
 
 		$model = $this->findModel($id);
@@ -140,8 +133,7 @@ class PostController extends Controller
 		]);
 	}
 
-	public function actionDelete($id)
-	{
+	public function actionDelete($id) {
 		$model = $this->findModel($id);
 		if (!$model->belongsToViewer()) {
 			throw new UnauthorizedHttpException('You do not have permission to edit this post.');
@@ -150,8 +142,7 @@ class PostController extends Controller
 		return $this->redirect(['index']);
 	}
 
-	public function actionCommentstatus($action, $id)
-	{
+	public function actionCommentstatus($action, $id) {
 		$comment = Comment::findOne($id);
 		$post = $this->findModel($comment->parent);
 
@@ -172,13 +163,11 @@ class PostController extends Controller
 		return false;
 	}
 
-	protected function findComment($id)
-	{
+	protected function findComment($id) {
 		$query = Comment::find()
 				->where(['id' => $id])
 				->andWhere(Yii::$app->user->isGuest ? ['`active`' => Post::STATUS_ACTIVE] : ['or', ['`active`' => [Post::STATUS_INACTIVE, Post::STATUS_ACTIVE]]])
-				->with('user')
-		;
+				->with('user');
 
 		$model = $query->one();
 
@@ -192,8 +181,7 @@ class PostController extends Controller
 		return $model;
 	}
 
-	protected function findModel($id, $withList = [])
-	{
+	protected function findModel($id, $withList = []) {
 		$query = Post::find()
 				->where(['id' => $id])
 				->andWhere(Yii::$app->user->isGuest ? ['active' => Post::STATUS_ACTIVE] : ['or', ['active' => [Post::STATUS_INACTIVE, Post::STATUS_ACTIVE]]])

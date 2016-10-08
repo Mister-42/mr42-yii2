@@ -3,10 +3,9 @@ namespace app\models;
 use Yii;
 use yii\bootstrap\Html;
 
-class MenuItems
-{
+class MenuItems {
 	public static function menuArray() {
-		$isGuest = (Yii::$app->controller->action->id == 'sitemapxml') ? true : Yii::$app->user->isGuest;
+		$isGuest = (Yii::$app->controller->action->id == 'sitemapxml') ?? Yii::$app->user->isGuest;
 		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 		$username = $isGuest ? '' : Yii::$app->user->identity->username;
 
@@ -61,23 +60,22 @@ class MenuItems
 
 	public static function urlList() {
 		foreach (self::menuArray() as $item) :
-			if (isset($item['visible'])) continue;
+			if (isset($item['visible']))
+				continue;
 
-			if (isset($item['url'])) {
+			if (isset($item['url']))
 				$pages[] = $item['url'][0];
-			}
 
 			if (isset($item['items'])) {
 				foreach ($item['items'] as $subitem) :
-					if (isset($subitem['visible'])) continue;
+					if (isset($subitem['visible']))
+						continue;
 
-					if (isset($subitem['url'])) {
+					if (isset($subitem['url']))
 						$pages[] = $subitem['url'][0];
-					}
 				endforeach;
 			}
 		endforeach;
-
 		return $pages;
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\{Feed, MenuItems};
+use app\models\{Changelog, Feed, MenuItems};
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums};
 use app\models\post\{Post, Tags};
 use app\models\site\Contact;
@@ -12,10 +12,8 @@ use yii\db\Query;
 use yii\filters\{AccessControl, HttpCache};
 use yii\web\{Controller, ErrorAction, NotFoundHttpException, Response};
 
-class SiteController extends Controller
-{
-	public function actions()
-	{
+class SiteController extends Controller {
+	public function actions() {
 		return [
 			'captcha' => [
 				'class' => CaptchaAction::className(),
@@ -29,8 +27,7 @@ class SiteController extends Controller
 		];
 	}
 
-	public function behaviors()
-	{
+	public function behaviors() {
 		return [
 			'access' => [
 				'class' => AccessControl::className(),
@@ -49,8 +46,8 @@ class SiteController extends Controller
 				'class' => HttpCache::className(),
 				'only' => ['changelog'],
 				'lastModified' => function (Object $action, $params) {
-					$lastUpdate = Feed::find()->select(['updated' => 'max(time)'])->where(['feed' => 'changelog'])->asArray()->one();
-					return $lastUpdate['updated'];
+					$lastUpdate = Changelog::find()->select(['time' => 'max(time)'])->one();
+					return $lastUpdate->time;
 				},
 			], [
 				'class' => HttpCache::className(),
@@ -68,15 +65,14 @@ class SiteController extends Controller
 				'class' => HttpCache::className(),
 				'only' => ['rss'],
 				'lastModified' => function (Object $action, $params) {
-					$q = new Query();
-					return $q->from(Post::tableName())->max('updated');
+					$lastUpdate = Post::find()->select(['updated' => 'max(updated)'])->one();
+					return $lastUpdate->updated;
 				},
 			],
 		];
 	}
 
-	public function actionIndex()
-	{
+	public function actionIndex() {
 		$this->layout = '@app/views/layouts/column2.php';
 
 		return  $this->render('index', [
@@ -85,13 +81,11 @@ class SiteController extends Controller
 		]);
 	}
 
-	public function actionChangelog()
-	{
+	public function actionChangelog() {
 		return $this->render('changelog');
 	}
 
-	public function actionContact()
-	{
+	public function actionContact() {
 		$model = new Contact;
 		if ($model->load(Yii::$app->request->post()) && $model->contact())
 			return Alert::widget(['options' => ['class' => 'alert-success'], 'body' => 'Thank you for contacting us. We will respond to you as soon as possible.', 'closeButton' => false]);
@@ -101,30 +95,25 @@ class SiteController extends Controller
 		]);
 	}
 
-	public function actionCredits()
-	{
+	public function actionCredits() {
 		return $this->render('credits');
 	}
 
-	public function actionFaviconico()
-	{
+	public function actionFaviconico() {
 		Yii::$app->response->sendFile(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico', 'favicon.ico', ['inline' => true]);
 	}
 
-	public function actionOffline()
-	{
+	public function actionOffline() {
 		Yii::$app->response->statusCode = 503;
 		Yii::$app->response->headers->add('Retry-After', 900);
 		return $this->render('offline');
 	}
 
-	public function actionPlayground()
-	{
+	public function actionPlayground() {
 		return $this->render('playground');
 	}
 
-	public function actionRobotstxt()
-	{
+	public function actionRobotstxt() {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'text/plain');
 		return $this->renderPartial('robotstxt');
@@ -148,8 +137,7 @@ class SiteController extends Controller
 		]);
 	}
 
-	public function actionSitemapxml()
-	{
+	public function actionSitemapxml() {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/xml');
 
