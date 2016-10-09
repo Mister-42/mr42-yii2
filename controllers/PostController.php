@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\General;
+use app\models\Formatter;
 use app\models\post\{Comment, Post};
 use yii\bootstrap\Alert;
 use yii\data\ActiveDataProvider;
@@ -98,7 +98,7 @@ class PostController extends Controller {
 			if (empty($title) || $title != $model->url)
 				$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
-			$model->content = General::cleanInput($model->content, 'gfm', true);
+			$model->content = Formatter::cleanInput($model->content, 'gfm', true);
 			$html = $this->renderPartial('pdf', ['model' => $model]);
 
 			$fileName = Post::buildPdf($model, $html);

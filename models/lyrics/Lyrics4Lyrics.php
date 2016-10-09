@@ -8,6 +8,6 @@ class Lyrics4Lyrics extends \yii\db\ActiveRecord {
 
 	public function afterFind() {
 		parent::afterFind();
-		$this->lyrics = \app\models\General::cleanInput($this->lyrics, 'gfm-comment');
+		$this->lyrics = \app\models\Formatter::cleanInput($this->lyrics, 'gfm-comment');
 	}
 }

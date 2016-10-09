@@ -1,6 +1,6 @@
 <?php
 use Yii;
-use app\models\General;
+use app\models\Formatter;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 
@@ -47,7 +47,7 @@ foreach($posts as $post) :
 	$item->appendChild($doc->createElement('title', $post->title));
 	$item->appendChild($doc->createElement('link', Html::encode(Url::to(['post/index', 'id'=>$post->id, 'title'=>$post->url], true))));
 		$description = $doc->createElement('description');
-		$description->appendChild($doc->createCDATASection(General::cleanInput($post->content, 'gfm')));
+		$description->appendChild($doc->createCDATASection(Formatter::cleanInput($post->content, 'gfm')));
 	$item->appendChild($description);
 	$item->appendChild($doc->createElement('dc:creator', $post->user->username));
 	$item->appendChild($doc->createElement('category', Html::encode($post->tags)));

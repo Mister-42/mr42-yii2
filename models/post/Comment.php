@@ -1,7 +1,7 @@
 <?php
 namespace app\models\post;
 use Yii;
-use app\models\General;
+use app\models\Formatter;
 use yii\bootstrap\Html;
 use yii\web\AccessDeniedHttpException;
 
@@ -52,7 +52,7 @@ class Comment extends \yii\db\ActiveRecord {
 
 	public function afterFind() {
 		parent::afterFind();
-		$this->content = General::cleanInput($this->content, 'gfm-comment');
+		$this->content = Formatter::cleanInput($this->content, 'gfm-comment');
 	}
 
 	public function beforeSave($insert) {
@@ -65,7 +65,7 @@ class Comment extends \yii\db\ActiveRecord {
 		if (!$insert && Yii::$app->user->isGuest)
 			throw new AccessDeniedHttpException('Please login.');
 
-		$this->content = General::cleanInput($this->content, false);
+		$this->content = Formatter::cleanInput($this->content, false);
 		$this->name = ($this->name) ? $this->name : null;
 		$this->email = ($this->email) ? $this->email : null;
 		$this->website = ($this->website) ? $this->website : null;

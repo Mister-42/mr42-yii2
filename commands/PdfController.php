@@ -1,7 +1,7 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\General;
+use app\models\Formatter;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use app\models\post\Post;
 use yii\console\Controller;
@@ -69,7 +69,7 @@ class PdfController extends Controller {
 			for($x=0; $x<(7-floor(strlen($post->title)/8)); $x++)
 				$this->stdout("\t");
 
-			$post->content = General::cleanInput($post->content, 'gfm', true);
+			$post->content = Formatter::cleanInput($post->content, 'gfm', true);
 			$html = $this->renderPartial('@app/views/post/pdf', ['model' => $post]);
 			$fileName = Post::buildPdf($post, $html);
 

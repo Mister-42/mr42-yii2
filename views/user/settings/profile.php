@@ -62,7 +62,7 @@ $this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length
 
 		echo $form->field($model, 'bio', [
 				'template' => '{label}<div class="col-lg-9"><div id="chars" class="pull-right"></div></div><div class="input-group"><span class="input-group-addon">'.Html::icon('info-sign').'</span>{input}</div> <div class="col-lg-offset-3 col-lg-9">{hint} {error}</div>'
-			]) 
+			])
 			->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => 6])
 			->hint('You may use ' . Html::a('Markdown Syntax', ['/post/index', 'id' => 4], ['target' => '_blank']) . ' and <code>%age%</code> to show your age, calculated from <nobr>' . Html::tag('code', $model->getAttributeLabel('birthday')) . '</nobr>. HTML is not allowed.');
 

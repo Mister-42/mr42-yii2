@@ -41,7 +41,7 @@ echo $form->field($profile, 'birthday')->widget(DatePicker::classname(), [
 
 echo $form->field($profile, 'bio', [
 		'template' => '{label}<div class="col-lg-9"><div><div id="chars" class="pull-right"></div>{input}</div> {hint}</div><div class="col-lg-offset-2 col-lg-6">{error}</div>'
-	]) 
+	])
 	->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => 6]);
 
 echo $form->field($profile, 'timezone')->dropDownList(ArrayHelper::map(Timezone::getAll(), 'timezone', 'name'), ['tabindex' => 7]);

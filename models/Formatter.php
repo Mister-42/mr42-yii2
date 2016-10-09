@@ -3,7 +3,7 @@ namespace app\models;
 use Yii;
 use yii\helpers\Markdown;
 
-class General {
+class Formatter extends \yii\i18n\Formatter {
 	public static function cleanInput($data, $markdown = 'original', $allowHtml = false) {
 		$data = ($allowHtml) ? Yii::$app->formatter->asRaw($data) : Yii::$app->formatter->asHtml($data, ['HTML.Allowed' => '']);
 		if ($markdown)

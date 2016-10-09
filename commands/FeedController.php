@@ -1,7 +1,7 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Feed, General};
+use app\models\{Feed, Formatter};
 use app\models\user\RecentTracks;
 use dektrium\user\models\{Profile, User};
 use yii\console\Controller;
@@ -37,7 +37,7 @@ class FeedController extends Controller {
 			$rssItem->feed = $name;
 			$rssItem->title = (string) $item->title;
 			$rssItem->url = (string) $item->$urlField;
-			$rssItem->description = General::cleanInput($item->description, false);
+			$rssItem->description = Formatter::cleanInput($item->description, false);
 			$rssItem->time = strtotime($item->pubDate);
 			$rssItem->save();
 
