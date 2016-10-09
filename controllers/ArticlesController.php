@@ -2,14 +2,14 @@
 namespace app\controllers;
 use Yii;
 use app\models\Formatter;
-use app\models\post\{Comment, Post};
+use app\models\articles\{Articles, Comment};
 use yii\bootstrap\Alert;
 use yii\data\ActiveDataProvider;
 use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\Url;
 use yii\web\{Controller,ErrorAction, MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
 
-class PostController extends Controller {
+class ArticlesController extends Controller {
 	public $layout = '@app/views/layouts/column2.php';
 
 	public function actions() {
@@ -69,7 +69,7 @@ class PostController extends Controller {
 			]);
 		}
 
-		$query = Post::find()->orderBy('id DESC');
+		$query = Articles::find()->orderBy('id DESC');
 		if ($action === "tag" && !empty($tag)) {
 			$query->where(['like', 'tags', '%'.$tag.'%', false]);
 		} elseif ($action === "search" && !empty($q)) {
@@ -101,7 +101,7 @@ class PostController extends Controller {
 			$model->content = Formatter::cleanInput($model->content, 'gfm', true);
 			$html = $this->renderPartial('pdf', ['model' => $model]);
 
-			$fileName = Post::buildPdf($model, $html);
+			$fileName = Articles::buildPdf($model, $html);
 			Yii::$app->response->sendFile($fileName, Yii::$app->name.' - '.$model->id.' - '.$model->url.'.pdf');
 		}
 	}
@@ -109,7 +109,7 @@ class PostController extends Controller {
 	public function actionCreate() {
 		$this->layout = '@app/views/layouts/main.php';
 
-		$model = new Post;
+		$model = new Articles;
 		if ($model->load(Yii::$app->request->post()) && $model->save())
 			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
 
@@ -123,7 +123,7 @@ class PostController extends Controller {
 
 		$model = $this->findModel($id);
 		if (!$model->belongsToViewer())
-			throw new UnauthorizedHttpException('You do not have permission to edit this post.');
+			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
 
 		if ($model->load(Yii::$app->request->post()) && $model->save())
 			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
@@ -136,7 +136,7 @@ class PostController extends Controller {
 	public function actionDelete($id) {
 		$model = $this->findModel($id);
 		if (!$model->belongsToViewer()) {
-			throw new UnauthorizedHttpException('You do not have permission to edit this post.');
+			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
 		}
 		$model->delete();
 		return $this->redirect(['index']);
@@ -144,9 +144,9 @@ class PostController extends Controller {
 
 	public function actionCommentstatus($action, $id) {
 		$comment = Comment::findOne($id);
-		$post = $this->findModel($comment->parent);
+		$article = $this->findModel($comment->parent);
 
-		if (!$post->belongsToViewer())
+		if (!$article->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
 
 		$comment->active = ($comment->active) ? Comment::STATUS_INACTIVE : Comment::STATUS_ACTIVE;
@@ -157,7 +157,7 @@ class PostController extends Controller {
 			return $comment->showApprovalButton();
 		} elseif ($action == "delete") {
 			$comment->delete();
-			return $this->redirect(['index', 'id' => $post->id, 'title' => $post->title, '#' => 'comments']);
+			return $this->redirect(['index', 'id' => $article->id, 'title' => $article->title, '#' => 'comments']);
 		}
 
 		return false;
@@ -166,7 +166,7 @@ class PostController extends Controller {
 	protected function findComment($id) {
 		$query = Comment::find()
 				->where(['id' => $id])
-				->andWhere(Yii::$app->user->isGuest ? ['`active`' => Post::STATUS_ACTIVE] : ['or', ['`active`' => [Post::STATUS_INACTIVE, Post::STATUS_ACTIVE]]])
+				->andWhere(Yii::$app->user->isGuest ? ['`active`' => Articles::STATUS_ACTIVE] : ['or', ['`active`' => [Articles::STATUS_INACTIVE, Articles::STATUS_ACTIVE]]])
 				->with('user');
 
 		$model = $query->one();
@@ -174,17 +174,17 @@ class PostController extends Controller {
 		if ($model === null)
 			throw new NotFoundHttpException('Page not found.');
 
-		$post = $this->findModel($id);
-		if (!$post->belongsToViewer())
+		$article = $this->findModel($id);
+		if (!$article->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
 
 		return $model;
 	}
 
 	protected function findModel($id, $withList = []) {
-		$query = Post::find()
+		$query = Articles::find()
 				->where(['id' => $id])
-				->andWhere(Yii::$app->user->isGuest ? ['active' => Post::STATUS_ACTIVE] : ['or', ['active' => [Post::STATUS_INACTIVE, Post::STATUS_ACTIVE]]])
+				->andWhere(Yii::$app->user->isGuest ? ['active' => Articles::STATUS_ACTIVE] : ['or', ['active' => [Articles::STATUS_INACTIVE, Articles::STATUS_ACTIVE]]])
 				->with('user');
 
 		foreach ($withList as $with)

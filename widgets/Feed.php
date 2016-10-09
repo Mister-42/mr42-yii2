@@ -4,13 +4,11 @@ use Yii;
 use yii\bootstrap\{Html, Widget};
 use app\models\Feed as FeedModel;
 
-class Feed extends Widget
-{
+class Feed extends Widget {
 	public $name;
 	public $limit;
 
-	public function run()
-	{
+	public function run() {
 		$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 10;
 		$limit = $this->limit ?? $limit;
 		$items = FeedModel::find()
@@ -21,8 +19,7 @@ class Feed extends Widget
 		echo (empty($items)) ? Html::tag('p', 'No items to display.') : $this->renderFeed($items, $limit);
 	}
 
-	public function renderFeed($items, $limit)
-	{
+	public function renderFeed($items, $limit) {
 		$count = 0;
 		foreach ($items as $item) {
 			$count++;

@@ -6,7 +6,7 @@ return [
 	'GitHubHook' => $secrets['github']['hook'],
 	'LastFMAPI' => $secrets['LastFM']['API'],
 	'noreplyEmail' => $secrets['params']['noreplyEmail'],
-	'recentPosts' => 5,
+	'recentArticles' => 5,
 	'recentTracksCount' => 20,
 	'specialIPs' => $secrets['params']['specialIPs'],
 	'tagCloud' => 20,

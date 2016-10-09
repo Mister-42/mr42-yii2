@@ -1,5 +1,5 @@
 <?php
-namespace app\models\post;
+namespace app\models\articles;
 use Yii;
 use app\models\Pdf;
 use dektrium\user\models\{Profile, User};
@@ -7,13 +7,12 @@ use yii\bootstrap\Html;
 use yii\helpers\{StringHelper, Url};
 use yii\web\AccessDeniedHttpException;
 
-class Post extends \yii\db\ActiveRecord
-{
+class Articles extends \yii\db\ActiveRecord {
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
 
 	public static function tableName() {
-		return '{{%article}}';
+		return '{{%articles}}';
 	}
 
 	public function rules() {
@@ -96,14 +95,14 @@ class Post extends \yii\db\ActiveRecord
 
 		$pdf = new Pdf();
 		return $pdf->create(
-			'@runtime/PDF/posts/'.sprintf('%05d', $model->id),
+			'@runtime/PDF/articles/'.sprintf('%05d', $model->id),
 			$html,
 			$model->updated,
 			[
 				'author' => $name,
 				'created' => $model->created,
 				'footer' => $tags.': '.$model->tags.'|Author: '.$name.'|Page {PAGENO} of {nb}',
-				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, Url::to(['post/index', 'id' => $model->id], true)).'|' . date('D, j M Y', $model->updated),
+				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, Url::to(['articles/index', 'id' => $model->id], true)).'|' . date('D, j M Y', $model->updated),
 				'keywords' => $model->tags,
 				'subject' => $model->title,
 				'title' => implode(' ∷ ', [$model->title, Yii::$app->name]),
@@ -132,13 +131,13 @@ class Post extends \yii\db\ActiveRecord
 	public function getNewerLink() {
 		if (!$model = $this->findNewerOne())
 			return null;
-		return Html::a('Next Article &raquo;', ['post/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)]);
+		return Html::a('Next Article &raquo;', ['articles/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)]);
 	}
 
 	public function getOlderLink() {
 		if (!$model = $this->findOlderOne())
 			return null;
-		return Html::a('&laquo; Previous Article', ['post/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)]);
+		return Html::a('&laquo; Previous Article', ['articles/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)]);
 	}
 
 	public function getUser() {

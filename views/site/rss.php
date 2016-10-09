@@ -25,7 +25,7 @@ $channel->appendChild($atomSelfLink);
 $channel->appendChild($doc->createElement('language', Html::encode(Yii::$app->language)));
 $channel->appendChild($doc->createElement('copyright', '&#169; 2014-'.date('Y').' '.Html::encode(Yii::$app->name)));
 $channel->appendChild($doc->createElement('pubDate', date(DATE_RSS)));
-$channel->appendChild($doc->createElement('lastBuildDate', date(DATE_RSS, $posts[0]->updated)));
+$channel->appendChild($doc->createElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated)));
 	$rssImage = $doc->createElement('image');
 	$rssImage->appendChild($doc->createElement('title', Html::encode(Yii::$app->name)));
 	$rssImage->appendChild($doc->createElement('url', Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http')));
@@ -37,24 +37,24 @@ $channel->appendChild($doc->createElement('lastBuildDate', date(DATE_RSS, $posts
 $channel->appendChild($rssImage);
 $rss->appendChild($channel);
 
-foreach($posts as $post) :
-	if (strpos($post->content, '[readmore]')) {
-		$post->content = substr($post->content, 0, strpos($post->content, '[readmore]'));
-		$post->content .= Html::a('Read full article on our website', Url::to(['post/index', 'id'=>$post->id, 'title'=>$post->url], true)).' &raquo;';
+foreach($articles as $article) :
+	if (strpos($article->content, '[readmore]')) {
+		$article->content = substr($article->content, 0, strpos($article->content, '[readmore]'));
+		$article->content .= Html::a('Read full article on our website', Url::to(['articles/index', 'id'=>$article->id, 'title'=>$article->url], true)).' &raquo;';
 	}
 
 	$item = $doc->createElement('item');
-	$item->appendChild($doc->createElement('title', $post->title));
-	$item->appendChild($doc->createElement('link', Html::encode(Url::to(['post/index', 'id'=>$post->id, 'title'=>$post->url], true))));
+	$item->appendChild($doc->createElement('title', $article->title));
+	$item->appendChild($doc->createElement('link', Html::encode(Url::to(['articles/index', 'id'=>$article->id, 'title'=>$article->url], true))));
 		$description = $doc->createElement('description');
-		$description->appendChild($doc->createCDATASection(Formatter::cleanInput($post->content, 'gfm')));
+		$description->appendChild($doc->createCDATASection(Formatter::cleanInput($article->content, 'gfm')));
 	$item->appendChild($description);
-	$item->appendChild($doc->createElement('dc:creator', $post->user->username));
-	$item->appendChild($doc->createElement('category', Html::encode($post->tags)));
-		$guid = $doc->createElement('guid', Html::encode(Url::to(['post/index', 'id'=>$post->id], true)));
+	$item->appendChild($doc->createElement('dc:creator', $article->user->username));
+	$item->appendChild($doc->createElement('category', Html::encode($article->tags)));
+		$guid = $doc->createElement('guid', Html::encode(Url::to(['articles/index', 'id'=>$article->id], true)));
 		$guid->setAttribute('isPermaLink', 'true');
 	$item->appendChild($guid);
-	$item->appendChild($doc->createElement('pubDate', date(DATE_RSS, $post->created)));
+	$item->appendChild($doc->createElement('pubDate', date(DATE_RSS, $article->created)));
 	$channel->appendChild($item);
 endforeach;
 

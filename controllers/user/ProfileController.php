@@ -1,15 +1,12 @@
 <?php
 namespace app\controllers\user;
-use dektrium\user\controllers\ProfileController as BaseProfileController;
 use Yii;
 use yii\filters\HttpCache;
 use yii\helpers\ArrayHelper;
 use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException};
 
-class ProfileController extends BaseProfileController
-{
-	public function behaviors()
-	{
+class ProfileController extends \dektrium\user\controllers\ProfileController {
+	public function behaviors() {
 		$behaviors = parent::behaviors();
 		$behaviors['access']['rules'][] = ['allow' => true, 'actions' => ['recenttracks']];
 
@@ -31,14 +28,13 @@ class ProfileController extends BaseProfileController
 		return ArrayHelper::merge($behaviors, $newBehaviors);
 	}
 
-	public function actionShow($username)
-	{
+	public function actionShow($username) {
 		$user = $this->finder->findUserByUsername($username);
-		if ($user === null)
+		if (!$user)
 			throw new NotFoundHttpException('Profile not found.');
 
 		$profile = $this->finder->findProfileById($user->id);
-		if ($profile === null)
+		if (!$profile)
 			throw new NotFoundHttpException('Profile not found.');
 
 		if ($profile->lastfm)
@@ -49,10 +45,9 @@ class ProfileController extends BaseProfileController
 		]);
 	}
 
-	public function actionRecenttracks($username)
-	{
+	public function actionRecenttracks($username) {
 		$user = $this->finder->findUserByUsername($username);
-		if ($user === null)
+		if (!$user)
 			throw new NotFoundHttpException('Profile not found.');		
 
 		if (!Yii::$app->request->isAjax)

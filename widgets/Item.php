@@ -1,14 +1,12 @@
 <?php
 namespace app\widgets;
 
-class Item extends \yii\bootstrap\Widget
-{
+class Item extends \yii\bootstrap\Widget {
 	public $header;
 	public $body;
 	public $options;
 
-	public function run()
-	{
+	public function run() {
 		$class = 'item';
 		$option = '';
 		foreach ($this->options as $k => $v) {
@@ -21,9 +19,8 @@ class Item extends \yii\bootstrap\Widget
 
 		echo '<div class="' . $class . '" ' . $option . '>';
 
-		if ($this->header !== null) {
+		if ($this->header !== null)
 			echo '<div class="item-heading">', $this->header, '</div>';
-		}
 
 		echo '<div class="item-body">', $this->body, '</div>';
 		echo '</div>';

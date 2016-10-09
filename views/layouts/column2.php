@@ -1,6 +1,6 @@
 <?php
-use app\models\post\{Comment, Post};
-use app\widgets\{Feed, Item, RecentPosts, Search, TagCloud};
+use app\models\articles\{Articles, Comment};
+use app\widgets\{Feed, Item, RecentArticles, Search, TagCloud};
 use yii\bootstrap\Html;
 use yii\caching\DbDependency;
 
@@ -10,8 +10,8 @@ $dependency = [
 	'class' => DbDependency::className(),
 	'reusable' => true,
 	'sql' => 'SELECT GREATEST(
-		IFNULL((SELECT MAX(updated) FROM '.Post::tableName().' WHERE `active` = '.Post::STATUS_ACTIVE.'), 1),
-		IFNULL((SELECT MAX(created) FROM '.Comment::tableName().' WHERE `active` = '.Post::STATUS_ACTIVE.'), 1)
+		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1),
+		IFNULL((SELECT MAX(created) FROM '.Comment::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1)
 	)',
 ];
 ?>
@@ -25,9 +25,9 @@ $dependency = [
 		'body' => Search::widget(),
 	]);
 
-	if ($this->beginCache('postwidgets', ['dependency' => $dependency, 'duration' => 0])) {
+	if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0])) {
 		echo Item::widget([
-			'body' => RecentPosts::widget(),
+			'body' => RecentArticles::widget(),
 			'header' => Html::tag('h4', 'Latest Articles'),
 		]);
 

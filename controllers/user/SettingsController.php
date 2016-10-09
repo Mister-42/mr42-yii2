@@ -1,15 +1,12 @@
 <?php
 namespace app\controllers\user;
-use dektrium\user\controllers\SettingsController as BaseSettingsController;
 use Yii;
 use app\models\user\Profile;
 
-class SettingsController extends BaseSettingsController
-{
-	public function actionProfile()
-	{
+class SettingsController extends \dektrium\user\controllers\SettingsController {
+	public function actionProfile() {
 		$model = $this->finder->findProfileById(Yii::$app->user->identity->getId());
-		if ($model === null) {
+		if (!$model) {
 			$model = Yii::createObject(Profile::className());
 			$model->link('user', Yii::$app->user->identity);
 		}

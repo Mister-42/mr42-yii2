@@ -1,7 +1,7 @@
 <?php
 namespace app\models;
 use Yii;
-use app\models\post\Comment;
+use app\models\articles\Comment;
 use yii\bootstrap\Html;
 
 class MenuItems {
@@ -13,7 +13,7 @@ class MenuItems {
 		$unreadBadge = ($unread > 0) ? Html::tag('span', $unread, ['class' => 'badge']) : '';
 
 		$menuItems = [
-			['label' => Html::icon('th-list').'Articles', 'url' => ['/post/index'], 'visible' => 1],
+			['label' => Html::icon('th-list').'Articles', 'url' => ['/articles/index'], 'visible' => 1],
 			['label' => Html::icon('dashboard').'Calculator', 'url' => null,
 				'items' => [
 					['label' => 'Date (add/substract)', 'url' => ['/calculator/date']],
@@ -37,7 +37,7 @@ class MenuItems {
 			:
 				['label' => Html::icon('user').$username.' '.$unreadBadge, 'url' => null,
 					'items' => [
-						['label' => 'Create Article', 'url' => ['/post/create'], 'visible' => $isAdmin],
+						['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
 						['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
 						$isAdmin ? Html::tag('li', null, ['class' => 'divider']) : '',
 						['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => $username]],

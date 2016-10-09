@@ -6,13 +6,13 @@ use yii\widgets\Pjax;
 
 $rules = $model->rules();
 $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this).val().length;char='.$rules['charCount']['max'].'-len;if(len>'.$rules['charCount']['max'].'){$(\'#chars\').text(\'You are \'+Math.abs(char)+\' characters over the limit.\').addClass(\'alert-danger\')}else{$(\'#chars\').text(\'You have \'+char+\' characters left\').removeClass(\'alert-danger\');}}).keyup();', View::POS_READY);
-?>
-<?php Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]); ?>
-	<h2>Leave a Comment</h2>
 
-	<?php $form = ActiveForm::begin(['id' => 'comment-form', 'options' => ['data-pjax' => '']]);
+Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]);
+	echo Html::tag('h2', 'Leave a Comment');
 
-		if (\Yii::$app->user->isGuest) {
+	$form = ActiveForm::begin(['id' => 'comment-form', 'options' => ['data-pjax' => '']]);
+
+		if (Yii::$app->user->isGuest) {
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [
 					'options' => ['class' => 'col-xs-6'],
@@ -39,9 +39,9 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 				'template' => '{label} <div id="chars" class="pull-right"></div><div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div> {hint} {error}'
 			])
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => 5])
-			->hint('You may use ' . Html::a('Markdown Syntax', ['/post/index', 'id' => 4], ['target' => '_blank']) . '. HTML is not allowed.');
+			->hint('You may use ' . Html::a('Markdown Syntax', ['/articles/index', 'id' => 4], ['target' => '_blank']) . '. HTML is not allowed.');
 
-		if (\Yii::$app->user->isGuest) {
+		if (Yii::$app->user->isGuest) {
 			echo $form->field($model, 'captcha')->widget(Captcha::className(), [
 				'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 				'options' => ['class' => 'form-control', 'tabindex' => 6],

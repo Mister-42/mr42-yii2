@@ -1,6 +1,6 @@
 <?php
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
-use app\models\post\Tags;
+use app\models\articles\Tags;
 use app\models\site\Sitemap;
 use yii\base\View;
 use yii\helpers\Url;
@@ -19,18 +19,18 @@ Sitemap::prioData($doc, $urlset, Url::home(true), 1, filemtime(View::findViewFil
 foreach($pages as $page)
 	Sitemap::ageData($doc, $urlset, Url::to([$page], true), filemtime(View::findViewFile('@app/views/' . $page)));
 
-Sitemap::ageData($doc, $urlset, Url::to(['post/index'], true), end($posts)->updated, 0.8);
+Sitemap::ageData($doc, $urlset, Url::to(['articles/index'], true), end($articles)->updated, 0.8);
 
-foreach($posts as $post) :
-	$lastUpdate = $post['updated'];
-	foreach ($post['comments'] as $comment)
+foreach($articles as $article) :
+	$lastUpdate = $article['updated'];
+	foreach ($article['comments'] as $comment)
 		$lastUpdate = max($lastUpdate, $comment['created']);
-	Sitemap::ageData($doc, $urlset, Url::to(['post/index', 'id' => $post['id'], 'title' => $post['url']], true), $lastUpdate);
+	Sitemap::ageData($doc, $urlset, Url::to(['articles/index', 'id' => $article['id'], 'title' => $article['url']], true), $lastUpdate);
 endforeach;
 
 foreach($tags as $tag => $value) :
 	$lastUpdate = Tags::lastUpdate($tag);
-	Sitemap::prioData($doc, $urlset, Url::to(['post/index', 'action' => 'tag', 'tag' => $tag], true), $tags[$tag] / max($tags) - 0.2, $lastUpdate);
+	Sitemap::prioData($doc, $urlset, Url::to(['articles/index', 'action' => 'tag', 'tag' => $tag], true), $tags[$tag] / max($tags) - 0.2, $lastUpdate);
 endforeach;
 
 Sitemap::ageData($doc, $urlset, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpdate(null));

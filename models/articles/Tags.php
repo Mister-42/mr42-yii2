@@ -1,10 +1,8 @@
 <?php
-namespace app\models\post;
-use app\models\post\Post;
+namespace app\models\articles;
 use yii\helpers\StringHelper;
 
-class Tags
-{
+class Tags {
 	public static function findTagWeights($limit = 20) {
 		$tags = self::getTags();
 
@@ -18,7 +16,7 @@ class Tags
 	}
 
 	public static function lastUpdate($tag) {
-		$lastUpdate = Post::find()
+		$lastUpdate = Articles::find()
 			->select(['updated' => 'max(updated)'])
 			->where(['like', 'tags', $tag])
 			->one();
@@ -26,7 +24,7 @@ class Tags
 	}
 
 	private static function getTags() {
-		foreach (Post::find()->select('tags')->all() as $tag) :
+		foreach (Articles::find()->select('tags')->all() as $tag) :
 			foreach (StringHelper::explode($tag->tags) as $item)
 				$list[$item] = $list[$item] ? $list[$item] + 1 : 1;
 		endforeach;

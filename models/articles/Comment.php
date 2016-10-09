@@ -1,5 +1,5 @@
 <?php
-namespace app\models\post;
+namespace app\models\articles;
 use Yii;
 use app\models\Formatter;
 use yii\bootstrap\Html;
@@ -12,7 +12,7 @@ class Comment extends \yii\db\ActiveRecord {
 	const STATUS_ACTIVE = '1';
 
 	public static function tableName() {
-		return '{{%article_comment}}';
+		return '{{%articles_comment}}';
 	}
 
 	public function rules() {

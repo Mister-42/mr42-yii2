@@ -5,4 +5,4 @@ use yii\helpers\Url;
 
 <?= $comment->content . PHP_EOL ?>
 
-<?= Url::to(['post/index', 'id' => $model->id], true) ?>
+<?= Url::to(['articles/index', 'id' => $model->id], true) ?>

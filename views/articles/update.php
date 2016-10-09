@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = 'Edit Article';
 <div class="article-update">
 	<h1><?= Html::encode($this->title) ?></h1>
 
-	<?php echo $this->render('_formPost', [
+	<?php echo $this->render('_formArticles', [
 		'model' => $model,
 	]); ?>
 </div>

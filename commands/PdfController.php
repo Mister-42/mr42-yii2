@@ -3,7 +3,7 @@ namespace app\commands;
 use Yii;
 use app\models\Formatter;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
-use app\models\post\Post;
+use app\models\articles\Articles;
 use yii\console\Controller;
 use yii\helpers\Console;
 
@@ -57,21 +57,21 @@ class PdfController extends Controller {
 	 * Builds all articles PDF files.
 	*/
 	public function actionArticles() {
-		$posts = Post::find()
+		$articles = Articles::find()
 			->orderBy('created')
 			->all();
 
-		foreach($posts as $post) :
-			$id = $this->ansiFormat($post->id, Console::FG_PURPLE);
-			$updated = $this->ansiFormat(Yii::$app->formatter->asDate($post->updated, 'medium'), Console::FG_GREEN);
-			$title = $this->ansiFormat($post->title, Console::FG_GREEN);
+		foreach($articles as $article) :
+			$id = $this->ansiFormat($article->id, Console::FG_PURPLE);
+			$updated = $this->ansiFormat(Yii::$app->formatter->asDate($article->updated, 'medium'), Console::FG_GREEN);
+			$title = $this->ansiFormat($article->title, Console::FG_GREEN);
 			$this->stdout("$id\t\t\t$updated\t$title");
-			for($x=0; $x<(7-floor(strlen($post->title)/8)); $x++)
+			for($x=0; $x<(7-floor(strlen($article->title)/8)); $x++)
 				$this->stdout("\t");
 
-			$post->content = Formatter::cleanInput($post->content, 'gfm', true);
-			$html = $this->renderPartial('@app/views/post/pdf', ['model' => $post]);
-			$fileName = Post::buildPdf($post, $html);
+			$article->content = Formatter::cleanInput($article->content, 'gfm', true);
+			$html = $this->renderPartial('@app/views/articles/pdf', ['model' => $article]);
+			$fileName = Articles::buildPdf($article, $html);
 
 			if (!$fileName) {
 				$this->stdout($this->ansiFormat("ERROR!\n", Console::BOLD, Console::FG_RED));
