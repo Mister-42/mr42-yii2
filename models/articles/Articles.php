@@ -37,7 +37,7 @@ class Articles extends \yii\db\ActiveRecord {
 		];
 	}
 
-	public function addComment(Comment $comment) {
+	public function addComment(Comments $comment) {
 		$comment->parent = $this->id;
 		$comment->user = (Yii::$app->user->isGuest) ? null : Yii::$app->user->id;
 		$comment->active = (Yii::$app->user->isGuest) ? Self::STATUS_INACTIVE : Self::STATUS_ACTIVE;
@@ -68,6 +68,7 @@ class Articles extends \yii\db\ActiveRecord {
 
 		$datetime = time();
 		$this->url = $this->url ?? null;
+		$this->updated = $datetime;
 
 		if ($insert) {
 			$this->author = Yii::$app->user->id;
@@ -75,15 +76,12 @@ class Articles extends \yii\db\ActiveRecord {
 		} elseif (!$this->belongsToViewer())
 			return false;
 
-		$this->updated = $datetime;
-
 		return true;
 	}
 
 	public function belongsToViewer() {
 		if (Yii::$app->user->isGuest)
 			return false;
-
 		return $this->author == Yii::$app->user->id;
 	}
 
@@ -125,7 +123,7 @@ class Articles extends \yii\db\ActiveRecord {
 	}
 
 	public function getComments() {
-		return $this->hasMany(Comment::className(), ['parent' => 'id']);
+		return $this->hasMany(Comments::className(), ['parent' => 'id']);
 	}
 
 	public function getNewerLink() {

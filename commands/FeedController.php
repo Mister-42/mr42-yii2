@@ -59,7 +59,7 @@ class FeedController extends Controller {
 			if (isset($profile->lastfm)) {
 				$lastSeen = RecentTracks::lastSeen($user->id);
 
-				if ($lastSeen === null)
+				if (!$lastSeen)
 					continue;
 
 				RecentTracks::updateUser($lastSeen, $profile);

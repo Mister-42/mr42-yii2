@@ -29,10 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		['mPDF', 'http://www.mpdf1.com/'],
 	];
 
-	$x=0; $y=0;
+	$x = $y = 0;
 	foreach ($list as $item) {
-		$x++; $y++;
-		if ($x == 1)
+		$y++;
+		if ($x++ === 0)
 			echo '<div class="col-sm-6 text-center text-nowrap">';
 
 		echo Html::a($item[0], $item[1]);

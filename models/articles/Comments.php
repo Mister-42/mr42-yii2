@@ -5,14 +5,14 @@ use app\models\Formatter;
 use yii\bootstrap\Html;
 use yii\web\AccessDeniedHttpException;
 
-class Comment extends \yii\db\ActiveRecord {
+class Comments extends \yii\db\ActiveRecord {
 	public $captcha;
 
 	const STATUS_INACTIVE = '0';
 	const STATUS_ACTIVE = '1';
 
 	public static function tableName() {
-		return '{{%articles_comment}}';
+		return '{{%articles_comments}}';
 	}
 
 	public function rules() {

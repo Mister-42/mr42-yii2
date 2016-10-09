@@ -6,7 +6,7 @@ use DOMElement;
 class Sitemap
 {
 	public static function ageData(DOMDocument $dom, DOMElement $child, $url, $age, $prio = null) {
-		if ($prio === null)
+		if (!$prio)
 			return self::prioData($dom, $child, $url, self::age2Prio($age), $age);
 
 		return self::prioData($dom, $child, $url, $prio, $age);

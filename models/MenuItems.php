@@ -1,7 +1,7 @@
 <?php
 namespace app\models;
 use Yii;
-use app\models\articles\Comment;
+use app\models\articles\Comments;
 use yii\bootstrap\Html;
 
 class MenuItems {
@@ -9,7 +9,7 @@ class MenuItems {
 		$isGuest = (Yii::$app->controller->action->id == 'sitemapxml') ?? Yii::$app->user->isGuest;
 		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 		$username = $isGuest ? '' : Yii::$app->user->identity->username;
-		$unread = $isAdmin ? Comment::find()->where(['active' => Comment::STATUS_INACTIVE])->count() : 0;
+		$unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACTIVE])->count() : 0;
 		$unreadBadge = ($unread > 0) ? Html::tag('span', $unread, ['class' => 'badge']) : '';
 
 		$menuItems = [

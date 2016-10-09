@@ -1,5 +1,5 @@
 <?php
-use app\models\articles\{Articles, Comment};
+use app\models\articles\{Articles, Comments};
 use app\widgets\{Feed, Item, RecentArticles, Search, TagCloud};
 use yii\bootstrap\Html;
 use yii\caching\DbDependency;
@@ -11,7 +11,7 @@ $dependency = [
 	'reusable' => true,
 	'sql' => 'SELECT GREATEST(
 		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1),
-		IFNULL((SELECT MAX(created) FROM '.Comment::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1)
+		IFNULL((SELECT MAX(created) FROM '.Comments::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1)
 	)',
 ];
 ?>

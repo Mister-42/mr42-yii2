@@ -2,7 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\Formatter;
-use app\models\articles\{Articles, Comment};
+use app\models\articles\{Articles, Comments};
 use yii\bootstrap\Alert;
 use yii\data\ActiveDataProvider;
 use yii\filters\{AccessControl, VerbFilter};
@@ -45,7 +45,7 @@ class ArticlesController extends Controller {
 	public function actionIndex($id = '', $title = '', $page = '', $action = '', $tag = '', $q = '') {
 		if (isset($id) && !empty($id)) {
 			$model = $this->findModel($id, ['comments']);
-			$comment = new Comment;
+			$comment = new Comments;
 
 			if ($comment->load(Yii::$app->request->post())) {
 				if ($model->addComment($comment)) {
@@ -143,13 +143,13 @@ class ArticlesController extends Controller {
 	}
 
 	public function actionCommentstatus($action, $id) {
-		$comment = Comment::findOne($id);
+		$comment = Comments::findOne($id);
 		$article = $this->findModel($comment->parent);
 
 		if (!$article->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
 
-		$comment->active = ($comment->active) ? Comment::STATUS_INACTIVE : Comment::STATUS_ACTIVE;
+		$comment->active = ($comment->active) ? Comments::STATUS_INACTIVE : Comments::STATUS_ACTIVE;
 		if ($action == "toggleapproval") {
 			if (!Yii::$app->request->isAjax)
 				throw new MethodNotAllowedHttpException('Method Not Allowed. This url can only handle the following request methods: AJAX.');
@@ -164,14 +164,14 @@ class ArticlesController extends Controller {
 	}
 
 	protected function findComment($id) {
-		$query = Comment::find()
+		$query = Comments::find()
 				->where(['id' => $id])
 				->andWhere(Yii::$app->user->isGuest ? ['`active`' => Articles::STATUS_ACTIVE] : ['or', ['`active`' => [Articles::STATUS_INACTIVE, Articles::STATUS_ACTIVE]]])
 				->with('user');
 
 		$model = $query->one();
 
-		if ($model === null)
+		if (!$model)
 			throw new NotFoundHttpException('Page not found.');
 
 		$article = $this->findModel($id);
@@ -192,7 +192,7 @@ class ArticlesController extends Controller {
 
 		$model = $query->one();
 
-		if ($model === null)
+		if (!$model)
 			throw new NotFoundHttpException('Page not found.');
 
 		return $model;
