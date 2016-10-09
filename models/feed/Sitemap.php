@@ -1,5 +1,5 @@
 <?php
-namespace app\models\site;
+namespace app\models\feed;
 use DOMDocument;
 use DOMElement;
 

@@ -13,7 +13,7 @@ class FeedController extends Controller {
 		return [
 			[
 				'class' => HttpCache::className(),
-				'except' => ['index, rss'],
+				'except' => ['index'],
 				'lastModified' => function (Object $action, $params) {
 					$lastUpdate = Articles::find()->select(['updated' => 'max(updated)'])->one();
 					return $lastUpdate->updated;
@@ -28,7 +28,7 @@ class FeedController extends Controller {
 
 	public function actionRss() {
 		if (strpos($_SERVER[HTTP_USER_AGENT], 'FeedBurner') !== 0)
-#			$this->redirect('http://feed.mr42.me/Mr42')->send();
+			$this->redirect('http://feed.mr42.me/Mr42')->send();
 
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/rss+xml');
