@@ -132,14 +132,12 @@ class Post extends \yii\db\ActiveRecord
 	public function getNewerLink() {
 		if (!$model = $this->findNewerOne())
 			return null;
-
 		return Html::a('Next Article &raquo;', ['post/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)]);
 	}
 
 	public function getOlderLink() {
 		if (!$model = $this->findOlderOne())
 			return null;
-
 		return Html::a('&laquo; Previous Article', ['post/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)]);
 	}
 

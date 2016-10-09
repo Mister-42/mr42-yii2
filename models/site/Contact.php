@@ -23,7 +23,6 @@ class Contact extends \yii\base\Model
 
 		if (!Yii::$app->request->post())
 			$rules[] = [['captcha'], 'required'];
-
 		return $rules;
 	}
 

@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 use Yii;
+use app\models\post\Comment;
 use yii\bootstrap\Html;
 
 class MenuItems {
@@ -8,6 +9,8 @@ class MenuItems {
 		$isGuest = (Yii::$app->controller->action->id == 'sitemapxml') ?? Yii::$app->user->isGuest;
 		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 		$username = $isGuest ? '' : Yii::$app->user->identity->username;
+		$unread = $isAdmin ? Comment::find()->where(['active' => Comment::STATUS_INACTIVE])->count() : 0;
+		$unreadBadge = ($unread > 0) ? Html::tag('span', $unread, ['class' => 'badge']) : '';
 
 		$menuItems = [
 			['label' => Html::icon('th-list').'Articles', 'url' => ['/post/index'], 'visible' => 1],
@@ -32,7 +35,7 @@ class MenuItems {
 			$isGuest ?
 				['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => 1]
 			:
-				['label' => Html::icon('user').$username, 'url' => null,
+				['label' => Html::icon('user').$username.' '.$unreadBadge, 'url' => null,
 					'items' => [
 						['label' => 'Create Article', 'url' => ['/post/create'], 'visible' => $isAdmin],
 						['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],

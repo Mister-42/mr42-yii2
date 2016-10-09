@@ -50,6 +50,11 @@ class Comment extends \yii\db\ActiveRecord {
 		];
 	}
 
+	public function afterFind() {
+		parent::afterFind();
+		$this->content = General::cleanInput($this->content, 'gfm-comment');
+	}
+
 	public function beforeSave($insert) {
 		if (!parent::beforeSave($insert))
 			return false;
@@ -100,9 +105,9 @@ class Comment extends \yii\db\ActiveRecord {
 
 	public static function find() {
 		return parent::find()
-			->where(Yii::$app->user->isGuest ?
-				['active' => Self::STATUS_ACTIVE] :
-				['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
+			->where(Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
+				? ['active' => Self::STATUS_ACTIVE]
+				: ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
 			);
 	}
 }

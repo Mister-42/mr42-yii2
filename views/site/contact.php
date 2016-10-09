@@ -14,7 +14,7 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 	<div class="col-md-offset-2 col-md-8">
 		<?php echo Html::tag('h1', Html::encode($this->title));
 
-		Pjax::begin(['enablePushState' => false, 'linkSelector' => ':submit']);
+		Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger']);
 			echo Html::tag('p', 'If you have inquiries or other questions, please fill out the following form to contact ' . Yii::$app->name . '. Thank you.');
 
 			$form = ActiveForm::begin(['options' => ['data-pjax' => '']]);
@@ -48,7 +48,7 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 
 			echo '<div class="form-group text-right">';
 				echo Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) . ' ';
-				echo Html::submitButton('Send', ['class' => 'btn btn-primary', 'tabindex' => 6]);
+				echo Html::submitButton('Send', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 6]);
 			echo '</div>';
 
 			ActiveForm::end();

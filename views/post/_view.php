@@ -55,9 +55,8 @@ HighlightAsset::register($this);
 		$tags = StringHelper::explode($model->tags);
 		if (count($tags) > 0) {
 			echo ' &middot; ';
-			foreach($tags as $tag) {
+			foreach($tags as $tag)
 				$tagArray[] = Html::a($tag, ['index', 'action' => 'tag', 'tag' => $tag]);
-			}
 			echo (count($tags) === 1) ? Html::icon('tag', ['class' => 'text-muted']) : Html::icon('tags', ['class' => 'text-muted']);
 			echo ' '.implode(', ', $tagArray);
 		}
@@ -71,9 +70,8 @@ HighlightAsset::register($this);
 		echo ' &middot; '.Html::icon('user', ['class' => 'text-muted']).' <span class="author">' . (empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name)) . '</span>';
 
 		if (isset($view) && $view == 'full ') {
-			if (!empty($profile['bio']) && $author = Profile::show($profile)) {
+			if (!empty($profile['bio']) && $author = Profile::show($profile))
 				echo '<hr />' . Html::tag('div', $author, ['class' => 'well well-sm']);
-			}
 		}
 		?>
 	</div>

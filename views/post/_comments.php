@@ -1,5 +1,4 @@
 <?php
-use app\models\helpers\General;
 use dektrium\user\models\User;
 use yii\bootstrap\Html;
 use yii\widgets\Pjax;
@@ -28,7 +27,7 @@ foreach ($comments as $comment): ?>
 		</div>
 
 		<?php
-		echo General::cleanInput($comment->content, 'gfm-comment');
+		echo $comment->content;
 		if (!empty($comment->user)) {
 			$user = new User();
 			$profile = $user->finder->findProfileById($comment->user);			

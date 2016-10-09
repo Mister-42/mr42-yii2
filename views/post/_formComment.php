@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 $rules = $model->rules();
 $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this).val().length;char='.$rules['charCount']['max'].'-len;if(len>'.$rules['charCount']['max'].'){$(\'#chars\').text(\'You are \'+Math.abs(char)+\' characters over the limit.\').addClass(\'alert-danger\')}else{$(\'#chars\').text(\'You have \'+char+\' characters left\').removeClass(\'alert-danger\');}}).keyup();', View::POS_READY);
 ?>
-<?php Pjax::begin(['enablePushState' => false, 'linkSelector' => ':submit', 'options' => ['class' => 'comment-form']]); ?>
+<?php Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]); ?>
 	<h2>Leave a Comment</h2>
 
 	<?php $form = ActiveForm::begin(['id' => 'comment-form', 'options' => ['data-pjax' => '']]);
@@ -51,7 +51,7 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 
 		<div class="form-group text-right">
 			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) ?>
-			<?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'tabindex' => 7]) ?>
+			<?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7]) ?>
 		</div>
 	<?php ActiveForm::end(); ?>
 <?php Pjax::end(); ?>
