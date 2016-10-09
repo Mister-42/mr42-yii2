@@ -16,12 +16,12 @@ class Pdf {
 			$pdf->content = $content;
 			$pdf->filename = $filename;
 			$pdf->destination = PdfCreator::DEST_FILE;
-			foreach(['author', 'footer', 'header', 'keywords', 'subject', 'title'] as $x) {
+			foreach(['author', 'footer', 'header', 'keywords', 'subject', 'title'] as $x) :
 				if (isset($params[$x])) {
 					$function = 'Set' . ucfirst($x);
 					$pdf->api->$function($params[$x]);			
 				}
-			}
+			endforeach;
 			$pdf->render();
 			$this->replaceLine($filename, '/Producer', $pdf->api->_UTF16BEtextstring('Yii Framework'));
 			$this->replaceLine($filename, '/CreationDate', $pdf->api->_textstring(date('YmdHis', $created) . substr(date('O', $created), 0, 3) . "'" . substr(date('O', $created), 3, 2) . "'"));

@@ -1,7 +1,7 @@
 <?php
 namespace app\widgets;
 use Yii;
-use app\models\post\Tags;
+use app\models\post\{Post, Tags};
 use yii\bootstrap\{Html, Widget};
 
 class TagCloud extends Widget
@@ -16,7 +16,9 @@ class TagCloud extends Widget
 	public function renderTags($tags)
 	{
 		foreach ($tags as $tag => $weight) {
-			$link = Html::a(Html::encode($tag), ['post/index', 'action' => 'tag', 'tag' => $tag]);
+			$query = Post::find()->where(['like', 'tags', '%'.$tag.'%', false])->count();
+			$title = Yii::t('site', '{results, plural, =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $query, 'tag' => $tag]);
+			$link = Html::a(Html::encode($tag), ['post/index', 'action' => 'tag', 'tag' => $tag], ['title' => $title, 'data-toggle' => 'tooltip', 'data-placement' => 'top']);
 			$items[] = Html::tag('span', $link, ['style' => 'font-size:'.round(1.25 * $weight).'pt']);
 		}
 
