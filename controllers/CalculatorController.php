@@ -10,6 +10,7 @@ class CalculatorController extends \yii\web\Controller {
 		return [
 			[
 				'class' => HttpCache::className(),
+				'except' => ['index'],
 				'etagSeed' => function (Object $action, $params) {
 					return serialize([YII_DEBUG, Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
 				},

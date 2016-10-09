@@ -17,7 +17,7 @@ $doc->appendChild($urlset);
 Sitemap::prioData($doc, $urlset, Url::home(true), 1, filemtime(View::findViewFile('@app/views/site/index')));
 
 foreach($pages as $page)
-	Sitemap::ageData($doc, $urlset, Url::to([$page], true), filemtime(View::findViewFile('@app/views/' . $page)));
+	Sitemap::ageData($doc, $urlset, Url::to([$page], true), filemtime(View::findViewFile('@app/views' . $page)));
 
 Sitemap::ageData($doc, $urlset, Url::to(['articles/index'], true), end($articles)->updated, 0.8);
 
