@@ -8,7 +8,6 @@ class MenuItems {
 	public static function menuArray() {
 		$isGuest = (Yii::$app->controller->action->id === 'sitemap') ? true : Yii::$app->user->isGuest;
 		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
-		$username = $isGuest ? '' : Yii::$app->user->identity->username;
 		$unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACTIVE])->count() : 0;
 		$unreadBadge = ($unread > 0) ? Html::tag('span', $unread, ['class' => 'badge']) : '';
 
@@ -34,12 +33,12 @@ class MenuItems {
 			['label' => Html::icon('cd').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => 1],
 			$isGuest
 				?	['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => 1]
-				:	['label' => Html::icon('user').$username.' '.$unreadBadge, 'url' => null,
+				:	['label' => Html::icon('user').Yii::$app->user->identity->username.' '.$unreadBadge, 'url' => null,
 						'items' => [
 							['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
 							['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
 							$isAdmin ? Html::tag('li', null, ['class' => 'divider']) : '',
-							['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => $username]],
+							['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]],
 							Html::tag('li', null, ['class' => 'divider']),
 							['label' => 'Edit Profile', 'url' => ['/user/settings/profile']],
 							['label' => 'Account Settings', 'url' => ['/user/settings/account']],

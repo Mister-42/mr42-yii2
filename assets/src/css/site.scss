@@ -134,27 +134,13 @@ aside {
 	}
 }
 
-pre, code {
+pre code {
 	max-height: $pre-scrollable-max-height;
-	white-space: nowrap;
-
-	code {
-		overflow-wrap: normal;
-		word-wrap: normal;
-		white-space: pre;
-	}
+	white-space: pre;
 }
 
 .hljs {
 	background: transparent !important;
-}
-
-textarea {
-	resize: none;
-}
-
-.progress-bar-light {
-	background-color: #95bcdc;
 }
 
 form {
@@ -175,6 +161,10 @@ form {
 			content: ' *';
 			display: inline;
 		}
+	}
+
+	textarea {
+		resize: none;
 	}
 
 	img.captcha {
@@ -217,12 +207,6 @@ form {
 	height: 40px;
 	background-color: $lighterBlue;
 	padding-top: 10px;
-}
-
-@media (max-width: 767px) {
-	.dropdown-menu > li > a {
-		color: $lightBlue;
-	}
 }
 
 @media (min-width: 768px) {

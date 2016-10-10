@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		['jQuery', 'http://jquery.com/'],
 		['jQuery UI', 'http://jqueryui.com/'],
 		['Sass', 'http://sass-lang.com/'],
-		['Bluefish', 'http://bluefish.openoffice.nl/'],
 		['GitHub', 'https://github.com/'],
 		['ScienceDaily', 'https://www.sciencedaily.com/'],
 		['Last.fm', 'http://www.last.fm/'],

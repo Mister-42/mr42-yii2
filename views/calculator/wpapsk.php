@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = $this->title;
 
 ClipboardJsAsset::register($this);
-$this->registerJs('function print_psk(a){$(".btn").removeClass("disabled");$(".clipboard-js-init").removeClass("hidden");$("#psk").attr("class","well well-sm alert-success text-center").html(a).parent().removeClass("col-md-12").addClass("col-md-11")}function status(a){$(".progress-bar").width(Math.round(a)+"%")}function cal_psk(){var c=$("#ssid").val(),b=$("#pass").val();if(!b||!c){return $("#psk").attr("class","well well-sm alert-danger").html("Please fill in both values.")}else{$(".btn").addClass("disabled");$(".clipboard-js-init").addClass("hidden");$("#psk").attr("class","progress progress-striped").html("<div class=\"progress-bar progress-bar-light active\"></div>").parent().removeClass("col-md-11").addClass("col-md-12")}var a=new PBKDF2(b,c,4096,32);a.deriveKey(status,print_psk)}', View::POS_HEAD);
+$this->registerJs('function print_psk(a){$(".btn").removeClass("disabled");$(".clipboard-js-init").removeClass("hidden");$("#psk").attr("class","well well-sm alert-success text-center").html(a).parent().removeClass("col-md-12").addClass("col-md-11")}function status(a){$(".progress-bar").width(Math.round(a)+"%")}function cal_psk(){var c=$("#ssid").val(),b=$("#pass").val();if(!b||!c){return $("#psk").attr("class","well well-sm alert-danger").html("Please fill in both values.")}else{$(".btn").addClass("disabled");$(".clipboard-js-init").addClass("hidden");$("#psk").attr("class","progress progress-striped").html("<div class=\"progress-bar progress-bar-info active\"></div>").parent().removeClass("col-md-11").addClass("col-md-12")}var a=new PBKDF2(b,c,4096,32);a.deriveKey(status,print_psk)}', View::POS_HEAD);
 $this->registerJs('function reset_psk(){$("#psk").attr("class","well well-sm").html("Not calculated yet.");$(".clipboard-js-init").addClass("hidden");$("#psk").parent().removeClass("col-md-11").addClass("col-md-12")};', View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);
 $this->registerJs('$("form input").keydown(function(e){if(e.keyCode==13){cal_psk();return false}});', View::POS_READY);
@@ -36,15 +36,15 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 						'template' => "{label}{input}{error}",
 						'labelOptions' => ['class' => 'control-label'],
 				],
-		]); ?>
+		]);
 
-		<?= $form->field($model, 'ssid', [
+		echo $form->field($model, 'ssid', [
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('signal').'</span>{input}</div>{error}',
 			])
 			->label('SSID')
-			->textInput(['autofocus' => true, 'id' => 'ssid', 'tabindex' => 1]) ?>
+			->textInput(['autofocus' => true, 'id' => 'ssid', 'tabindex' => 1]);
 
-		<?= $form->field($model, 'pass', [
+		echo $form->field($model, 'pass', [
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 			])
 			->label('WPA Passphrase')
