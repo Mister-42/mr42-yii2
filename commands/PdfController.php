@@ -11,6 +11,7 @@ use yii\helpers\Console;
  * Builds PDF files for cache, unless already cached and up-to-date.
  */
 class PdfController extends Controller {
+	const TABSIZE = 8;
 	public $defaultAction = 'all';
 
 	/**
@@ -31,10 +32,10 @@ class PdfController extends Controller {
 				$albumYear = $this->ansiFormat($album->year, Console::FG_GREEN);
 				$albumName = $this->ansiFormat($album->name, Console::FG_GREEN);
 				$this->stdout("$artistName");
-				for($x=0; $x<(3-floor(strlen($artist->name)/8)); $x++)
+				for($x=0; $x<(3 - intdiv(strlen($artist->name), Self::TABSIZE)); $x++)
 					$this->stdout("\t");
 				$this->stdout("$albumYear\t\t$albumName");
-				for($x=0; $x<(7-floor(strlen($album->name)/8)); $x++)
+				for($x=0; $x<(8 - intdiv(strlen($album->name), Self::TABSIZE)); $x++)
 					$this->stdout("\t");
 
 				$tracks = Lyrics3Tracks::tracksListFull($album->artist->url, $album->year, $album->url);
@@ -66,7 +67,7 @@ class PdfController extends Controller {
 			$updated = $this->ansiFormat(Yii::$app->formatter->asDate($article->updated, 'medium'), Console::FG_GREEN);
 			$title = $this->ansiFormat($article->title, Console::FG_GREEN);
 			$this->stdout("$id\t\t\t$updated\t$title");
-			for($x=0; $x<(7-floor(strlen($article->title)/8)); $x++)
+			for($x=0; $x<(8 - intdiv(strlen($article->title), Self::TABSIZE)); $x++)
 				$this->stdout("\t");
 
 			$article->content = Formatter::cleanInput($article->content, 'gfm', true);
