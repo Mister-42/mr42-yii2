@@ -32,23 +32,22 @@ class MenuItems {
 				],
 			],
 			['label' => Html::icon('cd').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => 1],
-			$isGuest ?
-				['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => 1]
-			:
-				['label' => Html::icon('user').$username.' '.$unreadBadge, 'url' => null,
-					'items' => [
-						['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
-						['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
-						$isAdmin ? Html::tag('li', null, ['class' => 'divider']) : '',
-						['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => $username]],
-						Html::tag('li', null, ['class' => 'divider']),
-						['label' => 'Edit Profile', 'url' => ['/user/settings/profile']],
-						['label' => 'Account Settings', 'url' => ['/user/settings/account']],
-						['label' => 'Social Networks', 'url' => ['/user/settings/networks']],
-						Html::tag('li', null, ['class' => 'divider']),
-						['label' => 'Logout', 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']],
-					],
-				]
+			$isGuest
+				?	['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => 1]
+				:	['label' => Html::icon('user').$username.' '.$unreadBadge, 'url' => null,
+						'items' => [
+							['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
+							['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
+							$isAdmin ? Html::tag('li', null, ['class' => 'divider']) : '',
+							['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => $username]],
+							Html::tag('li', null, ['class' => 'divider']),
+							['label' => 'Edit Profile', 'url' => ['/user/settings/profile']],
+							['label' => 'Account Settings', 'url' => ['/user/settings/account']],
+							['label' => 'Social Networks', 'url' => ['/user/settings/networks']],
+							Html::tag('li', null, ['class' => 'divider']),
+							['label' => 'Logout', 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']],
+						],
+					]
 			,
 		];
 

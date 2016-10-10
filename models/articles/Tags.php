@@ -5,14 +5,12 @@ use yii\helpers\StringHelper;
 class Tags {
 	public static function findTagWeights($limit = 20) {
 		$tags = self::getTags();
-
-		$total = array_sum($tags);
 		foreach($tags as $key => $value)
-			$list[$key] = 8 + (int)(16 * $value / ($total + 10));
+			$list[$key] = 8 + (int)(16 * $value / (array_sum($tags) + 10));
 
 		array_slice($list, 0, $limit);
 		ksort($list, SORT_NATURAL | SORT_FLAG_CASE);
-		return ($total === 0) ? [] : $list;
+		return (array_sum($tags) === 0) ? [] : $list;
 	}
 
 	public static function lastUpdate($tag) {
