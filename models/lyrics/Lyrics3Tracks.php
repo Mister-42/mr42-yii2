@@ -17,11 +17,10 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 			->orderBy('track')
 			->joinWith('artist')
 			->with('album')
-			->where([Lyrics1Artists::tableName().'.name' => $artist])
-			->orWhere([Lyrics1Artists::tableName().'.url' => $artist])
+			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
 			->andWhere([Lyrics2Albums::tableName().'.year' => $year])
-			->andWhere([Lyrics2Albums::tableName().'.name' => $name])
-			->orWhere([Lyrics2Albums::tableName().'.url' => $name]);
+			->andWhere(['or', Lyrics2Albums::tableName().'.`name`=:album', Lyrics2Albums::tableName().'.`url`=:album'])
+			->addParams([':artist' => $artist, ':album' => $name]);
 	}
 
 	public function tracksList($artist, $year, $name) {
