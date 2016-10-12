@@ -12,15 +12,15 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->track = sprintf('%02d', $this->track);
 	}
 
-	public function baseList($artist, $year, $name, $view = null) {
+	protected function baseList($artist, $year, $name, $view = null) {
 		return self::find()
 			->orderBy('track')
 			->joinWith('artist')
 			->with('album')
-			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
-			->andWhere([Lyrics2Albums::tableName().'.year' => $year])
-			->andWhere(['or', Lyrics2Albums::tableName().'.`name`=:album', Lyrics2Albums::tableName().'.`url`=:album'])
-			->addParams([':artist' => $artist, ':album' => $name]);
+			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
+			->andWhere(Lyrics2Albums::tableName().'.year=:year')
+			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])
+			->addParams([':artist' => $artist, ':year' => $year, ':album' => $name]);
 	}
 
 	public function tracksList($artist, $year, $name) {

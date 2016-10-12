@@ -26,7 +26,7 @@ foreach ($albums as $album) :
 
 		echo $track->track . ' · ';
 		echo (!$track->lyricid) ? $track->name : Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track]);
-		echo '<br />';
+		echo '<br>';
 
 		if ($x == ceil(count($album->tracks) / 3) || $y == count($album->tracks)) {
 			echo '</div>';

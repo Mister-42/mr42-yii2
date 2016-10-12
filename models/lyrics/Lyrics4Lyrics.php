@@ -1,5 +1,6 @@
 <?php
 namespace app\models\lyrics;
+use app\models\Formatter;
 
 class Lyrics4Lyrics extends \yii\db\ActiveRecord {
 	public static function tableName() {
@@ -8,6 +9,6 @@ class Lyrics4Lyrics extends \yii\db\ActiveRecord {
 
 	public function afterFind() {
 		parent::afterFind();
-		$this->lyrics = \app\models\Formatter::cleanInput($this->lyrics, 'gfm-comment');
+		$this->lyrics = Formatter::cleanInput($this->lyrics, 'gfm-comment');
 	}
 }

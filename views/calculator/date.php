@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<?php
 		if ($flash = Yii::$app->session->getFlash('date-success')) {
-			$txt = '<p>From: <strong>'. Yii::$app->formatter->asDate($model->from, 'long') . '</strong><br />';
+			$txt = '<p>From: <strong>'. Yii::$app->formatter->asDate($model->from, 'long') . '</strong><br>';
 			$txt .= 'Adding: <strong>'. Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days]) . '</strong></p>';
 			$txt .= '<p>Result: <strong>' . Yii::$app->formatter->asDate($flash, 'long') . '</strong></p>';
 			echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $txt]);

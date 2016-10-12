@@ -26,7 +26,7 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 	<div class="col-md-offset-2 col-md-8">
 		<?= Html::tag('h1', Html::encode($this->title)) ?>
 
-		<p>This Wifi Protected Access Pre-Shared Key (WPA PSK) calculator provides an easy way to convert a SSID and WPA&nbsp;Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.<br />Type or paste in your SSID and WPA&nbsp;Passphrase below. Click 'Calculate' and wait a while as Javascript isn't known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <strong>None</strong> of this information will be sent over the network.</p>
+		<p>This Wifi Protected Access Pre-Shared Key (WPA PSK) calculator provides an easy way to convert a SSID and WPA&nbsp;Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.<br>Type or paste in your SSID and WPA&nbsp;Passphrase below. Click 'Calculate' and wait a while as Javascript isn't known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <strong>None</strong> of this information will be sent over the network.</p>
 
 		<?php $form = ActiveForm::begin([
 				'id' => 'wpapsk',

@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $tracks[0]->album->name;
 
 		echo $track->track . ' · ';
 		echo (!$track->lyricid) ? $track->name : Html::a($track->name, '#' . $track->track);
-		echo '<br />';
+		echo '<br>';
 
 		if ($x == ceil(count($tracks)/3) || $y == count($tracks)) {
 			echo '</div>';
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $tracks[0]->album->name;
 	foreach($tracks as $track) :
 		if ($track->lyricid) {
 			echo '<div class="row"><div class="col-lg-12">';
-			echo Html::a(null, null, ['name' => $track->track]);
+			echo Html::a(null, null, ['class' => 'anchor', 'name' => $track->track]);
 			echo Html::tag('h4', implode(' · ', [$track->track, $track->name]));
 			echo $track->lyrics->lyrics;
 			echo '</div></div>';

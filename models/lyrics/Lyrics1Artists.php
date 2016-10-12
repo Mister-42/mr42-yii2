@@ -17,7 +17,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 		$this->active = (bool) $this->active;
 	}
 
-	public function baseList() {
+	protected function baseList() {
 		return self::find()
 			->orderBy('name');
 	}

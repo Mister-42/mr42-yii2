@@ -1,11 +1,22 @@
-$tardisBlue:					#003E67;
-$middleBlue:					#6FACCF;
-$lighterBlue:					lighten(adjust_hue($middleBlue, 10), 20%);
-$lightBlue:						lighten(adjust_hue($middleBlue, 5), 10%);
-$darkBlue:						darken(adjust_hue($middleBlue, -5), 10%);
-$darkerBlue:					darken(adjust_hue($middleBlue, -10), 20%);
+$tardisBlue:	#003E67;
+$middleBlue:	#6FACCF;
+$lighterBlue:	lighten(adjust_hue($middleBlue, 10), 20%);
+$lightBlue:		lighten(adjust_hue($middleBlue, 5), 10%);
+$darkBlue:		darken(adjust_hue($middleBlue, -5), 10%);
+$darkerBlue:	darken(adjust_hue($middleBlue, -10), 20%);
 
 @import "bootstrap.scss";
+
+@mixin dividing-line($padding, $color) {
+	&:not(:first-child) {
+		padding-top: $padding;
+	}
+
+	&:not(:last-child) {
+		border-bottom: 1px solid $color;
+		padding-bottom: $padding;
+	}
+}
 
 html,
 body {
@@ -13,7 +24,7 @@ body {
 	text-align: justify;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .breadcrumb {
 	text-align: left;
 }
 
@@ -24,7 +35,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0 0 41px;
 
 	> .container {
-		padding: 70px 15px 10px;
+		padding: 70px 15px 20px;
 	}
 }
 
@@ -46,14 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .site- {
 	&changelog .row {
-		&:not(:first-child) {
-			padding-top: 2px;
-		}
-
-		&:not(:last-child) {
-			border-bottom: 1px solid $lighterBlue;
-			padding-bottom: 2px;
-		}
+		@include dividing-line(2px, $lighterBlue);
 	}
 
 	&credits div {
@@ -61,17 +65,8 @@ h1, h2, h3, h4, h5, h6 {
 	}
 
 	&headers,
-	&lyrics-lyrics {
-		.row {
-			&:not(:first-child) {
-				padding-top: 10px;
-			}
-
-			&:not(:last-child) {
-				border-bottom: 1px solid $lighterBlue;
-				padding-bottom: 10px;
-			}
-		}
+	&lyrics-lyrics .row {
+		@include dividing-line(10px, $lighterBlue);
 	}
 
 	&lyrics {
@@ -83,15 +78,15 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
-.profile {
-	min-height: 70px;
-}
-
-:target {
+.anchor {
 	display: block;
 	position: relative;
 	top: -55px;
 	visibility: hidden;
+}
+
+.profile {
+	min-height: 70px;
 }
 
 .inline {
@@ -173,7 +168,7 @@ form {
 }
 
 #btn-scrolltop {
-	bottom: 7px;
+	bottom: .75rem;
 	display: none;
 	margin: 0 auto;
 	position: fixed;
@@ -191,10 +186,7 @@ form {
 		height: 25px;
 		padding-top: 5px;
 		width: 25px;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		-webkit-user-select: none;
-		user-select: none;
+		@include user-select(none);
 
 		&:hover {
 			background-color: #666;
@@ -215,7 +207,7 @@ form {
 	}
 
 	#btn-scrolltop {
-		right: 7px;
+		right: .75rem;
 		width: auto;
 	}
 }

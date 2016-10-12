@@ -71,10 +71,10 @@ class ArticlesController extends Controller {
 
 		$query = Articles::find()->orderBy('id DESC');
 		if ($action === "tag" && !empty($tag)) {
-			$query->where(['like', 'tags', '%'.$tag.'%', false]);
+			$query->where(['like', 'tags', $tag]);
 		} elseif ($action === "search" && !empty($q)) {
 			Yii::$app->view->registerMetaTag(['name' => 'robots', 'content' => 'noindex']);
-			$query->where(['or like', 'title', $q]);
+			$query->where(['like', 'title', $q]);
 			$query->orWhere(['like', 'content', $q]);
 		}
 

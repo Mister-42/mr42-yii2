@@ -39,6 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		ActiveForm::end(); ?>
 
-		<p class="text-center"><br /><?= Html::a('Already registered? Sign in!', ['/user/security/login']) ?></p>
+		<p class="text-center"><br><?= Html::a('Already registered? Sign in!', ['/user/security/login']) ?></p>
 	</div>
 </div>

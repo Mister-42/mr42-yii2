@@ -15,7 +15,7 @@ foreach ($artists as $artist) :
 	if ($x++ === 0) echo '<div class="col-sm-4 artists text-center text-nowrap">';
 	echo Html::a($artist->name, ['index', 'artist' => $artist->url]);
 	if (!$artist->active) { echo ' ' . Html::tag('span', 'unpublished', ['class' => 'badge']); }
-	echo '<br />';
+	echo '<br>';
 
 	if ($x == ceil(count($artists)/3) || $y == count($artists)) {
 		echo '</div>';

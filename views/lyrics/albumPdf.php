@@ -3,14 +3,14 @@ use yii\bootstrap\Html;
 ?>
 <bookmark content="track list" />
 
-<br /><br /><br />
+<br><br><br>
 <div class="text-center">
 	<?= Html::tag('h1', $tracks[0]->album->name, ['class' => 'text-center']) ?>
 	by
 	<?= Html::tag('h2', $tracks[0]->artist->name, ['class' => 'text-center']) ?>
 </div>
 
-<br /><br /><br />
+<br><br><br>
 <div class="col-sm-12 mpdf_toc" id="mpdf_toc_0">
 	<?php foreach($tracks as $track) {
 		echo '<div class="mpdf_toc_level_0">';

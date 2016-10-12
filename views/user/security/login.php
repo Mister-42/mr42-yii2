@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		ActiveForm::end();
 
 		if ($module->enableConfirmation): ?>
-			<p class="text-center"><br />
+			<p class="text-center"><br>
 				<?= Html::a('Didn\'t receive confirmation message?', ['/user/registration/resend']) ?>
 			</p>
 		<?php endif ?>

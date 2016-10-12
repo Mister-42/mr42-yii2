@@ -22,8 +22,8 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->orderBy('year DESC, name')
 			->joinWith('artist')
 			->with('tracks')
-			->where([Lyrics1Artists::tableName().'.name' => $artist])
-			->orWhere([Lyrics1Artists::tableName().'.url' => $artist])
+			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
+			->addParams([':artist' => $artist])
 			->all();
 	}
 

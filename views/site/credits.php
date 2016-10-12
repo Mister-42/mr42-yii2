@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo Html::a($item[0], $item[1]);
 		if (!empty($item[2]))
 			echo ' - ' . $item[2];
-		echo '<br />';
+		echo '<br>';
 
 		if ($x == ceil(count($list)/2) || $y == count($list)) {
 			echo '</div>';
