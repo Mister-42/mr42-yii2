@@ -47,13 +47,12 @@ class PhoneticAlphabet extends \yii\base\Model
 	public function listAlphabets($type = 'map', $name = null) {
 		$alphabetFiles = FileHelper::findFiles(__DIR__ . '/PhoneticAlphabet/', ['only'=>['*.php'], 'recursive' => false]);
 
-		foreach ($alphabetFiles as $file) {
+		foreach ($alphabetFiles as $file) :
 			$file = basename($file, '.php');
 			$className = 'app\\models\\tools\\PhoneticAlphabet\\' . $file;
 			$alphabet = new $className();
-			
 			$alphabetOptions[] = ['sort' => $alphabet->sortOrder(), 'file' => $file, 'name' => $alphabet->name()];
-		}
+		endforeach;
 		ArrayHelper::multisort($alphabetOptions, 'sort');
 
 		switch ($type) {

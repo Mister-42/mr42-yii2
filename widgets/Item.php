@@ -1,5 +1,6 @@
 <?php
 namespace app\widgets;
+use yii\bootstrap\Html;
 
 class Item extends \yii\bootstrap\Widget {
 	public $header;
@@ -7,22 +8,19 @@ class Item extends \yii\bootstrap\Widget {
 	public $options;
 
 	public function run() {
-		$class = 'item';
-		$option = '';
-		foreach ($this->options as $k => $v) {
+		$class[] = 'item';
+		foreach ($this->options as $k => $v) :
 			if ($k === 'class') {
-				$class .= ' ' . $v;
+				$class[] = $v;
 				continue;
 			}
-			$option .= $k . '=' . '"' . $v . '" ';
-		}
+			$option[] = "{$k}=\"{$v}\""; 
+		endforeach;
 
-		echo '<div class="' . $class . '" ' . $option . '>';
-
-		if ($this->header !== null)
-			echo '<div class="item-heading">', $this->header, '</div>';
-
-		echo '<div class="item-body">', $this->body, '</div>';
+		echo '<div class="' . implode(' ', $class) . '" ' . implode(' ', $option) . '>';
+		if ($this->header)
+			echo Html::tag('div', $this->header, ['class' => 'item-heading']);
+		echo Html::tag('div', $this->body, ['class' => 'item-body']);
 		echo '</div>';
 	}
 }
