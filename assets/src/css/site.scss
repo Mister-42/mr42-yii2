@@ -40,6 +40,8 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 }
 
 .navbar {
+	@include user-select(none);
+
 	.navbar-brand {
 		font-weight: bold;
 		text-shadow: 2px 2px 2px #444;
