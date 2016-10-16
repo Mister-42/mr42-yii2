@@ -105,9 +105,10 @@ class Comments extends \yii\db\ActiveRecord {
 
 	public static function find() {
 		return parent::find()
-			->where(Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
-				? ['active' => Self::STATUS_ACTIVE]
-				: ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
+			->onCondition(
+				php_sapi_name() !== 'cli' && Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
+					? ['active' => Self::STATUS_ACTIVE]
+					: ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
 			);
 	}
 }

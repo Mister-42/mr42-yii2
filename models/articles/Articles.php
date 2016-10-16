@@ -141,4 +141,13 @@ class Articles extends \yii\db\ActiveRecord {
 	public function getUser() {
 		return $this->hasOne(User::className(), ['id' => 'author']);
 	}
+
+	public static function find() {
+		return parent::find()
+			->onCondition(
+				php_sapi_name() !== 'cli' && Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
+					? ['active' => Self::STATUS_ACTIVE]
+					: ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
+			);
+	}
 }

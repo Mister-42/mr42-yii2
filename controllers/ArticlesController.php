@@ -164,12 +164,10 @@ class ArticlesController extends Controller {
 	}
 
 	protected function findComment($id) {
-		$query = Comments::find()
-				->where(['id' => $id])
-				->andWhere(Yii::$app->user->isGuest ? ['`active`' => Articles::STATUS_ACTIVE] : ['or', ['`active`' => [Articles::STATUS_INACTIVE, Articles::STATUS_ACTIVE]]])
-				->with('user');
-
-		$model = $query->one();
+		$model = Comments::find()
+			->where(['id' => $id])
+			->with('user')
+			->one();
 
 		if (!$model)
 			throw new NotFoundHttpException('Page not found.');
@@ -183,9 +181,8 @@ class ArticlesController extends Controller {
 
 	protected function findModel($id, $withList = []) {
 		$query = Articles::find()
-				->where(['id' => $id])
-				->andWhere(Yii::$app->user->isGuest ? ['active' => Articles::STATUS_ACTIVE] : ['or', ['active' => [Articles::STATUS_INACTIVE, Articles::STATUS_ACTIVE]]])
-				->with('user');
+			->where(['id' => $id])
+			->with('user');
 
 		foreach ($withList as $with)
 			$query->with($with);

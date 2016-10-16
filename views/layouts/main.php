@@ -55,7 +55,7 @@ $this->beginPage();
 	</div>
 </div>
 
-<footer class="footer">
+<footer>
 	<div class="container">
 		<p class="pull-left">&copy; 2014-<?= date('Y') ?> <?= Yii::$app->name ?></p>
 		<p class="pull-right"><?php

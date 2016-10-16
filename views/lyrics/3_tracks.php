@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $tracks[0]->album->name;
 			echo '<div class="row"><div class="col-lg-12">';
 			echo Html::a(null, null, ['class' => 'anchor', 'name' => $track->track]);
 			echo Html::tag('h4', implode(' · ', [$track->track, $track->name]));
-			echo $track->lyrics->lyrics;
+			echo Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics']);
 			echo '</div></div>';
 		}
 	endforeach;

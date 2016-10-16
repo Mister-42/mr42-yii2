@@ -108,7 +108,7 @@ return [
 	'language' => 'en',
 	'name' => 'Mr.42',
 	'params' => require(__DIR__ . '/params.php'),
-	'runtimePath' => __DIR__ . '/../runtime/mr42',
+	'runtimePath' => __DIR__ . '/../../.cache/yii/mr42',
 	'timeZone' => 'Europe/Berlin',
 	'vendorPath' => __DIR__ . '/../vendor',
 ];

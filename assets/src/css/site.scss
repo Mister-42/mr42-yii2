@@ -69,6 +69,10 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 	&headers,
 	&lyrics-lyrics .row {
 		@include dividing-line(10px, $lighterBlue);
+
+		.lyrics {
+			@include user-select(all);
+		}
 	}
 
 	&lyrics {
@@ -197,10 +201,11 @@ form {
 	}
 }
 
-.footer {
-	height: 40px;
+footer {
 	background-color: $lighterBlue;
+	height: 40px;
 	padding-top: 10px;
+	@include user-select(none);
 }
 
 @media (min-width: 768px) {
