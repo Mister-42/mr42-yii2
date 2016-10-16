@@ -21,14 +21,14 @@ class Feed extends Widget {
 
 	public function renderFeed($items, $limit) {
 		$count = 0;
-		foreach ($items as $item) {
+		foreach ($items as $item) :
 			$count++;
 			$feed[] = Html::tag('li', Html::a(Html::encode($item['title']), $item['url'], ['title' => $item['description'], 'data-toggle' => 'tooltip', 'data-placement' => 'top']));
 
 			if ($count === $limit)
 				break;
-		}
+		endforeach;
 
-		return Html::tag('ul', implode('', $feed), ['class' => 'list-unstyled']);
+		return Html::tag('ul', implode($feed), ['class' => 'list-unstyled']);
 	}
 }

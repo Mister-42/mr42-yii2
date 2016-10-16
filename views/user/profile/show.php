@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php endif; ?>
 			</div>
 		</div>
-			<hr />
+		<hr>
 		<?php if (!empty($profile->bio)): ?>
 			<?php echo Profile::show($profile); ?>
 		<?php endif; ?>

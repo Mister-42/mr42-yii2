@@ -45,12 +45,8 @@ class Articles extends \yii\db\ActiveRecord {
 	}
 
 	public function beforeDelete() {
-		if (!parent::beforeDelete())
+		if (!parent::beforeDelete() || !$this->belongsToViewer())
 			return false;
-
-		if (!$this->belongsToViewer())
-			return false;
-
 		return true;
 	}
 
@@ -108,32 +104,28 @@ class Articles extends \yii\db\ActiveRecord {
 		);
 	}
 
-	public function findNewerOne() {
-		return static::find()
-			->where('id > :id', [':id' => $this->id])
-			->orderBy('id asc')
-			->one();
-	}
-
-	public function findOlderOne() {
-		return static::find()
-			->where('id < :id', [':id' => $this->id])
-			->orderBy('id desc')
-			->one();
-	}
-
 	public function getComments() {
 		return $this->hasMany(Comments::className(), ['parent' => 'id']);
 	}
 
 	public function getNewerLink() {
-		if (!$model = $this->findNewerOne())
+		$model = static::find()
+			->where('id > :id', [':id' => $this->id])
+			->orderBy('id asc')
+			->one();
+
+		if (!$model)
 			return null;
 		return Html::a('Next Article &raquo;', ['articles/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)]);
 	}
 
 	public function getOlderLink() {
-		if (!$model = $this->findOlderOne())
+		$model = static::find()
+			->where('id < :id', [':id' => $this->id])
+			->orderBy('id desc')
+			->one();
+
+		if (!$model)
 			return null;
 		return Html::a('&laquo; Previous Article', ['articles/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)]);
 	}

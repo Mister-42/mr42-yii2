@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 		])->passwordInput() ?>
 
-		<hr />
+		<hr>
 
 		<?= $form->field($model, 'current_password', [
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',

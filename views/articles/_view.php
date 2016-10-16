@@ -71,7 +71,7 @@ HighlightAsset::register($this);
 
 		if (isset($view) && $view == 'full ') {
 			if (!empty($profile['bio']) && $author = Profile::show($profile))
-				echo '<hr />' . Html::tag('div', $author, ['class' => 'well well-sm']);
+				echo '<hr>' . Html::tag('div', $author, ['class' => 'well well-sm']);
 		}
 		?>
 	</div>

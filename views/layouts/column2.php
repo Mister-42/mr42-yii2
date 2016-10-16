@@ -1,6 +1,6 @@
 <?php
 use app\models\articles\{Articles, Comments};
-use app\widgets\{Feed, Item, RecentArticles, Search, TagCloud};
+use app\widgets\{Feed, Item, RecentArticles, RecentComments, Search, TagCloud};
 use yii\bootstrap\Html;
 use yii\caching\DbDependency;
 
@@ -11,7 +11,7 @@ $dependency = [
 	'reusable' => true,
 	'sql' => 'SELECT GREATEST(
 		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1),
-		IFNULL((SELECT MAX(created) FROM '.Comments::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1)
+		IFNULL((SELECT MAX(created) FROM '.Comments::tableName().' WHERE `active` = '.Comments::STATUS_ACTIVE.'), 1)
 	)',
 ];
 ?>
@@ -21,28 +21,31 @@ $dependency = [
 	</div>
 
 	<aside class="hidden-xs col-sm-3">
-	<?php echo Item::widget([
-		'body' => Search::widget(),
-	]);
+		<?php echo Search::widget();
 
-	if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0])) {
+		if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0])) {
+			echo Item::widget([
+				'body' => RecentArticles::widget(),
+				'header' => Html::tag('h4', 'Latest Articles'),
+			]);
+
+			echo Item::widget([
+				'body' => RecentComments::widget(),
+				'header' => Html::tag('h4', 'Latest Comments'),
+			]);
+
+			echo Item::widget([
+				'body' => TagCloud::widget(),
+				'header' => Html::tag('h4', 'Tags'),
+			]);
+
+			$this->endCache();
+		}
+
 		echo Item::widget([
-			'body' => RecentArticles::widget(),
-			'header' => Html::tag('h4', 'Latest Articles'),
-		]);
-
-		echo Item::widget([
-			'body' => TagCloud::widget(),
-			'header' => Html::tag('h4', 'Tags'),
-		]);
-
-		$this->endCache();
-	}
-
-	echo Item::widget([
-		'body' => Feed::widget(['name' => 'ScienceDaily']),
-		'header' => Html::tag('h4', 'Science News'),
-	]); ?>
+			'body' => Feed::widget(['name' => 'ScienceDaily']),
+			'header' => Html::tag('h4', 'Science News'),
+		]); ?>
 	</aside>
 </div>
 <?php $this->endContent(); ?>

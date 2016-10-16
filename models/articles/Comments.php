@@ -103,6 +103,10 @@ class Comments extends \yii\db\ActiveRecord {
 		}
 	}
 
+	public function getArticle() {
+		return $this->hasOne(Articles::className(), ['id' => 'parent']);
+	}
+
 	public static function find() {
 		return parent::find()
 			->onCondition(

@@ -6,26 +6,23 @@ use yii\bootstrap\{Html, Widget};
 
 class RecentArticles extends Widget
 {
-	public function run()
-	{
+	public function run() {
 		$limit = (isset(Yii::$app->params['recentArticles']) && is_int(Yii::$app->params['recentArticles'])) ? Yii::$app->params['recentArticles'] : 5;
 
 		$articles = Articles::find()
-				->orderBy('created DESC')
-				->limit($limit)
-				->all();
+			->orderBy('created DESC')
+			->limit($limit)
+			->all();
 
 		echo (empty($articles)) ? Html::tag('p', 'No articles to display.') : Html::tag('ul', $this->renderArticles($articles), ['class' => 'list-unstyled']);		
 	}
 
-	public function renderArticles($articles)
-	{
-		$items = [];
+	public function renderArticles($articles) {
 		foreach ($articles as $article) {
 			$link = Html::a(Html::encode($article->title), ['articles/index', 'id' => $article->id, 'title' => $article->url]);
 			$items[] = Html::tag('li', $link);
 		}
 
-		return implode('', $items);
+		return implode($items);
 	}
 }

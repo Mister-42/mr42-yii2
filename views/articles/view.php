@@ -17,13 +17,13 @@ $this->params['breadcrumbs'][] = $model->title;
 
 	<div class="comments"><?= Html::a(null, null, ['class' => 'anchor', 'id' => 'comments']) ?>
 		<?php if(!empty($model->comments)) : ?>
-			<hr />
+			<hr>
 			<h2>Comments</h2>
 
 			<?= $this->render('_comments', ['mainmodel' => $model, 'model' => $comment, 'comments' => $model->comments]) ?>
 		<?php endif; ?>
 
-		<hr />
+		<hr>
 		<?= $this->render('_formComment', ['model' => $comment]) ?>
 	</div>
 </div>
