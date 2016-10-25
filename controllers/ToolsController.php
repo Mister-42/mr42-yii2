@@ -4,6 +4,7 @@ use Yii;
 use app\models\tools\{Favicon, PhoneticAlphabet};
 use yii\base\Object;
 use yii\filters\HttpCache;
+use yii\helpers\FileHelper;
 use yii\web\{Controller, UploadedFile};
 
 class ToolsController extends Controller {
@@ -31,8 +32,10 @@ class ToolsController extends Controller {
 	}
 
 	public function actionFavicon() {
-		$model = new Favicon;
+		if (!file_exists(Yii::getAlias('@webroot/assets/temp/favicon')))
+			FileHelper::createDirectory(Yii::getAlias('@webroot/assets/temp/favicon'));
 
+		$model = new Favicon;
 		if ($model->load(Yii::$app->request->post())) {
 			$model->sourceImage = UploadedFile::getInstance($model, 'sourceImage');
 			if ($model->convertImage())

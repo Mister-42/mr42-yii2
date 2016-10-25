@@ -1,5 +1,4 @@
 <?php
-use app\models\lyrics\Lyrics3Tracks;
 use yii\bootstrap\Html;
 
 $this->title = $albums[0]->artist->name;

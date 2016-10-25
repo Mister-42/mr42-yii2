@@ -2,7 +2,6 @@
 namespace app\models\user;
 use Yii;
 use yii\bootstrap\Html;
-use yii\db\Query;
 use yii\helpers\Url;
 use yii\httpclient\Client;
 
@@ -87,7 +86,7 @@ class RecentTracks extends \yii\db\ActiveRecord
 			self::deleteAll(['and',
 				['userid' => $profile->user_id],
 				['not in', 'time',
-					(new Query())->select('time')->from(self::tableName())->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit($limit)
+					(new \yii\db\Query())->select('time')->from(self::tableName())->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit($limit)
 				],
 			]);
 */

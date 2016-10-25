@@ -1,10 +1,7 @@
 <?php
 use yii\bootstrap\{ActiveForm, Alert, Html};
-use yii\helpers\{FileHelper, Url};
+use yii\helpers\Url;
 use nezhelskoy\highlight\HighlightAsset;
-
-if (!file_exists(Yii::getAlias('@webroot/assets/temp/favicon')))
-	FileHelper::createDirectory(Yii::getAlias('@webroot/assets/temp/favicon'));
 
 HighlightAsset::register($this);
 
