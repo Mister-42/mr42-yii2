@@ -1,5 +1,5 @@
 <?php
-$config = [
+return [
 	'id' => 'mr42-console',
 	'aliases' => [
 		'@web' => 'https://www.mr42.me/',
@@ -12,5 +12,3 @@ $config = [
 	],
 	'controllerNamespace' => 'app\commands',
 ];
-
-return $config;
