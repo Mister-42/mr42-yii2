@@ -3,11 +3,13 @@ namespace app\models\articles;
 use Yii;
 use app\models\Pdf;
 use dektrium\user\models\{Profile, User};
+use yii\behaviors\TimestampBehavior;
 use yii\bootstrap\Html;
+use yii\db\ActiveRecord;
 use yii\helpers\{StringHelper, Url};
 use yii\web\AccessDeniedHttpException;
 
-class ArticlesBase extends \yii\db\ActiveRecord {
+class ArticlesBase extends ActiveRecord {
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
 
@@ -37,6 +39,18 @@ class ArticlesBase extends \yii\db\ActiveRecord {
 		];
 	}
 
+	public function behaviors() {
+		return [
+			[
+				'class' => TimestampBehavior::className(),
+				'attributes' => [
+					ActiveRecord::EVENT_BEFORE_INSERT => ['created', 'updated'],
+					ActiveRecord::EVENT_BEFORE_UPDATE => ['updated'],
+				],
+			],
+		];
+	}
+
 	public function addComment(Comments $comment) {
 		$comment->parent = $this->id;
 		$comment->user = (Yii::$app->user->isGuest) ? null : Yii::$app->user->id;
@@ -55,14 +69,11 @@ class ArticlesBase extends \yii\db\ActiveRecord {
 		if (!parent::beforeSave($insert))
 			return false;
 
-		$datetime = time();
 		$this->url = $this->url ?? null;
-		$this->updated = $datetime;
 
-		if ($insert) {
+		if ($insert)
 			$this->author = Yii::$app->user->id;
-			$this->created = $datetime;
-		} elseif (!$this->belongsToViewer())
+		elseif (!$this->belongsToViewer())
 			return false;
 
 		return true;

@@ -2,10 +2,12 @@
 namespace app\models\articles;
 use Yii;
 use app\models\Formatter;
+use yii\behaviors\TimestampBehavior;
 use yii\bootstrap\Html;
+use yii\db\ActiveRecord;
 use yii\web\AccessDeniedHttpException;
 
-class Comments extends \yii\db\ActiveRecord {
+class Comments extends ActiveRecord {
 	public $captcha;
 
 	const STATUS_INACTIVE = '0';
@@ -50,6 +52,17 @@ class Comments extends \yii\db\ActiveRecord {
 		];
 	}
 
+	public function behaviors() {
+		return [
+			[
+				'class' => TimestampBehavior::className(),
+				'attributes' => [
+					ActiveRecord::EVENT_BEFORE_INSERT => ['created'],
+				],
+			],
+		];
+	}
+
 	public function afterFind() {
 		parent::afterFind();
 		$this->content = Formatter::cleanInput($this->content, 'gfm-comment');
@@ -58,9 +71,6 @@ class Comments extends \yii\db\ActiveRecord {
 	public function beforeSave($insert) {
 		if (!parent::beforeSave($insert))
 			return false;
-
-		if ($insert)
-			$this->created = time();
 
 		if (!$insert && Yii::$app->user->isGuest)
 			throw new AccessDeniedHttpException('Please login.');
