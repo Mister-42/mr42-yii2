@@ -7,12 +7,10 @@ $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-	<div class="col-md-offset-2 col-md-8">
-		<?= Html::tag('h1', Html::encode($this->title)) ?>
+	<div class="col-md-offset-2 col-md-8"><?php
+		echo Html::tag('h1', Html::encode($this->title));
+		echo Html::tag('p', 'This calculator calculates the new end date of a Microsoft® Office 365® Open SKU.');
 
-		<p>This calculator calculates the new end date of a Microsoft® Office 365® Open SKU.</p>
-
-		<?php
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
 			$txt = '<p><strong>This action is not allowed.</strong> Subscriptions have a maximum end date of 3 years into the future.</p>';
 			$txt .= '<p>Theoretically the subscription with <strong>' . Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> would approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';

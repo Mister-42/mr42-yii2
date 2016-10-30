@@ -21,6 +21,6 @@ $this->params['breadcrumbs'][] = $model->title;
 			echo '<hr>' . Html::tag('h2', 'Comments');
 			echo $this->render('_comments', ['mainmodel' => $model, 'model' => $comment, 'comments' => $model->comments]);
 		}
-		echo '<hr>' . $this->render('_formComment', ['model' => $comment]); ?>
-	</div>
+		echo '<hr>' . $this->render('_formComment', ['model' => $comment]);
+	?></div>
 </div>

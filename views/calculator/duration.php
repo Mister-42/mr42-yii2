@@ -2,17 +2,15 @@
 use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\jui\DatePicker;
 
-$this->title = 'Date to Date';
+$this->title = 'Date to Date (duration)';
 $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-	<div class="col-md-offset-2 col-md-8">
-		<?= Html::tag('h1', Html::encode($this->title)) ?>
+	<div class="col-md-offset-2 col-md-8"><?php
+		echo Html::tag('h1', Html::encode($this->title));
+		echo Html::tag('p', 'This calculator calculates the number of days between two dates.');
 
-		<p>This calculator calculates the number of days between two dates.</p>
-
-		<?php
 		if ($flash = Yii::$app->session->getFlash('duration-success')) {
 			$txt = '<p>From: <strong>'. Yii::$app->formatter->asDate($model->from, 'long') . '</strong><br>';
 			$txt .= 'To: <strong>'. Yii::$app->formatter->asDate($model->to, 'long') . '</strong></p>';

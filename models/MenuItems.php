@@ -15,7 +15,7 @@ class MenuItems {
 			['label' => Html::icon('th-list').'Articles', 'url' => ['/articles/index'], 'visible' => 1],
 			['label' => Html::icon('dashboard').'Calculator', 'url' => null,
 				'items' => [
-					['label' => 'Date (add/substract)', 'url' => ['/calculator/date']],
+					['label' => 'Date (add/subtract)', 'url' => ['/calculator/date']],
 					['label' => 'Date to Date (duration)', 'url' => ['/calculator/duration']],
 					['label' => 'Microsoft® Office 365® End Date', 'url' => ['/calculator/office365']],
 					['label' => 'Wifi Protected Access Pre-Shared Key', 'url' => ['/calculator/wpapsk']],
