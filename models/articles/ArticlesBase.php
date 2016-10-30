@@ -48,11 +48,6 @@ class ArticlesBase extends \yii\db\ActiveRecord {
 		return (parent::beforeDelete() && $this->belongsToViewer()) ? true : false;
 	}
 
-	public function afterFind() {
-		parent::afterFind();
-		$this->url = $this->url ?? $this->title;
-	}
-
 	public function beforeSave($insert) {
 		if (Yii::$app->user->isGuest)
 			throw new AccessDeniedHttpException('Please login.');
@@ -98,18 +93,6 @@ class ArticlesBase extends \yii\db\ActiveRecord {
 				'title' => implode(' ∷ ', [$model->title, Yii::$app->name]),
 			]
 		);
-	}
-
-	public function getNewerLink() {
-		return ($model = static::find()->where(['>', 'id', $this->id])->orderBy('id asc')->one())
-			? Html::a('Next Article &raquo;', ['articles/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($model->title)])
-			: null; 
-	}
-
-	public function getOlderLink() {
-		return ($model = static::find()->where(['<', 'id', $this->id])->orderBy('id desc')->one())
-			? Html::a('&laquo; Previous Article', ['articles/index', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($model->title)])
-			: null;
 	}
 
 	public function getUser() {

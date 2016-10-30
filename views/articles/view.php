@@ -7,10 +7,10 @@ $this->params['breadcrumbs'][] = $model->title;
 ?>
 <div class="articles-view">
 	<div class="clearfix"><?php
-		if ($olderLink = $model->olderLink)
-			echo $olderLink;
-		if ($newerLink = $model->newerLink)
-			echo $newerLink;
+		if ($older = $model->find()->where(['<', 'id', $model->id])->orderBy('id desc')->one())
+			echo Html::a('&laquo; Previous Article', ['articles/index', 'id' => $older->id, 'title' => $older->url], ['class' => 'btn btn-sm btn-default pull-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => Html::encode($older->title)]);
+		if ($newer = $model->find()->where(['>', 'id', $model->id])->orderBy('id asc')->one())
+			echo Html::a('Next Article &raquo;', ['articles/index', 'id' => $newer->id, 'title' => $newer->url], ['class' => 'btn btn-sm btn-default pull-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => Html::encode($newer->title)]);
 	?></div>
 
 	<?= $this->render('_view', ['model' => $model, 'view' => 'full']) ?>
