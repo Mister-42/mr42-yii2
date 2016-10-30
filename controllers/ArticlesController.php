@@ -1,13 +1,12 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\Formatter;
-use app\models\articles\{Articles, Comments};
+use app\models\articles\{Articles, ArticlesBase, Comments};
 use yii\bootstrap\Alert;
 use yii\data\ActiveDataProvider;
 use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\Url;
-use yii\web\{Controller,ErrorAction, MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
+use yii\web\{Controller, ErrorAction, MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
 
 class ArticlesController extends Controller {
 	public $layout = '@app/views/layouts/column2.php';
@@ -98,7 +97,6 @@ class ArticlesController extends Controller {
 			if (empty($title) || $title != $model->url)
 				$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
-			$model->content = Formatter::cleanInput($model->content, 'gfm', true);
 			$html = $this->renderPartial('pdf', ['model' => $model]);
 
 			$fileName = Articles::buildPdf($model, $html);
@@ -109,7 +107,7 @@ class ArticlesController extends Controller {
 	public function actionCreate() {
 		$this->layout = '@app/views/layouts/main.php';
 
-		$model = new Articles;
+		$model = new ArticlesBase;
 		if ($model->load(Yii::$app->request->post()) && $model->save())
 			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
 
@@ -121,7 +119,7 @@ class ArticlesController extends Controller {
 	public function actionUpdate($id) {
 		$this->layout = '@app/views/layouts/main.php';
 
-		$model = $this->findModel($id);
+		$model = ArticlesBase::findOne($id);
 		if (!$model->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
 
@@ -134,7 +132,7 @@ class ArticlesController extends Controller {
 	}
 
 	public function actionDelete($id) {
-		$model = $this->findModel($id);
+		$model = ArticlesBase::findOne($id);
 		if (!$model->belongsToViewer()) {
 			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
 		}

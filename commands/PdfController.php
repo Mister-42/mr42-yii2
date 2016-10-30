@@ -1,7 +1,6 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\Formatter;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use app\models\articles\Articles;
 use yii\console\Controller;
@@ -47,7 +46,8 @@ class PdfController extends Controller {
 					continue;
 				}
 
-				$this->stdout(Yii::$app->formatter->asShortSize(filesize($fileName), 2)."\t" . $this->ansiFormat("OK\n", Console::BOLD, Console::FG_GREEN));
+				$this->stdout(Yii::$app->formatter->asShortSize(filesize($fileName), 2)."\t");
+				$this->stdout($this->ansiFormat("OK\n", Console::BOLD, Console::FG_GREEN));
 			endforeach;
 		endforeach;
 
@@ -70,7 +70,6 @@ class PdfController extends Controller {
 			for($x=0; $x<(8 - intdiv(strlen($article->title), Self::TABSIZE)); $x++)
 				$this->stdout("\t");
 
-			$article->content = Formatter::cleanInput($article->content, 'gfm', true);
 			$html = $this->renderPartial('@app/views/articles/pdf', ['model' => $article]);
 			$fileName = Articles::buildPdf($article, $html);
 
@@ -79,7 +78,8 @@ class PdfController extends Controller {
 				continue;
 			}
 
-			$this->stdout(Yii::$app->formatter->asShortSize(filesize($fileName), 2)."\t" . $this->ansiFormat("OK\n", Console::BOLD, Console::FG_GREEN));
+			$this->stdout(Yii::$app->formatter->asShortSize(filesize($fileName), 2)."\t");
+			$this->stdout($this->ansiFormat("OK\n", Console::BOLD, Console::FG_GREEN));
 		endforeach;
 
 		return Controller::EXIT_CODE_NORMAL;

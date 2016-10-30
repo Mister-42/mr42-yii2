@@ -1,6 +1,5 @@
 <?php
 use Yii;
-use app\models\Formatter;
 use yii\bootstrap\Html;
 use yii\helpers\Url;
 
@@ -40,18 +39,18 @@ $rss->appendChild($channel);
 foreach($articles as $article) :
 	if (strpos($article->content, '[readmore]')) {
 		$article->content = substr($article->content, 0, strpos($article->content, '[readmore]'));
-		$article->content .= Html::a('Read full article on our website', Url::to(['articles/index', 'id'=>$article->id, 'title'=>$article->url], true)).' &raquo;';
+		$article->content .= Html::a('Read full article on our website', Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true)).' &raquo;';
 	}
 
 	$item = $doc->createElement('item');
 	$item->appendChild($doc->createElement('title', $article->title));
-	$item->appendChild($doc->createElement('link', Html::encode(Url::to(['articles/index', 'id'=>$article->id, 'title'=>$article->url], true))));
+	$item->appendChild($doc->createElement('link', Html::encode(Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true))));
 		$description = $doc->createElement('description');
-		$description->appendChild($doc->createCDATASection(Formatter::cleanInput($article->content, 'gfm')));
+		$description->appendChild($doc->createCDATASection($article->content));
 	$item->appendChild($description);
 	$item->appendChild($doc->createElement('dc:creator', $article->user->username));
 	$item->appendChild($doc->createElement('category', Html::encode($article->tags)));
-		$guid = $doc->createElement('guid', Html::encode(Url::to(['articles/index', 'id'=>$article->id], true)));
+		$guid = $doc->createElement('guid', Html::encode(Url::to(['articles/index', 'id' => $article->id], true)));
 		$guid->setAttribute('isPermaLink', 'true');
 	$item->appendChild($guid);
 	$item->appendChild($doc->createElement('pubDate', date(DATE_RSS, $article->created)));

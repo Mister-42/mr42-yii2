@@ -1,5 +1,4 @@
 <?php
-use app\models\Formatter;
 use app\models\user\Profile;
 use dektrium\user\models\User;
 use nezhelskoy\highlight\HighlightAsset;
@@ -39,7 +38,7 @@ HighlightAsset::register($this);
 			}
 		}
 
-		echo Formatter::cleanInput($model->content, 'gfm', true);
+		echo $model->content;
 		?>
 	</div>
 

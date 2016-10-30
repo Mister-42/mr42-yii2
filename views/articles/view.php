@@ -13,17 +13,14 @@ $this->params['breadcrumbs'][] = $model->title;
 			echo $newerLink;
 	?></div>
 
-	<?php echo $this->render('_view', ['model' => $model, 'view' => 'full']); ?>
+	<?= $this->render('_view', ['model' => $model, 'view' => 'full']) ?>
 
-	<div class="comments"><?= Html::a(null, null, ['class' => 'anchor', 'id' => 'comments']) ?>
-		<?php if(!empty($model->comments)) : ?>
-			<hr>
-			<h2>Comments</h2>
-
-			<?= $this->render('_comments', ['mainmodel' => $model, 'model' => $comment, 'comments' => $model->comments]) ?>
-		<?php endif; ?>
-
-		<hr>
-		<?= $this->render('_formComment', ['model' => $comment]) ?>
+	<div class="comments"><?php
+		echo Html::a(null, null, ['class' => 'anchor', 'id' => 'comments']);
+		if(!empty($model->comments)) {
+			echo '<hr>' . Html::tag('h2', 'Comments');
+			echo $this->render('_comments', ['mainmodel' => $model, 'model' => $comment, 'comments' => $model->comments]);
+		}
+		echo '<hr>' . $this->render('_formComment', ['model' => $comment]); ?>
 	</div>
 </div>

@@ -21,12 +21,11 @@ class Tags {
 		return $lastUpdate['updated'];
 	}
 
-	private static function getTags() {
+	private function getTags() {
 		foreach (Articles::find()->select('tags')->all() as $tag) :
 			foreach (StringHelper::explode($tag->tags) as $item)
 				$list[$item] = $list[$item] ? $list[$item] + 1 : 1;
 		endforeach;
-
 		return $list;
 	}
 }
