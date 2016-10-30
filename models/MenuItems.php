@@ -5,7 +5,7 @@ use app\models\articles\Comments;
 use yii\bootstrap\Html;
 
 class MenuItems {
-	public static function menuArray() {
+	public function menuArray() {
 		$isGuest = (Yii::$app->controller->action->id === 'sitemap') ? true : Yii::$app->user->isGuest;
 		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 		$unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACTIVE])->count() : 0;
@@ -50,7 +50,7 @@ class MenuItems {
 			,
 		];
 
-		if (Yii::$app->controller->action->id == 'sitemapxml') {
+		if (Yii::$app->controller->action->id === 'sitemap') {
 			$menuItems[] = ['label' => 'Create Account', 'url' => ['/user/registration/register']];
 			$menuItems[] = ['label' => 'Contact', 'url' => ['/site/changelog']];
 			$menuItems[] = ['label' => 'Contact', 'url' => ['/site/contact']];
@@ -59,7 +59,7 @@ class MenuItems {
 		return $menuItems;
 	}
 
-	public static function urlList() {
+	public function urlList() {
 		foreach (self::menuArray() as $item) :
 			if (isset($item['visible']))
 				continue;
