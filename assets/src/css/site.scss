@@ -67,11 +67,9 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 	}
 
 	&headers,
-	&lyrics-lyrics .row {
-		@include dividing-line(10px, $lighterBlue);
-
-		.lyrics {
-			@include user-select(all);
+	&lyrics-lyrics {
+		.row {
+			@include dividing-line(10px, $lighterBlue);
 		}
 	}
 
@@ -80,6 +78,10 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 			font-weight: bold;
 			line-height: 250%;
 			vertical-align: top;
+		}
+
+		&-lyrics .lyrics {
+			@include user-select(all);
 		}
 	}
 }

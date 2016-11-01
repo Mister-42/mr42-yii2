@@ -3,8 +3,7 @@ namespace app\models\tools;
 use Yii;
 use yii\helpers\{ArrayHelper, FileHelper};
 
-class PhoneticAlphabet extends \yii\base\Model
-{
+class PhoneticAlphabet extends \yii\base\Model {
 	public $text;
 	public $alphabet;
 

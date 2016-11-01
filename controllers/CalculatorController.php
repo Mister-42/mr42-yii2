@@ -27,7 +27,6 @@ class CalculatorController extends \yii\web\Controller {
 
 	public function actionDate() {
 		$model = new Date;
-
 		if ($model->load(Yii::$app->request->post()))
 			$model->diff();
 
@@ -38,7 +37,6 @@ class CalculatorController extends \yii\web\Controller {
 
 	public function actionDuration() {
 		$model = new Duration;
-
 		if ($model->load(Yii::$app->request->post()))
 			$model->duration();
 
@@ -49,7 +47,6 @@ class CalculatorController extends \yii\web\Controller {
 
 	public function actionOffice365() {
 		$model = new Office365;
-
 		if ($model->load(Yii::$app->request->post()))
 			$model->calcEndDate();
 

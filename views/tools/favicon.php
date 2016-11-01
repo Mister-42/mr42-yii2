@@ -1,6 +1,6 @@
 <?php
 use yii\bootstrap\{ActiveForm, Alert, Html};
-use yii\helpers\Url;
+use yii\helpers\{Inflector, Url};
 use nezhelskoy\highlight\HighlightAsset;
 
 HighlightAsset::register($this);
@@ -12,21 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
 echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover\').val(\'File "\'+$(this).val()+\'" selected\');});', \yii\web\View::POS_READY);
 ?>
 <div class="row">
-	<div class="col-md-offset-2 col-md-8">
+	<div class="col-md-offset-2 col-md-8"><?
+		echo Html::tag('h1', Html::encode($this->title));
+		echo Html::tag('p', 'A favicon (short for \'favorites icon\'), are little icons associated with a particular website or webpage, shown next to the site\'s name in the URL bar or the page\'s title on the tab of all major browsers. Browse to the file\'s location on your computer to select the image and press the \'' . $model->getAttributeLabel('generate') . '\' button to generate a favicon for your site.');
 
-		<?= Html::tag('h1', Html::encode($this->title)) ?>
-
-		<p>A favicon (short for 'favorites icon'), are little icons associated with a particular website or webpage, shown next to the site's name in the URL bar or the page's title on the tab of all major browsers. Browse to the file's location on your computer to select the image and press the '<?= $model->getAttributeLabel('generate') ?>' button to generate a favicon for your site.</p>
-
-		<?php
-		$x=0;
-		foreach ($model->dimensions as $dimension) {
-			$x++;
+		foreach ($model->dimensions as $dimension)
 			$dimensions[] = $dimension.'x'.$dimension;
-			$dimensionList .= $dimension.'x'.$dimension;
-			if (count($model->dimensions) !== $x)
-				$dimensionList .= (count($model->dimensions)-1 == $x) ? ' and ' : ', ';
-		}
 
 		if ($flash = Yii::$app->session->getFlash('favicon-error'))
 			echo Alert::widget(['options' => ['class' => 'alert-danger'],'body' => $flash]);
@@ -59,7 +50,7 @@ echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover
 
 		<?= $form->field($model, 'sourceImage')
 			->fileInput(['accept' => 'image/*', 'class' => 'hidden', 'id' => 'sourceFile'])
-			->hint('For the best result you should upload a square image. Your icon will be generated in '.$dimensionList.' pixels.')
+			->hint('For the best result you should upload a square image. Your icon will be generated in ' . Inflector::sentence($dimensions) . ' pixels.')
 			->label(false) ?>
 
 		<div class="form-group">

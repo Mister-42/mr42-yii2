@@ -133,9 +133,9 @@ class ArticlesController extends Controller {
 
 	public function actionDelete($id) {
 		$model = ArticlesBase::findOne($id);
-		if (!$model->belongsToViewer()) {
+		if (!$model->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
-		}
+
 		$model->delete();
 		return $this->redirect(['index']);
 	}

@@ -4,8 +4,7 @@ use Imagick;
 use ImagickException;
 use Yii;
 
-class Favicon extends \yii\base\Model
-{
+class Favicon extends \yii\base\Model {
 	public $email;
 	public $sourceImage;
 	public $dimensions = [16, 32, 48, 64];

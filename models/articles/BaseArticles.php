@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 use yii\helpers\{StringHelper, Url};
 use yii\web\AccessDeniedHttpException;
 
-class ArticlesBase extends ActiveRecord {
+class BaseArticles extends ActiveRecord {
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
 
