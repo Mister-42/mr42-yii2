@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover\').val(\'File "\'+$(this).val()+\'" selected\');});', \yii\web\View::POS_READY);
 ?>
 <div class="row">
-	<div class="col-md-offset-2 col-md-8"><?
+	<div class="col-md-offset-2 col-md-8"><?php
 		echo Html::tag('h1', Html::encode($this->title));
 		echo Html::tag('p', 'A favicon (short for \'favorites icon\'), are little icons associated with a particular website or webpage, shown next to the site\'s name in the URL bar or the page\'s title on the tab of all major browsers. Browse to the file\'s location on your computer to select the image and press the \'' . $model->getAttributeLabel('generate') . '\' button to generate a favicon for your site.');
 

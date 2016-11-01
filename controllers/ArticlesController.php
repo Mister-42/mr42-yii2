@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\articles\{Articles, ArticlesBase, Comments};
+use app\models\articles\{Articles, BaseArticles, Comments};
 use yii\bootstrap\Alert;
 use yii\data\ActiveDataProvider;
 use yii\filters\{AccessControl, VerbFilter};
@@ -107,7 +107,7 @@ class ArticlesController extends Controller {
 	public function actionCreate() {
 		$this->layout = '@app/views/layouts/main.php';
 
-		$model = new ArticlesBase;
+		$model = new BaseArticles;
 		if ($model->load(Yii::$app->request->post()) && $model->save())
 			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
 
@@ -119,7 +119,7 @@ class ArticlesController extends Controller {
 	public function actionUpdate($id) {
 		$this->layout = '@app/views/layouts/main.php';
 
-		$model = ArticlesBase::findOne($id);
+		$model = BaseArticles::findOne($id);
 		if (!$model->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
 
@@ -132,7 +132,7 @@ class ArticlesController extends Controller {
 	}
 
 	public function actionDelete($id) {
-		$model = ArticlesBase::findOne($id);
+		$model = BaseArticles::findOne($id);
 		if (!$model->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
 

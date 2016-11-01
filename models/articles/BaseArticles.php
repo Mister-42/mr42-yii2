@@ -28,14 +28,7 @@ class BaseArticles extends ActiveRecord {
 
 	public function attributeLabels() {
 		return [
-			'id' => 'ID',
-			'title' => 'Title',
 			'url' => 'URL',
-			'content' => 'Content',
-			'tags' => 'Tags',
-			'created' => 'Created At',
-			'updated' => 'Updated At',
-			'author' => 'User ID',
 		];
 	}
 
