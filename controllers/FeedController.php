@@ -4,7 +4,6 @@ use Yii;
 use app\models\MenuItems;
 use app\models\articles\{Articles, Tags};
 use app\models\lyrics\Lyrics1Artists;
-use yii\base\Object;
 use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, StringHelper};
 use yii\web\{Controller, Response};
@@ -15,7 +14,7 @@ class FeedController extends Controller {
 			[
 				'class' => HttpCache::className(),
 				'except' => ['index'],
-				'lastModified' => function (Object $action, $params) {
+				'lastModified' => function ($action, $params) {
 					$lastUpdate = Articles::find()->select(['updated' => 'max(updated)'])->one();
 					return $lastUpdate->updated;
 				},

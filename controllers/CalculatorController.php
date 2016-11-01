@@ -2,7 +2,6 @@
 namespace app\controllers;
 use Yii;
 use app\models\calculator\{Date, Duration, Office365};
-use yii\base\Object;
 use yii\filters\HttpCache;
 
 class CalculatorController extends \yii\web\Controller {
@@ -10,10 +9,10 @@ class CalculatorController extends \yii\web\Controller {
 		return [
 			[
 				'class' => HttpCache::className(),
-				'etagSeed' => function (Object $action, $params) {
+				'etagSeed' => function ($action, $params) {
 					return serialize([YII_DEBUG, Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
 				},
-				'lastModified' => function (Object $action, $params) {
+				'lastModified' => function ($action, $params) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['wpapsk'],
