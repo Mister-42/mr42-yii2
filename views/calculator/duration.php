@@ -12,10 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo Html::tag('p', 'This calculator calculates the number of days between two dates.');
 
 		if ($flash = Yii::$app->session->getFlash('duration-success')) {
-			$txt = '<p>From: <strong>'. Yii::$app->formatter->asDate($model->from, 'long') . '</strong><br>';
-			$txt .= 'To: <strong>'. Yii::$app->formatter->asDate($model->to, 'long') . '</strong></p>';
-			$txt .= '<p>Result: <strong>' . Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $flash->days]) . '</strong></p>';
-			echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $txt]);
+			Alert::begin(['options' => ['class' => 'alert-success']]);
+			echo '<p>From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long')) . '<br>';
+			echo 'To: ' . Html::tag('b', Yii::$app->formatter->asDate($model->to, 'long')) . '</p>';
+			echo '<p>Result: ' . Html::tag('strong', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $flash->days])) . '</p>';
+			Alert::end();
 		}
 
 		$form = ActiveForm::begin();

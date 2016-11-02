@@ -12,18 +12,19 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo Html::tag('p', 'This calculator calculates the new end date of a Microsoft® Office 365® Open SKU.');
 
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
-			$txt = '<p><strong>This action is not allowed.</strong> Subscriptions have a maximum end date of 3 years into the future.</p>';
-			$txt .= '<p>Theoretically the subscription with <strong>' . Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> would approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';
-			echo Alert::widget(['options' => ['class' => 'alert-danger'], 'body' => $txt]);
+			Alert::begin(['options' => ['class' => 'alert-danger']]);
+			echo '<p><b>This action is not allowed.</b> Subscriptions have a maximum end date of 3 years into the future.</p>';
+			echo '<p>Theoretically the subscription with ' . Html::tag('strong', Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']])) . ' would approximately expire on ' . Html::tag('strong', Yii::$app->formatter->asDate($flash['date'], 'long')) . '.</p>';
+			Alert::end();
 		} elseif ($flash = Yii::$app->session->getFlash('office365-success')) {
-			$txt = '<p>The subscription with <strong>' . Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']]) . '</strong> will approximately expire on <strong>' . Yii::$app->formatter->asDate($flash['date'], 'long') . '</strong>.</p>';
-			echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $txt]);
+			Alert::begin(['options' => ['class' => 'alert-success']]);
+			echo '<p>The subscription with ' . Html::tag('strong', Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']])) . ' will approximately expire on ' . Html::tag('strong', Yii::$app->formatter->asDate($flash['date'], 'long')) . '.</p>';
+			Alert::end();
 		}
 
 		$form = ActiveForm::begin();
-		$tab = 0;
+		$tab = 1;
 		foreach (['source', 'target'] as $field) {
-			$tab++;
 			echo '<div class="row">';
 			echo $form->field($model, $field.'date', [
 				'options' => ['class' => 'col-xs-6'],
@@ -37,22 +38,21 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 				'dateFormat' => 'yyyy-MM-dd',
 				'language' => 'en-GB',
-				'options' => ['class' => 'form-control', 'tabindex' => $tab],
+				'options' => ['class' => 'form-control', 'tabindex' => $tab++],
 			]);
 
-			$tab++;
 			echo $form->field($model, $field.'count', [
 				'options' => ['class' => 'col-xs-6'],
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 			])
-			->textInput(['class' => 'form-control', 'tabindex' => $tab]);
+			->textInput(['class' => 'form-control', 'tabindex' => $tab++]);
 			echo '</div>';
 		}
 
 		echo $form->field($model, 'action')->dropDownList([
 			'renew' => 'I am renewing these licenses',
 			'add' => 'I am adding these licenses',
-		], ['tabindex' => 5]);
+		], ['tabindex' => $tab++]);
 		?>
 
 		<div class="form-group text-right">
@@ -61,6 +61,5 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 
 		<?php ActiveForm::end(); ?>
-
 	</div>
 </div>

@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\helpers\{Inflector, Url};
+use yii\web\View;
 use nezhelskoy\highlight\HighlightAsset;
 
 HighlightAsset::register($this);
@@ -9,7 +10,7 @@ $this->title = 'Favicon Converter';
 $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
 
-echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover\').val(\'File "\'+$(this).val()+\'" selected\');});', \yii\web\View::POS_READY);
+echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover\').val(\'File "\'+$(this).val()+\'" selected\');});', View::POS_READY);
 ?>
 <div class="row">
 	<div class="col-md-offset-2 col-md-8"><?php
@@ -20,14 +21,15 @@ echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover
 			$dimensions[] = $dimension.'x'.$dimension;
 
 		if ($flash = Yii::$app->session->getFlash('favicon-error'))
-			echo Alert::widget(['options' => ['class' => 'alert-danger'],'body' => $flash]);
+			echo Alert::widget(['options' => ['class' => 'alert-danger'], 'body' => $flash]);
 
 		if ($icon = Yii::$app->session->getFlash('favicon-success')) {
-			$img = Html::img(Url::to('@web/assets/temp/favicon/'.$icon), ['alt' => 'favicon.ico', 'class' => 'inline-left pull-left', 'height' => 64, 'width' => 64]);
-			$txt = '<p>Your icon has been generated successfully. Save it to your website and add the code below between the &lt;head&gt; tags of your html. This will allow all major browsers to show the icon when the website is accessed and/or bookmarked.<br>';
-			$txt .= 'Do not link the icon directly to this website. Your icon will soon be automatically deleted.</p>';
-			$txt .= '<br><pre><code>&lt;link rel="icon" href="/path/to/'.$icon.'" type="image/x-icon" sizes="'.implode(' ', $dimensions).'" /&gt;</code></pre>';
-			echo Alert::widget(['options' => ['class' => 'alert-success'],'body' => $img . $txt]);
+			Alert::begin(['options' => ['class' => 'alert-success']]);
+			echo Html::img(Url::to('@web/assets/temp/favicon/'.$icon), ['alt' => 'favicon.ico', 'class' => 'inline-left pull-left', 'height' => 64, 'width' => 64]);
+			echo '<p>Your icon has been generated successfully. Save it to your website and add the code below between the &lt;head&gt; tags of your html. This will allow all major browsers to show the icon when the website is accessed and/or bookmarked.<br>';
+			echo 'Do not link the icon directly to this website. Your icon will soon be automatically deleted.</p>';
+			echo '<br><pre><code>&lt;link rel="icon" href="/path/to/'.$icon.'" type="image/x-icon" sizes="'.implode(' ', $dimensions).'" /&gt;</code></pre>';
+			Alert::end();
 		}
 
 		$form = ActiveForm::begin(); ?>

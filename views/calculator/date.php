@@ -12,10 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo Html::tag('p', 'This calculator enables you to add or subtract days to a date to calculate a future or past date.');
 
 		if ($flash = Yii::$app->session->getFlash('date-success')) {
-			$txt = '<p>From: <strong>'. Yii::$app->formatter->asDate($model->from, 'long') . '</strong><br>';
-			$txt .= 'Adding: <strong>'. Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days]) . '</strong></p>';
-			$txt .= '<p>Result: <strong>' . Yii::$app->formatter->asDate($flash, 'long') . '</strong></p>';
-			echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $txt]);
+			Alert::begin(['options' => ['class' => 'alert-success']]);
+			echo '<p>From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long')) . '<br>';
+			echo 'Adding: ' . Html::tag('b', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days])) . '</p>';
+			echo '<p>Result: ' . Html::tag('strong', Yii::$app->formatter->asDate($flash, 'long')) . '</p>';
+			Alert::end();
 		}
 
 		$form = ActiveForm::begin();
