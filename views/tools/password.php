@@ -1,5 +1,6 @@
 <?php
 use app\assets\ClipboardJsAsset;
+use app\models\Formatter;
 use yii\bootstrap\Html;
 use yii\web\View;
 
@@ -8,7 +9,7 @@ $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
 
 ClipboardJsAsset::register($this);
-$this->registerJs('function rndpass(a){chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";pass="";for(x=0;x<a;x++){i=Math.floor(Math.random()*chars.length);pass+=chars.charAt(i)}return pass}function get(){$("#password").attr("class","well well-sm alert-success text-center form-control").html(rndpass($("#length").val()));return false}', View::POS_HEAD);
+$this->registerJs(Formatter::minify('genpass.js'), View::POS_HEAD);
 $this->registerJs('$("#length").change(function(){get();}).change();', View::POS_READY);
 ?>
 <div class="row">
