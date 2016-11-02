@@ -4,6 +4,7 @@ use Yii;
 use app\models\{Changelog, MenuItems};
 use app\models\site\Contact;
 use yii\bootstrap\Alert;
+use yii\base\Object;
 use yii\captcha\CaptchaAction;
 use yii\filters\{AccessControl, HttpCache};
 use yii\web\{Controller, ErrorAction, NotFoundHttpException, Response};
@@ -41,20 +42,20 @@ class SiteController extends Controller {
 			], [
 				'class' => HttpCache::className(),
 				'only' => ['changelog'],
-				'lastModified' => function ($action, $params) {
+				'lastModified' => function (Object $action, $params) {
 					$lastUpdate = Changelog::find()->select(['time' => 'max(time)'])->one();
 					return $lastUpdate->time;
 				},
 			], [
 				'class' => HttpCache::className(),
 				'only' => ['credits', 'robotstxt'],
-				'lastModified' => function ($action, $params) {
+				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 			], [
 				'class' => HttpCache::className(),
 				'only' => ['faviconico'],
-				'lastModified' => function ($action, $params) {
+				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico');
 				},
 			],
