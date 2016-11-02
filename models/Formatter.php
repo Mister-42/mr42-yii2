@@ -2,6 +2,7 @@
 namespace app\models;
 use Yii;
 use JShrink\Minifier;
+use GK\JavascriptPacker;
 use yii\helpers\Markdown;
 
 class Formatter extends \yii\i18n\Formatter {
@@ -14,10 +15,15 @@ class Formatter extends \yii\i18n\Formatter {
 		return trim($data);
 	}
 
-	public function minify($file) {
+	public function minify($file, $minify = false) {
 		$file = Yii::getAlias('@app/assets/src/js/' . $file);
 		if (!$js = file_get_contents($file))
 			return $file . ' does not exist.';
-		return Minifier::minify($js, array('flaggedComments' => false));
+
+		if ($minify)
+			return Minifier::minify($js, array('flaggedComments' => false));
+
+		$jp = new JavascriptPacker($js, 0);
+		return $jp->pack();
 	}
 }

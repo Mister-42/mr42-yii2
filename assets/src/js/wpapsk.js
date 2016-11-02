@@ -12,7 +12,7 @@ function cal_psk() {
 	var ssid = $("#ssid").val(), pass = $("#pass").val();
 
 	if(!ssid || !pass) {
-		return $("#psk").attr("class", "well well-sm alert-danger").html("Please fill in both values.")
+		return $("#psk").attr("class", "well well-sm alert-danger").html("Please fill in all fields.")
 	} else {
 		$(".btn").addClass("disabled");
 		$(".clipboard-js-init").addClass("hidden");

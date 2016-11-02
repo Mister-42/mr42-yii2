@@ -13,8 +13,8 @@ ClipboardJsAsset::register($this);
 $this->registerJs(Formatter::minify('wpapsk.js'), View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);
 $this->registerJs('$("form input").keydown(function(e){if(e.keyCode==13){cal_psk();return false}});', View::POS_READY);
-$this->registerJs(Formatter::minify('pbkdf2.js'), View::POS_END);
-$this->registerJs(Formatter::minify('sha1.js'), View::POS_END);
+$this->registerJs(Formatter::minify('pbkdf2.js', true), View::POS_END);
+$this->registerJs(Formatter::minify('sha1.js', true), View::POS_END);
 
 $model = new DynamicModel(['ssid', 'pass']);
 $model->addRule('ssid', 'required', ['message' => 'SSID cannot be blank.']);
@@ -25,7 +25,7 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 <div class="row">
 	<div class="col-md-offset-2 col-md-8"><?php
 		echo Html::tag('h1', Html::encode($this->title));
-		echo Html::tag('p', 'This Wifi Protected Access Pre-Shared Key (WPA PSK) calculator provides an easy way to convert a SSID and WPA&nbsp;Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.<br>Type or paste in your SSID and WPA&nbsp;Passphrase below. Click \'Calculate\' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <strong>None</strong> of this information will be sent over the network.');
+		echo Html::tag('p', 'This Wifi Protected Access Pre-Shared Key (WPA PSK) calculator provides an easy way to convert a SSID and WPA&nbsp;Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.<br>Type or paste in your SSID and WPA&nbsp;Passphrase below. Click \'Calculate\' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <b>None</b> of this information will be sent over the network.');
 
 		$form = ActiveForm::begin([
 				'id' => 'wpapsk',
