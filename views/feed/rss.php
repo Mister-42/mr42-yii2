@@ -1,40 +1,41 @@
 <?php
 use Yii;
 use yii\bootstrap\Html;
-use yii\helpers\Url;
+use yii\helpers\{StringHelper, Url};
 
-$doc=new DOMDocument('1.0', 'UTF-8');
-$doc->formatOutput = YII_ENV_DEV;
+$doc = new XMLWriter();
+$doc->openMemory();
+#$doc->setIndent(YII_ENV_DEV);
+$doc->setIndent(true);
 
-$rss = $doc->createElement('rss');
-$rss->setAttribute('version', '2.0');
-$rss->setAttribute('xmlns:atom', 'http://www.w3.org/2005/Atom');
-$rss->setAttribute('xmlns:dc', 'http://purl.org/dc/elements/1.1/');
-$doc->appendChild($rss);
+$doc->startDocument('1.0', 'UTF-8');
+$doc->startElement('rss');
+$doc->writeAttribute('version', '2.0');
+$doc->writeAttribute('xmlns:atom', 'http://www.w3.org/2005/Atom');
+$doc->writeAttribute('xmlns:dc', 'http://purl.org/dc/elements/1.1/');
 
-$channel = $doc->createElement('channel');
-$channel->appendChild($doc->createElement('title', Html::encode(Yii::$app->name)));
-$channel->appendChild($doc->createElement('link', Url::home(true)));
-$channel->appendChild($doc->createElement('description', Html::encode(Yii::$app->params['description'])));
-	$atomSelfLink = $doc->createElement('atom:link');
-	$atomSelfLink->setAttribute('href', Url::to(['site/rss'], true));
-	$atomSelfLink->setAttribute('rel', 'self');
-	$atomSelfLink->setAttribute('type', 'application/rss+xml');
-$channel->appendChild($atomSelfLink);
-$channel->appendChild($doc->createElement('language', Html::encode(Yii::$app->language)));
-$channel->appendChild($doc->createElement('copyright', '&#169; 2014-'.date('Y').' '.Html::encode(Yii::$app->name)));
-$channel->appendChild($doc->createElement('pubDate', date(DATE_RSS)));
-$channel->appendChild($doc->createElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated)));
-	$rssImage = $doc->createElement('image');
-	$rssImage->appendChild($doc->createElement('title', Html::encode(Yii::$app->name)));
-	$rssImage->appendChild($doc->createElement('url', Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http')));
-	$rssImage->appendChild($doc->createElement('link', Url::home(true)));
-	$rssImage->appendChild($doc->createElement('description', Html::encode(Yii::$app->params['description'])));
+$doc->startElement('channel');
+$doc->writeElement('title', Html::encode(Yii::$app->name));
+$doc->writeElement('link', Url::home(true));
+$doc->writeElement('description', Html::encode(Yii::$app->params['description']));
+	$doc->startElement('atom:link');
+	$doc->writeAttribute('href', Url::to(['site/rss'], true));
+	$doc->writeAttribute('rel', 'self');
+	$doc->writeAttribute('type', 'application/rss+xml');
+	$doc->endElement();
+$doc->writeElement('language', Html::encode(Yii::$app->language));
+$doc->writeElement('copyright', '&#169; 2014-'.date('Y').' '.Html::encode(Yii::$app->name));
+$doc->writeElement('pubDate', date(DATE_RSS));
+$doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
+	$doc->startElement('image');
+	$doc->writeAttribute('title', Html::encode(Yii::$app->name));
+	$doc->writeAttribute('url', Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http'));
+	$doc->writeAttribute('link', Url::home(true));
+	$doc->writeAttribute('description', Html::encode(Yii::$app->params['description']));
 	list($width, $height, $type, $attr) = getimagesize(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/logo.png');
-	$rssImage->appendChild($doc->createElement('height', $height));
-	$rssImage->appendChild($doc->createElement('width', $width));
-$channel->appendChild($rssImage);
-$rss->appendChild($channel);
+	$doc->writeAttribute('height', $height);
+	$doc->writeAttribute('width', $width);
+	$doc->endElement();
 
 foreach($articles as $article) :
 	if (strpos($article->content, '[readmore]')) {
@@ -42,19 +43,22 @@ foreach($articles as $article) :
 		$article->content .= Html::a('Read full article on our website', Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true)).' &raquo;';
 	}
 
-	$item = $doc->createElement('item');
-	$item->appendChild($doc->createElement('title', $article->title));
-	$item->appendChild($doc->createElement('link', Html::encode(Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true))));
-		$description = $doc->createElement('description');
-		$description->appendChild($doc->createCDATASection($article->content));
-	$item->appendChild($description);
-	$item->appendChild($doc->createElement('dc:creator', $article->user->username));
-	$item->appendChild($doc->createElement('category', Html::encode($article->tags)));
-		$guid = $doc->createElement('guid', Html::encode(Url::to(['articles/index', 'id' => $article->id], true)));
-		$guid->setAttribute('isPermaLink', 'true');
-	$item->appendChild($guid);
-	$item->appendChild($doc->createElement('pubDate', date(DATE_RSS, $article->created)));
-	$channel->appendChild($item);
+	$doc->startElement('item');
+	$doc->writeElement('title', $article->title);
+	$doc->writeElement('link', Html::encode(Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true)));
+		$doc->startElement('description');
+		$doc->writeCData($article->content);
+		$doc->endElement();
+	$doc->writeElement('dc:creator', $article->user->username);
+	foreach (StringHelper::explode($article->tags) as $tag) $doc->writeElement('category', Html::encode($tag));
+		$doc->startElement('guid');
+		$doc->writeAttribute('isPermaLink', 'true');
+		$doc->text(Html::encode(Url::to(['articles/index', 'id' => $article->id], true)));
+		$doc->endElement();
+	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
+	$doc->endElement();
 endforeach;
 
-echo $doc->saveXML();
+$doc->endElement();
+$doc->endDocument();
+echo $doc->outputMemory();
