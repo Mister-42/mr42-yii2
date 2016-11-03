@@ -5,8 +5,7 @@ use yii\helpers\{StringHelper, Url};
 
 $doc = new XMLWriter();
 $doc->openMemory();
-#$doc->setIndent(YII_ENV_DEV);
-$doc->setIndent(true);
+$doc->setIndent(YII_ENV_DEV);
 
 $doc->startDocument('1.0', 'UTF-8');
 $doc->startElement('rss');
@@ -19,22 +18,22 @@ $doc->writeElement('title', Html::encode(Yii::$app->name));
 $doc->writeElement('link', Url::home(true));
 $doc->writeElement('description', Html::encode(Yii::$app->params['description']));
 	$doc->startElement('atom:link');
-	$doc->writeAttribute('href', Url::to(['site/rss'], true));
+	$doc->writeAttribute('href', Url::to(['feed/rss'], true));
 	$doc->writeAttribute('rel', 'self');
 	$doc->writeAttribute('type', 'application/rss+xml');
 	$doc->endElement();
 $doc->writeElement('language', Html::encode(Yii::$app->language));
-$doc->writeElement('copyright', '&#169; 2014-'.date('Y').' '.Html::encode(Yii::$app->name));
+$doc->writeElement('copyright', '2014-'.date('Y').' '.Html::encode(Yii::$app->name));
 $doc->writeElement('pubDate', date(DATE_RSS));
 $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->startElement('image');
-	$doc->writeAttribute('title', Html::encode(Yii::$app->name));
-	$doc->writeAttribute('url', Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http'));
-	$doc->writeAttribute('link', Url::home(true));
-	$doc->writeAttribute('description', Html::encode(Yii::$app->params['description']));
+	$doc->writeElement('title', Html::encode(Yii::$app->name));
+	$doc->writeElement('url', Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http'));
+	$doc->writeElement('link', Url::home(true));
+	$doc->writeElement('description', Html::encode(Yii::$app->params['description']));
 	list($width, $height, $type, $attr) = getimagesize(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/logo.png');
-	$doc->writeAttribute('height', $height);
-	$doc->writeAttribute('width', $width);
+	$doc->writeElement('height', $height);
+	$doc->writeElement('width', $width);
 	$doc->endElement();
 
 foreach($articles as $article) :
