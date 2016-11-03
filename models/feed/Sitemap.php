@@ -1,33 +1,31 @@
 <?php
 namespace app\models\feed;
-use DOMDocument;
-use DOMElement;
+use XMLWriter;
 
-class Sitemap
-{
-	public static function ageData(DOMDocument $dom, DOMElement $child, $url, $age, $prio = null) {
+class Sitemap {
+	public function ageData(XMLWriter $dom, $url, $age, $prio = null) {
 		if (!$prio)
-			return self::prioData($dom, $child, $url, self::age2Prio($age), $age);
-		return self::prioData($dom, $child, $url, $prio, $age);
+			return self::prioData($dom, $url, self::age2Prio($age), $age);
+		return self::prioData($dom, $url, $prio, $age);
 	}
 
-	public static function prioData(DOMDocument $dom, DOMElement $child, $url, $priority, $age = '') {
-		$content = $dom->createElement('url');
-		$content->appendChild($dom->createElement('loc', $url));
-		if ($age) $content->appendChild($dom->createElement('lastmod', date(DATE_W3C, $age)));
-		$content->appendChild($dom->createElement('changefreq', self::priority2Changefreq($priority)));
-		$content->appendChild($dom->createElement('priority', number_format($priority, 2)));
-		$child->appendChild($content);
+	public function prioData(XMLWriter $doc, $url, $priority, $age = null) {
+		$doc->startElement('url');
+		$doc->writeElement('loc', $url);
+		if ($age) $doc->writeElement('lastmod', date(DATE_W3C, $age));
+		$doc->writeElement('changefreq', self::prio2Changefreq($priority));
+		$doc->writeElement('priority', number_format($priority, 2));
+		$doc->endElement();
 	}
 
-	private static function age2Prio($age) {
+	private function age2Prio($age) {
 		if( $age > strtotime("-1 week") )		return 0.9;
 		elseif( $age > strtotime("-1 month") )	return 0.8;
 		elseif( $age > strtotime("-1 year") )	return 0.7;
 		return 0.5;
 	}
 
-	private static function priority2Changefreq($priority) {
+	private function prio2Changefreq($priority) {
 		if( $priority >= 0.9 )		return 'daily';
 		elseif( $priority >= 0.8 )	return 'weekly';
 		elseif( $priority >= 0.7 )	return 'monthly';
