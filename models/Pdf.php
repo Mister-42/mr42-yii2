@@ -31,9 +31,9 @@ class Pdf {
 		return $filename;
 	}
 
-	public function replaceLine($fileName, $search, $replace) {
-		$reading = fopen($fileName, 'r');
-		$writing = fopen($fileName.'.tmp', 'w');
+	public function replaceLine($filename, $search, $replace) {
+		$reading = fopen($filename, 'r');
+		$writing = fopen($filename.'.tmp', 'w');
 
 		while (!feof($reading)) {
 			$line = fgets($reading);
@@ -42,6 +42,6 @@ class Pdf {
 			fputs($writing, $line);
 		}
 		fclose($reading); fclose($writing);
-		rename($fileName.'.tmp', $fileName);
+		rename($filename.'.tmp', $filename);
 	}
 }

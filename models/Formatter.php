@@ -1,9 +1,8 @@
 <?php
 namespace app\models;
 use Yii;
-use JShrink\Minifier;
 use GK\JavascriptPacker;
-use yii\helpers\Markdown;
+use yii\helpers\{FileHelper, Markdown};
 
 class Formatter extends \yii\i18n\Formatter {
 	public function cleanInput($data, $markdown = 'original', $allowHtml = false) {
@@ -15,15 +14,19 @@ class Formatter extends \yii\i18n\Formatter {
 		return trim($data);
 	}
 
-	public function minify($file, $minify = false) {
-		$file = Yii::getAlias('@app/assets/src/js/' . $file);
-		if (!$js = file_get_contents($file))
-			return $file . ' does not exist.';
+	public function jspack($file) {
+		$filename = Yii::getAlias('@app/assets/src/js/' . $file);
+		$cachefile = Yii::getAlias('@runtime/assets/js/' . $file);
 
-		if ($minify)
-			return Minifier::minify($js, array('flaggedComments' => false));
+		if (!file_exists($filename))
+			return $filename . ' does not exist.';
 
-		$jp = new JavascriptPacker($js, 0);
-		return $jp->pack();
+		if (!file_exists($cachefile) || filemtime($cachefile) < filemtime($filename)) {
+			$jp = new JavascriptPacker(file_get_contents($filename), 0);
+			FileHelper::createDirectory(dirname($cachefile));
+			file_put_contents($cachefile, $jp->pack());
+			touch($cachefile, filemtime($filename));
+		}
+		return file_get_contents($cachefile);
 	}
 }

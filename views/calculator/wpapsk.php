@@ -10,11 +10,11 @@ $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = $this->title;
 
 ClipboardJsAsset::register($this);
-$this->registerJs(Formatter::minify('wpapsk.js'), View::POS_HEAD);
+$this->registerJs(Formatter::jspack('wpapsk.js'), View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);
 $this->registerJs('$("form input").keydown(function(e){if(e.keyCode==13){cal_psk();return false}});', View::POS_READY);
-$this->registerJs(Formatter::minify('pbkdf2.js', true), View::POS_END);
-$this->registerJs(Formatter::minify('sha1.js', true), View::POS_END);
+$this->registerJs(Formatter::jspack('pbkdf2.js'), View::POS_END);
+$this->registerJs(Formatter::jspack('sha1.js'), View::POS_END);
 
 $model = new DynamicModel(['ssid', 'pass']);
 $model->addRule('ssid', 'required', ['message' => 'SSID cannot be blank.']);

@@ -111,7 +111,7 @@ function PBKDF2(password, salt, num_iterations, num_bytes)
 		m_status_func = status_callback;
 		m_result_func = result_callback;
 		setTimeout(function() { m_this_object.do_PBKDF2_iterations() }, 0);
-	}
+	};
 
 
 	// The workhorse
