@@ -9,17 +9,15 @@ echo $form->field($model, 'url')->textInput(['maxlength' => 255, 'tabindex' => 2
 
 echo $form->field($model, 'content')->textarea(['rows' => 6, 'tabindex' => 3]);
 
-echo $form->field($model, 'sourceName')->textInput(['maxlength' => 25, 'tabindex' => 4]);
+echo $form->field($model, 'source')->textInput(['maxlength' => 128, 'tabindex' => 4]);
 
-echo $form->field($model, 'sourceUrl')->textInput(['maxlength' => 128, 'tabindex' => 5]);
+echo $form->field($model, 'tags')->textInput(['maxlength' => 255, 'tabindex' => 5]);
 
-echo $form->field($model, 'tags')->textInput(['maxlength' => 255, 'tabindex' => 6]);
-
-echo $form->field($model, 'active')->checkbox(['tabindex' => 7]) ?>
+echo $form->field($model, 'active')->checkbox(['tabindex' => 6]) ?>
 
 <div class="form-group text-right">
-	<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 9]) ?>
-	<?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'tabindex' => 8]) ?>
+	<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) ?>
+	<?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'tabindex' => 7]) ?>
 </div>
 
 <?php ActiveForm::end(); ?>

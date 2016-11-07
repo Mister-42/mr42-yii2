@@ -8,11 +8,10 @@ class Articles extends BaseArticles {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->title;
 		$this->content = Formatter::cleanInput($this->content, 'gfm', true);
-		$this->sourceName = $this->sourceName ?? 'Source';
 
-		if ($this->sourceUrl) {
+		if ($this->source) {
 			$this->content .= '<div class="clearfix">';
-			$this->content .= Html::a($this->sourceName, $this->sourceUrl, ['class' => 'btn btn-default pull-right']);
+			$this->content .= Html::a('Source', $this->source, ['class' => 'btn btn-default pull-right']);
 			$this->content .= '</div>';
 		}
 

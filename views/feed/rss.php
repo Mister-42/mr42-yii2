@@ -55,10 +55,10 @@ foreach($articles as $article) :
 		$doc->text(Url::to(['articles/index', 'id' => $article->id], true));
 		$doc->endElement();
 	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
-	if ($article->sourceUrl) {
+	if ($article->source) {
 		$doc->startElement('source');
-		$doc->writeAttribute('url', $article->sourceUrl);
-		$doc->text($article->sourceName);
+		$doc->writeAttribute('url', $article->source);
+		$doc->text('Source');
 		$doc->endElement();
 	}
 	$doc->endElement();

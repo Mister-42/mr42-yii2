@@ -29,8 +29,7 @@ class BaseArticles extends ActiveRecord {
 	public function attributeLabels() {
 		return [
 			'url' => 'URL',
-			'sourceName' => 'Source Name',
-			'sourceUrl' => 'Source URL',
+			'source' => 'Source URL',
 		];
 	}
 
