@@ -52,9 +52,15 @@ foreach($articles as $article) :
 	foreach (StringHelper::explode($article->tags) as $tag) $doc->writeElement('category', Html::encode($tag));
 		$doc->startElement('guid');
 		$doc->writeAttribute('isPermaLink', 'true');
-		$doc->text(Html::encode(Url::to(['articles/index', 'id' => $article->id], true)));
+		$doc->text(Url::to(['articles/index', 'id' => $article->id], true));
 		$doc->endElement();
 	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
+	if ($article->sourceUrl) {
+		$doc->startElement('source');
+		$doc->writeAttribute('url', $article->sourceUrl);
+		$doc->text($article->sourceName);
+		$doc->endElement();
+	}
 	$doc->endElement();
 endforeach;
 

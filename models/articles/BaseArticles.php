@@ -29,6 +29,8 @@ class BaseArticles extends ActiveRecord {
 	public function attributeLabels() {
 		return [
 			'url' => 'URL',
+			'sourceName' => 'Source Name',
+			'sourceUrl' => 'Source URL',
 		];
 	}
 
@@ -63,6 +65,8 @@ class BaseArticles extends ActiveRecord {
 			return false;
 
 		$this->url = $this->url ?? null;
+		$this->sourceName = $this->sourceName ?? null;
+		$this->sourceUrl = $this->sourceUrl ?? null;
 
 		if ($insert)
 			$this->author = Yii::$app->user->id;

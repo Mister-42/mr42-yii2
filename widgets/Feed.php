@@ -2,7 +2,7 @@
 namespace app\widgets;
 use Yii;
 use yii\bootstrap\{Html, Widget};
-use app\models\Feed as FeedModel;
+use app\models\feed\Feed as FeedModel;
 
 class Feed extends Widget {
 	public $name;

@@ -1,5 +1,5 @@
 <?php
-use app\models\Changelog;
+use app\models\site\Changelog;
 use yii\bootstrap\Html;
 
 $this->title = 'Changelog';

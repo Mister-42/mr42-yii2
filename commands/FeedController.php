@@ -1,7 +1,8 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Feed, Formatter};
+use app\models\Formatter;
+use app\models\feed\Feed;
 use app\models\user\RecentTracks;
 use dektrium\user\models\{Profile, User};
 use yii\console\Controller;
