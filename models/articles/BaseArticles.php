@@ -64,8 +64,7 @@ class BaseArticles extends ActiveRecord {
 			return false;
 
 		$this->url = $this->url ?? null;
-		$this->sourceName = $this->sourceName ?? null;
-		$this->sourceUrl = $this->sourceUrl ?? null;
+		$this->source = $this->source ?? null;
 
 		if ($insert)
 			$this->author = Yii::$app->user->id;

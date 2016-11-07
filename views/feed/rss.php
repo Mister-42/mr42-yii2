@@ -44,12 +44,17 @@ foreach($articles as $article) :
 
 	$doc->startElement('item');
 	$doc->writeElement('title', $article->title);
-	$doc->writeElement('link', Html::encode(Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true)));
+	$doc->writeElement('link', Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true));
 		$doc->startElement('description');
 		$doc->writeCData($article->content);
 		$doc->endElement();
 	$doc->writeElement('dc:creator', $article->user->username);
-	foreach (StringHelper::explode($article->tags) as $tag) $doc->writeElement('category', Html::encode($tag));
+	foreach (StringHelper::explode($article->tags) as $tag) :
+		$doc->startElement('category');
+		$doc->writeAttribute('domain', Url::to(['articles/index', 'action' => 'tag', 'tag' => $tag], true));
+		$doc->text(Html::encode($tag));
+		$doc->endElement();
+	endforeach;
 		$doc->startElement('guid');
 		$doc->writeAttribute('isPermaLink', 'true');
 		$doc->text(Url::to(['articles/index', 'id' => $article->id], true));
