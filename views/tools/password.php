@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
 
 ClipboardJsAsset::register($this);
-$this->registerJs(Formatter::jspack('genpass.js'), View::POS_HEAD);
+$this->registerJs(Formatter::jspack('tools/genpass.js'), View::POS_HEAD);
 $this->registerJs('$("#length").change(function(){get();}).change();', View::POS_READY);
 ?>
 <div class="row">
