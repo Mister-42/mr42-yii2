@@ -3,20 +3,23 @@ $('.clipboard-js-init').on('mouseleave', function() {
 });
 
 cb = new Clipboard('.clipboard-js-init');
+
 cb.on('success', function(e) {
 	e.clearSelection();
-	$('.clipboard-js-init').removeClass('btn-primary').addClass('btn-success').attr('data-original-title', 'Copied!').tooltip('fixTitle').tooltip('show');
+	btnSucces('Copied!');
 });
 
 cb.on('error', function(e) {
 	actionKey = (action === 'cut' ? 'X' : 'C');
 	if (/iPhone|iPad/i.test(navigator.userAgent)) {
-		actionMsg = 'No support :(';
+		btnSucces('No support');
 	} else if (/Mac/i.test(navigator.userAgent)) {
-		actionMsg = 'Press ⌘-' + actionKey + ' to ' + action;
+		btnSucces('Press ⌘-' + actionKey + ' to ' + action);
 	} else {
-		actionMsg = 'Press Ctrl-' + actionKey + ' to ' + action;
+		btnSucces('Press Ctrl-' + actionKey + ' to ' + action);
 	}
-
-	$('.clipboard-js-init').removeClass('btn-primary').addClass('btn-success').attr('data-original-title', actionMsg).tooltip('fixTitle').tooltip('show');
 });
+
+function btnSucces(txt) {
+	$('.clipboard-js-init').removeClass('btn-primary').addClass('btn-success').attr('data-original-title', txt).tooltip('fixTitle').tooltip('show');
+}
