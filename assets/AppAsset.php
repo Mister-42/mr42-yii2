@@ -24,7 +24,7 @@ class AppAsset extends AssetBundle
 	{
 		Yii::$app->view->registerJs(Formatter::jspack('scrolltop.js'), View::POS_READY);
 		Yii::$app->view->registerJs(Formatter::jspack('targetBlank.js'), View::POS_READY);
-		Yii::$app->view->registerJs("$(function(){\$('[data-toggle=\"tooltip\"]').tooltip()});", View::POS_READY);
+		Yii::$app->view->registerJs(Formatter::jspack('tooltip.js'), View::POS_READY);
 	}
 
 	public $publishOptions = [
