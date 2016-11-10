@@ -1,6 +1,5 @@
 <?php
 use app\assets\ClipboardJsAsset;
-use app\models\Formatter;
 use yii\bootstrap\Html;
 use yii\web\View;
 
@@ -9,7 +8,7 @@ $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
 
 ClipboardJsAsset::register($this);
-$this->registerJs(Formatter::jspack('tools/genpass.js'), View::POS_HEAD);
+$this->registerJs(Yii::$app->formatter->jspack('tools/genpass.js'), View::POS_HEAD);
 $this->registerJs('$("#length").change(function(){get();}).change();', View::POS_READY);
 ?>
 <div class="row">
@@ -35,7 +34,7 @@ $this->registerJs('$("#length").change(function(){get();}).change();', View::POS
 				<label class="control-label">Password</label>
 				<div class="row">
 					<div class="col-md-11">
-						<div id="password">Javascript is disabled in your web browser. This tool does not work without Javascript.</div>
+						<div id="password">JavaScript is disabled in your web browser. This tool does not work without JavaScript.</div>
 					</div>
 					<div class="col-md-1 text-right">
 						<button class="btn btn-sm btn-primary clipboard-js-init" data-clipboard-target="#password" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" type="button"><?= Html::icon('copy') ?></button>

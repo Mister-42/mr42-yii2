@@ -1,16 +1,15 @@
 <?php
+use nezhelskoy\highlight\HighlightAsset;
 use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\helpers\{Inflector, Url};
 use yii\web\View;
-use nezhelskoy\highlight\HighlightAsset;
-
-HighlightAsset::register($this);
 
 $this->title = 'Favicon Converter';
 $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
 
-echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover\').val(\'File "\'+$(this).val()+\'" selected\');});', View::POS_READY);
+HighlightAsset::register($this);
+$this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
 ?>
 <div class="row">
 	<div class="col-md-offset-2 col-md-8"><?php
@@ -44,7 +43,7 @@ echo $this->registerJs('$(\'input[id=sourceFile]\').change(function(){$(\'#cover
 			<span class="input-group-addon">
 				<?= Html::icon('picture') ?>
 			</span>
-			<input type="text" id="cover" class="form-control" placeholder="Select an image" onclick="$('input[id=sourceFile]').click();" readonly>
+			<input type="text" id="file" class="form-control" placeholder="Select an image" onclick="$('input[id=sourceFile]').click();" readonly>
 			<span class="input-group-btn">
 				<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click();"><?= Html::icon('folder-open') ?></button>
 			</span>

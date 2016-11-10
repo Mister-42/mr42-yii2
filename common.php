@@ -52,6 +52,9 @@ return [
 			'queryCache' => 'fileCache',
 			'queryCacheDuration' => 60*60*24*2,
 		],
+		'formatter' => [
+			'class' => 'app\models\Formatter',
+		],
 		'i18n' => [
 			'translations' => [
 				'site' => [

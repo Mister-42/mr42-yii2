@@ -1,7 +1,6 @@
 <?php
 namespace app\models\articles;
 use Yii;
-use app\models\Formatter;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
@@ -65,7 +64,7 @@ class Comments extends ActiveRecord {
 
 	public function afterFind() {
 		parent::afterFind();
-		$this->content = Formatter::cleanInput($this->content, 'gfm-comment');
+		$this->content = Yii::$app->formatter->cleanInput($this->content, 'gfm-comment');
 	}
 
 	public function beforeSave($insert) {
@@ -75,10 +74,10 @@ class Comments extends ActiveRecord {
 		if (!$insert && Yii::$app->user->isGuest)
 			throw new AccessDeniedHttpException('Please login.');
 
-		$this->content = Formatter::cleanInput($this->content, false);
-		$this->name = ($this->name) ? $this->name : null;
-		$this->email = ($this->email) ? $this->email : null;
-		$this->website = ($this->website) ? $this->website : null;
+		$this->content = Yii::$app->formatter->cleanInput($this->content, false);
+		$this->name = $this->name ?? null;
+		$this->email = $this->email ?? null;
+		$this->website = $this->website ?? null;
 
 		return true;
 	}
@@ -87,7 +86,7 @@ class Comments extends ActiveRecord {
 		return Html::a(
 				($this->active) ? Html::icon('thumbs-down').' Renounce' : Html::icon('thumbs-up').' Approve',
 				['commentstatus', 'id' => $this->id, 'action' => 'toggleapproval'],
-				['class' => ($this->active) ? 'btn btn-xs btn-warning' : 'btn btn-xs btn-success', 'style' => 'margin-top:25px;']
+				['class' => $this->active ? 'btn btn-xs btn-warning' : 'btn btn-xs btn-success', 'style' => 'margin-top:25px;']
 			);
 	}
 

@@ -1,7 +1,6 @@
 <?php
 namespace app\assets;
 use Yii;
-use app\models\Formatter;
 use yii\web\{AssetBundle, View};
 
 class AppAsset extends AssetBundle {
@@ -19,13 +18,13 @@ class AppAsset extends AssetBundle {
 		'yii\bootstrap\BootstrapAsset',
 	];
 
-	public function init() {
-		Yii::$app->view->registerJs(Formatter::jspack('scrolltop.js'), View::POS_READY);
-		Yii::$app->view->registerJs(Formatter::jspack('targetBlank.js'), View::POS_READY);
-		Yii::$app->view->registerJs(Formatter::jspack('tooltip.js'), View::POS_READY);
-	}
-
 	public $publishOptions = [
 		'forceCopy' => YII_ENV_DEV,
 	];
+
+	public function init() {
+		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('scrolltop.js'), View::POS_READY);
+		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('targetBlank.js'), View::POS_READY);
+		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('tooltip.js'), View::POS_READY);
+	}
 }

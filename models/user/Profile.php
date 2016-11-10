@@ -2,7 +2,6 @@
 namespace app\models\user;
 use DateTime;
 use Yii;
-use app\models\Formatter;
 use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
 
@@ -26,7 +25,7 @@ class Profile extends \dektrium\user\models\Profile
 	}
 
 	public function beforeSave($insert) {
-		$this->bio = Formatter::cleanInput($this->bio, false);
+		$this->bio = Yii::$app->formatter->cleanInput($this->bio, false);
 		$this->bio = str_replace(['&lt;', '&gt;', '&amp;'], ['<', '>', '&'], $this->bio);
 		$this->setAttribute('bio', $this->bio);
 		return ActiveRecord::beforeSave($insert);
@@ -37,7 +36,7 @@ class Profile extends \dektrium\user\models\Profile
 		$replace_array = ['%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y];
 		$imgUrl = Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/william-morris/'.strtolower($name[0]).'.png';
 		$imgTag = Html::img($imgUrl, ['alt' => $name, 'class' => 'inline-left pull-left']);
-		$user->bio = Formatter::cleanInput($imgTag . '**'.substr($name, 1).'** '.strtr($user->bio, $replace_array), 'gfm-comment', true);
+		$user->bio = Yii::$app->formatter->cleanInput($imgTag . '**'.substr($name, 1).'** '.strtr($user->bio, $replace_array), 'gfm-comment', true);
 		return (empty($user->bio)) ? false : Html::tag('div', $user->bio, ['class' => 'profile']);
 	}
 }

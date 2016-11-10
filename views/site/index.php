@@ -1,5 +1,4 @@
 <?php
-use app\models\Formatter;
 use yii\bootstrap\Html;
 
 $this->title = Yii::$app->name;
@@ -11,12 +10,12 @@ echo Html::tag('p', 'Below is an overview of the items in the menu for a quick o
 echo '<ul>';
 foreach($pages as $menu) :
 	if (!isset($menu['visible']) || $menu['visible']) {
-		echo (isset($menu['url'])) ? Html::tag('li', Html::a(Formatter::cleanInput($menu['label'], false), $menu['url'])) : Html::tag('li', Formatter::cleanInput($menu['label'], false));
+		echo (isset($menu['url'])) ? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url'])) : Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false));
 		if ($menu['items']) {
 			echo '<ul>';
 			foreach($menu['items'] as $submenu) :
 				if (!isset($submenu['visible']) && isset($submenu['label']))
-					echo (isset($submenu['url'])) ? Html::tag('li', Html::a(Formatter::cleanInput($submenu['label'], false), $submenu['url'])) : Html::tag('li', Formatter::cleanInput($submenu['label'], false));
+					echo (isset($submenu['url'])) ? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($submenu['label'], false), $submenu['url'])) : Html::tag('li', Yii::$app->formatter->cleanInput($submenu['label'], false));
 			endforeach;
 			echo '</ul>';
 		}

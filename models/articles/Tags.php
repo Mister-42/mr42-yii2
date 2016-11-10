@@ -10,7 +10,7 @@ class Tags {
 
 		array_slice($list, 0, $limit);
 		ksort($list, SORT_NATURAL | SORT_FLAG_CASE);
-		return (array_sum($tags) === 0) ? [] : $list;
+		return array_sum($tags) === 0 ? [] : $list;
 	}
 
 	public static function lastUpdate($tag) {

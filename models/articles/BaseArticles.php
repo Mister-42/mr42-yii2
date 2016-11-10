@@ -47,8 +47,8 @@ class BaseArticles extends ActiveRecord {
 
 	public function addComment(Comments $comment) {
 		$comment->parent = $this->id;
-		$comment->user = (Yii::$app->user->isGuest) ? null : Yii::$app->user->id;
-		$comment->active = (Yii::$app->user->isGuest) ? Self::STATUS_INACTIVE : Self::STATUS_ACTIVE;
+		$comment->user = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
+		$comment->active = Yii::$app->user->isGuest ? Self::STATUS_INACTIVE : Self::STATUS_ACTIVE;
 		return $comment->save();
 	}
 
@@ -75,7 +75,7 @@ class BaseArticles extends ActiveRecord {
 	}
 
 	public function belongsToViewer() {
-		return (Yii::$app->user->isGuest) ? false : $this->author === Yii::$app->user->id;
+		return Yii::$app->user->isGuest ? false : $this->author === Yii::$app->user->id;
 	}
 
 	public function buildPdf($model, $html) {

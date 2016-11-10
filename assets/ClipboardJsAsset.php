@@ -1,7 +1,6 @@
 <?php
 namespace app\assets;
 use Yii;
-use app\models\Formatter;
 use yii\web\{AssetBundle, View};
 
 class ClipboardJsAsset extends AssetBundle {
@@ -11,13 +10,12 @@ class ClipboardJsAsset extends AssetBundle {
 		'clipboard.min.js',
 	];
 
-	public function registerAssetFiles($view) {
-		parent::registerAssetFiles($view);
-		Yii::$app->view->registerJs(Formatter::jspack('clipboard.js'), View::POS_READY);
-	}
-
 	public $depends = [
  		'app\assets\AppAsset',
 	];
 
+	public function registerAssetFiles($view) {
+		parent::registerAssetFiles($view);
+		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('clipboard.js'), View::POS_READY);
+	}
 }

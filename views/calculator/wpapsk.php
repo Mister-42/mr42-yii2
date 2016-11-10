@@ -1,6 +1,5 @@
 <?php
 use app\assets\ClipboardJsAsset;
-use app\models\Formatter;
 use yii\base\DynamicModel;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\web\View;
@@ -10,11 +9,11 @@ $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = $this->title;
 
 ClipboardJsAsset::register($this);
-$this->registerJs(Formatter::jspack('calculator/wpapsk.js'), View::POS_HEAD);
+$this->registerJs(Yii::$app->formatter->jspack('calculator/wpapsk.js'), View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);
 $this->registerJs('$("form input").keydown(function(e){if(e.keyCode==13){cal_psk();return false}});', View::POS_READY);
-$this->registerJs(Formatter::jspack('calculator/pbkdf2.js'), View::POS_END);
-$this->registerJs(Formatter::jspack('calculator/sha1.js'), View::POS_END);
+$this->registerJs(Yii::$app->formatter->jspack('calculator/pbkdf2.js'), View::POS_END);
+$this->registerJs(Yii::$app->formatter->jspack('calculator/sha1.js'), View::POS_END);
 
 $model = new DynamicModel(['ssid', 'pass']);
 $model->addRule('ssid', 'required', ['message' => 'SSID cannot be blank.']);
@@ -53,7 +52,7 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 			<?= Html::tag('label', 'Pre-Shared Key', ['class' => 'control-label']) ?>
 			<div class="row">
 				<div class="col-md-12">
-					<?= Html::tag('div', 'Javascript is disabled in your web browser. This tool does not work without Javascript.', ['id' => 'psk']) ?>
+					<?= Html::tag('div', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', ['id' => 'psk']) ?>
 				</div>
 				<div class="col-md-1 text-right">
 					<button class="btn btn-sm btn-primary clipboard-js-init hidden" data-clipboard-target="#psk" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" type="button"><?= Html::icon('copy') ?></button>
