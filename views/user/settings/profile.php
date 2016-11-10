@@ -15,10 +15,10 @@ $this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
 <div class="row">
-	<div class="col-md-offset-2 col-md-8">
-		<?= Html::tag('h1', Html::encode($this->title)) ?>
+	<div class="col-md-offset-2 col-md-8"><?php
+		echo Html::tag('h1', Html::encode($this->title));
 
-		<?php $form = ActiveForm::begin([
+		$form = ActiveForm::begin([
 			'enableAjaxValidation' => true,
 			'enableClientValidation' => false,
 			'fieldConfig' => [
@@ -70,11 +70,9 @@ $this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
 		])->dropDownList(ArrayHelper::map(Timezone::getAll(), 'timezone', 'name'), ['tabindex' => 7]); ?>
 
-		<div class="form-group">
-			<div class="text-right">
-				<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 9]) ?>
-				<?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'tabindex' => 8]) ?>
-			</div>
+		<div class="form-group text-right">
+			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 9]) ?>
+			<?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'tabindex' => 8]) ?>
 		</div>
 		<?php ActiveForm::end(); ?>
 	</div>

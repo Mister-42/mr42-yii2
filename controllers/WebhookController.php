@@ -22,7 +22,7 @@ class WebhookController extends Controller {
 			throw new NotFoundHttpException('Action not found.');
 
 		$payload = json_decode(Yii::$app->request->post('payload'));
-		foreach($payload->commits as $item) {
+		foreach($payload->commits as $item) :
 			if (empty(Changelog::find()->where(['time' => strtotime($item->timestamp)])->all())) {
 				$rssItem = new Changelog();
 				$rssItem->title = $item->id;
@@ -31,8 +31,7 @@ class WebhookController extends Controller {
 				$rssItem->time = strtotime($item->timestamp);
 				$rssItem->save();
 			}
-		}
-
+		endforeach;
 		return ['status' => 'success', 'message' => 'Successfully updated.'];
 	}
 

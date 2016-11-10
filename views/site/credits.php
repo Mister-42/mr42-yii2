@@ -4,10 +4,10 @@ use yii\bootstrap\Html;
 $this->title = 'Credits';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-credits">
-	<?= Html::tag('h1', Html::encode($this->title)) ?>
+<div class="site-credits"><?php
+	echo Html::tag('h1', Html::encode($this->title));
 
-	<?php $list = [
+	$list = [
 		['Yii Framework', 'http://www.yiiframework.com/'],
 		['Bootstrap', 'http://getbootstrap.com/'],
 		['jQuery', 'http://jquery.com/'],
@@ -39,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			echo ' - ' . $item[2];
 		echo '<br>';
 
-		if ($x == ceil(count($list)/2) || $y == count($list)) {
+		if ($x === (int) ceil(count($list) / 2) || $y === count($list)) {
 			echo '</div>';
 			$x=0;
 		}
-	} ?>
-</div>
+	}
+?></div>

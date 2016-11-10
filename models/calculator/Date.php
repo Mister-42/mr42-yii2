@@ -23,8 +23,8 @@ class Date extends \yii\base\Model {
 
 	public function diff() {
 		if ($this->validate()) {
-			$this->from = ($this->from) ? $this->from : date('Y-m-d');
-			$this->days = ($this->days) ? $this->days : 42;
+			$this->from = $this->from ?? date('Y-m-d');
+			$this->days = $this->days ?? 42;
 			$date = new DateTime($this->from);
 			$date->modify($this->days . ' days');
 			Yii::$app->getSession()->setFlash('date-success', $date);

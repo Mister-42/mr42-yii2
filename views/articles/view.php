@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $model->title;
 
 	<div class="comments"><?php
 		echo Html::a(null, null, ['class' => 'anchor', 'id' => 'comments']);
-		if(!empty($model->comments)) {
+		if (!empty($model->comments)) {
 			echo '<hr>' . Html::tag('h2', 'Comments');
 			echo $this->render('_comments', ['mainmodel' => $model, 'model' => $comment, 'comments' => $model->comments]);
 		}

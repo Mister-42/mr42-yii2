@@ -31,13 +31,15 @@ foreach ($comments as $comment): ?>
 		if (!empty($comment->user)) {
 			$user = new User();
 			$profile = $user->finder->findProfileById($comment->user);			
-			$comment->name = (empty($profile->name) ? Html::encode($profile->user->username) : Html::encode($profile->name));
+			$comment->name = empty($profile->name) ? Html::encode($profile->user->username) : Html::encode($profile->name);
 			$comment->website = $profile->website;
 		}
 		echo Html::icon('time', ['class' => 'text-muted']) . ' <time datetime="'.date(DATE_W3C, $comment->created).'">'.Yii::$app->formatter->asRelativeTime($comment->created).'</time>';
-		echo ' &middot; ' . Html::icon('user', ['class' => 'text-muted']) . ' <span class="author">' . $comment->name . '</span>';
-		if ($mainmodel->author === $comment->user) { echo ' <span class="badge">Article Author</span>'; }
-		echo empty($comment->website) ? '' : ' &middot; ' . Html::icon('globe', ['class' => 'text-muted']) . ' ' . Html::a($comment->website, $comment->website);
+		echo ' · ' . Html::icon('user', ['class' => 'text-muted']) . ' <span class="author">' . $comment->name . '</span>';
+		if ($mainmodel->author === $comment->user)
+			echo ' <span class="badge">Article Author</span>';
+		if (!empty($comment->website))
+			echo ' · ' . Html::icon('globe', ['class' => 'text-muted']) . ' ' . Html::a($comment->website, $comment->website);
 		?>
 	</div>
 <?php endforeach; ?>

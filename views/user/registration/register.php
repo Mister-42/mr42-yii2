@@ -8,8 +8,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
 	<div class="col-md-offset-3 col-md-6">
-		<h2 class="panel-title"><?= Html::encode($this->title) ?></h2>
-		<?php $form = ActiveForm::begin([
+		<h2 class="panel-title"><?= Html::encode($this->title) ?></h2><?php
+		$form = ActiveForm::begin([
 			'id' => 'registration-form',
 		]);
 

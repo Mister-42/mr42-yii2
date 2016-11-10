@@ -1,6 +1,14 @@
 <?php
 use yii\bootstrap\{ActiveForm, Html};
 
+$this->title = $action === 'create' ? 'Create Article' : 'Edit Article';
+$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
+if ($action === 'edit')
+	$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['index', 'id' => $model->id, 'title' => $model->url]];
+$this->params['breadcrumbs'][] = $this->title;
+
+echo Html::tag('h1', Html::encode($this->title));
+
 $form = ActiveForm::begin();
 
 echo $form->field($model, 'title')->textInput(['maxlength' => 255, 'tabindex' => 1]);

@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		<h2 class="panel-title"><?= Html::encode($this->title) ?></h2>
 
 		<?php $form = ActiveForm::begin([
-			'id'								=> 'login-form',
+			'id'						=> 'login-form',
 			'enableAjaxValidation'		=> true,
 			'enableClientValidation'	=> false,
-			'validateOnBlur'				=> false,
-			'validateOnType'				=> false,
+			'validateOnBlur'			=> false,
+			'validateOnType'			=> false,
 			'validateOnChange'			=> false,
 		]);
 

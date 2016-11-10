@@ -19,7 +19,7 @@ class FeedController extends Controller {
 	*/
 	public function actionRss($name, $url, $urlField = 'link') {
 		$client = new Client();
-		$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 25;
+		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
 
 		$response = $client->createRequest()
 			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
@@ -30,7 +30,7 @@ class FeedController extends Controller {
 		if (!$response->isOK)
 			return Controller::EXIT_CODE_ERROR;
 
-		$count = 0;
+		$count = 1;
 		Feed::deleteAll(['feed' => $name]);
 		foreach($response->data['channel']['item'] as $item) :
 			$rssItem = new Feed();
@@ -41,7 +41,7 @@ class FeedController extends Controller {
 			$rssItem->time = strtotime($item->pubDate);
 			$rssItem->save();
 
-			if ($count++ === $limit - 1)
+			if ($count++ === $limit)
 				break;
 		endforeach;
 
@@ -52,7 +52,7 @@ class FeedController extends Controller {
 	 * Retrieves and stores Recent Tracks from Last.fm.
 	*/
 	public function actionLastfmRecent() {
-		RecentTracks::deleteAll(['<=', 'seen', time()-300]);
+		RecentTracks::deleteAll(['<=', 'seen', time() - 300]);
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::find()->where(['user_id' => $user->id])->one();
 			if (isset($profile->lastfm)) {

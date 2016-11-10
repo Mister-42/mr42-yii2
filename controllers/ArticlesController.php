@@ -92,7 +92,7 @@ class ArticlesController extends Controller {
 			$html = $this->renderPartial('pdf', ['model' => $model]);
 
 			$fileName = Articles::buildPdf($model, $html);
-			Yii::$app->response->sendFile($fileName, Yii::$app->name.' - '.$model->id.' - '.$model->url.'.pdf');
+			Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
 		}
 	}
 
@@ -103,7 +103,8 @@ class ArticlesController extends Controller {
 		if ($model->load(Yii::$app->request->post()) && $model->save())
 			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
 
-		return $this->render('create', [
+		return $this->render('_formArticles', [
+			'action' => 'create',
 			'model' => $model,
 		]);
 	}
@@ -118,7 +119,8 @@ class ArticlesController extends Controller {
 		if ($model->load(Yii::$app->request->post()) && $model->save())
 			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
 
-		return $this->render('update', [
+		return $this->render('_formArticles', [
+			'action' => 'edit',
 			'model' => $model,
 		]);
 	}
@@ -126,7 +128,7 @@ class ArticlesController extends Controller {
 	public function actionDelete($id) {
 		$model = BaseArticles::findOne($id);
 		if (!$model->belongsToViewer())
-			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
+			throw new UnauthorizedHttpException('You do not have permission to delete this article.');
 
 		$model->delete();
 		return $this->redirect(['index']);
@@ -142,7 +144,7 @@ class ArticlesController extends Controller {
 		$comment->active = ($comment->active) ? Comments::STATUS_INACTIVE : Comments::STATUS_ACTIVE;
 		if ($action == "toggleapproval") {
 			if (!Yii::$app->request->isAjax)
-				throw new MethodNotAllowedHttpException('Method Not Allowed. This url can only handle the following request methods: AJAX.');
+				throw new MethodNotAllowedHttpException('Method Not Allowed.');
 			$comment->update();
 			return $comment->showApprovalButton();
 		} elseif ($action == "delete") {

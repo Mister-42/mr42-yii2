@@ -14,16 +14,13 @@ $this->registerJs('$("#length").change(function(){get();}).change();', View::POS
 <div class="row">
 	<div class="col-md-offset-2 col-md-8">
 		<?= Html::tag('h1', Html::encode($this->title)) ?>
-
 		<p>This <?= Html::encode($this->title) ?> provides an easy way to create a random password. Password generation is done client-side (on your computer) using JavaScript. <strong>None</strong> of this information will be sent over the network.</p>
 
 		<form name="passform">
 			<div class="form-group field-passform-length">
 				<label class="control-label" for="length">Password Length</label>
 				<div class="input-group">
-					<span class="input-group-addon">
-						<?= Html::icon('dashboard') ?>
-					</span>
+					<span class="input-group-addon"><?= Html::icon('dashboard') ?></span>
 					<select id="length" class="form-control">
 						<?php for ($x=6; $x<=64; $x++) { echo '<option value="'.$x.'"'; if ($x==12) { echo ' selected'; } echo '>'.$x.'</option>'; } ?>
 					</select>

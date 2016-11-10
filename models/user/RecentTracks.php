@@ -5,14 +5,13 @@ use yii\bootstrap\Html;
 use yii\helpers\Url;
 use yii\httpclient\Client;
 
-class RecentTracks extends \yii\db\ActiveRecord
-{
+class RecentTracks extends \yii\db\ActiveRecord {
 	public static function tableName() {
 		 return '{{%recenttracks}}';
 	}
 
 	public static function display($userid) {
-		if (time()-self::lastSeen($userid) > 300) {
+		if (time() - self::lastSeen($userid) > 300) {
 			$profile = Profile::find()->where(['user_id' => $userid])->one();
 			self::updateUser(1, $profile);
 		}
@@ -65,7 +64,7 @@ class RecentTracks extends \yii\db\ActiveRecord
 				return false;
 
 			$playcount = (int) $response->data['recenttracks']['@attributes']['total'];
-			$count = 0;
+			$count = 1;
 			foreach($response->data['recenttracks']['track'] as $track) {
 				$time = (bool) $track['nowplaying'] ? 0 : (int) $track->date['uts'];
 				$addTrack = self::findOne(['userid' => $profile->user_id, 'time' => $time]) ?? new RecentTracks();
@@ -77,8 +76,7 @@ class RecentTracks extends \yii\db\ActiveRecord
 				$addTrack->seen = $lastSeen;
 				$addTrack->save();
 
-				$count++;
-				if ($count === $limit)
+				if ($count++ === $limit)
 					break;
 			}
 

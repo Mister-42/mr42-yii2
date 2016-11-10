@@ -10,7 +10,7 @@ echo Html::tag('p', 'Below is an overview of the items in the menu for a quick o
 echo '<ul>';
 foreach($pages as $menu) :
 	if (!isset($menu['visible']) || $menu['visible']) {
-		echo (isset($menu['url'])) ? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url'])) : Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false));
+		echo isset($menu['url']) ? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url'])) : Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false));
 		if ($menu['items']) {
 			echo '<ul>';
 			foreach($menu['items'] as $submenu) :

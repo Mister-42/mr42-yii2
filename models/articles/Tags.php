@@ -4,13 +4,15 @@ use yii\helpers\StringHelper;
 
 class Tags {
 	public static function findTagWeights($limit = 20) {
-		$tags = self::getTags();
-		foreach($tags as $key => $value)
-			$list[$key] = 8 + (int)(16 * $value / (array_sum($tags) + 10));
-
-		array_slice($list, 0, $limit);
+		if (empty($tags = self::getTags()))
+			return [];
+		foreach($tags as $key => $value) :
+			$list[$key]['count'] = $value;
+			$list[$key]['weight'] = 8 + (int) (16 * $value / (array_sum($tags) + 10));
+		endforeach;
+		$list = array_slice($list, 0, $limit);
 		ksort($list, SORT_NATURAL | SORT_FLAG_CASE);
-		return array_sum($tags) === 0 ? [] : $list;
+		return $list;
 	}
 
 	public static function lastUpdate($tag) {
@@ -24,7 +26,7 @@ class Tags {
 	private function getTags() {
 		foreach (Articles::find()->select('tags')->all() as $tag) :
 			foreach (StringHelper::explode($tag->tags) as $item)
-				$list[$item] = $list[$item] ? $list[$item] + 1 : 1;
+				$list[$item]++;
 		endforeach;
 		return $list;
 	}

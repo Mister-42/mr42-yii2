@@ -35,7 +35,7 @@ class FeedController extends Controller {
 		Yii::$app->response->headers->add('Content-Type', 'application/rss+xml');
 
 		$articles = Articles::find()
-			->orderBy('created DESC')
+			->orderBy('updated DESC')
 			->with('user')
 			->limit(5)
 			->all();
@@ -49,7 +49,8 @@ class FeedController extends Controller {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/xml');
 
-		$pages = MenuItems::urlList(); sort($pages);
+		$pages = MenuItems::urlList();
+		sort($pages);
 
 		$articles = Articles::find()
 			->orderBy('created')

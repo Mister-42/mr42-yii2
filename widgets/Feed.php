@@ -9,26 +9,23 @@ class Feed extends Widget {
 	public $limit;
 
 	public function run() {
-		$limit = (isset(Yii::$app->params['feedItemCount']) && is_int(Yii::$app->params['feedItemCount'])) ? Yii::$app->params['feedItemCount'] : 10;
+		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 10;
 		$limit = $this->limit ?? $limit;
 		$items = FeedModel::find()
 			->where(['feed' => $this->name])
 			->orderBy('time DESC')
 			->limit($limit)
 			->all();
-		echo (empty($items)) ? Html::tag('p', 'No items to display.') : $this->renderFeed($items, $limit);
+		echo empty($items) ? Html::tag('p', 'No items to display.') : $this->renderFeed($items, $limit);
 	}
 
 	public function renderFeed($items, $limit) {
-		$count = 0;
+		$count = 1;
 		foreach ($items as $item) :
-			$count++;
 			$feed[] = Html::tag('li', Html::a(Html::encode($item['title']), $item['url'], ['title' => $item['description'], 'data-toggle' => 'tooltip', 'data-placement' => 'top']));
-
-			if ($count === $limit)
+			if ($count++ === $limit)
 				break;
 		endforeach;
-
 		return Html::tag('ul', implode($feed), ['class' => 'list-unstyled']);
 	}
 }

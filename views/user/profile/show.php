@@ -9,16 +9,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
 	<div class="col-sm-12">
-		<h2><?= $title ?></h2>
+		<?= Html::tag('h2', $title) ?>
 		<div class="row">
-			<div class="col-md-6">
-				<?php if (!empty($profile->location)): ?>
-					<?= Html::icon('map-marker', ['class' => 'text-muted']) ?> <?= Html::encode($profile->location) ?><br>
-				<?php endif; ?>
-				<?php if (!empty($profile->website)): ?>
-					<?= Html::icon('globe', ['class' => 'text-muted']) ?> <?= Html::a(Html::encode($profile->website), Html::encode($profile->website)) ?>
-				<?php endif; ?>
-			</div>
+			<div class="col-md-6"><?php
+				if (!empty($profile->location))
+					echo Html::icon('map-marker', ['class' => 'text-muted']) . Html::encode($profile->location) . '<br>';
+				if (!empty($profile->website))
+					echo Html::icon('globe', ['class' => 'text-muted']) . Html::a(Html::encode($profile->website), Html::encode($profile->website));
+			?></div>
 			<div class="col-md-6 text-right">
 				<?= '<time datetime="'.date(DATE_W3C, $profile->user->created_at).'">' . Yii::t('user', 'Joined on {0, date}', $profile->user->created_at) . '</time>' ?> <?= Html::icon('time', ['class' => 'text-muted']) ?><br>
 				<?php if ($profile->user->created_at != $profile->user->updated_at): ?>
@@ -26,9 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php endif; ?>
 			</div>
 		</div>
-		<hr>
-		<?php if (!empty($profile->bio)): ?>
-			<?php echo Profile::show($profile); ?>
-		<?php endif; ?>
-	</div>
+		<hr><?php
+		if (!empty($profile->bio))
+			echo Profile::show($profile);
+	?></div>
 </div>

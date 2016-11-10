@@ -16,12 +16,10 @@ $dependency = [
 ];
 ?>
 <div class="row">
-	<div class="col-xs-12 col-sm-9">
-		<?= $content; ?>
-	</div>
+	<div class="col-xs-12 col-sm-9"><?= $content; ?></div>
 
-	<aside class="hidden-xs col-sm-3">
-		<?php echo Search::widget();
+	<aside class="hidden-xs col-sm-3"><?php
+		echo Search::widget();
 
 		if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0])) {
 			echo Item::widget([
@@ -45,7 +43,7 @@ $dependency = [
 		echo Item::widget([
 			'body' => Feed::widget(['name' => 'ScienceDaily']),
 			'header' => Html::tag('h4', 'Science News'),
-		]); ?>
-	</aside>
+		]);
+	?></aside>
 </div>
 <?php $this->endContent(); ?>

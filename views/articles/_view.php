@@ -47,26 +47,26 @@ HighlightAsset::register($this);
 		if ($model->active == 0)
 			echo Html::tag('div', 'Not published.', ['class' => 'well well-sm alert-warning']);
 
-		echo Html::icon('link', ['class' => 'text-muted']) . ' ' . Html::a('permalink', ['index', 'id' => $model->id]).' &middot; ';
+		echo Html::icon('link', ['class' => 'text-muted']) . ' ' . Html::a('permalink', ['index', 'id' => $model->id]).' · ';
 		$commentText = Yii::t('site', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
 		echo Html::icon('comment', ['class' => 'text-muted']) . ' ' . Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);
 
 		$tags = StringHelper::explode($model->tags);
 		if (count($tags) > 0) {
-			echo ' &middot; ';
+			echo ' · ';
 			foreach($tags as $tag)
 				$tagArray[] = Html::a($tag, ['index', 'action' => 'tag', 'tag' => $tag]);
-			echo (count($tags) === 1) ? Html::icon('tag', ['class' => 'text-muted']) : Html::icon('tags', ['class' => 'text-muted']);
-			echo ' '.implode(', ', $tagArray);
+			echo Html::icon(count($tags) === 1 ? 'tag' : 'tags', ['class' => 'text-muted']);
+			echo ' ' . implode(', ', $tagArray);
 		}
 
-		echo ' &middot; '.Html::icon('time', ['class' => 'text-muted']).' <time datetime="'.date(DATE_W3C, $model->created).'">'.Yii::$app->formatter->asRelativeTime($model->created).'</time>';
+		echo ' · '.Html::icon('time', ['class' => 'text-muted']).' <time datetime="'.date(DATE_W3C, $model->created).'">'.Yii::$app->formatter->asRelativeTime($model->created).'</time>';
 		if($model->updated - $model->created > 3600)
-			echo ' &middot; updated <time datetime="'.date(DATE_W3C, $model->updated).'">'.Yii::$app->formatter->asRelativeTime($model->updated).'</time>';
+			echo ' · updated <time datetime="'.date(DATE_W3C, $model->updated).'">'.Yii::$app->formatter->asRelativeTime($model->updated).'</time>';
 
 		$user = new User();
 		$profile = $user->finder->findProfileById($model->user->id);
-		echo ' &middot; '.Html::icon('user', ['class' => 'text-muted']).' <span class="author">' . (empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name)) . '</span>';
+		echo ' · '.Html::icon('user', ['class' => 'text-muted']).' <span class="author">' . empty($profile->name ? Html::encode($model->user->username) : Html::encode($profile->name)) . '</span>';
 
 		if (isset($view) && $view == 'full ') {
 			if (!empty($profile['bio']) && $author = Profile::show($profile))

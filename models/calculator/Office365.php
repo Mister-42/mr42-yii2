@@ -29,7 +29,7 @@ class Office365 extends \yii\base\Model {
 
 	public function calcEndDate() {
 		if ($this->validate()) {
-			$this->targetdate = ($this->targetdate) ? $this->targetdate : date('Y-m-d');
+			$this->targetdate = $this->targetdate ?? date('Y-m-d');
 			$diff = (new DateTime($this->sourcedate))->diff(new DateTime($this->targetdate));
 
 			$redeemDate = ($diff->invert === 0 && $diff->days <= 30) ? $this->sourcedate : $this->targetdate;
@@ -39,7 +39,7 @@ class Office365 extends \yii\base\Model {
 			$upcomingYear = new DateTime($redeemDate);
 			$upcomingYearDays = (new DateTime($redeemDate))->diff($upcomingYear->modify('1 year'));
 
-			$targetCount = ($this->action == 'renew') ? $this->targetcount : $this->sourcecount + $this->targetcount;
+			$targetCount = $this->action == 'renew' ? $this->targetcount : $this->sourcecount + $this->targetcount;
 			$dateCalc = (($diff->days * $this->sourcecount) + ($upcomingYearDays->days * $this->targetcount)) / $targetCount;
 
 			$newDate = new DateTime($redeemDate);

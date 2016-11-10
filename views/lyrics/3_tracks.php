@@ -25,12 +25,12 @@ $this->params['breadcrumbs'][] = $tracks[0]->album->name;
 			echo '<div class="col-sm-4 text-nowrap">';
 
 		echo $track->track . ' · ';
-		echo (!$track->lyricid) ? $track->name : Html::a($track->name, '#' . $track->track);
+		echo !$track->lyricid ? $track->name : Html::a($track->name, '#' . $track->track);
 		echo '<br>';
 
-		if ($x == ceil(count($tracks)/3) || $y == count($tracks)) {
+		if ($x === (int) ceil(count($tracks) / 3) || $y === count($tracks)) {
 			echo '</div>';
-			$x=0;
+			$x = 0;
 		}
 	endforeach;
 	echo '</div>';
