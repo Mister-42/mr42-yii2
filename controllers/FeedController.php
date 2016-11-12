@@ -57,7 +57,7 @@ class FeedController extends Controller {
 			->with('comments')
 			->all();
 
-		$tags = Tags::findTagWeights(-1);
+		$tags = Tags::findTagWeights();
 
 		$artists = Lyrics1Artists::albumsList();
 

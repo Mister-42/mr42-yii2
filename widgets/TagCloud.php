@@ -1,13 +1,12 @@
 <?php
 namespace app\widgets;
 use Yii;
-use app\models\articles\{Articles, Tags};
+use app\models\articles\Tags;
 use yii\bootstrap\{Html, Widget};
 
 class TagCloud extends Widget {
 	public function run() {
-		$limit = is_int(Yii::$app->params['tagCloud']) ? Yii::$app->params['tagCloud'] : 5;
-		echo empty($tags = Tags::findTagWeights($limit)) ? Html::tag('p', 'No tags to display.') : $this->renderTags($tags);
+		echo empty($tags = Tags::findTagWeights()) ? Html::tag('p', 'No tags to display.') : $this->renderTags($tags);
 	}
 
 	public function renderTags($tags) {

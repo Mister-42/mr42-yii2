@@ -9,5 +9,4 @@ return [
 	'recentArticles' => 5,
 	'recentTracksCount' => 20,
 	'specialIPs' => $secrets['params']['specialIPs'],
-	'tagCloud' => 20,
 ];

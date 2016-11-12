@@ -3,7 +3,7 @@ use app\models\articles\Tags;
 use app\models\feed\Sitemap;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\base\View;
-use yii\helpers\Url;
+use yii\helpers\{ArrayHelper, Url};
 
 $doc = new XMLWriter();
 $doc->openMemory();
@@ -29,9 +29,10 @@ foreach($articles as $article) :
 	Sitemap::ageData($doc, Url::to(['articles/index', 'id' => $article['id'], 'title' => $article['url']], true), $lastUpdate);
 endforeach;
 
+$weight = ArrayHelper::getColumn($tags, 'weight');
 foreach($tags as $tag => $value) :
 	$lastUpdate = Tags::lastUpdate($tag);
-	Sitemap::prioData($doc, Url::to(['articles/index', 'action' => 'tag', 'tag' => $tag], true), $tags[$tag] / max($tags) - 0.2, $lastUpdate);
+	Sitemap::prioData($doc, Url::to(['articles/index', 'action' => 'tag', 'tag' => $tag], true), $value['weight'] / max($weight) - 0.2, $lastUpdate);
 endforeach;
 
 Sitemap::ageData($doc, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpdate(null));
