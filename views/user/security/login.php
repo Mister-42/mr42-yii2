@@ -23,14 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		]);
 
 		echo $form->field($model, 'login', [
-			'inputOptions' => ['autofocus' => true, 'class' => 'form-control', 'tabindex' => 1],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
-		]);
+		])->textInput(['autofocus' => true, 'class' => 'form-control', 'tabindex' => 1]);
 
 		echo $form->field($model, 'password', [
-			'inputOptions' => ['class' => 'form-control', 'tabindex' => 2],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
-		])->passwordInput()
+		])->passwordInput(['class' => 'form-control', 'tabindex' => 2])
 		->label('Password' . ($module->enablePasswordRecovery ? ' (' . Html::a('Forgot password?', ['/user/recovery/request']) . ')' : ''));
 
 		echo $form->field($model, 'rememberMe')->checkbox(['tabindex' => 3]);

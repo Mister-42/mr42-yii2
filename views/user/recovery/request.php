@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo $form->field($model, 'email', [
 			'inputOptions' => ['tabindex' => 1],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{error}',
-		])->textInput(['autofocus' => true]);
+		])->input('email', ['autofocus' => true]);
 
 		echo Html::submitButton('Continue', ['class' => 'btn btn-primary btn-block', 'tabindex' => 2]) . '<br>';
 

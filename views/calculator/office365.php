@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'options' => ['class' => 'col-xs-6'],
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 			])
-			->textInput(['class' => 'form-control', 'tabindex' => $tab++]);
+			->input('number', ['class' => 'form-control', 'tabindex' => $tab++]);
 			echo '</div>';
 		}
 

@@ -18,14 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		]);
 
 		echo $form->field($model, 'email', [
-			'inputOptions' => ['tabindex' => 1],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{error}',
-		]);
+		])->input('email', ['tabindex' => 1]);
 
 		echo $form->field($model, 'username', [
-			'inputOptions' => ['tabindex' => 2],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
-		]);
+		])->textInput(['tabindex' => 2]);
 
 		echo Html::submitButton('Continue', ['class' => 'btn btn-primary btn-block', 'tabindex' => 3]);
 

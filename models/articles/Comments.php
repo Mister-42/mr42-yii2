@@ -29,7 +29,7 @@ class Comments extends ActiveRecord {
 		];
 
 		if (Yii::$app->user->isGuest) {
-			$rules[] = [['captcha'], 'captcha'];
+			$rules[] = ['captcha', 'captcha'];
 			$rules[] = [['name', 'email'], 'required'];
 			$rules[] = ['captcha', 'required'];
 		}

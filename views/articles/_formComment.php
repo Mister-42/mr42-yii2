@@ -21,14 +21,14 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 
 				echo $form->field($model, 'email', [
 					'options' => ['class' => 'col-xs-6'],
-					'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{error}',
-				])->textInput(['tabindex' => 2])
-				->hint('Your ' . $model->getAttributeLabel('email') . ' will not be published.');
+					'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{hint}{error}',
+				])->input('email', ['tabindex' => 2])
+				->hint('This will not be published.');
 			echo '</div>';
 
 			echo $form->field($model, 'website', [
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
-			])->textInput(['tabindex' => 3]);
+			])->input('url', ['tabindex' => 3]);
 		}
 
 		echo $form->field($model, 'title', [

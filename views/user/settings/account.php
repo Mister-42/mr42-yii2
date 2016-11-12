@@ -23,11 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		echo $form->field($model, 'email', [
 			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{error}',
-		]);
+		])->input('email');
 
 		echo $form->field($model, 'username', [
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
-		]);
+		])->textInput();
 
 		echo $form->field($model, 'new_password', [
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',

@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo $form->field($model, 'days', [
 			'options' => ['class' => 'col-xs-6'],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('plus').'</span>{input}</div>{error}',
-		])->textInput(['tabindex' => 2]);
+		])->input('number', ['tabindex' => 2]);
 		echo '</div>'; ?>
 
 		<div class="form-group text-right">

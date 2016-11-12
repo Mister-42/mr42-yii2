@@ -22,7 +22,7 @@ $this->registerJs('$("#length").change(function(){get();}).change();', View::POS
 				<div class="input-group">
 					<span class="input-group-addon"><?= Html::icon('dashboard') ?></span>
 					<select id="length" class="form-control">
-						<?php for ($x=6; $x<=64; $x++) { echo '<option value="'.$x.'"'; if ($x==12) { echo ' selected'; } echo '>'.$x.'</option>'; } ?>
+						<?php for ($x=6; $x<=64; $x++) { echo Html::tag('option', $x, ['value' => $x, 'selected' => $x === 12 ? 'selected' : false]); } ?>
 					</select>
 				</div>
 			</div>

@@ -34,7 +34,7 @@ $this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length
 
 		echo $form->field($model, 'website', [
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
-		])->textInput(['tabindex' => 2]);
+		])->input('url', ['tabindex' => 2]);
 
 		echo $form->field($model, 'lastfm', [
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('music').'</span>{input}</div>{error}',

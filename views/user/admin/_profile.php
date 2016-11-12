@@ -19,7 +19,7 @@ $form = ActiveForm::begin([
 
 echo $form->field($profile, 'name')->textInput(['tabindex' => 1]);
 
-echo $form->field($profile, 'website')->textInput(['tabindex' => 2]);
+echo $form->field($profile, 'website')->input('url', ['tabindex' => 2]);
 
 echo $form->field($profile, 'lastfm')->textInput(['tabindex' => 3]);
 

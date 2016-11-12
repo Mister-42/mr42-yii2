@@ -10,7 +10,7 @@ class ProfileController extends \dektrium\user\controllers\ProfileController {
 		$behaviors = parent::behaviors();
 		$behaviors['access']['rules'][] = ['allow' => true, 'actions' => ['recenttracks']];
 
-		$newBehaviors = [
+		return ArrayHelper::merge($behaviors, [
 			[
 				'class' => HttpCache::className(),
 				'etagSeed' => function ($action, $params) {
@@ -23,9 +23,7 @@ class ProfileController extends \dektrium\user\controllers\ProfileController {
 				},
 				'only' => ['show'],
 			],
-		];
-
-		return ArrayHelper::merge($behaviors, $newBehaviors);
+		]);
 	}
 
 	public function actionShow($username) {

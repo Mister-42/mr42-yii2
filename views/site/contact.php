@@ -28,7 +28,7 @@ $this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this)
 				echo $form->field($model, 'email', [
 					'options' => ['class' => 'col-xs-6 form-group'],
 					'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{error}',
-				])->textInput(['tabindex' => 2]);
+				])->input('email', ['tabindex' => 2]);
 			echo '</div>';
 
 			echo $form->field($model, 'title', [

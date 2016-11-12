@@ -14,7 +14,7 @@ class Sitemap {
 		$doc->writeElement('loc', $url);
 		if ($age) $doc->writeElement('lastmod', date(DATE_W3C, $age));
 		$doc->writeElement('changefreq', self::prio2Changefreq($priority));
-		$doc->writeElement('priority', number_format($priority, 2));
+		$doc->writeElement('priority', round($priority, 2));
 		$doc->endElement();
 	}
 

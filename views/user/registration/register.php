@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		echo $form->field($model, 'email', [
 			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{error}',
-		])->textInput(['tabindex' => 1]);
+		])->input('email', ['tabindex' => 1]);
 
 		echo '<div class="row">';
 			echo $form->field($model, 'username', [
@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		echo '</div>';
 
 		echo $form->field($model, 'captcha')->widget(Captcha::className(), [
+			'captchaAction' => '/site/captcha',
 			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 			'options' => ['class' => 'form-control', 'tabindex' => 4],
 			'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
