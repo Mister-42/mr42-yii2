@@ -32,15 +32,10 @@ class ProfileController extends \dektrium\user\controllers\ProfileController {
 			throw new NotFoundHttpException('User not found.');
 
 		$profile = $this->finder->findProfileById($user->id);
-		if (!$profile)
-			throw new NotFoundHttpException('Profile not found.');
-
 		if ($profile->lastfm)
 			$this->layout = '@app/views/layouts/recenttracks.php';
 
-		return $this->render('show', [
-			'profile' => $profile,
-		]);
+		return parent::actionShow($user->id);
 	}
 
 	public function actionRecenttracks($username) {

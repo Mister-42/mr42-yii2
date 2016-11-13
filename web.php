@@ -44,7 +44,6 @@ $config = [
 			'admins' => ['admin'],
 			'controllerMap' => [
 				'profile' => 'app\controllers\user\ProfileController',
-				'settings' => 'app\controllers\user\SettingsController',
 			],
 			'modelMap' => [
 				'Profile' => 'app\models\user\Profile',
