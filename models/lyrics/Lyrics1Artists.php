@@ -17,11 +17,6 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 		$this->active = (bool) $this->active;
 	}
 
-	protected function baseList() {
-		return self::find()
-			->orderBy('name');
-	}
-
 	public function artistsList() {
 		return self::baseList()
 			->all();
@@ -52,5 +47,10 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 					? ['or', [self::tableName().'.`active`' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
 					: [self::tableName().'.`active`' => Self::STATUS_ACTIVE]
 			);
+	}
+
+	protected function baseList() {
+		return self::find()
+			->orderBy('name');
 	}
 }

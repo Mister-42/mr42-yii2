@@ -43,7 +43,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 
 	public function getArtist() {
 		return $this->hasOne(Lyrics1Artists::className(), ['id' => 'parent'])
-			->viaTable(Lyrics2Albums::tableName(), ['id' => 'parent']);
+			->via('album');
 	}
 
 	public function getAlbum() {

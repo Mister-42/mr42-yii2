@@ -38,11 +38,10 @@ endforeach;
 Sitemap::ageData($doc, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpdate(null));
 
 foreach($artists as $artist) :
-	$lastUpdate = Lyrics2Albums::lastUpdate($artist->url, $artist);
+	$lastUpdate = Lyrics2Albums::lastUpdate($artist->url, $artist->albums);
 	Sitemap::ageData($doc, Url::to(['lyrics/index', 'artist' => $artist->url], true), $lastUpdate, 0.6);
 	foreach($artist->albums as $album) :
-		$lastUpdate = Lyrics3Tracks::lastUpdate($album->artist->url, $album->year, $album->url, $album);
-		Sitemap::ageData($doc, Url::to(['lyrics/index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true), $lastUpdate, 0.5);
+		Sitemap::ageData($doc, Url::to(['lyrics/index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true), $album->updated, 0.5);
 	endforeach;
 endforeach;
 
