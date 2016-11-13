@@ -32,7 +32,7 @@ $this->beginPage();
 		'brandUrl' => Yii::$app->homeUrl,
 		'options' => [
 			'class' => 'navbar-default navbar-fixed-top',
-		],		
+		],
 	]);
 
 	if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {

@@ -1,6 +1,5 @@
 <?php
 namespace app\models\user;
-use Yii;
 
 class RegistrationForm extends \dektrium\user\models\RegistrationForm {
 	public $captcha;

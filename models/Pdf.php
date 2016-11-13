@@ -19,7 +19,7 @@ class Pdf {
 			foreach(['author', 'footer', 'header', 'keywords', 'subject', 'title'] as $x) :
 				if (isset($params[$x])) {
 					$function = 'Set' . ucfirst($x);
-					$pdf->api->$function($params[$x]);			
+					$pdf->api->$function($params[$x]);
 				}
 			endforeach;
 			$pdf->render();

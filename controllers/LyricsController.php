@@ -51,7 +51,7 @@ class LyricsController extends Controller {
 
 			return $this->render('2_albums', [
 				'albums' => $albums,
-			]);		
+			]);
 		} elseif (isset($get['artist']) && isset($get['year']) && isset($get['album'])) {
 			$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
 

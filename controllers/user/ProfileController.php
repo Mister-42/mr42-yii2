@@ -29,14 +29,14 @@ class ProfileController extends \dektrium\user\controllers\ProfileController {
 	public function actionShow($username) {
 		$user = $this->finder->findUserByUsername($username);
 		if (!$user)
-			throw new NotFoundHttpException('Profile not found.');
+			throw new NotFoundHttpException('User not found.');
 
 		$profile = $this->finder->findProfileById($user->id);
 		if (!$profile)
 			throw new NotFoundHttpException('Profile not found.');
 
 		if ($profile->lastfm)
-			$this->layout = '@app/views/layouts/recenttracks.php';			
+			$this->layout = '@app/views/layouts/recenttracks.php';
 
 		return $this->render('show', [
 			'profile' => $profile,
@@ -46,7 +46,7 @@ class ProfileController extends \dektrium\user\controllers\ProfileController {
 	public function actionRecenttracks($username) {
 		$user = $this->finder->findUserByUsername($username);
 		if (!$user)
-			throw new NotFoundHttpException('Profile not found.');		
+			throw new NotFoundHttpException('Profile not found.');
 
 		if (!Yii::$app->request->isAjax)
 			throw new MethodNotAllowedHttpException('Method Not Allowed.');

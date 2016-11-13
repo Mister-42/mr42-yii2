@@ -76,7 +76,7 @@ class Favicon extends \yii\base\Model {
 						unlink($file);
 					unlink($srcImg);
 				}
-			
+
 				if ($this->email) {
 					Yii::$app->mailer
 						->compose(['html' => 'faviconRequester'])

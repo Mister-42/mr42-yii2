@@ -14,7 +14,7 @@ class Item extends \yii\bootstrap\Widget {
 				$class[] = $v;
 				continue;
 			}
-			$option[] = "{$k}=\"{$v}\""; 
+			$option[] = "{$k}=\"{$v}\"";
 		endforeach;
 
 		echo '<div class="' . implode(' ', $class) . '" ' . implode(' ', $option) . '>';

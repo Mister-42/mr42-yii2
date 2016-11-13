@@ -1,7 +1,7 @@
 /*
  * JavaScript implementation of Password-Based Key Derivation Function 2
  * (PBKDF2) as defined in RFC 2898.
- * Version 1.5 
+ * Version 1.5
  * Copyright (c) 2007, 2008, 2009, 2010, 2011, 2012, 2013 Parvez Anandam
  * parvez@anandam.com
  * http://anandam.com/pbkdf2
@@ -13,7 +13,7 @@
  * (uses the binb_sha1(), rstr2binb(), binb2str(), rstr2hex() functions from that libary)
  *
  * Thanks to Felix Gartsman for pointing out a bug in version 1.0
- * Thanks to Thijs Van der Schaeghe for pointing out a bug in version 1.1 
+ * Thanks to Thijs Van der Schaeghe for pointing out a bug in version 1.1
  * Thanks to Richard Gautier for asking to clarify dependencies in version 1.2
  * Updated contact information from version 1.3
  * Thanks to Stuart Heinrich for pointing out updates to PAJ's SHA-1 library in version 1.4
@@ -21,7 +21,7 @@
 
 
 /*
- * The four arguments to the constructor of the PBKDF2 object are 
+ * The four arguments to the constructor of the PBKDF2 object are
  * the password, salt, number of iterations and number of bytes in
  * generated key. This follows the RFC 2898 definition: PBKDF2 (P, S, c, dkLen)
  *
@@ -83,7 +83,7 @@ function PBKDF2(password, salt, num_iterations, num_bytes)
 
 	// This is where the result of the iterations gets sotred
 	var m_buffer = new Array(0x0,0x0,0x0,0x0,0x0);
-	
+
 	// The result
 	var m_key = "";
 
@@ -95,7 +95,7 @@ function PBKDF2(password, salt, num_iterations, num_bytes)
 
 	// The function to call with status after computing every chunk
 	var m_status_func;
-	
+
 	// Set up the HMAC-SHA1 computations
 	if (m_bpassword.length > 16) m_bpassword = binb_sha1(m_bpassword, password.length * chrsz);
 	for(var i = 0; i < 16; ++i)
@@ -120,10 +120,10 @@ function PBKDF2(password, salt, num_iterations, num_bytes)
 		var iterations = m_iterations_in_chunk;
 		if (m_total_iterations - m_iterations_done < m_iterations_in_chunk)
 			iterations = m_total_iterations - m_iterations_done;
-			
+
 		for(var i=0; i<iterations; ++i)
 		{
-			// compute HMAC-SHA1 
+			// compute HMAC-SHA1
 			if (m_iterations_done == 0)
 			{
 				var salt_block = m_salt +
@@ -138,7 +138,7 @@ function PBKDF2(password, salt, num_iterations, num_bytes)
 			}
 			else
 			{
-				m_hash = binb_sha1(m_ipad.concat(m_hash), 
+				m_hash = binb_sha1(m_ipad.concat(m_hash),
 								   512 + m_hash.length * 32);
 				m_hash = binb_sha1(m_opad.concat(m_hash), 512 + 160);
 			}
@@ -161,9 +161,9 @@ function PBKDF2(password, salt, num_iterations, num_bytes)
 			if (m_current_block < m_total_blocks)
 			{
 				// Compute the next block (T_i in RFC 2898)
-				
+
 				m_key += rstr2hex(binb2rstr(m_buffer));
-			
+
 				m_current_block++;
 				m_buffer = new Array(0x0,0x0,0x0,0x0,0x0);
 				m_iterations_done = 0;
@@ -173,10 +173,10 @@ function PBKDF2(password, salt, num_iterations, num_bytes)
 			else
 			{
 				// We've computed the final block T_l; we're done.
-			
+
 				var tmp = rstr2hex(binb2rstr(m_buffer));
 				m_key += tmp.substr(0, (m_key_length - (m_total_blocks - 1) * m_hash_length) * 2 );
-				
+
 				// Call the result callback function
 				m_result_func(m_key);
 			}

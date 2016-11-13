@@ -30,7 +30,7 @@ foreach ($comments as $comment): ?>
 		echo $comment->content;
 		if (!empty($comment->user)) {
 			$user = new User();
-			$profile = $user->finder->findProfileById($comment->user);			
+			$profile = $user->finder->findProfileById($comment->user);
 			$comment->name = empty($profile->name) ? Html::encode($profile->user->username) : Html::encode($profile->name);
 			$comment->website = $profile->website;
 		}
