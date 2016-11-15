@@ -20,13 +20,13 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		self::updateAll(['seen' => time()], 'userid = '.$userid);
 
 		$limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : $this->limit;
-		$recentTracks = self::find()
+		$tracks = self::find()
 			->where(['userid' => $userid])
 			->orderBy('count DESC')
 			->limit($limit)
 			->all();
 
-		foreach ($recentTracks as $track) :
+		foreach ($tracks as $track) :
 			echo '<div class="clearfix track">';
 				echo Html::tag('span', $track['artist'], ['class' => 'pull-left']);
 				if ($track['time'] === 0)
@@ -35,12 +35,12 @@ class RecentTracks extends \yii\db\ActiveRecord {
 			echo '</div>';
 		endforeach;
 
-		echo (empty($recentTracks)) ?
-			Html::tag('p', 'No items to display.') :
-			Html::tag('div',
-				Html::tag('span', Html::tag('b', 'Total tracks played:'), ['class' => 'pull-left']) .
-				Html::tag('span', Html::tag('b', Yii::$app->formatter->asInteger($recentTracks[0]['count'])), ['class' => 'pull-right'])
-			, ['class' => 'clearfix']);
+		echo empty($tracks)
+			? Html::tag('p', 'No items to display.')
+			: Html::tag('div',
+					Html::tag('div', Html::tag('b', 'Total tracks played:'), ['class' => 'pull-left']) .
+					Html::tag('div', Html::tag('b', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'pull-right'])
+				, ['class' => 'clearfix']);
 	}
 
 	public function lastSeen($userid) {

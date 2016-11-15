@@ -6,7 +6,7 @@ use yii\helpers\{FileHelper, Markdown};
 
 class Formatter extends \yii\i18n\Formatter {
 	public function cleanInput($data, $markdown = 'original', $allowHtml = false) {
-		$data = ($allowHtml) ? parent::asRaw($data) : parent::asHtml($data, ['HTML.Allowed' => '']);
+		$data = $allowHtml ? parent::asRaw($data) : parent::asHtml($data, ['HTML.Allowed' => '']);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
 		if ($allowHtml)
@@ -21,14 +21,11 @@ class Formatter extends \yii\i18n\Formatter {
 		if (!file_exists($filename))
 			return $filename . ' does not exist.';
 
-		if (!empty($replace)) {
-			$js = strtr(file_get_contents($filename), $replace);
-			$jp = new JavascriptPacker($js, 0);
-			return $jp->pack();
-		}
-
 		if (!file_exists($cachefile) || filemtime($cachefile) < filemtime($filename)) {
-			$jp = new JavascriptPacker(file_get_contents($filename), 0);
+			$js = empty($replace) ? file_get_contents($filename) : strtr(file_get_contents($filename), $replace);
+			$jp = new JavascriptPacker($js, 0);
+			if (!empty($replace))
+				return $jp->pack();
 			FileHelper::createDirectory(dirname($cachefile));
 			file_put_contents($cachefile, $jp->pack());
 			touch($cachefile, filemtime($filename));
