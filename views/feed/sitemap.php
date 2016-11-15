@@ -1,7 +1,7 @@
 <?php
 use app\models\articles\Tags;
 use app\models\feed\Sitemap;
-use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
+use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums};
 use yii\base\View;
 use yii\helpers\{ArrayHelper, Url};
 

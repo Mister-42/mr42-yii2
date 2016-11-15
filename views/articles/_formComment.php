@@ -5,7 +5,7 @@ use yii\web\View;
 use yii\widgets\Pjax;
 
 $rules = $model->rules();
-$this->registerJs('$(\'#formContent\').on(\'input keyup\',function(){len=$(this).val().length;char='.$rules['charCount']['max'].'-len;if(len>'.$rules['charCount']['max'].'){$(\'#chars\').text(\'You are \'+Math.abs(char)+\' characters over the limit.\').addClass(\'alert-danger\')}else{$(\'#chars\').text(\'You have \'+char+\' characters left\').removeClass(\'alert-danger\');}}).keyup();', View::POS_READY);
+$this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' => $rules['charCount']['max']]), View::POS_READY);
 
 Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]);
 	echo Html::tag('h2', 'Leave a Comment');

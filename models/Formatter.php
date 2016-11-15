@@ -14,12 +14,18 @@ class Formatter extends \yii\i18n\Formatter {
 		return trim($data);
 	}
 
-	public function jspack($file) {
+	public function jspack($file, $replace = []) {
 		$filename = Yii::getAlias('@app/assets/src/js/' . $file);
 		$cachefile = Yii::getAlias('@runtime/assets/js/' . $file);
 
 		if (!file_exists($filename))
 			return $filename . ' does not exist.';
+
+		if (!empty($replace)) {
+			$js = strtr(file_get_contents($filename), $replace);
+			$jp = new JavascriptPacker($js, 0);
+			return $jp->pack();
+		}
 
 		if (!file_exists($cachefile) || filemtime($cachefile) < filemtime($filename)) {
 			$jp = new JavascriptPacker(file_get_contents($filename), 0);

@@ -9,7 +9,7 @@ $this->title = 'Edit Profile';
 $this->params['breadcrumbs'][] = $this->title;
 
 $rules = $model->rules();
-$this->registerJs('$(\'#formContent\').keyup(function(){len=$(this).val().length;char='.$rules['bioString']['max'].'-len;if(len>'.$rules['bioString']['max'].'){$(\'#chars\').text(\'You are \'+Math.abs(char)+\' characters over the limit.\').addClass(\'alert-danger\')}else{$(\'#chars\').text(\'You have \'+char+\' characters left\').removeClass(\'alert-danger\');}}).keyup();', View::POS_READY);
+$this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' => $rules['bioString']['max']]), View::POS_READY);
 ?>
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
