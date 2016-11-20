@@ -45,7 +45,6 @@ class PhoneticAlphabet extends \yii\base\Model {
 
 	public function listAlphabets($type = 'map', $name = null) {
 		$alphabetFiles = FileHelper::findFiles(__DIR__ . '/PhoneticAlphabet/', ['only'=>['*.php'], 'recursive' => false]);
-
 		foreach ($alphabetFiles as $file) :
 			$file = basename($file, '.php');
 			$className = 'app\\models\\tools\\PhoneticAlphabet\\' . $file;

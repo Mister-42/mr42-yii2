@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\httpclient\Client;
 
 class RecentTracks extends \yii\db\ActiveRecord {
-	public $limit = 25;
+	public $limit = 20;
 
 	public static function tableName() {
 		 return '{{%recenttracks}}';
@@ -38,9 +38,9 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		echo empty($tracks)
 			? Html::tag('p', 'No items to display.')
 			: Html::tag('div',
-					Html::tag('div', Html::tag('b', 'Total tracks played:'), ['class' => 'pull-left']) .
-					Html::tag('div', Html::tag('b', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'pull-right'])
-				, ['class' => 'clearfix']);
+				Html::tag('span', Html::tag('b', 'Total tracks played:'), ['class' => 'pull-left']) .
+				Html::tag('span', Html::tag('b', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'pull-right'])
+			);
 	}
 
 	public function lastSeen($userid) {

@@ -18,17 +18,13 @@ class ToolsController extends Controller {
 				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
-				'only' => ['password'],
+				'only' => ['html-to-markdown', 'password'],
 			],
 		];
 	}
 
 	public function actionIndex() {
 		return $this->goHome();
-	}
-
-	public function actionHeaders() {
-		return $this->render('headers');
 	}
 
 	public function actionFavicon() {
@@ -45,6 +41,14 @@ class ToolsController extends Controller {
 		return $this->render('favicon', [
 			'model' => $model,
 		]);
+	}
+
+	public function actionHeaders() {
+		return $this->render('headers');
+	}
+
+	public function actionHtmlToMarkdown() {
+		return $this->render('html-to-markdown');
 	}
 
 	public function actionPassword() {

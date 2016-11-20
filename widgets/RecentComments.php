@@ -7,14 +7,12 @@ use yii\bootstrap\{Html, Widget};
 class RecentComments extends Widget {
 	public function run() {
 		$limit = is_int(Yii::$app->params['recentArticles']) ? Yii::$app->params['recentArticles'] : 5;
-
 		$comments = Comments::find()
 			->orderBy('created DESC')
 			->with('article')
 			->where(['active' => Comments::STATUS_ACTIVE])
 			->limit($limit)
 			->all();
-
 		echo empty($comments) ? Html::tag('p', 'No comments to display.') : Html::tag('ul', $this->renderComments($comments), ['class' => 'list-unstyled']);
 	}
 
