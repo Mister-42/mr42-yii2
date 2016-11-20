@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
+use app\models\articles\Articles;
 use app\models\tools\{Favicon, PhoneticAlphabet};
 use yii\base\Object;
 use yii\filters\HttpCache;
@@ -48,7 +49,9 @@ class ToolsController extends Controller {
 	}
 
 	public function actionHtmlToMarkdown() {
-		return $this->render('html-to-markdown');
+		return $this->render('html-to-markdown', [
+			'lastPost' => Articles::find()->orderBy('id DESC')->one(),
+		]);
 	}
 
 	public function actionPassword() {

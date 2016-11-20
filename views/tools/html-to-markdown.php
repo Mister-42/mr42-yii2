@@ -1,9 +1,8 @@
 <?php
 use app\assets\Html2MarkdownAsset;
 use yii\bootstrap\Html;
-use yii\web\View;
 
-$this->title = 'HTML to Markdown converter';
+$this->title = 'HTML to Markdown Converter';
 $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -17,7 +16,7 @@ Html2MarkdownAsset::register($this);
 	<div class="row">
 		<div class="col-md-6">
 			<?= Html::tag('h3', 'HTML') ?>
-			<textarea id="input"></textarea>
+			<textarea id="input"><?= $lastPost->content ?></textarea>
 		</div>
 
 		<div class="col-md-6">
