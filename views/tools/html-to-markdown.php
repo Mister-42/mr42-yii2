@@ -22,7 +22,7 @@ Html2MarkdownAsset::register($this);
 
 		<div class="col-md-6">
 			<?= Html::tag('h3', 'Markdown') ?>
-			<textarea readonly id="output"></textarea>
+			<textarea id="output" readonly></textarea>
 		</div>
 	</div>
 

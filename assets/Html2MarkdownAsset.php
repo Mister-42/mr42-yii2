@@ -16,6 +16,6 @@ class Html2MarkdownAsset extends AssetBundle {
 
 	public function registerAssetFiles($view) {
 		parent::registerAssetFiles($view);
-		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('tools/html-to-markdown.js'), View::POS_HEAD);
+		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('tools/html-to-markdown.js'), View::POS_READY);
 	}
 }
