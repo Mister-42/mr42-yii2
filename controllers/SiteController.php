@@ -41,23 +41,23 @@ class SiteController extends Controller {
 				}
 			], [
 				'class' => HttpCache::className(),
-				'only' => ['changelog'],
 				'lastModified' => function (Object $action, $params) {
 					$lastUpdate = Changelog::find()->select(['time' => 'max(time)'])->one();
 					return $lastUpdate->time;
 				},
+				'only' => ['changelog'],
 			], [
 				'class' => HttpCache::className(),
-				'only' => ['credits', 'robotstxt'],
 				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
+				'only' => ['robotstxt'],
 			], [
 				'class' => HttpCache::className(),
-				'only' => ['faviconico'],
 				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico');
 				},
+				'only' => ['faviconico'],
 			],
 		];
 	}
@@ -83,10 +83,6 @@ class SiteController extends Controller {
 		return $this->render('contact', [
 			'model' => $model,
 		]);
-	}
-
-	public function actionCredits() {
-		return $this->render('credits');
 	}
 
 	public function actionFaviconico() {

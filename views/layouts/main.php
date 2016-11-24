@@ -61,7 +61,6 @@ $this->beginPage();
 		<p class="pull-right"><?php
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
-				echo Html::a('Credits', ['/site/credits'], ['class' => 'label label-primary']) . ' ';
 				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary visible-md-inline visible-lg-inline']) . ' ';
 				echo Html::a('RSS', ['/feed/rss'], ['class' => 'label label-warning visible-md-inline visible-lg-inline', 'target' => '_blank']);
 			}

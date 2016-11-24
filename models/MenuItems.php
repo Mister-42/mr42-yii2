@@ -55,7 +55,6 @@ class MenuItems {
 			$menuItems[] = ['label' => 'Create Account', 'url' => ['/user/registration/register']];
 			$menuItems[] = ['label' => 'Contact', 'url' => ['/site/changelog']];
 			$menuItems[] = ['label' => 'Contact', 'url' => ['/site/contact']];
-			$menuItems[] = ['label' => 'Credits', 'url' => ['/site/credits']];
 		}
 		return $menuItems;
 	}

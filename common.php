@@ -67,9 +67,15 @@ return [
 			'traceLevel' => YII_DEBUG ? 3 : 0,
 			'targets' => [
 				[
-					'class' => 'yii\log\DbTarget',
+					'class' => 'yii\log\FileTarget',
+					'except' => ['yii\web\HttpException:404'],
 					'levels' => ['error'],
-					'logTable' => 'x_log',
+					'logFile' => '@runtime/logs/error.log',
+				], [
+					'class' => 'yii\log\FileTarget',
+					'categories' => ['yii\web\HttpException:404'],
+					'levels' => ['error', 'warning'],
+					'logFile' => '@runtime/logs/404.log',
 				],
 			],
 		],
