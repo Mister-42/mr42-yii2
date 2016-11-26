@@ -33,9 +33,7 @@ class Profile extends \dektrium\user\models\Profile {
 	public function show($user) {
 		$name = empty($user->name) ? Html::encode($user->user->username) : Html::encode($user->name);
 		$replace_array = ['%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y];
-		$imgUrl = Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/william-morris/'.strtolower($name[0]).'.png';
-		$imgTag = Html::img($imgUrl, ['alt' => $name, 'class' => 'inline-left pull-left']);
-		$user->bio = Yii::$app->formatter->cleanInput($imgTag . '**'.substr($name, 1).'** '.strtr($user->bio, $replace_array), 'gfm-comment', true);
+		$user->bio = Yii::$app->formatter->cleanInput(strtr($user->bio, $replace_array), 'gfm-comment');
 		return empty($user->bio) ? false : Html::tag('div', $user->bio, ['class' => 'profile']);
 	}
 }

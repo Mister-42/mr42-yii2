@@ -95,6 +95,13 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 
 .profile {
 	min-height: 70px;
+
+	p:first-child:first-letter {
+		float: left;
+		font-size: 66px;
+		margin-right: 5px;
+		margin-top: 7px;
+	}
 }
 
 .inline {
