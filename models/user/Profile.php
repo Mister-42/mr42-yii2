@@ -24,16 +24,17 @@ class Profile extends \dektrium\user\models\Profile {
 	}
 
 	public function beforeSave($insert) {
+		if (!ActiveRecord::beforeSave($insert))
+			return false;
 		$this->bio = Yii::$app->formatter->cleanInput($this->bio, false);
-		$this->bio = str_replace(['&lt;', '&gt;', '&amp;'], ['<', '>', '&'], $this->bio);
-		$this->setAttribute('bio', $this->bio);
-		return ActiveRecord::beforeSave($insert);
+		$this->bio = strtr($this->bio, ['&lt;' => '<', '&gt;' => '>', '&amp;' => '&']);
+		$this->name = !empty($this->name) ? $this->name : null;
+		return true;
 	}
 
 	public function show($user) {
-		$name = empty($user->name) ? Html::encode($user->user->username) : Html::encode($user->name);
-		$replace_array = ['%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y];
-		$user->bio = Yii::$app->formatter->cleanInput(strtr($user->bio, $replace_array), 'gfm-comment');
+		$replace = ['%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y];
+		$user->bio = Yii::$app->formatter->cleanInput(strtr($user->bio, $replace), 'gfm-comment');
 		return empty($user->bio) ? false : Html::tag('div', $user->bio, ['class' => 'profile']);
 	}
 }

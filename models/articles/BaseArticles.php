@@ -5,11 +5,10 @@ use app\models\Pdf;
 use dektrium\user\models\{Profile, User};
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap\Html;
-use yii\db\ActiveRecord;
 use yii\helpers\{StringHelper, Url};
 use yii\web\AccessDeniedHttpException;
 
-class BaseArticles extends ActiveRecord {
+class BaseArticles extends \yii\db\ActiveRecord {
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
 
@@ -37,10 +36,8 @@ class BaseArticles extends ActiveRecord {
 		return [
 			[
 				'class' => TimestampBehavior::className(),
-				'attributes' => [
-					ActiveRecord::EVENT_BEFORE_INSERT => ['created', 'updated'],
-					ActiveRecord::EVENT_BEFORE_UPDATE => ['updated'],
-				],
+				'createdAtAttribute' => 'created',
+				'updatedAtAttribute' => 'updated',
 			],
 		];
 	}

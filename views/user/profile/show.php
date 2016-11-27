@@ -2,20 +2,19 @@
 use app\models\user\Profile;
 use yii\bootstrap\Html;
 
-$title = empty($profile->name) ? Html::encode($profile->user->username) : Html::encode($profile->name);
-$this->title = $title;
+$this->title = $profile->name ?? $profile->user->username;
 $this->params['breadcrumbs'][] = 'Profile';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
 	<div class="col-sm-12">
-		<?= Html::tag('h2', $title) ?>
+		<?= Html::tag('h2', Html::encode($this->title)) ?>
 		<div class="row">
 			<div class="col-md-6"><?php
 				if (!empty($profile->location))
 					echo Html::icon('map-marker', ['class' => 'text-muted']) . Html::encode($profile->location) . '<br>';
 				if (!empty($profile->website))
-					echo Html::icon('globe', ['class' => 'text-muted']) . Html::a(Html::encode($profile->website), Html::encode($profile->website));
+					echo Html::icon('globe', ['class' => 'text-muted']) . Html::a(Html::encode($profile->website), $profile->website);
 			?></div>
 			<div class="col-md-6 text-right">
 				<?= '<time datetime="'.date(DATE_W3C, $profile->user->created_at).'">' . Yii::t('user', 'Joined on {0, date}', $profile->user->created_at) . '</time>' ?> <?= Html::icon('time', ['class' => 'text-muted']) ?><br>

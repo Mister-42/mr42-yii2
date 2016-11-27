@@ -10,10 +10,8 @@ class Articles extends BaseArticles {
 		$this->content = Yii::$app->formatter->cleanInput($this->content, 'gfm', true);
 
 		if ($this->source) {
-			$this->content .= '<div class="clearfix">';
-			$this->content .= Html::a('Source', $this->source, ['class' => 'btn btn-default pull-right']);
-			$this->content .= '</div>';
+			$link = Html::a('Source', $this->source, ['class' => 'btn btn-default pull-right']);
+			$this->content .= Html::tag('div', $link, ['class' => 'clearfix']);
 		}
-
 	}
 }
