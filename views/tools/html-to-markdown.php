@@ -21,7 +21,7 @@ Html2MarkdownAsset::register($this);
 
 		<div class="col-md-6">
 			<?= Html::tag('h3', 'Markdown') ?>
-			<textarea id="output" readonly></textarea>
+			<textarea id="output" readonly>JavaScript is disabled in your web browser. This tool does not work without JavaScript.</textarea>
 		</div>
 	</div>
 
