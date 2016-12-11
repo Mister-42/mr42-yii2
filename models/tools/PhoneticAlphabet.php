@@ -6,11 +6,13 @@ use yii\helpers\{ArrayHelper, FileHelper};
 class PhoneticAlphabet extends \yii\base\Model {
 	public $text;
 	public $alphabet;
+	public $numeric;
 
 	public function rules() {
 		return [
 			[['text', 'alphabet'], 'required'],
 			['alphabet', 'in', 'range' => self::listAlphabets('column', 'file')],
+			['numeric', 'boolean'],
 		];
 	}
 
@@ -18,6 +20,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		return [
 			'text' => 'Text to convert',
 			'alphabet' => 'Phonetic Alphabet to use',
+			'numeric' => 'Do not convert numbers',
 		];
 	}
 
@@ -30,7 +33,9 @@ class PhoneticAlphabet extends \yii\base\Model {
 			$text = strtolower($this->text);
 			$text = preg_replace("/(.)/i","\${1} ", $text);
 			$text = strtr($text, ArrayHelper::merge(
-				$alphabet->replaceArray(), [
+				$alphabet->alphabetArray(),
+				($this->numeric) ? [] : $alphabet->numericArray(),
+				[
 					'   ' => ' · ',
 					' - ' => PHP_EOL,
 				]

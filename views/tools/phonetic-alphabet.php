@@ -22,9 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		echo $form->field($model, 'alphabet')->dropDownList(PhoneticAlphabet::listAlphabets(), ['tabindex' => 2]);
 
+		echo $form->field($model, 'numeric')->checkbox(['tabindex' => 3]);
+
 		echo '<div class="form-group text-right">';
-		echo Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) . ' ';
-		echo Html::submitButton('Send', ['class' => 'btn btn-primary', 'tabindex' => 3]);
+		echo Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 5]) . ' ';
+		echo Html::submitButton('Send', ['class' => 'btn btn-primary', 'tabindex' => 4]);
 		echo '</div>';
 
 		ActiveForm::end();

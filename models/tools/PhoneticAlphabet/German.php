@@ -11,7 +11,7 @@ class German extends \app\models\tools\PhoneticAlphabet
 		return self::name();
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Anton',
 				'b' => 'Berta',
 				'c' => 'Cäsar',
@@ -38,7 +38,11 @@ class German extends \app\models\tools\PhoneticAlphabet
 				'x' => 'Xanthippe',
 				'y' => 'Ypsilon',
 				'z' => 'Zacharias',
-				'0' => 'Null',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Null',
 				'1' => 'Eins',
 				'2' => 'Zwei',
 				'3' => 'Drei',

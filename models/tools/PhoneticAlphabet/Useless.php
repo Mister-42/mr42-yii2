@@ -11,7 +11,7 @@ class Useless extends \app\models\tools\PhoneticAlphabet
 		return 'Z';
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Are',
 				'b' => 'Bee',
 				'c' => 'Cue',
@@ -38,7 +38,11 @@ class Useless extends \app\models\tools\PhoneticAlphabet
 				'x' => 'Xu',
 				'y' => 'You',
 				'z' => 'Zero',
-				'0' => 'Oh',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Oh',
 		];
 	}
 }

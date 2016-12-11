@@ -11,7 +11,7 @@ class DutchNl extends \app\models\tools\PhoneticAlphabet
 		return self::name();
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Anton',
 				'b' => 'Bernhard',
 				'c' => 'Cornelis',
@@ -38,7 +38,11 @@ class DutchNl extends \app\models\tools\PhoneticAlphabet
 				'x' => 'Xantippe',
 				'y' => 'Ypsilon',
 				'z' => 'Zacharias',
-				'0' => 'Nul',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Nul',
 				'1' => 'Een',
 				'2' => 'Twee',
 				'3' => 'Drie',

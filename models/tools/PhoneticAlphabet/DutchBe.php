@@ -11,7 +11,7 @@ class DutchBe extends \app\models\tools\PhoneticAlphabet
 		return self::name();
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Arthur',
 				'b' => 'Brussel',
 				'c' => 'Carolina',
@@ -38,7 +38,11 @@ class DutchBe extends \app\models\tools\PhoneticAlphabet
 				'x' => 'Xavier',
 				'y' => 'Yvonne',
 				'z' => 'Zola',
-				'0' => 'Nul',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Nul',
 				'1' => 'Een',
 				'2' => 'Twee',
 				'3' => 'Drie',

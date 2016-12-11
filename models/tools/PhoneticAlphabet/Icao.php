@@ -11,7 +11,7 @@ class Icao extends \app\models\tools\PhoneticAlphabet
 		return '0';
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Alfa',
 				'b' => 'Bravo',
 				'c' => 'Charlie',
@@ -38,7 +38,11 @@ class Icao extends \app\models\tools\PhoneticAlphabet
 				'x' => 'X-ray',
 				'y' => 'Yankee',
 				'z' => 'Zulu',
-				'0' => 'Zero',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Zero',
 				'1' => 'One',
 				'2' => 'Two',
 				'3' => 'Three',

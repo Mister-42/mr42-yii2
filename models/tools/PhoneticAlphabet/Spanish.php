@@ -11,7 +11,7 @@ class Spanish extends \app\models\tools\PhoneticAlphabet
 		return self::name();
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Antonio',
 				'b' => 'Barcelona',
 				'c' => 'Carmen',
@@ -38,7 +38,11 @@ class Spanish extends \app\models\tools\PhoneticAlphabet
 				'x' => 'Xiqeuna',
 				'y' => 'Yegua',
 				'z' => 'Zaragoza',
-				'0' => 'Cero',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Cero',
 				'1' => 'Uno',
 				'2' => 'Dos',
 				'3' => 'Tres',

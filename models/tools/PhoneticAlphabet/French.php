@@ -11,7 +11,7 @@ class French extends \app\models\tools\PhoneticAlphabet
 		return self::name();
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Anatole',
 				'b' => 'Berthe',
 				'c' => 'Célestine',
@@ -38,7 +38,11 @@ class French extends \app\models\tools\PhoneticAlphabet
 				'x' => 'Xavier',
 				'y' => 'Yvonne',
 				'z' => 'Zoé',
-				'0' => 'Zéro',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Zéro',
 				'1' => 'Un',
 				'2' => 'Deux',
 				'3' => 'Trois',

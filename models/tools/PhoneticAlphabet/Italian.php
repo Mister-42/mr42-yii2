@@ -11,7 +11,7 @@ class Italian extends \app\models\tools\PhoneticAlphabet
 		return self::name();
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Ancona',
 				'b' => 'Bari',
 				'c' => 'Como',
@@ -38,7 +38,11 @@ class Italian extends \app\models\tools\PhoneticAlphabet
 				'x' => 'Xilofono',
 				'y' => 'Yogurt',
 				'z' => 'Zara',
-				'0' => 'Zero',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Zero',
 				'1' => 'Uno',
 				'2' => 'Due',
 				'3' => 'Tre',

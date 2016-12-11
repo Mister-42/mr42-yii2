@@ -11,7 +11,7 @@ class Lapd extends \app\models\tools\PhoneticAlphabet
 		return '3';
 	}
 
-	public function replaceArray() {
+	public function alphabetArray() {
 		return ['a' => 'Adam',
 				'b' => 'Boy',
 				'c' => 'Charles',
@@ -38,7 +38,11 @@ class Lapd extends \app\models\tools\PhoneticAlphabet
 				'x' => 'X-ray',
 				'y' => 'Young',
 				'z' => 'Zebra',
-				'0' => 'Zero',
+		];
+	}
+
+	public function numericArray() {
+		return ['0' => 'Zero',
 				'1' => 'One',
 				'2' => 'Two',
 				'3' => 'Three',
