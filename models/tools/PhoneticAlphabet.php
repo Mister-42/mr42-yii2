@@ -20,7 +20,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		return [
 			'text' => 'Text to convert',
 			'alphabet' => 'Phonetic Alphabet to use',
-			'numeric' => 'Do not convert numbers',
+			'numeric' => 'Convert digits',
 		];
 	}
 
@@ -34,7 +34,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 			$text = preg_replace("/(.)/i","\${1} ", $text);
 			$text = strtr($text, ArrayHelper::merge(
 				$alphabet->alphabetArray(),
-				($this->numeric) ? [] : $alphabet->numericArray(),
+				($this->numeric) ? $alphabet->numericArray() : [],
 				[
 					'   ' => ' · ',
 					' - ' => PHP_EOL,
