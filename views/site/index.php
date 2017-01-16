@@ -12,12 +12,12 @@ foreach($pages as $menu) :
 	if (!isset($menu['visible']) || $menu['visible']) {
 		echo isset($menu['url']) ? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url'])) : Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false));
 		if ($menu['items']) {
-			echo '<ul>';
+			$submenuitems = [];
 			foreach($menu['items'] as $submenu) :
 				if (!isset($submenu['visible']) && isset($submenu['label']))
-					echo (isset($submenu['url'])) ? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($submenu['label'], false), $submenu['url'])) : Html::tag('li', Yii::$app->formatter->cleanInput($submenu['label'], false));
+					$submenuitems[] = isset($submenu['url']) ? Html::a(Yii::$app->formatter->cleanInput($submenu['label'], false), $submenu['url']) : Yii::$app->formatter->cleanInput($submenu['label'], false);
 			endforeach;
-			echo '</ul>';
+			echo Html::ul($submenuitems, ['encode' => false]);
 		}
 	}
 endforeach;

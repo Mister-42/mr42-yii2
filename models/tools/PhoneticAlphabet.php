@@ -6,7 +6,7 @@ use yii\helpers\{ArrayHelper, FileHelper};
 class PhoneticAlphabet extends \yii\base\Model {
 	public $text;
 	public $alphabet;
-	public $numeric;
+	public $numeric = true;
 
 	public function rules() {
 		return [
