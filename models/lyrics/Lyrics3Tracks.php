@@ -12,7 +12,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->track = sprintf('%02d', $this->track);
 	}
 
-	protected function baseList($artist, $year, $name, $view = null) {
+	protected function baseList($artist, $year, $name) {
 		return self::find()
 			->orderBy('track')
 			->joinWith('artist')
