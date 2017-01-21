@@ -9,6 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $rules = $model->rules();
 $this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' => $rules['charCount']['max']]), View::POS_READY);
+$this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
 ?>
 <div class="row">
 	<div class="col-md-offset-2 col-md-8">
@@ -38,17 +39,33 @@ $this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' =>
 			echo $form->field($model, 'content',[
 				'template' => "{label} <div id=\"chars\" class=\"pull-right\"></div> {input} {hint} {error}",
 				'template' => '{label} <div id="chars" class="pull-right"></div><div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div> {hint} {error}'
-			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => 4]);
+			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => 4]); ?>
+
+			<label class="control-label" for="file">Attachment</label>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<?= Html::icon('file') ?>
+				</span>
+				<input type="text" id="file" class="form-control" placeholder="No file selected" onclick="$('input[id=sourceFile]').click();" readonly>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click();" tabindex="5"><?= Html::icon('folder-open') ?></button>
+				</span>
+			</div>
+
+			<?php
+			echo $form->field($model, 'attachment')
+				->fileInput(['class' => 'hidden', 'id' => 'sourceFile'])
+				->label(false);
 
 			echo $form->field($model, 'captcha')->widget(Captcha::className(), [
 				'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
-				'options' => ['class' => 'form-control', 'tabindex' => 5],
+				'options' => ['class' => 'form-control', 'tabindex' => 6],
 				'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
 			])->hint('Click on the image to retrieve a new verification code.');
 
 			echo '<div class="form-group text-right">';
-				echo Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) . ' ';
-				echo Html::submitButton('Send', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 6]);
+				echo Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) . ' ';
+				echo Html::submitButton('Send', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7]);
 			echo '</div>';
 
 			ActiveForm::end();

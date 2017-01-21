@@ -8,6 +8,7 @@ class Contact extends \yii\base\Model
 	public $email;
 	public $title;
 	public $content;
+	public $attachment;
 	public $captcha;
 
 	public function rules() {
@@ -18,6 +19,10 @@ class Contact extends \yii\base\Model
 			[['name'], 'string', 'max' => 25],
 			[['email'], 'string', 'max' => 50],
 			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
+			[['attachment'], 'file',
+				'minSize' => 64,
+				'maxSize' => 1024 * 1024 * 5,
+			],
 			[['captcha'], 'captcha'],
 		];
 
@@ -28,7 +33,6 @@ class Contact extends \yii\base\Model
 
 	public function attributeLabels() {
 		return [
-			'name' => 'Name',
 			'email' => 'Email Address',
 			'title' => 'Subject',
 			'content' => 'Message',
@@ -38,12 +42,16 @@ class Contact extends \yii\base\Model
 
 	public function contact() {
 		if ($this->validate()) {
-			return Yii::$app->mailer->compose()
+			$mailer = Yii::$app->mailer->compose()
 				->setTo(Yii::$app->params['adminEmail'])
 				->setFrom([$this->email => $this->name])
 				->setSubject($this->title)
-				->setTextBody($this->content)
-				->send();
+				->setTextBody($this->content);
+
+			if ($this->attachment)
+				$mailer->attach($this->attachment->tempName, ['fileName' => $this->attachment->name]);
+
+			return $mailer->send();
 		}
 		return false;
 	}

@@ -7,7 +7,7 @@ use yii\bootstrap\Alert;
 use yii\base\Object;
 use yii\captcha\CaptchaAction;
 use yii\filters\{AccessControl, HttpCache};
-use yii\web\{Controller, ErrorAction, NotFoundHttpException, Response};
+use yii\web\{Controller, ErrorAction, NotFoundHttpException, Response, UploadedFile};
 
 class SiteController extends Controller {
 	public function actions() {
@@ -77,8 +77,11 @@ class SiteController extends Controller {
 
 	public function actionContact() {
 		$model = new Contact;
-		if ($model->load(Yii::$app->request->post()) && $model->contact())
-			return Alert::widget(['options' => ['class' => 'alert-success'], 'body' => 'Thank you for contacting us. We will respond to you as soon as possible.', 'closeButton' => false]);
+		if ($model->load(Yii::$app->request->post())) {
+			$model->attachment = UploadedFile::getInstance($model, 'attachment');
+			if ($model->contact())
+				return Alert::widget(['options' => ['class' => 'alert-success'], 'body' => 'Thank you for contacting us. We will respond to you as soon as possible.', 'closeButton' => false]);
+		}
 
 		return $this->render('contact', [
 			'model' => $model,
