@@ -4,10 +4,7 @@ engines:
     enabled: true
     config:
       languages:
-      - javascript
       - php
-  eslint:
-    enabled: true
   fixme:
     enabled: true
   phpmd:
@@ -17,6 +14,5 @@ engines:
         enabled: false
 ratings:
   paths:
-  - "**.js"
   - "**.php"
 exclude_paths: []
