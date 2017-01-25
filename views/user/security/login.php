@@ -1,10 +1,12 @@
 <?php
 use dektrium\user\widgets\Connect;
-use yii\bootstrap\{ActiveForm, Html};
+use yii\bootstrap\{ActiveForm, Alert, Html};
+use yii\web\View;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = 'User';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerJs(Yii::$app->formatter->jspack('capsDetector.js'), View::POS_READY);
 ?>
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
@@ -30,6 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 		])->passwordInput(['class' => 'form-control', 'tabindex' => 2])
 		->label('Password' . ($module->enablePasswordRecovery ? ' (' . Html::a('Forgot password?', ['/user/recovery/request']) . ')' : ''));
+
+		echo Alert::widget(['options' => ['class' => 'alert-danger hidden', 'id' => 'caps'], 'body' => 'Caps Lock is ON.', 'closeButton' => false]);
 
 		echo $form->field($model, 'rememberMe')->checkbox(['tabindex' => 3]);
 
