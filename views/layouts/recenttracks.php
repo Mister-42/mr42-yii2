@@ -20,7 +20,7 @@ $this->registerJs('(function refresh(){$(\'aside .tracks\').load(\'' . $url . '\
 		<?php if (Yii::$app->controller->id === 'profile' || Yii::$app->controller->action->id === 'show') {
 			echo '<div class="clearfix artists">';
 			echo Item::widget([
-				'body' => WeeklyArtistChart::widget(),
+				'body' => WeeklyArtistChart::widget(['profile' => basename(Url::current())]),
 				'header' => Html::tag('h4', 'Weekly Artist Chart'),
 			]);
 		}
