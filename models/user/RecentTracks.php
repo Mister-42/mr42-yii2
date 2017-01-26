@@ -9,7 +9,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 	public $limit = 20;
 
 	public static function tableName() {
-		 return '{{%recenttracks}}';
+		 return '{{%lastfm_recenttracks}}';
 	}
 
 	public function display($userid) {
@@ -27,7 +27,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 			->all();
 
 		foreach ($tracks as $track) :
-			echo '<div class="clearfix track">';
+			echo '<div class="clearfix">';
 				echo Html::tag('span', $track['artist'], ['class' => 'pull-left']);
 				if ($track['time'] === 0)
 					echo Html::icon('volume-up', ['title' => 'Currently playing']);

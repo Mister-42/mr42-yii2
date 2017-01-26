@@ -123,12 +123,13 @@ aside {
 		margin-top: 10px;
 	}
 
+	.artists,
 	.tracks {
 		span {
 			padding: 0 2px;
 		}
 
-		.track {
+		.clearfix {
 			&:nth-child(even) {
 				background-color: $lighterBlue;
 			}

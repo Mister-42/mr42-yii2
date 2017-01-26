@@ -1,4 +1,6 @@
 <?php
+use app\widgets\{Item, WeeklyArtistChart};
+use yii\bootstrap\Html;
 use yii\helpers\Url;
 
 $this->beginContent('@app/views/layouts/main.php');
@@ -12,8 +14,17 @@ $this->registerJs('(function refresh(){$(\'aside .tracks\').load(\'' . $url . '\
 	</div>
 
 	<aside class="hidden-xs hidden-sm col-md-4">
-		<h4>Recently Played Tracks</h4>
-		<div class="tracks"></div>
+		<?= Html::tag('h4', 'Recently Played Tracks') ?>
+		<div class="clearfix tracks"></div>
+
+		<?php if (Yii::$app->controller->id === 'profile' || Yii::$app->controller->action->id === 'show') {
+			echo '<div class="clearfix artists">';
+			echo Item::widget([
+				'body' => WeeklyArtistChart::widget(),
+				'header' => Html::tag('h4', 'Weekly Artist Chart'),
+			]);
+		}
+		echo '</div>'; ?>
 	</aside>
 </div>
 <?php $this->endContent(); ?>

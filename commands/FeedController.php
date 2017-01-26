@@ -2,7 +2,7 @@
 namespace app\commands;
 use Yii;
 use app\models\feed\Feed;
-use app\models\user\RecentTracks;
+use app\models\user\{RecentTracks, WeeklyArtist};
 use dektrium\user\models\{Profile, User};
 use yii\console\Controller;
 use yii\helpers\Url;
@@ -62,6 +62,52 @@ class FeedController extends Controller {
 					continue;
 
 				RecentTracks::updateUser($lastSeen, $profile);
+				usleep(200000);
+			}
+		endforeach;
+
+		return Controller::EXIT_CODE_NORMAL;
+	}
+
+	/**
+	 * Retrieves and stores Weekly Artist Chart from Last.fm.
+	*/
+	public function actionLastfmWeeklyArtist() {
+		$client = new Client(['baseUrl' => 'https://ws.audioscrobbler.com/2.0/']);
+		$limit = 15;
+
+		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
+			$profile = Profile::find()->where(['user_id' => $user->id])->one();
+
+			if (isset($profile->lastfm)) {
+				$response = $client->createRequest()
+					->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
+					->setData([
+						'method' => 'user.getweeklyartistchart',
+						'user' => $profile->lastfm,
+						'limit' => $limit,
+						'api_key' => Yii::$app->params['LastFMAPI'],
+					])
+					->send();
+
+				if (!$response->isOK)
+					return false;
+
+				$count = 1;
+				foreach($response->data['weeklyartistchart']['artist'] as $artist) :
+					$addTrack = WeeklyArtist::findOne(['userid' => $profile->user_id, 'artist' => $artist->name]) ?? new WeeklyArtist();
+					$addTrack->userid = $profile->user_id;
+					$addTrack->artist = (string) $artist->name;
+					$addTrack->count = $artist->playcount;
+					$addTrack->save();
+
+					if ($count++ === $limit)
+						break;
+				endforeach;
+
+				$delete = WeeklyArtist::find()->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit(999)->offset($limit)->all();
+				foreach ($delete as $item)
+					$item->delete();
 				usleep(200000);
 			}
 		endforeach;

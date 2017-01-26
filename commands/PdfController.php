@@ -31,10 +31,10 @@ class PdfController extends Controller {
 				$albumYear = $this->ansiFormat($album->year, Console::FG_GREEN);
 				$albumName = $this->ansiFormat($album->name, Console::FG_GREEN);
 				$this->stdout("$artistName");
-				for($x=0; $x<(3 - intdiv(strlen($artist->name), Self::TABSIZE)); $x++)
+				for($x=0; $x<(3 - intdiv(mb_strlen($artist->name), Self::TABSIZE)); $x++)
 					$this->stdout("\t");
 				$this->stdout("$albumYear\t\t$albumName");
-				for($x=0; $x<(8 - intdiv(strlen($album->name), Self::TABSIZE)); $x++)
+				for($x=0; $x<(8 - intdiv(mb_strlen($album->name), Self::TABSIZE)); $x++)
 					$this->stdout("\t");
 
 				$tracks = Lyrics3Tracks::tracksListFull($album->artist->url, $album->year, $album->url);
@@ -67,7 +67,7 @@ class PdfController extends Controller {
 			$updated = $this->ansiFormat(Yii::$app->formatter->asDate($article->updated, 'medium'), Console::FG_GREEN);
 			$title = $this->ansiFormat($article->title, Console::FG_GREEN);
 			$this->stdout("$id\t\t\t$updated\t$title");
-			for($x=0; $x<(8 - intdiv(strlen($article->title), Self::TABSIZE)); $x++)
+			for($x=0; $x<(8 - intdiv(mb_strlen($article->title), Self::TABSIZE)); $x++)
 				$this->stdout("\t");
 
 			$html = $this->renderPartial('@app/views/articles/pdf', ['model' => $article]);
