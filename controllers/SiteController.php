@@ -28,10 +28,10 @@ class SiteController extends Controller {
 		return [
 			'access' => [
 				'class' => AccessControl::className(),
-				'only' => ['playground'],
+				'only' => ['php', 'playground'],
 				'rules' => [
 					[
-						'actions' => ['playground'],
+						'actions' => ['php', 'playground'],
 						'allow' => true,
 						'roles' => ['@'],
 					],
@@ -96,6 +96,10 @@ class SiteController extends Controller {
 		Yii::$app->response->statusCode = 503;
 		Yii::$app->response->headers->add('Retry-After', 900);
 		return $this->render('offline');
+	}
+
+	public function actionPhp() {
+		return $this->render('php');
 	}
 
 	public function actionPlayground() {

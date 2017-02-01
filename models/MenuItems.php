@@ -45,6 +45,8 @@ class MenuItems {
 							['label' => 'Account Settings', 'url' => ['/user/settings/account']],
 							['label' => 'Social Networks', 'url' => ['/user/settings/networks']],
 							Html::tag('li', null, ['class' => 'divider']),
+							['label' => 'PHP version', 'url' => ['/site/php'], 'visible' => $isAdmin],
+							$isAdmin ? Html::tag('li', null, ['class' => 'divider']) : '',
 							['label' => 'Logout', 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']],
 						],
 					]
