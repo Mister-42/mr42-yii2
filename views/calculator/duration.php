@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		if ($flash = Yii::$app->session->getFlash('duration-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success']]);
-			echo '<p>From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long')) . '<br>';
-			echo 'To: ' . Html::tag('b', Yii::$app->formatter->asDate($model->to, 'long')) . '</p>';
+			echo '<p>From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->fromDate, 'long')) . '<br>';
+			echo 'To: ' . Html::tag('b', Yii::$app->formatter->asDate($model->toDate, 'long')) . '</p>';
 			echo '<p>Result: ' . Html::tag('strong', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $flash->days])) . '</p>';
 			Alert::end();
 		}
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		echo '<div class="row">';
 		$tab = 0;
-		foreach (['from', 'to'] as $field) {
+		foreach (['fromDate', 'toDate'] as $field) {
 			$tab++;
 			echo $form->field($model, $field, [
 				'options' => ['class' => 'col-xs-6'],
