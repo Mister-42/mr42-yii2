@@ -18,7 +18,6 @@ class ArticlesController extends Controller {
 				'only' => ['create', 'update', 'delete', 'commentstatus'],
 				'rules' => [
 					[
-						'actions' => ['create', 'update', 'delete', 'commentstatus'],
 						'allow' => true,
 						'roles' => ['@'],
 					],

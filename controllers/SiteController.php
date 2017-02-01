@@ -31,7 +31,6 @@ class SiteController extends Controller {
 				'only' => ['php', 'playground'],
 				'rules' => [
 					[
-						'actions' => ['php', 'playground'],
 						'allow' => true,
 						'roles' => ['@'],
 					],

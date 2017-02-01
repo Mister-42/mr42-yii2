@@ -1,6 +1,5 @@
 <?php
-use yii\bootstrap\Carousel;
-use yii\helpers\{FileHelper, Html, Url};
+use yii\helpers\Html;
 
 $this->title = 'PHP ' . phpversion();
 $this->params['breadcrumbs'][] = $this->title;
