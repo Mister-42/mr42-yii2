@@ -5,6 +5,8 @@ engines:
     config:
       languages:
       - php
+      exclude_fingerprints:
+      - a308e38bf3f3a0db3f248490dd813c52
   fixme:
     enabled: true
   phpmd:
