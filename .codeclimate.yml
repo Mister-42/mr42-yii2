@@ -2,11 +2,9 @@
 engines:
   duplication:
     enabled: true
-    config:
-      languages:
-      - php
-      exclude_fingerprints:
-      - a308e38bf3f3a0db3f248490dd813c52
+    checks:
+      Identical code:
+        enabled: false
   fixme:
     enabled: true
   phpmd:
