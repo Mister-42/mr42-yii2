@@ -22,8 +22,8 @@ class Duration extends \yii\base\Model {
 
 	public function duration() {
 		if ($this->validate()) {
-			$this->fromDate = $this->fromDate ?? date('Y-m-d');
-			$this->toDate = $this->toDate ?? date('Y-m-d');
+			$this->fromDate = (empty($this->fromDate)) ? date('Y-m-d') : $this->fromDate;
+			$this->toDate = (empty($this->toDate)) ? date('Y-m-d') : $this->toDate;
 			$diff = (new DateTime($this->fromDate))->diff(new DateTime($this->toDate));
 			Yii::$app->getSession()->setFlash('duration-success', $diff);
 			return true;

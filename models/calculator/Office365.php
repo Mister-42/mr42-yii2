@@ -29,7 +29,7 @@ class Office365 extends \yii\base\Model {
 
 	public function calcEndDate() {
 		if ($this->validate()) {
-			$this->targetdate = $this->targetdate ?? date('Y-m-d');
+			$this->targetdate = (empty($this->targetdate)) ? date('Y-m-d') : $this->targetdate;
 			$diff = (new DateTime($this->sourcedate))->diff(new DateTime($this->targetdate));
 
 			$redeemDate = ($diff->invert === 0 && $diff->days <= 30) ? $this->sourcedate : $this->targetdate;
