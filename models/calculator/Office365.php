@@ -36,17 +36,14 @@ class Office365 extends \yii\base\Model {
 			if ($diff->invert === 0)
 				$diff = (new DateTime($this->targetdate))->diff(new DateTime($this->targetdate));
 
-			$upcomingYear = new DateTime($redeemDate);
-			$upcomingYearDays = (new DateTime($redeemDate))->diff($upcomingYear->modify('1 year'));
-
+			$upcomingYear = (new DateTime($redeemDate))->diff((new DateTime($redeemDate))->modify('1 year'));
 			$targetCount = $this->action == 'renew' ? $this->targetcount : $this->sourcecount + $this->targetcount;
-			$dateCalc = (($diff->days * $this->sourcecount) + ($upcomingYearDays->days * $this->targetcount)) / $targetCount;
+			$dateCalc = (($diff->days * $this->sourcecount) + ($upcomingYear->days * $this->targetcount)) / $targetCount;
 
 			$newDate = new DateTime($redeemDate);
 			$newDate->modify(ceil($dateCalc) . ' days');
 
-			$today = new DateTime();
-			if ($newDate > $today->modify('3 years')) {
+			if ($newDate > (new DateTime($redeemDate))->modify('3 years')) {
 				Yii::$app->getSession()->setFlash('office365-error', ['date' => $newDate, 'count' => $targetCount]);
 				return false;
 			}

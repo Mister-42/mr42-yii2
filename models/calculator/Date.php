@@ -23,7 +23,7 @@ class Date extends \yii\base\Model {
 
 	public function diff() {
 		if ($this->validate()) {
-			$this->from = $this->from ?? date('Y-m-d');
+			$this->from = (empty($this->from)) ? date('Y-m-d') : $this->from;
 			$this->days = $this->days ?? 42;
 			$date = new DateTime($this->from);
 			$date->modify($this->days . ' days');
