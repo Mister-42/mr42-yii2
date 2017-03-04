@@ -2,9 +2,9 @@
 use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\jui\DatePicker;
 
-$this->title = 'Date (add/subtract)';
+$this->title = 'Date Calculator (add/subtract)';
 $this->params['breadcrumbs'][] = 'Calculator';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Date (add/subtract)';
 ?>
 <div class="row">
 	<div class="col-md-offset-2 col-md-8"><?php

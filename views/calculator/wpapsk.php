@@ -4,9 +4,9 @@ use yii\base\DynamicModel;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\web\View;
 
-$this->title = 'Wifi Protected Access Pre-Shared Key';
+$this->title = 'Wifi Protected Access Pre-Shared Key Calculator';
 $this->params['breadcrumbs'][] = 'Calculator';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Wifi Protected Access Pre-Shared Key';
 
 ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/wpapsk.js'), View::POS_HEAD);

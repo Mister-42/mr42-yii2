@@ -2,7 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\articles\Articles;
-use app\models\tools\{Favicon, PhoneticAlphabet};
+use app\models\tools\{Country, Favicon, PhoneticAlphabet};
 use yii\base\Object;
 use yii\filters\HttpCache;
 use yii\helpers\FileHelper;
@@ -26,6 +26,13 @@ class ToolsController extends Controller {
 
 	public function actionIndex() {
 		return $this->goHome();
+	}
+
+	public function actionCountry() {
+		$model = new Country;
+		return $this->render('country', [
+			'model' => $model,
+		]);
 	}
 
 	public function actionFavicon() {

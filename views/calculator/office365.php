@@ -2,9 +2,9 @@
 use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\jui\DatePicker;
 
-$this->title = 'Microsoft® Office 365® End Date';
+$this->title = 'Microsoft® Office 365® End Date Calculator';
 $this->params['breadcrumbs'][] = 'Calculator';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Microsoft® Office 365® End Date';
 ?>
 <div class="row">
 	<div class="col-md-offset-2 col-md-8"><?php

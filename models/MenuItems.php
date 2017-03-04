@@ -25,6 +25,7 @@ class MenuItems {
 				'items' => [
 					['label' => 'Code Playground', 'url' => ['/site/playground'], 'visible' => $isAdmin],
 					['label' => 'Browser Headers', 'url' => ['/tools/headers']],
+					['label' => 'Country Information', 'url' => ['/tools/country']],
 					['label' => 'Favicon Converter', 'url' => ['/tools/favicon']],
 					['label' => 'HTML to Markdown Converter', 'url' => ['/tools/html-to-markdown']],
 					['label' => 'Password Generator', 'url' => ['/tools/password']],

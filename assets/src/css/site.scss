@@ -66,6 +66,12 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 		line-height: 1.7;
 	}
 
+	&country {
+		.row {
+			@include dividing-line(0px, $lighterBlue);
+		}
+	}
+
 	&headers,
 	&lyrics-lyrics {
 		.row {

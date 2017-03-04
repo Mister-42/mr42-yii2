@@ -2,9 +2,9 @@
 use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\jui\DatePicker;
 
-$this->title = 'Date to Date (duration)';
+$this->title = 'Date to Date Calculator (duration)';
 $this->params['breadcrumbs'][] = 'Calculator';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Date to Date (duration)';
 ?>
 <div class="row">
 	<div class="col-md-offset-2 col-md-8"><?php
