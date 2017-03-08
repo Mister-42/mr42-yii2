@@ -10,23 +10,22 @@ if ($model->load(Yii::$app->request->post())) {
 	$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['country']];
 	$this->params['breadcrumbs'][] = $data['name'];
 	$this->title .= ' - ' . $data['name'];
-} else {
+} else
 	$this->params['breadcrumbs'][] = $this->title;
-}
 
 echo Html::tag('h1', Html::encode($this->title));
 
 echo '<div class="site-country">';
 	echo '<div class="row">';
-		echo '<div class="col-md-12">';
+		echo '<div class="col-md-4">';
 			$form = ActiveForm::begin();
-			$countries = $model->find()->select('ISO3166-1-Alpha-2, name')->orderBy('name')->asArray()->all();
+			$countries = $model->find()->select('ISO3166-1-Alpha-2, name')->orderBy('name')->all();
 			echo $form->field($model, 'iso')->dropDownList(ArrayHelper::map($countries, 'ISO3166-1-Alpha-2', 'name'), [
 				'onchange' => 'if(this.value!=0){this.form.submit();}',
 				'options' => [
 					$post['iso'] => ['selected' => true]
 				],
-				'prompt' => '',
+				'prompt' => ($model->load(Yii::$app->request->post())) ? NULL : 'Select a country',
 			])->label(false);
 			ActiveForm::end();
 		echo '</div>';
@@ -36,7 +35,7 @@ echo '<div class="site-country">';
 		foreach ([
 			'name'								=> 'Customary English short name (CLDR)',
 			'official_name_en'					=> 'Official English short name',
-			'official_name_fr'					=> 'Offical French short name',
+			'official_name_fr'					=> 'Official French short name',
 			'ISO3166-1-Alpha-2'					=> 'Alpha-2 codes from ISO 3166-1',
 			'ISO3166-1-Alpha-3'					=> 'Alpha-3 codes from ISO 3166-1 (synonymous with World Bank Codes)',
 			'M49'								=> 'UN Statistics M49 numeric codes',
@@ -67,10 +66,10 @@ echo '<div class="site-country">';
 			elseif ($item === 'is_independent' && $data[$item] === 'Yes')
 				continue;
 
-			echo '<div class="row">';
-			echo Html::tag('div', Html::tag('strong', $name), ['class' => 'col-lg-8']);
-			echo Html::tag('div', $data[$item], ['class' => 'col-lg-4']);
-			echo '</div>';
+			echo Html::tag('div',
+				Html::tag('div', Html::tag('strong', $name), ['class' => 'col-lg-8']) .
+				Html::tag('div', $data[$item], ['class' => 'col-lg-4'])
+			, ['class' => 'row']);
 		endforeach;
 	}
 echo '</div>';
