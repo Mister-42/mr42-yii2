@@ -28,7 +28,7 @@ class SiteController extends Controller {
 		return [
 			'access' => [
 				'class' => AccessControl::className(),
-				'only' => ['php', 'playground'],
+				'only' => ['php-version', 'playground'],
 				'rules' => [
 					[
 						'allow' => true,
@@ -97,8 +97,8 @@ class SiteController extends Controller {
 		return $this->render('offline');
 	}
 
-	public function actionPhp() {
-		return $this->render('php');
+	public function actionPhpVersion() {
+		return $this->render('php-version');
 	}
 
 	public function actionPlayground() {
