@@ -39,7 +39,7 @@ class MenuItems {
 						'items' => [
 							['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
 							['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
-							['label' => 'PHP version', 'url' => ['/site/php-version'], 'visible' => $isAdmin],
+							['label' => 'PHP ' . phpversion(), 'url' => ['/site/php-version'], 'visible' => $isAdmin],
 							$isAdmin ? Html::tag('li', null, ['class' => 'divider']) : '',
 							['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]],
 							Html::tag('li', null, ['class' => 'divider']),

@@ -65,10 +65,12 @@ echo '<div class="site-country">';
 				continue;
 			elseif ($item === 'is_independent' && $data[$item] === 'Yes')
 				continue;
+			elseif ($item === 'Geoname ID')
+				$data[$item] = Html::a($data[$item], 'http://geonames.org/' . $data[$item]);
 
 			echo Html::tag('div',
-				Html::tag('div', Html::tag('strong', $name), ['class' => 'col-lg-8']) .
-				Html::tag('div', $data[$item], ['class' => 'col-lg-4'])
+				Html::tag('div', Html::tag('strong', $name), ['class' => 'col-md-8']) .
+				Html::tag('div', $data[$item], ['class' => 'col-md-4'])
 			, ['class' => 'row']);
 		endforeach;
 	}

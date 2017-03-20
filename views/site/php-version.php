@@ -12,7 +12,7 @@ foreach (get_loaded_extensions() as $i => $ext)
 echo '<div class="site-php-version">';
 	foreach($modules as $version => $items)
 		echo Html::tag('div',
-			Html::tag('div', Inflector::sentence($items, ' &amp; '), ['class' => 'col-lg-8']) .
-			Html::tag('div', $version, ['class' => 'col-lg-4 text-right'])
+			Html::tag('div', Inflector::sentence($items, ' &amp; '), ['class' => 'col-md-8']) .
+			Html::tag('div', $version, ['class' => 'col-md-4 text-right'])
 		, ['class' => 'row']);
 echo '</div>';

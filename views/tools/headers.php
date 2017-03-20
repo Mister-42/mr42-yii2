@@ -11,8 +11,8 @@ echo '<div class="site-headers">';
 	foreach (apache_request_headers() as $header => $value) :
 		if ($header != "Cookie") {
 			echo Html::tag('div',
-				Html::tag('div', Html::tag('strong', $header), ['class' => 'col-lg-2']) .
-				Html::tag('div', $value, ['class' => 'col-lg-10'])
+				Html::tag('div', Html::tag('strong', $header), ['class' => 'col-md-2']) .
+				Html::tag('div', $value, ['class' => 'col-md-10'])
 			, ['class' => 'row']);
 		}
 	endforeach;
