@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap\Html;
 
-$this->title = implode(' - ', [$tracks[0]->artist->name, $tracks[0]->album->name]);
+$this->title = implode(' - ', [$tracks[0]->artist->name, $tracks[0]->album->name, 'Lyrics']);
 $this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $tracks[0]->artist->name, 'url' => ['index', 'artist' => $tracks[0]->artist->url]];
 $this->params['breadcrumbs'][] = $tracks[0]->album->name;

@@ -2,18 +2,18 @@
 use yii\bootstrap\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;
 
-$this->title = 'Country Information';
+$title = 'Country Information';
 $this->params['breadcrumbs'][] = 'Tools';
+$this->params['breadcrumbs'][] = ($model->load(Yii::$app->request->post())) ? ['label' => $title, 'url' => ['country']] : $title;
+
 if ($model->load(Yii::$app->request->post())) {
 	$post = Yii::$app->request->post('Country');
 	$data = $model->find()->where(['ISO3166-1-Alpha-2' => $post['iso']])->one();
-	$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['country']];
 	$this->params['breadcrumbs'][] = $data['name'];
-	$this->title .= ' - ' . $data['name'];
-} else
-	$this->params['breadcrumbs'][] = $this->title;
+}
+$this->title = ($model->load(Yii::$app->request->post())) ? implode(' - ', [$data['name'], $title]) : $title;
 
-echo Html::tag('h1', Html::encode($this->title));
+echo Html::tag('h1', Html::encode(($model->load(Yii::$app->request->post())) ? implode(' - ', [$title, $data['name']]) : $title));
 
 echo '<div class="site-country">';
 	echo '<div class="row">';
