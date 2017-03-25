@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div>{error}',
 			])->textInput(['tabindex' => 1]);
 
-		echo $form->field($model, 'alphabet')->dropDownList(PhoneticAlphabet::listAlphabets(), ['tabindex' => 2]);
+		echo $form->field($model, 'alphabet')->dropDownList(PhoneticAlphabet::getAlphabetList(), ['tabindex' => 2]);
 
 		echo $form->field($model, 'numeric')->checkbox(['tabindex' => 3]);
 
