@@ -32,6 +32,7 @@ class WebhookController extends Controller {
 				$rssItem->save();
 			}
 		endforeach;
+		touch(Yii::getAlias('@app/views/site/changelog.php'));
 		return ['status' => 'success', 'message' => 'Successfully updated.'];
 	}
 

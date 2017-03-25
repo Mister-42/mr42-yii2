@@ -60,6 +60,7 @@ echo '<div class="site-country">';
 			'Languages'							=> 'Languages',
 			'Geoname ID'						=> 'Geoname ID',
 			'EDGAR'								=> 'EDGAR country code from SEC',
+			'source'							=> 'Source',
 		] as $item => $name) :
 			if ($data[$item] === '')
 				continue;
@@ -69,7 +70,7 @@ echo '<div class="site-country">';
 				$data[$item] = Html::a($data[$item], 'http://geonames.org/' . $data[$item]);
 
 			echo Html::tag('div',
-				Html::tag('div', Html::tag('strong', $name), ['class' => 'col-md-8']) .
+				Html::tag('div', $name, ['class' => 'col-md-8']) .
 				Html::tag('div', $data[$item], ['class' => 'col-md-4'])
 			, ['class' => 'row']);
 		endforeach;

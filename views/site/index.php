@@ -14,7 +14,7 @@ foreach($pages as $menu) :
 		: Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false));
 	if ($menu['items']) {
 		foreach($menu['items'] as $submenu) :
-			if (isset($submenu['label']) && !isset($submenu['visible']) && isset($submenu['label']))
+			if (isset($submenu['label']) && (!isset($submenu['visible']) || $submenu['visible']))
 				$submenuitems[] = isset($submenu['url'])
 					? Html::a(Yii::$app->formatter->cleanInput($submenu['label'], false), $submenu['url'])
 					: Yii::$app->formatter->cleanInput($submenu['label'], false);
