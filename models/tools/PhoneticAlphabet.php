@@ -67,7 +67,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		}
 	}
 
-	public function alphabetArrayIcao() {
+	private function alphabetArrayIcao() {
 		return ['a' => 'Alfa',
 				'b' => 'Bravo',
 				'c' => 'Charlie',
@@ -97,7 +97,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayIcao() {
+	private function numericArrayIcao() {
 		return ['0' => 'Zero',
 				'1' => 'One',
 				'2' => 'Two',
@@ -111,7 +111,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function alphabetArrayLapd() {
+	private function alphabetArrayLapd() {
 		return ['a' => 'Adam',
 				'b' => 'Boy',
 				'c' => 'Charles',
@@ -141,14 +141,14 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayLapd() {
+	private function numericArrayLapd() {
 		return ArrayHelper::merge(
 			['9' => 'Niner'],
 			self::numericArrayIcao()
 		);
 	}
 
-	public function alphabetArrayNlbe() {
+	private function alphabetArrayNlbe() {
 		return ['a' => 'Arthur',
 				'b' => 'Brussel',
 				'c' => 'Carolina',
@@ -178,11 +178,11 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayNlbe() {
+	private function numericArrayNlbe() {
 		return self::numericArrayNlnl();
 	}
 
-	public function alphabetArrayNlnl() {
+	private function alphabetArrayNlnl() {
 		return ['a' => 'Anton',
 				'b' => 'Bernhard',
 				'c' => 'Cornelis',
@@ -212,7 +212,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayNlnl() {
+	private function numericArrayNlnl() {
 		return ['0' => 'Nul',
 				'1' => 'Een',
 				'2' => 'Twee',
@@ -226,7 +226,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function alphabetArrayDe() {
+	private function alphabetArrayDe() {
 		return ['a' => 'Anton',
 				'b' => 'Berta',
 				'c' => 'Cäsar',
@@ -256,7 +256,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayDe() {
+	private function numericArrayDe() {
 		return ['0' => 'Null',
 				'1' => 'Eins',
 				'2' => 'Zwei',
@@ -270,7 +270,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function alphabetArrayFr() {
+	private function alphabetArrayFr() {
 		return ['a' => 'Anatole',
 				'b' => 'Berthe',
 				'c' => 'Célestine',
@@ -300,7 +300,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayFr() {
+	private function numericArrayFr() {
 		return ['0' => 'Zéro',
 				'1' => 'Un',
 				'2' => 'Deux',
@@ -314,7 +314,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function alphabetArrayIt() {
+	private function alphabetArrayIt() {
 		return ['a' => 'Ancona',
 				'b' => 'Bari',
 				'c' => 'Como',
@@ -344,7 +344,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayIt() {
+	private function numericArrayIt() {
 		return ['0' => 'Zero',
 				'1' => 'Uno',
 				'2' => 'Due',
@@ -358,7 +358,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function alphabetArrayEs() {
+	private function alphabetArrayEs() {
 		return ['a' => 'Antonio',
 				'b' => 'Barcelona',
 				'c' => 'Carmen',
@@ -388,7 +388,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayEs() {
+	private function numericArrayEs() {
 		return ['0' => 'Cero',
 				'1' => 'Uno',
 				'2' => 'Dos',
@@ -402,7 +402,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function alphabetArrayUseless() {
+	private function alphabetArrayUseless() {
 		return ['a' => 'Are',
 				'b' => 'Bee',
 				'c' => 'Cue',
@@ -432,7 +432,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function numericArrayUseless() {
+	private function numericArrayUseless() {
 		return ['0' => 'Oh',
 		];
 	}
