@@ -43,10 +43,10 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			[
 				'author' => $tracks[0]->artist->name,
 				'footer' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.$tracks[0]->album->year.'|Page {PAGENO} of {nb}',
-				'header' => $tracks[0]->artist->name.'||'.$tracks[0]->album->name,
+				'header' => $tracks[0]->artist->name.'|Lyrics|'.$tracks[0]->album->name,
 				'keywords' => implode(', ', [$tracks[0]->artist->name, $tracks[0]->album->name, 'lyrics']),
 				'subject' => $tracks[0]->artist->name.' - '.$tracks[0]->album->name,
-				'title' => implode(' - ', [$tracks[0]->artist->name, $tracks[0]->album->name]),
+				'title' => implode(' - ', [$tracks[0]->artist->name, $tracks[0]->album->name, 'Lyrics']),
 			]
 		);
 	}

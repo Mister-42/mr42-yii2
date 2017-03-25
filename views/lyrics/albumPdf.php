@@ -10,9 +10,9 @@ use yii\bootstrap\Html;
 	<?= Html::tag('h2', $tracks[0]->artist->name, ['class' => 'text-center']) ?>
 </div>
 
-<br><br><br>
-<div class="col-sm-12 mpdf_toc" id="mpdf_toc_0">
-	<?php foreach($tracks as $track) {
+<br><br><br><?php
+echo '<div class="col-sm-12 mpdf_toc" id="mpdf_toc_0">';
+	foreach($tracks as $track) {
 		echo '<div class="mpdf_toc_level_0">';
 
 		echo '<a class="mpdf_toc_a" href="#'.$track->track.'">';
@@ -26,10 +26,9 @@ use yii\bootstrap\Html;
 		echo '</a>';
 
 		echo '</div>';
-	} ?>
-</div>
+	}
+echo '</div>';
 
-<?php
 foreach($tracks as $track) {
 	echo '<pagebreak>';
 	echo '<bookmark content="'.$track->name.'" />';
@@ -43,4 +42,3 @@ foreach($tracks as $track) {
 		echo Html::tag('strong', 'Instrumental');
 	}
 }
-?>
