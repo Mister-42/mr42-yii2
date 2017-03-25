@@ -5,9 +5,9 @@ use yii\jui\DatePicker;
 $this->title = 'Microsoft® Office 365® End Date Calculator';
 $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = 'Microsoft® Office 365® End Date';
-?>
-<div class="row">
-	<div class="col-md-offset-2 col-md-8"><?php
+
+echo '<div class="row">';
+	echo '<div class="col-md-offset-2 col-md-8">';
 		echo Html::tag('h1', Html::encode($this->title));
 		echo Html::tag('p', 'This calculator calculates the new end date of a Microsoft® Office 365® Open SKU.');
 
@@ -53,13 +53,12 @@ $this->params['breadcrumbs'][] = 'Microsoft® Office 365® End Date';
 			'renew' => 'I am renewing these licenses',
 			'add' => 'I am adding these licenses',
 		], ['tabindex' => $tab++]);
-		?>
 
-		<div class="form-group text-right">
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) ?>
-			<?= Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 6]) ?>
-		</div>
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) . ' ' .
+			Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 6])
+		, ['class' => 'form-group text-right']);
 
-		<?php ActiveForm::end(); ?>
-	</div>
-</div>
+		ActiveForm::end();
+	echo '</div>';
+echo '</div>';

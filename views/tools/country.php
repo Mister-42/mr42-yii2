@@ -25,7 +25,7 @@ echo '<div class="site-country">';
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('th-list').'</span>{input}</div>{error}',
 			])->dropDownList(ArrayHelper::map($countries, 'ISO3166-1-Alpha-2', 'name'), [
 				'onchange' => 'if(this.value!=0){this.form.submit();}',
-				'prompt' => ($model->load(Yii::$app->request->post())) ? null : 'Select a country',
+				'prompt' => $model->load(Yii::$app->request->post()) ? null : 'Select a country',
 			])->label(false);
 			ActiveForm::end();
 		echo '</div>';

@@ -12,19 +12,19 @@ if ($model->load(Yii::$app->request->post())) {
 	$this->registerJs('$("#timezone-datetime").val("' . $post['datetime'] . '")', View::POS_READY);
 }
 
-$model->source = ($model->load(Yii::$app->request->post())) ? $post['source'] : 'Europe/Berlin';
-$model->target = ($model->load(Yii::$app->request->post())) ? $post['target'] : 'America/New_York';
-?>
-<div class="row">
-	<div class="col-md-offset-2 col-md-8"><?php
+$model->source = $model->load(Yii::$app->request->post()) ? $post['source'] : 'Europe/Berlin';
+$model->target = $model->load(Yii::$app->request->post()) ? $post['target'] : 'America/New_York';
+
+echo '<div class="row">';
+	echo '<div class="col-md-offset-2 col-md-8">';
 		echo Html::tag('h1', Html::encode($this->title));
 		echo Html::tag('p', 'With this calculator you can check the date and time in any timezone around the globe.');
 
 		if ($flash = Yii::$app->session->getFlash('timezone-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success']]);
-			echo '<p>' . $model->datetime . ' in ' . str_replace('_', ' ', $model->source) . '<br>';
+			echo '<p>' . date('l F j, Y, H:i', strtotime($model->datetime)) . ' in ' . str_replace('_', ' ', $model->source) . '<br>';
 			echo 'equals<br>';
-			echo '<strong>' . $flash->format('Y-m-d H:i') . '</strong> in <b>' . str_replace('_', ' ', $model->target) . '</b>.</p>';
+			echo Html::tag('strong', $flash->format('l F j, Y, H:i')) . ' in ' . Html::tag('b', str_replace('_', ' ', $model->target)) . '.</p>';
 			Alert::end();
 		}
 
@@ -33,7 +33,7 @@ $model->target = ($model->load(Yii::$app->request->post())) ? $post['target'] : 
 		echo $form->field($model, 'source', [
 			'options' => ['class' => 'col-sm-6'],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
-		])->dropDownList($model->getTimezones(), ['tabindex' => 1]);
+		])->dropDownList($model->getTimezones(true), ['tabindex' => 1]);
 
 		echo $form->field($model, 'datetime', [
 			'options' => ['class' => 'col-sm-6'],
@@ -54,14 +54,14 @@ $model->target = ($model->load(Yii::$app->request->post())) ? $post['target'] : 
 		echo $form->field($model, 'target', [
 			'options' => ['class' => 'col-sm-6'],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
-		])->dropDownList($model->getTimezones(), ['tabindex' => 3]);
-		echo '</div>'; ?>
+		])->dropDownList($model->getTimezones(true), ['tabindex' => 3]);
+		echo '</div>';
 
-		<div class="form-group text-right">
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 5]) ?>
-			<?= Html::submitButton('Convert', ['class' => 'btn btn-primary', 'tabindex' => 4]) ?>
-		</div>
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 5]) . ' ' .
+			Html::submitButton('Convert', ['class' => 'btn btn-primary', 'tabindex' => 4])
+		, ['class' => 'form-group text-right']);
 
-		<?php ActiveForm::end(); ?>
-	</div>
-</div>
+		ActiveForm::end();
+	echo '</div>';
+echo '</div>';

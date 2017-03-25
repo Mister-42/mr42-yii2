@@ -35,7 +35,7 @@ class Timezone extends \yii\base\Model {
 		return false;
 	}
 
-	public function getTimezones($replace = true) {
+	public function getTimezones($replace) {
 		foreach (DateTimeZone::listIdentifiers() as $timezone)
 			$timezones[$timezone] = $replace ? str_replace('_', ' ', $timezone) : $timezone;
 		return $timezones;

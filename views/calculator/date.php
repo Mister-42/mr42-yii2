@@ -5,9 +5,9 @@ use yii\jui\DatePicker;
 $this->title = 'Date Calculator (add/subtract)';
 $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = 'Date (add/subtract)';
-?>
-<div class="row">
-	<div class="col-md-offset-2 col-md-8"><?php
+
+echo '<div class="row">';
+	echo '<div class="col-md-offset-2 col-md-8">';
 		echo Html::tag('h1', Html::encode($this->title));
 		echo Html::tag('p', 'This calculator enables you to add or subtract days to a date to calculate a future or past date.');
 
@@ -41,14 +41,13 @@ $this->params['breadcrumbs'][] = 'Date (add/subtract)';
 			'options' => ['class' => 'col-sm-6'],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('plus').'</span>{input}</div>{error}',
 		])->input('number', ['tabindex' => 2]);
-		echo '</div>'; ?>
+		echo '</div>';
 
-		<div class="form-group text-right">
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) ?>
-			<?= Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 3]) ?>
-		</div>
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) . ' ' .
+			Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 3])
+		, ['class' => 'form-group text-right']);
 
-		<?php ActiveForm::end(); ?>
-
-	</div>
-</div>
+		ActiveForm::end();
+	echo '</div>';
+echo '</div>';

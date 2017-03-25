@@ -5,9 +5,9 @@ use yii\jui\DatePicker;
 $this->title = 'Date to Date Calculator (duration)';
 $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = 'Date to Date (duration)';
-?>
-<div class="row">
-	<div class="col-md-offset-2 col-md-8"><?php
+
+echo '<div class="row">';
+	echo '<div class="col-md-offset-2 col-md-8">';
 		echo Html::tag('h1', Html::encode($this->title));
 		echo Html::tag('p', 'This calculator calculates the number of days between two dates.');
 
@@ -20,11 +20,9 @@ $this->params['breadcrumbs'][] = 'Date to Date (duration)';
 		}
 
 		$form = ActiveForm::begin();
-
+		$tab = 1;
 		echo '<div class="row">';
-		$tab = 0;
 		foreach (['fromDate', 'toDate'] as $field) {
-			$tab++;
 			echo $form->field($model, $field, [
 				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
@@ -37,17 +35,16 @@ $this->params['breadcrumbs'][] = 'Date to Date (duration)';
 				],
 				'dateFormat' => 'yyyy-MM-dd',
 				'language' => 'en-GB',
-				'options' => ['class' => 'form-control', 'tabindex' => $tab],
+				'options' => ['class' => 'form-control', 'tabindex' => $tab++],
 			]);
 		}
-		echo '</div>'; ?>
+		echo '</div>';
 
-		<div class="form-group text-right">
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) ?>
-			<?= Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 3]) ?>
-		</div>
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) . ' ' .
+			Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 3])
+		, ['class' => 'form-group text-right']);
 
-		<?php ActiveForm::end(); ?>
-
-	</div>
-</div>
+		ActiveForm::end();
+	echo '</div>';
+echo '</div>';
