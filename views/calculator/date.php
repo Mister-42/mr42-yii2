@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = 'Date (add/subtract)';
 
 		echo '<div class="row">';
 		echo $form->field($model, 'from', [
-			'options' => ['class' => 'col-xs-6'],
+			'options' => ['class' => 'col-sm-6'],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
 		])->widget(DatePicker::classname(), [
 			'clientOptions' => [
@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = 'Date (add/subtract)';
 		]);
 
 		echo $form->field($model, 'days', [
-			'options' => ['class' => 'col-xs-6'],
+			'options' => ['class' => 'col-sm-6'],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('plus').'</span>{input}</div>{error}',
 		])->input('number', ['tabindex' => 2]);
 		echo '</div>'; ?>

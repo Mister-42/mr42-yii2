@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = 'Microsoft® Office 365® End Date';
 		foreach (['source', 'target'] as $field) {
 			echo '<div class="row">';
 			echo $form->field($model, $field.'date', [
-				'options' => ['class' => 'col-xs-6'],
+				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
 			])->widget(DatePicker::classname(), [
 				'clientOptions' => [
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = 'Microsoft® Office 365® End Date';
 			]);
 
 			echo $form->field($model, $field.'count', [
-				'options' => ['class' => 'col-xs-6'],
+				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
 			])
 			->input('number', ['class' => 'form-control', 'tabindex' => $tab++]);

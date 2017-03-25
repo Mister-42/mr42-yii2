@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\calculator\{Date, Duration, Office365};
+use app\models\calculator\{Date, Duration, Office365, Timezone};
 use yii\base\Object;
 use yii\filters\HttpCache;
 
@@ -51,6 +51,16 @@ class CalculatorController extends \yii\web\Controller {
 			$model->calcEndDate();
 
 		return $this->render('office365', [
+			'model' => $model,
+		]);
+	}
+
+	public function actionTimezone() {
+		$model = new Timezone;
+		if ($model->load(Yii::$app->request->post()))
+			$model->diff();
+
+		return $this->render('timezone', [
 			'model' => $model,
 		]);
 	}

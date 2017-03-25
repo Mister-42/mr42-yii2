@@ -4,28 +4,28 @@ use yii\helpers\ArrayHelper;
 
 $title = 'Country Information';
 $this->params['breadcrumbs'][] = 'Tools';
-$this->params['breadcrumbs'][] = ($model->load(Yii::$app->request->post())) ? ['label' => $title, 'url' => ['country']] : $title;
+$this->params['breadcrumbs'][] = $model->load(Yii::$app->request->post()) ? ['label' => $title, 'url' => ['country']] : $title;
 
 if ($model->load(Yii::$app->request->post())) {
 	$post = Yii::$app->request->post('Country');
+	$model->iso = $post['iso'];
 	$data = $model->find()->where(['ISO3166-1-Alpha-2' => $post['iso']])->one();
 	$this->params['breadcrumbs'][] = $data['name'];
 }
-$this->title = ($model->load(Yii::$app->request->post())) ? implode(' - ', [$data['name'], $title]) : $title;
+$this->title = $model->load(Yii::$app->request->post()) ? implode(' - ', [$data['name'], $title]) : $title;
 
-echo Html::tag('h1', Html::encode(($model->load(Yii::$app->request->post())) ? implode(' - ', [$title, $data['name']]) : $title));
+echo Html::tag('h1', Html::encode($model->load(Yii::$app->request->post()) ? implode(' - ', [$title, $data['name']]) : $title));
 
 echo '<div class="site-country">';
 	echo '<div class="row">';
 		echo '<div class="col-md-4">';
 			$form = ActiveForm::begin();
 			$countries = $model->find()->select('ISO3166-1-Alpha-2, name')->orderBy('name')->all();
-			echo $form->field($model, 'iso')->dropDownList(ArrayHelper::map($countries, 'ISO3166-1-Alpha-2', 'name'), [
+			echo $form->field($model, 'iso', [
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('th-list').'</span>{input}</div>{error}',
+			])->dropDownList(ArrayHelper::map($countries, 'ISO3166-1-Alpha-2', 'name'), [
 				'onchange' => 'if(this.value!=0){this.form.submit();}',
-				'options' => [
-					$post['iso'] => ['selected' => true]
-				],
-				'prompt' => ($model->load(Yii::$app->request->post())) ? NULL : 'Select a country',
+				'prompt' => ($model->load(Yii::$app->request->post())) ? null : 'Select a country',
 			])->label(false);
 			ActiveForm::end();
 		echo '</div>';

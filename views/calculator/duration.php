@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = 'Date to Date (duration)';
 		foreach (['fromDate', 'toDate'] as $field) {
 			$tab++;
 			echo $form->field($model, $field, [
-				'options' => ['class' => 'col-xs-6'],
+				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
 			])->widget(DatePicker::classname(), [
 				'clientOptions' => [

@@ -18,6 +18,7 @@ class MenuItems {
 					['label' => 'Date (add/subtract)', 'url' => ['/calculator/date']],
 					['label' => 'Date to Date (duration)', 'url' => ['/calculator/duration']],
 					['label' => 'Microsoft® Office 365® End Date', 'url' => ['/calculator/office365']],
+					['label' => 'Time Zone Converter', 'url' => ['/calculator/timezone']],
 					['label' => 'Wifi Protected Access Pre-Shared Key', 'url' => ['/calculator/wpapsk']],
 				],
 			],
