@@ -20,7 +20,7 @@ class Timezone extends \yii\base\Model {
 	public function attributeLabels() {
 		return [
 			'source' => 'Source Time Zone',
-			'datetime' => 'Date & Time',
+			'datetime' => 'Date & Time in Source Time Zone',
 			'target' => 'Target Time Zone',
 		];
 	}

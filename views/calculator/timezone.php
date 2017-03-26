@@ -29,12 +29,17 @@ echo '<div class="row">';
 		}
 
 		$form = ActiveForm::begin();
+		$tab = 1;
 		echo '<div class="row">';
-		echo $form->field($model, 'source', [
-			'options' => ['class' => 'col-sm-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
-		])->dropDownList($model->getTimezones(true), ['tabindex' => 1]);
+		foreach (['source', 'target'] as $field) :
+			echo $form->field($model, $field, [
+				'options' => ['class' => 'col-sm-6'],
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
+			])->dropDownList($model->getTimezones(true), ['tabindex' => $tab++]);
+		endforeach;
+		echo '</div>';
 
+		echo '<div class="row">';
 		echo $form->field($model, 'datetime', [
 			'options' => ['class' => 'col-sm-6'],
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
@@ -46,15 +51,8 @@ echo '<div class="row">';
 				'timeFormat' => 'HH:mm',
 			],
 			'dateFormat' => 'yyyy-MM-dd',
-			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => 2],
+			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab++],
 		]);
-		echo '</div>';
-
-		echo '<div class="row">';
-		echo $form->field($model, 'target', [
-			'options' => ['class' => 'col-sm-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
-		])->dropDownList($model->getTimezones(true), ['tabindex' => 3]);
 		echo '</div>';
 
 		echo Html::tag('div',

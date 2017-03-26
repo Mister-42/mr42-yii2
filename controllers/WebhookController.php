@@ -5,29 +5,23 @@ use app\models\site\Changelog;
 use yii\web\{Controller, Response, NotFoundHttpException, UnauthorizedHttpException};
 
 class WebhookController extends Controller {
-	public function actionIndex() {
-		return $this->goHome();
-	}
-
 	public function actionChangelog() {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2);
 		if (!hash_equals($hash, hash_hmac($algo, file_get_contents('php://input'), Yii::$app->params['GitHubHook'])))
 			throw new UnauthorizedHttpException('Access denied!');
-
-		if ($_SERVER['HTTP_X_GITHUB_EVENT'] === 'ping')
+		elseif ($_SERVER['HTTP_X_GITHUB_EVENT'] === 'ping')
 			return ['status' => 'success', 'message' => 'Pong!'];
-
-		if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
+		elseif ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
 			throw new NotFoundHttpException('Action not found.');
 
 		$payload = json_decode(Yii::$app->request->post('payload'));
-		foreach($payload->commits as $item) :
-			if (empty(Changelog::find()->where(['time' => strtotime($item->timestamp)])->all())) {
+		foreach($payload->commits as $commit) :
+			if (empty(Changelog::find()->where(['id' => $commit->id])->all())) {
 				$rssItem = new Changelog();
-				$rssItem->id = $item->id;
-				$rssItem->description = $item->message;
-				$rssItem->time = strtotime($item->timestamp);
+				$rssItem->id = $commit->id;
+				$rssItem->description = $commit->message;
+				$rssItem->time = strtotime($commit->timestamp);
 				$rssItem->save();
 			}
 		endforeach;

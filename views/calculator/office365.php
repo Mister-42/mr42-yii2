@@ -24,7 +24,7 @@ echo '<div class="row">';
 
 		$form = ActiveForm::begin();
 		$tab = 1;
-		foreach (['source', 'target'] as $field) {
+		foreach (['source', 'target'] as $field) :
 			echo '<div class="row">';
 			echo $form->field($model, $field.'date', [
 				'options' => ['class' => 'col-sm-6'],
@@ -47,7 +47,7 @@ echo '<div class="row">';
 			])
 			->input('number', ['class' => 'form-control', 'tabindex' => $tab++]);
 			echo '</div>';
-		}
+		endforeach;
 
 		echo $form->field($model, 'action')->dropDownList([
 			'renew' => 'I am renewing these licenses',
