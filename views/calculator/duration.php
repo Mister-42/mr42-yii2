@@ -35,7 +35,7 @@ echo '<div class="row">';
 				],
 				'dateFormat' => 'yyyy-MM-dd',
 				'language' => 'en-GB',
-				'options' => ['class' => 'form-control', 'tabindex' => $tab++],
+				'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab++],
 			]);
 		}
 		echo '</div>';

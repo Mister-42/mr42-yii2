@@ -43,12 +43,10 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 
 			<label class="control-label" for="file">Attachment</label>
 			<div class="input-group">
-				<span class="input-group-addon">
-					<?= Html::icon('file') ?>
-				</span>
-				<input type="text" id="file" class="form-control" placeholder="No file selected" onclick="$('input[id=sourceFile]').click();" readonly>
+				<?= Html::tag('span', Html::icon('file'), ['class' => 'input-group-addon']) ?>
+				<input type="text" id="file" class="form-control" placeholder="No file selected" onclick="$('input[id=sourceFile]').click()" readonly>
 				<span class="input-group-btn">
-					<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click();" tabindex="5"><?= Html::icon('folder-open') ?></button>
+					<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click()" tabindex="5"><?= Html::icon('folder-open') ?></button>
 				</span>
 			</div>
 
@@ -63,10 +61,10 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 				'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
 			])->hint('Click on the image to retrieve a new verification code.');
 
-			echo '<div class="form-group text-right">';
-				echo Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) . ' ';
-				echo Html::submitButton('Send', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7]);
-			echo '</div>';
+			echo Html::tag('div',
+				Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) . ' ' .
+				Html::submitButton('Send', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7])
+			, ['class' => 'form-group text-right']);
 
 			ActiveForm::end();
 		Pjax::end(); ?>

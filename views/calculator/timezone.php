@@ -46,7 +46,7 @@ echo '<div class="row">';
 				'timeFormat' => 'HH:mm',
 			],
 			'dateFormat' => 'yyyy-MM-dd',
-			'options' => ['class' => 'form-control', 'tabindex' => 2],
+			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => 2],
 		]);
 		echo '</div>';
 

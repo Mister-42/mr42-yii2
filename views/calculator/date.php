@@ -34,7 +34,7 @@ echo '<div class="row">';
 			],
 			'dateFormat' => 'yyyy-MM-dd',
 			'language' => 'en-GB',
-			'options' => ['class' => 'form-control', 'tabindex' => 1],
+			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => 1],
 		]);
 
 		echo $form->field($model, 'days', [
