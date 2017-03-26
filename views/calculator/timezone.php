@@ -32,12 +32,12 @@ echo '<div class="row">';
 		echo '<div class="row">';
 		echo $form->field($model, 'source', [
 			'options' => ['class' => 'col-sm-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
 		])->dropDownList($model->getTimezones(true), ['tabindex' => 1]);
 
 		echo $form->field($model, 'datetime', [
 			'options' => ['class' => 'col-sm-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
 		])->widget(DateTimePicker::className(), [
 			'clientOptions' => [
 				'changeMonth' => true,
@@ -53,7 +53,7 @@ echo '<div class="row">';
 		echo '<div class="row">';
 		echo $form->field($model, 'target', [
 			'options' => ['class' => 'col-sm-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
+			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
 		])->dropDownList($model->getTimezones(true), ['tabindex' => 3]);
 		echo '</div>';
 

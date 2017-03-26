@@ -93,7 +93,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, Url::to(['articles/index', 'id' => $model->id], true)).'|' . date('D, j M Y', $model->updated),
 				'keywords' => $model->tags,
 				'subject' => $model->title,
-				'title' => implode(' ∷ ', [$model->title, Yii::$app->name]),
+				'title' => $model->title,
 			]
 		);
 	}
