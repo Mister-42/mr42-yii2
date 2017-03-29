@@ -9,14 +9,18 @@ echo Html::tag('h1', Html::encode($albums[0]->artist->name));
 
 foreach ($albums as $album) :
 	echo '<div class="row">';
-	echo '<div class="col-lg-12"><div class="clearfix"><div class="pull-left"><h3>' . $album->year . ' · ';
-	echo Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url]);
-	echo '</h3>';
-	if (!$album->active)
-		echo ' ' . Html::tag('span', 'unpublished', ['class' => 'badge']);
-	echo '</div><div class="pull-right">';
-	echo Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;']);
-	echo '</div></div></div>';
+	echo Html::tag('div',
+		Html::tag('div',
+			Html::tag('div',
+				Html::tag('h3', $album->year . ' · ' . Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url]))
+			, ['class' => 'pull-left']) .
+			Html::tag('div',
+				$album->active
+					? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;'])
+					: Html::tag('span', 'unpublished', ['class' => 'badge', 'style' => 'margin-top:25px;'])
+			, ['class' => 'pull-right'])
+		, ['class' => 'clearfix'])
+	, ['class' => 'col-lg-12']);
 
 	$x = $y = 0;
 	foreach ($album->tracks as $track) :
@@ -24,7 +28,9 @@ foreach ($albums as $album) :
 		if ($x++ === 0)
 			echo '<div class="col-sm-4 text-nowrap">';
 
-		$track->name = !$track->lyricid ? $track->name : Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track]);
+		$track->name = $track->lyricid
+			? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
+			: $track->name;
 		echo implode(' · ', [$track->track, $track->name]);
 		echo '<br>';
 
