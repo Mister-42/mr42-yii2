@@ -63,7 +63,7 @@ HighlightAsset::register($this);
 
 		$user = new User();
 		$profile = $user->finder->findProfileById($model->user->id);
-		echo ' · '.Html::icon('user', ['class' => 'text-muted']) . ' ' . Html::tag('span', empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name), ['class' => 'author']);
+		echo ' · ' . Html::icon('user', ['class' => 'text-muted']) . ' ' . Html::tag('span', empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name), ['class' => 'author']);
 
 		if (isset($view) && $view == 'full ' && !empty($profile['bio']) && $author = Profile::show($profile))
 			echo '<hr>' . Html::tag('div', $author, ['class' => 'well well-sm']);

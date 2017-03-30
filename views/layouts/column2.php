@@ -16,7 +16,7 @@ $dependency = [
 ];
 ?>
 <div class="row">
-	<div class="col-xs-12 col-sm-9"><?= $content; ?></div>
+	<?= Html::tag('div', $content, ['class' => 'col-xs-12 col-sm-9']) ?>
 
 	<aside class="hidden-xs col-sm-3"><?php
 		echo Search::widget();
