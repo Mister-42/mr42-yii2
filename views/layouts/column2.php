@@ -46,4 +46,4 @@ $dependency = [
 		]);
 	?></aside>
 </div>
-<?php $this->endContent(); ?>
+<?php $this->endContent();

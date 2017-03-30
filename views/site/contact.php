@@ -12,8 +12,8 @@ $this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' =>
 $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
 ?>
 <div class="row">
-	<div class="col-md-offset-2 col-md-8">
-		<?php echo Html::tag('h1', Html::encode($this->title));
+	<div class="col-md-offset-2 col-md-8"><?php
+		echo Html::tag('h1', Html::encode($this->title));
 
 		Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger']);
 			echo Html::tag('p', 'If you have inquiries or other questions, please fill out the following form to contact ' . Yii::$app->name . '. Thank you.');
@@ -67,6 +67,6 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 			, ['class' => 'form-group text-right']);
 
 			ActiveForm::end();
-		Pjax::end(); ?>
-	</div>
+		Pjax::end();
+	?></div>
 </div>

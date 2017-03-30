@@ -42,18 +42,15 @@ $this->beginPage();
 			'options' => ['class' => 'navbar-nav navbar-right'],
 		]);
 	}
-
 	NavBar::end();
-	?>
 
-	<div class="container">
-		<?= Breadcrumbs::widget([
+	echo Html::tag('div',
+		Breadcrumbs::widget([
 			'homeLink' => ['label' => Yii::$app->name, 'url' => Yii::$app->homeUrl],
 			'links' => $this->params['breadcrumbs'] ?? [],
-		]) ?>
-		<?= $content ?>
-	</div>
-</div>
+		]) . $content
+	, ['class' => 'container']);
+?></div>
 
 <footer>
 	<div class="container">
@@ -66,10 +63,9 @@ $this->beginPage();
 			}
 		?></p>
 	</div>
-	<?php echo Html::a(Html::tag('span', '&nbsp;&nbsp;^&nbsp;&nbsp;', ['title' => 'Scroll to top', 'data-toggle' => 'tooltip', 'data-placement' => 'top']), false, ['id' => 'btn-scrolltop']); ?>
+	<?= Html::a(Html::tag('span', '&nbsp;&nbsp;^&nbsp;&nbsp;', ['title' => 'Scroll to top', 'data-toggle' => 'tooltip', 'data-placement' => 'top']), false, ['id' => 'btn-scrolltop']) ?>
 </footer>
-<?php $this->endBody() ?>
+<?php $this->endBody();
 
-</body>
-</html>
-<?php $this->endPage() ?>
+echo '</body></html>';
+$this->endPage();
