@@ -57,6 +57,10 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 	font-family: $font-family-base;
 }
 
+.dropdown .divider {
+	margin: 2px 0;
+}
+
 .site- {
 	&changelog .row {
 		@include dividing-line(2px, $lighterBlue);

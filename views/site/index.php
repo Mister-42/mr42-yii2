@@ -1,4 +1,5 @@
 <?php
+use app\models\MenuItems;
 use yii\bootstrap\Html;
 
 $this->title = Yii::$app->name;
@@ -8,13 +9,13 @@ echo Html::tag('p', 'This website is merely a hobby project. Some parts are crea
 echo Html::tag('p', 'Below is an overview of the items in the menu for a quick overview.');
 
 echo '<ul>';
-foreach($pages as $menu) :
+foreach(MenuItems::menuArray() as $menu) :
 	echo isset($menu['url'])
 		? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url']))
 		: Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false));
 	if ($menu['items']) {
 		foreach($menu['items'] as $submenu) :
-			if (isset($submenu['label']) && (!isset($submenu['visible']) || $submenu['visible']))
+			if (isset($submenu['url']) && (!isset($submenu['visible']) || $submenu['visible']))
 				$submenuitems[] = isset($submenu['url'])
 					? Html::a(Yii::$app->formatter->cleanInput($submenu['label'], false), $submenu['url'])
 					: Yii::$app->formatter->cleanInput($submenu['label'], false);

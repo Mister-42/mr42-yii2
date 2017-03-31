@@ -1,7 +1,6 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\MenuItems;
 use app\models\site\{Changelog, Contact};
 use yii\bootstrap\Alert;
 use yii\base\Object;
@@ -63,11 +62,7 @@ class SiteController extends Controller {
 
 	public function actionIndex() {
 		$this->layout = '@app/views/layouts/column2.php';
-
-		return  $this->render('index', [
-			'model' => $model,
-			'pages' => MenuItems::menuArray(),
-		]);
+		return $this->render('index');
 	}
 
 	public function actionChangelog() {
