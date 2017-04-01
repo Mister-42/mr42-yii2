@@ -1,11 +1,17 @@
 <?php
 use app\models\MenuItems;
-use yii\bootstrap\Html;
+use yii\bootstrap\{Carousel, Html};
+use yii\helpers\FileHelper;
 
 $this->title = Yii::$app->name;
+$img = FileHelper::findFiles(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath . '/index/', ['only'=>['*.jpg', '*.png'], 'recursive' => false]);
+sort($img);
+foreach($img as $file)
+	$images[] = Html::img(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/index/' . basename($file));
 
 echo Html::tag('h2', 'Welcome to '.Yii::$app->name);
 echo Html::tag('p', 'This website is merely a hobby project. Some parts are created to make work or life a little bit easier, other parts are created for entertainment purposes only.');
+echo Carousel::widget(['controls' => false, 'items' => $images, 'showIndicators' => false]);
 echo Html::tag('p', 'Below is an overview of the items in the menu for a quick overview.');
 
 echo '<ul>';
