@@ -13,8 +13,8 @@ echo '<div class="site-lyrics-lyrics">';
 		, ['class' => 'pull-left']) .
 		Html::tag('div',
 			$tracks[0]->album->active
-				? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;'])
-				: Html::tag('span', 'Not published', ['class' => 'badge', 'style' => 'margin-top:20px;'])
+				? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], ['class' => 'btn btn-xs btn-warning action'])
+				: Html::tag('span', 'Not published', ['class' => 'badge action'])
 		, ['class' => 'pull-right'])
 	, ['class' => 'clearfix']);
 

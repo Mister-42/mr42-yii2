@@ -11,9 +11,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<div class="alert alert-info">
 			<p>In order to finish your registration, we need you to enter following fields</p>
-		</div>
+		</div><?php
 
-		<?php $form = ActiveForm::begin([
+		$form = ActiveForm::begin([
 			'id' => 'connect-account-form',
 		]);
 
@@ -27,10 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		echo Html::submitButton('Continue', ['class' => 'btn btn-primary btn-block', 'tabindex' => 3]);
 
-		ActiveForm::end(); ?>
+		ActiveForm::end();
 
-		<p class="text-center">
-			<?= Html::a('If you already registered, sign in and connect this account on settings page', ['/user/settings/networks']) ?>.
-		</p>
-	</div>
+		echo Html::tag('p', Html::a('If you already registered, sign in and connect this account on settings page.', ['/user/settings/networks']), ['class' => 'text-center']);
+	?></div>
 </div>

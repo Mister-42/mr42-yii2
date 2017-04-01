@@ -68,12 +68,13 @@ $this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' =>
 
 		echo $form->field($model, 'timezone', [
 			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
-		])->dropDownList(ArrayHelper::map(Timezone::getAll(), 'timezone', 'name'), ['tabindex' => 7]); ?>
+		])->dropDownList(ArrayHelper::map(Timezone::getAll(), 'timezone', 'name'), ['tabindex' => 7]);
 
-		<div class="form-group text-right">
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 9]) ?>
-			<?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'tabindex' => 8]) ?>
-		</div>
-		<?php ActiveForm::end(); ?>
-	</div>
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 9]) . ' ' .
+			Html::submitButton('Save', ['class' => 'btn btn-primary', 'tabindex' => 8])
+		, ['class' => 'form-group text-right']);
+
+		ActiveForm::end();
+	?></div>
 </div>

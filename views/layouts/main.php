@@ -38,7 +38,7 @@ $this->head(); ?></head>
 	if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 		echo Nav::widget([
 			'encodeLabels' => false,
-			'items' => Menu::getMenu(),
+			'items' => Menu::getItemList(),
 			'options' => ['class' => 'navbar-nav navbar-right'],
 		]);
 	}

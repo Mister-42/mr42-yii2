@@ -78,16 +78,15 @@ class Comments extends ActiveRecord {
 		$this->name = $this->name ?? null;
 		$this->email = $this->email ?? null;
 		$this->website = $this->website ?? null;
-
 		return true;
 	}
 
 	public function showApprovalButton() {
 		return Html::a(
-				($this->active) ? Html::icon('thumbs-down').' Renounce' : Html::icon('thumbs-up').' Approve',
-				['commentstatus', 'id' => $this->id, 'action' => 'toggleapproval'],
-				['class' => $this->active ? 'btn btn-xs btn-warning' : 'btn btn-xs btn-success', 'style' => 'margin-top:25px;']
-			);
+			$this->active ? Html::icon('thumbs-down').' Renounce' : Html::icon('thumbs-up').' Approve',
+			['commentstatus', 'id' => $this->id, 'action' => 'toggleapproval'],
+			['class' => $this->active ? 'btn btn-xs btn-warning action' : 'btn btn-xs btn-success action']
+		);
 	}
 
 	public function sendCommentMail($model, $comment) {

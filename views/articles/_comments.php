@@ -3,30 +3,26 @@ use dektrium\user\models\User;
 use yii\bootstrap\Html;
 use yii\widgets\Pjax;
 
-foreach ($comments as $comment): ?>
-	<div class="comment">
+foreach ($comments as $comment) :
+	?><div class="comment">
 		<div class="clearfix">
-			<?php  ?>
 			<div class="pull-left">
 				<h3 class="comment-info"><?= Html::encode($comment->title) ?></h3>
-			</div>
-			<?php if ($mainmodel->belongsToViewer()): ?>
-				<div class="pull-right">
-					<?php Pjax::begin(['enablePushState' => false, 'options' => ['tag' => 'span']]);
+			</div><?php
+			if ($mainmodel->belongsToViewer()):
+				?><div class="pull-right"><?php
+					Pjax::begin(['enablePushState' => false, 'options' => ['tag' => 'span']]);
 						echo $comment->showApprovalButton();
 					Pjax::end();
 
 					echo ' ' . Html::a(Html::icon('remove').' Delete', ['commentstatus', 'id' => $comment->id, 'action' => 'delete'], [
-						'class' => 'btn btn-xs btn-danger',
+						'class' => 'btn btn-xs btn-danger action',
 						'data-confirm' => 'Are you sure you want to delete this comment?',
 						'data-method' => 'post',
-						'style' => 'margin-top:25px;',
-					]); ?>
-				</div>
-			<?php endif; ?>
-		</div>
-
-		<?php
+					]);
+				?></div><?php
+			endif;
+		?></div><?php
 		echo $comment->content;
 		if (!empty($comment->user)) {
 			$user = new User();
@@ -40,6 +36,5 @@ foreach ($comments as $comment): ?>
 			echo ' <span class="badge">Article Author</span>';
 		if (!empty($comment->website))
 			echo ' · ' . Html::icon('globe', ['class' => 'text-muted']) . ' ' . Html::a($comment->website, $comment->website);
-		?>
-	</div>
-<?php endforeach; ?>
+	?></div><?php
+endforeach;

@@ -21,11 +21,11 @@ echo $form->field($model, 'source')->input('url', ['maxlength' => 128, 'tabindex
 
 echo $form->field($model, 'tags')->textInput(['maxlength' => 255, 'tabindex' => 5]);
 
-echo $form->field($model, 'active')->checkbox(['tabindex' => 6]) ?>
+echo $form->field($model, 'active')->checkbox(['tabindex' => 6]);
 
-<div class="form-group text-right">
-	<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) ?>
-	<?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'tabindex' => 7]) ?>
-</div>
+echo Html::tag('div',
+	Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) . ' ' .
+	Html::submitButton('Save', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7])
+, ['class' => 'form-group text-right']);
 
-<?php ActiveForm::end(); ?>
+ActiveForm::end();

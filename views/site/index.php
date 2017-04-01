@@ -15,7 +15,7 @@ echo Carousel::widget(['controls' => false, 'items' => $images, 'showIndicators'
 echo Html::tag('p', 'Below is an overview of the items in the menu for a quick overview.');
 
 echo '<ul>';
-foreach(Menu::getMenu() as $menu) :
+foreach(Menu::getItemList() as $menu) :
 	echo isset($menu['url'])
 		? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url']))
 		: Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false));

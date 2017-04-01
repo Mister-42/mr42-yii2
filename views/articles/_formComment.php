@@ -47,11 +47,12 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 				'options' => ['class' => 'form-control', 'tabindex' => 6],
 				'template' => '<div class="row"><div class="col-xs-3"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
 			])->hint('Click on the image to retrieve a new verification code.');
-		} ?>
+		}
 
-		<div class="form-group text-right">
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) ?>
-			<?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7]) ?>
-		</div>
-	<?php ActiveForm::end(); ?>
-<?php Pjax::end(); ?>
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) . ' ' .
+			Html::submitButton('Submit', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7])
+		, ['class' => 'form-group text-right']);
+
+	ActiveForm::end();
+Pjax::end();

@@ -41,17 +41,17 @@ $this->registerJs(Yii::$app->formatter->jspack('capsDetector.js'), View::POS_REA
 
 		ActiveForm::end();
 
-		if ($module->enableConfirmation): ?>
+		if ($module->enableConfirmation) : ?>
 			<p class="text-center"><br>
 				<?= Html::a('Didn\'t receive confirmation message?', ['/user/registration/resend']) ?>
 			</p>
-		<?php endif ?>
-		<?php if ($module->enableRegistration): ?>
+		<?php endif;
+		if ($module->enableRegistration) : ?>
 			<p class="text-center">
 				<?= Html::a('Don\'t have an account? Sign up!', ['/user/registration/register']) ?>
 			</p>
-		<?php endif ?>
-		<?= Connect::widget([
+		<?php endif;
+		echo Connect::widget([
 			'baseAuthUrl' => ['/user/security/auth'],
 		]) ?>
 	</div>

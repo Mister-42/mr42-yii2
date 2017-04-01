@@ -9,19 +9,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
 <div class="row">
-	<div class="col-md-offset-2 col-md-8">
-		<?= Html::tag('h1', Html::encode($this->title)) ?>
-		<?= Html::tag('div', 'You can connect multiple accounts to be able to log in using them.', ['class' => 'alert alert-info'])?>
+	<div class="col-md-offset-2 col-md-8"><?php
+		echo Html::tag('h1', Html::encode($this->title));
+		echo Html::tag('div', 'You can connect multiple accounts to be able to log in using them.', ['class' => 'alert alert-info']);
 
-		<?php $auth = Connect::begin([
+		$auth = Connect::begin([
 			'baseAuthUrl'	=> ['/user/security/auth'],
 			'accounts'		=> $user->accounts,
 			'autoRender'	=> false,
 			'popupMode'		=> false,
 		]);
 
-		foreach ($auth->getClients() as $client): ?>
-			<div class="row">
+		foreach ($auth->getClients() as $client) :
+			?><div class="row">
 				<div class="col-md-offset-2 col-md-1">
 					<?= Html::tag('span', '', ['aria-hidden' => 'true', 'class' => 'auth-icon ' . $client->getName()]) ?>
 				</div>
@@ -37,9 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
 						])
 					?>
 				</div>
-			</div>
-		<?php endforeach; ?>
+			</div><?php
+		endforeach;
 
-		<?php Connect::end() ?>
-    </div>
+		Connect::end();
+    ?></div>
 </div>

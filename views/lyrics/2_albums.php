@@ -16,8 +16,8 @@ foreach ($albums as $album) :
 			, ['class' => 'pull-left']) .
 			Html::tag('div',
 				$album->active
-					? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning', 'style' => 'margin-top:25px;'])
-					: Html::tag('span', 'Not published', ['class' => 'badge', 'style' => 'margin-top:20px;'])
+					? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
+					: Html::tag('span', 'Not published', ['class' => 'badge action'])
 			, ['class' => 'pull-right'])
 		, ['class' => 'clearfix'])
 	, ['class' => 'col-lg-12']);

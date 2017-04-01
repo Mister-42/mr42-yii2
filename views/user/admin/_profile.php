@@ -45,14 +45,13 @@ echo $form->field($profile, 'bio', [
 	->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => 6]);
 
 echo $form->field($profile, 'timezone')->dropDownList(ArrayHelper::map(Timezone::getAll(), 'timezone', 'name'), ['tabindex' => 7]);
-?>
 
-<div class="form-group">
+?><div class="form-group">
     <div class="col-lg-offset-3 col-lg-9">
         <?= Html::submitButton('Update', ['class' => 'btn btn-block btn-primary', 'tabindex' => 8]) ?>
     </div>
-</div>
+</div><?php
 
-<?php ActiveForm::end(); ?>
+ActiveForm::end();
 
-<?php $this->endContent() ?>
+$this->endContent();
