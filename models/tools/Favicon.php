@@ -9,7 +9,7 @@ class Favicon extends \yii\base\Model {
 	public $sourceImage;
 	public $dimensions = [16, 32, 48, 64];
 
-	public function rules() {
+	public function rules() : array {
 		return [
 			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
 			[['sourceImage'], 'file',
@@ -20,7 +20,7 @@ class Favicon extends \yii\base\Model {
 		];
 	}
 
-	public function attributeLabels() {
+	public function attributeLabels() : array {
 		return [
 			'email' => 'Email Address',
 			'sourceImage' => 'Source Image',
@@ -28,7 +28,7 @@ class Favicon extends \yii\base\Model {
 		];
 	}
 
-	public function convertImage() {
+	public function convertImage() : bool {
 		if ($this->validate()) {
 			try {
 				$rndFilename = uniqid('favicon');
@@ -55,7 +55,7 @@ class Favicon extends \yii\base\Model {
 					unlink($file);
 				unlink($srcImg);
 
-				if ($this->email) {
+				if ($this->email)
 					Yii::$app->mailer
 						->compose(['html' => 'faviconRequester'])
 						->setTo($this->email)
@@ -63,7 +63,6 @@ class Favicon extends \yii\base\Model {
 						->setSubject('Your favicon file from '.Yii::$app->name)
 						->attach(Yii::getAlias('@webroot/assets/temp/favicon/'.$rndFilename.'.ico'), ['fileName' => 'favicon.ico'])
 						->send();
-				}
 				Yii::$app->getSession()->setFlash('favicon-success', $rndFilename.'.ico');
 				return true;
 			} catch(ImagickException $e) {

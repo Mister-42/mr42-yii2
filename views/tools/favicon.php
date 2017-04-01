@@ -31,13 +31,13 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 			Alert::end();
 		}
 
-		$form = ActiveForm::begin(); ?>
+		$form = ActiveForm::begin();
 
-		<?= $form->field($model, 'email', [
+		echo $form->field($model, 'email', [
 				'template' => '{label} (optional)<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{hint} {error}',
 			])
-			->input('email')
-			->hint('If you enter your email address here the favicon will be mailed to that address.') ?>
+			->input('email', ['tabindex' => 1])
+			->hint('If you enter your email address here the favicon will be mailed to that address.'); ?>
 
 		<div class="input-group">
 			<span class="input-group-addon">
@@ -45,19 +45,21 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 			</span>
 			<input type="text" id="file" class="form-control" placeholder="Select an image" onclick="$('input[id=sourceFile]').click();" readonly>
 			<span class="input-group-btn">
-				<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click();"><?= Html::icon('folder-open') ?></button>
+				<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click();" tabindex="2"><?= Html::icon('folder-open') ?></button>
 			</span>
 		</div>
 
-		<?= $form->field($model, 'sourceImage')
+		<?php
+		echo $form->field($model, 'sourceImage')
 			->fileInput(['accept' => 'image/*', 'class' => 'hidden', 'id' => 'sourceFile'])
 			->hint('For the best result you should upload a square image. Your icon will be generated in ' . Inflector::sentence($dimensions) . ' pixels.')
-			->label(false) ?>
+			->label(false);
 
-		<div class="form-group">
-			<?= Html::submitButton($model->getAttributeLabel('generate'), ['class' => 'btn btn-block btn-primary']) ?>
-		</div>
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) . ' ' .
+			Html::submitButton($model->getAttributeLabel('generate'), ['class' => 'btn btn-primary', 'tabindex' => 3])
+		, ['class' => 'form-group text-right']);
 
-		<?php ActiveForm::end(); ?>
+		ActiveForm::end(); ?>
 	</div>
 </div>

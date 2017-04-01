@@ -24,10 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		echo $form->field($model, 'numeric')->checkbox(['tabindex' => 3]);
 
-		echo '<div class="form-group text-right">';
-		echo Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 5]) . ' ';
-		echo Html::submitButton('Send', ['class' => 'btn btn-primary', 'tabindex' => 4]);
-		echo '</div>';
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 5]) . ' ' .
+			Html::submitButton('Send', ['class' => 'btn btn-primary', 'tabindex' => 4])
+		, ['class' => 'form-group text-right']);
 
 		ActiveForm::end();
 	?></div>

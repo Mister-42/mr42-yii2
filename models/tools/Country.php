@@ -6,7 +6,7 @@ class Country extends \yii\db\ActiveRecord {
 	public $iso;
 	public $source;
 
-	public static function tableName() {
+	public static function tableName() : string {
 		return 'x_country';
 	}
 
@@ -18,13 +18,13 @@ class Country extends \yii\db\ActiveRecord {
 
 	private function showContinent($short) {
 		switch ($short) {
-			case 'AF' : return 'Africa';
-			case 'AN' : return 'Antarctica';
-			case 'AS' : return 'Asia';
-			case 'EU' : return 'Europe';
-			case 'NA' : return 'North America';
-			case 'OC' : return 'Oceania';
-			case 'SA' : return 'South America';
+			case 'AF'	: return 'Africa';			break;
+			case 'AN'	: return 'Antarctica';		break;
+			case 'AS'	: return 'Asia';			break;
+			case 'EU'	: return 'Europe';			break;
+			case 'NA'	: return 'North America';	break;
+			case 'OC'	: return 'Oceania';			break;
+			case 'SA'	: return 'South America';	break;
 		};
 	}
 }
