@@ -4,8 +4,8 @@ use Yii;
 use app\models\articles\Comments;
 use yii\bootstrap\Html;
 
-class MenuItems {
-	public function menuArray() {
+class Menu {
+	public function getMenu() : array {
 		$isGuest = (Yii::$app->controller->action->id === 'sitemap') ? true : Yii::$app->user->isGuest;
 		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 		$unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACTIVE])->count() : 0;
@@ -62,8 +62,8 @@ class MenuItems {
 		return $menuItems;
 	}
 
-	public function urlList() {
-		foreach (self::menuArray() as $item) :
+	public function getUrlList() : array {
+		foreach (self::getMenu() as $item) :
 			if (isset($item['visible']))
 				continue;
 

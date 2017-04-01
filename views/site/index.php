@@ -1,5 +1,5 @@
 <?php
-use app\models\MenuItems;
+use app\models\Menu;
 use yii\bootstrap\{Carousel, Html};
 use yii\helpers\FileHelper;
 
@@ -15,7 +15,7 @@ echo Carousel::widget(['controls' => false, 'items' => $images, 'showIndicators'
 echo Html::tag('p', 'Below is an overview of the items in the menu for a quick overview.');
 
 echo '<ul>';
-foreach(MenuItems::menuArray() as $menu) :
+foreach(Menu::getMenu() as $menu) :
 	echo isset($menu['url'])
 		? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url']))
 		: Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false));

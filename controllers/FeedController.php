@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\MenuItems;
+use app\models\Menu;
 use app\models\articles\{Articles, Tags};
 use app\models\lyrics\Lyrics1Artists;
 use yii\base\Object;
@@ -49,7 +49,7 @@ class FeedController extends Controller {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/xml');
 
-		$pages = MenuItems::urlList();
+		$pages = Menu::getUrlList();
 		sort($pages);
 
 		$articles = Articles::find()
@@ -57,15 +57,11 @@ class FeedController extends Controller {
 			->with('comments')
 			->all();
 
-		$tags = Tags::findTagWeights();
-
-		$artists = Lyrics1Artists::albumsList();
-
 		return $this->renderPartial('sitemap', [
 			'pages' => $pages,
 			'articles' => $articles,
-			'tags' => $tags,
-			'artists' => $artists,
+			'tags' => Tags::findTagWeights(),
+			'artists' => Lyrics1Artists::albumsList(),
 		]);
 	}
 }

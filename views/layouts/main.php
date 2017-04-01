@@ -1,6 +1,6 @@
 <?php
 use app\assets\{AppAsset, ImagesAsset};
-use app\models\MenuItems;
+use app\models\Menu;
 use yii\bootstrap\{Html, Nav, NavBar};
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
@@ -38,7 +38,7 @@ $this->head(); ?></head>
 	if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 		echo Nav::widget([
 			'encodeLabels' => false,
-			'items' => MenuItems::menuArray(),
+			'items' => Menu::getMenu(),
 			'options' => ['class' => 'navbar-nav navbar-right'],
 		]);
 	}
