@@ -5,7 +5,7 @@ use GK\JavascriptPacker;
 use yii\helpers\{FileHelper, Markdown};
 
 class Formatter extends \yii\i18n\Formatter {
-	public function cleanInput($data, $markdown = 'original', $allowHtml = false) {
+	public function cleanInput(string $data, string $markdown = 'original', bool $allowHtml = false) : string {
 		$data = $allowHtml ? parent::asRaw($data) : parent::asHtml($data, ['HTML.Allowed' => '']);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
@@ -14,7 +14,7 @@ class Formatter extends \yii\i18n\Formatter {
 		return trim($data);
 	}
 
-	public function jspack($file, $replace = []) {
+	public function jspack(string $file, array $replace = []) : string {
 		$filename = Yii::getAlias('@app/assets/src/js/' . $file);
 		$cachefile = Yii::getAlias('@runtime/assets/js/' . $file);
 

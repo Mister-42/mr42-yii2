@@ -5,7 +5,7 @@ use kartik\mpdf\Pdf as PdfCreator;
 use yii\helpers\FileHelper;
 
 class Pdf {
-	public function create($filename, $content, $updated, $params) {
+	public function create(string $filename, string $content, string $updated, array $params) : string {
 		$filename = Yii::getAlias($filename.'.pdf');
 		$created = $params['created'] ?? $updated;
 		if (!file_exists($filename) || filemtime($filename) < $updated) {
@@ -23,15 +23,15 @@ class Pdf {
 				}
 			endforeach;
 			$pdf->render();
-			$this->replaceLine($filename, '/Producer', $pdf->api->_UTF16BEtextstring('Yii Framework'));
-			$this->replaceLine($filename, '/CreationDate', $pdf->api->_textstring(date('YmdHis', $created) . substr(date('O', $created), 0, 3) . "'" . substr(date('O', $created), 3, 2) . "'"));
-			$this->replaceLine($filename, '/ModDate', $pdf->api->_textstring(date('YmdHis', $updated) . substr(date('O', $updated), 0, 3) . "'" . substr(date('O', $updated), 3, 2) . "'"));
+			self::replaceLine($filename, '/Producer', $pdf->api->_UTF16BEtextstring('Yii Framework'));
+			self::replaceLine($filename, '/CreationDate', $pdf->api->_textstring(date('YmdHis', $created) . substr(date('O', $created), 0, 3) . "'" . substr(date('O', $created), 3, 2) . "'"));
+			self::replaceLine($filename, '/ModDate', $pdf->api->_textstring(date('YmdHis', $updated) . substr(date('O', $updated), 0, 3) . "'" . substr(date('O', $updated), 3, 2) . "'"));
 			touch($filename, $updated);
 		}
 		return $filename;
 	}
 
-	private function replaceLine($filename, $search, $replace) {
+	private function replaceLine(string $filename, string $search, string $replace) {
 		$reading = fopen($filename, 'r');
 		$writing = fopen($filename.'.tmp', 'w');
 
