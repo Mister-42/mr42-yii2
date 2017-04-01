@@ -3,8 +3,9 @@ engines:
     enabled: true
     config:
       languages:
-        - javascript
-        - php:
+        javascript:
+          mass_threshold: 65
+        php:
           mass_threshold: 85
   eslint:
     enabled: true
