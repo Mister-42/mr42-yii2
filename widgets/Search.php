@@ -10,7 +10,7 @@ class Search extends Widget {
 		$model->addRule('search_term', 'required');
 		$model->addRule('search_term', 'string', ['max' => 25]);
 
-		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'method' => 'get']);
+		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'method' => 'get', 'options' => ['role' => 'search']]);
 
 		echo $form->field($model, 'search_term', [
 				'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('span', Html::submitButton(Html::icon('search'), ['class' => 'btn btn-primary']), ['class' => 'input-group-btn']) . "</div>",
