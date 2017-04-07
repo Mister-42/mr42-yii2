@@ -78,7 +78,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	public function buildPdf($model, $html) {
 		$user = new Profile();
 		$profile = $user->find($model->user->id)->one();
-		$name = (empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name));
+		$name = empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name);
 		$tags = Yii::t('site', '{results, plural, =1{1 tag} other{# tags}}', ['results' => count(StringHelper::explode($model->tags))]);
 
 		$pdf = new Pdf();

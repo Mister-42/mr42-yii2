@@ -11,7 +11,7 @@ class Contact extends \yii\base\Model
 	public $attachment;
 	public $captcha;
 
-	public function rules() {
+	public function rules(): array {
 		$rules = [
 			[['name', 'email', 'title', 'content'], 'required'],
 			[['name', 'email', 'title', 'content'], 'trim'],
@@ -31,7 +31,7 @@ class Contact extends \yii\base\Model
 		return $rules;
 	}
 
-	public function attributeLabels() {
+	public function attributeLabels(): array {
 		return [
 			'email' => 'Email Address',
 			'title' => 'Subject',
@@ -40,7 +40,7 @@ class Contact extends \yii\base\Model
 		];
 	}
 
-	public function contact() {
+	public function contact(): bool {
 		if ($this->validate()) {
 			$mailer = Yii::$app->mailer->compose()
 				->setTo(Yii::$app->params['adminEmail'])

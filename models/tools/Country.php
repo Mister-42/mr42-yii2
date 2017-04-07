@@ -6,7 +6,7 @@ class Country extends \yii\db\ActiveRecord {
 	public $iso;
 	public $source;
 
-	public static function tableName() : string {
+	public static function tableName(): string {
 		return 'x_country';
 	}
 

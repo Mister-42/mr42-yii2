@@ -9,7 +9,7 @@ class Timezone extends \yii\base\Model {
 	public $datetime;
 	public $target;
 
-	public function rules() {
+	public function rules(): array {
 		return [
 			[['source', 'datetime', 'target'], 'required'],
 			[['datetime'], 'date', 'format' => 'php:Y-m-d H:i'],
@@ -17,7 +17,7 @@ class Timezone extends \yii\base\Model {
 		];
 	}
 
-	public function attributeLabels() {
+	public function attributeLabels(): array {
 		return [
 			'source' => 'Source Time Zone',
 			'datetime' => 'Date & Time in Source Time Zone',
@@ -25,7 +25,7 @@ class Timezone extends \yii\base\Model {
 		];
 	}
 
-	public function diff() {
+	public function diff(): bool {
 		if ($this->validate()) {
 			$time = new DateTime($this->datetime, new DateTimeZone($this->source));
 			$time->setTimezone(new DateTimeZone($this->target));
@@ -35,7 +35,7 @@ class Timezone extends \yii\base\Model {
 		return false;
 	}
 
-	public function getTimezones($replace) {
+	public function getTimezones($replace): array {
 		foreach (DateTimeZone::listIdentifiers() as $timezone)
 			$timezones[$timezone] = $replace ? str_replace('_', ' ', $timezone) : $timezone;
 		return $timezones;

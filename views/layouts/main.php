@@ -22,11 +22,11 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)])
 $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
 $this->registerLinkTag(['rel' => 'icon', 'sizes' => '16x16 32x32 48x48 64x64', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/favicon.ico']);
 echo Html::csrfMetaTags();
-$this->head(); ?></head>
-<body>
+$this->head();
+echo '</head><body>';
 
-<?php $this->beginBody() ?>
-<div class="wrap"><?php
+$this->beginBody();
+echo '<div class="wrap">';
 	NavBar::begin([
 		'brandLabel' => Yii::$app->name,
 		'brandUrl' => Yii::$app->homeUrl,
@@ -50,11 +50,11 @@ $this->head(); ?></head>
 			'links' => $this->params['breadcrumbs'] ?? [],
 		]) . $content
 	, ['class' => 'container']);
-?></div>
+echo '</div>';
 
-<footer>
+?><footer>
 	<div class="container">
-		<p class="pull-left">&copy; 2014-<?= date('Y ') . Yii::$app->name . Html::tag('span', ' · ' . Yii::powered(), ['class' => 'visible-md-inline visible-lg-inline']) ?></p>
+		<p class="pull-left"><?= date('&\c\o\p\y; 2014-Y ') . Yii::$app->name . Html::tag('span', ' · ' . Yii::powered(), ['class' => 'visible-md-inline visible-lg-inline']) ?></p>
 		<p class="pull-right"><?php
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
@@ -64,8 +64,8 @@ $this->head(); ?></head>
 		?></p>
 	</div>
 	<?= Html::a(Html::tag('span', '&nbsp;&nbsp;^&nbsp;&nbsp;', ['title' => 'Scroll to top', 'data-toggle' => 'tooltip', 'data-placement' => 'top']), false, ['id' => 'btn-scrolltop']) ?>
-</footer>
-<?php $this->endBody();
+</footer><?php
+$this->endBody();
 
 echo '</body></html>';
 $this->endPage();

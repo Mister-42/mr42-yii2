@@ -10,7 +10,7 @@ class Office365 extends \yii\base\Model {
 	public $targetcount;
 	public $action;
 
-	public function rules() {
+	public function rules(): array {
 		return [
 			[['sourcedate', 'sourcecount', 'targetcount', 'action'], 'required'],
 			[['sourcedate', 'targetdate'], 'date', 'format' => 'php:Y-m-d'],
@@ -18,7 +18,7 @@ class Office365 extends \yii\base\Model {
 		];
 	}
 
-	public function attributeLabels() {
+	public function attributeLabels(): array {
 		return [
 			'sourcedate' => 'Current End Date',
 			'sourcecount' => 'Current Amount of Licenses',
@@ -27,9 +27,9 @@ class Office365 extends \yii\base\Model {
 		];
 	}
 
-	public function calcEndDate() {
+	public function calcEndDate(): bool {
 		if ($this->validate()) {
-			$this->targetdate = (empty($this->targetdate)) ? date('Y-m-d') : $this->targetdate;
+			$this->targetdate = empty($this->targetdate) ? date('Y-m-d') : $this->targetdate;
 			$diff = (new DateTime($this->sourcedate))->diff(new DateTime($this->targetdate));
 
 			$redeemDate = ($diff->invert === 0 && $diff->days <= 30) ? $this->sourcedate : $this->targetdate;

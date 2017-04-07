@@ -8,7 +8,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 	public $alphabet;
 	public $numeric = true;
 
-	public function rules() : array {
+	public function rules(): array {
 		return [
 			[['text', 'alphabet'], 'required'],
 			['alphabet', 'in', 'range' => self::getAlphabetList('lng')],
@@ -16,7 +16,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function attributeLabels() : array {
+	public function attributeLabels(): array {
 		return [
 			'text' => 'Text to convert',
 			'alphabet' => 'Phonetic Alphabet to use',
@@ -24,7 +24,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	public function convertText() {
+	public function convertText(): bool {
 		if ($this->validate()) {
 			list($alpha, $numeric) = self::getData($this->alphabet);
 
@@ -39,12 +39,13 @@ class PhoneticAlphabet extends \yii\base\Model {
 			$text = Yii::$app->formatter->asNtext($text);
 			$text = trim($text);
 
-			return Yii::$app->getSession()->setFlash('phonetic-alphabet-success', $text);
+			Yii::$app->getSession()->setFlash('phonetic-alphabet-success', $text);
+			return true;
 		}
 		return false;
 	}
 
-	public function getAlphabetList(string $column = '*') : array {
+	public function getAlphabetList(string $column = '*'): array {
 		$list = [
 			['lng' => 'Icao',		'name' => 'ICAO/NATO phonetic alphabet'],
 			['lng' => 'Lapd',		'name' => 'LAPD radio alphabet'],
@@ -62,7 +63,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		return ArrayHelper::map($list, 'lng', 'name');
 	}
 
-	private function getData(string $language) : array {
+	private function getData(string $language): array {
 		switch ($language) {
 			case 'Lapd'		: $alpha = self::getLapdAlpha();	$numeric = self::getLapdNumeric();		break;
 			case 'NlBe'		: $alpha = self::getNlBeAlpha();	$numeric = self::getNlNumeric();		break;
@@ -77,7 +78,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		return [$alpha, $numeric];
 	}
 
-	private function getIcaoAlpha() : array {
+	private function getIcaoAlpha(): array {
 		return ['a' => 'Alfa',
 				'b' => 'Bravo',
 				'c' => 'Charlie',
@@ -107,7 +108,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getIcaoNumeric() : array {
+	private function getIcaoNumeric(): array {
 		return ['0' => 'Zero',
 				'1' => 'One',
 				'2' => 'Two',
@@ -121,7 +122,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getLapdAlpha() : array {
+	private function getLapdAlpha(): array {
 		return ['a' => 'Adam',
 				'b' => 'Boy',
 				'c' => 'Charles',
@@ -151,14 +152,14 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getLapdNumeric() : array {
+	private function getLapdNumeric(): array {
 		return ArrayHelper::merge(
 			['9' => 'Niner'],
 			self::getIcaoNumeric()
 		);
 	}
 
-	private function getNlBeAlpha() : array {
+	private function getNlBeAlpha(): array {
 		return ['a' => 'Arthur',
 				'b' => 'Brussel',
 				'c' => 'Carolina',
@@ -188,7 +189,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getNlNlAlpha() : array {
+	private function getNlNlAlpha(): array {
 		return ['a' => 'Anton',
 				'b' => 'Bernhard',
 				'c' => 'Cornelis',
@@ -218,7 +219,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getNlNumeric() : array {
+	private function getNlNumeric(): array {
 		return ['0' => 'Nul',
 				'1' => 'Een',
 				'2' => 'Twee',
@@ -232,7 +233,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getDeAlpha() : array {
+	private function getDeAlpha(): array {
 		return ['a' => 'Anton',
 				'b' => 'Berta',
 				'c' => 'Cäsar',
@@ -262,7 +263,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getDeNumeric() : array {
+	private function getDeNumeric(): array {
 		return ['0' => 'Null',
 				'1' => 'Eins',
 				'2' => 'Zwei',
@@ -276,7 +277,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getFrAlpha() : array {
+	private function getFrAlpha(): array {
 		return ['a' => 'Anatole',
 				'b' => 'Berthe',
 				'c' => 'Célestine',
@@ -306,7 +307,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getFrNumeric() : array {
+	private function getFrNumeric(): array {
 		return ['0' => 'Zéro',
 				'1' => 'Un',
 				'2' => 'Deux',
@@ -320,7 +321,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getItAlpha() : array {
+	private function getItAlpha(): array {
 		return ['a' => 'Ancona',
 				'b' => 'Bari',
 				'c' => 'Como',
@@ -350,7 +351,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getItNumeric() : array {
+	private function getItNumeric(): array {
 		return ['0' => 'Zero',
 				'1' => 'Uno',
 				'2' => 'Due',
@@ -364,7 +365,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getEsAlpha() : array {
+	private function getEsAlpha(): array {
 		return ['a' => 'Antonio',
 				'b' => 'Barcelona',
 				'c' => 'Carmen',
@@ -394,7 +395,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getEsNumeric() : array {
+	private function getEsNumeric(): array {
 		return ['0' => 'Cero',
 				'1' => 'Uno',
 				'2' => 'Dos',
@@ -408,7 +409,7 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getUselessAlpha() : array {
+	private function getUselessAlpha(): array {
 		return ['a' => 'Are',
 				'b' => 'Bee',
 				'c' => 'Cue',
@@ -438,11 +439,11 @@ class PhoneticAlphabet extends \yii\base\Model {
 		];
 	}
 
-	private function getUselessNumeric() : array {
+	private function getUselessNumeric(): array {
 		return ['0' => 'Oh'];
 	}
 
-	private function getGenericReplacements() : array {
+	private function getGenericReplacements(): array {
 		return ['   ' => ' · ',
 				' - ' => PHP_EOL,
 		];

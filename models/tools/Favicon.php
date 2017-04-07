@@ -9,7 +9,7 @@ class Favicon extends \yii\base\Model {
 	public $sourceImage;
 	public $dimensions = [16, 32, 48, 64];
 
-	public function rules() : array {
+	public function rules(): array {
 		return [
 			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
 			[['sourceImage'], 'file',
@@ -20,7 +20,7 @@ class Favicon extends \yii\base\Model {
 		];
 	}
 
-	public function attributeLabels() : array {
+	public function attributeLabels(): array {
 		return [
 			'email' => 'Email Address',
 			'sourceImage' => 'Source Image',
@@ -28,7 +28,7 @@ class Favicon extends \yii\base\Model {
 		];
 	}
 
-	public function convertImage() : bool {
+	public function convertImage(): bool {
 		if ($this->validate()) {
 			try {
 				$rndFilename = uniqid('favicon');
