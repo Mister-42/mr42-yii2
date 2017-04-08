@@ -3,13 +3,8 @@ namespace app\models\feed;
 use XMLWriter;
 
 class Sitemap {
-	public function ageData(XMLWriter $dom, string $url, int $age, float $prio = null): XMLWriter {
-		return ($prio)
-			? self::prioData($dom, $url, $prio, $age)
-			: self::prioData($dom, $url, self::age2Prio($age), $age);
-	}
-
-	public function prioData(XMLWriter $doc, string $url, float $prio, int $age = null): XMLWriter {
+	public function lineItem(XMLWriter $doc, string $url, int $age = null, float $prio = null): XMLWriter {
+		$prio = $prio ?? self::age2Prio($age);
 		$doc->startElement('url');
 		$doc->writeElement('loc', $url);
 		if ($age) $doc->writeElement('lastmod', date(DATE_W3C, $age));
