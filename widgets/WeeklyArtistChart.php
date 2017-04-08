@@ -8,13 +8,13 @@ use yii\bootstrap\{Html, Widget};
 class WeeklyArtistChart extends Widget {
 	public $profile;
 
-	public function run() {
+	public function run(): string {
 		$user = User::find()->where(['username' => $this->profile])->one();
 		$items = WeeklyArtist::find()->where(['userid' => $user->id])->orderBy('count DESC')->all();
-		echo empty($items) ? Html::tag('p', 'No items to display.') : $this->renderFeed($items);
+		return empty($items) ? Html::tag('p', 'No items to display.') : $this->renderFeed($items);
 	}
 
-	public function renderFeed($items) {
+	public function renderFeed(array $items): string {
 		foreach ($items as $item)
 			$feed[] = Html::tag('div',
 				Html::tag('span', ++$count, ['class' => 'pull-left']) .
