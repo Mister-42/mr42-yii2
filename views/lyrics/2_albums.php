@@ -28,10 +28,12 @@ foreach ($albums as $album) :
 		if ($x++ === 0)
 			echo '<div class="col-sm-4 text-nowrap">';
 
-		$track->name = $track->lyricid
+		$track->name = $track->hasLyrics || $track->video
 			? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 			: $track->name;
 		echo implode(' · ', [$track->track, $track->name]);
+		if ($track->video)
+			echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 		echo '<br>';
 
 		if ($x === (int) ceil(count($album->tracks) / 3) || $y === count($album->tracks)) {

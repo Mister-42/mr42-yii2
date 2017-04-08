@@ -10,7 +10,7 @@ class Formatter extends \yii\i18n\Formatter {
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
 		if ($allowHtml)
-			$data = preg_replace('#@yt:([a-zA-Z0-9-]+):(16by9|4by3)#U', '<div class="embed-responsive embed-responsive-$2"><iframe class="embed-responsive-item" src="https://www.youtube.com/embed/$1?wmode=opaque" frameborder="0" allowfullscreen></iframe></div>', $data);
+			$data = preg_replace('#@yt:([a-zA-Z0-9-_]+):(16by9|4by3)#U', '<div class="embed-responsive embed-responsive-$2"><iframe class="embed-responsive-item" src="https://www.youtube.com/embed/$1?wmode=opaque" frameborder="0" allowfullscreen></iframe></div>', $data);
 		return trim($data);
 	}
 

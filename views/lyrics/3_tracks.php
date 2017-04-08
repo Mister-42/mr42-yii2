@@ -23,10 +23,14 @@ echo '<div class="site-lyrics-lyrics">';
 	foreach($tracks as $track) :
 		$y++;
 		if ($x++ === 0)
-			echo '<div class="col-sm-4 text-nowrap">';
+			echo '<div class="col-md-4 text-nowrap">';
 
 		echo $track->track . ' · ';
-		echo $track->lyricid ? Html::a($track->name, '#' . $track->track) : $track->name;
+		echo $track->hasLyrics || $track->video
+			? Html::a($track->name, '#' . $track->track)
+			: $track->name;
+		if ($track->video)
+			echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'resize-full', ['class' => 'text-muted']);
 		echo '<br>';
 
 		if ($x === (int) ceil(count($tracks) / 3) || $y === count($tracks)) {
@@ -37,13 +41,16 @@ echo '<div class="site-lyrics-lyrics">';
 	echo '</div>';
 
 	foreach($tracks as $track) :
-		if ($track->lyricid) {
+		if ($track->lyricid || $track->video) {
 			echo Html::tag('div',
 				Html::tag('div',
 					Html::a(null, null, ['class' => 'anchor', 'name' => $track->track]) .
 					Html::tag('h4', implode(' · ', [$track->track, $track->name])) .
-					Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics'])
-				, ['class' => 'col-lg-12'])
+					($track->lyricid ? Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics']) : '')
+				, ['class' => $track->lyricid ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .
+				Html::tag('div',
+					$track->video
+				, ['class' => $track->lyricid ? 'col-xs-12 col-sm-4' : 'col-sm-12'])
 			, ['class' => 'row']);
 		}
 	endforeach;

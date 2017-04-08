@@ -54,12 +54,12 @@ echo '</div>';
 
 ?><footer>
 	<div class="container">
-		<p class="pull-left"><?= date('&\c\o\p\y; 2014-Y ') . Yii::$app->name . Html::tag('span', ' · ' . Yii::powered(), ['class' => 'visible-md-inline visible-lg-inline']) ?></p>
+		<p class="pull-left"><?= date('&\c\o\p\y; 2014-Y ') . Yii::$app->name . Html::tag('span', ' · ' . Yii::powered(), ['class' => 'hidden-xs']) ?></p>
 		<p class="pull-right"><?php
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
-				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary visible-md-inline visible-lg-inline']) . ' ';
-				echo Html::a('RSS', ['/feed/rss'], ['class' => 'label label-warning visible-md-inline visible-lg-inline', 'target' => '_blank']);
+				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary hidden-xs']) . ' ';
+				echo Html::a('RSS', ['/feed/rss'], ['class' => 'label label-warning hidden-xs', 'target' => '_blank']);
 			}
 		?></p>
 	</div>

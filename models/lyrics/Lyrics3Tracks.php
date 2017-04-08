@@ -3,6 +3,9 @@ namespace app\models\lyrics;
 use Yii;
 
 class Lyrics3Tracks extends \yii\db\ActiveRecord {
+	public $hasLyrics;
+	public $video;
+
 	public static function tableName() {
 		return '{{%lyrics_3_tracks}}';
 	}
@@ -10,6 +13,8 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public function afterFind() {
 		parent::afterFind();
 		$this->track = sprintf('%02d', $this->track);
+		$this->hasLyrics = $this->lyricid && $this->lyricid != "00000000000000000000000000000000";
+		$this->video = $this->video_source && $this->video_id && $this->video_ratio ? Yii::$app->formatter->cleanInput("@{$this->video_source}:{$this->video_id}:{$this->video_ratio}", 'original', true) : null;
 	}
 
 	protected function baseList($artist, $year, $name) {
