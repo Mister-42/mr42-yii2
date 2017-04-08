@@ -26,7 +26,10 @@ foreach($articles as $article) :
 	$lastUpdate = $article['updated'];
 	foreach ($article['comments'] as $comment)
 		$lastUpdate = max($lastUpdate, $comment['created']);
-	Sitemap::lineItem($doc, Url::to(['articles/index', 'id' => $article['id'], 'title' => $article['url']], true), $lastUpdate);
+	Sitemap::lineItem($doc, [
+			Url::to(['articles/index', 'id' => $article['id'], 'title' => $article['url']], true),
+			Url::to(['articles/pdf', 'id' => $article['id'], 'title' => $article['url']], true)
+		], $lastUpdate);
 endforeach;
 
 $weight = ArrayHelper::getColumn($tags, 'weight');
@@ -40,9 +43,11 @@ Sitemap::lineItem($doc, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpd
 foreach($artists as $artist) :
 	$lastUpdate = Lyrics2Albums::lastUpdate($artist->url, $artist->albums);
 	Sitemap::lineItem($doc, Url::to(['lyrics/index', 'artist' => $artist->url], true), $lastUpdate, 0.6);
-	foreach($artist->albums as $album) :
-		Sitemap::lineItem($doc, Url::to(['lyrics/index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true), $album->updated, 0.5);
-	endforeach;
+	foreach($artist->albums as $album)
+		Sitemap::lineItem($doc, [
+				Url::to(['lyrics/index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true),
+				Url::to(['lyrics/albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true)
+			], $album->updated, 0.5);
 endforeach;
 
 $doc->endElement();
