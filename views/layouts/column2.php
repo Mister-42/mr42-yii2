@@ -35,16 +35,19 @@ $dependency = [
 			echo Item::widget([
 				'body' => RecentArticles::widget(),
 				'header' => Html::tag('h4', 'Latest Articles'),
+				'options' => ['id' => 'latestArticles'],
 			]);
 
 			echo Item::widget([
 				'body' => RecentComments::widget(),
 				'header' => Html::tag('h4', 'Latest Comments'),
+				'options' => ['id' => 'latestComments'],
 			]);
 
 			echo Item::widget([
 				'body' => TagCloud::widget(),
 				'header' => Html::tag('h4', 'Tags'),
+				'options' => ['id' => 'tags'],
 			]);
 
 			$this->endCache();

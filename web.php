@@ -8,6 +8,11 @@ $config = [
 		'authClientCollection' => [
 			'class'   => \yii\authclient\Collection::className(),
 			'clients' => [
+				'facebook' => [
+					'class'			=> 'dektrium\user\clients\Facebook',
+					'clientId'		=> $secrets['facebook']['Id'],
+					'clientSecret'	=> $secrets['facebook']['Secret'],
+				],
 				'github' => [
 					'class'			=> 'dektrium\user\clients\GitHub',
 					'clientId'		=> $secrets['github']['Id'],
