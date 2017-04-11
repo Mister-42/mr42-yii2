@@ -13,6 +13,8 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public function afterFind() {
 		parent::afterFind();
 		$this->track = sprintf('%02d', $this->track);
+		$this->disambiguation = $this->disambiguation ? ' (' . $this->disambiguation . ')' : null;
+		$this->feat = $this->feat ? ' (feat. ' . $this->feat . ')' : null;
 		$this->hasLyrics = $this->lyricid && $this->lyricid != "00000000000000000000000000000000";
 		$this->video = $this->video_source && $this->video_id && $this->video_ratio ? Yii::$app->formatter->cleanInput("@{$this->video_source}:{$this->video_id}:{$this->video_ratio}", 'original', true) : null;
 	}

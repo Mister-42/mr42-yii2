@@ -18,7 +18,7 @@ echo '<div class="site-lyrics-albums">';
 				Html::tag('div',
 					$album->active
 						? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
-						: Html::tag('span', 'Not published', ['class' => 'badge action'])
+						: Html::tag('span', 'Draft', ['class' => 'badge action'])
 				, ['class' => 'pull-right'])
 			, ['class' => 'clearfix'])
 		, ['class' => 'col-lg-12']);
@@ -33,6 +33,10 @@ echo '<div class="site-lyrics-albums">';
 				? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 				: $track->name;
 			echo implode(' · ', [$track->track, $track->name]);
+			if ($track->disambiguation)
+				echo $track->disambiguation;
+			if ($track->feat)
+				echo $track->feat;
 			if ($track->video)
 				echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 			echo '<br>';

@@ -12,11 +12,11 @@ use yii\bootstrap\Html;
 
 <br><br><br><?php
 echo '<div class="col-sm-12 mpdf_toc" id="mpdf_toc_0">';
-	foreach($tracks as $track) {
+	foreach($tracks as $track) :
 		echo '<div class="mpdf_toc_level_0">';
 
 		echo '<a class="mpdf_toc_a" href="#'.$track->track.'">';
-		echo '<span class="mpdf_toc_t_level_0">'.$track->name.'</span>';
+		echo '<span class="mpdf_toc_t_level_0">'.$track->name.$track->disambiguation.$track->feat.'</span>';
 		echo '</a>';
 
 		echo '<dottab outdent="2em" />';
@@ -26,14 +26,14 @@ echo '<div class="col-sm-12 mpdf_toc" id="mpdf_toc_0">';
 		echo '</a>';
 
 		echo '</div>';
-	}
+	endforeach;
 echo '</div>';
 
-foreach($tracks as $track) {
+foreach($tracks as $track) :
 	echo '<pagebreak>';
-	echo '<bookmark content="'.$track->name.'" />';
+	echo '<bookmark content="'.$track->name.$track->disambiguation.$track->feat.'" />';
 	echo Html::a(null, null, ['name' => $track->track]);
-	echo Html::tag('h3', $track->name);
+	echo Html::tag('h3', $track->name . $track->disambiguation . $track->feat);
 
 	if ($track->lyricid) {
 		echo $track->lyrics->lyrics;
@@ -41,4 +41,4 @@ foreach($tracks as $track) {
 		echo Html::img(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/TrebleClef.png');
 		echo Html::tag('strong', 'Instrumental');
 	}
-}
+endforeach;

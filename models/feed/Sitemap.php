@@ -3,12 +3,10 @@ namespace app\models\feed;
 use XMLWriter;
 
 class Sitemap {
-	public function lineItem(XMLWriter $doc, $url, int $age = null, float $priority = null): XMLWriter {
+	public function lineItem(XMLWriter $doc, string $url, int $age = null, float $priority = null): XMLWriter {
 		$priority = $priority ?? self::getPriority($age);
-		$url = is_array($url) ? $url : [$url];
 		$doc->startElement('url');
-		foreach ($url as $loc)
-			$doc->writeElement('loc', $loc);
+		$doc->writeElement('loc', $url);
 		if ($age) $doc->writeElement('lastmod', date(DATE_W3C, $age));
 		$doc->writeElement('changefreq', self::getChangefreq($priority));
 		$doc->writeElement('priority', round($priority, 2));

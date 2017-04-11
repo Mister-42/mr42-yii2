@@ -14,7 +14,7 @@ echo '<div class="site-lyrics-lyrics">';
 		Html::tag('div',
 			$tracks[0]->album->active
 				? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], ['class' => 'btn btn-xs btn-warning action'])
-				: Html::tag('span', 'Not published', ['class' => 'badge action'])
+				: Html::tag('span', 'Draft', ['class' => 'badge action'])
 		, ['class' => 'pull-right'])
 	, ['class' => 'clearfix']);
 
@@ -29,6 +29,8 @@ echo '<div class="site-lyrics-lyrics">';
 		echo $track->hasLyrics || $track->video
 			? Html::a($track->name, '#' . $track->track)
 			: $track->name;
+		if ($track->disambiguation)
+			echo $track->disambiguation;
 		if ($track->video)
 			echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 		echo '<br>';
@@ -45,7 +47,7 @@ echo '<div class="site-lyrics-lyrics">';
 			echo Html::tag('div',
 				Html::tag('div',
 					Html::a(null, null, ['class' => 'anchor', 'name' => $track->track]) .
-					Html::tag('h4', implode(' · ', [$track->track, $track->name])) .
+					Html::tag('h4', implode(' · ', [$track->track, $track->name . $track->disambiguation . $track->feat])) .
 					($track->lyricid ? Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics']) : '')
 				, ['class' => $track->lyricid ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .
 				Html::tag('div',
