@@ -24,14 +24,9 @@ class ToolsController extends Controller {
 		];
 	}
 
-	public function actionIndex() {
-		return $this->goHome();
-	}
-
 	public function actionCountry() {
-		$model = new Country;
 		return $this->render('country', [
-			'model' => $model,
+			'model' => new Country,
 		]);
 	}
 
@@ -67,11 +62,8 @@ class ToolsController extends Controller {
 
 	public function actionPhoneticAlphabet() {
 		$model = new PhoneticAlphabet;
-
-		if ($model->load(Yii::$app->request->post())) {
-			if ($model->convertText())
-				return $this->refresh();
-		}
+		if ($model->load(Yii::$app->request->post()))
+			$model->convertText();
 
 		return $this->render('phonetic-alphabet', [
 			'model' => $model,

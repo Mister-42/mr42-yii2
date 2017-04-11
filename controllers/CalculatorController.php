@@ -21,10 +21,6 @@ class CalculatorController extends \yii\web\Controller {
 		];
 	}
 
-	public function actionIndex() {
-		return $this->goHome();
-	}
-
 	public function actionDate() {
 		$model = new Date;
 		if ($model->load(Yii::$app->request->post()))

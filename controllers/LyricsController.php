@@ -83,7 +83,6 @@ class LyricsController extends Controller {
 	public function actionAlbumpdf() {
 		$get = Yii::$app->request->get();
 		$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
-		$html = $this->renderPartial('albumPdf', ['tracks' => $tracks]);
 
 		if (count($tracks) === 0)
 			throw new NotFoundHttpException('Album not found.');
@@ -91,7 +90,7 @@ class LyricsController extends Controller {
 		if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])
 			$this->redirect(['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
 
-		$fileName = Lyrics2Albums::buildPdf($tracks, $html);
+		$fileName = Lyrics2Albums::buildPdf($tracks, $this->renderPartial('albumPdf', ['tracks' => $tracks]));
 		Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]).'.pdf');
 	}
 }

@@ -84,6 +84,13 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 		}
 	}
 
+	&lyrics-albums,
+	&lyrics-lyrics {
+		.glyphicon.text-muted  {
+			color: $lighterBlue;
+		}
+	}
+
 	&lyrics {
 		.artists {
 			font-weight: bold;

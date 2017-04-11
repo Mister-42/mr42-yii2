@@ -30,7 +30,7 @@ echo '<div class="site-lyrics-lyrics">';
 			? Html::a($track->name, '#' . $track->track)
 			: $track->name;
 		if ($track->video)
-			echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'resize-full', ['class' => 'text-muted']);
+			echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 		echo '<br>';
 
 		if ($x === (int) ceil(count($tracks) / 3) || $y === count($tracks)) {
