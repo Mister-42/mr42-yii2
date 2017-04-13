@@ -32,11 +32,7 @@ echo '<div class="site-lyrics-albums">';
 			$track->name = $track->hasLyrics || $track->video
 				? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 				: $track->name;
-			echo implode(' · ', [$track->track, $track->name]);
-			if ($track->disambiguation)
-				echo $track->disambiguation;
-			if ($track->feat)
-				echo $track->feat;
+			echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
 			if ($track->video)
 				echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 			echo '<br>';

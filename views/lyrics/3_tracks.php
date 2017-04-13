@@ -29,8 +29,7 @@ echo '<div class="site-lyrics-lyrics">';
 		echo $track->hasLyrics || $track->video
 			? Html::a($track->name, '#' . $track->track)
 			: $track->name;
-		if ($track->disambiguation)
-			echo $track->disambiguation;
+		echo $track->disambiguation . $track->feat;
 		if ($track->video)
 			echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 		echo '<br>';

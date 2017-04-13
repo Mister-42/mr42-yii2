@@ -1,6 +1,7 @@
 <?php
 return [
 	'adminEmail' => $secrets['params']['adminEmail'],
+	'BingSiteAuth' => $secrets['bing']['SiteAuth'],
 	'description' => 'Sharing beautiful knowledge of the world.',
 	'feedItemCount' => 10,
 	'GitHubHook' => $secrets['github']['hook'],

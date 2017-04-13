@@ -65,6 +65,12 @@ class SiteController extends Controller {
 		return $this->render('index');
 	}
 
+	public function actionBingSiteAuth() {
+		Yii::$app->response->format = Response::FORMAT_RAW;
+		Yii::$app->response->headers->add('Content-Type', 'application/xml');
+		return $this->renderPartial('bing-site-auth');
+	}
+
 	public function actionChangelog() {
 		return $this->render('changelog');
 	}
