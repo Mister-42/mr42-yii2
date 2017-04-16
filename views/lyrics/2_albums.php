@@ -12,16 +12,14 @@ echo '<div class="site-lyrics-albums">';
 		echo '<div class="row">';
 		echo Html::tag('div',
 			Html::tag('div',
-				Html::tag('div',
-					Html::tag('h3', $album->year . ' · ' . Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url]))
-				, ['class' => 'pull-left']) .
-				Html::tag('div',
-					$album->active
-						? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
-						: Html::tag('span', 'Draft', ['class' => 'badge action'])
-				, ['class' => 'pull-right'])
-			, ['class' => 'clearfix'])
-		, ['class' => 'col-lg-12']);
+				Html::tag('h3', $album->year . ' · ' . Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url]))
+			, ['class' => 'pull-left']) .
+			Html::tag('div',
+				$album->active
+					? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
+					: Html::tag('span', 'Draft', ['class' => 'badge action'])
+			, ['class' => 'pull-right'])
+		, ['class' => 'clearfix col-lg-12']);
 
 		$x = $y = 0;
 		foreach ($album->tracks as $track) :

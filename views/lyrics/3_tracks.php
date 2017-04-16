@@ -1,4 +1,5 @@
 <?php
+use app\models\lyrics\Lyrics2Albums;
 use yii\bootstrap\Html;
 
 $this->title = implode(' - ', [$tracks[0]->artist->name, $tracks[0]->album->name, 'Lyrics']);
@@ -40,6 +41,13 @@ echo '<div class="site-lyrics-lyrics">';
 		}
 	endforeach;
 	echo '</div>';
+
+	if ($tracks[0]->album->image)
+		echo Html::tag('div',
+			Html::tag('div',
+				Html::img(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$tracks[0]->artist->name, $tracks[0]->album->name]), 'class' => 'center-block img-responsive', 'height' => 500, 'width' => 500])
+			, ['class' => 'col-xs-12'])
+		, ['class' => 'row']);
 
 	foreach($tracks as $track) :
 		if ($track->lyricid || $track->video) {

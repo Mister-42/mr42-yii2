@@ -1,7 +1,5 @@
 <?php
 namespace app\models\tools;
-use Imagick;
-use ImagickException;
 use Yii;
 
 class Favicon extends \yii\base\Model {
@@ -30,45 +28,39 @@ class Favicon extends \yii\base\Model {
 
 	public function convertImage(): bool {
 		if ($this->validate()) {
-			try {
-				$rndFilename = uniqid('favicon');
-				$srcImg = $this->sourceImage->tempName;
-				$geo['width'] = exec('convert ' . $srcImg .  ' -print "%w"');
-				$geo['height'] = exec('convert ' . $srcImg .  ' -print "%h"');
+			$rndFilename = uniqid('favicon');
+			$srcImg = $this->sourceImage->tempName;
+			list($width, $height) = getimagesize($srcImg);
 
-				if (empty($geo['width'])) {
-					Yii::$app->getSession()->setFlash('favicon-error', 'Uploaded file could not be converted. Make sure you upload a valid image.');
-					unlink($srcImg);
-					return false;
-				}
-
-				$tmpSize = min(640, $geo['width'], $geo['height']);
-				($tmpSize / $geo['width'] * $geo['height'] > $tmpSize) ? exec('convert -scale '.$tmpSize.',0'.$srcImg) : exec('convert -scale 0,'.$tmpSize.' '.$srcImg);
-				exec('convert -crop '.$tmpSize.'x'.$tmpSize.' '.$srcImg);
-
-				foreach ($this->dimensions as $dimension) {
-					$tmpFiles[] = Yii::getAlias('@webroot/assets/temp/'.$rndFilename.'.'.$dimension.'.png');
-					exec('convert -scale '.$dimension.' '.$srcImg.' '.end($tmpFiles));
-				}
-				exec('convert '.implode(' ', $tmpFiles).' '.Yii::getAlias('@webroot/assets/temp/favicon/'.$rndFilename.'.ico'));
-				foreach ($tmpFiles as $file)
-					unlink($file);
-				unlink($srcImg);
-
-				if ($this->email)
-					Yii::$app->mailer
-						->compose(['html' => 'faviconRequester'])
-						->setTo($this->email)
-						->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name])
-						->setSubject('Your favicon file from '.Yii::$app->name)
-						->attach(Yii::getAlias('@webroot/assets/temp/favicon/'.$rndFilename.'.ico'), ['fileName' => 'favicon.ico'])
-						->send();
-				Yii::$app->getSession()->setFlash('favicon-success', $rndFilename.'.ico');
-				return true;
-			} catch(ImagickException $e) {
+			if (empty($width)) {
 				Yii::$app->getSession()->setFlash('favicon-error', 'Uploaded file could not be converted. Make sure you upload a valid image.');
+				unlink($srcImg);
 				return false;
 			}
+
+			$tmpSize = min(640, $width, $height);
+			$tmpSize / $width * $height > $tmpSize ? exec("convert -scale {$tmpSize},0 {$srcImg}") : exec('convert -scale 0,'.$tmpSize.' '.$srcImg);
+			exec("convert -crop {$tmpSize}x{$tmpSize} {$srcImg}");
+
+			foreach ($this->dimensions as $dimension) :
+				$tmpFiles[] = Yii::getAlias("@webroot/assets/temp/{$rndFilename}.{$dimension}.png");
+				exec("convert -scale {$dimension} {$srcImg} ".end($tmpFiles));
+			endforeach;
+			exec('convert '.implode(' ', $tmpFiles).' '.Yii::getAlias("@webroot/assets/temp/favicon/{$rndFilename}.ico"));
+			foreach ($tmpFiles as $file)
+				unlink($file);
+			unlink($srcImg);
+
+			if ($this->email)
+				Yii::$app->mailer
+					->compose(['html' => 'faviconRequester'])
+					->setTo($this->email)
+					->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name])
+					->setSubject('Your favicon file from '.Yii::$app->name)
+					->attach(Yii::getAlias("@webroot/assets/temp/favicon/{$rndFilename}.ico"), ['fileName' => 'favicon.ico'])
+					->send();
+			Yii::$app->getSession()->setFlash('favicon-success', $rndFilename.'.ico');
+			return true;
 		}
 
 		Yii::$app->getSession()->setFlash('favicon-error', 'Validation failed. Please upload a valid image.');

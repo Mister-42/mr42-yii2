@@ -29,7 +29,7 @@ class LyricsController extends Controller {
 					elseif (isset($get['artist']) && isset($get['year']) && isset($get['album']))
 						return Lyrics3Tracks::lastUpdate($get['artist'], $get['year'], $get['album']);
 				},
-				'only' => ['index', 'albumpdf'],
+				'only' => ['index', 'albumpdf', 'cover'],
 			],
 		];
 	}
@@ -65,19 +65,13 @@ class LyricsController extends Controller {
 				$this->redirect(['index', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
 
 			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
+			if ($tracks[0]->album->image)
+				Yii::$app->view->registerLinkTag(['property' => 'og:image', 'content' => Url::to(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 'cover'], true)]);
+			Yii::$app->view->registerLinkTag(['property' => 'og:type', 'content' => 'music.album']);
 			return $this->render('3_tracks', [
 				'tracks' => $tracks,
 			]);
 		}
-	}
-
-	public function actionRecenttracks() {
-		if (!Yii::$app->request->isAjax)
-			throw new MethodNotAllowedHttpException('Method Not Allowed.');
-
-		return $this->renderAjax('recentTracks', [
-			'userid' => 1,
-		]);
 	}
 
 	public function actionAlbumpdf() {
@@ -92,5 +86,28 @@ class LyricsController extends Controller {
 
 		$fileName = Lyrics2Albums::buildPdf($tracks, $this->renderPartial('albumPdf', ['tracks' => $tracks]));
 		Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]).'.pdf');
+	}
+
+	public function actionCover() {
+		$get = Yii::$app->request->get();
+		$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
+
+		if (count($tracks) === 0 || !$tracks[0]->album->image || !in_array($get['size'], [500, 'cover']))
+			throw new NotFoundHttpException('Cover not found.');
+
+		if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])
+			$this->redirect(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
+
+		list($fileName, $image) = Lyrics2Albums::getCover($get['size'], $tracks);
+		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
+	}
+
+	public function actionRecenttracks() {
+		if (!Yii::$app->request->isAjax)
+			throw new MethodNotAllowedHttpException('Method Not Allowed.');
+
+		return $this->renderAjax('recentTracks', [
+			'userid' => 1,
+		]);
 	}
 }

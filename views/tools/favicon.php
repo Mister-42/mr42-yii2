@@ -26,7 +26,7 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 			Alert::begin(['options' => ['class' => 'alert-success']]);
 			echo Html::img(Url::to('@web/assets/temp/favicon/'.$icon), ['alt' => 'favicon.ico', 'class' => 'inline-left pull-left', 'height' => 64, 'width' => 64]);
 			echo '<p>Your icon has been generated successfully. Save it to your website and add the code below between the &lt;head&gt; tags of your html. This will allow all major browsers to show the icon when the website is accessed and/or bookmarked.<br>';
-			echo 'Do not link the icon directly to this website. Your icon will soon be automatically deleted.</p>';
+			echo 'Do not link to the icon on this website directly. Your icon will be deleted shortly.</p>';
 			echo '<br><pre><code>&lt;link rel="icon" href="/path/to/'.$icon.'" type="image/x-icon" sizes="'.implode(' ', $dimensions).'" /&gt;</code></pre>';
 			Alert::end();
 		}

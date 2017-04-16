@@ -2,7 +2,9 @@
 namespace app\models\lyrics;
 use Yii;
 use app\models\Pdf;
+use yii\behaviors\TimestampBehavior;
 use yii\bootstrap\Html;
+use yii\db\Expression;
 use yii\helpers\Url;
 
 class Lyrics2Albums extends \yii\db\ActiveRecord {
@@ -15,6 +17,17 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		$this->url = $this->url ?? $this->name;
 		$this->updated = strtotime($this->updated);
 		$this->active = (bool) $this->active;
+	}
+
+	public function behaviors() {
+		return [
+			[
+				'class' => TimestampBehavior::className(),
+				'createdAtAttribute' => 'updated',
+				'updatedAtAttribute' => 'updated',
+				'value' => new Expression('NOW()'),
+			],
+		];
 	}
 
 	public function albumsList($artist) {
@@ -49,6 +62,28 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 				'title' => implode(' - ', [$tracks[0]->artist->name, $tracks[0]->album->name, 'Lyrics']),
 			]
 		);
+	}
+
+	public function getCover($size, $tracks) {
+		$image = $tracks->image ?? $tracks[0]->album->image;
+		if ($size !== 'cover') {
+			$process = proc_open("convert -resize {$size} -strip -quality 85% -interlace Plane - jpg:-", [0 => ['pipe', 'r'], 1 => ['pipe', 'w']], $pipes);
+			if (is_resource($process)) {
+				fwrite($pipes[0], $image);
+				fclose($pipes[0]);
+
+				$image = stream_get_contents($pipes[1]);
+				fclose($pipes[1]);
+
+				proc_close($process);
+			}
+		}
+
+		if (!$tracks->image) {
+			$fileName = implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]);
+			$fileName .= $size === 'cover' ? '' : '-' . $size;
+		}
+		return $tracks->image ? [$image] : [$fileName.'.jpg', $image];
 	}
 
 	public function getArtist() {
