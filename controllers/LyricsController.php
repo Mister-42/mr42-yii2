@@ -66,8 +66,8 @@ class LyricsController extends Controller {
 
 			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
 			if ($tracks[0]->album->image)
-				Yii::$app->view->registerLinkTag(['property' => 'og:image', 'content' => Url::to(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 'cover'], true)]);
-			Yii::$app->view->registerLinkTag(['property' => 'og:type', 'content' => 'music.album']);
+				Yii::$app->view->registerMetaTag(['property' => 'og:image', 'content' => Url::to(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 'cover'], true)]);
+			Yii::$app->view->registerMetaTag(['property' => 'og:type', 'content' => 'music.album']);
 			return $this->render('3_tracks', [
 				'tracks' => $tracks,
 			]);

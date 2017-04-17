@@ -1,5 +1,4 @@
 <?php
-use app\models\lyrics\Lyrics2Albums;
 use yii\bootstrap\Html;
 
 $this->title = implode(' - ', [$tracks[0]->artist->name, $tracks[0]->album->name, 'Lyrics']);
@@ -53,7 +52,7 @@ echo '<div class="site-lyrics-lyrics">';
 		if ($track->lyricid || $track->video) {
 			echo Html::tag('div',
 				Html::tag('div',
-					Html::a(null, null, ['class' => 'anchor', 'name' => $track->track]) .
+					Html::a(null, null, ['class' => 'anchor', 'id' => $track->track]) .
 					Html::tag('h4', implode(' · ', [$track->track, $track->name . $track->disambiguation . $track->feat])) .
 					($track->lyricid ? Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics']) : '')
 				, ['class' => $track->lyricid ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .

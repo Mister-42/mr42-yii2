@@ -34,9 +34,9 @@ class ImageController extends Controller {
 				$this->stdout("{$width}x{$height}\t");
 				if ($width > 999 && $height > 999) {
 					list($album->image) = Lyrics2Albums::getCover(999, $album);
-					list($width, $height) = getimagesizefromstring($album->image);
 					$album->url = $album->name === $album->url ? null : $album->url;
 					$album->save();
+					list($width, $height) = getimagesizefromstring($album->image);
 					$this->stdout($this->ansiFormat("{$width}x{$height}\n", Console::BOLD, Console::FG_GREEN));
 					continue;
 				}
