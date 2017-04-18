@@ -18,14 +18,15 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	}
 
 	public function artistsList() {
-		return self::baseList()
+		return self::find()
+			->orderBy('name')
 			->all();
 	}
 
 	public function albumsList() {
-		return self::baseList()
-			->joinWith('albums')
-			->all();
+		return self::find()
+			->orderBy('name')
+			->each();
 	}
 
 	public function lastUpdate($data, $max = null) {
@@ -47,10 +48,5 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 					? ['or', [self::tableName().'.`active`' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
 					: [self::tableName().'.`active`' => Self::STATUS_ACTIVE]
 			);
-	}
-
-	protected function baseList() {
-		return self::find()
-			->orderBy('name');
 	}
 }

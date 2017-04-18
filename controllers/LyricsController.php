@@ -39,7 +39,6 @@ class LyricsController extends Controller {
 		$get = Yii::$app->request->get();
 
 		if (!isset($get['artist']) && !isset($get['year']) && !isset($get['album'])) {
-			$this->layout = '@app/views/layouts/recenttracks.php';
 			return $this->render('1_artists', [
 				'artists' => Lyrics1Artists::artistsList(),
 			]);
@@ -58,7 +57,7 @@ class LyricsController extends Controller {
 		} elseif (isset($get['artist']) && isset($get['year']) && isset($get['album'])) {
 			$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
 
-			if (count($tracks) === 0)
+			if (!$tracks[0]->album->active || count($tracks) === 0)
 				throw new NotFoundHttpException('Album not found.');
 
 			if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])
@@ -78,7 +77,7 @@ class LyricsController extends Controller {
 		$get = Yii::$app->request->get();
 		$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
 
-		if (count($tracks) === 0)
+		if (!$tracks[0]->album->active || count($tracks) === 0)
 			throw new NotFoundHttpException('Album not found.');
 
 		if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])
@@ -100,14 +99,5 @@ class LyricsController extends Controller {
 
 		list($fileName, $image) = Lyrics2Albums::getCover($get['size'], $tracks);
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
-	}
-
-	public function actionRecenttracks() {
-		if (!Yii::$app->request->isAjax)
-			throw new MethodNotAllowedHttpException('Method Not Allowed.');
-
-		return $this->renderAjax('recentTracks', [
-			'userid' => 1,
-		]);
 	}
 }

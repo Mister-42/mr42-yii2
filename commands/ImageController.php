@@ -10,12 +10,12 @@ use yii\helpers\Console;
  */
 class ImageController extends Controller {
 	const TABSIZE = 8;
-	public $defaultAction = 'album-covers';
+	public $defaultAction = 'albums';
 
 	/**
 	 * Resizes all album covers to 999x999 if they exceed this limit.
 	*/
-	public function actionAlbumCovers() {
+	public function actionAlbums() {
 		foreach(Lyrics1Artists::albumsList() as $artist) :
 			$artistName = $this->ansiFormat($artist->name, Console::FG_PURPLE);
 			foreach($artist->albums as $album) :

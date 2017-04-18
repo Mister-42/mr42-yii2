@@ -28,6 +28,8 @@ class PdfController extends Controller {
 		foreach(Lyrics1Artists::albumsList() as $artist) :
 			$artistName = $this->ansiFormat($artist->name, Console::FG_PURPLE);
 			foreach($artist->albums as $album) :
+				if (!$album->active)
+					continue;
 				$albumYear = $this->ansiFormat($album->year, Console::FG_GREEN);
 				$albumName = $this->ansiFormat($album->name, Console::FG_GREEN);
 				$this->stdout("$artistName");

@@ -11,13 +11,13 @@ echo '<div class="site-lyrics-albums">';
 	foreach ($albums as $album) :
 		echo '<div class="row">';
 		echo Html::tag('div',
-			Html::tag('div',
-				Html::tag('h3', $album->year . ' · ' . Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url]))
-			, ['class' => 'pull-left']) .
-			Html::tag('div',
-				$album->active
-					? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
-					: Html::tag('span', 'Draft', ['class' => 'badge action'])
+			Html::tag('div', Html::tag('h3', "{$album->year} · " . ($album->active
+				? Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
+				: $album->name
+			)), ['class' => 'pull-left']) .
+			Html::tag('div', $album->active
+				? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
+				: Html::tag('span', 'Lyrics not available yet', ['class' => 'badge action'])
 			, ['class' => 'pull-right'])
 		, ['class' => 'clearfix col-lg-12']);
 
@@ -27,7 +27,7 @@ echo '<div class="site-lyrics-albums">';
 			if ($x++ === 0)
 				echo '<div class="col-sm-4 text-nowrap">';
 
-			$track->name = $track->hasLyrics || $track->video
+			$track->name = $album->active && ($track->hasLyrics || $track->video)
 				? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 				: $track->name;
 			echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;

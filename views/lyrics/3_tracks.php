@@ -23,7 +23,7 @@ echo '<div class="site-lyrics-lyrics">';
 	foreach($tracks as $track) :
 		$y++;
 		if ($x++ === 0)
-			echo '<div class="col-md-4 text-nowrap">';
+			echo '<div class="col-sm-4 text-nowrap">';
 
 		echo $track->track . ' · ';
 		echo $track->hasLyrics || $track->video

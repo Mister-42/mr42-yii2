@@ -97,7 +97,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public static function find() {
 		return parent::find()
 			->onCondition(
-				php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
+				Yii::$app->controller->action->id !== 'sitemap'
 					? ['or', [self::tableName().'.`active`' => [Lyrics1Artists::STATUS_INACTIVE, Lyrics1Artists::STATUS_ACTIVE]]]
 					: [self::tableName().'.`active`' => Lyrics1Artists::STATUS_ACTIVE]
 			);

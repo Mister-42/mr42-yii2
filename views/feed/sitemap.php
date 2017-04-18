@@ -1,5 +1,6 @@
 <?php
-use app\models\articles\Tags;
+use app\models\Menu;
+use app\models\articles\{Articles, Tags};
 use app\models\feed\Sitemap;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums};
 use yii\base\View;
@@ -17,9 +18,10 @@ $doc->writeAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/site
 
 Sitemap::lineItem($doc, Url::home(true), filemtime(View::findViewFile('@app/views/site/index')), 1);
 
-foreach($pages as $page)
+foreach(Menu::getUrlList() as $page)
 	Sitemap::lineItem($doc, Url::to([$page], true), filemtime(View::findViewFile('@app/views' . $page)));
 
+$articles = Articles::find()->orderBy('created')->with('comments')->all();
 Sitemap::lineItem($doc, Url::to(['articles/index'], true), end($articles)->updated, 0.8);
 
 foreach($articles as $article) :
@@ -29,16 +31,19 @@ foreach($articles as $article) :
 	Sitemap::lineItem($doc, Url::to(['articles/index', 'id' => $article['id'], 'title' => $article['url']], true), $lastUpdate);
 	Sitemap::lineItem($doc, Url::to(['articles/pdf', 'id' => $article['id'], 'title' => $article['url']], true), $lastUpdate);
 endforeach;
+unset($articles);
 
+$tags = Tags::findTagWeights();
 $weight = ArrayHelper::getColumn($tags, 'weight');
 foreach($tags as $tag => $value) :
 	$lastUpdate = Tags::lastUpdate($tag);
 	Sitemap::lineItem($doc, Url::to(['articles/index', 'action' => 'tag', 'tag' => $tag], true), $lastUpdate, $value['weight'] / max($weight) - 0.2);
 endforeach;
+unset($tags);
 
 Sitemap::lineItem($doc, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpdate(null));
 
-foreach($artists as $artist) :
+foreach(Lyrics1Artists::albumsList() as $artist) :
 	$lastUpdate = Lyrics2Albums::lastUpdate($artist->url, $artist->albums);
 	Sitemap::lineItem($doc, Url::to(['lyrics/index', 'artist' => $artist->url], true), $lastUpdate, 0.65);
 	foreach($artist->albums as $album) :

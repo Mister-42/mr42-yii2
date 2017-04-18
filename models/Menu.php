@@ -6,7 +6,7 @@ use yii\bootstrap\Html;
 
 class Menu {
 	public function getItemList() : array {
-		$isGuest = (Yii::$app->controller->action->id === 'sitemap') ? true : Yii::$app->user->isGuest;
+		$isGuest = Yii::$app->controller->action->id === 'sitemap' ? true : Yii::$app->user->isGuest;
 		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 		$unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACTIVE])->count() : 0;
 		$unreadBadge = $unread > 0 ? Html::tag('span', $unread, ['class' => 'badge']) : '';
