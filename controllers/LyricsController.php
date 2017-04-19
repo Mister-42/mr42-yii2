@@ -57,7 +57,7 @@ class LyricsController extends Controller {
 		} elseif (isset($get['artist']) && isset($get['year']) && isset($get['album'])) {
 			$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
 
-			if (!$tracks[0]->album->active || count($tracks) === 0)
+			if ((!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active) || count($tracks) === 0)
 				throw new NotFoundHttpException('Album not found.');
 
 			if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])

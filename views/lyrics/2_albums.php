@@ -11,7 +11,7 @@ echo '<div class="site-lyrics-albums">';
 	foreach ($albums as $album) :
 		echo '<div class="row">';
 		echo Html::tag('div',
-			Html::tag('div', Html::tag('h3', "{$album->year} · " . ($album->active
+			Html::tag('div', Html::tag('h3', "{$album->year} · " . ((Yii::$app->user->identity->isAdmin || $album->active) && $album->tracks
 				? Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
 				: $album->name
 			)), ['class' => 'pull-left']) .
@@ -27,7 +27,7 @@ echo '<div class="site-lyrics-albums">';
 			if ($x++ === 0)
 				echo '<div class="col-sm-4 text-nowrap">';
 
-			$track->name = $album->active && ($track->hasLyrics || $track->video)
+			$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->hasLyrics || $track->video)
 				? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 				: $track->name;
 			echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
