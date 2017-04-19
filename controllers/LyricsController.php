@@ -4,7 +4,7 @@ use Yii;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\filters\HttpCache;
 use yii\helpers\Url;
-use yii\web\{Controller, MethodNotAllowedHttpException, NotFoundHttpException};
+use yii\web\{Controller, NotFoundHttpException};
 
 class LyricsController extends Controller {
 	public function behaviors() {

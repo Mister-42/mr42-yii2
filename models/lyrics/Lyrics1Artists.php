@@ -26,6 +26,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	public function albumsList() {
 		return self::find()
 			->orderBy('name')
+			->with('albums')
 			->each();
 	}
 
