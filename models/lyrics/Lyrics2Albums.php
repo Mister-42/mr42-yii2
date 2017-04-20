@@ -50,19 +50,19 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return $max;
 	}
 
-	public function buildPdf($tracks, $html) {
+	public function buildPdf($album, $html) {
 		$pdf = new Pdf();
 		return $pdf->create(
-			'@runtime/PDF/lyrics/'.implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]),
+			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
 			$html,
-			Lyrics3Tracks::lastUpdate($tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url, $tracks),
+			Lyrics3Tracks::lastUpdate($album->artist->url, $album->year, $album->url, (object)['item' => (object)['album' => $album]]),
 			[
-				'author' => $tracks[0]->artist->name,
-				'footer' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.$tracks[0]->album->year.'|Page {PAGENO} of {nb}',
-				'header' => $tracks[0]->artist->name.'|Lyrics|'.$tracks[0]->album->name,
-				'keywords' => implode(', ', [$tracks[0]->artist->name, $tracks[0]->album->name, 'lyrics']),
-				'subject' => $tracks[0]->artist->name.' - '.$tracks[0]->album->name,
-				'title' => implode(' - ', [$tracks[0]->artist->name, $tracks[0]->album->name, 'Lyrics']),
+				'author' => $album->artist->name,
+				'footer' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.$album->year.'|Page {PAGENO} of {nb}',
+				'header' => $album->artist->name.'|Lyrics|'.$album->name,
+				'keywords' => implode(', ', [$album->artist->name, $album->name, 'lyrics']),
+				'subject' => $album->artist->name.' - '.$album->name,
+				'title' => implode(' - ', [$album->artist->name, $album->name, 'Lyrics']),
 			]
 		);
 	}

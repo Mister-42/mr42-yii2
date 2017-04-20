@@ -22,8 +22,8 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public function tracksList($artist, $year, $name) {
 		return self::find()
 			->orderBy('track')
-			->joinWith('artist', 'lyrics')
-			->with('album')
+			->joinWith('artist')
+			->with('album', 'lyrics')
 			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
 			->andWhere(Lyrics2Albums::tableName().'.year=:year')
 			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])
@@ -36,7 +36,8 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		foreach ($data as $item) :
 			$max = max($max, $item->album->updated);
 			foreach ($item->album->tracks as $track)
-				$max = max($max, $track->lyrics->updated);
+				if ($track->lyrics)
+					$max = max($max, $track->lyrics->updated);
 		endforeach;
 		return $max;
 	}
