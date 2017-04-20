@@ -39,7 +39,7 @@ class PdfController extends Controller {
 				for($x=0; $x<(8 - intdiv(mb_strlen($album->name), Self::TABSIZE)); $x++)
 					$this->stdout("\t");
 
-				$tracks = Lyrics3Tracks::tracksListFull($album->artist->url, $album->year, $album->url);
+				$tracks = Lyrics3Tracks::tracksList($album->artist->url, $album->year, $album->url);
 				$html = $this->renderPartial('@app/views/lyrics/albumPdf', ['tracks' => $tracks]);
 				$fileName = Lyrics2Albums::buildPdf($tracks, $html);
 

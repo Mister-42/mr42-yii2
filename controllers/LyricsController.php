@@ -55,7 +55,7 @@ class LyricsController extends Controller {
 				'albums' => $albums,
 			]);
 		} elseif (isset($get['artist']) && isset($get['year']) && isset($get['album'])) {
-			$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
+			$tracks = Lyrics3Tracks::tracksList($get['artist'], $get['year'], $get['album']);
 
 			if ((!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active) || count($tracks) === 0)
 				throw new NotFoundHttpException('Album not found.');
@@ -75,7 +75,7 @@ class LyricsController extends Controller {
 
 	public function actionAlbumpdf() {
 		$get = Yii::$app->request->get();
-		$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
+		$tracks = Lyrics3Tracks::tracksList($get['artist'], $get['year'], $get['album']);
 
 		if (!$tracks[0]->album->active || count($tracks) === 0)
 			throw new NotFoundHttpException('Album not found.');
@@ -89,7 +89,7 @@ class LyricsController extends Controller {
 
 	public function actionCover() {
 		$get = Yii::$app->request->get();
-		$tracks = Lyrics3Tracks::tracksListFull($get['artist'], $get['year'], $get['album']);
+		$tracks = Lyrics3Tracks::tracksList($get['artist'], $get['year'], $get['album']);
 
 		if (count($tracks) === 0 || !$tracks[0]->album->image || !in_array($get['size'], [500, 'cover']))
 			throw new NotFoundHttpException('Cover not found.');

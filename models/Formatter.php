@@ -9,8 +9,10 @@ class Formatter extends \yii\i18n\Formatter {
 		$data = $allowHtml ? parent::asRaw($data) : parent::asHtml($data, ['HTML.Allowed' => '']);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
-		if ($allowHtml)
-			$data = preg_replace('#@yt:([a-zA-Z0-9-_]+):(16by9|4by3)#U', '<div class="embed-responsive embed-responsive-$2"><iframe class="embed-responsive-item" src="https://www.youtube.com/embed/$1?wmode=opaque" frameborder="0" allowfullscreen></iframe></div>', $data);
+		if ($allowHtml) {
+			$data = preg_replace('#@vimeo:([0-9]+):(16by9|4by3)#U', '<div class="embed-responsive embed-responsive-$2"><iframe class="embed-responsive-item" src="https://player.vimeo.com/video/$1?byline=0&portrait=0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>', $data);
+			$data = preg_replace('#@yt:([a-zA-Z0-9-_]+):(16by9|4by3)#U', '<div class="embed-responsive embed-responsive-$2"><iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/$1?rel=0&wmode=opaque" allowfullscreen></iframe></div>', $data);
+		}
 		return trim($data);
 	}
 

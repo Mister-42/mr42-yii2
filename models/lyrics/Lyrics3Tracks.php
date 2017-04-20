@@ -19,32 +19,25 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->video = $this->video_source && $this->video_id && $this->video_ratio ? Yii::$app->formatter->cleanInput("@{$this->video_source}:{$this->video_id}:{$this->video_ratio}", 'original', true) : null;
 	}
 
-	protected function baseList($artist, $year, $name) {
+	public function tracksList($artist, $year, $name) {
 		return self::find()
 			->orderBy('track')
-			->joinWith('artist')
+			->joinWith('artist', 'lyrics')
 			->with('album')
 			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
 			->andWhere(Lyrics2Albums::tableName().'.year=:year')
 			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])
-			->addParams([':artist' => $artist, ':year' => $year, ':album' => $name]);
-	}
-
-	public function tracksList($artist, $year, $name) {
-		return self::baseList($artist, $year, $name)
-			->all();
-	}
-
-	public function tracksListFull($artist, $year, $name) {
-		return self::baseList($artist, $year, $name)
-			->with('lyrics')
+			->addParams([':artist' => $artist, ':year' => $year, ':album' => $name])
 			->all();
 	}
 
 	public function lastUpdate($artist, $year, $name, $data = null, $max = null) {
 		$data = $data ?? self::tracksList($artist, $year, $name);
-		foreach ($data as $item)
+		foreach ($data as $item) :
 			$max = max($max, $item->album->updated);
+			foreach ($item->album->tracks as $track)
+				$max = max($max, $track->lyrics->updated);
+		endforeach;
 		return $max;
 	}
 

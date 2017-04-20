@@ -42,8 +42,11 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 
 	public function lastUpdate($artist, $data = null, $max = null) {
 		$data = $data ?? self::albumsList($artist);
-		foreach ($data as $item)
+		foreach ($data as $item) :
 			$max = max($max, $item->updated);
+			foreach ($item->tracks as $track)
+				$max = max($max, $track->lyrics->updated);
+		endforeach;
 		return $max;
 	}
 
@@ -91,7 +94,12 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	}
 
 	public function getTracks() {
-		return $this->hasMany(Lyrics3Tracks::className(), ['parent' => 'id']);
+		return $this->hasMany(Lyrics3Tracks::className(), ['parent' => 'id'])
+			->with('lyrics');
+	}
+
+	public function getLyrics() {
+		return $this->hasOne(Lyrics4Lyrics::className(), ['id' => 'lyricid']);
 	}
 
 	public static function find() {

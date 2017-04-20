@@ -2,7 +2,7 @@
 use app\models\Menu;
 use app\models\articles\{Articles, Tags};
 use app\models\feed\Sitemap;
-use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums};
+use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\base\View;
 use yii\helpers\{ArrayHelper, Url};
 
@@ -47,8 +47,9 @@ foreach(Lyrics1Artists::albumsList() as $artist) :
 	$lastUpdate = Lyrics2Albums::lastUpdate($artist->url, $artist->albums);
 	Sitemap::lineItem($doc, Url::to(['lyrics/index', 'artist' => $artist->url], true), $lastUpdate, 0.65);
 	foreach($artist->albums as $album) :
-		Sitemap::lineItem($doc, Url::to(['lyrics/index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true), $album->updated, 0.5);
-		Sitemap::lineItem($doc, Url::to(['lyrics/albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true), $album->updated, 0.5);
+		$lastUpdate = Lyrics3Tracks::lastUpdate($album->artist->url, $album->year, $album->url, (object)['item' => (object)['album' => $album]]);
+		Sitemap::lineItem($doc, Url::to(['lyrics/index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true), $lastUpdate, 0.5);
+		Sitemap::lineItem($doc, Url::to(['lyrics/albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], true), $lastUpdate, 0.5);
 	endforeach;
 endforeach;
 
