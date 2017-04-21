@@ -8,6 +8,8 @@ use yii\db\Expression;
 use yii\helpers\Url;
 
 class Lyrics2Albums extends \yii\db\ActiveRecord {
+	public $video;
+
 	public static function tableName() {
 		return '{{%lyrics_2_albums}}';
 	}
@@ -15,8 +17,18 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function afterFind() {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
+		$this->video = $this->playlist_source && $this->playlist_id && $this->playlist_ratio ? Yii::$app->formatter->getVideo($this->playlist_source, $this->playlist_id, $this->playlist_ratio, true) : null;
 		$this->updated = strtotime($this->updated);
 		$this->active = (bool) $this->active;
+	}
+
+	public function beforeSave($insert) {
+		if (parent::beforeSave($insert)) {
+			$this->url = $this->name === $this->url ? null : $this->url;
+			$this->active = $this->active ? 1 : 0;
+			return true;
+		}
+		return false;
 	}
 
 	public function behaviors() {

@@ -20,7 +20,9 @@ echo '<div class="site-lyrics-albums">';
 				: Html::tag('span', 'Lyrics not available yet', ['class' => 'badge action'])
 			, ['class' => 'pull-right'])
 		, ['class' => 'clearfix col-lg-12']);
+		echo "</div>";
 
+		echo '<div class="row">';
 		$x = $y = 0;
 		foreach ($album->tracks as $track) :
 			$y++;
@@ -40,7 +42,6 @@ echo '<div class="site-lyrics-albums">';
 				$x = 0;
 			}
 		endforeach;
-
-		echo "</div>";
+		echo '</div>';
 	endforeach;
 echo '</div>';
