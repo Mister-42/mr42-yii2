@@ -9,8 +9,8 @@ class Formatter extends \yii\i18n\Formatter {
 	public function cleanInput(string $data, string $markdown = 'original', bool $allowHtml = false): string {
 		$data = $allowHtml ? parent::asRaw($data) : parent::asHtml($data, ['HTML.Allowed' => '']);
 		$data = preg_replace_callback_array([
-			'/(vimeo):(()?[[:digit:]]+):(16by9|4by3)/U'			=> 'self::getVideoMatch',
-			'/(yt):((PL)?[[:ascii:]]{11,32}):(16by9|4by3)/U'	=> 'self::getVideoMatch',
+			'/(vimeo):(()?[[:digit:]]+):(16by9|4by3)/U'				=> 'self::getVideoMatch',
+			'/(youtube):((PL)?[[:ascii:]]{11,32}):(16by9|4by3)/U'	=> 'self::getVideoMatch',
 		], $data);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
@@ -18,7 +18,7 @@ class Formatter extends \yii\i18n\Formatter {
 	}
 
 	public function getVideo(string $source, string $id, string $ratio, bool $playlist = false): string {
-		if ($source === 'yt' && $playlist)
+		if ($source === 'youtube' && $playlist)
 			$playlist = 'PL';
 		return self::getVideoMatch([null, $source, $id, $playlist, $ratio]);
 	}
@@ -45,9 +45,9 @@ class Formatter extends \yii\i18n\Formatter {
 	private function getVideoMatch(array $match): string {
 		if ($match[1] === 'vimeo')
 			$src = "https://player.vimeo.com/video/$match[2]?" . http_build_query(['byline' => 0, 'portrait' => 0, 'title' => 0]);
-		elseif ($match[1] === 'yt' && !$match[3])
+		elseif ($match[1] === 'youtube' && !$match[3])
 			$src = "https://www.youtube-nocookie.com/embed/$match[2]?" . http_build_query(['disablekb' => 1, 'rel' => 0, 'showinfo' => 0]);
-		elseif ($match[1] === 'yt' && $match[3] === 'PL')
+		elseif ($match[1] === 'youtube' && $match[3] === 'PL')
 			$src = 'https://www.youtube-nocookie.com/embed/videoseries?' . http_build_query(['disablekb' => 1, 'list' => $match[2], 'showinfo' => 0]);
 		$video = Html::tag('iframe', null, ['allowfullscreen' => true, 'class' => 'embed-responsive-item', 'src' => $src]);
 		return Html::tag('div', $video, ['class' => "embed-responsive embed-responsive-$match[4]"]);
