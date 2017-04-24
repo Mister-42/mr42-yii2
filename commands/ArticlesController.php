@@ -2,7 +2,6 @@
 namespace app\commands;
 use Yii;
 use app\models\articles\Articles;
-use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums};
 use yii\console\Controller;
 use yii\helpers\Console;
 

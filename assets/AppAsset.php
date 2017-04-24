@@ -4,17 +4,17 @@ use Yii;
 use yii\web\{AssetBundle, View};
 
 class AppAsset extends AssetBundle {
-	public $sourcePath = '@app/assets/src/css';
+	public $sourcePath = '@runtime/assets/css';
 
 	public $css = [
-		'site.scss',
+		'site.css',
 	];
 
 	public $js = [
 	];
 
 	public $depends = [
- 		'yii\web\YiiAsset',
+		'yii\web\YiiAsset',
 		'yii\bootstrap\BootstrapAsset',
 	];
 
