@@ -22,7 +22,8 @@ echo '<div class="site-lyrics-albums">';
 		, ['class' => 'clearfix col-lg-12']);
 		echo "</div>";
 
-		echo '<div class="row">';
+		echo '<div class="row media">';
+		echo '<div class="media-body">';
 		$x = $y = 0;
 		foreach ($album->tracks as $track) :
 			$y++;
@@ -42,6 +43,11 @@ echo '<div class="site-lyrics-albums">';
 				$x = 0;
 			}
 		endforeach;
+		echo '</div>';
+		if ($album->image)
+			echo Html::tag('div',
+				Html::img(['cover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => 100], ['alt' => implode(' · ', [$album->artist->name, $album->name]), 'class' => 'media-object', 'height' => 100, 'width' => 100])
+			, ['class' => 'media-right']);
 		echo '</div>';
 	endforeach;
 echo '</div>';

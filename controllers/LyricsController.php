@@ -91,7 +91,7 @@ class LyricsController extends Controller {
 		$get = Yii::$app->request->get();
 		$tracks = Lyrics3Tracks::tracksList($get['artist'], $get['year'], $get['album']);
 
-		if (count($tracks) === 0 || !$tracks[0]->album->image || !in_array($get['size'], [500, 'cover']))
+		if (count($tracks) === 0 || !$tracks[0]->album->image || !in_array($get['size'], [100, 500, 'cover']))
 			throw new NotFoundHttpException('Cover not found.');
 
 		if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])
