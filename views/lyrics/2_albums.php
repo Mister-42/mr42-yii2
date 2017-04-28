@@ -1,4 +1,5 @@
 <?php
+use yeesoft\lightbox\Lightbox;
 use yii\bootstrap\Html;
 
 $this->title = implode(' - ', [$albums[0]->artist->name, 'Lyrics']);
@@ -22,8 +23,10 @@ echo '<div class="site-lyrics-albums">';
 		, ['class' => 'clearfix col-lg-12']);
 		echo "</div>";
 
-		echo '<div class="row media">';
+		echo '<div class="row">';
+		echo '<div class="col-md-12 media">';
 		echo '<div class="media-body">';
+		echo '<div class="row">';
 		$x = $y = 0;
 		foreach ($album->tracks as $track) :
 			$y++;
@@ -34,7 +37,7 @@ echo '<div class="site-lyrics-albums">';
 				? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 				: $track->name;
 			echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
-			if ($track->video)
+			if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video)
 				echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 			echo '<br>';
 
@@ -44,10 +47,24 @@ echo '<div class="site-lyrics-albums">';
 			}
 		endforeach;
 		echo '</div>';
+		echo '</div>';
 		if ($album->image)
-			echo Html::tag('div',
-				Html::img(['cover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => 100], ['alt' => implode(' · ', [$album->artist->name, $album->name]), 'class' => 'media-object', 'height' => 100, 'width' => 100])
-			, ['class' => 'media-right']);
+			echo Lightbox::widget([
+				'options' => [
+					'imageFadeDuration'	=> 25,
+					'wrapAround'		=> true,
+				],
+				'linkOptions' => ['class' => 'media-right hidden-xs'],
+				'items' => [
+					[
+						'thumb'	=> ['cover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
+						'image'	=> ['cover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '500'],
+						'title'	=> implode(' · ', [$album->artist->name, $album->name]),
+						'group'	=> $album->artist->url,
+					],
+				],
+			]);
+		echo '</div>';
 		echo '</div>';
 	endforeach;
 echo '</div>';

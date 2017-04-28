@@ -5,7 +5,7 @@ use app\models\Pdf;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap\Html;
 use yii\db\Expression;
-use yii\helpers\Url;
+use yii\helpers\{ArrayHelper, Url};
 
 class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public $video;
@@ -79,26 +79,27 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		);
 	}
 
-	public function getCover($size, $tracks) {
-		$image = $tracks->image ?? $tracks[0]->album->image;
+	public function getCover($size, $album) {
+		$fileName = null;
+		if (ArrayHelper::keyExists(0, $album)) {
+			$fileName = implode(' - ', [$album[0]->artist->url, $album[0]->album->year, $album[0]->album->url, $size]).'.jpg';
+			$album = $album[0]->album;
+		}
+
 		if ($size !== 'cover') {
-			$process = proc_open("convert -resize {$size} -strip -quality 85% -interlace Plane - jpg:-", [0 => ['pipe', 'r'], 1 => ['pipe', 'w']], $pipes);
+			$process = proc_open("convert -resize {$size} -strip -quality 85% -interlace Plane - jpg:-", [['pipe', 'r'], ['pipe', 'w']], $pipes);
 			if (is_resource($process)) {
-				fwrite($pipes[0], $image);
+				fwrite($pipes[0], $album->image);
 				fclose($pipes[0]);
 
-				$image = stream_get_contents($pipes[1]);
+				$album->image = stream_get_contents($pipes[1]);
 				fclose($pipes[1]);
 
 				proc_close($process);
 			}
 		}
 
-		if (!$tracks->image) {
-			$fileName = implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]);
-			$fileName .= $size === 'cover' ? '' : '-' . $size;
-		}
-		return $tracks->image ? [$image] : [$fileName.'.jpg', $image];
+		return [$fileName, $album->image];
 	}
 
 	public function getArtist() {

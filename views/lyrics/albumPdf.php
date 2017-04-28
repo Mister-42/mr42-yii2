@@ -7,7 +7,7 @@ use yii\bootstrap\Html;
 <br><br><br>
 <div class="text-center"><?php
 	echo $tracks[0]->album->image
-		? Html::img('data:image/jpeg;base64,'.base64_encode((Lyrics2Albums::getCover(500, $tracks[0]->album))[0]), ['height' => 500, 'width' => 500])
+		? Html::img('data:image/jpeg;base64,'.base64_encode((Lyrics2Albums::getCover(500, $tracks))[1]), ['height' => 500, 'width' => 500])
 		: Html::tag('h1', $tracks[0]->album->name) . PHP_EOL . 'by' . PHP_EOL . Html::tag('h2', $tracks[0]->artist->name);
 ?></div>
 
