@@ -14,7 +14,7 @@ class Office365 extends \yii\base\Model {
 		return [
 			[['sourcedate', 'sourcecount', 'targetcount', 'action'], 'required'],
 			[['sourcedate', 'targetdate'], 'date', 'format' => 'php:Y-m-d'],
-			[['sourcecount', 'targetcount'], 'double'],
+			[['sourcecount', 'targetcount'], 'double', 'min' => 1],
 		];
 	}
 

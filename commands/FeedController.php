@@ -28,7 +28,7 @@ class FeedController extends Controller {
 			->send();
 
 		if (!$response->isOK)
-			return Controller::EXIT_CODE_ERROR;
+			return self::EXIT_CODE_ERROR;
 
 		$count = 1;
 		Feed::deleteAll(['feed' => $name]);
@@ -45,7 +45,7 @@ class FeedController extends Controller {
 				break;
 		endforeach;
 
-		return Controller::EXIT_CODE_NORMAL;
+		return self::EXIT_CODE_NORMAL;
 	}
 
 	/**
@@ -66,7 +66,7 @@ class FeedController extends Controller {
 			}
 		endforeach;
 
-		return Controller::EXIT_CODE_NORMAL;
+		return self::EXIT_CODE_NORMAL;
 	}
 
 	/**
@@ -112,6 +112,6 @@ class FeedController extends Controller {
 			}
 		endforeach;
 
-		return Controller::EXIT_CODE_NORMAL;
+		return self::EXIT_CODE_NORMAL;
 	}
 }

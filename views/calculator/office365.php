@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = 'Microsoft® Office 365® End Date';
 echo '<div class="row">';
 	echo '<div class="col-md-offset-2 col-md-8">';
 		echo Html::tag('h1', Html::encode($this->title));
-		echo Html::tag('p', 'This calculator calculates the new end date of a Microsoft® Office 365® Open SKU.');
+		echo Html::tag('p', 'This calculator calculates the new end date of a Microsoft® Office 365® Open SKU. For redeeming your product keys, please visit ' . Html::a('https://office.com/setup365', 'https://office.com/setup365') . '.');
 
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
 			Alert::begin(['options' => ['class' => 'alert-danger']]);
