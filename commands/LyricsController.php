@@ -1,7 +1,7 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Console, Youtube};
+use app\models\{Console, Video};
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
@@ -91,7 +91,7 @@ class LyricsController extends Controller {
 				if (!isset($data) || ($x !== count($artist->albums) && count($data) < 50))
 					continue;
 				else {
-					$response = Youtube::getApiRequest(implode(',', ArrayHelper::getColumn($data, 'id')), 'playlists');
+					$response = Video::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'playlists');
 					if (!$response->isOK || $response->data['pageInfo']['totalResults'] === 0) {
 						Console::writeError('Error', [Console::BOLD, Console::FG_RED]);
 						return self::EXIT_CODE_ERROR;
@@ -131,7 +131,7 @@ class LyricsController extends Controller {
 			if (++$x !== count($query) && count($data) < 50)
 				continue;
 			else {
-				$response = Youtube::getApiRequest(implode(',', ArrayHelper::getColumn($data, 'id')), 'videos');
+				$response = Video::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'videos');
 				if (!$response->isOK || $response->data['pageInfo']['totalResults'] === 0) {
 					Console::writeError('Error', [Console::BOLD, Console::FG_RED]);
 					return self::EXIT_CODE_ERROR;

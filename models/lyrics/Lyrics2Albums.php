@@ -1,7 +1,7 @@
 <?php
 namespace app\models\lyrics;
 use Yii;
-use app\models\Pdf;
+use app\models\{Pdf, Video};
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap\Html;
 use yii\db\Expression;
@@ -19,8 +19,8 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
 		$this->playlist_id = $this->playlist_id ? 'PL' . $this->playlist_id : null;
-		$this->playlist = $this->playlist_id && $this->playlist_ratio ? Yii::$app->formatter->getVideo('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
-		$this->playlist_url = $this->playlist_id ? Yii::$app->formatter->getVideo('youtube', $this->playlist_id, true, true, false) : null;
+		$this->playlist = $this->playlist_id && $this->playlist_ratio ? Video::getVideo('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
+		$this->playlist_url = $this->playlist_id ? Video::getVideo('youtube', $this->playlist_id, false, true, false) : null;
 		$this->updated = strtotime($this->updated);
 		$this->active = (bool) $this->active;
 	}
