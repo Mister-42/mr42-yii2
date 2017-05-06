@@ -84,10 +84,10 @@ class LyricsController extends Controller {
 		foreach(Lyrics1Artists::albumsList() as $artist) :
 			$x = 0;
 			foreach($artist->albums as $album) :
+				$x++;
 				if (isset($album->playlist_id))
 					$data[] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
 
-				$x++;
 				if (!isset($data) || ($x !== count($artist->albums) && count($data) < 50))
 					continue;
 				else {
@@ -103,7 +103,7 @@ class LyricsController extends Controller {
 						Console::write($albumData['year'], [Console::FG_GREEN]);
 						Console::write($albumData['name'], [Console::FG_GREEN], 8);
 
-						if (!$response[$albumData['id']]) {
+						if (!ArrayHelper::keyExists($albumData['id'], $response, false)) {
 							Console::writeError('Not Found', [Console::BOLD, Console::FG_RED]);
 							continue;
 						}
@@ -117,7 +117,6 @@ class LyricsController extends Controller {
 				}
 			endforeach;
 		endforeach;
-
 		return self::EXIT_CODE_NORMAL;
 	}
 
@@ -142,7 +141,7 @@ class LyricsController extends Controller {
 				foreach ($data as $trackData) :
 					Console::write($trackData['name'], [Console::FG_PURPLE], 5);
 
-					if (!$response[$trackData['id']]) {
+					if (!ArrayHelper::keyExists($trackData['id'], $response, false)) {
 						Console::writeError('Not Found', [Console::BOLD, Console::FG_RED]);
 						continue;
 					}
@@ -153,11 +152,9 @@ class LyricsController extends Controller {
 					Console::write($response[$trackData['id']]['snippet']['title'], [Console::FG_GREEN]);
 					Console::newLine();
 				endforeach;
-
 				unset($data, $response);
 			}
 		endforeach;
-
 		return self::EXIT_CODE_NORMAL;
 	}
 }

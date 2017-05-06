@@ -8,7 +8,8 @@ class WebhookController extends Controller {
 	public function actionChangelog() {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2);
-		if (!hash_equals($hash, hash_hmac($algo, file_get_contents('php://input'), Yii::$app->params['GitHubHook'])))
+		if (!hash_equals($hash, hash_hmac($algo, file_get_contents('php://input'), Yii::$app->params['secrets']['github']['hook'])))
+
 			throw new UnauthorizedHttpException('Access denied!');
 		elseif ($_SERVER['HTTP_X_GITHUB_EVENT'] === 'ping')
 			return ['status' => 'success', 'message' => 'Pong!'];

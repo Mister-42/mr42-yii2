@@ -10,7 +10,7 @@ class Youtube {
 			->setUrl($content)
 			->setData([
 				'id' => $id,
-				'key' => Yii::$app->params['GoogleAPI'],
+				'key' => Yii::$app->params['secrets']['google']['API'],
 				'part' => $content === 'videos' ? 'snippet,status' : 'contentDetails,status',
 			])
 			->send();

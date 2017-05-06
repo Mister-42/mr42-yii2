@@ -43,7 +43,7 @@ class Contact extends \yii\base\Model
 	public function contact(): bool {
 		if ($this->validate()) {
 			$mailer = Yii::$app->mailer->compose()
-				->setTo(Yii::$app->params['adminEmail'])
+				->setTo(Yii::$app->params['secrets']['params']['adminEmail'])
 				->setFrom([$this->email => $this->name])
 				->setSubject($this->title)
 				->setTextBody($this->content);

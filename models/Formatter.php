@@ -46,7 +46,7 @@ class Formatter extends \yii\i18n\Formatter {
 		if (!$match[5]) {
 			if ($match[1] === 'vimeo' && !$match[3])
 				return "https://vimeo.com/$match[2]";
-			if ($match[1] === 'vimeo' && $match[3])
+			elseif ($match[1] === 'vimeo' && $match[3])
 				return "https://vimeo.com/album/$match[2]";
 			elseif ($match[1] === 'youtube' && !$match[3])
 				return "https://youtu.be/$match[2]";

@@ -86,7 +86,7 @@ class FeedController extends Controller {
 						'method' => 'user.getweeklyartistchart',
 						'user' => $profile->lastfm,
 						'limit' => $limit,
-						'api_key' => Yii::$app->params['LastFMAPI'],
+						'api_key' => Yii::$app->params['secrets']['last.fm']['API'],
 					])
 					->send();
 

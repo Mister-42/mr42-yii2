@@ -55,7 +55,7 @@ class Favicon extends \yii\base\Model {
 				Yii::$app->mailer
 					->compose(['html' => 'faviconRequester'])
 					->setTo($this->email)
-					->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name])
+					->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
 					->setSubject('Your favicon file from '.Yii::$app->name)
 					->attach(Yii::getAlias("@webroot/assets/temp/favicon/{$rndFilename}.ico"), ['fileName' => 'favicon.ico'])
 					->send();
