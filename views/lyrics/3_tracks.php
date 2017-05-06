@@ -11,10 +11,13 @@ echo '<div class="site-lyrics-lyrics">';
 		Html::tag('div',
 			Html::tag('h1', Html::encode(implode(' · ', [$tracks[0]->artist->name, $tracks[0]->album->name])))
 		, ['class' => 'pull-left']) .
-		Html::tag('div',
-			$tracks[0]->album->active
-				? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], ['class' => 'btn btn-xs btn-warning action'])
-				: Html::tag('span', 'Lyrics not available yet', ['class' => 'badge action'])
+		Html::tag('div', $tracks[0]->album->active
+			? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], ['class' => 'btn btn-xs btn-warning action'])
+			: Html::tag('span', 'Lyrics not available yet', ['class' => 'badge action'])
+		, ['class' => 'pull-right']) .
+		Html::tag('div', $tracks[0]->album->playlist_url
+			? Html::a(Html::icon('play').' Play', $tracks[0]->album->playlist_url, ['class' => 'btn btn-xs btn-warning action']) . '&nbsp;'
+			: ''
 		, ['class' => 'pull-right'])
 	, ['class' => 'clearfix']);
 

@@ -128,7 +128,7 @@ class LyricsController extends Controller {
 		$x = 0;
 		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]])->all();
 		foreach($query as $track) :
-			$data[] = ['num' => $x, 'id' => $track->video_id, 'name' => $track->name];
+			$data[] = ['id' => $track->video_id, 'name' => $track->name];
 			if (++$x !== count($query) && count($data) < 50)
 				continue;
 			else {
@@ -140,7 +140,6 @@ class LyricsController extends Controller {
 					$response = ArrayHelper::index($response->data['items'], 'id');
 
 				foreach ($data as $trackData) :
-					Console::write($trackData['num'], [Console::FG_PURPLE]);
 					Console::write($trackData['name'], [Console::FG_PURPLE], 5);
 
 					if (!$response[$trackData['id']]) {

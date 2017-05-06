@@ -19,6 +19,10 @@ echo '<div class="site-lyrics-albums">';
 			Html::tag('div', $album->active
 				? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
 				: Html::tag('span', 'Lyrics not available yet', ['class' => 'badge action'])
+			, ['class' => 'pull-right']) .
+			Html::tag('div', $album->playlist_url
+				? Html::a(Html::icon('play').' Play', $album->playlist_url, ['class' => 'btn btn-xs btn-warning action']) . '&nbsp;'
+				: ''
 			, ['class' => 'pull-right'])
 		, ['class' => 'clearfix col-lg-12']);
 		echo "</div>";

@@ -17,10 +17,10 @@ class Formatter extends \yii\i18n\Formatter {
 		return trim($data);
 	}
 
-	public function getVideo(string $source, string $id, string $ratio, bool $playlist = false): string {
+	public function getVideo(string $source, string $id, string $ratio, bool $playlist = false, bool $embed = true): string {
 		if ($source === 'youtube' && $playlist)
 			$playlist = 'PL';
-		return self::getVideoMatch([null, $source, $id, $playlist, $ratio]);
+		return self::getVideoMatch([null, $source, $id, $playlist, $ratio, $embed]);
 	}
 
 	public function jspack(string $file, array $replace = []): string {
@@ -43,6 +43,17 @@ class Formatter extends \yii\i18n\Formatter {
 	}
 
 	private function getVideoMatch(array $match): string {
+		if (!$match[5]) {
+			if ($match[1] === 'vimeo' && !$match[3])
+				return "https://vimeo.com/$match[2]";
+			if ($match[1] === 'vimeo' && $match[3])
+				return "https://vimeo.com/album/$match[2]";
+			elseif ($match[1] === 'youtube' && !$match[3])
+				return "https://youtu.be/$match[2]";
+			elseif ($match[1] === 'youtube' && $match[3] === 'PL')
+				return 'https://www.youtube.com/playlist?' . http_build_query(['list' => $match[2]]);
+		}
+
 		if ($match[1] === 'vimeo')
 			$src = "https://player.vimeo.com/video/$match[2]?" . http_build_query(['byline' => 0, 'portrait' => 0, 'title' => 0]);
 		elseif ($match[1] === 'youtube' && !$match[3])

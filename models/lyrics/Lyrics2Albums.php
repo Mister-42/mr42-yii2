@@ -8,7 +8,8 @@ use yii\db\Expression;
 use yii\helpers\{ArrayHelper, Url};
 
 class Lyrics2Albums extends \yii\db\ActiveRecord {
-	public $video;
+	public $playlist;
+	public $playlist_url;
 
 	public static function tableName() {
 		return '{{%lyrics_2_albums}}';
@@ -18,7 +19,8 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
 		$this->playlist_id = $this->playlist_id ? 'PL' . $this->playlist_id : null;
-		$this->video = $this->playlist_id && $this->playlist_ratio ? Yii::$app->formatter->getVideo('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
+		$this->playlist = $this->playlist_id && $this->playlist_ratio ? Yii::$app->formatter->getVideo('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
+		$this->playlist_url = $this->playlist_id ? Yii::$app->formatter->getVideo('youtube', $this->playlist_id, true, true, false) : null;
 		$this->updated = strtotime($this->updated);
 		$this->active = (bool) $this->active;
 	}
