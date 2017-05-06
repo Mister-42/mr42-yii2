@@ -22,7 +22,6 @@ class ArticlesController extends Controller {
 
 			$html = $this->renderPartial('@app/views/articles/pdf', ['model' => $article]);
 			$fileName = Articles::buildPdf($article, $html);
-
 			if (!$fileName) {
 				Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED]);
 				continue;
