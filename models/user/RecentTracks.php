@@ -1,9 +1,8 @@
 <?php
 namespace app\models\user;
 use Yii;
+use app\models\Webrequest;
 use yii\bootstrap\Html;
-use yii\helpers\Url;
-use yii\httpclient\Client;
 
 class RecentTracks extends \yii\db\ActiveRecord {
 	public $limit = 20;
@@ -52,20 +51,9 @@ class RecentTracks extends \yii\db\ActiveRecord {
 	}
 
 	public function updateUser($lastSeen, $profile) {
-		$client = new Client(['baseUrl' => 'https://ws.audioscrobbler.com/2.0/']);
 		$limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : $this->limit;
-
 		if (isset($profile->lastfm)) {
-			$response = $client->createRequest()
-				->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
-				->setData([
-					'method' => 'user.getrecenttracks',
-					'user' => $profile->lastfm,
-					'limit' => $limit,
-					'api_key' => Yii::$app->params['LastFMAPI'],
-				])
-				->send();
-
+			$response = Webrequest::getLastfmApi('user.getrecenttracks', $profile->lastfm, $limit);
 			if (!$response->isOK)
 				return false;
 

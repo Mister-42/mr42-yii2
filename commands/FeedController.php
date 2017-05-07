@@ -1,12 +1,11 @@
 <?php
 namespace app\commands;
 use Yii;
+use app\models\Webrequest;
 use app\models\feed\Feed;
 use app\models\user\{RecentTracks, WeeklyArtist};
 use dektrium\user\models\{Profile, User};
 use yii\console\Controller;
-use yii\helpers\Url;
-use yii\httpclient\Client;
 
 /**
  * Handles feeds.
@@ -18,15 +17,8 @@ class FeedController extends Controller {
 	 * Retrieves and stores an RSS feed.
 	*/
 	public function actionRss($name, $url, $urlField = 'link') {
-		$client = new Client();
 		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
-
-		$response = $client->createRequest()
-			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
-			->setMethod('get')
-			->setUrl($url)
-			->send();
-
+		$response = Webrequest::getUrl('', $url);
 		if (!$response->isOK)
 			return self::EXIT_CODE_ERROR;
 
@@ -73,23 +65,11 @@ class FeedController extends Controller {
 	 * Retrieves and stores Weekly Artist Chart from Last.fm.
 	*/
 	public function actionLastfmWeeklyArtist() {
-		$client = new Client(['baseUrl' => 'https://ws.audioscrobbler.com/2.0/']);
 		$limit = 15;
-
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::find()->where(['user_id' => $user->id])->one();
-
 			if (isset($profile->lastfm)) {
-				$response = $client->createRequest()
-					->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])
-					->setData([
-						'method' => 'user.getweeklyartistchart',
-						'user' => $profile->lastfm,
-						'limit' => $limit,
-						'api_key' => Yii::$app->params['secrets']['last.fm']['API'],
-					])
-					->send();
-
+				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $limit);
 				if (!$response->isOK)
 					return false;
 
