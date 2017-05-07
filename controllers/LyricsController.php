@@ -29,7 +29,7 @@ class LyricsController extends Controller {
 					elseif (isset($get['artist']) && isset($get['year']) && isset($get['album']))
 						return Lyrics3Tracks::lastUpdate($get['artist'], $get['year'], $get['album']);
 				},
-				'only' => ['index', 'albumpdf', 'cover'],
+				'only' => ['index', 'albumpdf', 'albumcover'],
 			],
 		];
 	}
@@ -57,7 +57,7 @@ class LyricsController extends Controller {
 		} elseif (isset($get['artist']) && isset($get['year']) && isset($get['album'])) {
 			$tracks = Lyrics3Tracks::tracksList($get['artist'], $get['year'], $get['album']);
 
-			if ((!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active) || count($tracks) === 0)
+			if (!ArrayHelper::keyExists(0, $tracks) || (!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active))
 				throw new NotFoundHttpException('Album not found.');
 
 			if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])
@@ -77,7 +77,7 @@ class LyricsController extends Controller {
 		$get = Yii::$app->request->get();
 		$tracks = Lyrics3Tracks::tracksList($get['artist'], $get['year'], $get['album']);
 
-		if (!$tracks[0]->album->active || count($tracks) === 0)
+		if (!ArrayHelper::keyExists(0, $tracks) || !$tracks[0]->album->active)
 			throw new NotFoundHttpException('Album not found.');
 
 		if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])
@@ -87,15 +87,15 @@ class LyricsController extends Controller {
 		Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]).'.pdf');
 	}
 
-	public function actionCover() {
+	public function actionAlbumcover() {
 		$get = Yii::$app->request->get();
 		$tracks = Lyrics3Tracks::tracksList($get['artist'], $get['year'], $get['album']);
 
-		if (count($tracks) === 0 || !$tracks[0]->album->image || !ArrayHelper::isIn($get['size'], [100, 500, 'cover']))
+		if (!ArrayHelper::keyExists(0, $tracks) || !ArrayHelper::isIn($get['size'], [100, 500, 'cover']))
 			throw new NotFoundHttpException('Cover not found.');
 
 		if ($tracks[0]->artist->url != $get['artist'] || $tracks[0]->album->url != $get['album'])
-			$this->redirect(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
+			$this->redirect(['albumcover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
 
 		list($fileName, $image) = Lyrics2Albums::getCover($get['size'], $tracks);
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);

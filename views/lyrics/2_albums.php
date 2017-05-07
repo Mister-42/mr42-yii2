@@ -53,7 +53,7 @@ echo '<div class="site-lyrics-albums">';
 		endforeach;
 		echo '</div>';
 		echo '</div>';
-		if ($album->image)
+		if ($album->image && count($album->tracks) > 0)
 			echo Lightbox::widget([
 				'options' => [
 					'imageFadeDuration'	=> 25,
@@ -62,8 +62,8 @@ echo '<div class="site-lyrics-albums">';
 				'linkOptions' => ['class' => 'media-right hidden-xs'],
 				'items' => [
 					[
-						'thumb'	=> ['cover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
-						'image'	=> ['cover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '500'],
+						'thumb'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
+						'image'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '500'],
 						'title'	=> implode(' · ', [$album->artist->name, $album->name]),
 						'group'	=> $album->artist->url,
 					],

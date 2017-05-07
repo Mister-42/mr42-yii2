@@ -37,7 +37,7 @@ class Formatter extends \yii\i18n\Formatter {
 		return file_get_contents($cachefile);
 	}
 
-	private function getVideo($match) {
+	private function getVideo(array $match): string {
 		return Video::getVideo($match[1], $match[2], $match[4], $match[3]);
 	}
 }

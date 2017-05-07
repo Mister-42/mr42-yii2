@@ -47,7 +47,7 @@ echo '<div class="site-lyrics-lyrics">';
 	if ($tracks[0]->album->image)
 		echo Html::tag('div',
 			Html::tag('div',
-				Html::img(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$tracks[0]->artist->name, $tracks[0]->album->name]), 'class' => 'center-block img-responsive', 'height' => 500, 'width' => 500])
+				Html::img(['albumcover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$tracks[0]->artist->name, $tracks[0]->album->name]), 'class' => 'center-block img-responsive', 'height' => 500, 'width' => 500])
 			, ['class' => 'col-xs-12'])
 		, ['class' => 'row']);
 
@@ -59,9 +59,7 @@ echo '<div class="site-lyrics-lyrics">';
 					Html::tag('h4', implode(' · ', [$track->track, $track->name . $track->disambiguation . $track->feat])) .
 					($track->lyricid ? Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics']) : '')
 				, ['class' => $track->lyricid ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .
-				Html::tag('div',
-					$track->video
-				, ['class' => $track->lyricid ? 'col-xs-12 col-sm-4' : 'col-sm-12'])
+				Html::tag('div', $track->video, ['class' => $track->lyricid ? 'col-xs-12 col-sm-4' : 'col-xs-12'])
 			, ['class' => 'row']);
 		}
 	endforeach;

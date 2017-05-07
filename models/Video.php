@@ -5,22 +5,6 @@ use yii\httpclient\{Client, Response};
 use yii\bootstrap\Html;
 
 class Video {
-	// Array: $source, $id, $isPlaylist, $ratio, $isEmbed
-/*
-array(5) {
-  [0]=>
-  string(7) "youtube"
-  [1]=>
-  string(34) "PL6ugFMfi2vpN8uPV7OM2FMOlfF1nU2WJL"
-  [2]=>
-  bool(true)
-  [3]=>
-  bool(true)
-  [4]=>
-  bool(false)
-}
-*/
-
 	public function getVideo(string $source, string $id, string $ratio, bool $isPlaylist = false, bool $getEmbed = true): string {
 		if (!$getEmbed) {
 			if ($source === 'vimeo' && !$isPlaylist)
@@ -39,8 +23,6 @@ array(5) {
 			$src = "https://www.youtube-nocookie.com/embed/$id?" . http_build_query(['disablekb' => 1, 'rel' => 0, 'showinfo' => 0]);
 		elseif ($source === 'youtube' && ($isPlaylist || $isPlaylist === 'PL'))
 			$src = 'https://www.youtube-nocookie.com/embed/videoseries?' . http_build_query(['disablekb' => 1, 'list' => $id, 'showinfo' => 0]);
-		else
-			return false;
 		$video = Html::tag('iframe', null, ['allowfullscreen' => true, 'class' => 'embed-responsive-item', 'src' => $src]);
 		return Html::tag('div', $video, ['class' => "embed-responsive embed-responsive-$ratio"]);
 	}
