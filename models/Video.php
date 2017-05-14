@@ -1,7 +1,6 @@
 <?php
 namespace app\models;
 use Yii;
-use yii\httpclient\{Client, Response};
 use yii\bootstrap\Html;
 
 class Video {

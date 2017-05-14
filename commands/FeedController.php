@@ -73,21 +73,18 @@ class FeedController extends Controller {
 				if (!$response->isOK)
 					return false;
 
+				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);
 				$count = 1;
 				foreach($response->data['weeklyartistchart']['artist'] as $artist) :
-					$addTrack = WeeklyArtist::findOne(['userid' => $profile->user_id, 'artist' => $artist->name]) ?? new WeeklyArtist();
-					$addTrack->userid = $profile->user_id;
-					$addTrack->artist = (string) $artist->name;
-					$addTrack->count = $artist->playcount;
-					$addTrack->save();
+					$addArtist = new WeeklyArtist();
+					$addArtist->userid = $profile->user_id;
+					$addArtist->artist = (string) $artist->name;
+					$addArtist->count = $artist->playcount;
+					$addArtist->save();
 
 					if ($count++ === $limit)
 						break;
 				endforeach;
-
-				$delete = WeeklyArtist::find()->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit(999)->offset($limit)->all();
-				foreach ($delete as $item)
-					$item->delete();
 				usleep(200000);
 			}
 		endforeach;

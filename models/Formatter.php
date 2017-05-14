@@ -3,7 +3,6 @@ namespace app\models;
 use Yii;
 use app\models\Video;
 use GK\JavascriptPacker;
-use yii\bootstrap\Html;
 use yii\helpers\{FileHelper, Markdown};
 
 class Formatter extends \yii\i18n\Formatter {
