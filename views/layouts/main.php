@@ -52,19 +52,21 @@ echo '<div class="wrap">';
 	, ['class' => 'container']);
 echo '</div>';
 
-?><footer>
-	<div class="container">
-		<p class="pull-left"><?= date('&\c\o\p\y; 2014-Y ') . Yii::$app->name . Html::tag('span', ' · ' . Yii::powered(), ['class' => 'hidden-xs']) ?></p>
-		<p class="pull-right"><?php
+echo '<footer>';
+	echo '<div class="container">';
+		echo Html::tag(p,
+			'&copy; ' . date('2014-Y ') . Yii::$app->name . Html::tag('span', ' · ' . Yii::powered(), ['class' => 'hidden-xs'])
+		, ['class' => 'pull-left']);
+		echo '<p class="pull-right">';
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
 				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary hidden-xs']) . ' ';
 				echo Html::a('RSS', ['/feed/rss'], ['class' => 'label label-warning hidden-xs', 'target' => '_blank']);
 			}
-		?></p>
-	</div>
-	<?= Html::a(Html::tag('span', '&nbsp;&nbsp;^&nbsp;&nbsp;', ['title' => 'Scroll to top', 'data-toggle' => 'tooltip', 'data-placement' => 'top']), false, ['id' => 'btn-scrolltop']) ?>
-</footer><?php
+		echo '</p>';
+	echo '</div>';
+	echo Html::a(Html::tag('span', '&nbsp;&nbsp;^&nbsp;&nbsp;', ['title' => 'Scroll to top', 'data-toggle' => 'tooltip', 'data-placement' => 'top']), false, ['id' => 'btn-scrolltop']);
+echo '</footer>';
 $this->endBody();
 
 echo '</body></html>';

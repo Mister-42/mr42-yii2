@@ -18,7 +18,7 @@ echo '<div class="site-lyrics-albums">';
 				)), ['class' => 'pull-left']) .
 				Html::tag('div', $album->active
 					? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
-					: Html::tag('span', 'Lyrics not available yet', ['class' => 'badge action'])
+					: ''
 				, ['class' => 'pull-right']) .
 				Html::tag('div', $album->playlist_url
 					? Html::a(Html::icon('play').' Play', $album->playlist_url, ['class' => 'btn btn-xs btn-warning action']) . '&nbsp;'
@@ -60,7 +60,7 @@ echo '<div class="site-lyrics-albums">';
 						'thumb'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
 						'image'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '500'],
 						'title'	=> implode(' · ', [$album->artist->name, $album->name]),
-#						'group'	=> $album->artist->url,
+						'group'	=> $album->artist->url,
 					],
 				],
 			]);

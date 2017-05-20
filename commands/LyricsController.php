@@ -108,8 +108,8 @@ class LyricsController extends Controller {
 							continue;
 						}
 
-						Console::write("{$response[$albumData['id']]['contentDetails']['itemCount']} found", [Console::BOLD, Console::FG_GREEN], 2);
-						Console::write($response[$albumData['id']]['status']['privacyStatus'], [Console::BOLD, Console::FG_GREEN], 0);
+						Console::write(ArrayHelper::getValue($response, "{$albumData['id']}.contentDetails.itemCount") . " found", [Console::BOLD, Console::FG_GREEN], 2);
+						Console::write(ArrayHelper::getValue($response, "{$albumData['id']}.status.privacyStatus"), [Console::BOLD, Console::FG_GREEN], 0);
 						Console::newLine();
 					endforeach;
 
@@ -146,10 +146,10 @@ class LyricsController extends Controller {
 						continue;
 					}
 
-					$response[$trackData['id']]['status']['embeddable']
+					ArrayHelper::getValue($response, "{$trackData['id']}.status.embeddable")
 						? Console::write('Embeddable', [Console::FG_GREEN], 2)
 						: Console::write('Not embeddable', [Console::BOLD, Console::FG_RED], 2);
-					Console::write($response[$trackData['id']]['snippet']['title'], [Console::FG_GREEN]);
+					Console::write(ArrayHelper::getValue($response, "{$trackData['id']}.snippet.title"), [Console::FG_GREEN]);
 					Console::newLine();
 				endforeach;
 				unset($data, $response);

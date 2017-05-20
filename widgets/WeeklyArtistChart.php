@@ -15,9 +15,10 @@ class WeeklyArtistChart extends Widget {
 	}
 
 	public function renderFeed(array $items): string {
+		$count = 1;
 		foreach ($items as $item)
 			$feed[] = Html::tag('div',
-				Html::tag('span', ++$count, ['class' => 'pull-left']) .
+				Html::tag('span', $count++, ['class' => 'pull-left']) .
 				Html::tag('span', $item['artist'], ['class' => 'pull-left']) .
 				Html::tag('span', $item['count'], ['class' => 'pull-right text-right'])
 			, ['class' => 'clearfix']);

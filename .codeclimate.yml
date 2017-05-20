@@ -13,6 +13,9 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+    checks:
+      Design/TooManyPublicMethods:
+        enabled: false
     config:
       rulesets: "codesize,design,unusedcode"
 ratings:
