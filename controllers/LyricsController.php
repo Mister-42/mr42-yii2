@@ -14,11 +14,11 @@ class LyricsController extends Controller {
 				'etagSeed' => function ($action, $params) {
 					$get = Yii::$app->request->get();
 					if (!isset($get['artist']) && !isset($get['year']) && !isset($get['album']))
-						return serialize([YII_DEBUG, Yii::$app->user->id, Lyrics1Artists::lastUpdate(null)]);
+						return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, Lyrics1Artists::lastUpdate(null)]);
 					elseif (isset($get['artist']) && !isset($get['year']) && !isset($get['album']))
-						return serialize([YII_DEBUG, Yii::$app->user->id, Lyrics2Albums::albumsList($get['artist'])]);
+						return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, Lyrics2Albums::albumsList($get['artist'])]);
 					elseif (isset($get['artist']) && isset($get['year']) && isset($get['album']))
-						return serialize([YII_DEBUG, Yii::$app->user->id, $get['artist'], $get['year'], $get['album']]);
+						return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, $get['artist'], $get['year'], $get['album']]);
 				},
 				'lastModified' => function ($action, $params) {
 					$get = Yii::$app->request->get();

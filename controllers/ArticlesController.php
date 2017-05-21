@@ -32,7 +32,7 @@ class ArticlesController extends Controller {
 		];
 	}
 
-	public function actionIndex($id = '', $title = '', $page = '', $action = '', $tag = '', $q = '') {
+	public function actionIndex($id = '', $title = '', $action = '', $tag = '', $q = '') {
 		if (isset($id) && !empty($id)) {
 			$model = $this->findModel($id, ['comments']);
 			$comment = new Comments;
@@ -60,9 +60,9 @@ class ArticlesController extends Controller {
 		}
 
 		$query = Articles::find()->orderBy('id DESC');
-		if ($action === "tag" && !empty($tag)) {
+		if ($action === "tag" && !empty($tag))
 			$query->where(['like', 'tags', $tag]);
-		} elseif ($action === "search" && !empty($q)) {
+		elseif ($action === "search" && !empty($q)) {
 			Yii::$app->view->registerMetaTag(['name' => 'robots', 'content' => 'noindex']);
 			$query->where(['like', 'title', $q]);
 			$query->orWhere(['like', 'content', $q]);

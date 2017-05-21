@@ -92,7 +92,6 @@ return [
 				'favicon.ico'														=> 'site/faviconico',
 				'robots.txt'														=> 'site/robotstxt',
 				'sitemap.xml'														=> 'feed/sitemap',
-				'lyrics/recenttracks'												=> 'lyrics/recenttracks',
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>.pdf'					=> 'lyrics/albumpdf',
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>-<size:.{2,5}>.jpg'	=> 'lyrics/albumcover',
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>'						=> 'lyrics/index',

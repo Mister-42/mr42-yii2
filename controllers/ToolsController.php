@@ -14,7 +14,7 @@ class ToolsController extends Controller {
 			[
 				'class' => HttpCache::className(),
 				'etagSeed' => function (Object $action, $params) {
-					return serialize([YII_DEBUG, Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
+					return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
 				},
 				'lastModified' => function (Object $action, $params) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
