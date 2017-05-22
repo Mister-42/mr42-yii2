@@ -13,10 +13,10 @@ class ToolsController extends Controller {
 		return [
 			[
 				'class' => HttpCache::className(),
-				'etagSeed' => function (Object $action, $params) {
+				'etagSeed' => function (Object $action) {
 					return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
 				},
-				'lastModified' => function (Object $action, $params) {
+				'lastModified' => function (Object $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['html-to-markdown', 'password'],

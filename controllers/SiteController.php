@@ -34,25 +34,25 @@ class SiteController extends Controller {
 						'roles' => ['@'],
 					],
 				],
-				'denyCallback' => function ($rule, $action) {
+				'denyCallback' => function () {
 					throw new NotFoundHttpException('Page not found.');
 				}
 			], [
 				'class' => HttpCache::className(),
-				'lastModified' => function (Object $action, $params) {
+				'lastModified' => function () {
 					$lastUpdate = Changelog::find()->select(['time' => 'max(time)'])->one();
 					return $lastUpdate->time;
 				},
 				'only' => ['changelog'],
 			], [
 				'class' => HttpCache::className(),
-				'lastModified' => function (Object $action, $params) {
+				'lastModified' => function (Object $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['robotstxt'],
 			], [
 				'class' => HttpCache::className(),
-				'lastModified' => function (Object $action, $params) {
+				'lastModified' => function () {
 					return filemtime(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico');
 				},
 				'only' => ['faviconico'],

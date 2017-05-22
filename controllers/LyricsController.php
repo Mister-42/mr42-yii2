@@ -11,7 +11,7 @@ class LyricsController extends Controller {
 		return [
 			[
 				'class' => HttpCache::className(),
-				'etagSeed' => function ($action, $params) {
+				'etagSeed' => function () {
 					$get = Yii::$app->request->get();
 					if (!isset($get['artist']) && !isset($get['year']) && !isset($get['album']))
 						return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, Lyrics1Artists::lastUpdate(null)]);
@@ -20,7 +20,7 @@ class LyricsController extends Controller {
 					elseif (isset($get['artist']) && isset($get['year']) && isset($get['album']))
 						return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, $get['artist'], $get['year'], $get['album']]);
 				},
-				'lastModified' => function ($action, $params) {
+				'lastModified' => function () {
 					$get = Yii::$app->request->get();
 					if (!isset($get['artist']) && !isset($get['year']) && !isset($get['album']))
 						return Lyrics1Artists::lastUpdate(null);

@@ -13,7 +13,7 @@ class FeedController extends Controller {
 			[
 				'class' => HttpCache::className(),
 				'except' => ['index'],
-				'lastModified' => function (Object $action, $params) {
+				'lastModified' => function () {
 					$lastUpdate = Articles::find()->select(['updated' => 'max(updated)'])->one();
 					return $lastUpdate->updated;
 				},

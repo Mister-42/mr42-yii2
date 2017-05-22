@@ -10,10 +10,10 @@ class CalculatorController extends \yii\web\Controller {
 		return [
 			[
 				'class' => HttpCache::className(),
-				'etagSeed' => function (Object $action, $params) {
+				'etagSeed' => function (Object $action) {
 					return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
 				},
-				'lastModified' => function (Object $action, $params) {
+				'lastModified' => function (Object $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['wpapsk'],
