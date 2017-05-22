@@ -74,15 +74,15 @@ class FeedController extends Controller {
 					return false;
 
 				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);
-				$count = 1;
 				foreach($response->data['weeklyartistchart']['artist'] as $artist) :
 					$addArtist = new WeeklyArtist();
 					$addArtist->userid = $profile->user_id;
+					$addArtist->rank = (int) $artist->attributes()->rank;
 					$addArtist->artist = (string) $artist->name;
-					$addArtist->count = $artist->playcount;
+					$addArtist->count = (int) $artist->playcount;
 					$addArtist->save();
 
-					if ($count++ === $limit)
+					if ((int) $artist->attributes()->rank === $limit)
 						break;
 				endforeach;
 				usleep(200000);
