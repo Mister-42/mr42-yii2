@@ -2,7 +2,6 @@
 namespace app\controllers;
 use Yii;
 use app\models\articles\Articles;
-use yii\base\Object;
 use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, StringHelper};
 use yii\web\{Controller, Response};
