@@ -7,7 +7,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $albums[0]->artist->name;
 
 echo '<div class="site-lyrics-albums">';
-	echo Html::tag('h1', Html::encode($albums[0]->artist->name));
+	echo Html::tag('div',
+		Html::tag('div',
+			Html::tag('h1', Html::encode($albums[0]->artist->name), ['class' => 'pull-left']) .
+			Html::tag('div', $albums[0]->artist->website
+				? Html::a(Html::icon('globe').' Website of ' . Html::encode($albums[0]->artist->name), $albums[0]->artist->website, ['class' => 'btn btn-xs btn-warning action'])
+				: 	''
+			, ['class' => 'pull-right'])
+		, ['class' => 'clearfix col-lg-12'])
+	, ['class' => 'row']);
 
 	foreach ($albums as $album) :
 		echo Html::tag('div',
