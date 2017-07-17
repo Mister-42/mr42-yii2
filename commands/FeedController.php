@@ -6,6 +6,7 @@ use app\models\feed\Feed;
 use app\models\user\{RecentTracks, WeeklyArtist};
 use dektrium\user\models\{Profile, User};
 use yii\console\Controller;
+use yii\helpers\ArrayHelper;
 
 /**
  * Handles feeds.
@@ -27,10 +28,10 @@ class FeedController extends Controller {
 		foreach($response->data['channel']['item'] as $item) :
 			$rssItem = new Feed();
 			$rssItem->feed = $name;
-			$rssItem->title = (string) $item->title;
-			$rssItem->url = (string) $item->$urlField;
-			$rssItem->description = Yii::$app->formatter->cleanInput($item->description, false);
-			$rssItem->time = strtotime($item->pubDate);
+			$rssItem->title = (string) ArrayHelper::getValue($item, 'title');
+			$rssItem->url = (string) ArrayHelper::getValue($item, $urlField);
+			$rssItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, 'description'), false);
+			$rssItem->time = strtotime(ArrayHelper::getValue($item, 'pubDate'));
 			$rssItem->save();
 
 			if ($count++ === $limit)
@@ -77,12 +78,12 @@ class FeedController extends Controller {
 				foreach($response->data['weeklyartistchart']['artist'] as $artist) :
 					$addArtist = new WeeklyArtist();
 					$addArtist->userid = $profile->user_id;
-					$addArtist->rank = (int) $artist->attributes()->rank;
-					$addArtist->artist = (string) $artist->name;
-					$addArtist->count = (int) $artist->playcount;
+					$addArtist->rank = (int) ArrayHelper::getValue($artist, '@attributes.rank');
+					$addArtist->artist = (string) ArrayHelper::getValue($artist, 'name');
+					$addArtist->count = (int) ArrayHelper::getValue($artist, 'playcount');
 					$addArtist->save();
 
-					if ((int) $artist->attributes()->rank === $limit)
+					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $limit)
 						break;
 				endforeach;
 				usleep(200000);

@@ -15,7 +15,7 @@ engines:
     enabled: true
     checks:
       CyclomaticComplexity:
-        reportLevel: 20
+        enabled: false
       Design/TooManyPublicMethods:
         enabled: false
     config:
