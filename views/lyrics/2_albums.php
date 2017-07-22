@@ -66,7 +66,7 @@ echo '<div class="site-lyrics-albums">';
 				'items' => [
 					[
 						'thumb'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
-						'image'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '500'],
+						'image'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800'],
 						'title'	=> implode(' · ', [$album->artist->name, $album->name]),
 						'group'	=> $album->artist->url,
 					],
