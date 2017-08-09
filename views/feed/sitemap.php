@@ -29,7 +29,8 @@ foreach($articles as $article) :
 	foreach ($article['comments'] as $comment)
 		$lastUpdate = max($lastUpdate, $comment['created']);
 	Sitemap::lineItem($doc, Url::to(['articles/index', 'id' => $article['id'], 'title' => $article['url']], true), $lastUpdate);
-	Sitemap::lineItem($doc, Url::to(['articles/pdf', 'id' => $article['id'], 'title' => $article['url']], true), $lastUpdate);
+	if ($article['pdf'])
+		Sitemap::lineItem($doc, Url::to(['articles/pdf', 'id' => $article['id'], 'title' => $article['url']], true), $lastUpdate);
 endforeach;
 unset($articles);
 

@@ -85,6 +85,9 @@ class ArticlesController extends Controller {
 		if (isset($id) && !empty($id)) {
 			$model = $this->findModel($id);
 
+			if (!$model->pdf)
+				throw new NotFoundHttpException('Page not found.');
+
 			if (empty($title) || $title != $model->url)
 				$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 

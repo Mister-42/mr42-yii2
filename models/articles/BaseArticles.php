@@ -21,6 +21,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 			[['title', 'content'], 'required'],
 			[['content'], 'string'],
 			[['title', 'tags'], 'string', 'max' => 255],
+			[['pdf'], 'boolean'],
 			[['active'], 'boolean'],
 		];
 	}
@@ -29,6 +30,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		return [
 			'url' => 'URL',
 			'source' => 'Source URL',
+			'pdf' => 'Create PDF',
 		];
 	}
 

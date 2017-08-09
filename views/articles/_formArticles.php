@@ -21,11 +21,13 @@ echo $form->field($model, 'source')->input('url', ['maxlength' => 128, 'tabindex
 
 echo $form->field($model, 'tags')->textInput(['maxlength' => 255, 'tabindex' => 5]);
 
-echo $form->field($model, 'active')->checkbox(['tabindex' => 6]);
+echo $form->field($model, 'pdf')->checkbox(['tabindex' => 6]);
+
+echo $form->field($model, 'active')->checkbox(['tabindex' => 7]);
 
 echo Html::tag('div',
-	Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) . ' ' .
-	Html::submitButton('Save', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7])
+	Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 9]) . ' ' .
+	Html::submitButton('Save', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 8])
 , ['class' => 'form-group text-right']);
 
 ActiveForm::end();

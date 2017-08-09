@@ -21,7 +21,8 @@ HighlightAsset::register($this);
 					'data-method' => 'post',
 				]);
 			}
-			echo ' ' . Html::a(Html::icon('save') . ' PDF', ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-xs btn-warning action']);
+			if ($model->pdf)
+				echo ' ' . Html::a(Html::icon('save') . ' PDF', ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-xs btn-warning action']);
 		?></div>
 	</div>
 
