@@ -2,7 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\articles\Articles;
-use app\models\tools\{Country, Favicon, PhoneticAlphabet};
+use app\models\tools\{Country, Favicon, PhoneticAlphabet, Qr};
 use yii\base\Object;
 use yii\filters\HttpCache;
 use yii\helpers\FileHelper;
@@ -66,6 +66,16 @@ class ToolsController extends Controller {
 			$model->convertText();
 
 		return $this->render('phonetic-alphabet', [
+			'model' => $model,
+		]);
+	}
+
+	public function actionQr() {
+		$model = new Qr;
+		if ($model->load(Yii::$app->request->post()))
+			$model->generateQr();
+
+		return $this->render('qr', [
 			'model' => $model,
 		]);
 	}

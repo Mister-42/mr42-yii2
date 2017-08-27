@@ -26,13 +26,11 @@ class Comments extends ActiveRecord {
 			[['website'], 'string', 'max' => 128],
 			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
 			[['website'], 'url', 'defaultScheme' => 'http', 'enableIDN' => true],
+			[['captcha'], 'captcha'],
 		];
 
-		if (Yii::$app->user->isGuest) {
-			$rules[] = ['captcha', 'captcha'];
-			$rules[] = [['name', 'email'], 'required'];
-			$rules[] = ['captcha', 'required'];
-		}
+		if (Yii::$app->user->isGuest)
+			$rules[] = [['name', 'email', 'captcha'], 'required'];
 		return $rules;
 	}
 

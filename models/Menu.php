@@ -31,6 +31,7 @@ class Menu {
 					['label' => 'HTML to Markdown Converter', 'url' => ['/tools/html-to-markdown']],
 					['label' => 'Password Generator', 'url' => ['/tools/password']],
 					['label' => 'Phonetic Alphabet Translator', 'url' => ['/tools/phonetic-alphabet']],
+					['label' => 'QR Code Generator', 'url' => ['/tools/qr']],
 				],
 			],
 			['label' => Html::icon('cd').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => 1],
