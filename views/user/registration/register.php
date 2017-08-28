@@ -24,9 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				echo $form->field($model, 'username');
 
-				if ($module->generatePasswords == false) {
+				if ($module->generatePasswords === false)
 					echo $form->field($model, 'password')->passwordInput();
-				}
 
 				echo $form->field($model, 'captcha')->widget(Captcha::className(), [
 					'captchaAction' => '/site/captcha',
