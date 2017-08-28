@@ -1,8 +1,8 @@
 <?php
 namespace app\widgets;
 use Yii;
-use dektrium\user\models\User;
 use app\models\user\WeeklyArtist;
+use Da\User\Model\User;
 use yii\bootstrap\{Html, Widget};
 
 class WeeklyArtistChart extends Widget {

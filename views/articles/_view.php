@@ -1,6 +1,6 @@
 <?php
 use app\models\user\Profile;
-use dektrium\user\models\User;
+use Da\User\Model\User;
 use nezhelskoy\highlight\HighlightAsset;
 use yii\bootstrap\Html;
 use yii\helpers\StringHelper;
@@ -60,8 +60,7 @@ HighlightAsset::register($this);
 		if($model->updated - $model->created > 3600)
 			echo ' · updated ' . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
 
-		$user = new User();
-		$profile = $user->finder->findProfileById($model->user->id);
+		$profile = User::find()->where(['id' => $model->user->id])->one();
 		echo ' · ' . Html::icon('user', ['class' => 'text-muted']) . ' ' . Html::tag('span', empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name), ['class' => 'author']);
 
 		if (isset($view) && $view == 'full ' && !empty($profile['bio']) && $author = Profile::show($profile))

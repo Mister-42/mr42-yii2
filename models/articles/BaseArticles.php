@@ -2,7 +2,7 @@
 namespace app\models\articles;
 use Yii;
 use app\models\Pdf;
-use dektrium\user\models\{Profile, User};
+use Da\User\Model\{Profile, User};
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap\Html;
 use yii\helpers\{StringHelper, Url};

@@ -1,5 +1,5 @@
 <?php
-use dektrium\user\models\User;
+use Da\User\Model\User;
 use yii\bootstrap\Html;
 use yii\widgets\Pjax;
 
@@ -25,8 +25,7 @@ foreach ($comments as $comment) :
 		?></div><?php
 		echo $comment->content;
 		if (!empty($comment->user)) {
-			$user = new User();
-			$profile = $user->finder->findProfileById($comment->user);
+			$profile = User::find()->where(['id' => $model->user->id])->one();
 			$comment->name = empty($profile->name) ? Html::encode($profile->user->username) : Html::encode($profile->name);
 			$comment->website = $profile->website;
 		}

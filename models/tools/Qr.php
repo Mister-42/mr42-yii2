@@ -57,37 +57,37 @@ class Qr extends \yii\base\Model {
 			[['authentication'], 'in', 'range' => self::getAuthentication()],
 			[['hidden'], 'boolean'],
 			[['phone', 'videoPhone'], 'string'],
-			['url', 'required', 'when' => function ($model) {
+			['url', 'required', 'when' => function (model $model) {
 					return $model->type == 'BookMarkFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='BookMarkFormat';}"],
-			[['address', 'amount'], 'required', 'when' => function ($model) {
+			[['address', 'amount'], 'required', 'when' => function (model $model) {
 					return $model->type == 'BtcFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='BtcFormat';}"],
-			[['lat', 'lng', 'altitude'], 'required', 'when' => function ($model) {
+			[['lat', 'lng', 'altitude'], 'required', 'when' => function (model $model) {
 					return $model->type == 'GeoFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='GeoFormat';}"],
-			[['dtStart', 'dtEnd'], 'required', 'when' => function ($model) {
+			[['dtStart', 'dtEnd'], 'required', 'when' => function (model $model) {
 					return $model->type == 'iCalFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='iCalFormat';}"],
-			[['email', 'subject', 'msg'], 'required', 'when' => function ($model) {
+			[['email', 'subject', 'msg'], 'required', 'when' => function (model $model) {
 					return $model->type == 'MailMessageFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='MailMessageFormat';}"],
-			['email', 'required', 'when' => function ($model) {
+			['email', 'required', 'when' => function (model $model) {
 					return $model->type == 'MailToFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='MailToFormat';}"],
-			[['fistName', 'lastName', 'email'], 'required', 'when' => function ($model) {
+			[['fistName', 'lastName', 'email'], 'required', 'when' => function (model $model) {
 					return $model->type == 'MeCardFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='MeCardFormat';}"],
-			['phone', 'required', 'when' => function ($model) {
+			['phone', 'required', 'when' => function (model $model) {
 					return $model->type == 'MmsFormat' || $model->type == 'PhoneFormat' || $model->type == 'SmsFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='MmsFormat'||$('#qr-type').val()=='PhoneFormat'||$('#qr-type').val()=='SmsFormat';}"],
-			[['authentication', 'ssid'], 'required', 'when' => function ($model) {
+			[['authentication', 'ssid'], 'required', 'when' => function (model $model) {
 					return $model->type == 'WifiFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='WifiFormat';}"],
-			['password', 'required', 'when' => function ($model) {
+			['password', 'required', 'when' => function (model $model) {
 					return $model->type == 'WifiFormat' && $model->authentication !== 'none';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='WifiFormat'&&$('#qr-authentication').val()!='none';}"],
-			['videoId', 'required', 'when' => function ($model) {
+			['videoId', 'required', 'when' => function (model $model) {
 					return $model->type == 'YoutubeFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='YoutubeFormat';}"],
 		];

@@ -10,5 +10,13 @@ return [
 			'baseUrl' => 'https://www.mr42.me/',
 		],
 	],
+	'controllerMap' => [
+		'migrate' => [
+			'class' => \yii\console\controllers\MigrateController::class,
+			'migrationNamespaces' => [
+				'Da\User\Migration',
+			],
+		],
+	],
 	'controllerNamespace' => 'app\commands',
 ];

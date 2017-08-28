@@ -5,7 +5,7 @@ use Yii;
 use yii\bootstrap\Html;
 use yii\db\ActiveRecord;
 
-class Profile extends \dektrium\user\models\Profile {
+class Profile extends \Da\User\Model\Profile {
 	public function attributeLabels() {
 		$labels = parent::attributeLabels();
 		$labels['lastfm'] = 'Last.fm Username';

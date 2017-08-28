@@ -2,44 +2,46 @@
 use yii\bootstrap\{ActiveForm, Html};
 use yii\captcha\Captcha;
 
-$this->title = 'Sign up';
-$this->params['breadcrumbs'][] = 'User';
+$this->title = Yii::t('usuario', 'Sign up');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-	<div class="col-md-offset-3 col-md-6">
-		<h2 class="panel-title"><?= Html::encode($this->title) ?></h2><?php
-		$form = ActiveForm::begin([
-			'id' => 'registration-form',
-		]);
+	<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+			</div>
+			<div class="panel-body">
+				<?php $form = ActiveForm::begin(
+					[
+						'id' => $model->formName(),
+						'enableAjaxValidation' => true,
+						'enableClientValidation' => false,
+					]
+				);
 
-		echo $form->field($model, 'email', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{error}',
-		])->input('email', ['tabindex' => 1]);
+				echo $form->field($model, 'email');
 
-		echo '<div class="row">';
-			echo $form->field($model, 'username', [
-				'options' => ['class' => 'col-xs-6 form-group'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
-			])->textInput(['tabindex' => 2]);
+				echo $form->field($model, 'username');
 
-			echo $form->field($model, 'password', [
-				'options' => ['class' => 'col-xs-6 form-group'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
-			])->passwordInput(['tabindex' => 3]);
-		echo '</div>';
+				if ($module->generatePasswords == false) {
+					echo $form->field($model, 'password')->passwordInput();
+				}
 
-		echo $form->field($model, 'captcha')->widget(Captcha::className(), [
-			'captchaAction' => '/site/captcha',
-			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
-			'options' => ['class' => 'form-control', 'tabindex' => 4],
-			'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
-		])->hint('Click on the image to retrieve a new verification code.');
+				echo $form->field($model, 'captcha')->widget(Captcha::className(), [
+					'captchaAction' => '/site/captcha',
+					'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
+					'options' => ['class' => 'form-control', 'tabindex' => 4],
+					'template' => '<div class="row"><div class="col-xs-6"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
+				])->hint('Click on the image to retrieve a new verification code.');
 
-		echo Html::submitButton('Sign up', ['class' => 'btn btn-primary btn-block', 'tabindex' => 5]);
+				echo Html::submitButton(Yii::t('usuario', 'Sign up'), ['class' => 'btn btn-success btn-block']);
 
-		ActiveForm::end(); ?>
-
-		<p class="text-center"><br><?= Html::a('Already registered? Sign in!', ['/user/security/login']) ?></p>
+				ActiveForm::end(); ?>
+			</div>
+		</div>
+		<p class="text-center">
+			<?= Html::a(Yii::t('usuario', 'Already registered? Sign in!'), ['/user/security/login']) ?>
+		</p>
 	</div>
 </div>

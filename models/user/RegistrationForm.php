@@ -1,7 +1,7 @@
 <?php
 namespace app\models\user;
 
-class RegistrationForm extends \dektrium\user\models\RegistrationForm {
+class RegistrationForm extends \Da\User\Form\RegistrationForm {
 	public $captcha;
 
 	public function attributeLabels() {

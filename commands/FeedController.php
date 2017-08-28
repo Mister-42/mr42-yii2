@@ -4,7 +4,7 @@ use Yii;
 use app\models\Webrequest;
 use app\models\feed\Feed;
 use app\models\user\{RecentTracks, WeeklyArtist};
-use dektrium\user\models\{Profile, User};
+use Da\User\Model\{Profile, User};
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
 

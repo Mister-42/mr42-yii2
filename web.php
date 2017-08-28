@@ -9,17 +9,17 @@ $config = [
 			'class'   => \yii\authclient\Collection::className(),
 			'clients' => [
 				'facebook' => [
-					'class'			=> 'dektrium\user\clients\Facebook',
+					'class'			=> 'Da\User\AuthClient\Facebook',
 					'clientId'		=> $secrets['facebook']['Id'],
 					'clientSecret'	=> $secrets['facebook']['Secret'],
 				],
 				'github' => [
-					'class'			=> 'dektrium\user\clients\GitHub',
+					'class'			=> 'Da\User\AuthClient\GitHub',
 					'clientId'		=> $secrets['github']['Id'],
 					'clientSecret'	=> $secrets['github']['Secret'],
 				],
 				'google' => [
-					'class'			=> 'dektrium\user\clients\Google',
+					'class'			=> 'Da\User\AuthClient\Google',
 					'clientId'		=> $secrets['google']['Id'],
 					'clientSecret'	=> $secrets['google']['Secret'],
 				],
@@ -38,27 +38,28 @@ $config = [
 		'view' => [
 			'theme' => [
 				'pathMap' => [
-					'@dektrium/user/views' => '@app/views/user'
+					'@Da/User/resources/views' => '@app/views/user'
 				],
 			],
 		],
 	],
 	'modules' => [
 		'user' => [
-			'class' => 'dektrium\user\Module',
-			'admins' => ['admin'],
+			'class' => Da\User\Module::class,
+			'administrators' => ['admin'],
+			'allowAccountDelete' => false,
 			'controllerMap' => [
 				'profile' => 'app\controllers\user\ProfileController',
 			],
-			'modelMap' => [
+			'classMap' => [
 				'Profile' => 'app\models\user\Profile',
 				'RegistrationForm' => 'app\models\user\RegistrationForm',
 			],
-			'urlRules' => [
+			'routes' => [
 				'profile/<username:\w+>'					=> 'profile/show',
 				'recenttracks/<username:\w+>'				=> 'profile/recenttracks',
 				'<action:(login|logout)>'					=> 'security/<action>',
-				'<action:(register|resend)>'				=> 'registration/<action>',
+				'<action:(register|resend)>'                => 'registration/<action>',
 				'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>'	=> 'registration/confirm',
 				'forgot'									=> 'recovery/request',
 				'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>'	=> 'recovery/reset',
