@@ -23,6 +23,9 @@ return [
 			],
 			'linkAssets' => true,
 		],
+		'authManager' => [
+			'class' => 'yii\rbac\DbManager',
+		],
 		'cache' => [
 			'class' => 'yii\caching\DbCache',
 		],

@@ -6,7 +6,7 @@ class RegistrationForm extends \Da\User\Form\RegistrationForm {
 
 	public function attributeLabels() {
 		$labels = parent::attributeLabels();
-		$labels['captcha'] = 'Completely Automated Public Turing test to tell Computers and Humans Apart';
+		$labels['captcha'] = 'Verification Code';
 		return $labels;
 	}
 
