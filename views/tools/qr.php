@@ -35,22 +35,22 @@ $this->registerJs(Yii::$app->formatter->jspack('tools/formQr.js'), View::POS_REA
 		echo Qr::printFormField($form, $model, 'textInput', 'name', 'user', $tab++);
 		echo Qr::printFormField($form, $model, 'textInput', 'title', 'header', $tab++);
 		echo Qr::printFormField($form, $model, 'otherInput', 'url', 'globe', $tab++, 'url');
-		echo '<div class="row">';
-			echo Qr::printFormField($form, $model, 'textInput', 'lat', 'globe', $tab++, 'col-sm-4');
-			echo Qr::printFormField($form, $model, 'textInput', 'lng', 'globe', $tab++, 'col-sm-4');
-			echo Qr::printFormField($form, $model, 'textInput', 'altitude', 'globe', $tab++, 'col-sm-4');
-		echo '</div>';
+		echo Html::tag('div',
+			Qr::printFormField($form, $model, 'textInput', 'lat', 'globe', $tab++, 'col-sm-4') .
+			Qr::printFormField($form, $model, 'textInput', 'lng', 'globe', $tab++, 'col-sm-4') .
+			Qr::printFormField($form, $model, 'textInput', 'altitude', 'globe', $tab++, 'col-sm-4')
+		, ['class' => 'row']);
 		echo Qr::printFormField($form, $model, 'textInput', 'summary', 'comment', $tab++);
-		echo '<div class="row">';
-			echo Qr::printFormField($form, $model, 'DateTimePicker', 'dtStart', 'time', $tab++, 'col-sm-6');
-			echo Qr::printFormField($form, $model, 'DateTimePicker', 'dtEnd', 'time', $tab++, 'col-sm-6');
-		echo '</div>';
+		echo Html::tag('div',
+			Qr::printFormField($form, $model, 'DateTimePicker', 'dtStart', 'time', $tab++, 'col-sm-6') .
+			Qr::printFormField($form, $model, 'DateTimePicker', 'dtEnd', 'time', $tab++, 'col-sm-6')
+		, ['class' => 'row']);
 		echo Qr::printFormField($form, $model, 'otherInput', 'email', 'envelope', $tab++, 'email');
 		echo Qr::printFormField($form, $model, 'textInput', 'subject', 'header', $tab++);
-		echo '<div class="row">';
-			echo Qr::printFormField($form, $model, 'textInput', 'firstName', 'user', $tab++, 'col-sm-6');
-			echo Qr::printFormField($form, $model, 'textInput', 'lastName', 'user', $tab++, 'col-sm-6');
-		echo '</div>';
+		echo Html::tag('div',
+			Qr::printFormField($form, $model, 'textInput', 'firstName', 'user', $tab++, 'col-sm-6') .
+			Qr::printFormField($form, $model, 'textInput', 'lastName', 'user', $tab++, 'col-sm-6')
+		, ['class' => 'row']);
 		echo Qr::printFormField($form, $model, 'textInput', 'sound', 'music', $tab++);
 		echo Qr::printFormField($form, $model, 'otherInput', 'phone', 'phone-alt', $tab++, 'tel');
 		echo Qr::printFormField($form, $model, 'otherInput', 'videoPhone', 'phone-alt', $tab++, 'tel');
@@ -64,10 +64,10 @@ $this->registerJs(Yii::$app->formatter->jspack('tools/formQr.js'), View::POS_REA
 		echo Qr::printFormField($form, $model, 'textInput', 'password', 'lock', $tab++);
 		echo Qr::printFormField($form, $model, 'checkBox', 'hidden', null, $tab++);
 		echo Qr::printFormField($form, $model, 'textInput', 'videoId', 'header', $tab++);
-		echo '<div class="row">';
-			echo Qr::printFormField($form, $model, 'otherInput', 'size', 'move', 96, 'col-sm-6', 'number');
-			echo Qr::printFormField($form, $model, 'otherInput', 'margin', 'fullscreen', 97, 'col-sm-6', 'number');
-		echo '</div>';
+		echo Html::tag('div',
+			Qr::printFormField($form, $model, 'otherInput', 'size', 'move', 96, 'col-sm-6', 'number') .
+			Qr::printFormField($form, $model, 'otherInput', 'margin', 'fullscreen', 97, 'col-sm-6', 'number')
+		, ['class' => 'row']);
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 99]) . ' ' .
