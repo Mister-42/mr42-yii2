@@ -1,7 +1,9 @@
 <?php
 use yii\bootstrap\{ActiveForm, Html};
 
-$this->title = Yii::t('usuario', 'Recover your password');
+$this->title = Yii::$app->controller->action->id === 'request'
+	? Yii::t('usuario', 'Recover your password')
+	: Yii::t('usuario', 'Reset your password');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
