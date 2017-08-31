@@ -3,7 +3,7 @@ namespace app\controllers;
 use Yii;
 use app\models\site\{Changelog, Contact};
 use yii\bootstrap\Alert;
-use yii\base\Object;
+use yii\base\Object as BaseObject;
 use yii\captcha\CaptchaAction;
 use yii\filters\{AccessControl, HttpCache};
 use yii\web\{Controller, ErrorAction, NotFoundHttpException, Response, UploadedFile};
@@ -46,7 +46,7 @@ class SiteController extends Controller {
 				'only' => ['changelog'],
 			], [
 				'class' => HttpCache::className(),
-				'lastModified' => function (Object $action) {
+				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['robotstxt'],

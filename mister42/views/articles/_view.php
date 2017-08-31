@@ -43,7 +43,7 @@ HighlightAsset::register($this);
 		if ($model->active == 0)
 			echo Html::tag('div', 'Not published', ['class' => 'well well-sm alert-warning']);
 
-		echo Html::icon('link', ['class' => 'text-muted']) . ' ' . Html::a('permalink', ['index', 'id' => $model->id]).' · ';
+		echo Html::icon('link', ['class' => 'text-muted']) . ' ' . Html::a('permalink', "https://mr42.me/art{$model->id}").' · ';
 		$commentText = Yii::t('site', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
 		echo Html::icon('comment', ['class' => 'text-muted']) . ' ' . Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);
 

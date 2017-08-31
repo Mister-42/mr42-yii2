@@ -1,13 +1,13 @@
 <?php
 return [
-	'id' => 'mr42-console',
+	'id' => 'mister42-console',
 	'aliases' => [
-		'@web' => 'https://www.mr42.me/',
-		'@webroot' => __DIR__ . '/../webroot',
+		'@web' => 'https://www.mister42.me/',
+		'@webroot' => __DIR__ . '/../../webroot',
 	],
 	'components' => [
 		'urlManager' => [
-			'baseUrl' => 'https://www.mr42.me/',
+			'baseUrl' => 'https://www.mister42.me/',
 		],
 	],
 	'controllerMap' => [

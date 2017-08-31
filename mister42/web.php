@@ -2,7 +2,7 @@
 $secrets = require(__DIR__ . '/secrets.php');
 
 $config = [
-	'id' => 'mr42',
+	'id' => 'mister42',
 #	'catchAll' => ['site/offline'],
 	'components' => [
 		'authClientCollection' => [

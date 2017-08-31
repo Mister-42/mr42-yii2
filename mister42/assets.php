@@ -1,6 +1,6 @@
 <?php
 return [
-	'cssCompressor' => 'sass {from} {to} --scss --sourcemap=none -C -t compressed -I '.realpath(__DIR__.'/../vendor/bower/bootstrap-sass/assets/stylesheets'),
+	'cssCompressor' => 'sass {from} {to} --scss --sourcemap=none -C -t compressed -I '.realpath(__DIR__.'/../../vendor/bower/bootstrap-sass/assets/stylesheets'),
 	'deleteSource' => true,
 	'bundles' => [
 		'app\assets\AppAssetCompress'
@@ -19,7 +19,7 @@ return [
 		'converter' => [
 			'class' => 'yii\web\AssetConverter',
 			'commands' => [
-				'scss' => ['css', 'sass {from} {to} -C --sourcemap=none -t compressed -I '.realpath(__DIR__.'/../vendor/bower/bootstrap-sass/assets/stylesheets')],
+				'scss' => ['css', 'sass {from} {to} -C --sourcemap=none -t compressed -I '.realpath(__DIR__.'/../../vendor/bower/bootstrap-sass/assets/stylesheets')],
 			],
 		],
 	],

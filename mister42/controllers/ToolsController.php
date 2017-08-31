@@ -3,7 +3,7 @@ namespace app\controllers;
 use Yii;
 use app\models\articles\Articles;
 use app\models\tools\{Country, Favicon, PhoneticAlphabet, Qr};
-use yii\base\Object;
+use yii\base\Object as BaseObject;
 use yii\filters\HttpCache;
 use yii\helpers\FileHelper;
 use yii\web\{Controller, UploadedFile};
@@ -13,10 +13,10 @@ class ToolsController extends Controller {
 		return [
 			[
 				'class' => HttpCache::className(),
-				'etagSeed' => function (Object $action) {
+				'etagSeed' => function (BaseObject $action) {
 					return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
 				},
-				'lastModified' => function (Object $action) {
+				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['html-to-markdown', 'password'],
