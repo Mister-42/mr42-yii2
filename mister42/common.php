@@ -100,6 +100,7 @@ return [
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>'						=> 'lyrics/index',
 				'lyrics/<artist:.*?>'												=> 'lyrics/index',
 				'articles/<id:\d+>/<title:.*?>.pdf'									=> 'articles/pdf',
+				'art<id:\d+>'														=> 'permalink/articles',
 				'articles/<id:\d+>/<title:.*?>'										=> 'articles/index',
 				'articles/<id:\d+>'													=> 'articles/index',
 				'articles/<action:search>'											=> 'articles/index',
@@ -115,7 +116,7 @@ return [
 	'language' => 'en',
 	'name' => 'Mr.42',
 	'params' => require(__DIR__ . '/params.php'),
-	'runtimePath' => __DIR__ . '/../../../.cache/yii/mr42/mister42',
+	'runtimePath' => __DIR__ . '/../../../.cache/yii/mister42',
 	'timeZone' => 'Europe/Berlin',
 	'vendorPath' => __DIR__ . '/../../vendor',
 ];

@@ -14,7 +14,6 @@ $this->beginPage();
 <html lang="<?= Yii::$app->language ?>">
 <head><?php
 echo Html::tag('title', Html::encode($this->title));
-echo '<meta name="google-site-verification" content="haKpAkVN9rh5Ea3AdJQCuGIJAMGrvgZAIn8HBl9MR8k" />';
 $this->registerMetaTag(['charset' => Yii::$app->charset]);
 $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
 $this->registerMetaTag(['name' => 'description', 'content' => Html::encode(Yii::$app->params['description'])]);
