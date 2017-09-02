@@ -1,1 +1,0 @@
-../mister42/common.php
