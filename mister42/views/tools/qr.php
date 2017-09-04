@@ -54,9 +54,11 @@ $this->registerJs(Yii::$app->formatter->jspack('tools/formQr.js'), View::POS_REA
 		echo Qr::printFormField($form, $model, 'textInput', 'sound', 'music', $tab++);
 		echo Qr::printFormField($form, $model, 'otherInput', 'phone', 'phone-alt', $tab++, 'tel');
 		echo Qr::printFormField($form, $model, 'otherInput', 'videoPhone', 'phone-alt', $tab++, 'tel');
+		echo Qr::printFormField($form, $model, 'otherInput', 'workPhone', 'phone-alt', $tab++, 'tel');
 		echo Qr::printFormField($form, $model, 'textInput', 'note', 'tag', $tab++);
 		echo Qr::printFormField($form, $model, 'DatePicker', 'birthday', 'calendar', $tab++);
 		echo Qr::printFormField($form, $model, 'textInput', 'nickName', 'user', $tab++);
+		echo Qr::printFormField($form, $model, 'textInput', 'organization', 'tower', $tab++);
 		echo Qr::printFormField($form, $model, 'textArea', 'msg', 'comment', $tab++);
 		echo Qr::printFormField($form, $model, 'textInput', 'fullName', 'user', $tab++);
 		echo Qr::printFormField($form, $model, 'dropDownList', 'authentication', 'cog', $tab++, null, Qr::getAuthentication());

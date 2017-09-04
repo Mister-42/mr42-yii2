@@ -21,7 +21,7 @@ $("#qr-type").on('change', function () {
 	} else if ($(this).val() === 'PhoneFormat' || $(this).val() === 'SmsFormat') {
 		$('.field-qr-phone').removeClass('hidden');
 	} else if ($(this).val() === 'vCardFormat') {
-		$('.field-qr-name, .field-qr-fullname, .field-qr-email').removeClass('hidden');
+		$('.field-qr-name, .field-qr-fullname, .field-qr-address, .field-qr-email, .field-qr-phone, .field-qr-workphone, .field-qr-birthday, .field-qr-url, .field-qr-organization, .field-qr-msg').removeClass('hidden');
 	} else if ($(this).val() === 'WifiFormat') {
 		$('.field-qr-authentication, .field-qr-ssid, .field-qr-password, .field-qr-hidden').removeClass('hidden');
 	} else if ($(this).val() === 'YoutubeFormat') {

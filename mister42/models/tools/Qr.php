@@ -27,6 +27,8 @@ class Qr extends \yii\base\Model {
 	public $sound;
 	public $phone;
 	public $videoPhone;
+	public $workPhone;
+	public $organization;
 	public $note;
 	public $birthday;
 	public $nickName;
@@ -81,6 +83,9 @@ class Qr extends \yii\base\Model {
 			['phone', 'required', 'when' => function (model $model) {
 					return $model->type == 'MmsFormat' || $model->type == 'PhoneFormat' || $model->type == 'SmsFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='MmsFormat'||$('#qr-type').val()=='PhoneFormat'||$('#qr-type').val()=='SmsFormat';}"],
+			[['email'], 'required', 'when' => function (model $model) {
+					return $model->type == 'vCardFormat';
+				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='vCardFormat';}"],
 			[['authentication', 'ssid'], 'required', 'when' => function (model $model) {
 					return $model->type == 'WifiFormat';
 				}, 'whenClient' => "function(attribute,value){return $('#qr-type').val()=='WifiFormat';}"],
@@ -132,11 +137,22 @@ class Qr extends \yii\base\Model {
 														'birthday' => $this->birthday,
 														'address' => $this->address,
 														'url' => $this->url,
-														'nickName' => $this->nickName]; break;
+														'nickName' => $this->nickName
+													]; break;
 			case 'MmsFormat'			: $qrData = ['phone' => $this->phone, 'msg' => $this->msg]; break;
 			case 'PhoneFormat'			:
 			case 'SmsFormat'			: $qrData = ['phone' => $this->phone]; break;
-			case 'vCardFormat'			: $qrData = ['name' => $this->name, 'fullName' => $this->fullName, 'email' => $this->email]; break;
+			case 'vCardFormat'			: $qrData = ['name' => $this->name,
+														'fullName' => $this->fullName,
+														'address' => $this->address,
+														'email' => $this->email,
+														'workPhone' => $this->workPhone,
+														'homePhone' => $this->phone,
+														'birthday' => $this->birthday,
+														'url' => $this->url,
+														'organization' => $this->organization,
+														'note' => $this->msg
+													]; break;
 			case 'WifiFormat'			: $qrData = ['authentication' => $this->authentication === "none" ? null : $this->authentication, 'ssid' => $this->ssid, 'password' => $this->authentication === "none" ? null : $this->password, 'hidden' => $this->hidden]; break;
 			case 'YoutubeFormat'		: $qrData = ['videoId' => $this->videoId]; break;
 		}
@@ -158,7 +174,7 @@ class Qr extends \yii\base\Model {
 
 	public function getTypes($rules = false): array {
 		$dir = Yii::getAlias('@vendor/2amigos/qrcode-library/src/Format');
-		foreach(FileHelper::findFiles($dir, ['except' => ['AbstractFormat.php', 'vCardFormat.php'], 'only' => ['*.php']]) as $file)
+		foreach(FileHelper::findFiles($dir, ['except' => ['AbstractFormat.php'], 'only' => ['*.php']]) as $file)
 			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : basename($file, 'Format.php');
 
 		asort($typeList, SORT_NATURAL | SORT_FLAG_CASE);
