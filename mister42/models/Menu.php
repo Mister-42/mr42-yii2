@@ -24,7 +24,6 @@ class Menu {
 			],
 			['label' => Html::icon('wrench').' Tools', 'url' => null,
 				'items' => [
-					['label' => 'Code Playground', 'url' => ['/site/playground'], 'visible' => $isAdmin],
 					['label' => 'Browser Headers', 'url' => ['/tools/headers']],
 					['label' => 'Country Information', 'url' => ['/tools/country']],
 					['label' => 'Favicon Converter', 'url' => ['/tools/favicon']],

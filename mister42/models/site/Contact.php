@@ -2,8 +2,7 @@
 namespace app\models\site;
 use Yii;
 
-class Contact extends \yii\base\Model
-{
+class Contact extends \yii\base\Model {
 	public $name;
 	public $email;
 	public $title;
@@ -23,7 +22,7 @@ class Contact extends \yii\base\Model
 			[['captcha'], 'captcha'],
 		];
 
-		if (!Yii::$app->request->post())
+		if (!Yii::$app->request->isPost)
 			$rules[] = [['captcha'], 'required'];
 		return $rules;
 	}
@@ -38,18 +37,18 @@ class Contact extends \yii\base\Model
 	}
 
 	public function contact(): bool {
-		if ($this->validate()) {
-			$mailer = Yii::$app->mailer->compose()
-				->setTo(Yii::$app->params['secrets']['params']['adminEmail'])
-				->setFrom([$this->email => $this->name])
-				->setSubject($this->title)
-				->setTextBody($this->content);
+		if (!$this->validate())
+			return false;
 
-			if ($this->attachment)
-				$mailer->attach($this->attachment->tempName, ['fileName' => $this->attachment->name]);
+		$mailer = Yii::$app->mailer->compose()
+			->setTo(Yii::$app->params['secrets']['params']['adminEmail'])
+			->setFrom([$this->email => $this->name])
+			->setSubject($this->title)
+			->setTextBody($this->content);
 
-			return $mailer->send();
-		}
-		return false;
+		if ($this->attachment)
+			$mailer->attach($this->attachment->tempName, ['fileName' => $this->attachment->name]);
+
+		return $mailer->send();
 	}
 }

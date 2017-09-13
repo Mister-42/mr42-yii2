@@ -2,7 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\calculator\{Date, Duration, Office365, Timezone};
-use yii\base\Object as BaseObject;
+use yii\base\BaseObject;
 use yii\filters\HttpCache;
 
 class CalculatorController extends \yii\web\Controller {

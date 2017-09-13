@@ -34,9 +34,8 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 		$form = ActiveForm::begin();
 
 		echo $form->field($model, 'email', [
-				'template' => '{label} (optional)<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{hint} {error}',
-			])
-			->input('email', ['tabindex' => 1])
+				'template' => '{label} (optional)<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{hint} {error}',
+			])->input('email', ['tabindex' => 1])
 			->hint('If you enter your email address here the favicon will be mailed to that address.'); ?>
 
 		<div class="input-group">

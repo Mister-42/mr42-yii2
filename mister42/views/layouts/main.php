@@ -54,7 +54,7 @@ echo '</div>';
 
 echo '<footer>';
 	echo '<div class="container">';
-		echo Html::tag(p,
+		echo Html::tag('p',
 			'&copy; ' . date('2014-Y ') . Yii::$app->name . Html::tag('span', ' · ' . Yii::powered(), ['class' => 'hidden-xs'])
 		, ['class' => 'pull-left']);
 		echo '<p class="pull-right">';

@@ -4,7 +4,7 @@ use yii\helpers\ArrayHelper;
 
 $title = 'Country Information';
 $this->params['breadcrumbs'][] = 'Tools';
-$this->params['breadcrumbs'][] = $model->load(Yii::$app->request->post()) ? ['label' => $title, 'url' => ['country']] : $title;
+$this->params['breadcrumbs'][] = Yii::$app->request->isPost ? ['label' => $title, 'url' => ['country']] : $title;
 
 if ($model->load(Yii::$app->request->post())) {
 	$post = Yii::$app->request->post('Country');

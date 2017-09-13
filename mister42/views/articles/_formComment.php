@@ -21,7 +21,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 
 				echo $form->field($model, 'email', [
 					'options' => ['class' => 'col-xs-6'],
-					'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{hint}{error}',
+					'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{hint}{error}',
 				])->input('email', ['tabindex' => 2])
 				->hint('This will not be published.');
 			echo '</div>';

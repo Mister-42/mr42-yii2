@@ -78,6 +78,13 @@ return [
 		],
 		'mailer' => [
 			'class' => 'yii\swiftmailer\Mailer',
+			'transport' => [
+				'class' => 'Swift_SmtpTransport',
+				'host' => $secrets['email']['host'],
+				'username' => $secrets['email']['username'],
+				'password' => $secrets['email']['password'],
+				'encryption' => 'tls',
+			],
 		],
 		'pdf' => [
 			'class' => \kartik\mpdf\Pdf::classname(),

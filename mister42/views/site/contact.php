@@ -28,7 +28,7 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 
 				echo $form->field($model, 'email', [
 					'options' => ['class' => 'col-xs-6 form-group'],
-					'template' => '{label}<div class="input-group"><span class="input-group-addon"><span class="addon-email"></span></span>{input}</div>{error}',
+					'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{error}',
 				])->input('email', ['tabindex' => 2]);
 			echo '</div>';
 

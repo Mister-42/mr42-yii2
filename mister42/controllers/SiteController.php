@@ -3,7 +3,7 @@ namespace app\controllers;
 use Yii;
 use app\models\site\{Changelog, Contact};
 use yii\bootstrap\Alert;
-use yii\base\Object as BaseObject;
+use yii\base\BaseObject;
 use yii\captcha\CaptchaAction;
 use yii\filters\{AccessControl, HttpCache};
 use yii\web\{Controller, ErrorAction, NotFoundHttpException, Response, UploadedFile};
@@ -27,7 +27,7 @@ class SiteController extends Controller {
 		return [
 			'access' => [
 				'class' => AccessControl::className(),
-				'only' => ['php-version', 'playground'],
+				'only' => ['php-version'],
 				'rules' => [
 					[
 						'allow' => true,
@@ -49,7 +49,7 @@ class SiteController extends Controller {
 				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
-				'only' => ['robotstxt'],
+				'only' => ['bing-site-auth', 'robotstxt'],
 			], [
 				'class' => HttpCache::className(),
 				'lastModified' => function () {
@@ -76,7 +76,7 @@ class SiteController extends Controller {
 	}
 
 	public function actionContact() {
-		$model = new Contact;
+		$model = new Contact();
 		if ($model->load(Yii::$app->request->post())) {
 			$model->attachment = UploadedFile::getInstance($model, 'attachment');
 			if ($model->contact())
@@ -100,10 +100,6 @@ class SiteController extends Controller {
 
 	public function actionPhpVersion() {
 		return $this->render('php-version');
-	}
-
-	public function actionPlayground() {
-		return $this->render('playground');
 	}
 
 	public function actionRobotstxt() {
