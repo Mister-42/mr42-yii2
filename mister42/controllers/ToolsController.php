@@ -6,9 +6,9 @@ use app\models\tools\{Country, Favicon, PhoneticAlphabet, Qr};
 use yii\base\{BaseObject, ViewNotFoundException};
 use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, FileHelper};
-use yii\web\{Controller, NotFoundHttpException, UploadedFile};
+use yii\web\{NotFoundHttpException, UploadedFile};
 
-class ToolsController extends Controller {
+class ToolsController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[

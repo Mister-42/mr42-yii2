@@ -4,9 +4,9 @@ use Yii;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, Url};
-use yii\web\{Controller, NotFoundHttpException};
+use yii\web\NotFoundHttpException;
 
-class LyricsController extends Controller {
+class LyricsController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[

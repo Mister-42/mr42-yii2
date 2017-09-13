@@ -6,9 +6,9 @@ use yii\bootstrap\Alert;
 use yii\data\ActiveDataProvider;
 use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\Url;
-use yii\web\{Controller, MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
+use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
 
-class ArticlesController extends Controller {
+class ArticlesController extends \yii\web\Controller {
 	public $layout = '@app/views/layouts/column2.php';
 
 	public function behaviors() {

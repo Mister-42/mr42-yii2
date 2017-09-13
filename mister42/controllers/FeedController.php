@@ -4,9 +4,9 @@ use Yii;
 use app\models\articles\Articles;
 use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, StringHelper};
-use yii\web\{Controller, Response};
+use yii\web\Response;
 
-class FeedController extends Controller {
+class FeedController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[

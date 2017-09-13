@@ -6,9 +6,9 @@ use yii\bootstrap\Alert;
 use yii\base\BaseObject;
 use yii\captcha\CaptchaAction;
 use yii\filters\{AccessControl, HttpCache};
-use yii\web\{Controller, ErrorAction, NotFoundHttpException, Response, UploadedFile};
+use yii\web\{ErrorAction, NotFoundHttpException, Response, UploadedFile};
 
-class SiteController extends Controller {
+class SiteController extends \yii\web\Controller {
 	public function actions() {
 		return [
 			'captcha' => [

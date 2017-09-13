@@ -3,7 +3,6 @@ namespace app\models\tools\qr;
 use Yii;
 
 class Geographic extends \app\models\tools\Qr {
-	public $address;
 	public $lat;
 	public $lng;
 	public $altitude;

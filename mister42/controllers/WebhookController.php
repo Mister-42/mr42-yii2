@@ -2,9 +2,9 @@
 namespace app\controllers;
 use Yii;
 use app\models\site\Changelog;
-use yii\web\{Controller, Response, NotFoundHttpException, UnauthorizedHttpException};
+use yii\web\{Response, NotFoundHttpException, UnauthorizedHttpException};
 
-class WebhookController extends Controller {
+class WebhookController extends \yii\web\Controller {
 	public function actionChangelog() {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		list($algo, $hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2);
