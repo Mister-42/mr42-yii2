@@ -2,10 +2,16 @@
 $secrets = require(__DIR__ . '/secrets.php');
 
 return [
+	'aliases' => [
+		'@assets' => '//s.mister42.me',
+		'@assetsroot' => __DIR__ . '/../../www/assets/me.mister42.s',
+	],
 	'basePath' => __DIR__,
 	'bootstrap' => ['log'],
 	'components' => [
 		'assetManager' => [
+			'basePath' => '@assetsroot',
+			'baseUrl' => '@assets',
 			'bundles' => [
 				'yii\bootstrap\BootstrapAsset' => [
 					'css' => [],

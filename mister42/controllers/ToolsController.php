@@ -30,8 +30,8 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionFavicon() {
-		if (!file_exists(Yii::getAlias('@webroot/assets/temp/favicon')))
-			FileHelper::createDirectory(Yii::getAlias('@webroot/assets/temp/favicon'));
+		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
+			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 
 		$model = new Favicon;
 		if ($model->load(Yii::$app->request->post())) {
@@ -70,8 +70,8 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionQr() {
-		if (!file_exists(Yii::getAlias('@webroot/assets/temp/qr')))
-			FileHelper::createDirectory(Yii::getAlias('@webroot/assets/temp/qr'));
+		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
+			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 
 		$model = new Qr;
 		if (Yii::$app->request->isPost) {

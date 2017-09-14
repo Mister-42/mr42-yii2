@@ -59,7 +59,7 @@ class Qr extends \yii\base\Model {
 		}
 
 		$rndFilename = uniqid('qr');
-		$cacheFile = Yii::getAlias("@webroot/assets/temp/qr/{$rndFilename}.png");
+		$cacheFile = Yii::getAlias("@assetsroot/temp/{$rndFilename}.png");
 
 		$qrcode = new QRcode(utf8_encode($qrData), 'L');
 		$qrcode->disableBorder();
@@ -85,7 +85,7 @@ class Qr extends \yii\base\Model {
 
 	public function getTypes(bool $rules = false): array {
 		$dir = Yii::getAlias('@app/models/tools/qr');
-		$rename = ['EmailMessage' => 'Email Message', 'Ical' => 'iCal', 'MailTo' => 'Mail To', 'Vcard' => 'vCard'];
+		$rename = ['FreeInput' => 'Free Input', 'EmailMessage' => 'Email Message', 'Ical' => 'iCal', 'MailTo' => 'Mail To', 'Vcard' => 'vCard'];
 		foreach(FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file)
 			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
 

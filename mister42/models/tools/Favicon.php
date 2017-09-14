@@ -43,10 +43,10 @@ class Favicon extends \yii\base\Model {
 			exec("convert -crop {$tmpSize}x{$tmpSize} {$srcImg}");
 
 			foreach ($this->dimensions as $dimension) :
-				$tmpFiles[] = Yii::getAlias("@webroot/assets/temp/{$rndFilename}.{$dimension}.png");
+				$tmpFiles[] = Yii::getAlias("@assetsroot/temp/{$rndFilename}.{$dimension}.png");
 				exec("convert -scale {$dimension} {$srcImg} ".end($tmpFiles));
 			endforeach;
-			exec('convert '.implode(' ', $tmpFiles).' '.Yii::getAlias("@webroot/assets/temp/favicon/{$rndFilename}.ico"));
+			exec('convert '.implode(' ', $tmpFiles).' '.Yii::getAlias("@assetsroot/temp/{$rndFilename}.ico"));
 			foreach ($tmpFiles as $file)
 				unlink($file);
 			unlink($srcImg);
@@ -57,7 +57,7 @@ class Favicon extends \yii\base\Model {
 					->setTo($this->email)
 					->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
 					->setSubject('Your favicon file from '.Yii::$app->name)
-					->attach(Yii::getAlias("@webroot/assets/temp/favicon/{$rndFilename}.ico"), ['fileName' => 'favicon.ico'])
+					->attach(Yii::getAlias("@assetsroot/temp/{$rndFilename}.ico"), ['fileName' => 'favicon.ico'])
 					->send();
 			Yii::$app->getSession()->setFlash('favicon-success', $rndFilename.'.ico');
 			return true;
