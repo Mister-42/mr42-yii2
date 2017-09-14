@@ -4,7 +4,6 @@ use Yii;
 use app\models\articles\Articles;
 use app\models\tools\{Country, Favicon, PhoneticAlphabet, Qr};
 use yii\base\{BaseObject, ViewNotFoundException};
-use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, FileHelper};
 use yii\web\{NotFoundHttpException, UploadedFile};
 
@@ -12,7 +11,7 @@ class ToolsController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[
-				'class' => HttpCache::className(),
+				'class' => \yii\filters\HttpCache::className(),
 				'etagSeed' => function (BaseObject $action) {
 					return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
 				},

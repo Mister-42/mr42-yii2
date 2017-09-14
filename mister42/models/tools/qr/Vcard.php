@@ -2,7 +2,7 @@
 namespace app\models\tools\qr;
 use Yii;
 
-class vCard extends \app\models\tools\Qr {
+class Vcard extends \app\models\tools\Qr {
 	public $firstName;
 	public $lastName;
 	public $fullName;

@@ -2,7 +2,7 @@
 namespace app\models\tools\qr;
 use Yii;
 
-class iCal extends \app\models\tools\Qr {
+class Ical extends \app\models\tools\Qr {
 	public $start;
 	public $end;
 	public $summary;

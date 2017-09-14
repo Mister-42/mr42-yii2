@@ -2,7 +2,6 @@
 namespace app\controllers;
 use Yii;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
-use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, Url};
 use yii\web\NotFoundHttpException;
 
@@ -10,7 +9,7 @@ class LyricsController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[
-				'class' => HttpCache::className(),
+				'class' => \yii\filters\HttpCache::className(),
 				'etagSeed' => function () {
 					$get = Yii::$app->request->get();
 					if (!isset($get['artist']) && !isset($get['year']) && !isset($get['album']))

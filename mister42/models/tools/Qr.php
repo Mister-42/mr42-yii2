@@ -85,7 +85,7 @@ class Qr extends \yii\base\Model {
 
 	public function getTypes(bool $rules = false): array {
 		$dir = Yii::getAlias('@app/models/tools/qr');
-		$rename = ['EmailMessage' => 'Email Message', 'MailTo' => 'Mail To'];
+		$rename = ['EmailMessage' => 'Email Message', 'Ical' => 'iCal', 'MailTo' => 'Mail To', 'Vcard' => 'vCard'];
 		foreach(FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file)
 			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
 
