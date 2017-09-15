@@ -1,8 +1,8 @@
 <?php
 use Da\User\Helper\TimezoneHelper;
+use janisto\timepicker\TimePicker;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;
-use yii\jui\DatePicker;
 use yii\web\View;
 
 $this->title = Yii::t('usuario', 'Profile settings');
@@ -55,19 +55,17 @@ $this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' =>
 			'inputTemplate' => '<div class="input-group"><span class="input-group-addon">'.Html::icon('map-marker').'</span>{input}</div>',
 		])->textInput(['tabindex' => 4]);
 
-		echo $form->field($model, 'birthday', [
-			'inputTemplate' => '<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>',
-		])->widget(DatePicker::classname(), [
+		echo $form->field($model, 'birthday')->widget(TimePicker::classname(), [
 			'clientOptions' => [
 				'changeMonth' => true,
 				'changeYear' => true,
+				'dateFormat' => 'yy-mm-dd',
 				'firstDay' => 1,
 				'maxDate' => '-16Y',
 				'minDate' => '-110Y',
 				'yearRange' => '-110Y:-16Y',
 			],
-			'dateFormat' => 'yyyy-MM-dd',
-			'language' => 'en-GB',
+			'mode' => 'date',
 			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => 5],
 		]);
 

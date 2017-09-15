@@ -10,8 +10,8 @@ class Bookmark extends \app\models\tools\Qr {
 		$rules = parent::rules();
 
 		$rules[] = ['url', 'required'];
-		$rules[] = [['title'], 'string'];
-		$rules[] = [['url'], 'url', 'defaultScheme' => 'http', 'enableIDN' => true];
+		$rules[] = ['title', 'string'];
+		$rules[] = ['url', 'url', 'defaultScheme' => 'http', 'enableIDN' => true];
 		return $rules;
 	}
 
@@ -23,6 +23,8 @@ class Bookmark extends \app\models\tools\Qr {
 	}
 
 	public function generateQr(): bool {
-		return parent::generate("MEBKM:TITLE:{$this->title};URL:{$this->url};;");
+		$data[] = $this->getDataOrOmit('TITLE:', $this->title, ';');
+		$data[] = $this->getDataOrOmit('URL:', $this->url, ';');
+		return parent::generate('MEBKM:' . implode($data) . ';');
 	}
 }

@@ -92,4 +92,10 @@ class Qr extends \yii\base\Model {
 		asort($typeList, SORT_NATURAL | SORT_FLAG_CASE);
 		return $typeList;
 	}
+
+	public function getDataOrOmit(string $label, string $value, string $glue = '') {
+		if ($value)
+			return $label . $value . $glue;
+		return false;
+	}
 }

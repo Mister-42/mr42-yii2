@@ -16,8 +16,6 @@ engines:
     checks:
       CyclomaticComplexity:
         enabled: false
-      Design/TooManyPublicMethods:
-        enabled: false
     config:
       rulesets: "codesize,design,unusedcode"
 ratings:

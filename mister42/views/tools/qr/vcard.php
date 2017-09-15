@@ -1,6 +1,6 @@
 <?php
+use janisto\timepicker\TimePicker;
 use yii\bootstrap\{ActiveForm, Html};
-use yii\jui\DatePicker;
 
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 
@@ -60,19 +60,17 @@ echo $form->field($model, 'website', [
 		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
 	])->input('url', ['tabindex' => 13]);
 
-echo $form->field($model, 'birthday', [
-		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
-	])->widget(DatePicker::classname(), [
+echo $form->field($model, 'birthday')->widget(TimePicker::classname(), [
 		'clientOptions' => [
 			'changeMonth' => true,
 			'changeYear' => true,
+			'dateFormat' => 'yy-mm-dd',
 			'firstDay' => 1,
 			'maxDate' => '-0Y',
 			'minDate' => '-110Y',
 			'yearRange' => '-110Y:-0Y',
 		],
-		'dateFormat' => 'yyyy-MM-dd',
-		'language' => 'en-GB',
+		'mode' => 'date',
 		'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => 14],
 	]);
 

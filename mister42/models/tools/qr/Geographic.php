@@ -26,6 +26,9 @@ class Geographic extends \app\models\tools\Qr {
 	}
 
 	public function generateQr(): bool {
-		return parent::generate("GEO:{$this->lat},{$this->lng},{$this->altitude}");
+		$data[] = $this->getDataOrOmit('', $this->lat);
+		$data[] = $this->getDataOrOmit('', $this->lng);
+		$data[] = $this->getDataOrOmit('', $this->altitude);
+		return parent::generate('GEO:' . implode(',', array_filter($data)));
 	}
 }

@@ -11,7 +11,7 @@ echo $form->field($model, 'address', [
 
 echo $form->field($model, 'amount', [
 		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('bitcoin').'</span>{input}</div>{error}',
-	])->input('number', ['tabindex' => 3]);
+	])->input('number', ['step' => '0.00000001', 'tabindex' => 3]);
 
 echo $form->field($model, 'name', [
 		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',

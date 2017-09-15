@@ -17,7 +17,10 @@ class Bitcoin extends \app\models\tools\Qr {
 	}
 
 	public function generateQr(): bool {
-		$query = http_build_query(['amount' => $this->amount, 'label' => $this->name, 'message' => $this->message]);
+		$data['amount'] = $this->amount;
+		$data['label'] = $this->name;
+		$data['message'] = $this->message;
+		$query = http_build_query(array_filter($data));
 		return parent::generate("bitcoin:{$this->address}?{$query}");
 	}
 }

@@ -34,6 +34,6 @@ class WiFi extends \app\models\tools\Qr {
 		$password = ctype_xdigit($this->password) ? $this->password : "\"{$this->password}\"";
 		$data[] = $this->authentication !== 'none' ? "P:{$password}" : null;
 		$data[] = $this->hidden ? "H:true" : null;
-		return parent::generate("WIFI:" . implode(";", $data) . ";");
+		return parent::generate("WIFI:" . implode(';', array_filter($data)) . ';');
 	}
 }

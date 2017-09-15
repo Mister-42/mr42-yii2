@@ -1,5 +1,6 @@
 <?php
 use app\models\tools\Qr;
+use janisto\timepicker\TimePicker;
 use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\helpers\Url;
 use yii\web\JsExpression;
@@ -8,6 +9,8 @@ use yii\widgets\Pjax;
 $this->title = 'QR Code Generator';
 $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
+
+TimePicker::widget();
 
 echo Html::tag('h1', Html::encode($this->title));
 

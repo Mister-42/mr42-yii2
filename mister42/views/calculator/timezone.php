@@ -1,5 +1,5 @@
 <?php
-use phamxuanloc\jui\DateTimePicker;
+use janisto\timepicker\TimePicker;
 use yii\bootstrap\{ActiveForm, Alert, Html};
 use yii\web\View;
 
@@ -7,13 +7,8 @@ $this->title = 'Time Zone Converter';
 $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = $this->title;
 
-if ($model->load(Yii::$app->request->post())) {
-	$post = Yii::$app->request->post('Timezone');
-	$this->registerJs('$("#timezone-datetime").val("' . $post['datetime'] . '")', View::POS_READY);
-}
-
-$model->source = $model->load(Yii::$app->request->post()) ? $post['source'] : 'Europe/Berlin';
-$model->target = $model->load(Yii::$app->request->post()) ? $post['target'] : 'America/New_York';
+$model->source = Yii::$app->request->isPost ? $model->source : 'Europe/Berlin';
+$model->target = Yii::$app->request->isPost ? $model->target : 'America/New_York';
 
 echo '<div class="row">';
 	echo '<div class="col-md-offset-2 col-md-8">';
@@ -42,15 +37,16 @@ echo '<div class="row">';
 		echo '<div class="row">';
 		echo $form->field($model, 'datetime', [
 			'options' => ['class' => 'col-sm-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('time').'</span>{input}</div>{error}',
-		])->widget(DateTimePicker::className(), [
+		])->widget(TimePicker::className(), [
+			'addon' => Html::icon('time'),
 			'clientOptions' => [
 				'changeMonth' => true,
 				'changeYear' => true,
+				'dateFormat' => 'yy-mm-dd',
 				'firstDay' => 1,
 				'timeFormat' => 'HH:mm',
+				'showSecond' => true,
 			],
-			'dateFormat' => 'yyyy-MM-dd',
 			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab++],
 		]);
 		echo '</div>';

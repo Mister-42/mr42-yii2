@@ -1,6 +1,6 @@
 <?php
+use janisto\timepicker\TimePicker;
 use yii\bootstrap\{ActiveForm, Alert, Html};
-use yii\jui\DatePicker;
 
 $this->title = 'Date Calculator (add/subtract)';
 $this->params['breadcrumbs'][] = 'Calculator';
@@ -24,16 +24,15 @@ echo '<div class="row">';
 		echo '<div class="row">';
 		echo $form->field($model, 'from', [
 			'options' => ['class' => 'col-sm-6'],
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
-		])->widget(DatePicker::classname(), [
+		])->widget(TimePicker::classname(), [
 			'clientOptions' => [
 				'changeMonth' => true,
 				'changeYear' => true,
+				'dateFormat' => 'yy-mm-dd',
 				'firstDay' => 1,
 				'yearRange' => '-100Y:+100Y',
 			],
-			'dateFormat' => 'yyyy-MM-dd',
-			'language' => 'en-GB',
+			'mode' => 'date',
 			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => 1],
 		]);
 

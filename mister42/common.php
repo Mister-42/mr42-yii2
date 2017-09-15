@@ -104,7 +104,6 @@ return [
 			'showScriptName' => false,
 			'rules' => [
 				''																	=> 'site/index',
-				'BingSiteAuth.xml'													=> 'site/bing-site-auth',
 				'favicon.ico'														=> 'site/faviconico',
 				'robots.txt'														=> 'site/robotstxt',
 				'sitemap.xml'														=> 'feed/sitemap',

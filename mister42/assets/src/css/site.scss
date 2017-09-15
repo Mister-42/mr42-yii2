@@ -226,6 +226,10 @@ form {
 	}
 }
 
+#ui-datepicker-div {
+	z-index: 1030 !important;
+}
+
 footer {
 	background-color: $lighterBlue;
 	height: 40px;

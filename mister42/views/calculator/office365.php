@@ -1,6 +1,6 @@
 <?php
+use janisto\timepicker\TimePicker;
 use yii\bootstrap\{ActiveForm, Alert, Html};
-use yii\jui\DatePicker;
 
 $this->title = 'Microsoft® Office 365® End Date Calculator';
 $this->params['breadcrumbs'][] = 'Calculator';
@@ -28,16 +28,15 @@ echo '<div class="row">';
 			echo '<div class="row">';
 			echo $form->field($model, $field.'date', [
 				'options' => ['class' => 'col-sm-6'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('calendar').'</span>{input}</div>{error}',
-			])->widget(DatePicker::classname(), [
+			])->widget(TimePicker::classname(), [
 				'clientOptions' => [
 					'changeMonth' => true,
 					'changeYear' => true,
+					'dateFormat' => 'yy-mm-dd',
 					'firstDay' => 1,
 					'yearRange' => '-2Y:+3Y',
 				],
-				'dateFormat' => 'yyyy-MM-dd',
-				'language' => 'en-GB',
+				'mode' => 'date',
 				'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab++],
 			]);
 

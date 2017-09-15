@@ -38,21 +38,21 @@ class Vcard extends \app\models\tools\Qr {
 	public function generateQr(): bool {
 		$data[] = 'BEGIN:VCARD';
 		$data[] = 'VERSION:4.0';
-		$data[] = "N:{$this->firstName};{$this->lastName}";
-		$data[] = "FN:{$this->fullName}";
-		$data[] = "ADR;TYPE=home:;;{$this->homeAddress}";
-		$data[] = "TEL;TYPE=home,voice;{$this->homePhone}";
-		$data[] = "ORG:{$this->organization}";
-		$data[] = "TITLE:{$this->title}";
-		$data[] = "ROLE:{$this->role}";
-		$data[] = "ADR;TYPE=work:;;{$this->workAddress}";
-		$data[] = "TEL;TYPE=work,voice;{$this->workPhone}";
-		$data[] = "EMAIL:{$this->email}";
-		$data[] = "URL:{$this->website}";
-		$data[] = 'BDAY:' . date('Ymd', strtotime($this->birthday));
-		$data[] = "NOTE:{$this->note}";
+		$data[] = $this->getDataOrOmit('N:', implode(';', [$this->firstName, $this->lastName]));
+		$data[] = $this->getDataOrOmit('FN:', $this->fullName);
+		$data[] = $this->getDataOrOmit('ADR;TYPE=home:;;', $this->homeAddress);
+		$data[] = $this->getDataOrOmit('TEL;TYPE=home,voice;', $this->homePhone);
+		$data[] = $this->getDataOrOmit('ORG:', $this->organization);
+		$data[] = $this->getDataOrOmit('TITLE:', $this->title);
+		$data[] = $this->getDataOrOmit('ROLE:', $this->role);
+		$data[] = $this->getDataOrOmit('ADR;TYPE=work:;;', $this->workAddress);
+		$data[] = $this->getDataOrOmit('TEL;TYPE=work,voice;', $this->workPhone);
+		$data[] = $this->getDataOrOmit('EMAIL:', $this->email);
+		$data[] = $this->getDataOrOmit('URL:', $this->website);
+		$data[] = $this->getDataOrOmit('BDAY:', $this->birthday ? date('Ymd', strtotime($this->birthday)) : '');
+		$data[] = $this->getDataOrOmit('NOTE:', $this->note);
 		$data[] = 'REV:' . date('Ymd\THis\Z');
 		$data[] = "END:VCARD";
-		return parent::generate(implode("\n", $data));
+		return parent::generate(implode("\n", array_filter($data)));
 	}
 }

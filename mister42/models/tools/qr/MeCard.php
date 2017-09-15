@@ -5,7 +5,8 @@ use Yii;
 class MeCard extends \app\models\tools\Qr {
 	public $firstName;
 	public $lastName;
-	public $sound;
+	public $firstSound;
+	public $lastSound;
 	public $phone;
 	public $videoPhone;
 	public $email;
@@ -29,23 +30,24 @@ class MeCard extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['sound'] = 'Name (Phonetic)';
+		$labels['firstSound'] = 'First Name (phonetic)';
+		$labels['lastSound'] = 'Last Name (phonetic)';
 		$labels['phone'] = 'Telephone Number';
 		$labels['email'] = 'Email Address';
 		return $labels;
 	}
 
 	public function generateQr(): bool {
-		$data[] = "N:{$this->lastName},{$this->firstName};";
-		$data[] = "SOUND:{$this->sound};";
-		$data[] = "TEL:{$this->phone};";
-		$data[] = "TEL-AV:{$this->videoPhone};";
-		$data[] = "EMAIL:{$this->email};";
-		$data[] = "NOTE:{$this->note};";
-		$data[] = 'BDAY:' . date('Ymd', strtotime($this->birthday)) . ';';
-		$data[] = "ADR:{$this->address};";
-		$data[] = "URL:{$this->website};";
-		$data[] = "NICKNAME:{$this->nickname};";
+		$data[] = $this->getDataOrOmit('N:', implode(',', [$this->lastName, $this->firstName]), ';');
+		$data[] = $this->getDataOrOmit('SOUND:', implode(',', [$this->lastSound, $this->firstSound]), ';');
+		$data[] = $this->getDataOrOmit('TEL:', $this->phone, ';');
+		$data[] = $this->getDataOrOmit('TEL-AV:', $this->videoPhone, ';');
+		$data[] = $this->getDataOrOmit('EMAIL:', $this->email, ';');
+		$data[] = $this->getDataOrOmit('NOTE:', $this->note, ';');
+		$data[] = $this->getDataOrOmit('BDAY:', $this->birthday ? date('Ymd', strtotime($this->birthday)) : '', ';');
+		$data[] = $this->getDataOrOmit('ADR:', $this->address, ';');
+		$data[] = $this->getDataOrOmit('URL:', $this->website, ';');
+		$data[] = $this->getDataOrOmit('NICKNAME:', $this->nickname, ';');
 		return parent::generate('MECARD:' . implode($data) . ';');
 	}
 }

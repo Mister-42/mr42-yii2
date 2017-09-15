@@ -11,7 +11,7 @@ class EmailMessage extends \app\models\tools\Qr {
 		$rules = parent::rules();
 
 		$rules[] = [['email', 'subject', 'message'], 'required'];
-		$rules[] = [['email'], 'email', 'enableIDN' => true];
+		$rules[] = ['email', 'email', 'enableIDN' => true];
 		$rules[] = [['subject, message'], 'string'];
 		return $rules;
 	}
@@ -24,7 +24,9 @@ class EmailMessage extends \app\models\tools\Qr {
 	}
 
 	public function generateQr(): bool {
-		$post = Yii::$app->request->post('qr');
-		return parent::generate("MATMSG:TO:{$post['email']};SUB:{$post['subject']};BODY:{$post['message']};;");
+		$data[] = $this->getDataOrOmit('TO:', $this->email, ';');
+		$data[] = $this->getDataOrOmit('SUB:', $this->subject, ';');
+		$data[] = $this->getDataOrOmit('BODY:', $this->message, ';');
+		return parent::generate('MATMSG:' . implode($data) . ';');
 	}
 }

@@ -49,7 +49,7 @@ class SiteController extends \yii\web\Controller {
 				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
-				'only' => ['bing-site-auth', 'robotstxt'],
+				'only' => ['robotstxt'],
 			], [
 				'class' => HttpCache::className(),
 				'lastModified' => function () {
@@ -63,12 +63,6 @@ class SiteController extends \yii\web\Controller {
 	public function actionIndex() {
 		$this->layout = '@app/views/layouts/column2.php';
 		return $this->render('index');
-	}
-
-	public function actionBingSiteAuth() {
-		Yii::$app->response->format = Response::FORMAT_RAW;
-		Yii::$app->response->headers->add('Content-Type', 'application/xml');
-		return $this->renderPartial('bing-site-auth');
 	}
 
 	public function actionChangelog() {
