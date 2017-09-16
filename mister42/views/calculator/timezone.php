@@ -45,7 +45,6 @@ echo '<div class="row">';
 				'dateFormat' => 'yy-mm-dd',
 				'firstDay' => 1,
 				'timeFormat' => 'HH:mm',
-				'showSecond' => true,
 			],
 			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab++],
 		]);

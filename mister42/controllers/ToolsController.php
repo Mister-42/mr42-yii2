@@ -2,7 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\articles\Articles;
-use app\models\tools\{Country, Favicon, PhoneticAlphabet, Qr};
+use app\models\tools\{Barcode, Country, Favicon, PhoneticAlphabet, Qr};
 use yii\base\{BaseObject, ViewNotFoundException};
 use yii\helpers\{ArrayHelper, FileHelper};
 use yii\web\{NotFoundHttpException, UploadedFile};
@@ -21,6 +21,19 @@ class ToolsController extends \yii\web\Controller {
 				'only' => ['html-to-markdown', 'password'],
 			],
 		];
+	}
+
+	public function actionBarcode() {
+		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
+			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
+
+		$model = new Barcode;
+		if ($model->load(Yii::$app->request->post()) && $model->validate())
+			$model->generate();
+
+		return $this->render('barcode', [
+			'model' => $model,
+		]);
 	}
 
 	public function actionCountry() {
@@ -51,7 +64,7 @@ class ToolsController extends \yii\web\Controller {
 
 	public function actionHtmlToMarkdown() {
 		return $this->render('html-to-markdown', [
-			'lastPost' => Articles::find()->orderBy('id DESC')->one(),
+			'lastPost' => Articles::findOne(4),
 		]);
 	}
 
