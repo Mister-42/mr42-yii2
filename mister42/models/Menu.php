@@ -9,7 +9,7 @@ class Menu {
 		$isGuest = Yii::$app->controller->action->id === 'sitemap' ? true : Yii::$app->user->isGuest;
 		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 		$unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACTIVE])->count() : 0;
-		$unreadBadge = $unread > 0 ? Html::tag('span', $unread, ['class' => 'badge']) : '';
+		$unreadBadge = $unread > 0 ? ' '.Html::tag('span', $unread, ['class' => 'badge']) : '';
 
 		$menuItems = [
 			['label' => Html::icon('th-list').'Articles', 'url' => ['/articles/index'], 'visible' => 1],
@@ -37,7 +37,7 @@ class Menu {
 			['label' => Html::icon('cd').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => 1],
 			$isGuest
 				?	['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => 1]
-				:	['label' => Html::icon('user').Yii::$app->user->identity->username.' '.$unreadBadge, 'url' => null,
+				:	['label' => Html::icon('user').Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
 						'items' => [
 							['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
 							['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],

@@ -7,17 +7,17 @@ class Barcode extends \yii\base\Model {
 	public $type;
 	public $code;
 	public $height = 150;
-	public $ratio = 2;
+	public $barWidth = 2;
 	public $recipient;
 
 	public function rules(): array {
 		return [
-			[['type', 'code', 'height', 'ratio'], 'required'],
+			[['type', 'code', 'height', 'barWidth'], 'required'],
 			['type', 'in', 'range' => self::getTypes(true)],
 			['code', 'string', 'max' => 25],
 			['code', 'double'],
 			['height', 'double', 'min' => 50, 'max' => 750],
-			['ratio', 'double', 'min' => 1, 'max' => 5],
+			['barWidth', 'double', 'min' => 1, 'max' => 5],
 			['recipient', 'email', 'checkDNS' => true, 'enableIDN' => true],
 		];
 	}
@@ -25,6 +25,7 @@ class Barcode extends \yii\base\Model {
 	public function attributeLabels(): array {
 		return [
 			'type' => 'Type of Barcode to generate',
+			'height' => 'Height in Pixels',
 			'recipient' => 'Email Address'
 		];
 	}
@@ -40,12 +41,12 @@ class Barcode extends \yii\base\Model {
 		$classProperty->setAccessible(true);
 		$data = $classProperty->getValue($barcode);
 
-		$image = imagecreate($data['maxw'] * $this->ratio, $this->height);
+		$image = imagecreate($data['maxw'] * $this->barWidth, $this->height);
 		imagefill($image, 0, 0, imagecolorallocate($image, 255, 255, 255));
 		$fgCol = imagecolorallocate($image, 0, 0, 0);
 
 		foreach ($data['bcode'] as $key => $value) :
-			$barWidth = round($value['w'] * $this->ratio, 3);
+			$barWidth = round($value['w'] * $this->barWidth, 3);
 			$barHeight = round($value['h'] * $this->height / $data['maxh'], 3);
 			if ($value['t']) {
 				$top = round($value['p'] * $this->height / $data['maxh'], 3);

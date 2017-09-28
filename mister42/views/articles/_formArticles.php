@@ -13,7 +13,7 @@ $form = ActiveForm::begin();
 
 echo $form->field($model, 'title')->textInput(['maxlength' => 255, 'tabindex' => 1]);
 
-echo $form->field($model, 'url')->input('url', ['maxlength' => 255, 'tabindex' => 2]);
+echo $form->field($model, 'url')->textInput(['maxlength' => 255, 'tabindex' => 2]);
 
 echo $form->field($model, 'content')->textarea(['rows' => 6, 'tabindex' => 3]);
 

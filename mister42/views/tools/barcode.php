@@ -41,7 +41,7 @@ echo '<div class="row">';
 				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('resize-vertical').'</span>{input}</div>{error}',
 			])->input('number', ['tabindex' => 3]) .
-			$form->field($model, 'ratio', [
+			$form->field($model, 'barWidth', [
 				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('resize-horizontal').'</span>{input}</div>{hint} {error}',
 			])->input('number', ['step' => '0.5', 'tabindex' => 4])

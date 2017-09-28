@@ -45,7 +45,7 @@ return [
 			'username' => $secrets['MySQL']['user'],
 			'password' => $secrets['MySQL']['pass'],
 			'charset' => 'utf8',
-			'tablePrefix' => 'mr42_',
+			'tablePrefix' => 'mister42_',
 
 			'enableSchemaCache' => true,
 			'schemaCache' => 'fileCache',
@@ -63,22 +63,6 @@ return [
 				'site' => [
 					'class' => 'yii\i18n\PhpMessageSource',
 					'sourceLanguage' => 'en',
-				],
-			],
-		],
-		'log' => [
-			'traceLevel' => YII_DEBUG ? 3 : 0,
-			'targets' => [
-				[
-					'class' => 'yii\log\FileTarget',
-					'except' => ['yii\web\HttpException:404'],
-					'levels' => ['error'],
-					'logFile' => '@runtime/logs/mister42.error.log',
-				], [
-					'class' => 'yii\log\FileTarget',
-					'categories' => ['yii\web\HttpException:404'],
-					'levels' => ['error', 'warning'],
-					'logFile' => '@runtime/logs/mister42.404.log',
 				],
 			],
 		],

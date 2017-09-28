@@ -43,7 +43,7 @@ class Contact extends \yii\base\Model {
 		$mailer = Yii::$app->mailer->compose()
 			->setTo(Yii::$app->params['secrets']['params']['adminEmail'])
 			->setFrom([$this->email => $this->name])
-			->setSubject($this->title)
+			->setSubject(Yii::$app->name . ' - ' . $this->title)
 			->setTextBody($this->content);
 
 		if ($this->attachment)
