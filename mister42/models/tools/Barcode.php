@@ -45,7 +45,7 @@ class Barcode extends \yii\base\Model {
 		imagefill($image, 0, 0, imagecolorallocate($image, 255, 255, 255));
 		$fgCol = imagecolorallocate($image, 0, 0, 0);
 
-		foreach ($data['bcode'] as $key => $value) :
+		foreach ($data['bcode'] as $value) :
 			$barWidth = round($value['w'] * $this->barWidth, 3);
 			$barHeight = round($value['h'] * $this->height / $data['maxh'], 3);
 			if ($value['t']) {

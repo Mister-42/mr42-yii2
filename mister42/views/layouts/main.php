@@ -18,7 +18,9 @@ $this->registerMetaTag(['charset' => Yii::$app->charset]);
 $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
 $this->registerMetaTag(['name' => 'description', 'content' => Html::encode(Yii::$app->params['description'])]);
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']);
-$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
+$this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => Yii::getAlias('@assets')]);
+if (Yii::$app->controller->id !== 'articles' || Yii::$app->controller->action->id !== 'index')
+	$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
 $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
 $this->registerLinkTag(['rel' => 'icon', 'sizes' => '16x16 32x32 48x48 64x64', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/favicon.ico']);
 echo Html::csrfMetaTags();

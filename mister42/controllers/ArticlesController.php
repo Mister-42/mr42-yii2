@@ -52,7 +52,9 @@ class ArticlesController extends \yii\web\Controller {
 			if (empty($title) || $title != $model->url)
 				$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
-			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
+			Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://mr42.me/art{$model->id}"]);
+			if ($model->pdf)
+				Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
 			return $this->render('view', [
 				'model' => $model,
 				'comment' => $comment

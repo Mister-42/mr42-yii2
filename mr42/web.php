@@ -18,7 +18,7 @@ return [
 		],
 		'urlManager' => [
 			'rules' => [
-				'download/php<version:\d+>'	=> 'download/php'
+				'dl/php<version:\d+>'		=> 'download/php',
 			],
 		],
 	],
