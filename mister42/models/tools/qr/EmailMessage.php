@@ -12,7 +12,7 @@ class EmailMessage extends \app\models\tools\Qr {
 
 		$rules[] = [['email', 'subject', 'message'], 'required'];
 		$rules[] = ['email', 'email', 'enableIDN' => true];
-		$rules[] = [['subject, message'], 'string'];
+		$rules[] = [['subject', 'message'], 'string'];
 		return $rules;
 	}
 

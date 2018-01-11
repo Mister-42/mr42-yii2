@@ -1,6 +1,7 @@
 <?php
 namespace app\models\tools;
 use Yii;
+use Mpdf\Barcode as BarcodeData;
 use yii\bootstrap\{ActiveForm, Html};
 
 class Barcode extends \yii\base\Model {
@@ -34,12 +35,8 @@ class Barcode extends \yii\base\Model {
 		$rndFilename = uniqid('barcode');
 		$cacheFile = Yii::getAlias("@assetsroot/temp/{$rndFilename}.png");
 
-		$barcode = new \PDFBarcode();
-		$barcode->setBarcode($this->code, $this->type);
-		$reflector = new \ReflectionClass($barcode);
-		$classProperty = $reflector->getProperty('barcode_array');
-		$classProperty->setAccessible(true);
-		$data = $classProperty->getValue($barcode);
+		$barcode = new BarcodeData();
+		$data = $barcode->getBarcodeArray($this->code, $this->type);
 
 		$image = imagecreate($data['maxw'] * $this->barWidth, $this->height);
 		imagefill($image, 0, 0, imagecolorallocate($image, 255, 255, 255));

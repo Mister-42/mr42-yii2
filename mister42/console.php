@@ -16,6 +16,10 @@ return [
 			'migrationNamespaces' => [
 				'Da\User\Migration',
 			],
+			'migrationPath' => [
+				'@app/migrations',
+				'@yii/rbac/migrations',
+			],
 		],
 	],
 	'controllerNamespace' => 'app\commands',

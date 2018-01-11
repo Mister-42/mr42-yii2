@@ -1,7 +1,7 @@
 <?php
 namespace app\models\tools;
-use QRcode;
 use Yii;
+use Mpdf\QrCode\QrCode;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\helpers\{FileHelper, StringHelper};
 
@@ -61,7 +61,7 @@ class Qr extends \yii\base\Model {
 		$rndFilename = uniqid('qr');
 		$cacheFile = Yii::getAlias("@assetsroot/temp/{$rndFilename}.png");
 
-		$qrcode = new QRcode(utf8_encode($qrData), 'L');
+		$qrcode = new QrCode(utf8_encode($qrData), 'L');
 		$qrcode->disableBorder();
 		$qrcode->displayPNG($this->size, [255,255,255], [0,0,0], $cacheFile, 6);
 

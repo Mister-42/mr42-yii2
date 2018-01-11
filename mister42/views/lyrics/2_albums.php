@@ -11,7 +11,7 @@ echo '<div class="site-lyrics-albums">';
 		Html::tag('div',
 			Html::tag('h1', Html::encode($albums[0]->artist->name), ['class' => 'pull-left']) .
 			Html::tag('div', $albums[0]->artist->website
-				? Html::a(Html::icon('globe').' Website of ' . Html::encode($albums[0]->artist->name), $albums[0]->artist->website, ['class' => 'btn btn-xs btn-warning action'])
+				? Html::a(Html::icon('globe'), $albums[0]->artist->website, ['class' => 'btn btn-xs btn-warning action', 'title' => 'Website of ' . Html::encode($albums[0]->artist->name)])
 				: 	''
 			, ['class' => 'pull-right'])
 		, ['class' => 'clearfix col-lg-12'])
