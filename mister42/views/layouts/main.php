@@ -56,9 +56,7 @@ echo '</div>';
 
 echo '<footer>';
 	echo '<div class="container">';
-		echo Html::tag('p',
-			'&copy; ' . date('2014-Y ') . Yii::$app->name . Html::tag('span', ' · ' . Yii::powered(), ['class' => 'hidden-xs'])
-		, ['class' => 'pull-left']);
+		echo Html::tag('p', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'pull-left']);
 		echo '<p class="pull-right">';
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';

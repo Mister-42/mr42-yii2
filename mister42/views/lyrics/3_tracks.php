@@ -52,7 +52,7 @@ echo '<div class="site-lyrics-lyrics">';
 		, ['class' => 'row']);
 
 	foreach($tracks as $track) :
-		if ($track->lyricid || $track->video) {
+		if ($track->lyricid || $track->video)
 			echo Html::tag('div',
 				Html::tag('div',
 					Html::a(null, null, ['class' => 'anchor', 'id' => $track->track]) .
@@ -61,6 +61,5 @@ echo '<div class="site-lyrics-lyrics">';
 				, ['class' => $track->lyricid ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .
 				Html::tag('div', $track->video, ['class' => $track->lyricid ? 'col-xs-12 col-sm-4' : 'col-xs-12'])
 			, ['class' => 'row']);
-		}
 	endforeach;
 echo '</div>';
