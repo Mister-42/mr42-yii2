@@ -19,10 +19,12 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	public function rules() {
 		return [
 			[['title', 'content'], 'required'],
-			[['content'], 'string'],
+			['url', 'string'],
+			['content', 'string'],
 			[['title', 'tags'], 'string', 'max' => 255],
-			[['pdf'], 'boolean'],
-			[['active'], 'boolean'],
+			['source', 'string'],
+			['pdf', 'boolean'],
+			['active', 'boolean'],
 		];
 	}
 

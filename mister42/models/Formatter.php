@@ -14,6 +14,7 @@ class Formatter extends \yii\i18n\Formatter {
 		], $data);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
+		$data = self::addImageResponsiveClass($data);
 		return trim($data);
 	}
 
@@ -38,5 +39,16 @@ class Formatter extends \yii\i18n\Formatter {
 
 	private function getVideo(array $match): string {
 		return Video::getVideo($match[1], $match[2], $match[4], $match[3]);
+	}
+
+	private function addImageResponsiveClass($html) {
+		if (preg_match('/<img.*? class="/', $html)) {
+			$html = preg_replace('/(<img.*? class=" .*?)(".*?\="">)/', '$1 img-responsive $2', $html);
+		} else {
+			$html = preg_replace('/(<img.*?)(\>)/', '$1 class="img-responsive" $2', $html);
+		}
+
+		$html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
+		return $html;
 	}
 }
