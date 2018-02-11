@@ -8,11 +8,11 @@ $this->params['breadcrumbs'][] = $this->title;
 echo Html::tag('h1', Html::encode($this->title));
 
 echo '<div class="site-headers">';
-	foreach (apache_request_headers() as $header => $value) :
-		if ($header != "Cookie")
+	foreach (Yii::$app->request->headers as $name => $value) :
+		if ($name != 'cookie')
 			echo Html::tag('div',
-				Html::tag('div', Html::tag('strong', $header), ['class' => 'col-md-2']) .
-				Html::tag('div', $value, ['class' => 'col-md-10'])
+				Html::tag('div', Html::tag('strong', $name), ['class' => 'col-md-2']) .
+				Html::tag('div', $value[0], ['class' => 'col-md-10'])
 			, ['class' => 'row']);
 	endforeach;
 echo '</div>';
