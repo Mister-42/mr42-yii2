@@ -60,7 +60,7 @@ echo $form->field($model, 'website', [
 		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
 	])->input('url', ['tabindex' => 13]);
 
-echo $form->field($model, 'birthday')->widget(TimePicker::classname(), [
+echo $form->field($model, 'birthday')->widget(TimePicker::class, [
 		'clientOptions' => [
 			'changeMonth' => true,
 			'changeYear' => true,

@@ -12,13 +12,13 @@ class SiteController extends \yii\web\Controller {
 	public function actions() {
 		return [
 			'captcha' => [
-				'class' => CaptchaAction::className(),
+				'class' => CaptchaAction::class,
 				'backColor' => 0xffffff,
 				'foreColor' => 0x003e67,
 				'transparent' => true,
 			],
 			'error' => [
-				'class' => ErrorAction::className(),
+				'class' => ErrorAction::class,
 			],
 		];
 	}
@@ -26,7 +26,7 @@ class SiteController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			'access' => [
-				'class' => AccessControl::className(),
+				'class' => AccessControl::class,
 				'only' => ['php-version'],
 				'rules' => [
 					[
@@ -38,20 +38,20 @@ class SiteController extends \yii\web\Controller {
 					throw new NotFoundHttpException('Page not found.');
 				}
 			], [
-				'class' => HttpCache::className(),
+				'class' => HttpCache::class,
 				'lastModified' => function () {
 					$lastUpdate = Changelog::find()->select(['time' => 'max(time)'])->one();
 					return $lastUpdate->time;
 				},
 				'only' => ['changelog'],
 			], [
-				'class' => HttpCache::className(),
+				'class' => HttpCache::class,
 				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['robotstxt'],
 			], [
-				'class' => HttpCache::className(),
+				'class' => HttpCache::class,
 				'lastModified' => function () {
 					return filemtime(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico');
 				},

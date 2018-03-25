@@ -52,7 +52,7 @@ class Comments extends ActiveRecord {
 	public function behaviors() {
 		return [
 			[
-				'class' => TimestampBehavior::className(),
+				'class' => TimestampBehavior::class,
 				'attributes' => [
 					ActiveRecord::EVENT_BEFORE_INSERT => ['created'],
 				],
@@ -110,7 +110,7 @@ class Comments extends ActiveRecord {
 	}
 
 	public function getArticle() {
-		return $this->hasOne(Articles::className(), ['id' => 'parent']);
+		return $this->hasOne(Articles::class, ['id' => 'parent']);
 	}
 
 	public static function find() {

@@ -10,7 +10,7 @@ class FeedController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[
-				'class' => HttpCache::className(),
+				'class' => HttpCache::class,
 				'except' => ['index'],
 				'lastModified' => function () {
 					$lastUpdate = Articles::find()->select(['updated' => 'max(updated)'])->one();
@@ -25,7 +25,7 @@ class FeedController extends \yii\web\Controller {
 	}
 
 	public function actionRss() {
-		if (!Stringhelper::startsWith($_SERVER[HTTP_USER_AGENT], 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->getRequest()->getUserIP(), Yii::$app->params['secrets']['params']['specialIPs']))
+		if (!Stringhelper::startsWith(Yii::$app->request->headers->get('HTTP_USER_AGENT'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs']))
 			$this->redirect('http://f.mr42.me/Mr42')->send();
 
 		Yii::$app->response->format = Response::FORMAT_RAW;

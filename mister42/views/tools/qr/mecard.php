@@ -47,7 +47,7 @@ echo $form->field($model, 'note', [
 		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div>{error}',
 	])->textArea(['rows' => 6, 'tabindex' => 9]);
 
-echo $form->field($model, 'birthday')->widget(TimePicker::classname(), [
+echo $form->field($model, 'birthday')->widget(TimePicker::class, [
 		'clientOptions' => [
 			'changeMonth' => true,
 			'changeYear' => true,

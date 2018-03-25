@@ -21,7 +21,7 @@ echo ListView::widget([
 	},
 	'layout' => '{items}<div class="pager-wrapper pull-right">{pager}</div>',
 	'pager' => [
-		'class' => ScrollPager::className(),
+		'class' => ScrollPager::class,
 		'enabledExtensions' => [
 			ScrollPager::EXTENSION_TRIGGER,
 			ScrollPager::EXTENSION_SPINNER,

@@ -13,7 +13,7 @@ echo '<div class="row">';
 
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
 			Alert::begin(['options' => ['class' => 'alert-danger']]);
-			echo '<p><b>This action is not allowed.</b> Subscriptions have a maximum end date of 3 years into the future.</p>';
+			echo '<p><b>This action is not allowed.</b> You cannot renew your subscription for more than three years.</p>';
 			echo '<p>Theoretically the subscription with ' . Html::tag('strong', Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']])) . ' would approximately expire on ' . Html::tag('strong', Yii::$app->formatter->asDate($flash['date'], 'long')) . '.</p>';
 			Alert::end();
 		} elseif ($flash = Yii::$app->session->getFlash('office365-success')) {
@@ -28,7 +28,7 @@ echo '<div class="row">';
 			echo '<div class="row">';
 			echo $form->field($model, $field.'date', [
 				'options' => ['class' => 'col-sm-6'],
-			])->widget(TimePicker::classname(), [
+			])->widget(TimePicker::class, [
 				'clientOptions' => [
 					'changeMonth' => true,
 					'changeYear' => true,

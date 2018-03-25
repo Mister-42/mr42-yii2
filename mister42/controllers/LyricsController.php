@@ -9,7 +9,7 @@ class LyricsController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[
-				'class' => \yii\filters\HttpCache::className(),
+				'class' => \yii\filters\HttpCache::class,
 				'etagSeed' => function () {
 					$get = Yii::$app->request->get();
 					if (!isset($get['artist']) && !isset($get['year']) && !isset($get['album']))

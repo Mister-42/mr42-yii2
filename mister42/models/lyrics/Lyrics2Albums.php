@@ -37,7 +37,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function behaviors() {
 		return [
 			[
-				'class' => TimestampBehavior::className(),
+				'class' => TimestampBehavior::class,
 				'createdAtAttribute' => 'updated',
 				'updatedAtAttribute' => 'updated',
 				'value' => new Expression('NOW()'),
@@ -106,16 +106,16 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	}
 
 	public function getArtist() {
-		return $this->hasOne(Lyrics1Artists::className(), ['id' => 'parent']);
+		return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent']);
 	}
 
 	public function getTracks() {
-		return $this->hasMany(Lyrics3Tracks::className(), ['parent' => 'id'])
+		return $this->hasMany(Lyrics3Tracks::class, ['parent' => 'id'])
 			->with('lyrics');
 	}
 
 	public function getLyrics() {
-		return $this->hasOne(Lyrics4Lyrics::className(), ['id' => 'lyricid']);
+		return $this->hasOne(Lyrics4Lyrics::class, ['id' => 'lyricid']);
 	}
 
 	public static function find() {

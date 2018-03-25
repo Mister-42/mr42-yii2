@@ -37,7 +37,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	public function behaviors() {
 		return [
 			[
-				'class' => TimestampBehavior::className(),
+				'class' => TimestampBehavior::class,
 				'createdAtAttribute' => 'created',
 				'updatedAtAttribute' => 'updated',
 			],
@@ -101,11 +101,11 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	}
 
 	public function getUser() {
-		return $this->hasOne(User::className(), ['id' => 'author']);
+		return $this->hasOne(User::class, ['id' => 'author']);
 	}
 
 	public function getComments() {
-		return $this->hasMany(Comments::className(), ['parent' => 'id']);
+		return $this->hasMany(Comments::class, ['parent' => 'id']);
 	}
 
 	public static function find() {

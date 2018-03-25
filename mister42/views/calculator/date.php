@@ -24,7 +24,7 @@ echo '<div class="row">';
 		echo '<div class="row">';
 		echo $form->field($model, 'from', [
 			'options' => ['class' => 'col-sm-6'],
-		])->widget(TimePicker::classname(), [
+		])->widget(TimePicker::class, [
 			'clientOptions' => [
 				'changeMonth' => true,
 				'changeYear' => true,

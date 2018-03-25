@@ -27,20 +27,21 @@ class RecentTracks extends \yii\db\ActiveRecord {
 			->all();
 
 		foreach ($tracks as $track) :
-			echo '<div class="clearfix">';
-				echo Html::tag('span', $track['artist'], ['class' => 'pull-left']);
+			$data .= '<div class="clearfix">';
+				$data .= Html::tag('span', $track['artist'], ['class' => 'pull-left']);
 				if ($track['time'] === 0)
-					echo Html::icon('volume-up', ['title' => 'Currently playing']);
-				echo Html::tag('span', $track['track'], ['class' => 'pull-right text-right']);
-			echo '</div>';
+					$data .= Html::icon('volume-up', ['title' => 'Currently playing']);
+				$data .= Html::tag('span', $track['track'], ['class' => 'pull-right text-right']);
+			$data .= '</div>';
 		endforeach;
 
-		echo empty($tracks)
+		$data .= empty($tracks)
 			? Html::tag('p', 'No items to display.')
 			: Html::tag('div',
 				Html::tag('span', Html::tag('b', 'Total tracks played:'), ['class' => 'pull-left']) .
 				Html::tag('span', Html::tag('b', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'pull-right'])
 			);
+		return $data;
 	}
 
 	public function lastSeen($userid) {

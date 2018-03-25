@@ -9,7 +9,7 @@ function status(done) {
 }
 
 function cal_psk() {
-	var ssid = $('#ssid').val(), pass = $('#pass').val();
+	var ssid = $('#dynamicmodel-ssid').val(), pass = $('#dynamicmodel-pass').val();
 
 	if(!ssid || !pass) {
 		return $('#psk').attr('class', 'well well-sm alert-danger').html('Please fill in all fields.');

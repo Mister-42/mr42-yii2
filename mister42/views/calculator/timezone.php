@@ -37,7 +37,7 @@ echo '<div class="row">';
 		echo '<div class="row">';
 		echo $form->field($model, 'datetime', [
 			'options' => ['class' => 'col-sm-6'],
-		])->widget(TimePicker::className(), [
+		])->widget(TimePicker::class, [
 			'addon' => Html::icon('time'),
 			'clientOptions' => [
 				'changeMonth' => true,

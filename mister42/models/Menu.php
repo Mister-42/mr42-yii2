@@ -3,6 +3,7 @@ namespace app\models;
 use Yii;
 use app\models\articles\Comments;
 use yii\bootstrap\Html;
+use yii\helpers\ArrayHelper;
 
 class Menu {
 	public function getItemList(): array {
@@ -12,7 +13,7 @@ class Menu {
 		$unreadBadge = $unread > 0 ? ' '.Html::tag('span', $unread, ['class' => 'badge']) : '';
 
 		$menuItems = [
-			['label' => Html::icon('th-list').'Articles', 'url' => ['/articles/index'], 'visible' => 1],
+			['label' => Html::icon('th-list').'Articles', 'url' => ['/articles/index'], 'visible' => true],
 			['label' => Html::icon('dashboard').'Calculator', 'url' => null,
 				'items' => [
 					['label' => 'Date (add/subtract)', 'url' => ['/calculator/date']],
@@ -34,9 +35,9 @@ class Menu {
 					['label' => 'QR Code Generator', 'url' => ['/tools/qr']],
 				],
 			],
-			['label' => Html::icon('cd').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => 1],
+			['label' => Html::icon('cd').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
 			$isGuest
-				?	['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => 1]
+				?	['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => true]
 				:	['label' => Html::icon('user').Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
 						'items' => [
 							['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
@@ -65,19 +66,19 @@ class Menu {
 
 	public function getUrlList(): array {
 		foreach (self::getItemList() as $item) :
-			if (isset($item['visible']))
+			if (ArrayHelper::keyExists('visible', $item))
 				continue;
 
 			if (isset($item['url']))
-				$pages[] = $item['url'][0];
+				$pages[] = ArrayHelper::getValue($item, 'url.0');
 
 			if (isset($item['items'])) {
 				foreach ($item['items'] as $subitem) :
-					if (isset($subitem['visible']))
+					if (!is_array($subitem) || ArrayHelper::keyExists('visible', $subitem))
 						continue;
 
 					if (isset($subitem['url']))
-						$pages[] = $subitem['url'][0];
+						$pages[] = ArrayHelper::getValue($subitem, 'url.0');
 				endforeach;
 			}
 		endforeach;

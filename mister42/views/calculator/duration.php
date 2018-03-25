@@ -25,7 +25,7 @@ echo '<div class="row">';
 		foreach (['fromDate', 'toDate'] as $field) {
 			echo $form->field($model, $field, [
 				'options' => ['class' => 'col-sm-6'],
-			])->widget(TimePicker::classname(), [
+			])->widget(TimePicker::class, [
 				'clientOptions' => [
 					'changeMonth' => true,
 					'changeYear' => true,

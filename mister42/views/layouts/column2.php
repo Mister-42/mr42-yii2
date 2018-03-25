@@ -11,7 +11,7 @@ $search = new DynamicModel(['search_term']);
 $search->addRule('search_term', 'required');
 $search->addRule('search_term', 'string', ['max' => 25]);
 $dependency = [
-	'class' => DbDependency::className(),
+	'class' => DbDependency::class,
 	'reusable' => true,
 	'sql' => 'SELECT GREATEST(
 		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1),

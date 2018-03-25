@@ -38,7 +38,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	}
 
 	public function getAlbums() {
-		return $this->hasMany(Lyrics2Albums::className(), ['parent' => 'id'])
+		return $this->hasMany(Lyrics2Albums::class, ['parent' => 'id'])
 			->orderBy('year, name');
 	}
 

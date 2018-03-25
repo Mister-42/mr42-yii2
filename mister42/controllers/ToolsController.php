@@ -11,7 +11,7 @@ class ToolsController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[
-				'class' => \yii\filters\HttpCache::className(),
+				'class' => \yii\filters\HttpCache::class,
 				'etagSeed' => function (BaseObject $action) {
 					return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
 				},
@@ -93,11 +93,11 @@ class ToolsController extends \yii\web\Controller {
 
 			$modelName = '\\app\\models\\tools\\qr\\' . $type;
 			$model = new $modelName;
-			$model->type = $type;
+			$model->type = $type === 'SMS' ? 'Phone' : $type;
 
 			if (Yii::$app->request->isAjax)
 				try {
-					return $this->renderAjax('qr/' . strtolower($type == 'Sms' ? 'Phone' : $type), [
+					return $this->renderAjax('qr/' . strtolower($model->type), [
 						'model' => $model,
 					]);
 				} catch (ViewNotFoundException $e) {
@@ -107,7 +107,7 @@ class ToolsController extends \yii\web\Controller {
 			$model = ArrayHelper::merge($model, ArrayHelper::getValue(Yii::$app->request->post(), 'qr'));
 			if ($model->validate())
 				$model->generateQr();
-			$qrForm = $this->renderPartial('qr/' . strtolower($type == 'Sms' ? 'Phone' : $type), [
+			$qrForm = $this->renderPartial('qr/' . strtolower($model->type), [
 				'model' => $model
 			]);
 		}

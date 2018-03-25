@@ -37,10 +37,6 @@ class Formatter extends \yii\i18n\Formatter {
 		return file_get_contents($cachefile);
 	}
 
-	private function getVideo(array $match): string {
-		return Video::getVideo($match[1], $match[2], $match[4], $match[3]);
-	}
-
 	private function addImageResponsiveClass($html) {
 		if (preg_match('/<img.*? class="/', $html)) {
 			$html = preg_replace('/(<img.*? class=" .*?)(".*?\="">)/', '$1 img-responsive $2', $html);
@@ -50,5 +46,9 @@ class Formatter extends \yii\i18n\Formatter {
 
 		$html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
 		return $html;
+	}
+
+	private function getVideo(array $match): string {
+		return Video::getVideo($match[1], $match[2], $match[4], $match[3] === 'PL' ? true : $match[3]);
 	}
 }

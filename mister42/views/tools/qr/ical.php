@@ -12,7 +12,7 @@ echo '<div class="row">';
 	foreach (['start', 'end'] as $name) :
 		echo $form->field($model, $name, [
 			'options' => ['class' => 'col-sm-6'],
-		])->widget(TimePicker::className(), [
+		])->widget(TimePicker::class, [
 			'clientOptions' => [
 				'changeMonth' => true,
 				'changeYear' => true,

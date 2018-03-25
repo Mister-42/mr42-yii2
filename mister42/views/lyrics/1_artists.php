@@ -4,10 +4,14 @@ use yii\bootstrap\Html;
 $this->title = 'Lyrics';
 $this->params['breadcrumbs'][] = $this->title;
 
-echo Html::tag('h1', Html::encode($this->title));
-?>
-<div class="site-lyrics">
-	<div class="row"><?php
+echo '<div class="clearfix">';
+	echo '<div class="pull-left">';
+		echo Html::tag('h1', Html::encode($this->title));
+	echo '</div>';
+echo '</div>';
+
+echo '<div class="site-lyrics">';
+    echo '<div class="row">';
 		$x = $y = 0;
 		foreach ($artists as $artist) :
 			$y++;
@@ -23,5 +27,5 @@ echo Html::tag('h1', Html::encode($this->title));
 				$x = 0;
 			}
 		endforeach;
-	?></div>
-</div>
+	echo '</div>';
+echo '</div>';

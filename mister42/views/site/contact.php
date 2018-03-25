@@ -55,7 +55,7 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 				->fileInput(['class' => 'hidden', 'id' => 'sourceFile'])
 				->label(false);
 
-			echo $form->field($model, 'captcha')->widget(Captcha::className(), [
+			echo $form->field($model, 'captcha')->widget(Captcha::class, [
 				'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 				'options' => ['class' => 'form-control', 'tabindex' => 6],
 				'template' => '<div class="row"><div class="col-xs-4"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',

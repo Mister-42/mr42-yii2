@@ -9,7 +9,7 @@ class CalculatorController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			[
-				'class' => HttpCache::className(),
+				'class' => HttpCache::class,
 				'etagSeed' => function (BaseObject $action) {
 					return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
 				},

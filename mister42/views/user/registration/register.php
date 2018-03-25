@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				])->passwordInput(['tabindex' => 3]);
 		echo '</div>';
 
-		echo $form->field($model, 'captcha')->widget(Captcha::className(), [
+		echo $form->field($model, 'captcha')->widget(Captcha::class, [
 			'captchaAction' => '/site/captcha',
 			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 			'options' => ['class' => 'form-control', 'tabindex' => 4],

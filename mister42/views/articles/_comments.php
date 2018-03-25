@@ -4,13 +4,14 @@ use yii\bootstrap\Html;
 use yii\widgets\Pjax;
 
 foreach ($comments as $comment) :
-	?><div class="comment">
-		<div class="clearfix">
-			<div class="pull-left">
-				<h3 class="comment-info"><?= Html::encode($comment->title) ?></h3>
-			</div><?php
+	echo '<div>';
+		echo '<div class="clearfix">';
+			echo Html::tag('div',
+				Html::tag('h3', Html::encode($comment->title), ['class' => 'comment-info'])
+			, ['class' => 'pull-left']);
+
 			if ($mainmodel->belongsToViewer()):
-				?><div class="pull-right"><?php
+				echo '<div class="pull-right">';
 					Pjax::begin(['enablePushState' => false, 'options' => ['tag' => 'span']]);
 						echo $comment->showApprovalButton();
 					Pjax::end();
@@ -20,9 +21,9 @@ foreach ($comments as $comment) :
 						'data-confirm' => 'Are you sure you want to delete this comment?',
 						'data-method' => 'post',
 					]);
-				?></div><?php
+				echo '</div>';
 			endif;
-		?></div><?php
+		echo '</div>';
 		echo $comment->content;
 		if (!empty($comment->user)) {
 			$profile = User::find()->where(['id' => $model->user->id])->one();
@@ -32,8 +33,8 @@ foreach ($comments as $comment) :
 		echo Html::icon('time', ['class' => 'text-muted']) . ' <time datetime="'.date(DATE_W3C, $comment->created).'">'.Yii::$app->formatter->asRelativeTime($comment->created).'</time>';
 		echo ' · ' . Html::icon('user', ['class' => 'text-muted']) . ' <span class="author">' . $comment->name . '</span>';
 		if ($mainmodel->author === $comment->user)
-			echo ' <span class="badge">Article Author</span>';
+			echo Html::tag('span', 'Article Author', ['class' => 'badge']);
 		if (!empty($comment->website))
 			echo ' · ' . Html::icon('globe', ['class' => 'text-muted']) . ' ' . Html::a($comment->website, $comment->website);
-	?></div><?php
+	echo '</div>';
 endforeach;

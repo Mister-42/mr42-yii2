@@ -40,13 +40,13 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('signal').'</span>{input}</div>{error}',
 			])
 			->label('SSID')
-			->textInput(['autofocus' => true, 'id' => 'ssid', 'tabindex' => 1]);
+			->textInput(['autofocus' => true, 'tabindex' => 1]);
 
 		echo $form->field($model, 'pass', [
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 			])
 			->label('WPA Passphrase')
-			->textInput(['id' => 'pass', 'tabindex' => 2]) ?>
+			->textInput(['tabindex' => 2]) ?>
 
 		<div class="form-group field-psk">
 			<?= Html::tag('label', 'Pre-Shared Key', ['class' => 'control-label']) ?>

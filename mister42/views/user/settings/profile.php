@@ -55,7 +55,7 @@ $this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' =>
 			'inputTemplate' => '<div class="input-group"><span class="input-group-addon">'.Html::icon('map-marker').'</span>{input}</div>',
 		])->textInput(['tabindex' => 4]);
 
-		echo $form->field($model, 'birthday')->widget(TimePicker::classname(), [
+		echo $form->field($model, 'birthday')->widget(TimePicker::class, [
 			'clientOptions' => [
 				'changeMonth' => true,
 				'changeYear' => true,

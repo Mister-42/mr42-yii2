@@ -22,7 +22,7 @@ class ProfileController extends \Da\User\Controller\ProfileController {
 
 		return ArrayHelper::merge($behaviors, [
 			[
-				'class' => HttpCache::className(),
+				'class' => HttpCache::class,
 				'etagSeed' => function ($action, $params) {
 					return serialize([YII_DEBUG, Yii::$app->user->id, Yii::$app->request->get('username')]);
 				},

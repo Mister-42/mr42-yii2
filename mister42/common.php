@@ -79,7 +79,7 @@ return [
 			],
 		],
 		'pdf' => [
-			'class' => \kartik\mpdf\Pdf::classname(),
+			'class' => \kartik\mpdf\Pdf::class,
 			'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
 		],
 		'urlManager' => [

@@ -14,7 +14,7 @@ class ArticlesController extends \yii\web\Controller {
 	public function behaviors() {
 		return [
 			'access' => [
-				'class' => AccessControl::className(),
+				'class' => AccessControl::class,
 				'only' => ['create', 'update', 'delete', 'commentstatus'],
 				'rules' => [
 					[
@@ -24,7 +24,7 @@ class ArticlesController extends \yii\web\Controller {
 				],
 			],
 			'verbs' => [
-				'class' => VerbFilter::className(),
+				'class' => VerbFilter::class,
 				'actions' => [
 					'delete' => ['post'],
 				],
@@ -116,7 +116,7 @@ class ArticlesController extends \yii\web\Controller {
 	public function actionUpdate($id) {
 		$this->layout = '@app/views/layouts/main.php';
 
-		$model = BaseArticles::findOne($id);
+		$model = BaseArticles::findOne(['id' => $id]);
 		if (!$model->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
 
@@ -130,7 +130,7 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionDelete($id) {
-		$model = BaseArticles::findOne($id);
+		$model = BaseArticles::findOne(['id' => $id]);
 		if (!$model->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to delete this article.');
 
@@ -139,7 +139,7 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionCommentstatus($action, $id) {
-		$comment = Comments::findOne($id);
+		$comment = Comments::findOne(['id' => $id]);
 		$article = $this->findModel($comment->parent);
 
 		if (!$article->belongsToViewer())
