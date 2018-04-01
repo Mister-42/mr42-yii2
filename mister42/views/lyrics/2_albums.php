@@ -59,10 +59,6 @@ echo '<div class="site-lyrics-albums">';
 		echo '</div></div>';
 		if ($album->image && count($album->tracks) > 0)
 			echo Lightbox::widget([
-				'options' => [
-					'imageFadeDuration'	=> 25,
-					'wrapAround'		=> true,
-				],
 				'items' => [
 					[
 						'thumb'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
@@ -70,6 +66,10 @@ echo '<div class="site-lyrics-albums">';
 						'title'	=> implode(' · ', [$album->artist->name, $album->name]),
 						'group'	=> $album->artist->url,
 					],
+				],
+				'options' => [
+					'imageFadeDuration'	=> 25,
+					'wrapAround'		=> true,
 				],
 			]);
 		echo '</div></div>';

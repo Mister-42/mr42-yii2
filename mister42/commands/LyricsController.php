@@ -1,7 +1,7 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Console, Webrequest};
+use app\models\{Console, Image, Webrequest};
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
@@ -10,6 +10,8 @@ use yii\helpers\ArrayHelper;
  * Handles all actions related to lyrics.
  */
 class LyricsController extends Controller {
+	const ALBUM_IMAGE_DIMENSIONS = 1000;
+
 	public $defaultAction = 'index';
 
 	/**
@@ -21,26 +23,41 @@ class LyricsController extends Controller {
 	}
 
 	/**
-	 * Resizes all album covers to 999x999 if they exceed this limit.
+	 * Resizes all album covers to the default dimensions if they exceed this limit.
 	*/
 	public function actionAlbumImage() {
 		foreach(Lyrics1Artists::albumsList() as $artist) :
 			foreach($artist->albums as $album) :
-				if (!$album->image)
+				list($width, $height) = getimagesizefromstring($album->image);
+				$exif = exif_read_data("data://image/jpeg;base64," . base64_encode($album->image));
+				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' || is_null($album->image_color))
 					continue;
+
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
 				Console::write($album->year, [Console::FG_GREEN]);
 				Console::write($album->name, [Console::FG_GREEN], 8);
 
-				list($width, $height) = getimagesizefromstring($album->image);
-				Console::write("{$width}x{$height}", [Console::FG_GREEN], 2);
-				if ($width > 999 && $height > 999) {
-					$album->image = (Lyrics2Albums::getCover(999, $album))[1];
-					$album->save();
-					list($width, $height) = getimagesizefromstring($album->image);
-					Console::write("{$width}x{$height}", [Console::BOLD, Console::FG_GREEN]);
+				if (!$album->image) {
+					Console::write('Missing', [Console::BOLD, Console::FG_RED]);
 					Console::newLine();
 					continue;
+				}
+
+				Console::write("{$width}x{$height}", [$width === self::ALBUM_IMAGE_DIMENSIONS ? Console::FG_GREEN : Console::FG_RED], 2);
+
+				if (($width > self::ALBUM_IMAGE_DIMENSIONS && $height > self::ALBUM_IMAGE_DIMENSIONS) || !empty($exif['SectionsFound']) || $exif['MimeType'] !== 'image/jpeg') {
+					if ($width >= self::ALBUM_IMAGE_DIMENSIONS && $height >= self::ALBUM_IMAGE_DIMENSIONS) {
+						$album->image = (Lyrics2Albums::getCover(self::ALBUM_IMAGE_DIMENSIONS, $album))[1];
+						$album->image_color = Image::getAverageColor($album->image);
+						$album->save();
+						list($width, $height) = getimagesizefromstring($album->image);
+						Console::write("{$width}x{$height}", [Console::BOLD, Console::FG_GREEN]);
+					}
+					Console::newLine();
+					continue;
+				} elseif ($album->image && is_null($album->image_color)) {
+					$album->image_color = Image::getAverageColor($album->image);
+					$album->save();
 				}
 
 				Console::write("OK", [Console::BOLD, Console::FG_GREEN]);

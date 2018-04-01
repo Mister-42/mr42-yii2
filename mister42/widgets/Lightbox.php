@@ -9,7 +9,7 @@ class Lightbox extends Widget {
 	public $items = [];
 	public $options = [];
 	public $linkOptions = ['class' => 'media-right hidden-xs'];
-	public $imageOptions = ['class' => 'thumbnail pull-left'];
+	public $imageOptions = ['class' => 'img-rounded pull-left'];
 
 	public function init() {
 		LightboxAsset::register($this->getView());
