@@ -43,12 +43,12 @@ echo '<div class="site-lyrics-albums">';
 			if ($x++ === 0)
 				echo '<div class="col-sm-4 text-nowrap">';
 
-			$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->hasLyrics || $track->video)
+			$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->lyricid || $track->video)
 				? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 				: $track->name;
 			echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
 			if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video)
-				echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
+				echo ' ' . Html::icon($track->lyricid || $track->wip ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 			echo '<br>';
 
 			if ($x === (int) ceil(count($album->tracks) / 3) || $y === count($album->tracks)) {

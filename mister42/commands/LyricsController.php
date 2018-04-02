@@ -30,7 +30,7 @@ class LyricsController extends Controller {
 			foreach($artist->albums as $album) :
 				list($width, $height) = getimagesizefromstring($album->image);
 				$exif = exif_read_data("data://image/jpeg;base64," . base64_encode($album->image));
-				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' || is_null($album->image_color))
+				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' && !is_null($album->image_color))
 					continue;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);

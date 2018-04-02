@@ -29,12 +29,12 @@ echo '<div class="site-lyrics-lyrics">';
 			echo '<div class="col-sm-4 text-nowrap">';
 
 		echo $track->track . ' · ';
-		echo $track->hasLyrics || $track->video
+		echo $track->lyricid || $track->video
 			? Html::a($track->name, '#' . $track->track)
 			: $track->name;
 		echo $track->disambiguation . $track->feat;
 		if ($track->video)
-			echo ' ' . Html::icon($track->hasLyrics ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
+			echo ' ' . Html::icon($track->lyricid || $track->wip ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
 		echo '<br>';
 
 		if ($x === (int) ceil(count($tracks) / 3) || $y === count($tracks)) {
@@ -47,19 +47,20 @@ echo '<div class="site-lyrics-lyrics">';
 	if ($tracks[0]->album->image)
 		echo Html::tag('div',
 			Html::tag('div',
-				Html::img(['albumcover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$tracks[0]->artist->name, $tracks[0]->album->name]), 'class' => 'center-block img-responsive', 'height' => 500, 'width' => 500])
+				Html::img(['albumcover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$tracks[0]->artist->name, $tracks[0]->album->name]), 'class' => 'center-block img-responsive img-rounded', 'height' => 500, 'width' => 500])
 			, ['class' => 'col-xs-12'])
 		, ['class' => 'row']);
 
 	foreach($tracks as $track) :
-		if ($track->lyricid || $track->video)
+		if ($track->lyricid || $track->wip || $track->video)
 			echo Html::tag('div',
 				Html::tag('div',
 					Html::a(null, null, ['class' => 'anchor', 'id' => $track->track]) .
 					Html::tag('h4', implode(' · ', [$track->track, $track->name . $track->disambiguation . $track->feat])) .
-					($track->lyricid ? Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics']) : '')
-				, ['class' => $track->lyricid ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .
-				Html::tag('div', $track->video, ['class' => $track->lyricid ? 'col-xs-12 col-sm-4' : 'col-xs-12'])
+					($track->lyricid ? Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics']) : '') .
+					($track->wip ? Html::tag('div', Html::tag('i', 'Work in Progress'), ['class' => 'lyrics']) : '')
+				, ['class' => $track->lyricid || $track->wip ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .
+				Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-xs-12 col-sm-4' : 'col-xs-12'])
 			, ['class' => 'row']);
 	endforeach;
 echo '</div>';

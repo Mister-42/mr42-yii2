@@ -8,7 +8,7 @@ use yii\db\Expression;
 use yii\helpers\{ArrayHelper, Url};
 
 class Lyrics2Albums extends \yii\db\ActiveRecord {
-	public $playlist;
+	public $playlist_embed;
 	public $playlist_url;
 
 	public static function tableName() {
@@ -19,7 +19,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
 		$this->playlist_id = $this->playlist_id ? 'PL' . $this->playlist_id : null;
-		$this->playlist = $this->playlist_id && $this->playlist_ratio ? Video::getEmbed('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
+		$this->playlist_embed = $this->playlist_id && $this->playlist_ratio ? Video::getEmbed('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
 		$this->playlist_url = $this->playlist_id ? Video::getUrl('youtube', $this->playlist_id, true) : null;
 		$this->updated = strtotime($this->updated);
 		$this->active = (bool) $this->active;
@@ -28,6 +28,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function beforeSave($insert) {
 		if (parent::beforeSave($insert)) {
 			$this->url = $this->name === $this->url ? null : $this->url;
+			$this->playlist_id = substr($this->playlist_id, 2);
 			$this->active = $this->active ? 1 : 0;
 			return true;
 		}

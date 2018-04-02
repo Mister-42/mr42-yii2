@@ -4,7 +4,6 @@ use Yii;
 use app\models\Video;
 
 class Lyrics3Tracks extends \yii\db\ActiveRecord {
-	public $hasLyrics;
 	public $video;
 
 	public static function tableName() {
@@ -16,7 +15,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->track = sprintf('%02d', $this->track);
 		$this->disambiguation = $this->disambiguation ? ' (' . $this->disambiguation . ')' : null;
 		$this->feat = $this->feat ? ' (feat. ' . $this->feat . ')' : null;
-		$this->hasLyrics = $this->lyricid && $this->lyricid != "00000000000000000000000000000000";
+		$this->wip = (bool) $this->wip;
 		$this->video = $this->video_id && $this->video_ratio ? Video::getEmbed('youtube', $this->video_id, $this->video_ratio) : null;
 	}
 
