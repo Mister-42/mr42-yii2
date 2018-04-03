@@ -37,8 +37,7 @@ $this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY)
 				])->textInput(['tabindex' => 3]);
 
 			echo $form->field($model, 'content',[
-				'template' => "{label} <div id=\"chars\" class=\"pull-right\"></div> {input} {hint} {error}",
-				'template' => '{label} <div id="chars" class="pull-right"></div><div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div> {hint} {error}'
+				'template' => '{label} <div id="chars" class="pull-right"></div><div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div> {hint} {error}',
 			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => 4]); ?>
 
 			<label class="control-label" for="file">Attachment</label>

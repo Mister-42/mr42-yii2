@@ -58,13 +58,13 @@ echo '</div>';
 echo '<footer>';
 	echo '<div class="container">';
 		echo Html::tag('p', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'pull-left']);
-		echo '<p class="pull-right">';
+		echo '<p class="btn-toolbar pull-right">';
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				if (Yii::$app->user->identity->isAdmin)
-					echo Html::a('Validate HTML', 'https://validator.w3.org/nu/?doc=' . rawurlencode(Url::current([], true)), ['class' => 'label label-primary hidden-xs', 'target' => '_blank']) . ' ';
-				echo Html::a('Contact', ['/site/contact'], ['class' => 'label label-primary']) . ' ';
-				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'label label-primary hidden-xs']) . ' ';
-				echo Html::a('RSS', ['/feed/rss'], ['class' => 'label label-warning hidden-xs', 'target' => '_blank']);
+					echo Html::a('Validate HTML', 'https://validator.w3.org/nu/?doc=' . rawurlencode(Url::current([], true)), ['class' => 'btn btn-xs btn-primary hidden-xs', 'target' => '_blank']);
+				echo Html::a('Contact', ['/site/contact'], ['class' => 'btn btn-xs btn-primary']);
+				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'btn btn-xs btn-primary hidden-xs']);
+				echo Html::a('RSS', ['/feed/rss'], ['class' => 'btn btn-xs btn-warning hidden-xs', 'target' => '_blank']);
 			}
 		echo '</p>';
 	echo '</div>';

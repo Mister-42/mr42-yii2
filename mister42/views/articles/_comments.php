@@ -11,12 +11,12 @@ foreach ($comments as $comment) :
 			, ['class' => 'pull-left']);
 
 			if ($mainmodel->belongsToViewer()):
-				echo '<div class="pull-right">';
+				echo '<div class="btn-toolbar pull-right">';
 					Pjax::begin(['enablePushState' => false, 'options' => ['tag' => 'span']]);
 						echo $comment->showApprovalButton();
 					Pjax::end();
 
-					echo ' ' . Html::a(Html::icon('remove').' Delete', ['commentstatus', 'id' => $comment->id, 'action' => 'delete'], [
+					echo Html::a(Html::icon('remove') . ' Delete', ['commentstatus', 'id' => $comment->id, 'action' => 'delete'], [
 						'class' => 'btn btn-xs btn-danger action',
 						'data-confirm' => 'Are you sure you want to delete this comment?',
 						'data-method' => 'post',

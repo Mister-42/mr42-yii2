@@ -13,17 +13,17 @@ echo '<article>';
 			Html::tag('h2', (isset($view) && $view == 'full') ? Html::encode($model->title) : Html::a(Html::encode($model->title), ['index', 'id' => $model->id, 'title' => $model->url]))
 		, ['class' => 'pull-left']);
 
-		echo '<div class="pull-right">';
+		echo '<div class="btn-toolbar pull-right">';
 			if ($model->belongsToViewer()) {
-				echo Html::a(Html::icon('edit').' Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-xs btn-primary action']);
-				echo ' ' . Html::a(Html::icon('remove').' Delete', ['delete', 'id' => $model->id], [
+				echo Html::a(Html::icon('edit') . ' Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-xs btn-primary action']);
+				echo Html::a(Html::icon('remove') . ' Delete', ['delete', 'id' => $model->id], [
 					'class' => 'btn btn-xs btn-danger action',
 					'data-confirm' => 'Are you sure you want to delete this article?',
 					'data-method' => 'post',
 				]);
 			}
 			if ($model->pdf)
-				echo ' ' . Html::a(Html::icon('save') . ' PDF', ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-xs btn-warning action']);
+				echo Html::a(Html::icon('save') . ' PDF', ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-xs btn-warning action']);
 		echo '</div>';
 	echo '</div>';
 
