@@ -10,10 +10,14 @@ echo '<div class="site-lyrics-albums">';
 	echo Html::tag('div',
 		Html::tag('div',
 			Html::tag('h1', Html::encode($albums[0]->artist->name), ['class' => 'pull-left']) .
-			Html::tag('div', $albums[0]->artist->website
-				? Html::a(Html::icon('globe'), $albums[0]->artist->website, ['class' => 'btn btn-xs btn-warning action', 'title' => 'Website of ' . Html::encode($albums[0]->artist->name)])
-				: 	''
-			, ['class' => 'pull-right'])
+			Html::tag('div',
+				($albums[0]->artist->buy
+					? Html::a(Html::icon('headphones'), $albums[0]->artist->buy, ['class' => 'btn btn-xs btn-warning action', 'title' => 'Buy music of ' . Html::encode($albums[0]->artist->name)])
+					: 	'') .
+				($albums[0]->artist->website
+					? Html::a(Html::icon('globe'), $albums[0]->artist->website, ['class' => 'btn btn-xs btn-warning action', 'title' => 'Website of ' . Html::encode($albums[0]->artist->name)])
+					: 	'')
+			, ['class' => 'btn-toolbar pull-right'])
 		, ['class' => 'clearfix col-lg-12'])
 	, ['class' => 'row']);
 
@@ -24,14 +28,14 @@ echo '<div class="site-lyrics-albums">';
 					? Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
 					: $album->name
 				)), ['class' => 'pull-left']) .
-				Html::tag('div', $album->active
-					? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
-					: ''
-				, ['class' => 'pull-right']) .
-				Html::tag('div', $album->playlist_url
-					? Html::a(Html::icon('play').' Play', $album->playlist_url, ['class' => 'btn btn-xs btn-warning action']) . '&nbsp;'
-					: ''
-				, ['class' => 'pull-right'])
+				Html::tag('div',
+					($album->playlist_url
+						? Html::a(Html::icon('play').' Play', $album->playlist_url, ['class' => 'btn btn-xs btn-warning action'])
+						: '') .
+					($album->active
+						? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-xs btn-warning action'])
+						: '')
+				, ['class' => 'btn-toolbar pull-right'])
 			, ['class' => 'clearfix col-lg-12'])
 		, ['class' => 'row']);
 

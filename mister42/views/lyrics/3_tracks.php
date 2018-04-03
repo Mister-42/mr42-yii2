@@ -11,14 +11,14 @@ echo '<div class="site-lyrics-lyrics">';
 		Html::tag('div',
 			Html::tag('h1', Html::encode(implode(' · ', [$tracks[0]->artist->name, $tracks[0]->album->name])))
 		, ['class' => 'pull-left']) .
-		Html::tag('div', $tracks[0]->album->active
-			? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], ['class' => 'btn btn-xs btn-warning action'])
-			: ''
-		, ['class' => 'pull-right']) .
-		Html::tag('div', $tracks[0]->album->playlist_url
-			? Html::a(Html::icon('play').' Play', $tracks[0]->album->playlist_url, ['class' => 'btn btn-xs btn-warning action']) . '&nbsp;'
-			: ''
-		, ['class' => 'pull-right'])
+		Html::tag('div',
+			($tracks[0]->album->playlist_url
+				? Html::a(Html::icon('play').' Play', $tracks[0]->album->playlist_url, ['class' => 'btn btn-xs btn-warning action'])
+				: '') .
+			($tracks[0]->album->active
+				? Html::a(Html::icon('save').' PDF', ['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], ['class' => 'btn btn-xs btn-warning action'])
+				: '')
+		, ['class' => 'btn-toolbar pull-right'])
 	, ['class' => 'clearfix']);
 
 	$x = $y = 0;
@@ -57,8 +57,7 @@ echo '<div class="site-lyrics-lyrics">';
 				Html::tag('div',
 					Html::a(null, null, ['class' => 'anchor', 'id' => $track->track]) .
 					Html::tag('h4', implode(' · ', [$track->track, $track->name . $track->disambiguation . $track->feat])) .
-					($track->lyricid ? Html::tag('div', $track->lyrics->lyrics, ['class' => 'lyrics']) : '') .
-					($track->wip ? Html::tag('div', Html::tag('i', 'Work in Progress'), ['class' => 'lyrics']) : '')
+					Html::tag('div', $track->lyricid ? $track->lyrics->lyrics : Html::tag('i', 'Work in Progress'), ['class' => 'lyrics'])
 				, ['class' => $track->lyricid || $track->wip ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .
 				Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-xs-12 col-sm-4' : 'col-xs-12'])
 			, ['class' => 'row']);
