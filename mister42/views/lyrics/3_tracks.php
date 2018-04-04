@@ -57,7 +57,7 @@ echo '<div class="site-lyrics-lyrics">';
 				Html::tag('div',
 					Html::a(null, null, ['class' => 'anchor', 'id' => $track->track]) .
 					Html::tag('h4', implode(' · ', [$track->track, $track->name . $track->disambiguation . $track->feat])) .
-					Html::tag('div', $track->lyricid ? $track->lyrics->lyrics : Html::tag('i', 'Work in Progress'), ['class' => 'lyrics'])
+					Html::tag('div', $track->wip ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : ''), ['class' => 'lyrics'])
 				, ['class' => $track->lyricid || $track->wip ? 'col-xs-12 col-sm-8' : 'col-sm-12']) .
 				Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-xs-12 col-sm-4' : 'col-xs-12'])
 			, ['class' => 'row']);

@@ -57,8 +57,8 @@ echo '</div>';
 
 echo '<footer>';
 	echo '<div class="container">';
-		echo Html::tag('p', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'pull-left']);
-		echo '<p class="btn-toolbar pull-right">';
+		echo Html::tag('div', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'pull-left']);
+		echo '<div class="btn-toolbar pull-right">';
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				if (Yii::$app->user->identity->isAdmin)
 					echo Html::a('Validate HTML', 'https://validator.w3.org/nu/?doc=' . rawurlencode(Url::current([], true)), ['class' => 'btn btn-xs btn-primary hidden-xs', 'target' => '_blank']);
@@ -66,9 +66,9 @@ echo '<footer>';
 				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'btn btn-xs btn-primary hidden-xs']);
 				echo Html::a('RSS', ['/feed/rss'], ['class' => 'btn btn-xs btn-warning hidden-xs', 'target' => '_blank']);
 			}
-		echo '</p>';
+		echo '</div>';
 	echo '</div>';
-	echo Html::a(Html::tag('span', '&nbsp;&nbsp;^&nbsp;&nbsp;', ['title' => 'Scroll to top', 'data-toggle' => 'tooltip', 'data-placement' => 'top']), false, ['id' => 'btn-scrolltop']);
+	echo Html::a(Html::icon('chevron-up'), null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => 'Scroll to top']);
 echo '</footer>';
 $this->endBody();
 
