@@ -11,7 +11,7 @@ class Timezone extends \yii\base\Model {
 
 	public function rules(): array {
 		return [
-			[['source', 'datetime', 'target'], 'required'],
+			[['source', 'target'], 'required'],
 			[['datetime'], 'date', 'format' => 'php:Y-m-d H:i'],
 			[['source', 'target'], 'in', 'range' => self::getTimezones(false)],
 		];
@@ -27,6 +27,7 @@ class Timezone extends \yii\base\Model {
 
 	public function diff(): bool {
 		if ($this->validate()) {
+			$this->datetime = empty($this->datetime) ? date('Y-m-d H:i') : $this->datetime;
 			$time = new DateTime($this->datetime, new DateTimeZone($this->source));
 			$time->setTimezone(new DateTimeZone($this->target));
 			Yii::$app->getSession()->setFlash('timezone-success', $time);

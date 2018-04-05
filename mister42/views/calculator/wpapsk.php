@@ -20,11 +20,14 @@ $model->addRule('ssid', 'required', ['message' => 'SSID cannot be blank.']);
 $model->addRule('pass', 'required', ['message' => 'WPA Passphrase cannot be blank.']);
 $model->addRule('ssid', 'string', ['max'=>32]);
 $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
-?>
-<div class="row">
-	<div class="col-md-offset-2 col-md-8"><?php
+
+echo Html::beginTag('div', ['class' => 'row']);
+	echo Html::beginTag('div', ['class' => 'col-md-offset-2 col-md-8']);
 		echo Html::tag('h1', Html::encode($this->title));
-		echo Html::tag('p', 'This Wifi Protected Access Pre-Shared Key (WPA PSK) calculator provides an easy way to convert a SSID and WPA&nbsp;Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.<br>Type or paste in your SSID and WPA&nbsp;Passphrase below. Click \'Calculate\' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <b>None</b> of this information will be sent over the network.');
+		echo Html::beginTag('div', ['class' => 'alert alert-info']);
+			echo Html::tag('p', 'This Wifi Protected Access Pre-Shared Key (WPA PSK) calculator provides an easy way to convert a SSID and WPA Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.');
+			echo Html::tag('p', 'Type or paste in your SSID and WPA Passphrase below. Click \'Calculate\' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <strong>None</strong> of this information will be sent over the network.');
+		echo Html::endTag('div');
 
 		$form = ActiveForm::begin([
 				'id' => 'wpapsk',
@@ -46,25 +49,28 @@ $model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 			])
 			->label('WPA Passphrase')
-			->textInput(['tabindex' => 2]) ?>
+			->textInput(['tabindex' => 2]);
 
-		<div class="form-group field-psk">
-			<?= Html::tag('label', 'Pre-Shared Key', ['class' => 'control-label']) ?>
-			<div class="row">
-				<div class="col-md-12">
-					<?= Html::tag('div', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', ['id' => 'psk']) ?>
-				</div>
-				<div class="col-md-1 text-right">
-					<button class="btn btn-sm btn-primary clipboard-js-init hidden" data-clipboard-target="#psk" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" type="button"><?= Html::icon('copy') ?></button>
-				</div>
-			</div>
-		</div>
+		echo Html::tag('div',
+			Html::tag('div', null, ['class' => 'progress-bar progress-bar-striped progress-bar-info active'])
+		, ['class' => 'progress']);
 
-		<div class="form-group text-right">
-			<?= Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4, 'onclick' => 'reset_psk()']) ?>
-			<?= Html::button('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 3, 'onclick' => 'cal_psk()']) ?>
-		</div>
+		echo Html::beginTag('div', ['class' => 'form-group field-psk']);
+			echo Html::label('Pre-Shared Key', null, ['class' => 'control-label']);
+			echo Html::beginTag('div', ['class' => 'input-group passform-password']);
+				echo Html::tag('span', Html::icon('share'), ['class' => 'input-group-addon']);
+				echo Html::textInput('psk', null, ['class' => 'form-control', 'id' => 'psk', 'placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
+				echo Html::tag('span',
+					Html::button(Html::icon('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard'])
+				, ['class' => 'input-group-btn']);
+			echo Html::endTag('div');
+		echo Html::endTag('div');
 
-		<?php ActiveForm::end(); ?>
-	</div>
-</div>
+		echo Html::tag('div',
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4, 'onclick' => 'reset_psk()']) .
+			Html::button('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 3, 'onclick' => 'cal_psk()'])
+		, ['class' => 'btn-toolbar form-group pull-right']);
+
+		ActiveForm::end();
+	echo Html::endTag('div');
+echo Html::endTag('div');

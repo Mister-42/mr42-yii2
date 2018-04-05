@@ -9,6 +9,6 @@ function rndpass(length) {
 }
 
 function get() {
-	$("#password").attr("class", "well well-sm alert-success text-center form-control").html(rndpass($("#length").val()));
+	$("[name='password']").val(rndpass($("[name='length']").val()));
 	return false
 }

@@ -7,27 +7,26 @@ $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
 
 Html2MarkdownAsset::register($this);
-?>
-<div class="row">
-	<div class="col-md-12"><?= Html::tag('h1', Html::encode($this->title)); ?></div>
-</div>
 
-<form class="html2markdown">
-	<div class="row">
-		<div class="col-md-6">
-			<?= Html::tag('h3', 'HTML') ?>
-			<textarea id="input"><?= $lastPost->content ?></textarea>
-		</div>
+echo Html::beginTag('div', ['class' => 'row']);
+	echo Html::tag('h1', Html::encode($this->title), ['class' => 'col-md-12']);
+echo Html::endTag('div');
 
-		<div class="col-md-6">
-			<?= Html::tag('h3', 'Markdown') ?>
-			<textarea id="output" readonly>JavaScript is disabled in your web browser. This tool does not work without JavaScript.</textarea>
-		</div>
-	</div>
+echo Html::beginTag('form', ['class' => 'html2markdown']);
+	echo Html::beginTag('div', ['class' => 'row']);
+		echo Html::tag('div',
+			Html::tag('h3', 'HTML') .
+			Html::textArea('input', $lastPost->content)
+		, ['class' => 'col-md-6']);
+		echo Html::tag('div',
+			Html::tag('h3', 'Markdown') .
+			Html::textArea('output', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', ['readonly' => true])
+		, ['class' => 'col-md-6']);
+	echo Html::endTag('div');
 
-	<div class="row">
-		<div class="col-md-12">
-			<label><input type="checkbox" id="gfm"> GitHub Flavored Markdown</label>
-		</div>
-	</div>
-</form>
+	echo Html::beginTag('div', ['class' => 'row']);
+		echo Html::tag('div',
+			Html::label(Html::checkbox('gfm') . ' GitHub Flavored Markdown')
+		, ['class' => 'col-md-12']);
+	echo Html::endTag('div');
+echo Html::endTag('form');

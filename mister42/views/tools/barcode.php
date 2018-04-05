@@ -7,11 +7,10 @@ $this->title = 'Barcode Generator';
 $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
 
-
 echo Html::tag('h1', Html::encode($this->title));
 
-echo '<div class="row">';
-	echo '<div class="col-md-offset-2 col-md-8">';
+echo Html::beginTag('div', ['class' => 'row']);
+	echo Html::beginTag('div', ['class' => 'col-md-offset-2 col-md-8']);
 		if ($barcode = Yii::$app->session->getFlash('barcode-success')) {
 			list($width, $height) = getimagesize($barcode);
 			$imgHeight = min(150, $height);
@@ -19,7 +18,7 @@ echo '<div class="row">';
 			Alert::begin(['options' => ['class' => 'alert-success', 'style' => ['min-height' => $imgHeight + 30 . 'px']]]);
 			echo Html::img(Url::to('@assets/temp/'.basename($barcode)), ['alt' => 'Barcode', 'class' => 'img-responsive inline-left pull-left', 'height' => $imgHeight, 'width' => $imgWidth]);
 			echo Html::tag('p', 'Your Barcode has been generated successfully.');
-			echo Html::tag('p', 'Do not link to the image on this website directly. Your image will be deleted shortly.');
+			echo Html::tag('p', 'Do not link to the image on this website directly as it will be deleted shortly.');
 			Alert::end();
 		}
 
@@ -53,10 +52,10 @@ echo '<div class="row">';
 			->hint('If you enter your email address here the Barcode will be mailed to that address.');
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) . ' ' .
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) .
 			Html::submitButton('Generate Barcode', ['class' => 'btn btn-primary', 'tabindex' => 6])
-		, ['class' => 'form-group field-qr-buttons text-right']);
+		, ['class' => 'btn-toolbar form-group field-qr-buttons pull-right']);
 
 		ActiveForm::end();
-	echo '</div>';
-echo '</div>';
+	echo Html::endTag('div');
+echo Html::endTag('div');

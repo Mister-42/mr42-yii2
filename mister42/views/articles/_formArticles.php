@@ -26,8 +26,8 @@ echo $form->field($model, 'pdf')->checkbox(['tabindex' => 6]);
 echo $form->field($model, 'active')->checkbox(['tabindex' => 7]);
 
 echo Html::tag('div',
-	Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 9]) . ' ' .
+	Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 9]) .
 	Html::submitButton('Save', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 8])
-, ['class' => 'form-group text-right']);
+, ['class' => 'btn-toolbar form-group pull-right']);
 
 ActiveForm::end();

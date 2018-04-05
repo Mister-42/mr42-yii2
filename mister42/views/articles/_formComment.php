@@ -50,9 +50,9 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 		}
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) . ' ' .
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 8]) .
 			Html::submitButton('Submit', ['class' => 'btn btn-primary', 'id' => 'pjaxtrigger', 'tabindex' => 7])
-		, ['class' => 'form-group text-right']);
+		, ['class' => 'btn-toolbar form-group pull-right']);
 
 	ActiveForm::end();
 Pjax::end();

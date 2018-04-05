@@ -6,44 +6,44 @@ $this->title = 'Date to Date Calculator (duration)';
 $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = 'Date to Date (duration)';
 
-echo '<div class="row">';
-	echo '<div class="col-md-offset-2 col-md-8">';
+echo Html::beginTag('div', ['class' => 'row']);
+	echo Html::beginTag('div', ['class' => 'col-md-offset-2 col-md-8']);
 		echo Html::tag('h1', Html::encode($this->title));
-		echo Html::tag('p', 'This calculator calculates the number of days between two dates.');
+		echo Html::tag('div', 'This calculator calculates the number of days between two dates.', ['class' => 'alert alert-info']);
 
 		if ($flash = Yii::$app->session->getFlash('duration-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success']]);
 			echo '<p>From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->fromDate, 'long')) . '<br>';
 			echo 'To: ' . Html::tag('b', Yii::$app->formatter->asDate($model->toDate, 'long')) . '</p>';
-			echo '<p>Result: ' . Html::tag('strong', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $flash->days])) . '</p>';
+			echo Html::tag('p', 'Result: ' . Html::tag('strong', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $flash->days])));
 			Alert::end();
 		}
 
 		$form = ActiveForm::begin();
-		$tab = 1;
-		echo '<div class="row">';
-		foreach (['fromDate', 'toDate'] as $field) {
-			echo $form->field($model, $field, [
-				'options' => ['class' => 'col-sm-6'],
-			])->widget(TimePicker::class, [
-				'clientOptions' => [
-					'changeMonth' => true,
-					'changeYear' => true,
-					'dateFormat' => 'yy-mm-dd',
-					'firstDay' => 1,
-					'yearRange' => '-100Y:+100Y',
-				],
-				'mode' => 'date',
-				'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab++],
-			]);
-		}
-		echo '</div>';
+
+		echo Html::beginTag('div', ['class' => 'row']);
+			foreach (['fromDate', 'toDate'] as $field) {
+				echo $form->field($model, $field, [
+					'options' => ['class' => 'col-sm-6'],
+				])->widget(TimePicker::class, [
+					'clientOptions' => [
+						'changeMonth' => true,
+						'changeYear' => true,
+						'dateFormat' => 'yy-mm-dd',
+						'firstDay' => 1,
+						'yearRange' => '-100Y:+100Y',
+					],
+					'mode' => 'date',
+					'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => ++$tab],
+				]);
+			}
+		echo Html::endTag('div');
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) . ' ' .
+			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4]) .
 			Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 3])
-		, ['class' => 'form-group text-right']);
+		, ['class' => 'btn-toolbar form-group pull-right']);
 
 		ActiveForm::end();
-	echo '</div>';
-echo '</div>';
+	echo Html::endTag('div');
+echo Html::endTag('div');

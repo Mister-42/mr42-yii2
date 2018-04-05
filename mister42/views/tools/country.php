@@ -16,10 +16,11 @@ $this->title = $model->load(Yii::$app->request->post()) ? implode(' - ', [$data[
 
 echo Html::tag('h1', Html::encode($model->load(Yii::$app->request->post()) ? implode(' - ', [$title, $data['name']]) : $title));
 
-echo '<div class="site-country">';
-	echo '<div class="row">';
-		echo '<div class="col-md-4">';
+echo Html::beginTag('div', ['class' => 'site-country']);
+	echo Html::beginTag('div', ['class' => 'row']);
+		echo Html::beginTag('div', ['class' => 'col-md-4']);
 			$form = ActiveForm::begin();
+
 			$countries = $model->find()->select('ISO3166-1-Alpha-2, name')->orderBy('name')->all();
 			echo $form->field($model, 'iso', [
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('th-list').'</span>{input}</div>{error}',
@@ -27,9 +28,10 @@ echo '<div class="site-country">';
 				'onchange' => 'if(this.value!=0){this.form.submit();}',
 				'prompt' => $model->load(Yii::$app->request->post()) ? null : 'Select a country',
 			])->label(false);
+
 			ActiveForm::end();
-		echo '</div>';
-	echo '</div>';
+		echo Html::endTag('div');
+	echo Html::endTag('div');
 
 	if ($model->load(Yii::$app->request->post())) {
 		foreach ([
@@ -75,4 +77,4 @@ echo '<div class="site-country">';
 			, ['class' => 'row']);
 		endforeach;
 	}
-echo '</div>';
+echo Html::endTag('div');

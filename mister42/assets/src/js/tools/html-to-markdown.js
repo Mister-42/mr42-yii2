@@ -1,5 +1,5 @@
 $('form').bind('keyup change', 'input, textarea', function() {
-	$("#output").val(function( index, value ) {
-		return toMarkdown( $("#input").val(), { gfm: $("#gfm").prop('checked') } );
+	$("[name='output']").val(function( index, value ) {
+		return toMarkdown( $("[name='input']").val(), { gfm: $("[name='gfm']").prop('checked') } );
 	});
 }).keyup();
