@@ -10,7 +10,7 @@ function status(done) {
 }
 
 function cal_psk() {
-	var ssid = $('#dynamicmodel-ssid').val(), pass = $('#dynamicmodel-pass').val();
+	var ssid = $('#wpapsk-ssid').val(), pass = $('#wpapsk-pass').val();
 
 	if(!ssid || !pass) {
 		return false;

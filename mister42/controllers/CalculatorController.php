@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\calculator\{Date, Duration, Office365, Timezone};
+use app\models\calculator\{Date, Duration, Office365, Timezone, Wpapsk};
 use yii\base\BaseObject;
 use yii\filters\HttpCache;
 
@@ -62,6 +62,9 @@ class CalculatorController extends \yii\web\Controller {
 	}
 
 	public function actionWpapsk() {
-		return $this->render('wpapsk');
+		$model = new Wpapsk;
+		return $this->render('wpapsk', [
+			'model' => $model,
+		]);
 	}
 }

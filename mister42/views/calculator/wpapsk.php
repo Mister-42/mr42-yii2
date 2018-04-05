@@ -1,6 +1,5 @@
 <?php
 use app\assets\ClipboardJsAsset;
-use yii\base\DynamicModel;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\web\View;
 
@@ -15,12 +14,6 @@ $this->registerJs('$("form input").keydown(function(e){if(e.keyCode==13){cal_psk
 $this->registerJs(Yii::$app->formatter->jspack('calculator/pbkdf2.js'), View::POS_END);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/sha1.js'), View::POS_END);
 
-$model = new DynamicModel(['ssid', 'pass']);
-$model->addRule('ssid', 'required', ['message' => 'SSID cannot be blank.']);
-$model->addRule('pass', 'required', ['message' => 'WPA Passphrase cannot be blank.']);
-$model->addRule('ssid', 'string', ['max'=>32]);
-$model->addRule('pass', 'string', ['min'=>8, 'max'=>63]);
-
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-offset-2 col-md-8']);
 		echo Html::tag('h1', Html::encode($this->title));
@@ -30,25 +23,18 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::endTag('div');
 
 		$form = ActiveForm::begin([
-				'id' => 'wpapsk',
-				'action' => null,
-				'options' => ['csrf' => false],
-				'fieldConfig' => [
-						'template' => "{label}{input}{error}",
-						'labelOptions' => ['class' => 'control-label'],
-				],
+			'id' => 'wpapsk',
+			'action' => null,
 		]);
 
 		echo $form->field($model, 'ssid', [
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('signal').'</span>{input}</div>{error}',
 			])
-			->label('SSID')
 			->textInput(['autofocus' => true, 'tabindex' => 1]);
 
 		echo $form->field($model, 'pass', [
 				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
 			])
-			->label('WPA Passphrase')
 			->textInput(['tabindex' => 2]);
 
 		echo Html::tag('div',
