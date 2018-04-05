@@ -34,7 +34,7 @@ echo '<div class="site-lyrics-lyrics">';
 			: $track->name;
 		echo $track->disambiguation . $track->feat;
 		if ($track->video)
-			echo ' ' . Html::icon($track->lyricid || $track->wip ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
+			echo ' ' . Html::icon($track->lyricid || $track->wip ? 'facetime-video' : 'fullscreen', ['class' => 'hidden-xs text-muted']);
 		echo '<br>';
 
 		if ($x === (int) ceil(count($tracks) / 3) || $y === count($tracks)) {

@@ -19,9 +19,9 @@ $dependency = [
 	)',
 ];
 
-echo '<div class="row">';
+echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::tag('div', $content, ['class' => 'col-xs-12 col-sm-9']);
-	echo '<aside class="hidden-xs col-sm-3">';
+	echo Html::beginTag('aside', ['class' => 'hidden-xs col-sm-3']);
 		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'method' => 'get', 'options' => ['role' => 'search']]);
 		echo $form->field($search, 'search_term', [
 				'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('span', Html::submitButton(Html::icon('search'), ['class' => 'btn btn-primary']), ['class' => 'input-group-btn']) . "</div>",
@@ -56,6 +56,6 @@ echo '<div class="row">';
 			'body' => Feed::widget(['name' => 'ScienceDaily']),
 			'header' => Html::tag('h4', 'Science News'),
 		]);
-	echo '</aside>';
-echo '</div>';
+	echo Html::endTag('aside');
+echo Html::endTag('div');
 $this->endContent();

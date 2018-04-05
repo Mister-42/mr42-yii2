@@ -1,8 +1,7 @@
 function print_psk(key) {
 	$('#wpapsk .btn').removeClass('disabled');
-	$('.progress').addClass('hidden');
-	$('.progress-bar').width(0);
-	$('.field-psk').removeClass('hidden');
+	$('.progress, .field-psk').toggleClass('hidden');
+	$('.progress-bar').width('');
 	$("[name='psk']").val(key);
 }
 
@@ -26,6 +25,5 @@ function cal_psk() {
 }
 
 function reset_psk() {
-	$('.progress').addClass('hidden');
-	$('.field-psk').addClass('hidden');
+	$('.progress, .field-psk').addClass('hidden');
 }

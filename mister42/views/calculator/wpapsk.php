@@ -53,9 +53,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo Html::tag('div',
 			Html::tag('div', null, ['class' => 'progress-bar progress-bar-striped progress-bar-info active'])
-		, ['class' => 'progress']);
+		, ['class' => 'progress hidden']);
 
-		echo Html::beginTag('div', ['class' => 'form-group field-psk']);
+		echo Html::beginTag('div', ['class' => 'form-group field-psk has-success']);
 			echo Html::label('Pre-Shared Key', null, ['class' => 'control-label']);
 			echo Html::beginTag('div', ['class' => 'input-group passform-password']);
 				echo Html::tag('span', Html::icon('share'), ['class' => 'input-group-addon']);

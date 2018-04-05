@@ -6,7 +6,7 @@ use yii\helpers\{Json, Url};
 $this->beginContent('@app/views/layouts/main.php');
 $this->registerJs('(function refresh(){$(\'aside .tracks\').load(' . Json::htmlEncode('/user/recenttracks/' . basename(Url::current())) . ');setTimeout(refresh,60000)})();');
 
-echo '<div class="row">';
+echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::tag('div', $content, ['class' => 'col-sm-12 col-md-8']);
 
 	echo Html::tag('aside',
@@ -19,6 +19,6 @@ echo '<div class="row">';
 			])
 		, ['class' => 'clearfix artists'])
 	, ['class' => 'hidden-xs hidden-sm col-md-4']);
-echo '</div>';
+echo Html::endTag('div');
 
 $this->endContent();

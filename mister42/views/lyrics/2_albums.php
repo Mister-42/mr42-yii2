@@ -52,7 +52,7 @@ echo '<div class="site-lyrics-albums">';
 				: $track->name;
 			echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
 			if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video)
-				echo ' ' . Html::icon($track->lyricid || $track->wip ? 'facetime-video' : 'fullscreen', ['class' => 'text-muted']);
+				echo ' ' . Html::icon($track->lyricid || $track->wip ? 'facetime-video' : 'fullscreen', ['class' => 'hidden-xs text-muted']);
 			echo '<br>';
 
 			if ($x === (int) ceil(count($album->tracks) / 3) || $y === count($album->tracks)) {

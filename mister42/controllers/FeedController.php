@@ -3,7 +3,7 @@ namespace app\controllers;
 use Yii;
 use app\models\articles\Articles;
 use yii\filters\HttpCache;
-use yii\helpers\{ArrayHelper, StringHelper};
+use yii\helpers\ArrayHelper;
 use yii\web\Response;
 
 class FeedController extends \yii\web\Controller {
@@ -25,7 +25,7 @@ class FeedController extends \yii\web\Controller {
 	}
 
 	public function actionRss() {
-		if (!Stringhelper::startsWith(Yii::$app->request->headers->get('HTTP_USER_AGENT'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs']))
+		if (Yii::$app->request->headers->get('user-agent') !== 'FeedBurner' && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs']))
 			$this->redirect('http://f.mr42.me/Mr42')->send();
 
 		Yii::$app->response->format = Response::FORMAT_RAW;

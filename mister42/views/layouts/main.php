@@ -10,9 +10,9 @@ ImagesAsset::register($this);
 
 $this->beginPage();
 
-echo '<!DOCTYPE html>';
-echo '<html lang=' . Yii::$app->language . '>';
-echo '<head>';
+echo Html::beginTag('!DOCTYPE', ['html' => true]);
+echo Html::beginTag('html', ['lang' => Yii::$app->language]);
+echo Html::beginTag('head');
 echo Html::tag('title', Html::encode($this->title));
 $this->registerMetaTag(['charset' => Yii::$app->charset]);
 $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
@@ -25,10 +25,11 @@ $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], t
 $this->registerLinkTag(['rel' => 'icon', 'sizes' => '16x16 32x32 48x48 64x64', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/favicon.ico']);
 $this->registerCsrfMetaTags();
 $this->head();
-echo '</head><body>';
+echo Html::endTag('head');
+echo Html::beginTag('body');
 
 $this->beginBody();
-echo '<div class="wrap">';
+echo Html::beginTag('div', ['class' => 'wrap']);
 	NavBar::begin([
 		'brandLabel' => Yii::$app->name,
 		'brandUrl' => Yii::$app->homeUrl,
@@ -53,10 +54,10 @@ echo '<div class="wrap">';
 			'links' => $this->params['breadcrumbs'] ?? [],
 		]) . $content
 	, ['class' => 'container']);
-echo '</div>';
+echo Html::endTag('div');
 
-echo '<footer>';
-	echo '<div class="container">';
+echo Html::beginTag('footer');
+	echo Html::beginTag('div', ['class' => 'container']);
 		echo Html::tag('div', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'pull-left']);
 		echo '<div class="btn-toolbar pull-right">';
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
@@ -66,11 +67,12 @@ echo '<footer>';
 				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'btn btn-xs btn-primary hidden-xs']);
 				echo Html::a('RSS', ['/feed/rss'], ['class' => 'btn btn-xs btn-warning hidden-xs', 'target' => '_blank']);
 			}
-		echo '</div>';
-	echo '</div>';
+		echo Html::endTag('div');
+	echo Html::endTag('div');
 	echo Html::a(Html::icon('chevron-up'), null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => 'Scroll to top']);
-echo '</footer>';
+echo Html::endTag('footer');
 $this->endBody();
 
-echo '</body></html>';
+echo Html::endTag('body');
+echo Html::endTag('html');
 $this->endPage();

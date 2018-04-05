@@ -36,10 +36,6 @@ $config = [
 					'except' => ['yii\web\HttpException:404'],
 					'levels' => ['error'],
 					'logTable' => 'log_mister42_error',
-				], [
-					'class' => 'yii\log\DbTarget',
-					'categories' => ['yii\web\HttpException:404'],
-					'logTable' => 'log_mister42_404',
 				],
 			],
 		],
