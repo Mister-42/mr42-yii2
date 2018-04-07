@@ -1,8 +1,8 @@
 function print_psk(key) {
 	$('#wpapsk .btn').removeClass('disabled');
-	$('.progress, .field-psk').toggleClass('hidden');
+	$('.progress, .field-wpapsk-psk').toggleClass('hidden');
 	$('.progress-bar').width('');
-	$("[name='psk']").val(key);
+	$('#wpapsk-psk').val(key);
 }
 
 function status(done) {
@@ -10,20 +10,22 @@ function status(done) {
 }
 
 function cal_psk() {
-	var ssid = $('#wpapsk-ssid').val(), pass = $('#wpapsk-pass').val();
+	$.each($('#wpapsk').data('yiiActiveForm').attributes, function() {
+		this.status = 3;
+	});
+	$('#wpapsk').yiiActiveForm("validate");
 
-	if(!ssid || !pass) {
+	if ($('#wpapsk').find(".has-error").length) {
 		return false;
-	} else {
-		$('#wpapsk .btn').addClass('disabled');
-		$('.field-psk').addClass('hidden');
-		$('.progress').removeClass('hidden');
 	}
 
-	var pskgen = new PBKDF2(pass, ssid, 4096, 32);
+	$('#wpapsk .btn').addClass('disabled');
+	$('.field-wpapsk-psk').addClass('hidden');
+	$('.progress').removeClass('hidden');
+	var pskgen = new PBKDF2($('#wpapsk-pass').val(), $('#wpapsk-ssid').val(), 4096, 32);
 	pskgen.deriveKey(status, print_psk)
 }
 
 function reset_psk() {
-	$('.progress, .field-psk').addClass('hidden');
+	$('.progress, .field-wpapsk-psk').addClass('hidden');
 }

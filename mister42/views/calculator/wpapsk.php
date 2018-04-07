@@ -1,6 +1,6 @@
 <?php
 use app\assets\ClipboardJsAsset;
-use yii\bootstrap\{ActiveForm, Html};
+use yii\bootstrap\{ActiveForm, Html, Progress};
 use yii\web\View;
 
 $this->title = 'Wifi Protected Access Pre-Shared Key Calculator';
@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = 'Wifi Protected Access Pre-Shared Key';
 ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/wpapsk.js'), View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);
-$this->registerJs('$("form input").keydown(function(e){if(e.keyCode==13){cal_psk();return false}});', View::POS_READY);
+$this->registerJs('$("input").keypress(function(e){if(e.which==13){cal_psk();return false}});', View::POS_READY);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/pbkdf2.js'), View::POS_END);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/sha1.js'), View::POS_END);
 
@@ -23,8 +23,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::endTag('div');
 
 		$form = ActiveForm::begin([
+			'action' => false,
 			'id' => 'wpapsk',
-			'action' => null,
 		]);
 
 		echo $form->field($model, 'ssid', [
@@ -37,20 +37,16 @@ echo Html::beginTag('div', ['class' => 'row']);
 			])
 			->textInput(['tabindex' => 2]);
 
-		echo Html::tag('div',
-			Html::tag('div', null, ['class' => 'progress-bar progress-bar-striped progress-bar-info active'])
-		, ['class' => 'progress hidden']);
+		echo $form->field($model, 'psk', [
+				'options' => ['class' => 'form-group has-success'],
+				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('share').'</span>{input}<span class="input-group-btn">' . Html::button(Html::icon('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard']) . '</span></div>{error}',
+			])
+			->textInput(['placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
 
-		echo Html::beginTag('div', ['class' => 'form-group field-psk has-success']);
-			echo Html::label('Pre-Shared Key', null, ['class' => 'control-label']);
-			echo Html::beginTag('div', ['class' => 'input-group passform-password']);
-				echo Html::tag('span', Html::icon('share'), ['class' => 'input-group-addon']);
-				echo Html::textInput('psk', null, ['class' => 'form-control', 'id' => 'psk', 'placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
-				echo Html::tag('span',
-					Html::button(Html::icon('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard'])
-				, ['class' => 'input-group-btn']);
-			echo Html::endTag('div');
-		echo Html::endTag('div');
+		echo Progress::widget([
+			'barOptions' => ['class' => 'progress-bar-info'],
+			'options' => ['class' => 'active hidden progress-striped']
+		]);
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 4, 'onclick' => 'reset_psk()']) .

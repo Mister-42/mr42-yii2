@@ -4,6 +4,7 @@ namespace app\models\calculator;
 class Wpapsk extends \yii\base\Model {
 	public $ssid;
 	public $pass;
+	public $psk;
 
 	public function rules(): array {
 		return [
@@ -17,6 +18,7 @@ class Wpapsk extends \yii\base\Model {
 		return [
 			'ssid' => 'SSID',
 			'pass' => 'WPA Passphrase',
+			'psk' => 'Pre-Shared Key',
 		];
 	}
 }
