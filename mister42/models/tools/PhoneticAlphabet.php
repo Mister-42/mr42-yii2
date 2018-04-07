@@ -34,7 +34,7 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 			$text = strtolower($this->text);
 			$text = preg_replace("/(.)/i", "\${1} ", $text);
 			$text = strtr($text, ArrayHelper::merge(
-				self::getgetAlpha($this->alphabet),
+				self::getAlpha($this->alphabet),
 				($this->numeric) ? self::getNumeric($this->alphabet) : [],
 				self::getGenericReplacements()
 			));

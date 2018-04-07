@@ -99,13 +99,11 @@ class LyricsController extends Controller {
 	*/
 	public function actionAlbumPlaylist() {
 		foreach(Lyrics1Artists::albumsList() as $artist) :
-			$x = 0;
 			foreach($artist->albums as $album) :
-				$x++;
 				if (isset($album->playlist_id))
 					$data[] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
 
-				if (!isset($data) || ($x !== count($artist->albums) && count($data) < 50))
+				if (!isset($data) || (++$x !== count($artist->albums) && count($data) < 50))
 					continue;
 				else {
 					$response = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'playlists');
@@ -141,7 +139,6 @@ class LyricsController extends Controller {
 	 * Checking status of tracks video.
 	*/
 	public function actionTrackVideo() {
-		$x = 0;
 		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]])->all();
 		foreach($query as $track) :
 			$data[] = ['id' => $track->video_id, 'name' => $track->name];
