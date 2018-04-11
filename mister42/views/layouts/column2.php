@@ -1,6 +1,7 @@
 <?php
 use app\models\articles\{Articles, Comments};
-use app\widgets\{Feed, Item, RecentArticles, RecentComments, TagCloud};
+use app\models\site\Changelog;
+use app\widgets\{Feed, Item, RecentArticles, RecentChangelog, RecentComments, TagCloud};
 use yii\base\DynamicModel;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\caching\DbDependency;
@@ -15,7 +16,8 @@ $dependency = [
 	'reusable' => true,
 	'sql' => 'SELECT GREATEST(
 		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1),
-		IFNULL((SELECT MAX(created) FROM '.Comments::tableName().' WHERE `active` = '.Comments::STATUS_ACTIVE.'), 1)
+		IFNULL((SELECT MAX(created) FROM '.Comments::tableName().' WHERE `active` = '.Comments::STATUS_ACTIVE.'), 1),
+		IFNULL((SELECT MAX(time) FROM '.Changelog::tableName().'), 1)
 	)',
 ];
 
@@ -33,7 +35,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0])) {
 			echo Item::widget([
 				'body' => RecentArticles::widget(),
-				'header' => Html::tag('h4', 'Latest Articles'),
+				'header' => Html::tag('h4', 'Latest Updates'),
 				'options' => ['id' => 'latestArticles'],
 			]);
 
@@ -41,6 +43,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'body' => RecentComments::widget(),
 				'header' => Html::tag('h4', 'Latest Comments'),
 				'options' => ['id' => 'latestComments'],
+			]);
+
+			echo Item::widget([
+				'body' => RecentChangelog::widget(),
+				'header' => Html::tag('h4', 'Changelog'),
+				'options' => ['id' => 'changelog'],
 			]);
 
 			echo Item::widget([

@@ -49,6 +49,7 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 
 	public function getAlphabetList(string $column = '*'): array {
 		$list =	self::find()
+			->select('lng, name')
 			->orderBy('sort, name')
 			->all();
 
