@@ -3,7 +3,7 @@ $secrets = require(__DIR__ . '/secrets.php');
 
 $config = [
 	'id' => 'mister42',
-#	'catchAll' => ['site/offline'],
+#	'catchAll' => in_array($_SERVER['REMOTE_ADDR'], $secrets['params']['specialIPs']) ? null : ['site/offline'],
 	'components' => [
 		'authClientCollection' => [
 			'class'   => \yii\authclient\Collection::class,

@@ -46,15 +46,15 @@ echo Html::beginTag('div', ['class' => 'row']);
 			]);
 
 			echo Item::widget([
-				'body' => RecentChangelog::widget(),
-				'header' => Html::tag('h4', 'Changelog'),
-				'options' => ['id' => 'changelog'],
-			]);
-
-			echo Item::widget([
 				'body' => TagCloud::widget(),
 				'header' => Html::tag('h4', 'Tags'),
 				'options' => ['id' => 'tags'],
+			]);
+
+			echo Item::widget([
+				'body' => RecentChangelog::widget(),
+				'header' => Html::tag('h4', 'Changelog'),
+				'options' => ['id' => 'changelog'],
 			]);
 
 			$this->endCache();
