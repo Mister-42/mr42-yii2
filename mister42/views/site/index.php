@@ -6,8 +6,7 @@ use yii\helpers\ArrayHelper;
 $this->title = Yii::$app->name;
 
 echo Html::tag('h2', 'Welcome to '.Yii::$app->name);
-echo Html::tag('p', 'This website is merely a hobby project. Some parts are created to make work or life a little bit easier, other parts are created for entertainment purposes only.');
-echo Html::tag('p', 'Below is an overview of the items in the menu for a quick overview.');
+echo Html::tag('div', 'This website is merely a hobby project. Some parts are created to make work or life a little bit easier, other parts are created for entertainment purposes only.', ['class' => 'alert alert-info']);
 
 echo '<ul>';
 foreach(Menu::getItemList() as $menu) :
