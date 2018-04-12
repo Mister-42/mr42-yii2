@@ -61,7 +61,7 @@ class SiteController extends \yii\web\Controller {
 	}
 
 	public function actionIndex() {
-		$this->layout = '@app/views/layouts/column2.php';
+		$this->layout = 'columns';
 		return $this->render('index');
 	}
 

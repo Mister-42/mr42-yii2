@@ -9,7 +9,7 @@ use yii\helpers\Url;
 use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
 
 class ArticlesController extends \yii\web\Controller {
-	public $layout = '@app/views/layouts/column2.php';
+	public $layout = 'columns';
 
 	public function behaviors() {
 		return [

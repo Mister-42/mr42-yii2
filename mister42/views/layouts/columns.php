@@ -6,11 +6,10 @@ use yii\base\DynamicModel;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\caching\DbDependency;
 
-$this->beginContent('@app/views/layouts/main.php');
-
-$search = new DynamicModel(['search_term']);
-$search->addRule('search_term', 'required');
-$search->addRule('search_term', 'string', ['max' => 25]);
+$isHome = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
+$search = new DynamicModel(['search']);
+$search->addRule('search', 'required');
+$search->addRule('search', 'string', ['max' => 25]);
 $dependency = [
 	'class' => DbDependency::class,
 	'reusable' => true,
@@ -21,11 +20,26 @@ $dependency = [
 	)',
 ];
 
+$this->beginContent('@app/views/layouts/main.php');
 echo Html::beginTag('div', ['class' => 'row']);
-	echo Html::tag('div', $content, ['class' => 'col-xs-12 col-sm-9']);
+	if ($isHome) {
+		echo Html::beginTag('aside', ['class' => 'hidden-xs col-sm-3']);
+			echo Item::widget([
+				'body' => RecentChangelog::widget(),
+				'header' => Html::tag('h4', Yii::$app->name . ' Changelog'),
+				'options' => ['id' => 'changelog'],
+			]);
+
+			echo Item::widget([
+				'body' => Feed::widget(['name' => 'ScienceDaily']),
+				'header' => Html::tag('h4', 'Science News'),
+			]);
+		echo Html::endTag('aside');
+	}
+	echo Html::tag('div', $content, ['class' => $isHome ? 'col-xs-12 col-sm-6' : 'col-xs-12 col-sm-9']);
 	echo Html::beginTag('aside', ['class' => 'hidden-xs col-sm-3']);
 		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'method' => 'get', 'options' => ['role' => 'search']]);
-		echo $form->field($search, 'search_term', [
+		echo $form->field($search, 'search', [
 				'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('span', Html::submitButton(Html::icon('search'), ['class' => 'btn btn-primary']), ['class' => 'input-group-btn']) . "</div>",
 			])
 			->label(false)
@@ -51,19 +65,21 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'options' => ['id' => 'tags'],
 			]);
 
+			$this->endCache();
+		}
+
+		if (!$isHome) {
 			echo Item::widget([
 				'body' => RecentChangelog::widget(),
 				'header' => Html::tag('h4', 'Changelog'),
 				'options' => ['id' => 'changelog'],
 			]);
 
-			$this->endCache();
+			echo Item::widget([
+				'body' => Feed::widget(['name' => 'ScienceDaily']),
+				'header' => Html::tag('h4', 'Science News'),
+			]);
 		}
-
-		echo Item::widget([
-			'body' => Feed::widget(['name' => 'ScienceDaily']),
-			'header' => Html::tag('h4', 'Science News'),
-		]);
 	echo Html::endTag('aside');
 echo Html::endTag('div');
 $this->endContent();
