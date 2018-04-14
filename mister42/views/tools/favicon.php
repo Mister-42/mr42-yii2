@@ -36,7 +36,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo $form->field($model, 'email', [
 				'template' => '{label} (optional)<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => 1])
-			->hint('If you enter your email address here the favicon will be mailed to that address.');
+			->hint('If you enter your email address the favicon will be mailed to that address.');
 
 		echo Html::beginTag('div', ['class' => 'input-group']);
 			echo Html::tag('span', Html::icon('picture'), ['class' => 'input-group-addon']);

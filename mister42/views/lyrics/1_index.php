@@ -13,7 +13,7 @@ echo '</div>';
 echo '<div class="site-lyrics">';
     echo '<div class="row">';
 		$x = $y = 0;
-		foreach ($artists as $artist) :
+		foreach ($data as $artist) :
 			$y++;
 			if ($x++ === 0)
 				echo '<div class="col-sm-3 artists text-center text-nowrap">';
@@ -22,7 +22,7 @@ echo '<div class="site-lyrics">';
 				echo ' ' . Html::tag('span', 'Draft', ['class' => 'badge']);
 			echo '<br>';
 
-			if ($x === (int) ceil(count($artists) / 4) || $y === count($artists)) {
+			if ($x === (int) ceil(count($data) / 4) || $y === count($data)) {
 				echo '</div>';
 				$x = 0;
 			}

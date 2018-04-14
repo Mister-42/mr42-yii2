@@ -41,7 +41,7 @@ class Qr extends \yii\base\Model {
 				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label} (optional)<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => 97])
-			->hint('If you enter your email address here the ' . Html::tag('span', 'QR Code', ['class' => 'text-nowrap']) . ' will be mailed to that address.')
+			->hint('If you enter your email address the ' . Html::tag('span', 'QR Code', ['class' => 'text-nowrap']) . ' will be mailed to that address.')
 		, ['class' => 'row']);
 
 		$footer[] = Html::tag('div',

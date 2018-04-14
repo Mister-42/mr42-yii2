@@ -22,7 +22,6 @@ $this->beginBlock('widgets');
 	echo Item::widget([
 		'body' => RecentChangelog::widget(),
 		'header' => Html::tag('h4', Yii::$app->name . ' Changelog'),
-		'options' => ['id' => 'changelog'],
 	]);
 
 	echo Item::widget([
@@ -33,9 +32,9 @@ $this->endBlock();
 
 $this->beginContent('@app/views/layouts/main.php');
 echo Html::beginTag('div', ['class' => 'row']);
+	echo Html::tag('div', $content, ['class' => $isHome ? 'col-xs-12 col-sm-9 col-md-6' : 'col-xs-12 col-sm-9']);
 	if ($isHome)
-		echo Html::tag('aside', $this->blocks['widgets'], ['class' => 'hidden-xs col-sm-3']);
-	echo Html::tag('div', $content, ['class' => $isHome ? 'col-xs-12 col-sm-6' : 'col-xs-12 col-sm-9']);
+		echo Html::tag('aside', $this->blocks['widgets'], ['class' => 'hidden-xs hidden-sm col-md-3']);
 	echo Html::beginTag('aside', ['class' => 'hidden-xs col-sm-3']);
 		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'method' => 'get', 'options' => ['role' => 'search']]);
 		echo $form->field($search, 'search', [

@@ -2,26 +2,26 @@
 use app\widgets\Lightbox;
 use yii\bootstrap\Html;
 
-$this->title = implode(' - ', [$albums[0]->artist->name, 'Lyrics']);
+$this->title = implode(' - ', [$data[0]->artist->name, 'Lyrics']);
 $this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $albums[0]->artist->name;
+$this->params['breadcrumbs'][] = $data[0]->artist->name;
 
 echo '<div class="site-lyrics-albums">';
 	echo Html::tag('div',
 		Html::tag('div',
-			Html::tag('h1', Html::encode($albums[0]->artist->name), ['class' => 'pull-left']) .
+			Html::tag('h1', Html::encode($data[0]->artist->name), ['class' => 'pull-left']) .
 			Html::tag('div',
-				($albums[0]->artist->buy
-					? Html::a(Html::icon('headphones'), $albums[0]->artist->buy, ['class' => 'btn btn-xs btn-warning action', 'title' => 'Buy music of ' . Html::encode($albums[0]->artist->name)])
+				($data[0]->artist->buy
+					? Html::a(Html::icon('headphones'), $data[0]->artist->buy, ['class' => 'btn btn-xs btn-warning action', 'title' => 'Buy music of ' . Html::encode($data[0]->artist->name)])
 					: 	'') .
-				($albums[0]->artist->website
-					? Html::a(Html::icon('globe'), $albums[0]->artist->website, ['class' => 'btn btn-xs btn-warning action', 'title' => 'Website of ' . Html::encode($albums[0]->artist->name)])
+				($data[0]->artist->website
+					? Html::a(Html::icon('globe'), $data[0]->artist->website, ['class' => 'btn btn-xs btn-warning action', 'title' => 'Website of ' . Html::encode($data[0]->artist->name)])
 					: 	'')
 			, ['class' => 'btn-toolbar pull-right'])
 		, ['class' => 'clearfix col-lg-12'])
 	, ['class' => 'row']);
 
-	foreach ($albums as $album) :
+	foreach ($data as $album) :
 		echo Html::tag('div',
 			Html::tag('div',
 				Html::tag('div', Html::tag('h3', "{$album->year} · " . ((Yii::$app->user->identity->isAdmin || $album->active) && $album->tracks

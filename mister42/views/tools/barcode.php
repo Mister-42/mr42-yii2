@@ -49,7 +49,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo $form->field($model, 'recipient', [
 				'template' => '{label} (optional)<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => 5])
-			->hint('If you enter your email address here the Barcode will be mailed to that address.');
+			->hint('If you enter your email address the barcode will be mailed to that address.');
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) .
