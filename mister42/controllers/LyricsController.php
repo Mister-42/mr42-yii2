@@ -22,11 +22,11 @@ class LyricsController extends \yii\web\Controller {
 		$this->album = Yii::$app->request->get('album');
 		$this->size = Yii::$app->request->get('size');
 
-		if (!isset($this->artist) && !isset($this->year) && !isset($this->album))
+		if (!$this->artist && !$this->year && !$this->album)
 			$this->page = Self::PAGE_INDEX;
-		elseif (isset($this->artist) && !isset($this->year) && !isset($this->album))
+		elseif ($this->artist && !$this->year && !$this->album)
 			$this->page = Self::PAGE_ARTIST;
-		elseif (isset($this->artist) && isset($this->year) && isset($this->album))
+		elseif ($this->artist && $this->year && $this->album)
 			$this->page = Self::PAGE_ALBUM;
 
 		parent::init();
@@ -40,20 +40,17 @@ class LyricsController extends \yii\web\Controller {
 					switch ($this->page) {
 						case Self::PAGE_INDEX:
 							return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, Lyrics1Artists::lastUpdate(null)]);
-							break;
 						case Self::PAGE_ARTIST:
 							return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, Lyrics2Albums::lastUpdate($this->artist)]);
-							break;
 						case Self::PAGE_ALBUM:
 							return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, Lyrics3Tracks::lastUpdate($this->artist, $this->year, $this->album)]);
-							break;
 					}
 				},
 				'lastModified' => function () {
 					switch ($this->page) {
-						case Self::PAGE_INDEX:	return Lyrics1Artists::lastUpdate(null); break;
-						case Self::PAGE_ARTIST:	return Lyrics2Albums::lastUpdate($this->artist); break;
-						case Self::PAGE_ALBUM:	return Lyrics3Tracks::lastUpdate($this->artist, $this->year, $this->album); break;
+						case Self::PAGE_INDEX:	return Lyrics1Artists::lastUpdate(null);
+						case Self::PAGE_ARTIST:	return Lyrics2Albums::lastUpdate($this->artist);
+						case Self::PAGE_ALBUM:	return Lyrics3Tracks::lastUpdate($this->artist, $this->year, $this->album);
 					}
 				},
 				'only' => ['index', 'albumpdf', 'albumcover'],
@@ -80,9 +77,6 @@ class LyricsController extends \yii\web\Controller {
 		if (!ArrayHelper::keyExists(0, $tracks) || !$tracks[0]->album->active)
 			throw new NotFoundHttpException('Album not found.');
 
-		if ($tracks[0]->artist->url != $this->artist || $tracks[0]->album->url != $this->album)
-			$this->redirect(['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
-
 		$fileName = Lyrics2Albums::buildPdf($tracks[0]->album, $this->renderPartial('albumPdf', ['tracks' => $tracks]));
 		Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]).'.pdf');
 	}
@@ -93,33 +87,27 @@ class LyricsController extends \yii\web\Controller {
 		if (!ArrayHelper::keyExists(0, $tracks) || !ArrayHelper::isIn($this->size, [100, 500, 800, 'cover']))
 			throw new NotFoundHttpException('Cover not found.');
 
-		if ($tracks[0]->artist->url != $this->artist || $tracks[0]->album->url != $this->album)
-			$this->redirect(['albumcover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
-
 		list($fileName, $image) = Lyrics2Albums::getCover($this->size, $tracks);
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
 	}
 
-	private function pageArtist ($artist) {
+	private function pageArtist (string $artist): array {
 		$albums = Lyrics2Albums::albumsList($artist);
 
 		if (count($albums) === 0)
 			throw new NotFoundHttpException('Artist not found.');
 
-		if ($albums[0]->artist->url != $artist)
+		if ($albums[0]->artist->url !== $artist)
 			$this->redirect(['index', 'artist' => $albums[0]->artist->url], 301)->send();
 
 		return ['2_artist', $albums];
 	}
 
-	private function pageAlbum ($artist, $year, $album) {
+	private function pageAlbum (string $artist, string $year, string $album): array {
 		$tracks = Lyrics3Tracks::tracksList($artist, $year, $album);
 
 		if (!ArrayHelper::keyExists(0, $tracks) || (!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active))
 			throw new NotFoundHttpException('Album not found.');
-
-		if ($tracks[0]->artist->url != $this->artist || $tracks[0]->album->url != $this->album)
-			$this->redirect(['index', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
 
 		Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
 		if ($tracks[0]->album->image)
