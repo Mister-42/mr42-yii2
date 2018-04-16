@@ -8,6 +8,11 @@ use yii\helpers\ArrayHelper;
 class RecentTracks extends \yii\db\ActiveRecord {
 	public $limit = 20;
 
+	public function init() {
+		$this->limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : $this->limit;
+		parent::init();
+	}
+
 	public static function tableName() {
 		 return '{{%lastfm_recenttracks}}';
 	}
@@ -19,11 +24,10 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		}
 		self::updateAll(['seen' => time()], 'userid = '.$userid);
 
-		$limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : $this->limit;
 		$tracks = self::find()
 			->where(['userid' => $userid])
 			->orderBy('count DESC')
-			->limit($limit)
+			->limit($this->limit)
 			->all();
 
 		foreach ($tracks as $track) :
@@ -53,14 +57,12 @@ class RecentTracks extends \yii\db\ActiveRecord {
 	}
 
 	public function updateUser($lastSeen, $profile) {
-		$limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : $this->limit;
 		if (isset($profile->lastfm)) {
-			$response = Webrequest::getLastfmApi('user.getrecenttracks', $profile->lastfm, $limit);
+			$response = Webrequest::getLastfmApi('user.getrecenttracks', $profile->lastfm, $this->limit);
 			if (!$response->isOK)
 				return false;
 
 			$playcount = (int) $response->data['recenttracks']['@attributes']['total'];
-			$count = 1;
 			foreach($response->data['recenttracks']['track'] as $track) {
 				$time = (bool) ArrayHelper::getValue($track, '@attributes.nowplaying', false) ? 0 : (int) strtotime($track['date']);
 				$addTrack = self::findOne(['userid' => $profile->user_id, 'time' => $time]) ?? new RecentTracks();
@@ -72,11 +74,11 @@ class RecentTracks extends \yii\db\ActiveRecord {
 				$addTrack->seen = $lastSeen;
 				$addTrack->save();
 
-				if ($count++ === $limit)
+				if (++$count === $this->limit)
 					break;
 			}
 
-			$delete = self::find()->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit(999)->offset($limit)->all();
+			$delete = self::find()->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit(999)->offset($this->limit)->all();
 			foreach ($delete as $item)
 				$item->delete();
 		}

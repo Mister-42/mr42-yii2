@@ -15,17 +15,17 @@ class Sitemap {
 	}
 
 	private function getChangefreq(float $priority): string {
-		if ($priority >= 0.9)		return 'daily';
-		elseif ($priority >= 0.8)	return 'weekly';
-		elseif ($priority >= 0.7)	return 'monthly';
-		elseif ($priority >= 0.6)	return 'yearly';
-		return 'never';
+		if ($priority >= 0.9)		$freq = 'daily';
+		elseif ($priority >= 0.8)	$freq = 'weekly';
+		elseif ($priority >= 0.7)	$freq = 'monthly';
+		elseif ($priority >= 0.6)	$freq = 'yearly';
+		return $freq ?? 'never';
 	}
 
 	private function getPriority(int $age): float {
-		if ($age > strtotime("-1 week"))		return 0.9;
-		elseif ($age > strtotime("-1 month"))	return 0.8;
-		elseif ($age > strtotime("-1 year"))	return 0.7;
-		return 0.5;
+		if ($age > strtotime("-1 week"))		$prio = 0.9;
+		elseif ($age > strtotime("-1 month"))	$prio = 0.8;
+		elseif ($age > strtotime("-1 year"))	$prio = 0.7;
+		return $prio ?? 0.5;
 	}
 }

@@ -12,6 +12,8 @@ class Country extends \yii\db\ActiveRecord {
 
 	public function afterFind() {
 		parent::afterFind();
+		$this->{'Geoname ID'} = Html::a($this->{'Geoname ID'}, 'http://geonames.org/' . $this->{'Geoname ID'});
+		$this->is_independent = $this->is_independent === 'Yes' ? 'Independent' : $this->is_independent;
 		$this->source = Html::a('Frictionless Data', 'http://data.okfn.org/data/core/country-codes');
 	}
 }

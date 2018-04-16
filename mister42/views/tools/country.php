@@ -94,16 +94,12 @@ echo Html::beginTag('div', ['class' => 'site-country']);
 			'is_independent'							=> 'Country status, based on the CIA World Factbook',
 			'source'									=> 'Source',
 		] as $item => $name) :
-			if ($data[$item] === '')
-				continue;
-			elseif ($item === 'is_independent' && $data[$item] === 'Yes')
-				continue;
-			elseif ($item === 'Geoname ID')
-				$data[$item] = Html::a($data[$item], 'http://geonames.org/' . $data[$item]);
+			if (empty($data->$item))
+				$data->$item = Html::tag('span', 'unknown', ['class' => 'text-muted']);
 
 			echo Html::tag('div',
 				Html::tag('div', $name, ['class' => 'col-md-8']) .
-				Html::tag('div', $data[$item], ['class' => 'col-md-4'])
+				Html::tag('div', $data->$item, ['class' => 'col-md-4'])
 			, ['class' => 'row']);
 		endforeach;
 	}
