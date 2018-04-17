@@ -1,15 +1,16 @@
 <?php
 namespace app\models\tools;
 use Yii;
+use app\models\Mailer;
 
 class Favicon extends \yii\base\Model {
-	public $email;
+	public $recipient;
 	public $sourceImage;
 	public $dimensions = [16, 32, 48, 64];
 
 	public function rules(): array {
 		return [
-			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
+			[['recipient'], 'email', 'checkDNS' => true, 'enableIDN' => true],
 			[['sourceImage'], 'file',
 				'minSize' => 64,
 				'maxSize' => 1024 * 1024 * 2.5,
@@ -20,7 +21,7 @@ class Favicon extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'email' => 'Email Address',
+			'recipient' => 'Email Address',
 			'sourceImage' => 'Source Image',
 			'generate' => 'Convert Image',
 		];
@@ -51,14 +52,8 @@ class Favicon extends \yii\base\Model {
 				unlink($file);
 			unlink($srcImg);
 
-			if ($this->email)
-				Yii::$app->mailer
-					->compose(['html' => 'faviconRequester'])
-					->setTo($this->email)
-					->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
-					->setSubject('Your favicon file from '.Yii::$app->name)
-					->attach(Yii::getAlias("@assetsroot/temp/{$rndFilename}.ico"), ['fileName' => 'favicon.ico'])
-					->send();
+			if ($this->recipient)
+				Mailer::sendFileHtml($this->recipient, 'Your favicon from '.Yii::$app->name, 'faviconRequester', ['file' => "@assetsroot/temp/{$rndFilename}.ico", 'name' => 'favicon.ico']);
 			Yii::$app->getSession()->setFlash('favicon-success', $rndFilename.'.ico');
 			return true;
 		}

@@ -1,6 +1,7 @@
 <?php
 namespace app\models\tools;
 use Yii;
+use app\models\Mailer;
 use Mpdf\QrCode\QrCode;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\helpers\{FileHelper, StringHelper};
@@ -66,13 +67,7 @@ class Qr extends \yii\base\Model {
 		$qrcode->displayPNG($this->size, [255,255,255], [0,0,0], $cacheFile, 6);
 
 		if ($this->recipient)
-			Yii::$app->mailer
-				->compose(['html' => 'qrRequester'])
-				->setTo($this->recipient)
-				->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
-				->setSubject('Your QR Code from '.Yii::$app->name)
-				->attach($cacheFile, ['fileName' => 'QRcode.png'])
-				->send();
+			Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
 		Yii::$app->getSession()->setFlash('qr-success', $rndFilename.'.png');
 		return true;
 	}

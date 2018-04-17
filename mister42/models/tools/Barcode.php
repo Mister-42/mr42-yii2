@@ -1,6 +1,7 @@
 <?php
 namespace app\models\tools;
 use Yii;
+use app\models\Mailer;
 use Mpdf\Barcode as BarcodeData;
 use yii\bootstrap\{ActiveForm, Html};
 
@@ -56,13 +57,7 @@ class Barcode extends \yii\base\Model {
 		imagedestroy($image);
 
 		if ($this->recipient)
-			Yii::$app->mailer
-				->compose(['html' => 'barcodeRequester'])
-				->setTo($this->recipient)
-				->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
-				->setSubject('Your Barcode from '.Yii::$app->name)
-				->attach($cacheFile, ['fileName' => 'Barcode.png'])
-				->send();
+			Mailer::sendFileHtml($this->recipient, 'Your barcode from '.Yii::$app->name, 'barcodeRequester', ['file' => $cacheFile, 'name' => 'Barcode.png']);
 		Yii::$app->getSession()->setFlash('barcode-success', $cacheFile);
 		return true;
 	}

@@ -33,7 +33,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		$form = ActiveForm::begin();
 
-		echo $form->field($model, 'email', [
+		echo $form->field($model, 'recipient', [
 				'template' => '{label} (optional)<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => 1])
 			->hint('If you enter your email address the favicon will be mailed to that address.');
