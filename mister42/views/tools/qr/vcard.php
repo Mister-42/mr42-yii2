@@ -1,5 +1,4 @@
 <?php
-use janisto\timepicker\TimePicker;
 use yii\bootstrap\{ActiveForm, Html};
 
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
@@ -60,19 +59,7 @@ echo $form->field($model, 'website', [
 		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
 	])->input('url', ['tabindex' => 13]);
 
-echo $form->field($model, 'birthday')->widget(TimePicker::class, [
-		'clientOptions' => [
-			'changeMonth' => true,
-			'changeYear' => true,
-			'dateFormat' => 'yy-mm-dd',
-			'firstDay' => 1,
-			'maxDate' => '-0Y',
-			'minDate' => '-110Y',
-			'yearRange' => '-110Y:-0Y',
-		],
-		'mode' => 'date',
-		'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => 14],
-	]);
+echo $model::getBirthdayCalendar($form, $model, 14);
 
 echo $form->field($model, 'note', [
 		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div>{error}',

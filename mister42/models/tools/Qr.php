@@ -2,6 +2,7 @@
 namespace app\models\tools;
 use Yii;
 use app\models\Mailer;
+use janisto\timepicker\TimePicker;
 use Mpdf\QrCode\QrCode;
 use yii\bootstrap\{ActiveForm, Html};
 use yii\helpers\{FileHelper, StringHelper};
@@ -30,6 +31,22 @@ class Qr extends \yii\base\Model {
 
 	public function formName(): string {
 		return 'qr';
+	}
+
+	public function getBirthdayCalendar(ActiveForm $form, Qr $model, int $tab): string {
+		return $form->field($model, 'birthday')->widget(TimePicker::class, [
+				'clientOptions' => [
+					'changeMonth' => true,
+					'changeYear' => true,
+					'dateFormat' => 'yy-mm-dd',
+					'firstDay' => 1,
+					'maxDate' => '-0Y',
+					'minDate' => '-110Y',
+					'yearRange' => '-110Y:-0Y',
+				],
+				'mode' => 'date',
+				'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab],
+			]);
 	}
 
 	public function getFormFooter(ActiveForm $form): string {
