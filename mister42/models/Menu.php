@@ -23,7 +23,7 @@ class Menu {
 					['label' => 'Wifi Protected Access Pre-Shared Key', 'url' => ['/calculator/wpapsk']],
 				],
 			],
-			['label' => Html::icon('wrench').' Tools', 'url' => null,
+			['label' => Html::icon('wrench').'Tools', 'url' => null,
 				'items' => [
 					['label' => 'Barcode Generator', 'url' => ['/tools/barcode']],
 					['label' => 'Browser Headers', 'url' => ['/tools/headers']],
@@ -64,24 +64,18 @@ class Menu {
 		return $menuItems;
 	}
 
-	public function getUrlList(): array {
-		foreach (self::getItemList() as $item) :
-			if (ArrayHelper::keyExists('visible', $item))
+	public function getUrlList($items = null): array {
+		foreach ($items ?? self::getItemList() as $item) :
+			if (!is_array($item) || ArrayHelper::keyExists('visible', $item))
 				continue;
 
 			if (isset($item['url']))
 				$pages[] = ArrayHelper::getValue($item, 'url.0');
 
-			if (isset($item['items'])) {
-				foreach ($item['items'] as $subitem) :
-					if (!is_array($subitem) || ArrayHelper::keyExists('visible', $subitem))
-						continue;
-
-					if (isset($subitem['url']))
-						$pages[] = ArrayHelper::getValue($subitem, 'url.0');
-				endforeach;
-			}
+			if (isset($item['items']))
+				$pages[] = self::getUrlList($item['items']);
 		endforeach;
-		return $pages;
+		array_walk_recursive($pages, function($val) use (&$return) { $return[] = $val; });
+		return $return;
 	}
 }
