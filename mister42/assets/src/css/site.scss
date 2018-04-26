@@ -193,7 +193,7 @@ form {
 #btn-scrolltop {
 	background: #a0a0a0;
 	border-radius: 50%;
-	bottom: 40px;
+	bottom: 25px;
 	display: none;
 	height: 30px;
 	right: calc(50% - 15px);
@@ -233,6 +233,7 @@ footer {
 
 @include media-breakpoint-up(md) {
 	#btn-scrolltop {
+		bottom: 40px;
 		right: 10px;
 	}
 }

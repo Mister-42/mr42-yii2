@@ -51,11 +51,11 @@ class Qr extends \yii\base\Model {
 	public function getFormFooter(ActiveForm $form, int $tab): string {
 		$footer[] = Html::tag('div',
 			$form->field($this, 'size', [
-				'options' => ['class' => 'col-md-6'],
+				'options' => ['class' => 'form-group col-md-6'],
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt').'{input}</div>{error}',
 			])->input('number', ['tabindex' => ++$tab]) .
 			$form->field($this, 'recipient', [
-				'options' => ['class' => 'col-md-6'],
+				'options' => ['class' => 'form-group col-md-6'],
 				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => ++$tab])
 			->hint('If you enter your email address the ' . Html::tag('span', 'QR Code', ['class' => 'text-nowrap']) . ' will be mailed to that address.')

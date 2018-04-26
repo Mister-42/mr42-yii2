@@ -23,7 +23,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'from', [
-				'options' => ['class' => 'col-md-6'],
+				'options' => ['class' => 'form-group col-md-6'],
 			])->widget(TimePicker::class, [
 				'clientOptions' => [
 					'changeMonth' => true,
@@ -37,7 +37,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			]);
 
 			echo $form->field($model, 'days', [
-				'options' => ['class' => 'col-md-6'],
+				'options' => ['class' => 'form-group col-md-6'],
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('calendar-plus').'{input}</div>{hint}{error}',
 			])	->hint('Use the minus sign (-) to subtract days.')
 				->input('number', ['tabindex' => ++$tab]);

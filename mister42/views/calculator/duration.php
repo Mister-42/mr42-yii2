@@ -24,7 +24,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			foreach (['fromDate', 'toDate'] as $field) {
 				echo $form->field($model, $field, [
-					'options' => ['class' => 'col-md-6'],
+					'options' => ['class' => 'form-group col-md-6'],
 				])->widget(TimePicker::class, [
 					'clientOptions' => [
 						'changeMonth' => true,

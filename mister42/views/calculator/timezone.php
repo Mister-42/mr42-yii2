@@ -28,7 +28,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			foreach (['source', 'target'] as $field) :
 				echo $form->field($model, $field, [
-					'options' => ['class' => 'col-sm-6'],
+					'options' => ['class' => 'form-group col-sm-6'],
 					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('globe').'{input}</div>{error}',
 				])->dropDownList($model->getTimezones(true), ['tabindex' => ++$tab]);
 			endforeach;
@@ -36,7 +36,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'datetime', [
-				'options' => ['class' => 'col-sm-6'],
+				'options' => ['class' => 'form-group col-sm-6'],
 			])->widget(TimePicker::class, [
 				'addon' => 'clock',
 				'clientOptions' => [

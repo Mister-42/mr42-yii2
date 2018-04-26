@@ -1,7 +1,8 @@
 <?php
+$sass = 'sass --scss --sourcemap=none -C -t compressed -I '.Yii::getAlias('@bower/bootstrap/scss') . ' {from} {to}';
+
 return [
-	'cssCompressor' => 'sass {from} {to} --scss --sourcemap=none -C -t compressed -I '.Yii::getAlias('@bower/bootstrap/assets/stylesheets'),
-	'deleteSource' => true,
+	'cssCompressor' => $sass,
 	'bundles' => [
 		'app\assets\AppAssetCompress'
 	],
@@ -19,7 +20,7 @@ return [
 		'converter' => [
 			'class' => 'yii\web\AssetConverter',
 			'commands' => [
-				'scss' => ['css', 'sass {from} {to} -C --sourcemap=none -t compressed -I '.Yii::getAlias('@bower/bootstrap/scss')],
+				'scss' => ['css', $sass],
 			],
 		],
 	],

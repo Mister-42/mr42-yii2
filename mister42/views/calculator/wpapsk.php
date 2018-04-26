@@ -47,7 +47,6 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('div',
 			Html::tag('label', 'Current Progress') .
 			Progress::widget([
-#				'barOptions' => ['class' => 'progress-bar-info'],
 				'options' => ['class' => 'progress-bar progress-bar-striped progress-bar-animated']
 			])
 		, ['class' => 'd-none form-group current-progress']);
