@@ -2,7 +2,7 @@
 namespace app\widgets;
 use Yii;
 use app\models\articles\Articles;
-use yii\bootstrap\{Html, Widget};
+use yii\bootstrap4\{Html, Widget};
 
 class RecentArticles extends Widget {
 	public function run(): string {
@@ -11,14 +11,14 @@ class RecentArticles extends Widget {
 			->orderBy('updated DESC')
 			->limit($limit)
 			->all();
-		return empty($articles) ? Html::tag('p', 'No articles to display.') : Html::tag('ul', self::renderArticles($articles), ['class' => 'list-unstyled']);
+		return empty($articles) ? Html::tag('p', 'No articles to display.') : self::renderArticles($articles);
 	}
 
 	private function renderArticles(array $articles): string {
 		foreach ($articles as $article) :
-			$link = Html::a(Html::encode($article->title), ['articles/index', 'id' => $article->id, 'title' => $article->url]);
-			$items[] = Html::tag('li', $link);
+			$link = Html::a($article->title, ['articles/index', 'id' => $article->id, 'title' => $article->url], ['class' => 'card-link']);
+			$items[] = Html::tag('li', $link, ['class' => 'list-group-item']);
 		endforeach;
-		return implode($items);
+		return Html::tag('ul', implode($items), ['class' => 'list-group list-group-flush']);
 	}
 }

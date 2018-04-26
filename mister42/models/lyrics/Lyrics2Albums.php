@@ -3,7 +3,7 @@ namespace app\models\lyrics;
 use Yii;
 use app\models\{Pdf, Video};
 use yii\behaviors\TimestampBehavior;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\db\Expression;
 use yii\helpers\{ArrayHelper, Url};
 

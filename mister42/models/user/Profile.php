@@ -2,7 +2,7 @@
 namespace app\models\user;
 use DateTime;
 use Yii;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\db\ActiveRecord;
 
 class Profile extends \Da\User\Model\Profile {
@@ -35,6 +35,6 @@ class Profile extends \Da\User\Model\Profile {
 	public function show($user) {
 		$replace = ['%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y];
 		$user->bio = Yii::$app->formatter->cleanInput(strtr($user->bio, $replace), 'gfm-comment');
-		return empty($user->bio) ? false : Html::tag('div', $user->bio, ['class' => 'profile']);
+		return empty($user->bio) ? false : $user->bio;
 	}
 }

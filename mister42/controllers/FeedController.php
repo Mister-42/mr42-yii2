@@ -11,6 +11,7 @@ class FeedController extends \yii\web\Controller {
 		return [
 			[
 				'class' => HttpCache::class,
+				'enabled' => !YII_DEBUG,
 				'except' => ['index'],
 				'lastModified' => function () {
 					$lastUpdate = Articles::find()->select(['updated' => 'max(updated)'])->one();

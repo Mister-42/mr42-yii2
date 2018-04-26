@@ -1,5 +1,5 @@
 $('.clipboard-js-init').on('mouseleave', function() {
-	$(this).removeClass('btn-success').addClass('btn-primary').tooltip('hide').attr('data-original-title', 'Copy to Clipboard').tooltip('fixTitle');
+	$(this).removeClass('btn-success').addClass('btn-primary').tooltip('hide').attr('data-original-title', 'Copy to Clipboard');
 });
 
 cb = new Clipboard('.clipboard-js-init');
@@ -21,5 +21,5 @@ cb.on('error', function(e) {
 });
 
 function btnSucces(txt) {
-	$('.clipboard-js-init').removeClass('btn-primary').addClass('btn-success').attr('data-original-title', txt).tooltip('fixTitle').tooltip('show');
+	$('.clipboard-js-init').removeClass('btn-primary').addClass('btn-success').attr('data-original-title', txt).tooltip('show');
 }

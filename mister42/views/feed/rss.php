@@ -1,6 +1,5 @@
 <?php
-use Yii;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\helpers\{StringHelper, Url};
 
 $doc = new XMLWriter();
@@ -57,7 +56,7 @@ foreach($articles as $article) :
 	endforeach;
 		$doc->startElement('guid');
 		$doc->writeAttribute('isPermaLink', 'true');
-		$doc->text("https://mr42.me/art{$article->id}");
+		$doc->text(Yii::$app->params['shortDomain']/"art{$article->id}");
 		$doc->endElement();
 	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
 	if ($article->source) {

@@ -1,8 +1,9 @@
 <?php
+use app\models\Icon;
 use app\models\articles\{Articles, Comments};
 use app\widgets\{Feed, Item, RecentArticles, RecentChangelog, RecentComments, TagCloud};
 use yii\base\DynamicModel;
-use yii\bootstrap\{ActiveForm, Html};
+use yii\bootstrap4\{ActiveForm, Html};
 use yii\caching\DbDependency;
 
 $isHome = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
@@ -21,24 +22,25 @@ $dependency = [
 $this->beginBlock('widgets');
 	echo Item::widget([
 		'body' => RecentChangelog::widget(),
-		'header' => Html::tag('h4', Yii::$app->name . ' Changelog'),
+		'header' => 'Changelog',
 	]);
 
 	echo Item::widget([
 		'body' => Feed::widget(['name' => 'ScienceDaily']),
-		'header' => Html::tag('h4', 'Science News'),
+		'header' => 'Science News',
 	]);
 $this->endBlock();
 
 $this->beginContent('@app/views/layouts/main.php');
 echo Html::beginTag('div', ['class' => 'row']);
-	echo Html::tag('div', $content, ['class' => $isHome ? 'col-xs-12 col-sm-9 col-md-6' : 'col-xs-12 col-sm-9']);
+	echo Html::tag('div', $content, ['class' => $isHome ? 'col-12 col-md-8 col-lg-6' : 'col-12 col-md-9']);
 	if ($isHome)
-		echo Html::tag('aside', $this->blocks['widgets'], ['class' => 'hidden-xs hidden-sm col-md-3']);
-	echo Html::beginTag('aside', ['class' => 'hidden-xs col-sm-3']);
+		echo Html::tag('aside', $this->blocks['widgets'], ['class' => 'col-3 d-none d-lg-block']);
+	echo Html::beginTag('aside', ['class' => 'col-4 col-lg-3 d-none d-md-block']);
 		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'method' => 'get', 'options' => ['role' => 'search']]);
 		echo $form->field($search, 'search', [
-				'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('span', Html::submitButton(Html::icon('search'), ['class' => 'btn btn-primary']), ['class' => 'input-group-btn']) . "</div>",
+				'options' => ['class' => 'form-group mb-2'],
+				'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('div', Html::submitButton(Icon::show('search'), ['class' => 'btn btn-outline-primary']), ['class' => 'input-group-append']) . "</div>",
 			])
 			->label(false)
 			->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => 'Search Articles…', 'value' => Yii::$app->request->get('q')]);
@@ -47,19 +49,19 @@ echo Html::beginTag('div', ['class' => 'row']);
 		if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0])) {
 			echo Item::widget([
 				'body' => RecentArticles::widget(),
-				'header' => Html::tag('h4', 'Latest Updates'),
+				'header' => 'Latest Updates',
 				'options' => ['id' => 'latestArticles'],
 			]);
 
 			echo Item::widget([
 				'body' => RecentComments::widget(),
-				'header' => Html::tag('h4', 'Latest Comments'),
+				'header' => 'Latest Comments',
 				'options' => ['id' => 'latestComments'],
 			]);
 
 			echo Item::widget([
 				'body' => TagCloud::widget(),
-				'header' => Html::tag('h4', 'Tags'),
+				'header' => 'Tags',
 				'options' => ['id' => 'tags'],
 			]);
 

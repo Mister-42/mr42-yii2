@@ -1,8 +1,9 @@
 <?php
 namespace app\models;
 use Yii;
+use app\models\Icon;
 use app\models\articles\Comments;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
 class Menu {
@@ -13,8 +14,8 @@ class Menu {
 		$unreadBadge = $unread > 0 ? ' '.Html::tag('span', $unread, ['class' => 'badge']) : '';
 
 		$menuItems = [
-			['label' => Html::icon('th-list').'Articles', 'url' => ['/articles/index'], 'visible' => true],
-			['label' => Html::icon('dashboard').'Calculator', 'url' => null,
+			['label' => Icon::show('th-list').'Articles', 'url' => ['/articles/index'], 'visible' => true],
+			['label' => Icon::show('calculator').'Calculator', 'url' => null,
 				'items' => [
 					['label' => 'Date (add/subtract)', 'url' => ['/calculator/date']],
 					['label' => 'Date to Date (duration)', 'url' => ['/calculator/duration']],
@@ -23,7 +24,7 @@ class Menu {
 					['label' => 'Wifi Protected Access Pre-Shared Key', 'url' => ['/calculator/wpapsk']],
 				],
 			],
-			['label' => Html::icon('wrench').'Tools', 'url' => null,
+			['label' => Icon::show('wrench').'Tools', 'url' => null,
 				'items' => [
 					['label' => 'Barcode Generator', 'url' => ['/tools/barcode']],
 					['label' => 'Browser Headers', 'url' => ['/tools/headers']],
@@ -35,21 +36,21 @@ class Menu {
 					['label' => 'QR Code Generator', 'url' => ['/tools/qr']],
 				],
 			],
-			['label' => Html::icon('cd').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
+			['label' => Icon::show('music').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
 			$isGuest
-				?	['label' => Html::icon('log-in').'Login', 'url' => ['/user/security/login'], 'visible' => true]
-				:	['label' => Html::icon('user').Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
+				?	['label' => Icon::show('sign-in-alt').'Login', 'url' => ['/user/security/login'], 'visible' => true]
+				:	['label' => Icon::show('user-circle').Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
 						'items' => [
 							['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
 							['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
 							['label' => 'PHP ' . phpversion(), 'url' => ['/site/php-version'], 'visible' => $isAdmin],
-							$isAdmin ? Html::tag('li', null, ['class' => 'divider']) : '',
+							$isAdmin ? Html::tag('div', null, ['class' => 'dropdown-divider']) : '',
 							['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]],
-							Html::tag('li', null, ['class' => 'divider']),
+							Html::tag('div', null, ['class' => 'dropdown-divider']),
 							['label' => 'Edit Profile', 'url' => ['/user/settings/profile']],
 							['label' => 'Account Settings', 'url' => ['/user/settings/account']],
 							['label' => 'Social Networks', 'url' => ['/user/settings/networks']],
-							Html::tag('li', null, ['class' => 'divider']),
+							Html::tag('div', null, ['class' => 'dropdown-divider']),
 							['label' => 'Logout', 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']],
 						],
 					]

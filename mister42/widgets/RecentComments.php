@@ -2,7 +2,7 @@
 namespace app\widgets;
 use Yii;
 use app\models\articles\Comments;
-use yii\bootstrap\{Html, Widget};
+use yii\bootstrap4\{Html, Widget};
 
 class RecentComments extends Widget {
 	public function run(): string {
@@ -13,14 +13,14 @@ class RecentComments extends Widget {
 			->where(['active' => Comments::STATUS_ACTIVE])
 			->limit($limit)
 			->all();
-		return empty($comments) ? Html::tag('p', 'No comments to display.') : Html::tag('ul', self::renderComments($comments), ['class' => 'list-unstyled']);
+		return empty($comments) ? Html::tag('p', 'No comments to display.') : self::renderComments($comments);
 	}
 
 	private function renderComments(array $comments): string {
 		foreach ($comments as $comment) :
-			$link = Html::a(Html::encode($comment->title), ['articles/index', 'id' => $comment->article->id, 'title' => $comment->article->url, '#' => 'comments']);
-			$items[] = Html::tag('li', $link);
+			$link = Html::a($comment->title, ['articles/index', 'id' => $comment->article->id, 'title' => $comment->article->url, '#' => 'comments'], ['class' => 'card-link']);
+			$items[] = Html::tag('li', $link, ['class' => 'list-group-item']);
 		endforeach;
-		return implode($items);
+		return Html::tag('ul', implode($items), ['class' => 'list-group list-group-flush']);
 	}
 }

@@ -46,12 +46,14 @@ class SiteController extends \yii\web\Controller {
 				'only' => ['changelog'],
 			], [
 				'class' => HttpCache::class,
+				'enabled' => !YII_DEBUG,
 				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['robotstxt'],
 			], [
 				'class' => HttpCache::class,
+				'enabled' => !YII_DEBUG,
 				'lastModified' => function () {
 					return filemtime(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico');
 				},

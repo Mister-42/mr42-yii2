@@ -33,7 +33,7 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionIndex($id = '', $title = '', $action = '', $tag = '', $q = '') {
-		if (isset($id) && !empty($id)) {
+		if (!empty($id)) {
 			$model = $this->findModel($id, ['comments']);
 			$comment = new Comments;
 
@@ -52,7 +52,7 @@ class ArticlesController extends \yii\web\Controller {
 			if (empty($title) || $title != $model->url)
 				$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
-			Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => "https://mr42.me/art{$model->id}"]);
+			Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['shortDomain']."art{$model->id}"]);
 			if ($model->pdf)
 				Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
 			return $this->render('view', [
@@ -84,7 +84,7 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionPdf($id = '', $title = '') {
-		if (isset($id) && !empty($id)) {
+		if (!empty($id)) {
 			$model = $this->findModel($id);
 
 			if (!$model->pdf)

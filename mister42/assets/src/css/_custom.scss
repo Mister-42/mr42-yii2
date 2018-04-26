@@ -1,0 +1,28 @@
+$link-color:						$darkerBlue;
+$link-hover-color:					$darkBlue;
+
+$component-active-color:			$middleBlue;
+$component-active-bg:				$darkerBlue;
+
+$headings-color:					$tardisBlue;
+
+$dropdown-bg:						$tardisBlue;
+$dropdown-border-color:				darken($tardisBlue, 6.5%);
+$dropdown-divider-bg:				$middleBlue;
+$dropdown-link-color:				$lightBlue;
+$dropdown-link-hover-color:			darken($tardisBlue, 6.5%);
+$dropdown-link-hover-bg:			$middleBlue;
+$dropdown-link-active-color:		$component-active-color !default;
+$dropdown-link-active-bg:			darken($tardisBlue, 6.5%);
+
+$nav-divider-margin-y:				.1rem 0;
+
+$navbar-padding-y:					0;
+$navbar-brand-font-size:			1.8rem;
+$navbar-dark-color:					$lightBlue;
+$navbar-dark-hover-color:			rgba($white, .7) !default;
+$navbar-dark-active-color:			$darkBlue;
+$navbar-dark-disabled-color:		rgba($white, .25) !default;
+$navbar-dark-toggler-border-color:	rgba($white, .1) !default;
+
+$breadcrumb-padding-y:              .2rem;

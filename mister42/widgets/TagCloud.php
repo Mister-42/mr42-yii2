@@ -2,7 +2,7 @@
 namespace app\widgets;
 use Yii;
 use app\models\articles\Tags;
-use yii\bootstrap\{Html, Widget};
+use yii\bootstrap4\{Html, Widget};
 
 class TagCloud extends Widget {
 	public function run(): string {
@@ -12,9 +12,8 @@ class TagCloud extends Widget {
 	public function renderTags(array $tags): string {
 		foreach ($tags as $tag => $data) :
 			$title = Yii::t('site', '{results, plural, =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $data['count'], 'tag' => $tag]);
-			$link = Html::a(Html::encode($tag), ['articles/index', 'action' => 'tag', 'tag' => $tag], ['title' => $title, 'data-toggle' => 'tooltip', 'data-placement' => 'top']);
-			$items[] = Html::tag('span', $link, ['style' => 'font-size:'.round(1.25 * $data['weight']).'pt']);
+			$items[] = Html::a($tag, ['articles/index', 'action' => 'tag', 'tag' => $tag], ['class' => 'card-link', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'style' => 'font-size:'.round(1.5 * $data['weight']).'pt', 'title' => $title]);
 		endforeach;
-		return implode(' ', $items);
+		return Html::tag('div' , implode(' ', $items), ['class' => 'card-body text-center']);
 	}
 }

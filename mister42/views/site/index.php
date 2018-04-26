@@ -1,14 +1,13 @@
 <?php
 use app\models\Menu;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
 $this->title = Yii::$app->name;
 
-echo Html::tag('h2', 'Welcome to '.Yii::$app->name);
 echo Html::tag('div', 'This website is merely a hobby project. Some parts are created to make work or life a little bit easier, other parts are created for entertainment purposes only.', ['class' => 'alert alert-info']);
 
-echo '<ul>';
+echo Html::beginTag('ul', ['class' => 'list-unstyled']);
 foreach(Menu::getItemList() as $menu) :
 	if ($menu['items']) {
 		foreach($menu['items'] as $submenu) :
@@ -18,12 +17,10 @@ foreach(Menu::getItemList() as $menu) :
 					: Yii::$app->formatter->cleanInput($submenu['label'], false);
 		endforeach;
 	}
-	echo Html::tag('li', 
-		isset($menu['url'])
-			? Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url'])
-			: Yii::$app->formatter->cleanInput($menu['label'], false)
-		. Html::ul($submenuItems, ['encode' => false])
-	);
+	echo isset($menu['url'])
+			? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url']))
+			: Html::tag('dt', Yii::$app->formatter->cleanInput($menu['label'], false))
+		. Html::ul($submenuItems, ['encode' => false]);
 	unset($submenuItems);
 endforeach;
-echo '</ul>';
+echo Html::endTag('ul');

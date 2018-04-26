@@ -1,7 +1,7 @@
 <?php
 namespace app\models;
 use Yii;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 
 class Video {
 	public function getEmbed(string $source, string $id, string $ratio, bool $isPlaylist = false): string {

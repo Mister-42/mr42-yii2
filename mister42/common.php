@@ -15,18 +15,21 @@ return [
 			'basePath' => '@assetsroot',
 			'baseUrl' => '@assets',
 			'bundles' => [
-				'yii\bootstrap\BootstrapAsset' => [
+				'yii\bootstrap4\BootstrapAsset' => [
 					'css' => [],
 				],
-				'yii\bootstrap\BootstrapPluginAsset' => [
-					'js' => [YII_ENV_DEV ? 'js/bootstrap.js' : 'js/bootstrap.min.js'],
+				'yii\bootstrap4\BootstrapPluginAsset' => [
+					'js' => [YII_DEBUG ? 'js/bootstrap.js' : 'js/bootstrap.min.js'],
+				],
+				'yii\bootstrap4\PopperAsset' => [
+					'js' => [YII_DEBUG ? 'umd/popper.js' : 'umd/popper.min.js'],
 				],
 				'yii\jui\JuiAsset' => [
-					'css' => [YII_ENV_DEV ? 'themes/smoothness/jquery-ui.css' : 'themes/smoothness/jquery-ui.min.css'],
-					'js' => [YII_ENV_DEV ? 'jquery-ui.js' : 'jquery-ui.min.js'],
+					'css' => [YII_DEBUG ? 'themes/smoothness/jquery-ui.css' : 'themes/smoothness/jquery-ui.min.css'],
+					'js' => [YII_DEBUG ? 'jquery-ui.js' : 'jquery-ui.min.js'],
 				],
 				'yii\web\JqueryAsset' => [
-					'js' => [YII_ENV_DEV ? 'jquery.js' : 'jquery.min.js'],
+					'js' => [YII_DEBUG ? 'jquery.js' : 'jquery.min.js'],
 				],
 			],
 			'linkAssets' => true,

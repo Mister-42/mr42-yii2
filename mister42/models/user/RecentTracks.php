@@ -1,8 +1,8 @@
 <?php
 namespace app\models\user;
 use Yii;
-use app\models\Webrequest;
-use yii\bootstrap\Html;
+use app\models\{Icon, Webrequest};
+use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
 class RecentTracks extends \yii\db\ActiveRecord {
@@ -32,18 +32,18 @@ class RecentTracks extends \yii\db\ActiveRecord {
 
 		foreach ($tracks as $track) :
 			$data .= '<div class="clearfix">';
-				$data .= Html::tag('span', $track['artist'], ['class' => 'pull-left']);
+				$data .= Html::tag('span', $track['artist'], ['class' => 'float-left']);
 				if ($track['time'] === 0)
-					$data .= Html::icon('volume-up', ['title' => 'Currently playing']);
-				$data .= Html::tag('span', $track['track'], ['class' => 'pull-right text-right']);
+					$data .= Icon::show('volume-up', ['title' => 'Currently playing']);
+				$data .= Html::tag('span', $track['track'], ['class' => 'float-right text-right']);
 			$data .= '</div>';
 		endforeach;
 
 		$data .= empty($tracks)
 			? Html::tag('p', 'No items to display.')
 			: Html::tag('div',
-				Html::tag('span', Html::tag('b', 'Total tracks played:'), ['class' => 'pull-left']) .
-				Html::tag('span', Html::tag('b', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'pull-right'])
+				Html::tag('span', Html::tag('b', 'Total tracks played:'), ['class' => 'float-left']) .
+				Html::tag('span', Html::tag('b', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'float-right'])
 			);
 		return $data;
 	}

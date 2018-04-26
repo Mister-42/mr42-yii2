@@ -1,7 +1,7 @@
 <?php
 namespace app\widgets;
 use Yii;
-use yii\bootstrap\{Html, Widget};
+use yii\bootstrap4\{Html, Widget};
 use app\models\feed\Feed as FeedModel;
 
 class Feed extends Widget {
@@ -22,10 +22,10 @@ class Feed extends Widget {
 	private function renderFeed(array $items, int $limit): string {
 		$count = 1;
 		foreach ($items as $item) :
-			$feed[] = Html::tag('li', Html::a(Html::encode($item['title']), $item['url'], ['title' => $item['description'], 'data-toggle' => 'tooltip', 'data-placement' => 'top']));
+			$feed[] = Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link', 'title' => $item['description'], 'data-toggle' => 'tooltip', 'data-placement' => 'top']), ['class' => 'list-group-item']);
 			if ($count++ === $limit)
 				break;
 		endforeach;
-		return Html::tag('ul', implode($feed), ['class' => 'list-unstyled']);
+		return Html::tag('ul', implode($feed), ['class' => 'list-group list-group-flush']);
 	}
 }

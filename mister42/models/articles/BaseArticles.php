@@ -4,7 +4,7 @@ use Yii;
 use app\models\Pdf;
 use Da\User\Model\{Profile, User};
 use yii\behaviors\TimestampBehavior;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\helpers\{StringHelper, Url};
 use yii\web\AccessDeniedHttpException;
 
@@ -80,7 +80,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	public function buildPdf($model, $html) {
 		$user = new Profile();
 		$profile = $user->find($model->user->id)->one();
-		$name = empty($profile->name) ? Html::encode($model->user->username) : Html::encode($profile->name);
+		$name = empty($profile->name) ? $model->user->username : $profile->name;
 		$tags = Yii::t('site', '{results, plural, =1{1 tag} other{# tags}}', ['results' => count(StringHelper::explode($model->tags))]);
 
 		$pdf = new Pdf();
@@ -92,7 +92,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 				'author' => $name,
 				'created' => $model->created,
 				'footer' => $tags.': '.$model->tags.'|Author: '.$name.'|Page {PAGENO} of {nb}',
-				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, "https://mr42.me/art{$model->id}").'|' . date('D, j M Y', $model->updated),
+				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, Yii::$app->params['shortDomain']."art{$model->id}").'|' . date('D, j M Y', $model->updated),
 				'keywords' => $model->tags,
 				'subject' => $model->title,
 				'title' => $model->title,

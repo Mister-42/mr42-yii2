@@ -23,8 +23,9 @@ class ProfileController extends \Da\User\Controller\ProfileController {
 		return ArrayHelper::merge($behaviors, [
 			[
 				'class' => HttpCache::class,
+				'enabled' => !YII_DEBUG,
 				'etagSeed' => function ($action, $params) {
-					return serialize([YII_DEBUG, Yii::$app->user->id, Yii::$app->request->get('username')]);
+					return serialize([Yii::$app->user->id, Yii::$app->request->get('username')]);
 				},
 				'lastModified' => function ($action, $params) {
 					$user = $this->userQuery->whereUsername(Yii::$app->request->get('username'))->one();
@@ -56,6 +57,6 @@ class ProfileController extends \Da\User\Controller\ProfileController {
 		if (!Yii::$app->request->isAjax)
 			throw new MethodNotAllowedHttpException('Method Not Allowed.');
 
-		return RecentTracks::display($user->id);
+		return (new RecentTracks)->display($user->id);
 	}
 }

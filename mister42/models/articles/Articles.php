@@ -1,7 +1,7 @@
 <?php
 namespace app\models\articles;
 use Yii;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 
 class Articles extends BaseArticles {
 	public function afterFind() {
@@ -12,7 +12,7 @@ class Articles extends BaseArticles {
 
 		if ($this->source)
 			$this->content .= Html::tag('div',
-			    Html::a('Source', $this->source, ['class' => 'btn btn-default pull-right'])
+			    Html::a('Source', $this->source, ['class' => 'btn btn-secondary float-right'])
 			, ['class' => 'clearfix']);
 	}
 }

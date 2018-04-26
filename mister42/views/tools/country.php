@@ -1,5 +1,6 @@
 <?php
-use yii\bootstrap\{ActiveForm, Html};
+use app\models\Icon;
+use yii\bootstrap4\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;
 
 $title = 'Country Information';
@@ -14,7 +15,7 @@ if ($model->load(Yii::$app->request->post())) {
 }
 $this->title = $model->load(Yii::$app->request->post()) ? implode(' - ', [$data['official_name_en'], $title]) : $title;
 
-echo Html::tag('h1', Html::encode($model->load(Yii::$app->request->post()) ? implode(' - ', [$title, $data['official_name_en']]) : $title));
+echo Html::tag('h1', $model->load(Yii::$app->request->post() ? implode(' - ', [$title, $data['official_name_en']]) : $title));
 
 echo Html::beginTag('div', ['class' => 'site-country']);
 	echo Html::beginTag('div', ['class' => 'row']);
@@ -23,7 +24,7 @@ echo Html::beginTag('div', ['class' => 'site-country']);
 
 			$countries = $model->find()->select('ISO3166-1-Alpha-2, official_name_en')->orderBy('official_name_en')->all();
 			echo $form->field($model, 'iso', [
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('th-list').'</span>{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('th-list').'{input}</div>{error}',
 			])->dropDownList(ArrayHelper::map($countries, 'ISO3166-1-Alpha-2', 'official_name_en'), [
 				'onchange' => 'if(this.value!=0){this.form.submit();}',
 				'prompt' => $model->load(Yii::$app->request->post()) ? null : 'Select a country',

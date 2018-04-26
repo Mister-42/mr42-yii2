@@ -8,8 +8,8 @@ use yii\web\View;
 class Lightbox extends Widget {
 	public $items = [];
 	public $options = [];
-	public $linkOptions = ['class' => 'media-right hidden-xs'];
-	public $imageOptions = ['class' => 'img-rounded pull-left'];
+	public $linkOptions = ['class' => 'mr-2 my-1'];
+	public $imageOptions = ['class' => 'rounded'];
 
 	public function init() {
 		LightboxAsset::register($this->getView());

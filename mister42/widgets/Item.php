@@ -1,6 +1,6 @@
 <?php
 namespace app\widgets;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
 class Item extends \yii\bootstrap\Widget {
@@ -9,7 +9,7 @@ class Item extends \yii\bootstrap\Widget {
 	public $options;
 
 	public function run(): string {
-		$class[] = 'item';
+		$class[] = 'card mb-2';
 		foreach ($this->options as $k => $v) :
 			if ($k === 'class') {
 				$class[] = $v;
@@ -19,8 +19,8 @@ class Item extends \yii\bootstrap\Widget {
 		endforeach;
 
 		return Html::tag('div',
-			(($this->header) ? Html::tag('div', $this->header, ['class' => 'item-heading']) : '') .
-			Html::tag('div', $this->body, ['class' => 'item-body'])
+			($this->header ? Html::tag('div', $this->header, ['class' => 'card-header']) : '') .
+			$this->body
 		, ArrayHelper::merge(['class' => implode(' ', $class)], ArrayHelper::map($option, 'name', 'value')));
 	}
 }

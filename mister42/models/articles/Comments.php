@@ -1,8 +1,9 @@
 <?php
 namespace app\models\articles;
 use Yii;
+use app\models\Icon;
 use yii\behaviors\TimestampBehavior;
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\db\ActiveRecord;
 use yii\web\AccessDeniedHttpException;
 
@@ -45,7 +46,7 @@ class Comments extends ActiveRecord {
 			'name' => 'Name',
 			'email' => 'Email Address',
 			'website' => 'Website URL',
-			'captcha' => 'Completely Automated Public Turing test to tell Computers and Humans Apart',
+			'captcha' => 'CAPTCHA',
 		];
 	}
 
@@ -81,9 +82,9 @@ class Comments extends ActiveRecord {
 
 	public function showApprovalButton() {
 		return Html::a(
-			$this->active ? Html::icon('thumbs-down').' Renounce' : Html::icon('thumbs-up').' Approve',
+			$this->active ? Icon::show('thumbs-down').' Renounce' : Icon::show('thumbs-up').' Approve',
 			['commentstatus', 'id' => $this->id, 'action' => 'toggleapproval'],
-			['class' => $this->active ? 'btn btn-xs btn-warning action' : 'btn btn-xs btn-success action']
+			['class' => $this->active ? 'badge badge-warning ml-1' : 'badge badge-success ml-1']
 		);
 	}
 

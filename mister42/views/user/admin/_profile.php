@@ -1,5 +1,5 @@
 <?php
-use yii\bootstrap\{ActiveForm, Html};
+use yii\bootstrap4\{ActiveForm, Html};
 
 $this->beginContent('@Da/User/resources/views/admin/update.php', ['user' => $user]);
 
@@ -23,7 +23,7 @@ $form = ActiveForm::begin(
 <?= $form->field($profile, 'bio')->textarea(['rows' => 8, 'tabindex' => 6]) ?>
 
 <div class="form-group">
-	<div class="col-lg-offset-3 col-lg-9">
+	<div class="col-md-12 col-lg-9 mx-auto">
 		<?= Html::submitButton(Yii::t('usuario', 'Update'), ['class' => 'btn btn-block btn-success']) ?>
 	</div>
 </div>

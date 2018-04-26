@@ -28,7 +28,7 @@ foreach($articles as $article) :
 	$lastUpdate = $article['updated'];
 	foreach ($article['comments'] as $comment)
 		$lastUpdate = max($lastUpdate, $comment['created']);
-	Sitemap::lineItem($doc, "https://mr42.me/art{$article->id}", $lastUpdate);
+	Sitemap::lineItem($doc, Yii::$app->params['shortDomain']."art{$article->id}", $lastUpdate);
 	if ($article['pdf'])
 		Sitemap::lineItem($doc, Url::to(['articles/pdf', 'id' => $article->id, 'title' => $article->url], true), $lastUpdate);
 endforeach;

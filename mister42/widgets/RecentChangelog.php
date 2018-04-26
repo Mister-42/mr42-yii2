@@ -2,7 +2,7 @@
 namespace app\widgets;
 use Yii;
 use app\models\site\Changelog;
-use yii\bootstrap\{Html, Widget};
+use yii\bootstrap4\{Html, Widget};
 
 class RecentChangelog extends Widget {
 	public function run(): string {
@@ -10,15 +10,15 @@ class RecentChangelog extends Widget {
 			->orderBy('time DESC')
 			->limit(5)
 			->all();
-		return empty($logs) ? Html::tag('p', 'No changes to display.') : Html::tag('ul', self::renderLogs($logs), ['class' => 'list-unstyled']);
+		return empty($logs) ? Html::tag('p', 'No changes to display.') : self::renderLogs($logs);
 	}
 
 	private function renderLogs(array $logs): string {
 		foreach ($logs as $log) :
 			$url = "https://github.com/Thoulah/mr.42/commit/{$log->id}";
-			$logline = Html::a(Yii::$app->formatter->asNText($log->description), $url);
-			$items[] = Html::tag('li', $logline);
+			$logline = Html::a(Yii::$app->formatter->asNText($log->description), $url, ['class' => 'card-link']);
+			$items[] = Html::tag('li', $logline, ['class' => 'list-group-item']);
 		endforeach;
-		return implode($items);
+		return Html::tag('ul', implode($items), ['class' => 'list-group list-group-flush']);
 	}
 }

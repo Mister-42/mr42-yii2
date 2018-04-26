@@ -3,7 +3,7 @@ namespace app\widgets;
 use Yii;
 use app\models\user\WeeklyArtist;
 use Da\User\Model\User;
-use yii\bootstrap\{Html, Widget};
+use yii\bootstrap4\{Html, Widget};
 
 class WeeklyArtistChart extends Widget {
 	public $profile;
@@ -17,9 +17,9 @@ class WeeklyArtistChart extends Widget {
 	public function renderFeed(array $items): string {
 		foreach ($items as $item)
 			$feed[] = Html::tag('div',
-				Html::tag('span', $item['rank'], ['class' => 'pull-left']) .
-				Html::tag('span', $item['artist'], ['class' => 'pull-left']) .
-				Html::tag('span', $item['count'], ['class' => 'pull-right text-right'])
+				Html::tag('span', $item['rank'], ['class' => 'float-left']) .
+				Html::tag('span', $item['artist'], ['class' => 'float-left']) .
+				Html::tag('span', $item['count'], ['class' => 'float-right text-right'])
 			, ['class' => 'clearfix']);
 		return implode($feed);
 	}

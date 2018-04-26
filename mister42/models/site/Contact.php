@@ -32,7 +32,7 @@ class Contact extends \yii\base\Model {
 			'email' => 'Email Address',
 			'title' => 'Subject',
 			'content' => 'Message',
-			'captcha' => 'Completely Automated Public Turing test to tell Computers and Humans Apart',
+			'captcha' => 'CAPTCHA',
 		];
 	}
 

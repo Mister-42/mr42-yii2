@@ -1,7 +1,7 @@
 <?php
-use yii\bootstrap\{Alert, Html};
+use yii\bootstrap4\Html;
 
-$this->title = 'Work In Progress';
+$this->title = 'Maintenance Mode';
 
-echo Html::tag('h1', Html::encode($this->title));
-echo Alert::widget(['options' => ['class' => 'alert-warning'], 'body' => 'This website is temporarily offline for maintenance.', 'closeButton' => false]);
+echo Html::tag('h1', $this->title);
+echo Html::tag('div', 'This website is temporarily offline for maintenance. Please check back later.', ['class' => 'alert alert-warning']);

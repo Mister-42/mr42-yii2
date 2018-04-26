@@ -1,20 +1,21 @@
 <?php
-use yii\bootstrap\{ActiveForm, Html};
+use app\models\Icon;
+use yii\bootstrap4\{ActiveForm, Html};
 
+$tab = 1;
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
-echo '<div class="row">';
-	$tab = 2;
+echo Html::beginTag('div', ['class' => 'row']);
 	foreach (['lat', 'lng', 'altitude'] as $name) :
 		echo $form->field($model, $name, [
-				'options' => ['class' => 'col-sm-4'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('globe').'</span>{input}</div>{error}',
-			])->input('number', ['step' => '0.000001', 'tabindex' => $tab++]);
+				'options' => ['class' => 'col-4'],
+				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('globe').'{input}</div>{error}',
+			])->input('number', ['step' => '0.000001', 'tabindex' => ++$tab]);
 	endforeach;
-echo '</div>';
+echo Html::endTag('div');
 
-echo $model->getFormFooter($form);
+echo $model->getFormFooter($form, $tab);
 
 ActiveForm::end();

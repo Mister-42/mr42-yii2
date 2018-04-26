@@ -1,13 +1,14 @@
 <?php
-use yii\bootstrap\{ActiveForm, Html};
+use app\models\Icon;
+use yii\bootstrap4\{ActiveForm, Html};
 use yii\captcha\Captcha;
 
 $this->title = Yii::t('usuario', 'Sign up');
 $this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="row">
-	<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-		<h3><?= Html::encode($this->title) ?></h3><?php
+
+echo Html::beginTag('div', ['class' => 'row']);
+	echo Html::beginTag('div', ['class' => 'col-sm-12 col-md-6 mx-auto']);
+		echo Html::tag('h3', $this->title);
 
 		$form = ActiveForm::begin(
 			[
@@ -18,32 +19,33 @@ $this->params['breadcrumbs'][] = $this->title;
 		);
 
 		echo $form->field($model, 'email', [
-			'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{error}',
-		])->input('email', ['tabindex' => 1]);
+			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{error}',
+		])->input('email', ['tabindex' => ++$tab]);
 
-		echo '<div class="row">';
+		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'username', [
-				'options' => ['class' => 'col-xs-6 form-group'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
-			])->textInput(['tabindex' => 2]);
+				'options' => ['class' => 'col-6 form-group'],
+				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
+			])->textInput(['tabindex' => ++$tab]);
 
 			if ($module->generatePasswords === false)
 				echo $form->field($model, 'password', [
-					'options' => ['class' => 'col-xs-6 form-group'],
-					'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('lock').'</span>{input}</div>{error}',
-				])->passwordInput(['tabindex' => 3]);
-		echo '</div>';
+					'options' => ['class' => 'col-6 form-group'],
+					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
+				])->passwordInput(['tabindex' => ++$tab]);
+		echo Html::endTag('div');
 
 		echo $form->field($model, 'captcha')->widget(Captcha::class, [
 			'captchaAction' => '/site/captcha',
 			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
-			'options' => ['class' => 'form-control', 'tabindex' => 4],
-			'template' => '<div class="row"><div class="col-xs-6"><div class="input-group"><span class="input-group-addon">'.Html::icon('dashboard').'</span>{input}</div></div> {image}</div>',
+			'options' => ['class' => 'form-control', 'tabindex' => ++$tab],
+			'template' => '<div class="row"><div class="col-6"><div class="input-group">'.Icon::fieldAddon('question').'{input}</div></div> {image}</div>',
 		])->hint('Click on the image to retrieve a new verification code.');
 
-		echo Html::submitButton(Yii::t('usuario', 'Sign up'), ['class' => 'btn btn-success btn-block', 'tabindex' => 5]);
+		echo Html::submitButton(Yii::t('usuario', 'Sign up'), ['class' => 'btn btn-success btn-block', 'tabindex' => ++$tab]);
 
 		ActiveForm::end();
-		?><p class="text-center"><?= Html::a(Yii::t('usuario', 'Already registered? Sign in!'), ['/user/security/login']) ?></p>
-	</div>
-</div>
+
+		echo Html::tag('p', Html::a(Yii::t('usuario', 'Already registered? Sign in!'), ['/user/security/login']), ['class' => 'text-center']);
+	echo Html::endTag('div');
+echo Html::endTag('div');

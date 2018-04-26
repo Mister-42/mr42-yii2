@@ -1,14 +1,14 @@
 <?php
-use janisto\timepicker\TimePicker;
-use yii\bootstrap\{ActiveForm, Alert, Html};
+use app\models\{Icon, TimePicker};
+use yii\bootstrap4\{ActiveForm, Alert, Html};
 
 $this->title = 'Microsoft® Office 365® End Date Calculator';
 $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = 'Microsoft® Office 365® End Date';
 
 echo Html::beginTag('div', ['class' => 'row']);
-	echo Html::beginTag('div', ['class' => 'col-md-offset-2 col-md-8']);
-		echo Html::tag('h1', Html::encode($this->title));
+	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
+		echo Html::tag('h1', $this->title);
 		echo Html::tag('div', 'This calculator calculates the new end date of a Microsoft® Office 365® Open SKU. For redeeming your product keys, please visit ' . Html::a('https://office.com/setup365', 'https://office.com/setup365', ['class' => 'alert-link']) . '.', ['class' => 'alert alert-info']);
 
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
@@ -42,7 +42,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 				echo $form->field($model, $field.'count', [
 					'options' => ['class' => 'col-sm-6'],
-					'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('user').'</span>{input}</div>{error}',
+					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
 				])
 				->input('number', ['class' => 'form-control', 'tabindex' => ++$tab]);
 			echo Html::endTag('div');
@@ -54,9 +54,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 		], ['tabindex' => ++$tab]);
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default', 'tabindex' => 7]) .
-			Html::submitButton('Calculate', ['class' => 'btn btn-primary', 'tabindex' => 6])
-		, ['class' => 'btn-toolbar form-group pull-right']);
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
+			Html::submitButton('Calculate', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
+		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

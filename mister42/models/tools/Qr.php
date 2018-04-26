@@ -1,10 +1,9 @@
 <?php
 namespace app\models\tools;
 use Yii;
-use app\models\Mailer;
-use janisto\timepicker\TimePicker;
+use app\models\{Icon, Mailer, TimePicker};
 use Mpdf\QrCode\QrCode;
-use yii\bootstrap\{ActiveForm, Html};
+use yii\bootstrap4\{ActiveForm, Html};
 use yii\helpers\{FileHelper, StringHelper};
 
 class Qr extends \yii\base\Model {
@@ -49,22 +48,22 @@ class Qr extends \yii\base\Model {
 			]);
 	}
 
-	public function getFormFooter(ActiveForm $form): string {
+	public function getFormFooter(ActiveForm $form, int $tab): string {
 		$footer[] = Html::tag('div',
 			$form->field($this, 'size', [
-				'options' => ['class' => 'col-sm-6'],
-				'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('move').'</span>{input}</div>{error}',
-			])->input('number', ['tabindex' => 96]) .
+				'options' => ['class' => 'col-md-6'],
+				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt').'{input}</div>{error}',
+			])->input('number', ['tabindex' => ++$tab]) .
 			$form->field($this, 'recipient', [
-				'options' => ['class' => 'col-sm-6'],
-				'template' => '{label} (optional)<div class="input-group"><span class="input-group-addon">'.Html::icon('envelope').'</span>{input}</div>{hint} {error}',
-			])->input('email', ['tabindex' => 97])
+				'options' => ['class' => 'col-md-6'],
+				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',
+			])->input('email', ['tabindex' => ++$tab])
 			->hint('If you enter your email address the ' . Html::tag('span', 'QR Code', ['class' => 'text-nowrap']) . ' will be mailed to that address.')
 		, ['class' => 'row']);
 
 		$footer[] = Html::tag('div',
-			Html::submitButton('Generate QR Code', ['class' => 'btn btn-primary', 'tabindex' => 98])
-		, ['class' => 'form-group field-qr-buttons text-right']);
+			Html::submitButton('Generate QR Code', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
+		, ['class' => 'btn-toolbar float-right form-group']);
 
 		return implode($footer);
 	}

@@ -45,16 +45,17 @@ class FeedController extends Controller {
 	 * Retrieves and stores Recent Tracks from Last.fm.
 	*/
 	public function actionLastfmRecent() {
+		$recentTracks = new RecentTracks;
 		RecentTracks::deleteAll(['<=', 'seen', time() - 300]);
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::find()->where(['user_id' => $user->id])->one();
 			if (isset($profile->lastfm)) {
-				$lastSeen = RecentTracks::lastSeen($user->id);
+				$lastSeen = $recentTracks->lastSeen($user->id);
 
 				if (!$lastSeen)
 					continue;
 
-				RecentTracks::updateUser($lastSeen, $profile);
+				$recentTracks->updateUser($lastSeen, $profile);
 				usleep(200000);
 			}
 		endforeach;

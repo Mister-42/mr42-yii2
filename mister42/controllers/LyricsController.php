@@ -41,7 +41,8 @@ class LyricsController extends \yii\web\Controller {
 		return [
 			[
 				'class' => \yii\filters\HttpCache::class,
-				'etagSeed' => function () { return serialize([YII_DEBUG, phpversion(), Yii::$app->user->id, $this->lastModified]); },
+				'enabled' => !YII_DEBUG,
+				'etagSeed' => function () { return serialize([phpversion(), Yii::$app->user->id, $this->lastModified]); },
 				'lastModified' => function () { return $this->lastModified; },
 				'only' => ['index', 'albumpdf', 'albumcover'],
 			],

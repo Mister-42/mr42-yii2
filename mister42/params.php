@@ -5,4 +5,5 @@ return [
 	'recentArticles' => 5,
 	'recentTracksCount' => 20,
 	'secrets' => $secrets,
+	'shortDomain' => 'https://www.mr42.me/',
 ];

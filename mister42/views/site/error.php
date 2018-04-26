@@ -1,7 +1,7 @@
 <?php
-use yii\bootstrap\{Alert, Html};
+use yii\bootstrap4\Html;
 
 $this->title = $name;
 
-echo Html::tag('h1', Html::encode($this->title));
-echo Alert::widget(['options' => ['class' => 'alert-danger'], 'body' => nl2br(Html::encode($message)), 'closeButton' => false]);
+echo Html::tag('h1', $this->title);
+echo Html::tag('div', nl2br($message), ['class' => 'alert alert-danger']);

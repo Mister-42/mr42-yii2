@@ -1,17 +1,17 @@
 <?php
-use janisto\timepicker\TimePicker;
-use yii\bootstrap\{ActiveForm, Html};
+use app\models\{Icon, TimePicker};
+use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 
+$tab = 1;
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
-$tab = 2;
 
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
-echo '<div class="row">';
+echo Html::beginTag('div', ['class' => 'row']);
 	foreach (['start', 'end'] as $name) :
 		echo $form->field($model, $name, [
-			'options' => ['class' => 'col-sm-6'],
+			'options' => ['class' => 'col-6'],
 		])->widget(TimePicker::class, [
 			'clientOptions' => [
 				'changeMonth' => true,
@@ -20,15 +20,15 @@ echo '<div class="row">';
 				'firstDay' => 1,
 				'timeFormat' => 'HH:mm',
 			],
-			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab++],
+			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => ++$tab],
 		]);
 	endforeach;
-echo '</div>';
+echo Html::endTag('div');
 
 echo $form->field($model, 'summary', [
-		'template' => '{label}<div class="input-group"><span class="input-group-addon">'.Html::icon('comment').'</span>{input}</div>{error}',
-	])->textArea(['rows' => 6, 'tabindex' => $tab++]);
+		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('comment').'{input}</div>{error}',
+	])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
 
-echo $model->getFormFooter($form);
+echo $model->getFormFooter($form, $tab);
 
 ActiveForm::end();
