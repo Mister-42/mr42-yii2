@@ -14,8 +14,8 @@ class Menu {
 		$unreadBadge = $unread > 0 ? ' '.Html::tag('span', $unread, ['class' => 'badge']) : '';
 
 		$menuItems = [
-			['label' => Icon::show('th-list').'Articles', 'url' => ['/articles/index'], 'visible' => true],
-			['label' => Icon::show('calculator').'Calculator', 'url' => null,
+			['label' => Icon::show('th-list', ['class' => 'mr-1']).'Articles', 'url' => ['/articles/index'], 'visible' => true],
+			['label' => Icon::show('calculator', ['class' => 'mr-1']).'Calculator', 'url' => null,
 				'items' => [
 					['label' => 'Date (add/subtract)', 'url' => ['/calculator/date']],
 					['label' => 'Date to Date (duration)', 'url' => ['/calculator/duration']],
@@ -24,7 +24,7 @@ class Menu {
 					['label' => 'Wifi Protected Access Pre-Shared Key', 'url' => ['/calculator/wpapsk']],
 				],
 			],
-			['label' => Icon::show('wrench').'Tools', 'url' => null,
+			['label' => Icon::show('wrench', ['class' => 'mr-1']).'Tools', 'url' => null,
 				'items' => [
 					['label' => 'Barcode Generator', 'url' => ['/tools/barcode']],
 					['label' => 'Browser Headers', 'url' => ['/tools/headers']],
@@ -36,10 +36,10 @@ class Menu {
 					['label' => 'QR Code Generator', 'url' => ['/tools/qr']],
 				],
 			],
-			['label' => Icon::show('music').'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
+			['label' => Icon::show('music', ['class' => 'mr-1']).'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
 			$isGuest
-				?	['label' => Icon::show('sign-in-alt').'Login', 'url' => ['/user/security/login'], 'visible' => true]
-				:	['label' => Icon::show('user-circle').Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
+				?	['label' => Icon::show('sign-in-alt', ['class' => 'mr-1']).'Login', 'url' => ['/user/security/login'], 'visible' => true]
+				:	['label' => Icon::show('user-circle', ['class' => 'mr-1']).Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
 						'items' => [
 							['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
 							['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],

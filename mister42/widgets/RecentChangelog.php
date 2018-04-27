@@ -17,7 +17,7 @@ class RecentChangelog extends Widget {
 		foreach ($logs as $log) :
 			$url = "https://github.com/Thoulah/mr.42/commit/{$log->id}";
 			$logline = Html::a(Yii::$app->formatter->asNText($log->description), $url, ['class' => 'card-link']);
-			$items[] = Html::tag('li', $logline, ['class' => 'list-group-item']);
+			$items[] = Html::tag('li', $logline, ['class' => 'list-group-item text-truncate']);
 		endforeach;
 		return Html::tag('ul', implode($items), ['class' => 'list-group list-group-flush']);
 	}

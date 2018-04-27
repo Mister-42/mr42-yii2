@@ -31,12 +31,14 @@ class RecentTracks extends \yii\db\ActiveRecord {
 			->all();
 
 		foreach ($tracks as $track) :
-			$data .= '<div class="clearfix">';
-				$data .= Html::tag('span', $track['artist'], ['class' => 'float-left']);
-				if ($track['time'] === 0)
-					$data .= Icon::show('volume-up', ['title' => 'Currently playing']);
-				$data .= Html::tag('span', $track['track'], ['class' => 'float-right text-right']);
-			$data .= '</div>';
+			$data .= Html::beginTag('div', ['class' => 'clearfix']);
+				$data .= Html::beginTag('span', ['class' => 'float-left text-truncate']);
+					$data .= $track['artist'];
+					if ($track['time'] === 0)
+						$data .= Icon::show('volume-up', ['title' => 'Currently playing']);
+				$data .= Html::endTag('span');
+				$data .= Html::tag('span', $track['track'], ['class' => 'float-right text-right text-truncate']);
+			$data .= Html::endTag('div');
 		endforeach;
 
 		$data .= empty($tracks)

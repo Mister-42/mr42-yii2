@@ -56,7 +56,7 @@ foreach($articles as $article) :
 	endforeach;
 		$doc->startElement('guid');
 		$doc->writeAttribute('isPermaLink', 'true');
-		$doc->text(Yii::$app->params['shortDomain']/"art{$article->id}");
+		$doc->text(Yii::$app->params['shortDomain'] . "art{$article->id}");
 		$doc->endElement();
 	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
 	if ($article->source) {

@@ -19,9 +19,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 		if ($qr = Yii::$app->session->getFlash('qr-success')) {
 			$imgSize = min(250, $model->size);
 			Alert::begin(['options' => ['class' => 'alert-success', 'style' => ['min-height' => $imgSize + 30 . 'px']]]);
-				echo Html::img(Url::to('@assets/temp/'.$qr), ['alt' => $model->type . ' QR Code', 'class' => 'inline-left float-left', 'height' => $imgSize, 'width' => $imgSize]);
-				echo Html::tag('p', 'Your QR Code has been generated successfully.');
-				echo Html::tag('p', 'Do not link to the image on this website directly as it will be deleted shortly.');
+				echo Html::img(Url::to('@assets/temp/'.$qr), ['alt' => $model->type . ' QR Code', 'class' => 'float-left mr-2', 'height' => $imgSize, 'width' => $imgSize]);
+				echo Html::tag('div', 'Your QR Code has been generated successfully.');
+				echo Html::tag('div', 'Do not link to the image on this website directly as it will be deleted shortly.');
 			Alert::end();
 		}
 

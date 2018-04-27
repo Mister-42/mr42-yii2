@@ -22,7 +22,7 @@ class Feed extends Widget {
 	private function renderFeed(array $items, int $limit): string {
 		$count = 1;
 		foreach ($items as $item) :
-			$feed[] = Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link', 'title' => $item['description'], 'data-toggle' => 'tooltip', 'data-placement' => 'top']), ['class' => 'list-group-item']);
+			$feed[] = Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link', 'title' => Html::tag('div', $item['title'], ['class' => 'font-weight-bold']) . $item['description'], 'data-html' => 'true', 'data-toggle' => 'tooltip', 'data-placement' => 'left']), ['class' => 'list-group-item text-truncate']);
 			if ($count++ === $limit)
 				break;
 		endforeach;

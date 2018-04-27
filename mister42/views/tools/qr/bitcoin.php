@@ -12,7 +12,7 @@ echo $form->field($model, 'address', [
 	])->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'amount', [
-		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('bold').'{input}</div>{error}',
+		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('btc', ['prefix' => 'fab fa-']).'{input}</div>{error}',
 	])->input('number', ['step' => '0.00000001', 'tabindex' => ++$tab]);
 
 echo $form->field($model, 'name', [

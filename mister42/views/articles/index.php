@@ -19,7 +19,7 @@ echo ListView::widget([
 	'itemView' => function ($model, $key, $index, $widget) {
 		return $this->render('_view', ['model' => $model]);
 	},
-	'layout' => '{items}<div class="pager-wrapper pull-right">{pager}</div>',
+	'layout' => '{items}<div class="pagination float-right">{pager}</div>',
 	'pager' => [
 		'class' => ScrollPager::class,
 		'enabledExtensions' => [

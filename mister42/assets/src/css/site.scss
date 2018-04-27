@@ -7,8 +7,6 @@ $darkerBlue:		darken(adjust_hue($middleBlue, -10), 20%);
 $fa-font-path:		"/webfonts";
 
 @import "bootstrap.scss";
-@import "../../fontawesome/web-fonts-with-css/scss/fa-solid.scss";
-@import "../../fontawesome/web-fonts-with-css/scss/fontawesome.scss";
 
 @mixin dividing-line($padding, $color) {
 	&:not(:first-child) {
@@ -33,7 +31,7 @@ body {
 }
 
 body > .container {
-	padding: 15px 15px 35px;
+	padding: 2rem 15px 2rem;
 }
 
 h1, h2, h3, h4, h5, h6, .breadcrumb {
@@ -53,11 +51,6 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 			color: $middleBlue;
 			text-shadow: 2px 2px 2px #777;
 		}
-	}
-
-	.nav > li > a > .fa:after {
-		content: '\00a0';
-		font-family: $font-family-base;
 	}
 }
 
@@ -109,16 +102,6 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 	position: relative;
 	top: -55px;
 	@include invisible(hidden);
-}
-
-.inline {
-	&-left {
-		margin-right: 4px;
-	}
-
-	&-right {
-		margin-left: 4px;
-	}
 }
 
 aside {
@@ -183,9 +166,8 @@ form {
 
 	&.html2markdown {
 		textarea {
-			height: 450px;
 			overflow: auto;
-			width: 100%;
+			@include size(100%, 40rem);
 		}
 	}
 }
@@ -195,13 +177,12 @@ form {
 	border-radius: 50%;
 	bottom: 25px;
 	display: none;
-	height: 30px;
 	right: calc(50% - 15px);
 	position: fixed;
 	text-align: center;
 	text-decoration: none;
-	width: 30px;
 	z-index: $zindex-fixed;
+	@include size(30px);
 
 	span {
 		color: #fff;

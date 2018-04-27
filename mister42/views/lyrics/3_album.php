@@ -17,7 +17,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 					, ['class' => 'float-left']) .
 					Html::tag('div',
 						($data[0]->album->playlist_url
-							? Html::a(Icon::show('play').' Play', $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
+							? Html::a(Icon::show('youtube', ['prefix' => 'fab fa-']).' Play', $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
 							: '') .
 						($data[0]->album->active
 							? Html::a(Icon::show('file-pdf').' PDF', ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-light ml-1'])
@@ -30,16 +30,17 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 						$x = $y = 0;
 							foreach($data as $track) :
 								if ($x++ === 0)
-									echo Html::beginTag('div', ['class' => 'col-lg text-nowrap']);
+									echo Html::beginTag('div', ['class' => 'col-4']);
 
-								echo $track->track . ' · ';
-								echo $track->lyricid || $track->video
-									? Html::a($track->name, '#' . $track->track)
-									: $track->name;
-								echo $track->disambiguation . $track->feat;
-								if ($track->video)
-									echo ' ' . Icon::show($track->lyricid || $track->wip ? 'video' : 'desktop', ['class' => 'text-muted']);
-								echo Html::tag('br');
+								echo Html::beginTag('div', ['class' => 'text-truncate']);
+									echo $track->track . ' · ';
+									echo $track->lyricid || $track->video
+										? Html::a($track->name, '#' . $track->track)
+										: $track->name;
+									echo $track->disambiguation . $track->feat;
+									if ($track->video)
+										echo ' ' . Icon::show($track->lyricid || $track->wip ? 'video' : 'desktop', ['class' => 'text-muted']);
+								echo Html::endTag('div');
 
 								if (++$y === count($data) || $x === (int) ceil(count($data) / 3)) {
 									echo Html::endTag('div');

@@ -1,5 +1,5 @@
 <?php
-use app\assets\{AppAsset, ImagesAsset};
+use app\assets\{AppAsset, ImagesAsset, FontAwesomeAsset};
 use app\models\{Icon, Menu};
 use yii\bootstrap4\{Html, Nav, NavBar};
 use yii\helpers\Url;
@@ -7,6 +7,7 @@ use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
 ImagesAsset::register($this);
+FontAwesomeAsset::register($this);
 
 $this->beginPage();
 

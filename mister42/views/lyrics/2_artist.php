@@ -13,7 +13,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']) .
 			Html::tag('div',
 				($data[0]->artist->buy
-					? Html::a(Icon::show('music'), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => 'Buy music of ' . $data[0]->artist->name])
+					? Html::a(Icon::show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => 'Buy music of ' . $data[0]->artist->name])
 					: 	'') .
 				($data[0]->artist->website
 					? Html::a(Icon::show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => 'Website of ' . $data[0]->artist->name])
@@ -33,7 +33,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 						), ['class' => 'float-left']) .
 						Html::tag('div',
 							($album->playlist_url
-								? Html::a(Icon::show('play').' Play', $album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
+								? Html::a(Icon::show('youtube', ['prefix' => 'fab fa-']).' Play', $album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
 								: '') .
 							($album->active
 								? Html::a(Icon::show('file-pdf').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-light ml-1'])
@@ -46,15 +46,16 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 							$x = $y = 0;
 							foreach ($album->tracks as $track) :
 								if ($x++ === 0)
-									echo Html::beginTag('div', ['class' => 'col-lg text-nowrap']);
+									echo Html::beginTag('div', ['class' => 'col-4']);
 
-								$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->lyricid || $track->video)
-									? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
-									: $track->name;
-								echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
-								if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video)
-									echo ' ' . Icon::show($track->lyricid || $track->wip ? 'video' : 'desktop', ['class' => 'text-muted']);
-								echo Html::tag('br');
+								echo Html::beginTag('div', ['class' => 'text-truncate']);
+									$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->lyricid || $track->video)
+										? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
+										: $track->name;
+									echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
+									if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video)
+										echo ' ' . Icon::show($track->lyricid || $track->wip ? 'video' : 'desktop', ['class' => 'text-muted']);
+								echo Html::endTag('div');
 
 								if (++$y === count($album->tracks) || $x === (int) ceil(count($album->tracks) / 3)) {
 									echo Html::endTag('div');

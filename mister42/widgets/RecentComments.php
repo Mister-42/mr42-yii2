@@ -19,7 +19,7 @@ class RecentComments extends Widget {
 	private function renderComments(array $comments): string {
 		foreach ($comments as $comment) :
 			$link = Html::a($comment->title, ['articles/index', 'id' => $comment->article->id, 'title' => $comment->article->url, '#' => 'comments'], ['class' => 'card-link']);
-			$items[] = Html::tag('li', $link, ['class' => 'list-group-item']);
+			$items[] = Html::tag('li', $link, ['class' => 'list-group-item text-truncate']);
 		endforeach;
 		return Html::tag('ul', implode($items), ['class' => 'list-group list-group-flush']);
 	}
