@@ -4,7 +4,6 @@ $lighterBlue:		lighten(adjust_hue($middleBlue, 10), 20%);
 $lightBlue:			lighten(adjust_hue($middleBlue, 5), 10%);
 $darkBlue:			darken(adjust_hue($middleBlue, -5), 10%);
 $darkerBlue:		darken(adjust_hue($middleBlue, -10), 20%);
-$fa-font-path:		"/webfonts";
 
 @import "bootstrap.scss";
 
@@ -31,7 +30,7 @@ body {
 }
 
 body > .container {
-	padding: 2rem 15px 2rem;
+	padding: 4.5rem 15px 2rem;
 }
 
 h1, h2, h3, h4, h5, h6, .breadcrumb {
@@ -184,7 +183,7 @@ form {
 	z-index: $zindex-fixed;
 	@include size(30px);
 
-	span {
+	> :first-child {
 		color: #fff;
 		position: relative;
 		top: 3px;
@@ -195,7 +194,7 @@ form {
 		background: #666;
 		cursor: pointer;
 
-		span {
+		> :first-child {
 			top: 0px;
 		}
 	}

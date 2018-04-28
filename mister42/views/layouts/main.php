@@ -1,5 +1,5 @@
 <?php
-use app\assets\{AppAsset, ImagesAsset, FontAwesomeAsset};
+use app\assets\{AppAsset, ImagesAsset};
 use app\models\{Icon, Menu};
 use yii\bootstrap4\{Html, Nav, NavBar};
 use yii\helpers\Url;
@@ -7,7 +7,6 @@ use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
 ImagesAsset::register($this);
-FontAwesomeAsset::register($this);
 
 $this->beginPage();
 
@@ -31,7 +30,7 @@ echo Html::beginTag('body');
 
 $this->beginBody();
 
-echo Html::beginTag('header', ['class' => 'site-header sticky-top']);
+echo Html::beginTag('header', ['class' => 'site-header fixed-top']);
 NavBar::begin([
 	'brandLabel' => Yii::$app->name,
 	'brandUrl' => Yii::$app->homeUrl,

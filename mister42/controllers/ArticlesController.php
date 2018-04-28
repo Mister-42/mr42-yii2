@@ -2,7 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\articles\{Articles, BaseArticles, Comments};
-use yii\bootstrap\Alert;
+use yii\bootstrap4\Html;
 use yii\data\ActiveDataProvider;
 use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\Url;
@@ -44,9 +44,9 @@ class ArticlesController extends \yii\web\Controller {
 						$comment->email = Yii::$app->user->identity->email;
 					}
 					$comment->sendCommentMail($model, $comment);
-					return Alert::widget(['options' => ['class' => 'alert-success'], 'body' => 'Your comment has been saved. It will not be visible until approved by an administrator.', 'closeButton' => false]);
+					return Html::tag('div', 'Your comment has been saved. It will not be visible until approved by an administrator.', ['class' => 'alert alert-success']);
 				}
-				return Alert::widget(['options' => ['class' => 'alert-danger'], 'body' => 'Something went wrong, Your comment has not been saved.', 'closeButton' => false]);
+				return Html::tag('div', 'Something went wrong, Your comment has not been saved.', ['class' => 'alert alert-danger']);
 			}
 
 			if (empty($title) || $title != $model->url)
