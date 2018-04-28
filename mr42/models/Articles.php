@@ -1,12 +1,5 @@
 <?php
 namespace app\models;
-use Yii;
-use app\models\Pdf;
-use Da\User\Model\{Profile, User};
-use yii\behaviors\TimestampBehavior;
-use yii\bootstrap\Html;
-use yii\helpers\{StringHelper, Url};
-use yii\web\AccessDeniedHttpException;
 
 class Articles extends \yii\db\ActiveRecord {
 	const STATUS_INACTIVE = 0;

@@ -15,7 +15,7 @@ class WiFi extends \app\models\tools\Qr {
 		$rules[] = ['password', 'required', 'when' => function () {
 						return $this->authentication !== 'none';
 					}, 'whenClient' => "function(attribute,value){return $('#qr-authentication').val()!='none';}"];
-		$rules[] = ['authentication', 'in', 'range' => parent::getAuthentication()];
+		$rules[] = ['authentication', 'in', 'range' => parent::getWifiAuthentication()];
 		$rules[] = [['ssid', 'password'], 'string'];
 		$rules[] = ['hidden', 'boolean'];
 		return $rules;
@@ -25,6 +25,7 @@ class WiFi extends \app\models\tools\Qr {
 		$labels = parent::attributeLabels();
 
 		$labels['ssid'] = 'SSID';
+		$labels['hidden'] = 'Hidden Network';
 		return $labels;
 	}
 

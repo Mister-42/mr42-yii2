@@ -30,6 +30,6 @@ class Ical extends \app\models\tools\Qr {
 		$data[] = $this->getDataOrOmit('DTSTART:', $this->start ? date('Ymd\THis\Z', strtotime($this->start)) : '');
 		$data[] = $this->getDataOrOmit('DTEND:', $this->end ? date('Ymd\THis\Z', strtotime($this->end)) : '');
 		$data[] = "END:VEVENT";
-        return parent::generate(implode("\n", array_filter($data)));
+		return parent::generate(implode("\n", array_filter($data)));
 	}
 }

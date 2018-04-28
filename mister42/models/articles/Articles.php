@@ -8,11 +8,11 @@ class Articles extends BaseArticles {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->title;
 		if (!empty($this->content))
-		    $this->content = Yii::$app->formatter->cleanInput($this->content, 'gfm', true);
+			$this->content = Yii::$app->formatter->cleanInput($this->content, 'gfm', true);
 
 		if ($this->source)
 			$this->content .= Html::tag('div',
-			    Html::a('Source', $this->source, ['class' => 'btn btn-secondary float-right'])
+				Html::a('Source', $this->source, ['class' => 'btn btn-secondary float-right'])
 			, ['class' => 'clearfix']);
 	}
 }

@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
 		echo Html::tag('h1', $this->title);
-		echo Html::tag('div', 'This ' . $this->title .  ' will phoneticise any text that you enter in the below box. Spelling alphabet, radio alphabet, or telephone alphabet is a set of words which are used to stand for the letters of an alphabet. Each word in the spelling alphabet typically replaces the name of the letter with which it starts.', ['class' => 'alert alert-info']);
+		echo Html::tag('div', 'This ' . $this->title . ' will phoneticise any text that you enter in the below box. Spelling alphabet, radio alphabet, or telephone alphabet is a set of words which are used to stand for the letters of an alphabet. Each word in the spelling alphabet typically replaces the name of the letter with which it starts.', ['class' => 'alert alert-info']);
 
 		if ($flash = Yii::$app->session->getFlash('phonetic-alphabet-success'))
 			echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $flash]);
@@ -25,7 +25,10 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('th-list').'{input}</div>{error}',
 			])->dropDownList(PhoneticAlphabet::getAlphabetList(), ['tabindex' => ++$tab]);
 
-		echo $form->field($model, 'numeric')->checkbox(['tabindex' => ++$tab]);
+		echo $form->field($model, 'numeric', [
+				'options'=> ['class'=>'form-group form-check'],
+				'template' => '{input}{label}',
+			])->checkBox(['tabindex' => ++$tab]);
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .

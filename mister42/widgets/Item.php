@@ -3,7 +3,7 @@ namespace app\widgets;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
-class Item extends \yii\bootstrap\Widget {
+class Item extends \yii\bootstrap4\Widget {
 	public $header;
 	public $body;
 	public $options;

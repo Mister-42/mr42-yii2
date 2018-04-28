@@ -8,10 +8,10 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
-echo Html::beginTag('div', ['class' => 'row']);
+echo Html::beginTag('div', ['class' => 'row form-group']);
 	foreach (['start', 'end'] as $name) :
 		echo $form->field($model, $name, [
-			'options' => ['class' => 'col-6'],
+			'options' => ['class' => 'col-md-6'],
 		])->widget(TimePicker::class, [
 			'clientOptions' => [
 				'changeMonth' => true,

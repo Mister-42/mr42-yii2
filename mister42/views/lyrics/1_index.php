@@ -7,7 +7,7 @@ $this->params['breadcrumbs'][] = $this->title;
 echo Html::tag('h1', $this->title);
 
 echo Html::beginTag('div', ['class' => 'site-lyrics']);
-    echo Html::beginTag('div', ['class' => 'row artists']);
+	echo Html::beginTag('div', ['class' => 'row artists']);
 		$x = $y = 0;
 		foreach ($data as $artist) :
 			if ($x++ === 0)

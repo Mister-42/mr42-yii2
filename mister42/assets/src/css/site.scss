@@ -19,8 +19,8 @@ $darkerBlue:		darken(adjust_hue($middleBlue, -10), 20%);
 }
 
 @mixin user-select($select) {
-      -ms-user-select: $select;
-          user-select: $select;
+	-ms-user-select: $select;
+		user-select: $select;
 }
 
 html,
@@ -75,7 +75,7 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 
 	&lyrics-albums,
 	&lyrics-lyrics {
-		.fa.text-muted  {
+		.fa.text-muted {
 			color: $lighterBlue !important;
 		}
 

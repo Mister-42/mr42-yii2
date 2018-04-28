@@ -14,7 +14,7 @@ $authorPage = Html::a($author->name ?? $model->user->username, ['/user/profile/s
 echo Html::beginTag('article', ['class' => 'mb-3']);
 	echo Html::beginTag('div', ['class' => 'clearfix']);
 		echo Html::tag('h3', (isset($view) && $view === 'full') ? $model->title : Html::a($model->title, ['index', 'id' => $model->id, 'title' => $model->url]), ['class' => 'float-left']);
-	    echo Html::beginTag('div', ['class' => 'float-right']);
+		echo Html::beginTag('div', ['class' => 'float-right']);
 			if ($model->belongsToViewer()) {
 				echo Html::a(Icon::show('edit') . ' Edit', ['update', 'id' => $model->id], ['class' => 'badge badge-primary ml-1']);
 				echo Html::a(Icon::show('trash-alt') . ' Delete', ['delete', 'id' => $model->id], [
@@ -58,14 +58,14 @@ echo Html::beginTag('article', ['class' => 'mb-3']);
 		if (count($tags) > 0) {
 			foreach($tags as $tag)
 				$tagArray[] = Html::a($tag, ['index', 'action' => 'tag', 'tag' => $tag]);
-			$bar[] =  Icon::show(count($tags) === 1 ? 'tag' : 'tags', ['class' => 'mr-1 text-muted']) . implode(', ', $tagArray);
+			$bar[] = Icon::show(count($tags) === 1 ? 'tag' : 'tags', ['class' => 'mr-1 text-muted']) . implode(', ', $tagArray);
 		}
 
-		$bar[] =  Icon::show('clock', ['class' => 'mr-1 text-muted']) . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->created), ['datetime' => date(DATE_W3C, $model->created)]);
+		$bar[] = Icon::show('clock', ['class' => 'mr-1 text-muted']) . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->created), ['datetime' => date(DATE_W3C, $model->created)]);
 		if ($model->updated - $model->created > 3600)
-			$bar[] =  Icon::show('sync', ['class' => 'mr-1 text-muted']) . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
+			$bar[] = Icon::show('sync', ['class' => 'mr-1 text-muted']) . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
 
-		$bar[] =  Icon::show('user', ['class' => 'mr-1 text-muted']) . Html::tag('span', $authorPage, ['class' => 'author']);
+		$bar[] = Icon::show('user', ['class' => 'mr-1 text-muted']) . Html::tag('span', $authorPage, ['class' => 'author']);
 
 		echo Html::tag('div', implode(' · ', $bar), ['class' => 'article-toolbar mb-2']);
 

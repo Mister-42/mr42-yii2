@@ -13,6 +13,13 @@ class FreeInput extends \app\models\tools\Qr {
 		return $rules;
 	}
 
+	public function attributeLabels(): array {
+		$labels = parent::attributeLabels();
+
+		$labels['qrdata'] = 'QR Data';
+		return $labels;
+	}
+
 	public function generateQr(): bool {
 		return parent::generate($this->qrdata);
 	}

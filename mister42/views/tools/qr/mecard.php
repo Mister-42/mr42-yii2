@@ -7,38 +7,32 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
-echo Html::tag('div',
-	$form->field($model, 'firstName', [
-			'options' => ['class' => 'col-6'],
+echo Html::beginTag('div', ['class' => 'row form-group']);
+	foreach (['firstName', 'lastName'] as $name) :
+		echo $form->field($model, $name, [
+			'options' => ['class' => 'col-md-6'],
 			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
-		])->textInput(['tabindex' => ++$tab]) .
-	$form->field($model, 'lastName', [
-			'options' => ['class' => 'col-6'],
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
-		])->textInput(['tabindex' => ++$tab])
-, ['class' => 'row']);
+		])->textInput(['tabindex' => ++$tab]);
+	endforeach;
+echo Html::endTag('div');
 
-echo Html::tag('div',
-	$form->field($model, 'firstSound', [
-			'options' => ['class' => 'col-6'],
+echo Html::beginTag('div', ['class' => 'row form-group']);
+	foreach (['firstSound', 'lastSound'] as $name) :
+		echo $form->field($model, $name, [
+			'options' => ['class' => 'col-md-6'],
 			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('music').'{input}</div>{error}',
-		])->textInput(['tabindex' => ++$tab]) .
-	$form->field($model, 'lastSound', [
-			'options' => ['class' => 'col-6'],
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('music').'{input}</div>{error}',
-		])->textInput(['tabindex' => ++$tab])
-, ['class' => 'row']);
+		])->textInput(['tabindex' => ++$tab]);
+	endforeach;
+echo Html::endTag('div');
 
-echo Html::tag('div',
-	$form->field($model, 'phone', [
-			'options' => ['class' => 'col-6'],
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('phone').'{input}</div>{error}',
-		])->input('tel', ['tabindex' => ++$tab]) .
-	$form->field($model, 'videoPhone', [
-			'options' => ['class' => 'col-6'],
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('video').'{input}</div>{error}',
-		])->input('tel', ['tabindex' => ++$tab])
-, ['class' => 'row']);
+echo Html::beginTag('div', ['class' => 'row form-group']);
+	foreach (['phone' => 'phone', 'videoPhone' => 'video'] as $name => $icon) :
+		echo $form->field($model, $name, [
+			'options' => ['class' => 'col-md-6'],
+			'template' => '{label}<div class="input-group">'.Icon::fieldAddon($icon).'{input}</div>{error}',
+		])->textInput(['tabindex' => ++$tab]);
+	endforeach;
+echo Html::endTag('div');
 
 echo $form->field($model, 'email', [
 		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('envelope').'{input}</div>{error}',

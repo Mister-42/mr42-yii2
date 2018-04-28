@@ -59,7 +59,7 @@ class Qr extends \yii\base\Model {
 				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => ++$tab])
 			->hint('If you enter your email address the ' . Html::tag('span', 'QR Code', ['class' => 'text-nowrap']) . ' will be mailed to that address.')
-		, ['class' => 'row']);
+		, ['class' => 'row form-group']);
 
 		$footer[] = Html::tag('div',
 			Html::submitButton('Generate QR Code', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
@@ -88,7 +88,7 @@ class Qr extends \yii\base\Model {
 		return true;
 	}
 
-	public function getAuthentication(): array {
+	public function getWifiAuthentication(): array {
 		foreach (['none', 'WEP', 'WPA'] as $value)
 			$list[$value] = $value;
 		return $list;
