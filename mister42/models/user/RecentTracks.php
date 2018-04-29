@@ -44,8 +44,8 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		$data .= empty($tracks)
 			? Html::tag('p', 'No items to display.')
 			: Html::tag('div',
-				Html::tag('span', Html::tag('b', 'Total tracks played:'), ['class' => 'float-left']) .
-				Html::tag('span', Html::tag('b', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'float-right'])
+				Html::tag('span', Html::tag('strong', 'Total tracks played:'), ['class' => 'float-left']) .
+				Html::tag('span', Html::tag('strong', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'float-right'])
 			);
 		return $data;
 	}

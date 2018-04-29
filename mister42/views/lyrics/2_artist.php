@@ -46,7 +46,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 							$x = $y = 0;
 							foreach ($album->tracks as $track) :
 								if ($x++ === 0)
-									echo Html::beginTag('div', ['class' => 'col-4']);
+									echo Html::beginTag('div', ['class' => 'col-md-4']);
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
 									$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->lyricid || $track->video)

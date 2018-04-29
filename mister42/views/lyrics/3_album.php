@@ -30,7 +30,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 						$x = $y = 0;
 							foreach($data as $track) :
 								if ($x++ === 0)
-									echo Html::beginTag('div', ['class' => 'col-4']);
+									echo Html::beginTag('div', ['class' => 'col-md-4']);
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
 									echo $track->track . ' · ';

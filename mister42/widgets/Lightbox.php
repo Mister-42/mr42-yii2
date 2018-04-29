@@ -9,7 +9,7 @@ class Lightbox extends Widget {
 	public $items = [];
 	public $options = [];
 	public $linkOptions = ['class' => 'mr-2 my-1'];
-	public $imageOptions = ['class' => 'rounded'];
+	public $imageOptions = ['class' => 'd-none d-md-block rounded'];
 
 	public function init() {
 		LightboxAsset::register($this->getView());
