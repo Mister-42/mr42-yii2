@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 class Icon {
 	public static function show(string $name, array $options = []): string {
 		$tag = ArrayHelper::remove($options, 'tag', 'span');
-		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fa fa-');
+		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fas fa-');
 		Html::addCssClass($options, $classPrefix . $name);
 		return Html::tag($tag, '', $options);
 	}
