@@ -67,7 +67,7 @@ echo Html::beginTag('article', ['class' => 'mb-3']);
 
 		$bar[] = Icon::show('user', ['class' => 'mr-1 text-muted']) . Html::tag('span', $authorPage, ['class' => 'author']);
 
-		echo Html::tag('div', implode(' · ', $bar), ['class' => 'article-toolbar mb-2']);
+		echo Html::tag('div', implode(' · ', $bar), ['class' => 'article-toolbar my-2']);
 
 		if (!empty($author->bio) && $author = Profile::show($author))
 			echo Html::tag('div', $author, ['class' => 'alert alert-secondary']);

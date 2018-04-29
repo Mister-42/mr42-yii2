@@ -5,12 +5,11 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->title;
 
-echo Html::beginTag('div', ['class' => 'clearfix']);
-	if ($old = $model->find()->where(['<', 'id', $model->id])->orderBy('id DESC')->one())
-		echo Html::a('&laquo; Previous Article', ['articles/index', 'id' => $old->id, 'title' => $old->url], ['class' => 'btn btn-sm btn-light float-left', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => $old->title]);
-
-	if ($new = $model->find()->where(['>', 'id', $model->id])->orderBy('id')->one())
-		echo Html::a('Next Article &raquo;', ['articles/index', 'id' => $new->id, 'title' => $new->url], ['class' => 'btn btn-sm btn-light float-right', 'data-toggle' => 'tooltip', 'data-placement' => 'left', 'title' => $new->title]);
+echo Html::beginTag('div', ['class' => 'clearfix mb-1']);
+foreach (['<', '>'] as $z) :
+	if ($art = $model->find()->where([$z, 'id', $model->id])->orderBy('id ' . ($z === '<' ? 'DESC' : 'ASC'))->one())
+		echo Html::a(($z === '<' ? '&laquo; Previous Article' : 'Next Article &raquo;'), ['articles/index', 'id' => $art->id, 'title' => $art->url], ['class' => 'btn btn-sm btn-light float-'.($z === '<' ? 'left' : 'right'), 'data-toggle' => 'tooltip', 'data-placement' => ($z === '<' ? 'right' : 'left'), 'title' => $art->title]);
+endforeach;
 echo Html::endTag('div');
 
 echo $this->render('_view', ['model' => $model, 'view' => 'full']);

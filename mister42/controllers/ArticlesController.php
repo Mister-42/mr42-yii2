@@ -32,38 +32,13 @@ class ArticlesController extends \yii\web\Controller {
 		];
 	}
 
-	public function actionIndex($id = '', $title = '', $action = '', $tag = '', $q = '') {
-		if (!empty($id)) {
-			$model = $this->findModel($id, ['comments']);
-			$comment = new Comments;
-
-			if ($comment->load(Yii::$app->request->post())) {
-				if ($model->addComment($comment)) {
-					if (!Yii::$app->user->isGuest) {
-						$comment->name = Yii::$app->user->identity->username;
-						$comment->email = Yii::$app->user->identity->email;
-					}
-					$comment->sendCommentMail($model, $comment);
-					return Html::tag('div', 'Your comment has been saved. It will not be visible until approved by an administrator.', ['class' => 'alert alert-success']);
-				}
-				return Html::tag('div', 'Something went wrong, Your comment has not been saved.', ['class' => 'alert alert-danger']);
-			}
-
-			if (empty($title) || $title != $model->url)
-				$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
-
-			Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['shortDomain']."art{$model->id}"]);
-			if ($model->pdf)
-				Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
-			return $this->render('view', [
-				'model' => $model,
-				'comment' => $comment
-			]);
-		}
+	public function actionIndex($id = '', $action = '', $q = ''): string {
+		if (!empty($id))
+			return self::pageIndex($id);
 
 		$query = Articles::find()->orderBy('id DESC');
-		if ($action === "tag" && !empty($tag))
-			$query->where(['like', 'tags', $tag]);
+		if ($action === "tag" && !empty($q))
+			$query->where(['like', 'tags', $q]);
 		elseif ($action === "search" && !empty($q)) {
 			Yii::$app->view->registerMetaTag(['name' => 'robots', 'content' => 'noindex']);
 			$query->where(['like', 'title', $q]);
@@ -78,7 +53,6 @@ class ArticlesController extends \yii\web\Controller {
 				],
 			]),
 			'action' => $action,
-			'tag' => $tag,
 			'q' => $q,
 		]);
 	}
@@ -88,7 +62,7 @@ class ArticlesController extends \yii\web\Controller {
 			$model = $this->findModel($id);
 
 			if (!$model->pdf)
-				throw new NotFoundHttpException('Page not found.');
+				throw new NotFoundHttpException('File not found.');
 
 			if (empty($title) || $title != $model->url)
 				$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
@@ -157,6 +131,35 @@ class ArticlesController extends \yii\web\Controller {
 		}
 
 		return false;
+	}
+
+	private function pageIndex(int $id): string {
+		$model = $this->findModel($id, ['comments']);
+		$comment = new Comments;
+
+		if ($comment->load(Yii::$app->request->post())) {
+			if ($model->addComment($comment)) {
+				if (!Yii::$app->user->isGuest) {
+					$comment->name = Yii::$app->user->identity->username;
+					$comment->email = Yii::$app->user->identity->email;
+				}
+				$comment->sendCommentMail($model, $comment);
+				return Html::tag('div', 'Your comment has been saved. It will not be visible until approved by an administrator.', ['class' => 'alert alert-success']);
+			}
+			return Html::tag('div', 'Something went wrong, Your comment has not been saved.', ['class' => 'alert alert-danger']);
+		}
+
+		if (Yii::$app->request->get('title') != $model->url)
+			$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
+
+		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['shortDomain']."art{$model->id}"]);
+		if ($model->pdf)
+			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
+
+		return $this->render('view', [
+			'model' => $model,
+			'comment' => $comment
+		]);
 	}
 
 	protected function findComment($id) {

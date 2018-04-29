@@ -4,7 +4,7 @@ use yii\widgets\ListView;
 
 switch ($action) {
 	case 'tag'		:	$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
-						$this->title = Yii::t('site', '{results, plural, =0{No articles} =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $dataProvider->totalCount, 'tag' => $tag]);
+						$this->title = Yii::t('site', '{results, plural, =0{No articles} =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $dataProvider->totalCount, 'tag' => $q]);
 						break;
 	case 'search'	:	$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 						$this->title = Yii::t('site', '{results, plural, =0{No search results} =1{1 search result} other{# search results}} for "{query}"', ['results' => $dataProvider->totalCount, 'query' => $q]);

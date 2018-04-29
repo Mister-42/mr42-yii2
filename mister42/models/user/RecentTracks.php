@@ -35,7 +35,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 				$data .= Html::beginTag('span', ['class' => 'float-left text-truncate']);
 					$data .= $track['artist'];
 					if ($track['time'] === 0)
-						$data .= Icon::show('volume-up', ['title' => 'Currently playing']);
+						$data .= Icon::show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
 				$data .= Html::endTag('span');
 				$data .= Html::tag('span', $track['track'], ['class' => 'float-right text-right text-truncate']);
 			$data .= Html::endTag('div');

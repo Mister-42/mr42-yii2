@@ -105,7 +105,7 @@ return [
 				'articles/<id:\d+>/<title:.*?>'										=> 'articles/index',
 				'articles/<id:\d+>'													=> 'articles/index',
 				'articles/<action:search>'											=> 'articles/index',
-				'articles/<action:tag>/<tag:\w+>'									=> 'articles/index',
+				'articles/<action:tag>/<q:\w+>'										=> 'articles/index',
 				'articles/page-<page:\d+>'											=> 'articles/index',
 				'articles'															=> 'articles/index',
 				'articles/<action>'													=> 'articles/<action>',

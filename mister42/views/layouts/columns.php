@@ -61,7 +61,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo Item::widget([
 				'body' => TagCloud::widget(),
-				'header' => 'Tags',
+				'header' => 'Tag Cloud',
 				'options' => ['id' => 'tags'],
 			]);
 

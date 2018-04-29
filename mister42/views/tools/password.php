@@ -39,7 +39,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 					, ['class' => 'input-group-prepend']);
 					echo Html::textInput('password', null, ['class' => 'form-control', 'id' => 'password', 'placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
 					echo Html::tag('span',
-						Html::button(Icon::show('clipboard'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#password', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard'])
+						Html::button(Icon::show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#password', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard'])
 					, ['class' => 'input-group-append']);
 				echo Html::endTag('div');
 			echo Html::endTag('div');

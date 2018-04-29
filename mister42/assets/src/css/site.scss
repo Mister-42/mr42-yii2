@@ -117,7 +117,7 @@ aside {
 	}
 
 	#tags .card-link {
-		margin: 1.25rem;
+		margin: .25rem;
 	}
 
 	.artists,
@@ -140,11 +140,6 @@ aside {
 
 pre code {
 	max-height: $pre-scrollable-max-height;
-	white-space: pre;
-}
-
-.hljs {
-	background: transparent !important;
 }
 
 form {

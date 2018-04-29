@@ -40,7 +40,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'psk', [
 				'options' => ['class' => 'form-group has-success'],
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('key').'{input}<span class="input-group-append">' . Html::button(Icon::show('clipboard'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard']) . '</span></div>{error}',
+				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('key').'{input}<span class="input-group-append">' . Html::button(Icon::show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard']) . '</span></div>{error}',
 			])
 			->textInput(['placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
 
