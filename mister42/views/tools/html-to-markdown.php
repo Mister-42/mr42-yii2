@@ -1,10 +1,13 @@
 <?php
 use app\assets\Html2MarkdownAsset;
+use app\models\articles\Articles;
 use yii\bootstrap4\Html;
 
 $this->title = 'HTML to Markdown Converter';
 $this->params['breadcrumbs'][] = 'Tools';
 $this->params['breadcrumbs'][] = $this->title;
+
+$lastPost = Articles::findOne(['id' => 4]);
 
 Html2MarkdownAsset::register($this);
 

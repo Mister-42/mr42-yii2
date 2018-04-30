@@ -1,8 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\articles\Articles;
-use app\models\tools\{Barcode, Country, Favicon, PhoneticAlphabet, Qr};
+use app\models\tools\{Barcode, Favicon, PhoneticAlphabet, Qr};
 use yii\base\{BaseObject, ViewNotFoundException};
 use yii\helpers\{ArrayHelper, FileHelper};
 use yii\web\{NotFoundHttpException, UploadedFile};
@@ -38,9 +37,7 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionCountry() {
-		return $this->render('country', [
-			'model' => new Country,
-		]);
+		return $this->render('country');
 	}
 
 	public function actionFavicon() {
@@ -64,9 +61,7 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionHtmlToMarkdown() {
-		return $this->render('html-to-markdown', [
-			'lastPost' => Articles::findOne(4),
-		]);
+		return $this->render('html-to-markdown');
 	}
 
 	public function actionPassword() {

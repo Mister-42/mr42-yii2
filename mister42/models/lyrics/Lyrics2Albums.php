@@ -71,7 +71,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return $pdf->create(
 			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
 			$html,
-			Lyrics3Tracks::lastUpdate($album->artist->url, $album->year, $album->url, (object)['item' => (object)['album' => $album]]),
+			Lyrics3Tracks::lastUpdate($album->artist->url, $album->year, $album->url, (object) ['item' => (object) ['album' => $album]]),
 			[
 				'author' => $album->artist->name,
 				'footer' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.$album->year.'|Page {PAGENO} of {nb}',
