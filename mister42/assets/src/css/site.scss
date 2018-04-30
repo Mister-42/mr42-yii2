@@ -54,19 +54,15 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 }
 
 .site- {
-
-	&changelog .row {
-		@include dividing-line(2px, $lighterBlue);
-	}
-
+	&changelog,
 	&country,
+	&headers,
 	&php-version {
 		.row {
-			@include dividing-line(0px, $lighterBlue);
+			@include dividing-line(2px, $lighterBlue);
 		}
 	}
 
-	&headers,
 	&lyrics-lyrics {
 		.row {
 			@include dividing-line(10px, $lighterBlue);
@@ -94,6 +90,10 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 			@include user-select(all);
 		}
 	}
+}
+
+.alert p:last-of-type {
+	margin-bottom: 0;
 }
 
 .anchor {

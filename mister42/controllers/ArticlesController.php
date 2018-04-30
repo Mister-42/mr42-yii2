@@ -119,7 +119,7 @@ class ArticlesController extends \yii\web\Controller {
 		if (!$article->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
 
-		$comment->active = ($comment->active) ? Comments::STATUS_INACTIVE : Comments::STATUS_ACTIVE;
+		$comment->active = $comment->active ? Comments::STATUS_INACTIVE : Comments::STATUS_ACTIVE;
 		if ($action == "toggleapproval") {
 			if (!Yii::$app->request->isAjax)
 				throw new MethodNotAllowedHttpException('Method Not Allowed.');

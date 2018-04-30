@@ -10,8 +10,8 @@ use yii\web\AccessDeniedHttpException;
 class Comments extends ActiveRecord {
 	public $captcha;
 
-	const STATUS_INACTIVE = '0';
-	const STATUS_ACTIVE = '1';
+	const STATUS_INACTIVE = false;
+	const STATUS_ACTIVE = true;
 
 	public static function tableName() {
 		return '{{%articles_comments}}';
@@ -27,23 +27,18 @@ class Comments extends ActiveRecord {
 			[['website'], 'string', 'max' => 128],
 			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
 			[['website'], 'url', 'defaultScheme' => 'http', 'enableIDN' => true],
-			[['captcha'], 'captcha'],
 		];
 
-		if (Yii::$app->user->isGuest)
+		if (Yii::$app->user->isGuest) {
+			$rules[] = [['captcha'], 'captcha'];
 			$rules[] = [['name', 'email', 'captcha'], 'required'];
+		}
 		return $rules;
 	}
 
 	public function attributeLabels() {
 		return [
-			'id' => 'ID',
-			'parent' => 'Article ID',
-			'title' => 'Comment Title',
 			'content' => 'Comment',
-			'created' => 'Created At',
-			'user' => 'User',
-			'name' => 'Name',
 			'email' => 'Email Address',
 			'website' => 'Website URL',
 			'captcha' => 'CAPTCHA',
@@ -117,7 +112,7 @@ class Comments extends ActiveRecord {
 	public static function find() {
 		return parent::find()
 			->onCondition(
-				php_sapi_name() !== 'cli' && Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin
+				php_sapi_name() !== 'cli' && Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin
 					? ['active' => Self::STATUS_ACTIVE]
 					: ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
 			);

@@ -45,7 +45,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		])->input('url', ['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'lastfm', [
-			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('music').'{input}</div>',
+			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('lastfm', ['prefix' => 'fab fa-']).'{input}</div>',
 		])->textInput(['tabindex' => 3]);
 
 		echo $form->field($model, 'location', [
@@ -70,7 +70,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'inputTemplate' => '<div class="row"><div id="chars" class="col-12 text-right"></div></div><div class="input-group">'.Icon::fieldAddon('info-circle').'{input}</div>',
 			])
 			->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => ++$tab])
-			->hint('You may use ' . Html::a('Markdown Syntax', ['/articles/index', 'id' => 4], ['target' => '_blank']) . ' and <code>%age%</code> to show your age, calculated from <nobr>' . Html::tag('code', $model->getAttributeLabel('birthday')) . '</nobr>. HTML is not allowed.');
+			->hint('You may use ' . Html::a('Markdown Syntax', Yii::$app->params['shortDomain'] . 'art4', ['target' => '_blank']) . ' and <code>%age%</code> to show your age, calculated from <nobr>' . Html::tag('code', $model->getAttributeLabel('birthday')) . '</nobr>. HTML is not allowed.');
 
 		echo $form->field($model, 'timezone', [
 			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('clock').'{input}</div>',
@@ -78,7 +78,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo Html::tag('div',
 			Html::submitButton(Yii::t('usuario', 'Save'), ['class' => 'btn btn-success', 'tabindex' => ++$tab])
-		, ['class' => 'float-right']);
+		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

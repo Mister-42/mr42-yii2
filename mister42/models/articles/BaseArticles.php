@@ -9,8 +9,8 @@ use yii\helpers\{StringHelper, Url};
 use yii\web\AccessDeniedHttpException;
 
 class BaseArticles extends \yii\db\ActiveRecord {
-	const STATUS_INACTIVE = 0;
-	const STATUS_ACTIVE = 1;
+	const STATUS_INACTIVE = false;
+	const STATUS_ACTIVE = true;
 
 	public static function tableName() {
 		return '{{%articles}}';

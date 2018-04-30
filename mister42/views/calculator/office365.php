@@ -27,7 +27,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		foreach (['source', 'target'] as $field) :
 			echo Html::beginTag('div', ['class' => 'row']);
 				echo $form->field($model, $field.'date', [
-					'options' => ['class' => 'col-sm-6'],
+					'options' => ['class' => 'form-group col-md-6'],
 				])->widget(TimePicker::class, [
 					'clientOptions' => [
 						'changeMonth' => true,
@@ -41,14 +41,17 @@ echo Html::beginTag('div', ['class' => 'row']);
 				]);
 
 				echo $form->field($model, $field.'count', [
-					'options' => ['class' => 'col-sm-6'],
+					'options' => ['class' => 'form-group col-md-6'],
 					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
 				])
 				->input('number', ['class' => 'form-control', 'tabindex' => ++$tab]);
 			echo Html::endTag('div');
 		endforeach;
 
-		echo $form->field($model, 'action')->dropDownList([
+		echo $form->field($model, 'action', [
+			'options' => ['class' => 'form-group'],
+			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('cloud').'{input}</div>{error}',
+		])->dropDownList([
 			'renew' => 'I am renewing these licenses',
 			'add' => 'I am adding these licenses',
 		], ['tabindex' => ++$tab]);

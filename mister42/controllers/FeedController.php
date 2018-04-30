@@ -8,15 +8,14 @@ use yii\web\Response;
 
 class FeedController extends \yii\web\Controller {
 	public function behaviors() {
+		$lastUpdate = Articles::find()->select(['updated' => 'max(updated)'])->one();
 		return [
 			[
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
 				'except' => ['index'],
-				'lastModified' => function () {
-					$lastUpdate = Articles::find()->select(['updated' => 'max(updated)'])->one();
-					return $lastUpdate->updated;
-				},
+				'etagSeed' => function () { return serialize([phpversion(), Yii::$app->user->id, $lastUpdate]); },
+				'lastModified' => function () { return $lastUpdate->updated; },
 			],
 		];
 	}

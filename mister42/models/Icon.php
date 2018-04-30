@@ -8,7 +8,7 @@ class Icon {
 		$tag = ArrayHelper::remove($options, 'tag', 'span');
 		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fas fa-');
 		Html::addCssClass($options, $classPrefix . $name);
-		return Html::tag($tag, '', $options);
+		return Html::tag($tag, null, $options);
 	}
 
 	public static function fieldAddon(string $name, array $options = []): string {

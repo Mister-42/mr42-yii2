@@ -40,7 +40,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Icon::fieldAddon('comment').'{input}</div> {hint} {error}'
 			])
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
-			->hint('You may use ' . Html::a('Markdown Syntax', ['/articles/index', 'id' => 4], ['target' => '_blank']) . '. HTML is not allowed.');
+			->hint('You may use ' . Html::a('Markdown Syntax', Yii::$app->params['shortDomain'] . 'art4', ['target' => '_blank']) . '. HTML is not allowed.');
 
 		if (Yii::$app->user->isGuest) {
 			echo $form->field($model, 'captcha')->widget(Captcha::class, [

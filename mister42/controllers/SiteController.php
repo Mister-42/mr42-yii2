@@ -39,6 +39,10 @@ class SiteController extends \yii\web\Controller {
 				}
 			], [
 				'class' => HttpCache::class,
+				'enabled' => !YII_DEBUG,
+				'etagSeed' => function (BaseObject $action) {
+					return serialize([phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
+				},
 				'lastModified' => function () {
 					$lastUpdate = Changelog::find()->select(['time' => 'max(time)'])->one();
 					return $lastUpdate->time;
@@ -47,17 +51,23 @@ class SiteController extends \yii\web\Controller {
 			], [
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'lastModified' => function (BaseObject $action) {
-					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
+				'etagSeed' => function () {
+					return serialize(file(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico'));
 				},
-				'only' => ['robotstxt'],
-			], [
-				'class' => HttpCache::class,
-				'enabled' => !YII_DEBUG,
 				'lastModified' => function () {
 					return filemtime(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico');
 				},
 				'only' => ['faviconico'],
+			], [
+				'class' => HttpCache::class,
+				'enabled' => !YII_DEBUG,
+				'etagSeed' => function (BaseObject $action) {
+					return serialize([phpversion(), file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
+				},
+				'lastModified' => function (BaseObject $action) {
+					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
+				},
+				'only' => ['robotstxt'],
 			],
 		];
 	}

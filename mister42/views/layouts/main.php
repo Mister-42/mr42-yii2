@@ -66,10 +66,10 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 		echo Html::beginTag('div', ['class' => 'float-right']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				if (Yii::$app->user->identity->isAdmin)
-					echo Html::a('Validate HTML', 'https://validator.w3.org/nu/?doc=' . rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs']);
+					echo Html::a(Icon::show('code', ['title' => 'Validate HTML']), 'https://validator.w3.org/nu/?doc=' . rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs']);
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1']);
 				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'badge badge-primary ml-1 hidden-xs']);
-				echo Html::a('RSS', ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank']);
+				echo Html::a(Icon::show('rss', ['title' => 'RSS']), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank']);
 			}
 		echo Html::endTag('div');
 	echo Html::endTag('div');

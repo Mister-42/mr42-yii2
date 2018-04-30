@@ -12,7 +12,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::tag('aside',
 		Html::tag('div',
 			Html::tag('div', 'Recently Played Tracks', ['class' => 'card-header']) .
-			Html::tag('div', null, ['class' => 'tracks'])
+			Html::tag('div', Html::tag('span', 'Loading…', ['class' => 'mx-2']), ['class' => 'tracks'])
 		, ['class' => 'card mb-2']) .
 		Html::tag('div',
 			Item::widget([
@@ -20,7 +20,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'header' => 'Weekly Artist Chart',
 			])
 		, ['class' => 'artists'])
-	, ['class' => 'd-none d-md-inline col-4']);
+	, ['class' => 'd-none d-md-inline col-md-4']);
 echo Html::endTag('div');
 
 $this->endContent();
