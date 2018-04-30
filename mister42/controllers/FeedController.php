@@ -16,6 +16,7 @@ class FeedController extends \yii\web\Controller {
 				'except' => ['index'],
 				'etagSeed' => function () { return serialize([phpversion(), Yii::$app->user->id, $lastUpdate]); },
 				'lastModified' => function () { return $lastUpdate->updated; },
+				'only' => ['index', 'rss'],
 			],
 		];
 	}
