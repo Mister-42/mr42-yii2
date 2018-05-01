@@ -93,8 +93,10 @@ return [
 			'showScriptName' => false,
 			'rules' => [
 				''																	=> 'site/index',
+				'browserconfig.xml'													=> 'site/browserconfigxml',
 				'favicon.ico'														=> 'site/faviconico',
 				'robots.txt'														=> 'site/robotstxt',
+				'site.webmanifest'													=> 'site/webmanifest',
 				'sitemap.xml'														=> 'feed/sitemap',
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>.pdf'					=> 'lyrics/albumpdf',
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>-<size:.{2,5}>.jpg'	=> 'lyrics/albumcover',

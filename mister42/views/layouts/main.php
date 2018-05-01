@@ -23,6 +23,11 @@ if (Yii::$app->controller->id !== 'articles' || Yii::$app->controller->action->i
 	$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
 $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
 $this->registerLinkTag(['rel' => 'icon', 'sizes' => '16x16 32x32 48x48 64x64', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/favicon.ico']);
+$this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/apple-touch-icon.png']);
+$this->registerLinkTag(['rel' => 'mask-icon', 'color' => Yii::$app->params['themeColor'], 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/safari-pinned-tab.svg']);
+$this->registerLinkTag(['rel' => 'manifest', 'href' => Url::to(['/site/webmanifest'])]);
+$this->registerMetaTag(['name' => 'msapplication-config', 'content' => Url::to(['/site/browserconfigxml'])]);
+$this->registerMetaTag(['name' => 'theme-color', 'content' => Yii::$app->params['themeColor']]);
 $this->registerCsrfMetaTags();
 $this->head();
 echo Html::endTag('head');

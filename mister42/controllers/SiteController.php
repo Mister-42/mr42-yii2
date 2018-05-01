@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\site\{Changelog, Contact};
+use app\models\site\{Changelog, Contact, Webmanifest};
 use yii\bootstrap4\Html;
 use yii\base\BaseObject;
 use yii\captcha\CaptchaAction;
@@ -67,7 +67,7 @@ class SiteController extends \yii\web\Controller {
 				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
-				'only' => ['robotstxt'],
+				'only' => ['browserconfigxml', 'robotstxt'],
 			],
 		];
 	}
@@ -108,9 +108,19 @@ class SiteController extends \yii\web\Controller {
 		return $this->render('php-version');
 	}
 
+	public function actionBrowserconfigxml() {
+		Yii::$app->response->format = Response::FORMAT_RAW;
+		Yii::$app->response->headers->add('Content-Type', 'application/xml');
+		return $this->renderPartial('browserconfigxml');
+	}
+
 	public function actionRobotstxt() {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'text/plain');
 		return $this->renderPartial('robotstxt');
+	}
+
+	public function actionWebmanifest() {
+		return $this->asJson(Webmanifest::getData());
 	}
 }

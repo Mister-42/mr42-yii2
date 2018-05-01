@@ -1,5 +1,6 @@
 <?php
 return [
+	'themeColor' => '#003E67',
 	'description' => 'Sharing beautiful knowledge of the world.',
 	'feedItemCount' => 10,
 	'recentArticles' => 5,
