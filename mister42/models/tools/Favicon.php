@@ -39,9 +39,8 @@ class Favicon extends \yii\base\Model {
 				return false;
 			}
 
-			$tmpSize = min(640, $width, $height);
-			$tmpSize / $width * $height > $tmpSize ? exec("convert -scale {$tmpSize},0 {$srcImg}") : exec('convert -scale 0,'.$tmpSize.' '.$srcImg);
-			exec("convert -crop {$tmpSize}x{$tmpSize} {$srcImg}");
+			$tmpSize = min(500, $width, $height);
+			exec("convert {$srcImg} -resize \"{$tmpSize}x{$tmpSize}^\" -gravity center -crop {$tmpSize}x{$tmpSize}+0+0 +repage {$srcImg}");
 
 			foreach ($this->dimensions as $dimension) :
 				$tmpFiles[] = Yii::getAlias("@assetsroot/temp/{$rndFilename}.{$dimension}.png");
