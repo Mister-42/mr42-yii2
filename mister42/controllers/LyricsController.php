@@ -51,9 +51,9 @@ class LyricsController extends \yii\web\Controller {
 
 	public function actionIndex() {
 		switch ($this->page) {
-			case self::PAGE_INDEX:	list($page, $data) = ['1_index', Lyrics1Artists::artistsList()];				break;
-			case self::PAGE_ARTIST:	list($page, $data) = self::pageArtist($this->artist);							break;
-			case self::PAGE_ALBUM:	list($page, $data) = self::pageAlbum($this->artist, $this->year, $this->album);	break;
+			case self::PAGE_INDEX:	list($page, $data) = ['1_index', Lyrics1Artists::artistsList()];	break;
+			case self::PAGE_ARTIST:	list($page, $data) = self::pageArtist();							break;
+			case self::PAGE_ALBUM:	list($page, $data) = self::pageAlbum();								break;
 		}
 
 		Yii::$app->view->registerMetaTag(['name' => 'google', 'content' => 'notranslate']);
@@ -84,20 +84,20 @@ class LyricsController extends \yii\web\Controller {
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
 	}
 
-	private function pageArtist (string $artist): array {
-		$albums = Lyrics2Albums::albumsList($artist);
+	private function pageArtist (): array {
+		$albums = Lyrics2Albums::albumsList($this->artist);
 
 		if (count($albums) === 0)
 			throw new NotFoundHttpException('Artist not found.');
 
-		if ($albums[0]->artist->url !== $artist)
+		if ($albums[0]->artist->url !== $this->artist)
 			$this->redirect(['index', 'artist' => $albums[0]->artist->url], 301)->send();
 
 		return ['2_artist', $albums];
 	}
 
-	private function pageAlbum (string $artist, string $year, string $album): array {
-		$tracks = Lyrics3Tracks::tracksList($artist, $year, $album);
+	private function pageAlbum (): array {
+		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
 		if (!ArrayHelper::keyExists(0, $tracks) || (!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active))
 			throw new NotFoundHttpException('Album not found.');

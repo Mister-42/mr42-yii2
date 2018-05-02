@@ -27,7 +27,7 @@ $this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href
 $this->registerLinkTag(['rel' => 'mask-icon', 'color' => Yii::$app->params['themeColor'], 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/safari-pinned-tab.svg']);
 $this->registerLinkTag(['rel' => 'manifest', 'href' => Url::to(['/site/webmanifest'])]);
 $this->registerMetaTag(['name' => 'msapplication-config', 'content' => Url::to(['/site/browserconfigxml'])]);
-$this->registerMetaTag(['name' => 'theme-color', 'content' => Yii::$app->params['themeColor']]);
+$this->registerMetaTag(['name' => 'theme-color', 'content' => $this->params['themeColor'] ?? Yii::$app->params['themeColor']]);
 $this->registerCsrfMetaTags();
 $this->head();
 echo Html::endTag('head');

@@ -40,7 +40,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('hr');
 
 		if (!empty($profile->bio))
-			echo Profile::show($profile);
+			echo Html::tag('div', Profile::show($profile), ['class' => 'alert alert-secondary']);
 
 	echo Html::endTag('div');
 echo Html::endTag('div');

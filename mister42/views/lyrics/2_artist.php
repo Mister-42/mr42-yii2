@@ -66,6 +66,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 
 						if ($album->image && count($album->tracks) > 0)
 							echo Lightbox::widget([
+								'imageOptions' => ['style' => 'background-color:' . $album->image_color],
 								'items' => [
 									[
 										'thumb'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],

@@ -7,6 +7,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $data[0]->artist->name, 'url' => ['index', 'artist' => $data[0]->artist->url]];
 $this->params['breadcrumbs'][] = $data[0]->album->name;
 
+if ($data[0]->album->image_color)
+	$this->params['themeColor'] = $data[0]->album->image_color;
+
 echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 	echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'col mb-2']);
@@ -50,7 +53,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 					echo Html::endTag('div');
 				echo Html::endTag('div');
 				echo Html::tag('div',
-					Html::img(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$data[0]->artist->name, $data[0]->album->name]), 'class' => 'img-fluid rounded', 'height' => 500, 'width' => 500])
+					Html::img(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$data[0]->artist->name, $data[0]->album->name]), 'class' => 'img-fluid img-thumbnail rounded', 'height' => 500, 'width' => 500, 'style' => 'background-color:' . $data[0]->album->image_color])
 				, ['class' => 'card-body text-center']);
 			echo Html::endTag('div');
 		echo Html::endTag('div');
