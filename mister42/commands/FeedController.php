@@ -3,8 +3,8 @@ namespace app\commands;
 use Yii;
 use app\models\Webrequest;
 use app\models\feed\Feed;
-use app\models\user\{RecentTracks, WeeklyArtist};
-use Da\User\Model\{Profile, User};
+use app\models\user\{Profile, RecentTracks, WeeklyArtist};
+use Da\User\Model\User;
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
 
@@ -48,14 +48,14 @@ class FeedController extends Controller {
 		$recentTracks = new RecentTracks;
 		RecentTracks::deleteAll(['<=', 'seen', time() - 300]);
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
-			$profile = Profile::find()->where(['user_id' => $user->id])->one();
+			$profile = Profile::findOne(['user_id' => $user->id]);
 			if (isset($profile->lastfm)) {
 				$lastSeen = $recentTracks->lastSeen($user->id);
 
 				if (!$lastSeen)
 					continue;
 
-				$recentTracks->updateUser($lastSeen, $profile);
+				$recentTracks->updateUser($profile, $lastSeen);
 				usleep(200000);
 			}
 		endforeach;
@@ -69,11 +69,11 @@ class FeedController extends Controller {
 	public function actionLastfmWeeklyArtist() {
 		$limit = 15;
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
-			$profile = Profile::find()->where(['user_id' => $user->id])->one();
+			$profile = Profile::findOne(['user_id' => $user->id]);
 			if (isset($profile->lastfm)) {
 				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $limit);
 				if (!$response->isOK)
-					return false;
+					continue;
 
 				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);
 				foreach($response->data['weeklyartistchart']['artist'] as $artist) :

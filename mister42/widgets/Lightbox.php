@@ -22,6 +22,7 @@ class Lightbox extends Widget {
 			if (!isset($item['thumb']) || !isset($item['image']))
 				continue;
 
+			$imageOptions['alt'] = isset($item['title']) ? $item['title'] : '';
 			$imageOptions['class'] = 'd-none d-md-block img-thumbnail rounded';
 			$linkOptions['class'] = 'mr-2 my-1';
 			$linkOptions['data-title'] = isset($item['title']) ? $item['title'] : '';

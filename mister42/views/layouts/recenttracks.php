@@ -7,7 +7,7 @@ $this->beginContent('@app/views/layouts/main.php');
 $this->registerJs('(function refresh(){$(\'aside .tracks\').load(' . Json::htmlEncode('/user/recenttracks/' . basename(Url::current())) . ');setTimeout(refresh,60000)})();');
 
 echo Html::beginTag('div', ['class' => 'row']);
-	echo Html::tag('div', $content, ['class' => 'col-12 col-md-8']);
+	echo Html::tag('div', $content, ['class' => 'col-12 col-lg-8']);
 
 	echo Html::tag('aside',
 		Html::tag('div',
@@ -20,7 +20,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'header' => 'Weekly Artist Chart',
 			])
 		, ['class' => 'artists'])
-	, ['class' => 'd-none d-md-inline col-md-4']);
+	, ['class' => 'd-none d-lg-inline col-4']);
 echo Html::endTag('div');
 
 $this->endContent();

@@ -26,10 +26,7 @@ echo $form->field($model, 'password', [
 		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
 	])->textInput(['tabindex' => ++$tab]);
 
-echo $form->field($model, 'hidden', [
-		'options'=> ['class'=>'form-group form-check'],
-		'template' => '{input}{label}',
-	])->checkBox(['tabindex' => ++$tab]);
+echo $form->field($model, 'hidden')->checkBox(['tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);
 

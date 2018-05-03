@@ -25,10 +25,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('th-list').'{input}</div>{error}',
 			])->dropDownList(PhoneticAlphabet::getAlphabetList(), ['tabindex' => ++$tab]);
 
-		echo $form->field($model, 'numeric', [
-				'options'=> ['class'=>'form-group form-check'],
-				'template' => '{input}{label}',
-			])->checkBox(['tabindex' => ++$tab]);
+		echo $form->field($model, 'numeric')->checkBox(['tabindex' => ++$tab]);
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .

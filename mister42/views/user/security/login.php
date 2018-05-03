@@ -30,10 +30,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		])->passwordInput(['class' => 'form-control', 'tabindex' => ++$tab])
 		->label(Yii::t('usuario', 'Password') . ($module->allowPasswordRecovery ? ' (' . Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request'], ['tabindex' => '5']) . ')' : ''));
 
-		echo $form->field($model, 'rememberMe', [
-				'options'=> ['class'=>'form-group form-check'],
-				'template' => '{input}{label}',
-			])->checkBox(['tabindex' => ++$tab]);
+		echo $form->field($model, 'rememberMe')->checkBox(['tabindex' => ++$tab]);
 
 		echo Html::submitButton(Yii::t('usuario', 'Sign in'), ['class' => 'btn btn-primary btn-block', 'tabindex' => ++$tab]);
 

@@ -19,10 +19,6 @@ class AppAsset extends AssetBundle {
 		'app\assets\FontAwesomeAsset',
 	];
 
-	public $publishOptions = [
-		'forceCopy' => YII_ENV_DEV,
-	];
-
 	public function init() {
 		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('scrolltop.js'), View::POS_READY);
 		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('targetBlank.js'), View::POS_READY);

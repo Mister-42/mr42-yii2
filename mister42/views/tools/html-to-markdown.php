@@ -1,5 +1,6 @@
 <?php
 use app\assets\Html2MarkdownAsset;
+use app\models\Icon;
 use app\models\articles\Articles;
 use yii\bootstrap4\Html;
 
@@ -27,7 +28,7 @@ echo Html::beginTag('form', ['class' => 'html2markdown']);
 
 	echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('div',
-			Html::label(Html::checkbox('gfm') . ' GitHub Flavored Markdown')
+			Html::checkbox('gfm', false, ['label' => Icon::show('github', ['class' => 'mr-1', 'prefix' => 'fab fa-']) . 'GitHub Flavored Markdown'])
 		, ['class' => 'col']);
 	echo Html::endTag('div');
 echo Html::endTag('form');

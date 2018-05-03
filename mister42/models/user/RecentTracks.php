@@ -17,12 +17,9 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		 return '{{%lastfm_recenttracks}}';
 	}
 
-	public function display($userid) {
-		if (time() - self::lastSeen($userid) > 300) {
-			$profile = Profile::find()->where(['user_id' => $userid])->one();
-			self::updateUser(time(), $profile);
-		}
-		self::updateAll(['seen' => time()], 'userid = '.$userid);
+	public function display(int $userid) {
+		if (time() - self::lastSeen($userid, true) > 300)
+			self::updateUser(Profile::findOne(['user_id' => $userid]), time());
 
 		$tracks = self::find()
 			->where(['userid' => $userid])
@@ -31,36 +28,40 @@ class RecentTracks extends \yii\db\ActiveRecord {
 			->all();
 
 		foreach ($tracks as $track) :
-			$data .= Html::beginTag('div', ['class' => 'container clearfix']);
-				$data .= Html::beginTag('div', ['class' => 'row']);
-					$data .= Html::beginTag('span', ['class' => 'col float-left text-truncate']);
+			$data .= Html::beginTag('div', ['class' => 'clearfix']);
+				$data .= Html::beginTag('div', ['class' => 'd-flex justify-content-between']);
+					$data .= Html::beginTag('span', ['class' => 'text-truncate']);
 						$data .= $track['artist'];
 						if ($track['time'] === 0)
 							$data .= Icon::show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
 					$data .= Html::endTag('span');
-					$data .= Html::tag('span', $track['track'], ['class' => 'col float-right text-right text-truncate']);
+					$data .= Html::tag('span', $track['track'], ['class' => 'text-truncate text-right']);
 				$data .= Html::endTag('div');
 			$data .= Html::endTag('div');
 		endforeach;
 
 		$data .= empty($tracks)
-			? Html::tag('p', 'No items to display.')
+			? Html::tag('div', 'No items to display.', ['class' => 'font-weight-bold ml-2'])
 			: Html::tag('div',
-				Html::tag('span', Html::tag('strong', 'Total tracks played:'), ['class' => 'float-left']) .
-				Html::tag('span', Html::tag('strong', Yii::$app->formatter->asInteger($tracks[0]['count'])), ['class' => 'float-right'])
+				Html::tag('span', 'Total tracks played:', ['class' => 'font-weight-bold float-left']) .
+				Html::tag('span', Yii::$app->formatter->asInteger($tracks[0]['count']), ['class' => 'font-weight-bold float-right'])
 			);
 		return $data;
 	}
 
-	public function lastSeen($userid) {
+	public function lastSeen(int $userid, bool $update = false) {
 		$lastSeen = self::find()
 			->select(['seen' => 'max(seen)'])
 			->where(['userid' => $userid])
 			->one();
+
+		if ($update)
+			self::updateAll(['seen' => time()], 'userid = ' . $userid);
+
 		return $lastSeen->seen;
 	}
 
-	public function updateUser($lastSeen, $profile) {
+	public function updateUser(Profile $profile, int $lastSeen) {
 		if (isset($profile->lastfm)) {
 			$response = Webrequest::getLastfmApi('user.getrecenttracks', $profile->lastfm, $this->limit);
 			if (!$response->isOK)
@@ -82,9 +83,13 @@ class RecentTracks extends \yii\db\ActiveRecord {
 					break;
 			}
 
-			$delete = self::find()->where(['userid' => $profile->user_id])->orderBy('count DESC')->limit(999)->offset($this->limit)->all();
-			foreach ($delete as $item)
-				$item->delete();
+			self::cleanDb($profile->user_id);
 		}
+	}
+
+	private function cleanDb(int $userid) {
+		$items = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit(999)->offset($this->limit)->all();
+		foreach ($items as $item)
+			$item->delete();
 	}
 }

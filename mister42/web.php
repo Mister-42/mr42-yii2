@@ -89,13 +89,4 @@ if (YII_DEBUG && in_array($_SERVER['REMOTE_ADDR'], $secrets['params']['specialIP
 	];
 }
 
-if (YII_ENV_DEV && in_array($_SERVER['REMOTE_ADDR'], $secrets['params']['specialIPs'])) {
-	$config['bootstrap'][] = 'gii';
-	$config['modules']['gii'] = [
-		'class' => 'yii\gii\Module',
-		'allowedIPs' => $secrets['params']['specialIPs'],
-	];
-} else
-	define('YII_ENV_DEV', false);
-
 return $config;
