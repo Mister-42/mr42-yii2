@@ -22,7 +22,6 @@ class Favicon extends \yii\base\Model {
 	public function attributeLabels(): array {
 		return [
 			'recipient' => 'Email Address',
-			'sourceImage' => 'Source Image',
 			'generate' => 'Convert Image',
 		];
 	}

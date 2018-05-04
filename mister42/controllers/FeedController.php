@@ -14,7 +14,7 @@ class FeedController extends \yii\web\Controller {
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
 				'except' => ['index'],
-				'etagSeed' => function () { return serialize([phpversion(), Yii::$app->user->id, $lastUpdate]); },
+				'etagSeed' => function () { return serialize([phpversion(), Yii::$app->user->id, $lastUpdate->updated]); },
 				'lastModified' => function () { return $lastUpdate->updated; },
 				'only' => ['index', 'rss'],
 			],

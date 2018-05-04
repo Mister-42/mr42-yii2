@@ -1,3 +1,3 @@
 $('input[id=sourceFile]').change(function() {
-	$('#file').val('File "' + $(this).val() + '" selected');
+	$('.custom-file-label').text('File "' + $(this).val().replace(/^.*\\/, "") + '" selected');
 });

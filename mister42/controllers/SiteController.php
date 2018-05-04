@@ -2,7 +2,6 @@
 namespace app\controllers;
 use Yii;
 use app\models\site\{Changelog, Contact, Webmanifest};
-use yii\bootstrap4\Html;
 use yii\base\BaseObject;
 use yii\captcha\CaptchaAction;
 use yii\filters\{AccessControl, HttpCache};
@@ -86,7 +85,7 @@ class SiteController extends \yii\web\Controller {
 		if ($model->load(Yii::$app->request->post())) {
 			$model->attachment = UploadedFile::getInstance($model, 'attachment');
 			if ($model->contact())
-				return Html::tag('div', 'Thank you for contacting us. We will respond to you as soon as possible.', ['class' => 'alert alert-success']);
+				return $this->renderAjax('contact-success');
 		}
 
 		return $this->render('contact', [

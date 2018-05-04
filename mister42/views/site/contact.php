@@ -39,21 +39,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo $form->field($model, 'content',[
 				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Icon::fieldAddon('comment').'{input}</div> {hint} {error}',
-			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab]); ?>
+			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab]);
 
-			<label class="control-label" for="file">Attachment</label>
-			<div class="input-group">
-				<?= Icon::fieldAddon('paperclip') ?>
-				<input type="text" id="file" class="form-control" placeholder="No file selected" onclick="$('input[id=sourceFile]').click()" readonly>
-				<span class="input-group-append">
-					<button type="button" class="btn btn-primary" onclick="$('input[id=sourceFile]').click()" tabindex="<?= ++$tab ?>"><?= Icon::show('folder-open') ?></button>
-				</span>
-			</div>
-
-			<?php
-			echo $form->field($model, 'attachment')
-				->fileInput(['class' => 'd-none', 'id' => 'sourceFile'])
-				->label(false);
+			echo $form->field($model, 'attachment', [
+				'template' => Html::tag('label', $model->getAttributeLabel('attachment'), ['for' => 'sourceFile']) . '<div class="input-group">'.Icon::fieldAddon('paperclip').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
+			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
+			->label('Select a file', ['class' => 'custom-file-label text-truncate']);
 
 			echo $form->field($model, 'captcha')->widget(Captcha::class, [
 				'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
