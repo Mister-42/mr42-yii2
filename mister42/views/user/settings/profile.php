@@ -1,5 +1,6 @@
 <?php
-use app\models\{Icon, TimePicker};
+use app\models\Icon;
+use app\widgets\TimePicker;
 use Da\User\Helper\TimezoneHelper;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;

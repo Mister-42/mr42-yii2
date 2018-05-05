@@ -1,7 +1,6 @@
 <?php
-use app\models\Icon;
+use app\models\{Captcha, Icon};
 use yii\bootstrap4\{ActiveForm, Html};
-use yii\captcha\Captcha;
 use yii\web\View;
 use yii\widgets\Pjax;
 
@@ -42,13 +41,8 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
 			->hint('You may use ' . Html::a('Markdown Syntax', Yii::$app->params['shortDomain'] . 'art4', ['target' => '_blank']) . '. HTML is not allowed.');
 
-		if (Yii::$app->user->isGuest) {
-			echo $form->field($model, 'captcha')->widget(Captcha::class, [
-				'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
-				'options' => ['class' => 'form-control', 'tabindex' => ++$tab],
-				'template' => '<div class="row"><div class="col-6 col-md-3"><div class="input-group">'.Icon::fieldAddon('question').'{input}</div></div> {image}</div>',
-			])->hint('Click on the image to retrieve a new verification code.');
-		}
+		if (Yii::$app->user->isGuest)
+			echo Captcha::show($form, $model, ++$tab);
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .

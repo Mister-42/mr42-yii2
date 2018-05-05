@@ -1,6 +1,7 @@
 <?php
-use app\models\{Icon, TimePicker};
+use app\models\Icon;
 use app\models\tools\Qr;
+use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\helpers\Url;
 use yii\web\JsExpression;

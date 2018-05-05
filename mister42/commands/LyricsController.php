@@ -1,7 +1,7 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Console, Image, Webrequest};
+use app\models\{Console, Webrequest};
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
@@ -48,7 +48,7 @@ class LyricsController extends Controller {
 				if (($width > self::ALBUM_IMAGE_DIMENSIONS && $height > self::ALBUM_IMAGE_DIMENSIONS) || !empty($exif['SectionsFound']) || $exif['MimeType'] !== 'image/jpeg') {
 					if ($width >= self::ALBUM_IMAGE_DIMENSIONS && $height >= self::ALBUM_IMAGE_DIMENSIONS) {
 						$album->image = (Lyrics2Albums::getCover(self::ALBUM_IMAGE_DIMENSIONS, $album))[1];
-						$album->image_color = Image::getAverageColor($album->image);
+						$album->image_color = self::getAverageImageColor($album->image);
 						$album->save();
 						list($width, $height) = getimagesizefromstring($album->image);
 						Console::write("{$width}x{$height}", [Console::BOLD, Console::FG_GREEN]);
@@ -56,7 +56,7 @@ class LyricsController extends Controller {
 					Console::newLine();
 					continue;
 				} elseif ($album->image && is_null($album->image_color)) {
-					$album->image_color = Image::getAverageColor($album->image);
+					$album->image_color = self::getAverageImageColor($album->image);
 					$album->save();
 				}
 
@@ -170,5 +170,23 @@ class LyricsController extends Controller {
 			}
 		endforeach;
 		return self::EXIT_CODE_NORMAL;
+	}
+
+	private function getAverageImageColor(string $image): string {
+		$i = imagecreatefromstring($image);
+		list($width, $height) = getimagesizefromstring($image);
+		for ($x=0; $x < $width; $x++) {
+			for ($y=0; $y < $height; $y++) {
+				$rgb = imagecolorat($i, $x, $y);
+				$r = ($rgb >> 16) & 0xFF;
+				$g = ($rgb >> 8) & 0xFF;
+				$b = $rgb & 0xFF;
+				$rTotal += $r;
+				$gTotal += $g;
+				$bTotal += $b;
+				$total++;
+			}
+		}
+		return sprintf('#%02X%02X%02X', $rTotal/$total, $gTotal/$total, $bTotal/$total); 
 	}
 }

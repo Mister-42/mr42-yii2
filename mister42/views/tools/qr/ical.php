@@ -1,5 +1,6 @@
 <?php
-use app\models\{Icon, TimePicker};
+use app\models\Icon;
+use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 

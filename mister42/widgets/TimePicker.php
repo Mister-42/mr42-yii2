@@ -1,7 +1,8 @@
 <?php
-namespace app\models;
+namespace app\widgets;
 use Yii;
 use app\assets\TimePickerAsset;
+use app\models\Icon;
 use yii\base\InvalidConfigException;
 use yii\bootstrap4\Html;
 use yii\jui\{DatePicker, DatePickerLanguageAsset};

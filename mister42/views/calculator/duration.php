@@ -1,5 +1,6 @@
 <?php
-use app\models\{Icon, TimePicker};
+use app\models\Icon;
+use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 
 $this->title = 'Date to Date Calculator (duration)';

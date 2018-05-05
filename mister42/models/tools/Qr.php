@@ -1,7 +1,8 @@
 <?php
 namespace app\models\tools;
 use Yii;
-use app\models\{Icon, Mailer, TimePicker};
+use app\models\{Icon, Mailer};
+use app\widgets\TimePicker;
 use Mpdf\QrCode\QrCode;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\helpers\{FileHelper, StringHelper};
