@@ -29,22 +29,22 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 	}
 
 	public function convertText(): bool {
-		if ($this->validate()) {
-			$this->text = preg_replace('/[^a-z0-9. -]+/i', '', $this->text);
-			$text = strtolower($this->text);
-			$text = preg_replace("/(.)/i", "\${1} ", $text);
-			$text = strtr($text, ArrayHelper::merge(
-				self::getAlpha($this->alphabet),
-				($this->numeric) ? self::getNumeric($this->alphabet) : [],
-				self::getGenericReplacements()
-			));
-			$text = Yii::$app->formatter->asNtext($text);
-			$text = trim($text);
+		if (!$this->validate())
+			return false;
 
-			Yii::$app->getSession()->setFlash('phonetic-alphabet-success', $text);
-			return true;
-		}
-		return false;
+		$this->text = preg_replace('/[^a-z0-9. -]+/i', '', $this->text);
+		$text = strtolower($this->text);
+		$text = preg_replace("/(.)/i", "\${1} ", $text);
+		$text = strtr($text, ArrayHelper::merge(
+			self::getAlpha($this->alphabet),
+			($this->numeric) ? self::getNumeric($this->alphabet) : [],
+			self::getGenericReplacements()
+		));
+		$text = Yii::$app->formatter->asNtext($text);
+		$text = trim($text);
+
+		Yii::$app->getSession()->setFlash('phonetic-alphabet-success', $text);
+		return true;
 	}
 
 	public function getAlphabetList(string $column = '*'): array {

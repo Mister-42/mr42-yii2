@@ -57,10 +57,10 @@ echo Html::endTag('header');
 
 echo Html::tag('main',
 	Breadcrumbs::widget([
-		'activeItemTemplate' => "<li class=\"breadcrumb-item active\">{link}</li>\n",
+		'activeItemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item active']),
 		'homeLink' => ['label' => Yii::$app->name, 'url' => Yii::$app->homeUrl],
-		'itemTemplate' => "<li class=\"breadcrumb-item\">{link}</li>\n",
-		'links' => $this->params['breadcrumbs'] ?? [],
+		'itemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item']),
+		'links' => $this->params['breadcrumbs'],
 	]) .
 	$content
 , ['class' => 'container position-relative']);
@@ -71,10 +71,9 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 		echo Html::beginTag('div', ['class' => 'float-right']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				if (Yii::$app->user->identity->isAdmin)
-					echo Html::a(Icon::show('code', ['title' => 'Validate HTML']), 'https://validator.w3.org/nu/?doc=' . rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs']);
-				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1']);
-				echo Html::a('Changelog', ['/site/changelog'], ['class' => 'badge badge-primary ml-1 hidden-xs']);
-				echo Html::a(Icon::show('rss', ['title' => 'RSS']), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank']);
+					echo Html::a(Icon::show('code'), 'https://validator.w3.org/nu/?doc=' . rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
+				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact ' . Yii::$app->name]);
+				echo Html::a(Icon::show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => 'RSS']);
 			}
 		echo Html::endTag('div');
 	echo Html::endTag('div');

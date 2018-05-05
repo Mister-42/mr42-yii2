@@ -54,7 +54,6 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 }
 
 .site- {
-	&changelog,
 	&country,
 	&headers,
 	&php-version {
@@ -167,6 +166,10 @@ form {
 			@include size(100%, 40rem);
 		}
 	}
+
+	.invalid-feedback {
+		display: block;
+	}
 }
 
 #btn-scrolltop {
@@ -196,10 +199,6 @@ form {
 			top: 0px;
 		}
 	}
-}
-
-#ui-datepicker-div {
-	z-index: $zindex-popover;
 }
 
 footer {

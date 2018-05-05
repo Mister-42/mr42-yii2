@@ -15,30 +15,17 @@ class FeedController extends Controller {
 	public $defaultAction = 'rss';
 
 	/**
+	 * Retrieves and stores an Atom feed.
+	*/
+	public function actionAtom($name, $url, $urlField = 'link.@attributes.href') {
+		return self::processFeed($name, $url, 'atom', $urlField);
+	}
+
+	/**
 	 * Retrieves and stores an RSS feed.
 	*/
 	public function actionRss($name, $url, $urlField = 'link') {
-		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
-		$response = Webrequest::getUrl('', $url);
-		if (!$response->isOK)
-			return self::EXIT_CODE_ERROR;
-
-		$count = 1;
-		Feed::deleteAll(['feed' => $name]);
-		foreach($response->data['channel']['item'] as $item) :
-			$rssItem = new Feed();
-			$rssItem->feed = $name;
-			$rssItem->title = (string) ArrayHelper::getValue($item, 'title');
-			$rssItem->url = (string) ArrayHelper::getValue($item, $urlField);
-			$rssItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, 'description'), false);
-			$rssItem->time = strtotime(ArrayHelper::getValue($item, 'pubDate'));
-			$rssItem->save();
-
-			if ($count++ === $limit)
-				break;
-		endforeach;
-
-		return self::EXIT_CODE_NORMAL;
+		return self::processFeed($name, $url, 'rss', $urlField);
 	}
 
 	/**
@@ -89,6 +76,30 @@ class FeedController extends Controller {
 				endforeach;
 				usleep(200000);
 			}
+		endforeach;
+
+		return self::EXIT_CODE_NORMAL;
+	}
+
+	private function processFeed($name, $url, $type, $urlField) {
+		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
+		$response = Webrequest::getUrl('', $url);
+		if (!$response->isOK)
+			return self::EXIT_CODE_ERROR;
+
+		Feed::deleteAll(['feed' => $name]);
+		$data = $type === 'rss' ? $response->data['channel']['item'] : $response->data['entry'];
+		foreach($data as $item) :
+			$feedItem = new Feed();
+			$feedItem->feed = $name;
+			$feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
+			$feedItem->url = (string) ArrayHelper::getValue($item, $urlField);
+			$feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $type === 'rss' ? 'description': 'content'), false);
+			$feedItem->time = strtotime(ArrayHelper::getValue($item, $type === 'rss' ? 'pubDate' : 'updated'));
+			$feedItem->save();
+
+			if (++$count === $limit)
+				break;
 		endforeach;
 
 		return self::EXIT_CODE_NORMAL;

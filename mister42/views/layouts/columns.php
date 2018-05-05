@@ -21,7 +21,7 @@ $dependency = [
 
 $this->beginBlock('widgets');
 	echo Item::widget([
-		'body' => RecentChangelog::widget(),
+		'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
 		'header' => 'Changelog',
 	]);
 

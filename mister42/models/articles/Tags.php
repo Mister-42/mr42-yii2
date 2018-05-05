@@ -3,7 +3,7 @@ namespace app\models\articles;
 use yii\helpers\StringHelper;
 
 class Tags extends BaseArticles {
-	public static function findTagWeights() {
+	public static function findTagWeights(): array {
 		if (empty($tags = self::getTags()))
 			return [];
 		foreach($tags as $key => $value) :
@@ -14,7 +14,7 @@ class Tags extends BaseArticles {
 		return $list;
 	}
 
-	public static function lastUpdate($tag) {
+	public static function lastUpdate(string $tag): int {
 		$lastUpdate = self::find()
 			->select(['updated' => 'max(updated)'])
 			->where(['like', 'tags', $tag])
@@ -22,7 +22,7 @@ class Tags extends BaseArticles {
 		return $lastUpdate['updated'];
 	}
 
-	private function getTags() {
+	private function getTags(): array {
 		foreach (self::find()->select('tags')->all() as $tag) :
 			foreach (StringHelper::explode($tag->tags) as $item)
 				$list[$item]++;

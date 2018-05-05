@@ -9,7 +9,6 @@ class Menu {
 
 		if (Yii::$app->controller->action->id === 'sitemap') {
 			$menuItems[] = ['label' => 'Create Account', 'url' => ['/user/registration/register']];
-			$menuItems[] = ['label' => 'Contact', 'url' => ['/site/changelog']];
 			$menuItems[] = ['label' => 'Contact', 'url' => ['/site/contact']];
 		}
 		return $menuItems;

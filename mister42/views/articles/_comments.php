@@ -37,5 +37,6 @@ foreach ($comments as $comment) :
 		if (!empty($comment->website))
 			$bar[] = Icon::show('globe', ['class' => 'text-muted mr-1']) . Html::a($comment->website, $comment->website);
 		echo Html::tag('div', implode(' · ', $bar), ['class' => 'article-toolbar my-2']);
+		unset($bar);
 	echo Html::endTag('div');
 endforeach;

@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\site\{Changelog, Contact, Webmanifest};
+use app\models\site\{Contact, Webmanifest};
 use yii\base\BaseObject;
 use yii\captcha\CaptchaAction;
 use yii\filters\{AccessControl, HttpCache};
@@ -39,17 +39,6 @@ class SiteController extends \yii\web\Controller {
 			], [
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function (BaseObject $action) {
-					return serialize([phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
-				},
-				'lastModified' => function () {
-					$lastUpdate = Changelog::find()->select(['time' => 'max(time)'])->one();
-					return $lastUpdate->time;
-				},
-				'only' => ['changelog'],
-			], [
-				'class' => HttpCache::class,
-				'enabled' => !YII_DEBUG,
 				'etagSeed' => function () {
 					return serialize(file(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico'));
 				},
@@ -74,10 +63,6 @@ class SiteController extends \yii\web\Controller {
 	public function actionIndex() {
 		$this->layout = 'columns';
 		return $this->render('index');
-	}
-
-	public function actionChangelog() {
-		return $this->render('changelog');
 	}
 
 	public function actionContact() {

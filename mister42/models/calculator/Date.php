@@ -9,8 +9,10 @@ class Date extends \yii\base\Model {
 
 	public function rules(): array {
 		return [
-			[['from'], 'date', 'format' => 'php:Y-m-d'],
-			[['days'], 'number'],
+			['from', 'date', 'format' => 'php:Y-m-d'],
+			['days', 'number'],
+			['from', 'default', 'value' => date('Y-m-d')],
+			['days', 'default', 'value' => 42],
 		];
 	}
 
@@ -22,14 +24,12 @@ class Date extends \yii\base\Model {
 	}
 
 	public function diff(): bool {
-		if ($this->validate()) {
-			$this->from = empty($this->from) ? date('Y-m-d') : $this->from;
-			$this->days = empty($this->days) ? 42 : $this->days;
-			$date = new DateTime($this->from);
-			$date->modify($this->days . ' days');
-			Yii::$app->getSession()->setFlash('date-success', $date);
-			return true;
-		}
-		return false;
+		if (!$this->validate())
+			return false;
+
+		$date = new DateTime($this->from);
+		$date->modify($this->days . ' days');
+		Yii::$app->getSession()->setFlash('date-success', $date);
+		return true;
 	}
 }
