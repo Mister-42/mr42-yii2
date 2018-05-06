@@ -7,7 +7,7 @@ use yii\helpers\FileHelper;
 class Favicon extends \yii\base\Model {
 	public $recipient;
 	public $sourceImage;
-	public $dimensions = [16, 32, 48, 64];
+	public $dimensions = [64, 48, 32, 16];
 
 	public function rules(): array {
 		return [
@@ -41,17 +41,11 @@ class Favicon extends \yii\base\Model {
 			return false;
 		}
 
-		$tmpSize = min(500, $width, $height);
-		exec("convert {$this->sourceImage->tempName} -resize \"{$tmpSize}x{$tmpSize}^\" -gravity center -crop {$tmpSize}x{$tmpSize}+0+0 +repage {$this->sourceImage->tempName}");
+		$tmpSize = min($width, $height);
+		exec("convert {$this->sourceImage->tempName} -gravity center -crop {$tmpSize}x{$tmpSize}+0+0 +repage {$this->sourceImage->tempName}");
 
 		$rndFilename = uniqid('favicon');
-		foreach ($this->dimensions as $dimension) :
-			$tmpFiles[] = Yii::getAlias("@assetsroot/temp/{$rndFilename}.{$dimension}.png");
-			exec("convert -scale {$dimension} {$this->sourceImage->tempName} " . end($tmpFiles));
-		endforeach;
-		exec('convert '.implode(' ', $tmpFiles).' '.Yii::getAlias("@assetsroot/temp/{$rndFilename}.ico"));
-		foreach ($tmpFiles as $file)
-			FileHelper::unlink($file);
+		exec("convert {$this->sourceImage->tempName} -define icon:auto-resize=" . implode(',', $this->dimensions) . ' ' . Yii::getAlias("@assetsroot/temp/{$rndFilename}.ico"));
 		FileHelper::unlink($this->sourceImage->tempName);
 
 		if ($this->recipient)
