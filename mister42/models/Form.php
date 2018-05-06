@@ -4,7 +4,7 @@ use yii\bootstrap4\{ActiveForm, Html};
 use yii\captcha\Captcha;
 
 class Form extends ActiveForm {
-	public static function Captcha(ActiveForm $form, $model, int $tab): string {
+	public static function captcha(ActiveForm $form, $model, int $tab): string {
 		return $form->field($model, 'captcha')->widget(Captcha::class, [
 			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 			'options' => ['class' => 'form-control', 'tabindex' => $tab],

@@ -45,7 +45,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
 			->label('Select a file', ['class' => 'custom-file-label text-truncate']);
 
-			echo Form::Captcha($form, $model, ++$tab);
+			echo Form::captcha($form, $model, ++$tab);
 
 			echo Html::tag('div',
 				Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
