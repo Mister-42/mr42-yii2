@@ -33,10 +33,7 @@ class Favicon extends \yii\base\Model {
 
 		list($width, $height) = getimagesize($this->sourceImage->tempName);
 		if (!$this->validate() || empty($width) || empty($height)) {
-			if (!$this->validate())
-				Yii::$app->getSession()->setFlash('favicon-error', 'Validation failed. Please upload a valid image.');
-			elseif (empty($width) || empty($height))
-				Yii::$app->getSession()->setFlash('favicon-error', 'Uploaded file could not be converted. Make sure you upload a valid image.');
+			Yii::$app->getSession()->setFlash('favicon-error', 'Uploaded file could not be converted. Make sure you upload a valid image.');
 			FileHelper::unlink($this->sourceImage->tempName);
 			return false;
 		}
