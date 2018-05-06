@@ -2,6 +2,7 @@
 namespace app\models\tools;
 use Yii;
 use app\models\Mailer;
+use yii\helpers\FileHelper;
 
 class Favicon extends \yii\base\Model {
 	public $recipient;
@@ -27,32 +28,31 @@ class Favicon extends \yii\base\Model {
 	}
 
 	public function convertImage(): bool {
-		if (!$this->validate()) {
-			Yii::$app->getSession()->setFlash('favicon-error', 'Validation failed. Please upload a valid image.');
-			return false;
-		}
+		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
+			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 
-		$rndFilename = uniqid('favicon');
-		$srcImg = $this->sourceImage->tempName;
-		list($width, $height) = getimagesize($srcImg);
-
-		if (empty($width)) {
-			Yii::$app->getSession()->setFlash('favicon-error', 'Uploaded file could not be converted. Make sure you upload a valid image.');
-			unlink($srcImg);
+		list($width, $height) = getimagesize($this->sourceImage->tempName);
+		if (!$this->validate() || empty($width) || empty($height)) {
+			if (!$this->validate())
+				Yii::$app->getSession()->setFlash('favicon-error', 'Validation failed. Please upload a valid image.');
+			elseif (empty($width) || empty($height))
+				Yii::$app->getSession()->setFlash('favicon-error', 'Uploaded file could not be converted. Make sure you upload a valid image.');
+			FileHelper::unlink($this->sourceImage->tempName);
 			return false;
 		}
 
 		$tmpSize = min(500, $width, $height);
-		exec("convert {$srcImg} -resize \"{$tmpSize}x{$tmpSize}^\" -gravity center -crop {$tmpSize}x{$tmpSize}+0+0 +repage {$srcImg}");
+		exec("convert {$this->sourceImage->tempName} -resize \"{$tmpSize}x{$tmpSize}^\" -gravity center -crop {$tmpSize}x{$tmpSize}+0+0 +repage {$this->sourceImage->tempName}");
 
+		$rndFilename = uniqid('favicon');
 		foreach ($this->dimensions as $dimension) :
 			$tmpFiles[] = Yii::getAlias("@assetsroot/temp/{$rndFilename}.{$dimension}.png");
-			exec("convert -scale {$dimension} {$srcImg} ".end($tmpFiles));
+			exec("convert -scale {$dimension} {$this->sourceImage->tempName} " . end($tmpFiles));
 		endforeach;
 		exec('convert '.implode(' ', $tmpFiles).' '.Yii::getAlias("@assetsroot/temp/{$rndFilename}.ico"));
 		foreach ($tmpFiles as $file)
-			unlink($file);
-		unlink($srcImg);
+			FileHelper::unlink($file);
+		FileHelper::unlink($this->sourceImage->tempName);
 
 		if ($this->recipient)
 			Mailer::sendFileHtml($this->recipient, 'Your favicon from '.Yii::$app->name, 'faviconRequester', ['file' => "@assetsroot/temp/{$rndFilename}.ico", 'name' => 'favicon.ico']);

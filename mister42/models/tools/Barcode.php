@@ -4,6 +4,7 @@ use Yii;
 use app\models\Mailer;
 use Mpdf\Barcode as BarcodeData;
 use yii\bootstrap4\{ActiveForm, Html};
+use yii\helpers\FileHelper;
 
 class Barcode extends \yii\base\Model {
 	public $type;
@@ -33,6 +34,9 @@ class Barcode extends \yii\base\Model {
 	}
 
 	public function generate(): bool {
+		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
+			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
+
 		$rndFilename = uniqid('barcode');
 		$cacheFile = Yii::getAlias("@assetsroot/temp/{$rndFilename}.png");
 

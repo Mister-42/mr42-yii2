@@ -1,5 +1,5 @@
 <?php
-use app\models\{Captcha, Icon};
+use app\models\{Form, Icon};
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 use yii\widgets\Pjax;
@@ -42,7 +42,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 			->hint('You may use ' . Html::a('Markdown Syntax', Yii::$app->params['shortDomain'] . 'art4', ['target' => '_blank']) . '. HTML is not allowed.');
 
 		if (Yii::$app->user->isGuest)
-			echo Captcha::show($form, $model, ++$tab);
+			echo Form::Captcha($form, $model, ++$tab);
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .

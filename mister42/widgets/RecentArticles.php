@@ -11,7 +11,7 @@ class RecentArticles extends Widget {
 			->orderBy('updated DESC')
 			->limit($limit)
 			->all();
-		return empty($articles) ? Html::tag('p', 'No articles to display.') : self::renderArticles($articles);
+		return empty($articles) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderArticles($articles);
 	}
 
 	private function renderArticles(array $articles): string {

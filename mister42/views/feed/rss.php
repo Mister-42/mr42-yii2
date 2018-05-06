@@ -22,7 +22,7 @@ $doc->writeElement('description', Yii::$app->params['description']);
 	$doc->writeAttribute('type', 'application/rss+xml');
 	$doc->endElement();
 $doc->writeElement('language', Yii::$app->language);
-$doc->writeElement('copyright', '2014-'.date('Y').' '.Yii::$app->name);
+$doc->writeElement('copyright', '2014-'.date('Y') . ' ' . Yii::$app->name);
 $doc->writeElement('pubDate', date(DATE_RSS));
 $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->startElement('image');

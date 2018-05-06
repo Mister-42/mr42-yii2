@@ -14,10 +14,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			Html::tag('div',
 				($data[0]->artist->buy
 					? Html::a(Icon::show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => 'Buy music of ' . $data[0]->artist->name])
-					: 	'') .
+					: '') .
 				($data[0]->artist->website
 					? Html::a(Icon::show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => 'Website of ' . $data[0]->artist->name])
-					: 	'')
+					: '')
 			, ['class' => 'float-right'])
 		, ['class' => 'col'])
 	, ['class' => 'row']);
@@ -54,7 +54,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
 									if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video)
-										echo ' ' . Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted']);
+										echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
 								echo Html::endTag('div');
 
 								if (++$y === count($album->tracks) || $x === (int) ceil(count($album->tracks) / 3)) {

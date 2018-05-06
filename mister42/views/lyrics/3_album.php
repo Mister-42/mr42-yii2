@@ -42,7 +42,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 										: $track->name;
 									echo $track->disambiguation . $track->feat;
 									if ($track->video)
-										echo ' ' . Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted']);
+										echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
 								echo Html::endTag('div');
 
 								if (++$y === count($data) || $x === (int) ceil(count($data) / 3)) {

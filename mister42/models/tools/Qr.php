@@ -70,6 +70,9 @@ class Qr extends \yii\base\Model {
 	}
 
 	public function generate($qrData): bool {
+		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
+			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
+
 		$size = StringHelper::byteLength($qrData);
 		if ($size > 2746) {
 			Yii::$app->getSession()->setFlash('qr-size', $size - 2746);

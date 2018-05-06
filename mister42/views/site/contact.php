@@ -1,5 +1,5 @@
 <?php
-use app\models\{Captcha, Icon};
+use app\models\{Form, Icon};
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 use yii\widgets\Pjax;
@@ -45,10 +45,10 @@ echo Html::beginTag('div', ['class' => 'row']);
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
 			->label('Select a file', ['class' => 'custom-file-label text-truncate']);
 
-			echo Captcha::show($form, $model, ++$tab);
+			echo Form::Captcha($form, $model, ++$tab);
 
 			echo Html::tag('div',
-				Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) . ' ' .
+				Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
 				Html::submitButton('Send', ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab])
 			, ['class' => 'btn-toolbar float-right form-group']);
 

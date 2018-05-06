@@ -14,7 +14,7 @@ class Timezone extends \yii\base\Model {
 			[['source', 'target'], 'required'],
 			['datetime', 'date', 'format' => 'php:Y-m-d H:i'],
 			[['source', 'target'], 'in', 'range' => self::getTimezones(false)],
-			['datetime', 'default', 'value' => date('Y-m-d')],
+			['datetime', 'default', 'value' => date('Y-m-d H:i')],
 		];
 	}
 

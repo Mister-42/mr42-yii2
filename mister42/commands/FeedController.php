@@ -12,26 +12,12 @@ use yii\helpers\ArrayHelper;
  * Handles feeds.
  */
 class FeedController extends Controller {
-	public $defaultAction = 'rss';
-
-	/**
-	 * Retrieves and stores an Atom feed.
-	*/
-	public function actionAtom($name, $url, $urlField = 'link.@attributes.href') {
-		return self::processFeed($name, $url, 'atom', $urlField);
-	}
-
-	/**
-	 * Retrieves and stores an RSS feed.
-	*/
-	public function actionRss($name, $url, $urlField = 'link') {
-		return self::processFeed($name, $url, 'rss', $urlField);
-	}
+	public $defaultAction = 'webfeed';
 
 	/**
 	 * Retrieves and stores Recent Tracks from Last.fm.
 	*/
-	public function actionLastfmRecent() {
+	public function actionLastfmRecent(): int {
 		$recentTracks = new RecentTracks;
 		RecentTracks::deleteAll(['<=', 'seen', time() - 300]);
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
@@ -53,7 +39,7 @@ class FeedController extends Controller {
 	/**
 	 * Retrieves and stores Weekly Artist Chart from Last.fm.
 	*/
-	public function actionLastfmWeeklyArtist() {
+	public function actionLastfmWeeklyArtist(): int {
 		$limit = 15;
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::findOne(['user_id' => $user->id]);
@@ -81,7 +67,10 @@ class FeedController extends Controller {
 		return self::EXIT_CODE_NORMAL;
 	}
 
-	private function processFeed($name, $url, $type, $urlField) {
+	/**
+	 * Retrieves and stores an Atom or RSS feed.
+	*/
+	public function actionWebfeed(string $type, string $name, string $url): int {
 		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
 		$response = Webrequest::getUrl('', $url);
 		if (!$response->isOK)
@@ -93,7 +82,7 @@ class FeedController extends Controller {
 			$feedItem = new Feed();
 			$feedItem->feed = $name;
 			$feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
-			$feedItem->url = (string) ArrayHelper::getValue($item, $urlField);
+			$feedItem->url = (string) ArrayHelper::getValue($item, $type === 'rss' ? 'link' : 'link.@attributes.href');
 			$feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $type === 'rss' ? 'description': 'content'), false);
 			$feedItem->time = strtotime(ArrayHelper::getValue($item, $type === 'rss' ? 'pubDate' : 'updated'));
 			$feedItem->save();

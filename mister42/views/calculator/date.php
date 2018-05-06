@@ -14,9 +14,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		if ($flash = Yii::$app->session->getFlash('date-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success']]);
-			echo '<p>From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long')) . '<br>';
-			echo 'Adding: ' . Html::tag('b', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days])) . '</p>';
-			echo Html::tag('p', 'Result: ' . Html::tag('strong', Yii::$app->formatter->asDate($flash, 'long')));
+				echo Html::tag('div', 'From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long')));
+				echo Html::tag('div', 'Adding: ' . Html::tag('b', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days])));
+				echo Html::tag('div', 'Result: ' . Html::tag('strong', Yii::$app->formatter->asDate($flash, 'long')), ['class' => 'mt-3']);
 			Alert::end();
 		}
 

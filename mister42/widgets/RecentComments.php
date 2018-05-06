@@ -13,7 +13,7 @@ class RecentComments extends Widget {
 			->where(['active' => Comments::STATUS_ACTIVE])
 			->limit($limit)
 			->all();
-		return empty($comments) ? Html::tag('p', 'No comments to display.') : self::renderComments($comments);
+		return empty($comments) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderComments($comments);
 	}
 
 	private function renderComments(array $comments): string {

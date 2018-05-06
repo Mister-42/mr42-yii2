@@ -2,9 +2,10 @@
 namespace app\controllers;
 use Yii;
 use app\models\tools\{Barcode, Favicon, PhoneticAlphabet, Qr};
-use yii\base\{BaseObject, ViewNotFoundException};
-use yii\helpers\{ArrayHelper, FileHelper};
-use yii\web\{NotFoundHttpException, UploadedFile};
+use yii\base\BaseObject;
+use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
+use yii\web\NotFoundHttpException;
 
 class ToolsController extends \yii\web\Controller {
 	public function behaviors() {
@@ -24,9 +25,6 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionBarcode() {
-		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
-			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-
 		$model = new Barcode;
 		if ($model->load(Yii::$app->request->post()) && $model->validate())
 			$model->generate();
@@ -41,9 +39,6 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionFavicon() {
-		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
-			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-
 		$model = new Favicon;
 		if ($model->load(Yii::$app->request->post())) {
 			$model->sourceImage = UploadedFile::getInstance($model, 'sourceImage');
@@ -79,26 +74,20 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionQr() {
-		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
-			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-
 		$model = new Qr;
 		if (Yii::$app->request->isPost) {
-			$type = ArrayHelper::getValue(Yii::$app->request->post(), 'type')
-				?? ArrayHelper::getValue(Yii::$app->request->post(), 'qr.type');
+			$type = ArrayHelper::getValue(Yii::$app->request->post(), 'type') ?? ArrayHelper::getValue(Yii::$app->request->post(), 'qr.type');
+			if (!in_array($type, $model->getTypes(true)))
+				throw new NotFoundHttpException('Type ' . $type . ' not found.');
 
-			$modelName = '\\app\\models\\tools\\qr\\' . $type;
+			$modelName = "\\app\\models\\tools\\qr\\{$type}";
 			$model = new $modelName;
 			$model->type = $type === 'SMS' ? 'Phone' : $type;
 
 			if (Yii::$app->request->isAjax)
-				try {
-					return $this->renderAjax('qr/' . strtolower($model->type), [
-						'model' => $model,
-					]);
-				} catch (ViewNotFoundException $e) {
-					throw new NotFoundHttpException('Type ' . $type . ' not found.');
-				}
+				return $this->renderAjax('qr/' . strtolower($model->type), [
+					'model' => $model,
+				]);
 
 			$model = ArrayHelper::merge($model, ArrayHelper::getValue(Yii::$app->request->post(), 'qr'));
 			if ($model->validate())

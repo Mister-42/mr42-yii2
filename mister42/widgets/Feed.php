@@ -16,12 +16,12 @@ class Feed extends Widget {
 			->orderBy('time DESC')
 			->limit($limit)
 			->all();
-		return empty($items) ? Html::tag('p', 'No items to display.') : self::renderFeed($items, $limit);
+		return empty($items) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderFeed($items, $limit);
 	}
 
 	private function renderFeed(array $items, int $limit): string {
 		foreach ($items as $item) :
-			$feed[] = $item['title'] === $item['description'] || $item['description'] === null
+			$feed[] = $item['title'] === $item['description'] || empty($item['description'])
 				? Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link']), ['class' => 'list-group-item text-truncate'])
 				: Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link', 'title' => Html::tag('div', $item['title'], ['class' => 'font-weight-bold']) . $item['description'], 'data-html' => 'true', 'data-toggle' => 'tooltip', 'data-placement' => 'left']), ['class' => 'list-group-item text-truncate']);
 			if (++$count === $limit)

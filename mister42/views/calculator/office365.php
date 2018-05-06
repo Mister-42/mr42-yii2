@@ -14,8 +14,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
 			Alert::begin(['options' => ['class' => 'alert-danger']]);
-				echo Html::tag('p', Html::tag('strong', 'This action is not allowed!') . ' You cannot renew your subscription for more than three years.');
-				echo Html::tag('p', 'Theoretically the subscription with ' . Html::tag('strong', Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']])) . ' would approximately expire on ' . Html::tag('strong', Yii::$app->formatter->asDate($flash['date'], 'long')));
+				echo Html::tag('div', Html::tag('strong', 'This action is not allowed!') . ' You cannot renew your subscription for more than three years.');
+				echo Html::tag('div', 'Theoretically the subscription with ' . Html::tag('strong', Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']])) . ' would approximately expire on ' . Html::tag('strong', Yii::$app->formatter->asDate($flash['date'], 'long')));
 			Alert::end();
 		} elseif ($flash = Yii::$app->session->getFlash('office365-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success']]);
