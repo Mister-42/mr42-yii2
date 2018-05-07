@@ -8,9 +8,7 @@ use yii\web\HttpException;
 
 class DownloadController extends \yii\web\Controller {
 	public function actionPhp($version) {
-		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
-			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-
+		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 		$phpFile = Yii::getAlias("@webroot/../../../bin/php{$version}-cli");
 		$archiveFile = Yii::getAlias('@assetsroot/temp/') . uniqid("php{$version}-") . '.tar';
 		$compressedFile = $archiveFile . '.bz2';

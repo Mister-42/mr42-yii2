@@ -56,7 +56,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->all();
 	}
 
-	public function lastUpdate($artist, $data = null, $max = null) {
+	public function lastUpdate($artist, $data = null) {
 		$data = $data ?? self::albumsList($artist);
 		foreach ($data as $item) :
 			$max = max($max, $item->updated);

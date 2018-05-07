@@ -42,7 +42,7 @@ foreach($tags as $tag => $value) :
 endforeach;
 unset($tags);
 
-Sitemap::lineItem($doc, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpdate(null));
+Sitemap::lineItem($doc, Url::to(['lyrics/index'], true), Lyrics1Artists::lastUpdate());
 
 foreach(Lyrics1Artists::albumsList() as $artist) :
 	$lastUpdate = Lyrics2Albums::lastUpdate($artist->url, $artist->albums);

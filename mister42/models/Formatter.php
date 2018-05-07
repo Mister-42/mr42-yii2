@@ -19,17 +19,15 @@ class Formatter extends \yii\i18n\Formatter {
 	}
 
 	public function jspack(string $file, array $replace = []): string {
-		if (!file_exists(Yii::getAlias('@runtime/assets/js')))
-			FileHelper::createDirectory(Yii::getAlias('@runtime/assets/js'));
-
-		$filename = Yii::getAlias('@app/assets/js/' . $file);
-		$cachefile = Yii::getAlias('@runtime/assets/js/' . $file);
+		$filename = Yii::getAlias("@app/assets/js/{$file}");
+		$cachefile = Yii::getAlias("@runtime/assets/js/{$file}");
 
 		if (!file_exists($filename))
-			return $filename . ' does not exist.';
+			return $file . ' does not exist.';
 
 		if (!file_exists($cachefile) || filemtime($cachefile) < filemtime($filename)) {
-			$js = empty($replace) ? file_get_contents($filename) : strtr(file_get_contents($filename), $replace);
+			FileHelper::createDirectory(Yii::getAlias('@runtime/assets/js'));
+			$js = strtr(file_get_contents($filename), $replace);
 			$jp = new JavascriptPacker($js, 0);
 			if (!empty($replace))
 				return $jp->pack();

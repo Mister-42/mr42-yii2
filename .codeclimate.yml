@@ -16,6 +16,8 @@ engines:
     checks:
       CyclomaticComplexity:
         enabled: false
+      UnusedLocalVariable:
+        enabled: false
     config:
       rulesets: "codesize,design,unusedcode"
 ratings:

@@ -34,9 +34,6 @@ class Barcode extends \yii\base\Model {
 	}
 
 	public function generate(): bool {
-		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
-			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-
 		$barcode = new BarcodeData();
 		$data = $barcode->getBarcodeArray($this->code, $this->type);
 
@@ -54,6 +51,7 @@ class Barcode extends \yii\base\Model {
 			$location += $barWidth;
 		endforeach;
 
+		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 		$cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('barcode') . '.png');
 		imagepng($image, $cacheFile);
 		imagedestroy($image);

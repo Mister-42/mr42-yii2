@@ -24,9 +24,6 @@ class Favicon extends \yii\base\Model {
 	}
 
 	public function convertImage(): bool {
-		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
-			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-
 		if (!$this->validate()) {
 			Yii::$app->getSession()->setFlash('favicon-error', 'Uploaded file could not be converted. Make sure you upload a valid image.');
 			FileHelper::unlink($this->sourceImage->tempName);
@@ -35,6 +32,7 @@ class Favicon extends \yii\base\Model {
 
 		list($width, $height) = getimagesize($this->sourceImage->tempName);
 		$tmpSize = min($width, $height);
+		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 		$cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('favicon') . '.ico');
 		exec("convert {$this->sourceImage->tempName} -gravity center -crop {$tmpSize}x{$tmpSize}+0+0 +repage -resize 256x256 -define icon:auto-resize=" . implode(',', $this->dimensions) . " {$cacheFile}");
 		FileHelper::unlink($this->sourceImage->tempName);

@@ -31,7 +31,7 @@ class LyricsController extends \yii\web\Controller {
 			$this->lastModified = Lyrics2Albums::lastUpdate($this->artist);
 		} else {
 			$this->page = self::PAGE_INDEX;
-			$this->lastModified = Lyrics1Artists::lastUpdate(null);
+			$this->lastModified = Lyrics1Artists::lastUpdate();
 		}
 
 		parent::init();

@@ -32,8 +32,8 @@ class ArticlesController extends \yii\web\Controller {
 		];
 	}
 
-	public function actionIndex($id = '', $action = '', $q = ''): string {
-		if (!empty($id))
+	public function actionIndex(int $id = 0, string $action = '', string $q = ''): string {
+		if ($id !== 0)
 			return self::pageIndex($id);
 
 		$query = Articles::find()->orderBy('id DESC');
@@ -57,21 +57,18 @@ class ArticlesController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionPdf($id = '', $title = '') {
-		if (!empty($id)) {
-			$model = $this->findModel($id);
+	public function actionPdf(int $id, string $title = '') {
+		$model = $this->findModel($id);
 
-			if (!$model->pdf)
-				throw new NotFoundHttpException('File not found.');
+		if (!$model->pdf)
+			throw new NotFoundHttpException('File not found.');
 
-			if (empty($title) || $title != $model->url)
-				$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
+		if (empty($title) || $title != $model->url)
+			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
-			$html = $this->renderPartial('pdf', ['model' => $model]);
-
-			$fileName = Articles::buildPdf($model, $html);
-			Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
-		}
+		$html = $this->renderPartial('pdf', ['model' => $model]);
+		$fileName = Articles::buildPdf($model, $html);
+		Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
 	}
 
 	public function actionCreate() {
@@ -87,7 +84,7 @@ class ArticlesController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionUpdate($id) {
+	public function actionUpdate(int $id) {
 		$this->layout = '@app/views/layouts/main.php';
 
 		$model = BaseArticles::findOne(['id' => $id]);
@@ -103,7 +100,7 @@ class ArticlesController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionDelete($id) {
+	public function actionDelete(int $id) {
 		$model = BaseArticles::findOne(['id' => $id]);
 		if (!$model->belongsToViewer())
 			throw new UnauthorizedHttpException('You do not have permission to delete this article.');
@@ -112,7 +109,7 @@ class ArticlesController extends \yii\web\Controller {
 		return $this->redirect(['index']);
 	}
 
-	public function actionCommentstatus($action, $id) {
+	public function actionCommentstatus(int $id, string $action) {
 		$comment = Comments::findOne(['id' => $id]);
 		$article = $this->findModel($comment->parent);
 
@@ -162,7 +159,7 @@ class ArticlesController extends \yii\web\Controller {
 		]);
 	}
 
-	protected function findComment($id) {
+	protected function findComment(int $id) {
 		$model = Comments::find()
 			->where(['id' => $id])
 			->with('user')
@@ -178,7 +175,7 @@ class ArticlesController extends \yii\web\Controller {
 		return $model;
 	}
 
-	protected function findModel($id, $withList = []) {
+	protected function findModel(int $id, array $withList = []) {
 		$query = Articles::find()
 			->where(['id' => $id])
 			->with('user');
