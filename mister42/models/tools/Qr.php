@@ -79,16 +79,14 @@ class Qr extends \yii\base\Model {
 			return false;
 		}
 
-		$rndFilename = uniqid('qr');
-		$cacheFile = Yii::getAlias("@assetsroot/temp/{$rndFilename}.png");
-
+		$cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('qr') . '.png');
 		$qrcode = new QrCode(utf8_encode($qrData), 'L');
 		$qrcode->disableBorder();
 		$qrcode->displayPNG($this->size, [255,255,255], [0,0,0], $cacheFile, 6);
 
 		if ($this->recipient)
-			Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
-		Yii::$app->getSession()->setFlash('qr-success', $rndFilename.'.png');
+			Mailer::sendFileHtml($this->recipient, 'Your QR Code from ' . Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
+		Yii::$app->getSession()->setFlash('qr-success', $cacheFile);
 		return true;
 	}
 

@@ -21,32 +21,28 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		if (time() - self::lastSeen($userid, true) > 300)
 			self::updateUser(Profile::findOne(['user_id' => $userid]), time());
 
-		$tracks = self::find()
-			->where(['userid' => $userid])
-			->orderBy('count DESC')
-			->limit($this->limit)
-			->all();
+		$tracks = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit($this->limit)->all();
 
 		foreach ($tracks as $track) :
-			$data .= Html::beginTag('div', ['class' => 'clearfix']);
-				$data .= Html::beginTag('div', ['class' => 'd-flex justify-content-between']);
-					$data .= Html::beginTag('span', ['class' => 'text-truncate']);
-						$data .= $track['artist'];
+			$data[] = Html::beginTag('div', ['class' => 'clearfix']);
+				$data[] = Html::beginTag('div', ['class' => 'd-flex justify-content-between']);
+					$data[] = Html::beginTag('span', ['class' => 'text-truncate']);
+						$data[] = $track['artist'];
 						if ($track['time'] === 0)
-							$data .= Icon::show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
-					$data .= Html::endTag('span');
-					$data .= Html::tag('span', $track['track'], ['class' => 'text-truncate text-right']);
-				$data .= Html::endTag('div');
-			$data .= Html::endTag('div');
+							$data[] = Icon::show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
+					$data[] = Html::endTag('span');
+					$data[] = Html::tag('span', $track['track'], ['class' => 'text-truncate text-right']);
+				$data[] = Html::endTag('div');
+			$data[] = Html::endTag('div');
 		endforeach;
 
-		$data .= empty($tracks)
+		$data[] = empty($tracks)
 			? Html::tag('div', 'No items to display.', ['class' => 'ml-2'])
 			: Html::tag('div',
 				Html::tag('span', 'Total tracks played:', ['class' => 'font-weight-bold float-left']) .
 				Html::tag('span', Yii::$app->formatter->asInteger($tracks[0]['count']), ['class' => 'font-weight-bold float-right'])
 			);
-		return $data;
+		return implode($data);
 	}
 
 	public function lastSeen(int $userid, bool $update = false) {

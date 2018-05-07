@@ -24,7 +24,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo Alert::widget(['options' => ['class' => 'alert-danger'], 'body' => $flash]);
 
 		if ($icon = Yii::$app->session->getFlash('favicon-success')) {
-			Alert::begin(['options' => ['class' => 'alert-success']]);
+			Alert::begin(['options' => ['class' => 'alert-success clearfix']]);
 				echo Html::img(Url::to('@assets/temp/'.$icon), ['alt' => 'favicon.ico', 'class' => 'float-left mr-2', 'height' => 64, 'width' => 64]);
 				echo Html::tag('div', 'Your icon has been generated successfully. Save it to your website and add the code below between the &lt;head&gt; tags of your html. This will allow all major browsers to show the icon when the website is accessed and/or bookmarked.');
 				echo Html::tag('div', 'Do not link to the icon on this website directly as it will be deleted shortly.');
@@ -49,7 +49,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
-			Html::submitButton($model->getAttributeLabel('generate'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
+			Html::submitButton('Convert Image', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();

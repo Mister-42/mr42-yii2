@@ -2,12 +2,13 @@
 $sass = 'sass --scss --sourcemap=none -C -t compressed -I '.Yii::getAlias('@bower/bootstrap/scss') . ' {from} {to}';
 
 return [
-	'cssCompressor' => $sass,
 	'bundles' => [
 		'app\assets\AppAssetCompress'
 	],
+	'cssCompressor' => $sass,
+	'deleteSource' => true,
 	'targets' => [
-		'site' => [
+		'all' => [
 			'class' => 'yii\web\AssetBundle',
 			'basePath' => '@runtime/assets',
 			'baseUrl' => '@web/assets',

@@ -145,10 +145,10 @@ pre code {
 }
 
 form {
-	.required label {
+	.required label:not(.custom-file-label) {
 		&:after {
 			color: $red;
-			content: ' *';
+			content: '*';
 		}
 	}
 

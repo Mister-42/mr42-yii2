@@ -37,9 +37,6 @@ class Barcode extends \yii\base\Model {
 		if (!file_exists(Yii::getAlias('@assetsroot/temp')))
 			FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 
-		$rndFilename = uniqid('barcode');
-		$cacheFile = Yii::getAlias("@assetsroot/temp/{$rndFilename}.png");
-
 		$barcode = new BarcodeData();
 		$data = $barcode->getBarcodeArray($this->code, $this->type);
 
@@ -57,11 +54,12 @@ class Barcode extends \yii\base\Model {
 			$location += $barWidth;
 		endforeach;
 
+		$cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('barcode') . '.png');
 		imagepng($image, $cacheFile);
 		imagedestroy($image);
 
 		if ($this->recipient)
-			Mailer::sendFileHtml($this->recipient, 'Your barcode from '.Yii::$app->name, 'barcodeRequester', ['file' => $cacheFile, 'name' => 'Barcode.png']);
+			Mailer::sendFileHtml($this->recipient, 'Your barcode from ' . Yii::$app->name, 'barcodeRequester', ['file' => $cacheFile, 'name' => 'Barcode.png']);
 		Yii::$app->getSession()->setFlash('barcode-success', $cacheFile);
 		return true;
 	}
