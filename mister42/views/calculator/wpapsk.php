@@ -15,6 +15,7 @@ ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/wpapsk.js'), View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);
 $this->registerJs('$("input").keypress(function(e){if(e.which==13){cal_psk();return false}});', View::POS_READY);
+$this->registerJs(Yii::$app->formatter->jspack('togglePassword.js'), View::POS_END);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/pbkdf2.js'), View::POS_END);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/sha1.js'), View::POS_END);
 
@@ -34,12 +35,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo $form->field($model, 'ssid', [
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('wifi').'{input}</div>{error}',
 			])
-			->textInput(['autofocus' => true, 'tabindex' => 1]);
+			->textInput(['autofocus' => true, 'tabindex' => ++$tab]);
 
 		echo $form->field($model, 'pass', [
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group" id="pwdToggle">'.Icon::fieldAddon('lock').'{input}<span class="input-group-append">' . Html::button(Icon::show('eye', ['class' => 'append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']) . '</span></div>{error}',
 			])
-			->textInput(['tabindex' => 2]);
+			->passwordInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'psk', [
 				'options' => ['class' => 'form-group has-success'],
@@ -55,8 +56,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		, ['class' => 'd-none form-group current-progress']);
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => 4, 'onclick' => 'reset_psk()']) .
-			Html::button('Calculate', ['class' => 'btn btn-primary ml-1', 'tabindex' => 3, 'onclick' => 'cal_psk()'])
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2, 'onclick' => 'reset_psk()']) .
+			Html::button('Calculate', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();

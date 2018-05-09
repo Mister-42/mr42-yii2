@@ -13,7 +13,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('div', 'This calculator calculates the number of days between two dates.', ['class' => 'alert alert-info']);
 
 		if ($flash = Yii::$app->session->getFlash('duration-success')) {
-			Alert::begin(['options' => ['class' => 'alert-success']]);
+			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
 				echo Html::tag('div', 'From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->fromDate, 'long')));
 				echo Html::tag('div', 'To: ' . Html::tag('b', Yii::$app->formatter->asDate($model->toDate, 'long')));
 				echo Html::tag('div', 'Result: ' . Html::tag('strong', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $flash->days])), ['class' => 'mt-3']);

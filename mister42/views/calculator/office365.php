@@ -13,8 +13,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('div', 'This calculator calculates the new end date of a Microsoft® Office 365® Open SKU. For redeeming your product keys, please visit ' . Html::a('https://office.com/setup365', 'https://office.com/setup365', ['class' => 'alert-link']) . '.', ['class' => 'alert alert-info']);
 
 		if ($flash = Yii::$app->session->getFlash('office365-error')) {
-			Alert::begin(['options' => ['class' => 'alert-danger']]);
-				echo Html::tag('div', Html::tag('strong', 'This action is not allowed!') . ' You cannot renew your subscription for more than three years.');
+			Alert::begin(['options' => ['class' => 'alert-danger fade show']]);
+				echo Html::tag('h4', 'This action is not allowed!', ['class' => 'alert-heading']);
+				echo Html::tag('div', 'You cannot renew your subscription for more than three years.');
 				echo Html::tag('div', 'Theoretically the subscription with ' . Html::tag('strong', Yii::t('site', '{delta, plural, =1{1 license} other{# licenses}}', ['delta' => $flash['count']])) . ' would approximately expire on ' . Html::tag('strong', Yii::$app->formatter->asDate($flash['date'], 'long')));
 			Alert::end();
 		} elseif ($flash = Yii::$app->session->getFlash('office365-success')) {

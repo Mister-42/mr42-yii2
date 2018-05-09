@@ -16,10 +16,10 @@ echo Html::beginTag('div', ['class' => 'row']);
 			list($width, $height) = getimagesize($barcode);
 			$imgHeight = min(150, $height);
 			$imgWidth = round($imgHeight / $height * $width);
-			Alert::begin(['options' => ['class' => 'alert-success clearfix']]);
-			echo Html::img(Url::to('@assets/temp/'.basename($barcode)), ['alt' => 'Barcode', 'class' => 'float-left mr-2', 'height' => $imgHeight, 'width' => $imgWidth]);
-			echo Html::tag('div', 'Your Barcode has been generated successfully.');
-			echo Html::tag('div', 'Do not link to the image on this website directly as it will be deleted shortly.');
+			Alert::begin(['options' => ['class' => 'alert-success fade show clearfix']]);
+				echo Html::img(Url::to('@assets/temp/'.basename($barcode)), ['alt' => 'Barcode', 'class' => 'float-left mr-2', 'height' => $imgHeight, 'width' => $imgWidth]);
+				echo Html::tag('div', 'Your Barcode has been generated successfully.');
+				echo Html::tag('div', 'Do not link to the image on this website directly as it will be deleted shortly.');
 			Alert::end();
 		}
 
