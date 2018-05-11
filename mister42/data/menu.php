@@ -10,7 +10,7 @@ $unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACT
 $unreadBadge = $unread > 0 ? Html::tag('span', $unread, ['class' => 'badge badge-info ml-1']) : '';
 
 return [
-	['label' => Icon::show('newspaper', ['class' => ' mr-1']) . 'Articles', 'url' => ['/articles/index'], 'visible' => true],
+	['label' => Icon::show('newspaper', ['class' => 'mr-1']) . 'Articles', 'url' => ['/articles/index'], 'visible' => true],
 	['label' => Icon::show('calculator', ['class' => 'mr-1']) . 'Calculator', 'url' => null,
 		'items' => [
 			['label' => 'Date (add/subtract)', 'url' => ['/calculator/date']],

@@ -1,7 +1,6 @@
 <?php
 use app\models\Icon;
 use yii\bootstrap4\{ActiveForm, Html};
-use yii\captcha\Captcha;
 
 $this->title = Yii::t('usuario', 'Sign up');
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,7 +12,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$form = ActiveForm::begin(
 			[
 				'id' => $model->formName(),
-				'enableAjaxValidation' => true,
+				'enableAjaxValidation' => false,
 				'enableClientValidation' => false,
 			]
 		);
@@ -34,13 +33,6 @@ echo Html::beginTag('div', ['class' => 'row']);
 					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
 				])->passwordInput(['tabindex' => ++$tab]);
 		echo Html::endTag('div');
-
-		echo $form->field($model, 'captcha')->widget(Captcha::class, [
-			'captchaAction' => '/site/captcha',
-			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
-			'options' => ['class' => 'form-control', 'tabindex' => ++$tab],
-			'template' => '<div class="row"><div class="col-6"><div class="input-group">'.Icon::fieldAddon('question').'{input}</div></div> {image}</div>',
-		])->hint('Click on the image to retrieve a new verification code.');
 
 		echo Html::submitButton(Yii::t('usuario', 'Sign up'), ['class' => 'btn btn-success btn-block', 'tabindex' => ++$tab]);
 

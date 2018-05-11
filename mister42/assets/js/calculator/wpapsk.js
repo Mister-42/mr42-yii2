@@ -15,7 +15,7 @@ function cal_psk() {
 	});
 	$('#wpapsk').yiiActiveForm("validate");
 
-	if ($('#wpapsk').find(".has-error").length) {
+	if ($('#wpapsk').find(".is-invalid").length) {
 		return false;
 	}
 

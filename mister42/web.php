@@ -64,7 +64,6 @@ $config = [
 			],
 			'classMap' => [
 				'Profile' => 'app\models\user\Profile',
-				'RegistrationForm' => 'app\models\user\RegistrationForm',
 			],
 			'routes' => [
 				'profile/<username:\w+>'					=> 'profile/show',

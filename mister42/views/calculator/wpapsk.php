@@ -5,7 +5,7 @@ use app\models\calculator\Wpapsk;
 use yii\bootstrap4\{ActiveForm, Html, Progress};
 use yii\web\View;
 
-$this->title = 'Wifi Protected Access Pre-Shared Key Calculator';
+$this->title = 'Wifi Protected Access Pre-Shared Key (WPA-PSK) Calculator';
 $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = 'Wifi Protected Access Pre-Shared Key';
 
@@ -15,16 +15,16 @@ ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/wpapsk.js'), View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);
 $this->registerJs('$("input").keypress(function(e){if(e.which==13){cal_psk();return false}});', View::POS_READY);
-$this->registerJs(Yii::$app->formatter->jspack('togglePassword.js'), View::POS_END);
+$this->registerJs(Yii::$app->formatter->jspack('togglePassword.js'), View::POS_READY);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/pbkdf2.js'), View::POS_END);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/sha1.js'), View::POS_END);
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
-		echo Html::tag('h1', $this->title);
+		echo Html::tag('h1', Html::tag('abbr', 'WPA', ['title' => 'Wifi Protected Access']) . '-' . Html::tag('abbr', 'PSK', ['title' => 'Pre-Shared Key']) . ' Calculator');
 		echo Html::beginTag('div', ['class' => 'alert alert-info']);
-			echo Html::tag('div', 'This Wifi Protected Access Pre-Shared Key (WPA PSK) calculator provides an easy way to convert a SSID and WPA Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.');
-			echo Html::tag('div', 'Type or paste in your SSID and WPA Passphrase below. Click \'Calculate\' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <strong>None</strong> of this information will be sent over the network.');
+			echo Html::tag('div', 'This WPA-PSK calculator provides an easy way to convert a ' . Html::tag('abbr', 'SSID', ['title' => 'Service Set Identifier']) . ' and WPA Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.');
+			echo Html::tag('div', 'Type or paste in your SSID and WPA Passphrase below. Click \'Calculate PSK\' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <strong>None</strong> of this information will be sent over the network.');
 		echo Html::endTag('div');
 
 		$form = ActiveForm::begin([
@@ -32,15 +32,19 @@ echo Html::beginTag('div', ['class' => 'row']);
 			'id' => 'wpapsk',
 		]);
 
-		echo $form->field($model, 'ssid', [
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('wifi').'{input}</div>{error}',
-			])
-			->textInput(['autofocus' => true, 'tabindex' => ++$tab]);
+		echo Html::beginTag('div', ['class' => 'row']);
+			echo $form->field($model, 'ssid', [
+					'options' => ['class' => 'form-group col-md-6'],
+					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('wifi').'{input}</div>{error}',
+				])
+				->textInput(['tabindex' => ++$tab]);
 
-		echo $form->field($model, 'pass', [
-				'template' => '{label}<div class="input-group" id="pwdToggle">'.Icon::fieldAddon('lock').'{input}<span class="input-group-append">' . Html::button(Icon::show('eye', ['class' => 'append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']) . '</span></div>{error}',
-			])
-			->passwordInput(['tabindex' => ++$tab]);
+			echo $form->field($model, 'pass', [
+					'options' => ['class' => 'form-group col-md-6'],
+					'template' => '{label}<div class="input-group" id="pwdToggle">'.Icon::fieldAddon('lock').'{input}<span class="input-group-append">' . Html::button(Icon::show('eye', ['class' => 'append']) . Icon::show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']) . '</span></div>{error}',
+				])
+				->passwordInput(['tabindex' => ++$tab]);
+		echo Html::endTag('div');
 
 		echo $form->field($model, 'psk', [
 				'options' => ['class' => 'form-group has-success'],
@@ -49,7 +53,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->textInput(['placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
 
 		echo Html::tag('div',
-			Html::tag('label', 'Current Progress') .
+			Html::tag('label', 'Progress') .
 			Progress::widget([
 				'options' => ['class' => 'progress-bar progress-bar-striped progress-bar-animated']
 			])
@@ -57,7 +61,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2, 'onclick' => 'reset_psk()']) .
-			Html::button('Calculate', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
+			Html::button('Calculate PSK', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();

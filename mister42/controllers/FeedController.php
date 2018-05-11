@@ -26,7 +26,7 @@ class FeedController extends \yii\web\Controller {
 	}
 
 	public function actionRss() {
-		if (Yii::$app->request->headers->get('user-agent') !== 'FeedBurner' && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs']))
+		if (!strstr(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs']))
 			$this->redirect('http://f.mr42.me/Mr42')->send();
 
 		Yii::$app->response->format = Response::FORMAT_RAW;

@@ -53,6 +53,20 @@ h1, h2, h3, h4, h5, h6, .breadcrumb {
 	}
 }
 
+svg.fa {
+	display: inline-block;
+	font-size: inherit;
+	height: 1em;
+	overflow: visible;
+	vertical-align: -.125em;
+
+	@for $i from 1 through 20 {
+		&.w-#{$i} {
+			width: $i * .0625em;
+		}
+	}
+}
+
 .site- {
 	&country,
 	&headers,

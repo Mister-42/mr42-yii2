@@ -11,20 +11,16 @@ class Contact extends \yii\base\Model {
 	public $captcha;
 
 	public function rules(): array {
-		$rules = [
-			[['name', 'email', 'title', 'content'], 'required'],
+		return [
+			[['name', 'email', 'title', 'content', 'captcha'], 'required'],
 			[['name', 'email', 'title', 'content'], 'trim'],
-			'charCount' => [['content'], 'string', 'max' => 8192],
-			[['name'], 'string', 'max' => 25],
-			[['email'], 'string', 'max' => 50],
-			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
-			[['attachment'], 'file', 'minSize' => 64, 'maxSize' => 1024 * 1024 * 5],
-			[['captcha'], 'captcha'],
+			'charCount' => ['content', 'string', 'max' => 8192],
+			['name', 'string', 'max' => 25],
+			['email', 'string', 'max' => 50],
+			['email', 'email', 'checkDNS' => true, 'enableIDN' => true],
+			['attachment', 'file', 'minSize' => 64, 'maxSize' => 1024 * 1024 * 5],
+			['captcha', 'captcha'],
 		];
-
-		if (!Yii::$app->request->isPost)
-			$rules[] = [['captcha'], 'required'];
-		return $rules;
 	}
 
 	public function attributeLabels(): array {

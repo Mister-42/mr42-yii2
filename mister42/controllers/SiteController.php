@@ -3,7 +3,6 @@ namespace app\controllers;
 use Yii;
 use app\models\site\{Contact, Webmanifest};
 use yii\base\BaseObject;
-use yii\captcha\CaptchaAction;
 use yii\filters\{AccessControl, HttpCache};
 use yii\web\{ErrorAction, NotFoundHttpException, Response, UploadedFile};
 
@@ -11,7 +10,7 @@ class SiteController extends \yii\web\Controller {
 	public function actions() {
 		return [
 			'captcha' => [
-				'class' => CaptchaAction::class,
+				'class' => 'yii\captcha\CaptchaAction',
 				'backColor' => 0xffffff,
 				'foreColor' => 0x003e67,
 				'transparent' => true,

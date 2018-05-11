@@ -6,6 +6,7 @@ use yii\captcha\Captcha;
 class Form extends ActiveForm {
 	public static function captcha(ActiveForm $form, $model, int $tab): string {
 		return $form->field($model, 'captcha')->widget(Captcha::class, [
+			'captchaAction' => ['/site/captcha'],
 			'imageOptions' => ['alt' => 'CAPTCHA image', 'class' => 'captcha'],
 			'options' => ['class' => 'form-control', 'tabindex' => $tab],
 			'template' => '<div class="row"><div class="col-6 col-md-4"><div class="input-group">'.Icon::fieldAddon('code').'{input}</div></div> {image}</div>',

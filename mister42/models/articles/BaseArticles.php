@@ -62,8 +62,8 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		if (!parent::beforeSave($insert))
 			return false;
 
-		$this->url = $this->url ?? null;
-		$this->source = $this->source ?? null;
+		$this->url = !empty($this->url) ? $this->url : null;
+		$this->source = !empty($this->source) ? $this->source : null;
 
 		if ($insert)
 			$this->author = Yii::$app->user->id;
