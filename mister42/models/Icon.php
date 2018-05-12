@@ -8,9 +8,10 @@ class Icon {
 	public static function show(string $name, array $options = []): string {
 		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fas fa-');
 		$style = (explode(' ', $classPrefix))[0] === 'fab' ? 'brands' : 'solid';
-		if (!$fa = @file_get_contents(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg")))
+		if (!file_exists(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg")))
 			return static::show('question-circle', $options);
 
+		$fa = file_get_contents(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"));
 		$svg = simplexml_load_string($fa, 'SimpleXMLElement');
 		list($width, $height) = StringHelper::explode(str_replace('0', '', $svg->attributes()->viewBox), ' ', true, true);
 
