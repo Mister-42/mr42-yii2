@@ -6,7 +6,7 @@ return [
 		'@assets' => '//s.mister42.me',
 		'@assetsroot' => __DIR__ . '/../../www/assets/me.mister42.s',
 		'@bower' => '@vendor/bower-asset',
-		'@npm'   => '@vendor/npm-asset',
+		'@npm' => '@vendor/npm-asset',
 	],
 	'basePath' => __DIR__,
 	'bootstrap' => ['log'],

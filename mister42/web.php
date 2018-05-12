@@ -6,7 +6,7 @@ $config = [
 #	'catchAll' => in_array($_SERVER['REMOTE_ADDR'], $secrets['params']['specialIPs']) ? null : ['site/offline'],
 	'components' => [
 		'authClientCollection' => [
-			'class'   => \yii\authclient\Collection::class,
+			'class' => \yii\authclient\Collection::class,
 			'clients' => [
 				'facebook' => [
 					'class'			=> 'Da\User\AuthClient\Facebook',
@@ -59,17 +59,20 @@ $config = [
 			'class' => Da\User\Module::class,
 			'administrators' => ['admin'],
 			'allowAccountDelete' => false,
-			'controllerMap' => [
-				'profile' => 'app\controllers\user\ProfileController',
-			],
 			'classMap' => [
 				'Profile' => 'app\models\user\Profile',
+				'RegistrationForm' => 'app\models\user\RegistrationForm',
+				'User' => 'app\models\user\User',
+			],
+			'controllerMap' => [
+				'profile' => ['class' => 'app\controllers\user\ProfileController'],
+
 			],
 			'routes' => [
 				'profile/<username:\w+>'					=> 'profile/show',
 				'recenttracks/<username:\w+>'				=> 'profile/recenttracks',
 				'<action:(login|logout)>'					=> 'security/<action>',
-				'<action:(register|resend)>'                => 'registration/<action>',
+				'<action:(register|resend)>'				=> 'registration/<action>',
 				'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>'	=> 'registration/confirm',
 				'forgot'									=> 'recovery/request',
 				'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>'	=> 'recovery/reset',

@@ -60,8 +60,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		, ['class' => 'd-none form-group current-progress']);
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2, 'onclick' => 'reset_psk()']) .
-			Html::button('Calculate PSK', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'id' => 'disable', 'tabindex' => $tab+2, 'onclick' => 'reset_psk()']) .
+			Html::button('Calculate PSK', ['class' => 'btn btn-primary ml-1', 'id' => 'disable', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();

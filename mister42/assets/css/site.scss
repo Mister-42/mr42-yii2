@@ -65,6 +65,11 @@ svg.fa {
 			width: $i * .0625em;
 		}
 	}
+
+	&.fa-fw {
+		text-align: center;
+		width: (20em / 16);
+	}
 }
 
 .site- {

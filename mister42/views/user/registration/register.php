@@ -1,5 +1,5 @@
 <?php
-use app\models\Icon;
+use app\models\{Form, Icon};
 use yii\bootstrap4\{ActiveForm, Html};
 
 $this->title = Yii::t('usuario', 'Sign up');
@@ -13,7 +13,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			[
 				'id' => $model->formName(),
 				'enableAjaxValidation' => false,
-				'enableClientValidation' => false,
+				'enableClientValidation' => true,
 			]
 		);
 
@@ -33,6 +33,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
 				])->passwordInput(['tabindex' => ++$tab]);
 		echo Html::endTag('div');
+
+		echo Form::captcha($form, $model, ++$tab);
 
 		echo Html::submitButton(Yii::t('usuario', 'Sign up'), ['class' => 'btn btn-success btn-block', 'tabindex' => ++$tab]);
 
