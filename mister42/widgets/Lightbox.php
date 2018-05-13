@@ -13,8 +13,8 @@ class Lightbox extends Widget {
 
 	public function init() {
 		LightboxAsset::register($this->getView());
-		if(!empty($this->options))
-			$this->getView()->registerJs('lightbox.option(' . json_encode($this->options) . ')', View::POS_END);
+		if (!empty($this->options))
+			$this->getView()->registerJs('lightbox.option('.json_encode($this->options).')', View::POS_END);
 	}
 
 	public function run() {

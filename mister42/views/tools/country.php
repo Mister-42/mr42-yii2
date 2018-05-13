@@ -43,7 +43,7 @@ echo Html::beginTag('div', ['class' => 'site-country']);
 				$data->$item = Html::tag('span', 'unknown', ['class' => 'text-muted']);
 
 			echo Html::tag('div',
-				Html::tag('div', $name, ['class' => 'col-md-8']) .
+				Html::tag('div', $name, ['class' => 'col-md-8']).
 				Html::tag('div', $data->$item, ['class' => 'col-md-4'])
 			, ['class' => 'row']);
 		endforeach;

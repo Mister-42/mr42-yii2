@@ -13,6 +13,6 @@ class PermalinkController extends \yii\web\Controller {
 		}
 
 		$article = $article->one();
-		$this->redirect('https://www.mister42.me' . Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url]), 301)->send();
+		$this->redirect('https://www.mister42.me'.Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url]), 301)->send();
 	}
 }

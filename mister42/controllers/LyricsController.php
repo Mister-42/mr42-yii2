@@ -42,8 +42,8 @@ class LyricsController extends \yii\web\Controller {
 			[
 				'class' => \yii\filters\HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function () { return serialize([phpversion(), Yii::$app->user->id, $this->lastModified]); },
-				'lastModified' => function () { return $this->lastModified; },
+				'etagSeed' => function() { return serialize([phpversion(), Yii::$app->user->id, $this->lastModified]); },
+				'lastModified' => function() { return $this->lastModified; },
 				'only' => ['index', 'albumpdf', 'albumcover'],
 			],
 		];
@@ -51,9 +51,9 @@ class LyricsController extends \yii\web\Controller {
 
 	public function actionIndex() {
 		switch ($this->page) {
-			case self::PAGE_INDEX:	list($page, $data) = ['1_index', Lyrics1Artists::artistsList()];	break;
-			case self::PAGE_ARTIST:	list($page, $data) = self::pageArtist();							break;
-			case self::PAGE_ALBUM:	list($page, $data) = self::pageAlbum();								break;
+			case self::PAGE_INDEX:	list($page, $data) = ['1_index', Lyrics1Artists::artistsList()]; break;
+			case self::PAGE_ARTIST:	list($page, $data) = self::pageArtist(); break;
+			case self::PAGE_ALBUM:	list($page, $data) = self::pageAlbum(); break;
 		}
 
 		Yii::$app->view->registerMetaTag(['name' => 'google', 'content' => 'notranslate']);
@@ -84,7 +84,7 @@ class LyricsController extends \yii\web\Controller {
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
 	}
 
-	private function pageArtist (): array {
+	private function pageArtist(): array {
 		$albums = Lyrics2Albums::albumsList($this->artist);
 
 		if (count($albums) === 0)
@@ -96,7 +96,7 @@ class LyricsController extends \yii\web\Controller {
 		return ['2_artist', $albums];
 	}
 
-	private function pageAlbum (): array {
+	private function pageAlbum(): array {
 		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
 		if (!ArrayHelper::keyExists(0, $tracks) || (!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active))

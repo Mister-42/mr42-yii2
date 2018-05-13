@@ -16,19 +16,19 @@ echo Html::beginTag('article', ['class' => 'mb-3']);
 		echo Html::tag('h3', (isset($view) && $view === 'full') ? $model->title : Html::a($model->title, ['index', 'id' => $model->id, 'title' => $model->url]), ['class' => 'float-left']);
 		echo Html::beginTag('div', ['class' => 'float-right']);
 			if ($model->belongsToViewer()) {
-				echo Html::a(Icon::show('edit') . ' Edit', ['update', 'id' => $model->id], ['class' => 'badge badge-primary ml-1']);
-				echo Html::a(Icon::show('trash-alt') . ' Delete', ['delete', 'id' => $model->id], [
+				echo Html::a(Icon::show('edit').' Edit', ['update', 'id' => $model->id], ['class' => 'badge badge-primary ml-1']);
+				echo Html::a(Icon::show('trash-alt').' Delete', ['delete', 'id' => $model->id], [
 					'class' => 'badge badge-danger ml-1',
 					'data-confirm' => 'Are you sure you want to delete this article?',
 					'data-method' => 'post',
 				]);
 			}
 			if ($model->pdf)
-				echo Html::a(Icon::show('file-pdf') . ' PDF', ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'badge badge-warning ml-1']);
+				echo Html::a(Icon::show('file-pdf').' PDF', ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'badge badge-warning ml-1']);
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 
-	echo Html::tag('p', Yii::$app->formatter->asDate($model->updated) . ' by ' . $authorPage, ['class' => 'text-secondary']);
+	echo Html::tag('p', Yii::$app->formatter->asDate($model->updated).' by '.$authorPage, ['class' => 'text-secondary']);
 
 	echo Html::beginTag('div');
 		if (strpos($model->content, '[readmore]')) {
@@ -49,23 +49,23 @@ echo Html::beginTag('article', ['class' => 'mb-3']);
 		if ($model->active == 0)
 			$bar[] = Html::tag('div', 'Not published', ['class' => 'badge badge-warning']);
 
-		$bar[] = Icon::show('link', ['class' => 'mr-1 text-muted']) . Html::a('permalink', Yii::$app->params['shortDomain']."art{$model->id}");
+		$bar[] = Icon::show('link', ['class' => 'mr-1 text-muted']).Html::a('permalink', Yii::$app->params['shortDomain']."art{$model->id}");
 
 		$commentText = Yii::t('site', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
-		$bar[] = Icon::show('comment', ['class' => 'mr-1 text-muted']) . Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);
+		$bar[] = Icon::show('comment', ['class' => 'mr-1 text-muted']).Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);
 
 		$tags = StringHelper::explode($model->tags);
 		if (count($tags) > 0) {
-			foreach($tags as $tag)
+			foreach ($tags as $tag)
 				$tagArray[] = Html::a($tag, ['index', 'action' => 'tag', 'tag' => $tag]);
-			$bar[] = Icon::show(count($tags) === 1 ? 'tag' : 'tags', ['class' => 'mr-1 text-muted']) . implode(', ', $tagArray);
+			$bar[] = Icon::show(count($tags) === 1 ? 'tag' : 'tags', ['class' => 'mr-1 text-muted']).implode(', ', $tagArray);
 		}
 
-		$bar[] = Icon::show('clock', ['class' => 'mr-1 text-muted']) . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->created), ['datetime' => date(DATE_W3C, $model->created)]);
+		$bar[] = Icon::show('clock', ['class' => 'mr-1 text-muted']).Html::tag('time', Yii::$app->formatter->asRelativeTime($model->created), ['datetime' => date(DATE_W3C, $model->created)]);
 		if ($model->updated - $model->created > 3600)
-			$bar[] = Icon::show('sync', ['class' => 'mr-1 text-muted']) . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
+			$bar[] = Icon::show('sync', ['class' => 'mr-1 text-muted']).Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
 
-		$bar[] = Icon::show('user', ['class' => 'mr-1 text-muted']) . Html::tag('span', $authorPage, ['class' => 'author']);
+		$bar[] = Icon::show('user', ['class' => 'mr-1 text-muted']).Html::tag('span', $authorPage, ['class' => 'author']);
 
 		echo Html::tag('div', implode(' · ', $bar), ['class' => 'article-toolbar my-2']);
 

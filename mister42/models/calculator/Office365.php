@@ -43,7 +43,7 @@ class Office365 extends \yii\base\Model {
 		$dateCalc = (($diff->days * $this->sourcecount) + ($upcomingYear->days * $this->targetcount)) / $targetCount;
 
 		$newDate = new DateTime($redeemDate);
-		$newDate->modify(ceil($dateCalc) . ' days');
+		$newDate->modify(ceil($dateCalc).' days');
 
 		if ($newDate > (new DateTime($redeemDate))->modify('3 years')) {
 			Yii::$app->getSession()->setFlash('office365-error', ['date' => $newDate, 'count' => $targetCount]);

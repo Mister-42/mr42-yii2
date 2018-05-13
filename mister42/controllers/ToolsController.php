@@ -13,10 +13,10 @@ class ToolsController extends \yii\web\Controller {
 			[
 				'class' => \yii\filters\HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function (BaseObject $action) {
+				'etagSeed' => function(BaseObject $action) {
 					return serialize([phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'))]);
 				},
-				'lastModified' => function (BaseObject $action) {
+				'lastModified' => function(BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['html-to-markdown', 'password'],
@@ -78,21 +78,21 @@ class ToolsController extends \yii\web\Controller {
 		if (Yii::$app->request->isPost) {
 			$type = ArrayHelper::getValue(Yii::$app->request->post(), 'type') ?? ArrayHelper::getValue(Yii::$app->request->post(), 'qr.type');
 			if (!in_array($type, $model->getTypes(true)))
-				throw new NotFoundHttpException('Type ' . $type . ' not found.');
+				throw new NotFoundHttpException('Type '.$type.' not found.');
 
 			$modelName = "\\app\\models\\tools\\qr\\{$type}";
 			$model = new $modelName;
 			$model->type = $type === 'SMS' ? 'Phone' : $type;
 
 			if (Yii::$app->request->isAjax)
-				return $this->renderAjax('qr/' . strtolower($model->type), [
+				return $this->renderAjax('qr/'.strtolower($model->type), [
 					'model' => $model,
 				]);
 
 			$model = ArrayHelper::merge($model, ArrayHelper::getValue(Yii::$app->request->post(), 'qr'));
 			if ($model->validate())
 				$model->generateQr();
-			$qrForm = $this->renderPartial('qr/' . strtolower($model->type), [
+			$qrForm = $this->renderPartial('qr/'.strtolower($model->type), [
 				'model' => $model
 			]);
 		}

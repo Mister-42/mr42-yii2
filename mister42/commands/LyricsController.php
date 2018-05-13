@@ -16,7 +16,7 @@ class LyricsController extends Controller {
 
 	/**
 	 * Perform all actions.
-	*/
+	 */
 	public function actionIndex() {
 		self::actionAlbumImage();
 		self::actionAlbumPdf();
@@ -24,12 +24,12 @@ class LyricsController extends Controller {
 
 	/**
 	 * Resizes all album covers to the default dimensions if they exceed this limit.
-	*/
+	 */
 	public function actionAlbumImage() {
-		foreach(Lyrics1Artists::albumsList() as $artist) :
-			foreach($artist->albums as $album) :
+		foreach (Lyrics1Artists::albumsList() as $artist) :
+			foreach ($artist->albums as $album) :
 				list($width, $height) = getimagesizefromstring($album->image);
-				$exif = exif_read_data("data://image/jpeg;base64," . base64_encode($album->image));
+				$exif = exif_read_data("data://image/jpeg;base64,".base64_encode($album->image));
 				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' && !is_null($album->image_color))
 					continue;
 
@@ -70,10 +70,10 @@ class LyricsController extends Controller {
 
 	/**
 	 * Builds all albums PDF files, unless already cached and up-to-date.
-	*/
+	 */
 	public function actionAlbumPdf() {
-		foreach(Lyrics1Artists::albumsList() as $artist) :
-			foreach($artist->albums as $album) :
+		foreach (Lyrics1Artists::albumsList() as $artist) :
+			foreach ($artist->albums as $album) :
 				if (!$album->active)
 					continue;
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
@@ -96,10 +96,10 @@ class LyricsController extends Controller {
 
 	/**
 	 * Checking status of album playlist.
-	*/
+	 */
 	public function actionAlbumPlaylist() {
-		foreach(Lyrics1Artists::albumsList() as $artist) :
-			foreach($artist->albums as $album) :
+		foreach (Lyrics1Artists::albumsList() as $artist) :
+			foreach ($artist->albums as $album) :
 				if (isset($album->playlist_id))
 					$data[] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
 
@@ -123,7 +123,7 @@ class LyricsController extends Controller {
 							continue;
 						}
 
-						Console::write(ArrayHelper::getValue($response, "{$albumData['id']}.contentDetails.itemCount") . " found", [Console::BOLD, Console::FG_GREEN], 2);
+						Console::write(ArrayHelper::getValue($response, "{$albumData['id']}.contentDetails.itemCount")." found", [Console::BOLD, Console::FG_GREEN], 2);
 						Console::write(ArrayHelper::getValue($response, "{$albumData['id']}.status.privacyStatus"), [Console::BOLD, Console::FG_GREEN], 0);
 						Console::newLine();
 					endforeach;
@@ -137,10 +137,10 @@ class LyricsController extends Controller {
 
 	/**
 	 * Checking status of tracks video.
-	*/
+	 */
 	public function actionTrackVideo() {
 		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]])->all();
-		foreach($query as $track) :
+		foreach ($query as $track) :
 			$data[] = ['id' => $track->video_id, 'name' => $track->name];
 			if (++$x !== count($query) && count($data) < 50)
 				continue;
@@ -175,8 +175,8 @@ class LyricsController extends Controller {
 	private function getAverageImageColor(string $image): string {
 		$i = imagecreatefromstring($image);
 		list($width, $height) = getimagesizefromstring($image);
-		for ($x=0; $x < $width; $x++) {
-			for ($y=0; $y < $height; $y++) {
+		for ($x = 0; $x < $width; $x++) {
+			for ($y = 0; $y < $height; $y++) {
 				$rgb = imagecolorat($i, $x, $y);
 				$r = ($rgb >> 16) & 0xFF;
 				$g = ($rgb >> 8) & 0xFF;
@@ -187,6 +187,6 @@ class LyricsController extends Controller {
 				$total++;
 			}
 		}
-		return sprintf('#%02X%02X%02X', $rTotal/$total, $gTotal/$total, $bTotal/$total); 
+		return sprintf('#%02X%02X%02X', $rTotal / $total, $gTotal / $total, $bTotal / $total); 
 	}
 }

@@ -22,7 +22,7 @@ $doc->writeElement('description', Yii::$app->params['description']);
 	$doc->writeAttribute('type', 'application/rss+xml');
 	$doc->endElement();
 $doc->writeElement('language', Yii::$app->language);
-$doc->writeElement('copyright', '2014-'.date('Y') . ' ' . Yii::$app->name);
+$doc->writeElement('copyright', '2014-'.date('Y').' '.Yii::$app->name);
 $doc->writeElement('pubDate', date(DATE_RSS));
 $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->startElement('image');
@@ -35,7 +35,7 @@ $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->writeElement('width', $width);
 	$doc->endElement();
 
-foreach($articles as $article) :
+foreach ($articles as $article) :
 	if (strpos($article->content, '[readmore]')) {
 		$article->content = substr($article->content, 0, strpos($article->content, '[readmore]'));
 		$article->content .= Html::a('Read full article on our website', Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true)).' &raquo;';
@@ -56,7 +56,7 @@ foreach($articles as $article) :
 	endforeach;
 		$doc->startElement('guid');
 		$doc->writeAttribute('isPermaLink', 'true');
-		$doc->text(Yii::$app->params['shortDomain'] . "art{$article->id}");
+		$doc->text(Yii::$app->params['shortDomain']."art{$article->id}");
 		$doc->endElement();
 	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
 	if ($article->source) {

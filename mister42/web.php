@@ -1,5 +1,5 @@
 <?php
-$secrets = require(__DIR__ . '/secrets.php');
+$secrets = require(__DIR__.'/secrets.php');
 
 $config = [
 	'id' => 'mister42',
@@ -80,7 +80,7 @@ $config = [
 			],
 		],
 	],
-	'params' => require(__DIR__ . '/params.php'),
+	'params' => require(__DIR__.'/params.php'),
 ];
 
 if (YII_DEBUG && in_array($_SERVER['REMOTE_ADDR'], $secrets['params']['specialIPs'])) {

@@ -10,8 +10,8 @@ $unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACT
 $unreadBadge = $unread > 0 ? Html::tag('span', $unread, ['class' => 'badge badge-info ml-1']) : '';
 
 return [
-	['label' => Icon::show('newspaper', ['class' => 'mr-1']) . 'Articles', 'url' => ['/articles/index'], 'visible' => true],
-	['label' => Icon::show('calculator', ['class' => 'mr-1']) . 'Calculator', 'url' => null,
+	['label' => Icon::show('newspaper', ['class' => 'mr-1']).'Articles', 'url' => ['/articles/index'], 'visible' => true],
+	['label' => Icon::show('calculator', ['class' => 'mr-1']).'Calculator', 'url' => null,
 		'items' => [
 			['label' => 'Date (add/subtract)', 'url' => ['/calculator/date']],
 			['label' => 'Date to Date (duration)', 'url' => ['/calculator/duration']],
@@ -20,7 +20,7 @@ return [
 			['label' => 'Wifi Protected Access Pre-Shared Key', 'url' => ['/calculator/wpapsk']],
 		],
 	],
-	['label' => Icon::show('wrench', ['class' => 'mr-1']) . 'Tools', 'url' => null,
+	['label' => Icon::show('wrench', ['class' => 'mr-1']).'Tools', 'url' => null,
 		'items' => [
 			['label' => 'Barcode Generator', 'url' => ['/tools/barcode']],
 			['label' => 'Browser Headers', 'url' => ['/tools/headers']],
@@ -32,14 +32,14 @@ return [
 			['label' => 'QR Code Generator', 'url' => ['/tools/qr']],
 		],
 	],
-	['label' => Icon::show('music', ['class' => 'mr-1']) . 'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
+	['label' => Icon::show('music', ['class' => 'mr-1']).'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
 	$isGuest
-		?	['label' => Icon::show('sign-in-alt', ['class' => 'mr-1']) . 'Login', 'url' => ['/user/security/login'], 'visible' => true]
-		:	['label' => Icon::show('user-circle', ['class' => 'mr-1']) . Yii::$app->user->identity->username . $unreadBadge, 'url' => null,
+		? ['label' => Icon::show('sign-in-alt', ['class' => 'mr-1']).'Login', 'url' => ['/user/security/login'], 'visible' => true]
+		:	['label' => Icon::show('user-circle', ['class' => 'mr-1']).Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
 				'items' => [
 					['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
 					['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
-					['label' => 'PHP ' . phpversion(), 'url' => ['/site/php-version'], 'visible' => $isAdmin],
+					['label' => 'PHP '.phpversion(), 'url' => ['/site/php-version'], 'visible' => $isAdmin],
 					$isAdmin ? Html::tag('div', null, ['class' => 'dropdown-divider']) : '',
 					['label' => 'View Profile', 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]],
 					Html::tag('div', null, ['class' => 'dropdown-divider']),

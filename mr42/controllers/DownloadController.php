@@ -10,8 +10,8 @@ class DownloadController extends \yii\web\Controller {
 	public function actionPhp($version) {
 		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 		$phpFile = Yii::getAlias("@webroot/../../../bin/php{$version}-cli");
-		$archiveFile = Yii::getAlias('@assetsroot/temp/') . uniqid("php{$version}-") . '.tar';
-		$compressedFile = $archiveFile . '.bz2';
+		$archiveFile = Yii::getAlias('@assetsroot/temp/').uniqid("php{$version}-").'.tar';
+		$compressedFile = $archiveFile.'.bz2';
 
 		if (!is_readable($phpFile))
 			throw new HttpException(404, 'The requested file could not be found.');

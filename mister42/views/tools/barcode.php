@@ -40,7 +40,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			$form->field($model, 'height', [
 				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt-v').'{input}</div>{error}',
-			])->input('number', ['tabindex' => ++$tab]) .
+			])->input('number', ['tabindex' => ++$tab]).
 			$form->field($model, 'barWidth', [
 				'options' => ['class' => 'col-sm-6'],
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt-h').'{input}</div>{hint} {error}',
@@ -53,7 +53,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->hint('If you enter your email address the barcode will be mailed to that address.');
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
 			Html::submitButton('Generate Barcode', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 

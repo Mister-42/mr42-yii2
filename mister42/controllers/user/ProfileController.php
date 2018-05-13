@@ -24,10 +24,10 @@ class ProfileController extends \Da\User\Controller\ProfileController {
 			[
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function ($action, $params) {
+				'etagSeed' => function($action, $params) {
 					return serialize([Yii::$app->user->id, Yii::$app->request->get('username')]);
 				},
-				'lastModified' => function ($action, $params) {
+				'lastModified' => function($action, $params) {
 					$user = $this->userQuery->whereUsername(Yii::$app->request->get('username'))->one();
 					$profile = $this->profileQuery->whereUserId($user->id)->one();
 					return $profile->user->updated_at;

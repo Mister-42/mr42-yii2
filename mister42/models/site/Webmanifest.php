@@ -21,8 +21,8 @@ class Webmanifest {
 		foreach ($files as $icon) :
 			$size = getimagesize(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/'.$icon);
 			$icons[] = [
-				'src' => Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/' . $icon, Yii::$app->request->isSecureConnection ? 'https' : 'http'),
-				'sizes' => $size[0] . 'x' . $size[1],
+				'src' => Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/'.$icon, Yii::$app->request->isSecureConnection ? 'https' : 'http'),
+				'sizes' => $size[0].'x'.$size[1],
 				'type' => $size['mime'],
 			];
 		endforeach;

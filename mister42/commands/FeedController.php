@@ -16,7 +16,7 @@ class FeedController extends Controller {
 
 	/**
 	 * Retrieves and stores Recent Tracks from Last.fm.
-	*/
+	 */
 	public function actionLastfmRecent(): int {
 		$recentTracks = new RecentTracks;
 		RecentTracks::deleteAll(['<=', 'seen', time() - 300]);
@@ -38,7 +38,7 @@ class FeedController extends Controller {
 
 	/**
 	 * Retrieves and stores Weekly Artist Chart from Last.fm.
-	*/
+	 */
 	public function actionLastfmWeeklyArtist(): int {
 		$limit = 15;
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
@@ -49,7 +49,7 @@ class FeedController extends Controller {
 					continue;
 
 				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);
-				foreach($response->data['weeklyartistchart']['artist'] as $artist) :
+				foreach ($response->data['weeklyartistchart']['artist'] as $artist) :
 					$addArtist = new WeeklyArtist();
 					$addArtist->userid = $profile->user_id;
 					$addArtist->rank = (int) ArrayHelper::getValue($artist, '@attributes.rank');
@@ -69,7 +69,7 @@ class FeedController extends Controller {
 
 	/**
 	 * Retrieves and stores an Atom or RSS feed.
-	*/
+	 */
 	public function actionWebfeed(string $type, string $name, string $url): int {
 		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
 		$response = Webrequest::getUrl('', $url);
@@ -78,12 +78,12 @@ class FeedController extends Controller {
 
 		Feed::deleteAll(['feed' => $name]);
 		$data = $type === 'rss' ? $response->data['channel']['item'] : $response->data['entry'];
-		foreach($data as $item) :
+		foreach ($data as $item) :
 			$feedItem = new Feed();
 			$feedItem->feed = $name;
 			$feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
 			$feedItem->url = (string) ArrayHelper::getValue($item, $type === 'rss' ? 'link' : 'link.@attributes.href');
-			$feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $type === 'rss' ? 'description': 'content'), false);
+			$feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $type === 'rss' ? 'description' : 'content'), false);
 			$feedItem->time = strtotime(ArrayHelper::getValue($item, $type === 'rss' ? 'pubDate' : 'updated'));
 			$feedItem->save();
 

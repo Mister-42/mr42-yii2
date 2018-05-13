@@ -61,18 +61,18 @@ echo Html::tag('main',
 		'homeLink' => ['label' => Yii::$app->name, 'url' => Yii::$app->homeUrl],
 		'itemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item']),
 		'links' => $this->params['breadcrumbs'],
-	]) .
+	]).
 	$content
 , ['class' => 'container position-relative']);
 
 echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 	echo Html::beginTag('div', ['class' => 'container']);
-		echo Html::tag('span', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name);
+		echo Html::tag('span', '&copy; 2014-'.date('Y').' '.Yii::$app->name);
 		echo Html::beginTag('div', ['class' => 'float-right']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
 				if (Yii::$app->user->identity->isAdmin)
-					echo Html::a(Icon::show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc=' . rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
-				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact ' . Yii::$app->name]);
+					echo Html::a(Icon::show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
+				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact '.Yii::$app->name]);
 				echo Html::a(Icon::show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => 'RSS']);
 			}
 		echo Html::endTag('div');

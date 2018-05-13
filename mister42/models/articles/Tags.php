@@ -6,7 +6,7 @@ class Tags extends BaseArticles {
 	public static function findTagWeights(): array {
 		if (empty($tags = self::getTags()))
 			return [];
-		foreach($tags as $key => $value) :
+		foreach ($tags as $key => $value) :
 			$list[$key]['count'] = $value;
 			$list[$key]['weight'] = 8 + (int) (16 * $value / (array_sum($tags) + 10));
 		endforeach;

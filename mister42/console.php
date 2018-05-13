@@ -3,7 +3,7 @@ return [
 	'id' => 'mister42-console',
 	'aliases' => [
 		'@web' => 'https://www.mister42.me/',
-		'@webroot' => __DIR__ . '/../../webroot',
+		'@webroot' => __DIR__.'/../../webroot',
 	],
 	'components' => [
 		'urlManager' => [

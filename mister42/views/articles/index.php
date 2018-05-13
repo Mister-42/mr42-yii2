@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 echo ListView::widget([
 	'dataProvider' => $dataProvider,
 	'itemOptions' => ['class' => 'item'],
-	'itemView' => function ($model, $key, $index, $widget) {
+	'itemView' => function($model, $key, $index, $widget) {
 		return $this->render('_view', ['model' => $model]);
 	},
 	'layout' => '{items}<div class="pagination float-right">{pager}</div>',

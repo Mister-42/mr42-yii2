@@ -54,12 +54,12 @@ class Qr extends \yii\base\Model {
 			$form->field($this, 'size', [
 				'options' => ['class' => 'form-group col-md-6'],
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt').'{input}</div>{error}',
-			])->input('number', ['tabindex' => ++$tab]) .
+			])->input('number', ['tabindex' => ++$tab]).
 			$form->field($this, 'recipient', [
 				'options' => ['class' => 'form-group col-md-6'],
 				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => ++$tab])
-			->hint('If you enter your email address the ' . Html::tag('span', 'QR Code', ['class' => 'text-nowrap']) . ' will be mailed to that address.')
+			->hint('If you enter your email address the '.Html::tag('span', 'QR Code', ['class' => 'text-nowrap']).' will be mailed to that address.')
 		, ['class' => 'row form-group']);
 
 		$footer[] = Html::tag('div',
@@ -77,13 +77,13 @@ class Qr extends \yii\base\Model {
 		}
 
 		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-		$cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('qr') . '.png');
+		$cacheFile = Yii::getAlias('@assetsroot/temp/'.uniqid('qr').'.png');
 		$qrcode = new QrCode(utf8_encode($qrData), 'L');
 		$qrcode->disableBorder();
-		$qrcode->displayPNG($this->size, [255,255,255], [0,0,0], $cacheFile, 6);
+		$qrcode->displayPNG($this->size, [255, 255, 255], [0, 0, 0], $cacheFile, 6);
 
 		if ($this->recipient)
-			Mailer::sendFileHtml($this->recipient, 'Your QR Code from ' . Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
+			Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
 		Yii::$app->getSession()->setFlash('qr-success', $cacheFile);
 		return true;
 	}
@@ -97,7 +97,7 @@ class Qr extends \yii\base\Model {
 	public function getTypes(bool $rules = false): array {
 		$dir = Yii::getAlias('@app/models/tools/qr');
 		$rename = ['FreeInput' => 'Free Input', 'EmailMessage' => 'Email Message', 'Ical' => 'iCal', 'MailTo' => 'Mail To', 'Vcard' => 'vCard'];
-		foreach(FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file)
+		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file)
 			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
 
 		asort($typeList, SORT_NATURAL | SORT_FLAG_CASE);
@@ -106,7 +106,7 @@ class Qr extends \yii\base\Model {
 
 	public function getDataOrOmit(string $label, string $value, string $glue = '') {
 		if ($value)
-			return $label . $value . $glue;
+			return $label.$value.$glue;
 		return false;
 	}
 }

@@ -14,9 +14,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		if ($flash = Yii::$app->session->getFlash('date-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
-				echo Html::tag('div', 'From: ' . Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long')));
-				echo Html::tag('div', 'Adding: ' . Html::tag('b', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days])));
-				echo Html::tag('div', 'Result: ' . Html::tag('strong', Yii::$app->formatter->asDate($flash, 'long')), ['class' => 'mt-3']);
+				echo Html::tag('div', 'From: '.Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long')));
+				echo Html::tag('div', 'Adding: '.Html::tag('b', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days])));
+				echo Html::tag('div', 'Result: '.Html::tag('strong', Yii::$app->formatter->asDate($flash, 'long')), ['class' => 'mt-3']);
 			Alert::end();
 		}
 
@@ -45,7 +45,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::endTag('div');
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
 			Html::submitButton('Calculate', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 

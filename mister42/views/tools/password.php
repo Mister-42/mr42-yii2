@@ -12,13 +12,13 @@ ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('tools/genpass.js'), View::POS_HEAD);
 $this->registerJs('$("[name=\'length\']").change(function(){get();}).change();', View::POS_READY);
 
-for ($x=6; $x<=64; $x++)
+for ($x = 6; $x <= 64; $x++)
 	$passLength[$x] = $x;
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
 		echo Html::tag('h1', $this->title);
-		echo Html::tag('div', 'This ' . $this->title . ' provides an easy way to create a random password. Password generation is done client-side (on your computer) using JavaScript. <strong>None</strong> of this information will be sent over the network.', ['class' => 'alert alert-info']);
+		echo Html::tag('div', 'This '.$this->title.' provides an easy way to create a random password. Password generation is done client-side (on your computer) using JavaScript. <strong>None</strong> of this information will be sent over the network.', ['class' => 'alert alert-info']);
 
 		echo Html::beginTag('form', ['class' => 'passform']);
 			echo Html::beginTag('div', ['class' => 'form-group passform-length']);

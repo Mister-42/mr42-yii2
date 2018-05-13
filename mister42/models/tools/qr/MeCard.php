@@ -48,6 +48,6 @@ class MeCard extends \app\models\tools\Qr {
 		$data[] = $this->getDataOrOmit('ADR:', $this->address, ';');
 		$data[] = $this->getDataOrOmit('URL:', $this->website, ';');
 		$data[] = $this->getDataOrOmit('NICKNAME:', $this->nickname, ';');
-		return parent::generate('MECARD:' . implode($data) . ';');
+		return parent::generate('MECARD:'.implode($data).';');
 	}
 }

@@ -1,10 +1,10 @@
 <?php
-$secrets = require(__DIR__ . '/secrets.php');
+$secrets = require(__DIR__.'/secrets.php');
 
 return [
 	'aliases' => [
 		'@assets' => '//s.mister42.me',
-		'@assetsroot' => __DIR__ . '/../../www/assets/me.mister42.s',
+		'@assetsroot' => __DIR__.'/../../www/assets/me.mister42.s',
 		'@bower' => '@vendor/bower-asset',
 		'@npm' => '@vendor/npm-asset',
 	],
@@ -54,11 +54,11 @@ return [
 
 			'enableSchemaCache' => true,
 			'schemaCache' => 'fileCache',
-			'schemaCacheDuration' => 60*60*24*7,
+			'schemaCacheDuration' => 60 * 60 * 24 * 7,
 
 			'enableQueryCache' => true,
 			'queryCache' => 'fileCache',
-			'queryCacheDuration' => 60*60*24*2,
+			'queryCacheDuration' => 60 * 60 * 24 * 2,
 		],
 		'formatter' => [
 			'class' => 'app\models\Formatter',
@@ -118,8 +118,8 @@ return [
 	],
 	'language' => 'en',
 	'name' => 'Mr.42',
-	'params' => require(__DIR__ . '/params.php'),
-	'runtimePath' => __DIR__ . '/../../../.cache/yii/mister42',
+	'params' => require(__DIR__.'/params.php'),
+	'runtimePath' => __DIR__.'/../../../.cache/yii/mister42',
 	'timeZone' => 'Europe/Berlin',
-	'vendorPath' => __DIR__ . '/../../vendor',
+	'vendorPath' => __DIR__.'/../../vendor',
 ];

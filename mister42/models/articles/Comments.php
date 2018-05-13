@@ -90,7 +90,7 @@ class Comments extends ActiveRecord {
 			)
 			->setTo([$model->user->email => $model->user->username])
 			->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
-			->setSubject('A new comment has been posted on "' . $model->title . '"')
+			->setSubject('A new comment has been posted on "'.$model->title.'"')
 			->send();
 
 		if (Yii::$app->user->isGuest) {
@@ -100,7 +100,7 @@ class Comments extends ActiveRecord {
 				)
 				->setTo([$comment->email => $comment->name])
 				->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
-				->setSubject('Thank you for your reply on "' . $model->title . '"')
+				->setSubject('Thank you for your reply on "'.$model->title.'"')
 				->send();
 		}
 	}
