@@ -28,7 +28,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo $form->field($model, 'password', [
 			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
 		])->passwordInput(['tabindex' => ++$tab])
-		->label(Yii::t('usuario', 'Password') . ($module->allowPasswordRecovery ? ' (' . Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request']) . ')' : ''));
+		->label(Yii::t('usuario', 'Password').($module->allowPasswordRecovery ? ' ('.Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request']).')' : ''));
 
 		echo $form->field($model, 'rememberMe')->checkBox(['tabindex' => ++$tab]);
 
