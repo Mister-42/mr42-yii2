@@ -23,7 +23,7 @@ class Formatter extends \yii\i18n\Formatter {
 		$cachefile = Yii::getAlias("@runtime/assets/js/{$file}");
 
 		if (!file_exists($filename))
-			return $file.' does not exist.';
+			return "{$file} does not exist.";
 
 		if (!file_exists($cachefile) || filemtime($cachefile) < filemtime($filename)) {
 			FileHelper::createDirectory(Yii::getAlias('@runtime/assets/js'));
