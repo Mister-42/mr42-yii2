@@ -82,31 +82,35 @@ class Qr extends \yii\base\Model {
 		$qrcode->disableBorder();
 		$qrcode->displayPNG($this->size, [255, 255, 255], [0, 0, 0], $cacheFile, 6);
 
-		if ($this->recipient)
-			Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
+		if ($this->recipient) {
+					Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
+		}
 		Yii::$app->getSession()->setFlash('qr-success', $cacheFile);
 		return true;
 	}
 
 	public function getWifiAuthentication(): array {
-		foreach (['none', 'WEP', 'WPA'] as $value)
-			$list[$value] = $value;
+		foreach (['none', 'WEP', 'WPA'] as $value) {
+					$list[$value] = $value;
+		}
 		return $list;
 	}
 
 	public function getTypes(bool $rules = false): array {
 		$dir = Yii::getAlias('@app/models/tools/qr');
 		$rename = ['FreeInput' => 'Free Input', 'EmailMessage' => 'Email Message', 'Ical' => 'iCal', 'MailTo' => 'Mail To', 'Vcard' => 'vCard'];
-		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file)
-			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
+		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file) {
+					$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
+		}
 
 		asort($typeList, SORT_NATURAL | SORT_FLAG_CASE);
 		return $typeList;
 	}
 
 	public function getDataOrOmit(string $label, string $value, string $glue = '') {
-		if ($value)
-			return $label.$value.$glue;
+		if ($value) {
+					return $label.$value.$glue;
+		}
 		return false;
 	}
 }

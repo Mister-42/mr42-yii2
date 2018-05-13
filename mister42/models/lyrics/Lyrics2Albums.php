@@ -60,8 +60,9 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		$data = $data ?? self::albumsList($artist);
 		foreach ($data as $item) :
 			$max = max($max, $item->updated);
-			foreach ($item->tracks as $track)
-				$max = max($max, $track->lyrics->updated);
+			foreach ($item->tracks as $track) {
+							$max = max($max, $track->lyrics->updated);
+			}
 		endforeach;
 		return $max;
 	}

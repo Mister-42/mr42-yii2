@@ -37,8 +37,9 @@ class Pdf {
 
 		while (!feof($reading)) {
 			$line = fgets($reading);
-			if (stristr($line, $search))
-				$line = $search.' '.$replace.PHP_EOL;
+			if (stristr($line, $search)) {
+							$line = $search.' '.$replace.PHP_EOL;
+			}
 			fputs($writing, $line);
 		}
 		fclose($reading); fclose($writing);

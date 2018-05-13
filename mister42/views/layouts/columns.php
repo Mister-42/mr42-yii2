@@ -34,8 +34,9 @@ $this->endBlock();
 $this->beginContent('@app/views/layouts/main.php');
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::tag('div', $content, ['class' => $isHome ? 'col-12 col-md-8 col-lg-6' : 'col-12 col-md-9']);
-	if ($isHome)
-		echo Html::tag('aside', $this->blocks['widgets'], ['class' => 'col-3 d-none d-lg-block']);
+	if ($isHome) {
+			echo Html::tag('aside', $this->blocks['widgets'], ['class' => 'col-3 d-none d-lg-block']);
+	}
 	echo Html::beginTag('aside', ['class' => 'col-4 col-lg-3 d-none d-md-block']);
 		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'id' => 'search', 'method' => 'get', 'options' => ['role' => 'search']]);
 		echo $form->field($search, 'search', [
@@ -68,8 +69,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 			$this->endCache();
 		}
 
-		if (!$isHome)
-			echo $this->blocks['widgets'];
+		if (!$isHome) {
+					echo $this->blocks['widgets'];
+		}
 	echo Html::endTag('aside');
 echo Html::endTag('div');
 $this->endContent();

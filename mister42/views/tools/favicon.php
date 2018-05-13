@@ -17,11 +17,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h1', $this->title);
 		echo Html::tag('div', 'A favicon (short for \'favorites icon\'), are little icons associated with a particular website, shown next to the site\'s name in the URL bar or the page\'s title on the tab of all major browsers.', ['class' => 'alert alert-info']);
 
-		foreach ($model->dimensions as $dimension)
-			$dimensions[] = $dimension.'x'.$dimension;
+		foreach ($model->dimensions as $dimension) {
+					$dimensions[] = $dimension.'x'.$dimension;
+		}
 
-		if ($flash = Yii::$app->session->getFlash('favicon-error'))
-			echo Alert::widget(['options' => ['class' => 'alert-danger fade show'], 'body' => $flash]);
+		if ($flash = Yii::$app->session->getFlash('favicon-error')) {
+					echo Alert::widget(['options' => ['class' => 'alert-danger fade show'], 'body' => $flash]);
+		}
 
 		if ($icon = Yii::$app->session->getFlash('favicon-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success clearfix']]);

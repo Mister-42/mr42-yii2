@@ -24,8 +24,9 @@ class Date extends \yii\base\Model {
 	}
 
 	public function diff(): bool {
-		if (!$this->validate())
-			return false;
+		if (!$this->validate()) {
+					return false;
+		}
 
 		$date = new DateTime($this->from);
 		$date->modify($this->days.' days');

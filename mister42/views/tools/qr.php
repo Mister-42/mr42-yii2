@@ -43,8 +43,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 		ActiveForm::end();
 
 		Pjax::begin(['id' => 'form']);
-		if (Yii::$app->request->isPost)
-			echo $qrForm;
+		if (Yii::$app->request->isPost) {
+					echo $qrForm;
+		}
 		Pjax::end();
 	echo Html::endTag('div');
 echo Html::endTag('div');

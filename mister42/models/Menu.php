@@ -16,14 +16,17 @@ class Menu {
 
 	public function getUrlList($items = null): array {
 		foreach ($items ?? self::getItemList() as $item) :
-			if (!is_array($item) || ArrayHelper::keyExists('visible', $item))
-				continue;
+			if (!is_array($item) || ArrayHelper::keyExists('visible', $item)) {
+							continue;
+			}
 
-			if (isset($item['url']))
-				$pages[] = ArrayHelper::getValue($item, 'url.0');
+			if (isset($item['url'])) {
+							$pages[] = ArrayHelper::getValue($item, 'url.0');
+			}
 
-			if (isset($item['items']))
-				$pages[] = self::getUrlList($item['items']);
+			if (isset($item['items'])) {
+							$pages[] = self::getUrlList($item['items']);
+			}
 		endforeach;
 		array_walk_recursive($pages, function($val) use (&$return) { $return[] = $val; });
 		return $return;

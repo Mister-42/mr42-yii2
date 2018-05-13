@@ -11,10 +11,11 @@ echo Html::beginTag('ul', ['class' => 'list-unstyled']);
 foreach (Menu::getItemList() as $menu) :
 	if ($menu['items']) {
 		foreach ($menu['items'] as $submenu) :
-			if (isset($submenu['url']) && (!isset($submenu['visible']) || $submenu['visible']))
-				$submenuItems[] = isset($submenu['url'])
+			if (isset($submenu['url']) && (!isset($submenu['visible']) || $submenu['visible'])) {
+							$submenuItems[] = isset($submenu['url'])
 					? Html::a(Yii::$app->formatter->cleanInput($submenu['label'], false), $submenu['url'], ArrayHelper::getValue($submenu, 'linkOptions', []))
 					: Yii::$app->formatter->cleanInput($submenu['label'], false);
+			}
 		endforeach;
 	}
 	echo isset($menu['url'])

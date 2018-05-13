@@ -68,8 +68,9 @@ class SiteController extends \yii\web\Controller {
 		$model = new Contact();
 		if ($model->load(Yii::$app->request->post())) {
 			$model->attachment = UploadedFile::getInstance($model, 'attachment');
-			if ($model->contact())
-				return $this->renderAjax('contact-success');
+			if ($model->contact()) {
+							return $this->renderAjax('contact-success');
+			}
 		}
 
 		return $this->render('contact', [

@@ -19,8 +19,9 @@ $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
 $this->registerMetaTag(['name' => 'description', 'content' => Yii::$app->params['description']]);
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
 $this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => Yii::getAlias('@assets')]);
-if (Yii::$app->controller->id !== 'articles' || Yii::$app->controller->action->id !== 'index')
+if (Yii::$app->controller->id !== 'articles' || Yii::$app->controller->action->id !== 'index') {
 	$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
+}
 $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
 $this->registerLinkTag(['rel' => 'icon', 'sizes' => '64x64 48x48 32x32 16x16', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/favicon.ico']);
 $this->registerLinkTag(['rel' => 'mask-icon', 'color' => Yii::$app->params['themeColor'], 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/safari-pinned-tab.svg']);
@@ -70,8 +71,9 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 		echo Html::tag('span', '&copy; 2014-'.date('Y').' '.Yii::$app->name);
 		echo Html::beginTag('div', ['class' => 'float-right']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') {
-				if (Yii::$app->user->identity->isAdmin)
-					echo Html::a(Icon::show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
+				if (Yii::$app->user->identity->isAdmin) {
+									echo Html::a(Icon::show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
+				}
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact '.Yii::$app->name]);
 				echo Html::a(Icon::show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => 'RSS']);
 			}

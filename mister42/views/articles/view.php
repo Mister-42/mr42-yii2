@@ -7,9 +7,10 @@ $this->params['breadcrumbs'][] = $model->title;
 
 echo Html::beginTag('div', ['class' => 'clearfix mb-1']);
 foreach (['<', '>'] as $z) :
-	if ($art = $model->find()->where([$z, 'id', $model->id])->orderBy('id '.($z === '<' ? 'DESC' : 'ASC'))->one())
-		echo Html::a(($z === '<' ? '&laquo; Previous Article' : 'Next Article &raquo;'), ['articles/index', 'id' => $art->id, 'title' => $art->url], ['class' => 'btn btn-sm btn-light float-'.($z === '<' ? 'left' : 'right'), 'data-toggle' => 'tooltip', 'data-placement' => ($z === '<' ? 'right' : 'left'), 'title' => $art->title]);
-endforeach;
+	if ($art = $model->find()->where([$z, 'id', $model->id])->orderBy('id '.($z === '<' ? 'DESC' : 'ASC'))->one()) {
+			echo Html::a(($z === '<' ? '&laquo; Previous Article' : 'Next Article &raquo;'), ['articles/index', 'id' => $art->id, 'title' => $art->url], ['class' => 'btn btn-sm btn-light float-'.($z === '<' ? 'left' : 'right'), 'data-toggle' => 'tooltip', 'data-placement' => ($z === '<' ? 'right' : 'left'), 'title' => $art->title]);
+	}
+	endforeach;
 echo Html::endTag('div');
 
 echo $this->render('_view', ['model' => $model, 'view' => 'full']);

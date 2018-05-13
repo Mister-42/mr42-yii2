@@ -56,19 +56,22 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	}
 
 	public function beforeSave($insert) {
-		if (Yii::$app->user->isGuest)
-			throw new AccessDeniedHttpException('Please login.');
+		if (Yii::$app->user->isGuest) {
+					throw new AccessDeniedHttpException('Please login.');
+		}
 
-		if (!parent::beforeSave($insert))
-			return false;
+		if (!parent::beforeSave($insert)) {
+					return false;
+		}
 
 		$this->url = !empty($this->url) ? $this->url : null;
 		$this->source = !empty($this->source) ? $this->source : null;
 
-		if ($insert)
-			$this->author = Yii::$app->user->id;
-		elseif (!$this->belongsToViewer())
-			return false;
+		if ($insert) {
+					$this->author = Yii::$app->user->id;
+		} elseif (!$this->belongsToViewer()) {
+					return false;
+		}
 
 		return true;
 	}

@@ -39,23 +39,27 @@ class ProfileController extends \Da\User\Controller\ProfileController {
 
 	public function actionShow($username) {
 		$user = $this->userQuery->whereUsername($username)->one();
-		if (!$user)
-			throw new NotFoundHttpException('User not found.');
+		if (!$user) {
+					throw new NotFoundHttpException('User not found.');
+		}
 
 		$profile = $this->profileQuery->whereUserId($user->id)->one();
-		if ($profile->lastfm)
-			$this->layout = '@app/views/layouts/recenttracks.php';
+		if ($profile->lastfm) {
+					$this->layout = '@app/views/layouts/recenttracks.php';
+		}
 
 		return parent::actionShow($user->id);
 	}
 
 	public function actionRecenttracks($username) {
 		$user = $this->userQuery->whereUsername($username)->one();
-		if (!$user)
-			throw new NotFoundHttpException('Profile not found.');
+		if (!$user) {
+					throw new NotFoundHttpException('Profile not found.');
+		}
 
-		if (!Yii::$app->request->isAjax)
-			throw new MethodNotAllowedHttpException('Method Not Allowed.');
+		if (!Yii::$app->request->isAjax) {
+					throw new MethodNotAllowedHttpException('Method Not Allowed.');
+		}
 
 		return (new RecentTracks)->display($user->id);
 	}

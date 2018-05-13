@@ -39,8 +39,9 @@ echo Html::beginTag('div', ['class' => 'site-country']);
 
 	if ($model->load(Yii::$app->request->post())) {
 		foreach (require(Yii::getAlias('@app/data/countryMapping.php')) as $item => $name) :
-			if (empty($data->$item))
-				$data->$item = Html::tag('span', 'unknown', ['class' => 'text-muted']);
+			if (empty($data->$item)) {
+							$data->$item = Html::tag('span', 'unknown', ['class' => 'text-muted']);
+			}
 
 			echo Html::tag('div',
 				Html::tag('div', $name, ['class' => 'col-md-8']).

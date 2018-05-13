@@ -34,8 +34,9 @@ foreach ($comments as $comment) :
 
 		$bar[] = Icon::show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($comment->created), ['datetime' => date(DATE_W3C, $comment->created)]);
 		$bar[] = Icon::show('user', ['class' => 'text-muted mr-1']).$comment->name.($mainmodel->author === $comment->user ? Html::tag('span', 'Article Author', ['class' => 'badge badge-secondary']) : '');
-		if (!empty($comment->website))
-			$bar[] = Icon::show('globe', ['class' => 'text-muted mr-1']).Html::a($comment->website, $comment->website);
+		if (!empty($comment->website)) {
+					$bar[] = Icon::show('globe', ['class' => 'text-muted mr-1']).Html::a($comment->website, $comment->website);
+		}
 		echo Html::tag('div', implode(' · ', $bar), ['class' => 'article-toolbar my-2']);
 		unset($bar);
 	echo Html::endTag('div');

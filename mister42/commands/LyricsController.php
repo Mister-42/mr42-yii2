@@ -30,8 +30,9 @@ class LyricsController extends Controller {
 			foreach ($artist->albums as $album) :
 				list($width, $height) = getimagesizefromstring($album->image);
 				$exif = exif_read_data("data://image/jpeg;base64,".base64_encode($album->image));
-				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' && !is_null($album->image_color))
-					continue;
+				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' && !is_null($album->image_color)) {
+									continue;
+				}
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
 				Console::write($album->year, [Console::FG_GREEN]);
@@ -74,8 +75,9 @@ class LyricsController extends Controller {
 	public function actionAlbumPdf() {
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
-				if (!$album->active)
-					continue;
+				if (!$album->active) {
+									continue;
+				}
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
 				Console::write($album->year, [Console::FG_GREEN]);
 				Console::write($album->name, [Console::FG_GREEN], 8);
@@ -100,18 +102,20 @@ class LyricsController extends Controller {
 	public function actionAlbumPlaylist() {
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
-				if (isset($album->playlist_id))
-					$data[] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
+				if (isset($album->playlist_id)) {
+									$data[] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
+				}
 
-				if (!isset($data) || (++$x !== count($artist->albums) && count($data) < 50))
-					continue;
-				else {
+				if (!isset($data) || (++$x !== count($artist->albums) && count($data) < 50)) {
+									continue;
+				} else {
 					$response = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'playlists');
 					if (!$response->isOK || $response->data['pageInfo']['totalResults'] === 0) {
 						Console::writeError('Error', [Console::BOLD, Console::FG_RED]);
 						return self::EXIT_CODE_ERROR;
-					} else
-						$response = ArrayHelper::index($response->data['items'], 'id');
+					} else {
+											$response = ArrayHelper::index($response->data['items'], 'id');
+					}
 
 					foreach ($data as $albumData) :
 						Console::write($albumData['artist'], [Console::FG_PURPLE], 3);
@@ -142,15 +146,16 @@ class LyricsController extends Controller {
 		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]])->all();
 		foreach ($query as $track) :
 			$data[] = ['id' => $track->video_id, 'name' => $track->name];
-			if (++$x !== count($query) && count($data) < 50)
-				continue;
-			else {
+			if (++$x !== count($query) && count($data) < 50) {
+							continue;
+			} else {
 				$response = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'videos');
 				if (!$response->isOK || $response->data['pageInfo']['totalResults'] === 0) {
 					Console::writeError('Error', [Console::BOLD, Console::FG_RED]);
 					return self::EXIT_CODE_ERROR;
-				} else
-					$response = ArrayHelper::index($response->data['items'], 'id');
+				} else {
+									$response = ArrayHelper::index($response->data['items'], 'id');
+				}
 
 				foreach ($data as $trackData) :
 					Console::write($trackData['name'], [Console::FG_PURPLE], 5);

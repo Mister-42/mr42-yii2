@@ -33,13 +33,14 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionIndex(int $id = 0, string $action = '', string $q = ''): string {
-		if ($id !== 0)
-			return self::pageIndex($id);
+		if ($id !== 0) {
+					return self::pageIndex($id);
+		}
 
 		$query = Articles::find()->orderBy('id DESC');
-		if ($action === "tag" && !empty($q))
-			$query->where(['like', 'tags', $q]);
-		elseif ($action === "search" && !empty($q)) {
+		if ($action === "tag" && !empty($q)) {
+					$query->where(['like', 'tags', $q]);
+		} elseif ($action === "search" && !empty($q)) {
 			Yii::$app->view->registerMetaTag(['name' => 'robots', 'content' => 'noindex']);
 			$query->where(['like', 'title', $q]);
 			$query->orWhere(['like', 'content', $q]);
@@ -60,11 +61,13 @@ class ArticlesController extends \yii\web\Controller {
 	public function actionPdf(int $id, string $title = '') {
 		$model = $this->findModel($id);
 
-		if (!$model->pdf)
-			throw new NotFoundHttpException('File not found.');
+		if (!$model->pdf) {
+					throw new NotFoundHttpException('File not found.');
+		}
 
-		if (empty($title) || $title != $model->url)
-			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
+		if (empty($title) || $title != $model->url) {
+					$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
+		}
 
 		$html = $this->renderPartial('pdf', ['model' => $model]);
 		$fileName = Articles::buildPdf($model, $html);
@@ -75,8 +78,9 @@ class ArticlesController extends \yii\web\Controller {
 		$this->layout = '@app/views/layouts/main.php';
 
 		$model = new BaseArticles;
-		if ($model->load(Yii::$app->request->post()) && $model->save())
-			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
+		}
 
 		return $this->render('_formArticles', [
 			'action' => 'create',
@@ -88,11 +92,13 @@ class ArticlesController extends \yii\web\Controller {
 		$this->layout = '@app/views/layouts/main.php';
 
 		$model = BaseArticles::findOne(['id' => $id]);
-		if (!$model->belongsToViewer())
-			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
+		if (!$model->belongsToViewer()) {
+					throw new UnauthorizedHttpException('You do not have permission to edit this article.');
+		}
 
-		if ($model->load(Yii::$app->request->post()) && $model->save())
-			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+					return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
+		}
 
 		return $this->render('_formArticles', [
 			'action' => 'edit',
@@ -102,8 +108,9 @@ class ArticlesController extends \yii\web\Controller {
 
 	public function actionDelete(int $id) {
 		$model = BaseArticles::findOne(['id' => $id]);
-		if (!$model->belongsToViewer())
-			throw new UnauthorizedHttpException('You do not have permission to delete this article.');
+		if (!$model->belongsToViewer()) {
+					throw new UnauthorizedHttpException('You do not have permission to delete this article.');
+		}
 
 		$model->delete();
 		return $this->redirect(['index']);
@@ -113,13 +120,15 @@ class ArticlesController extends \yii\web\Controller {
 		$comment = Comments::findOne(['id' => $id]);
 		$article = $this->findModel($comment->parent);
 
-		if (!$article->belongsToViewer())
-			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
+		if (!$article->belongsToViewer()) {
+					throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
+		}
 
 		$comment->active = $comment->active ? Comments::STATUS_INACTIVE : Comments::STATUS_ACTIVE;
 		if ($action == "toggleapproval") {
-			if (!Yii::$app->request->isAjax)
-				throw new MethodNotAllowedHttpException('Method Not Allowed.');
+			if (!Yii::$app->request->isAjax) {
+							throw new MethodNotAllowedHttpException('Method Not Allowed.');
+			}
 			$comment->update();
 			return $comment->showApprovalButton();
 		} elseif ($action == "delete") {
@@ -146,12 +155,14 @@ class ArticlesController extends \yii\web\Controller {
 			return Html::tag('div', 'Something went wrong, Your comment has not been saved.', ['class' => 'alert alert-danger']);
 		}
 
-		if (Yii::$app->request->get('title') != $model->url)
-			$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
+		if (Yii::$app->request->get('title') != $model->url) {
+					$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
+		}
 
 		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['shortDomain']."art{$model->id}"]);
-		if ($model->pdf)
-			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
+		if ($model->pdf) {
+					Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
+		}
 
 		return $this->render('view', [
 			'model' => $model,
@@ -165,12 +176,14 @@ class ArticlesController extends \yii\web\Controller {
 			->with('user')
 			->one();
 
-		if (!$model)
-			throw new NotFoundHttpException('Page not found.');
+		if (!$model) {
+					throw new NotFoundHttpException('Page not found.');
+		}
 
 		$article = $this->findModel($id);
-		if (!$article->belongsToViewer())
-			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
+		if (!$article->belongsToViewer()) {
+					throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
+		}
 
 		return $model;
 	}
@@ -180,13 +193,15 @@ class ArticlesController extends \yii\web\Controller {
 			->where(['id' => $id])
 			->with('user');
 
-		foreach ($withList as $with)
-			$query->with($with);
+		foreach ($withList as $with) {
+					$query->with($with);
+		}
 
 		$model = $query->one();
 
-		if (!$model)
-			throw new NotFoundHttpException('Page not found.');
+		if (!$model) {
+					throw new NotFoundHttpException('Page not found.');
+		}
 
 		return $model;
 	}

@@ -26,8 +26,9 @@ class ToolsController extends \yii\web\Controller {
 
 	public function actionBarcode() {
 		$model = new Barcode;
-		if ($model->load(Yii::$app->request->post()) && $model->validate())
-			$model->generate();
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+					$model->generate();
+		}
 
 		return $this->render('barcode', [
 			'model' => $model,
@@ -42,8 +43,9 @@ class ToolsController extends \yii\web\Controller {
 		$model = new Favicon;
 		if ($model->load(Yii::$app->request->post())) {
 			$model->sourceImage = UploadedFile::getInstance($model, 'sourceImage');
-			if ($model->convertImage())
-				return $this->refresh();
+			if ($model->convertImage()) {
+							return $this->refresh();
+			}
 		}
 
 		return $this->render('favicon', [
@@ -65,8 +67,9 @@ class ToolsController extends \yii\web\Controller {
 
 	public function actionPhoneticAlphabet() {
 		$model = new PhoneticAlphabet;
-		if ($model->load(Yii::$app->request->post()) && $model->validate())
-			$model->convertText();
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+					$model->convertText();
+		}
 
 		return $this->render('phonetic-alphabet', [
 			'model' => $model,
@@ -77,21 +80,24 @@ class ToolsController extends \yii\web\Controller {
 		$model = new Qr;
 		if (Yii::$app->request->isPost) {
 			$type = ArrayHelper::getValue(Yii::$app->request->post(), 'type') ?? ArrayHelper::getValue(Yii::$app->request->post(), 'qr.type');
-			if (!in_array($type, $model->getTypes(true)))
-				throw new NotFoundHttpException('Type '.$type.' not found.');
+			if (!in_array($type, $model->getTypes(true))) {
+							throw new NotFoundHttpException('Type '.$type.' not found.');
+			}
 
 			$modelName = "\\app\\models\\tools\\qr\\{$type}";
 			$model = new $modelName;
 			$model->type = $type === 'SMS' ? 'Phone' : $type;
 
-			if (Yii::$app->request->isAjax)
-				return $this->renderAjax('qr/'.strtolower($model->type), [
+			if (Yii::$app->request->isAjax) {
+							return $this->renderAjax('qr/'.strtolower($model->type), [
 					'model' => $model,
 				]);
+			}
 
 			$model = ArrayHelper::merge($model, ArrayHelper::getValue(Yii::$app->request->post(), 'qr'));
-			if ($model->validate())
-				$model->generateQr();
+			if ($model->validate()) {
+							$model->generateQr();
+			}
 			$qrForm = $this->renderPartial('qr/'.strtolower($model->type), [
 				'model' => $model
 			]);

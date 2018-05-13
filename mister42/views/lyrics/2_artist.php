@@ -45,16 +45,18 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 						echo Html::beginTag('div', ['class' => 'row mr-2 media-body']);
 							$x = $y = 0;
 							foreach ($album->tracks as $track) :
-								if ($x++ === 0)
-									echo Html::beginTag('div', ['class' => 'col-md-4']);
+								if ($x++ === 0) {
+																	echo Html::beginTag('div', ['class' => 'col-md-4']);
+								}
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
 									$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->lyricid || $track->video)
 										? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name]).$track->disambiguation.$track->feat;
-									if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video)
-										echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
+									if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video) {
+																			echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
+									}
 								echo Html::endTag('div');
 
 								if (++$y === count($album->tracks) || $x === (int) ceil(count($album->tracks) / 3)) {
@@ -64,8 +66,8 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 							endforeach;
 						echo Html::endTag('div');
 
-						if ($album->image && count($album->tracks) > 0)
-							echo Lightbox::widget([
+						if ($album->image && count($album->tracks) > 0) {
+													echo Lightbox::widget([
 								'imageOptions' => ['style' => 'background-color:'.$album->image_color],
 								'items' => [
 									[
@@ -80,6 +82,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 									'wrapAround'		=> true,
 								],
 							]);
+						}
 					echo Html::endTag('div');
 				echo Html::endTag('div');
 			echo Html::endTag('div');

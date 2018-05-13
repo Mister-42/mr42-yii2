@@ -62,11 +62,13 @@ class Comments extends ActiveRecord {
 	}
 
 	public function beforeSave($insert) {
-		if (!parent::beforeSave($insert))
-			return false;
+		if (!parent::beforeSave($insert)) {
+					return false;
+		}
 
-		if (!$insert && Yii::$app->user->isGuest)
-			throw new AccessDeniedHttpException('Please login.');
+		if (!$insert && Yii::$app->user->isGuest) {
+					throw new AccessDeniedHttpException('Please login.');
+		}
 
 		$this->content = Yii::$app->formatter->cleanInput($this->content, false);
 		$this->name = $this->name ?? null;

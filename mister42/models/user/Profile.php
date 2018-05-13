@@ -24,8 +24,9 @@ class Profile extends \Da\User\Model\Profile {
 	}
 
 	public function beforeSave($insert) {
-		if (!ActiveRecord::beforeSave($insert))
-			return false;
+		if (!ActiveRecord::beforeSave($insert)) {
+					return false;
+		}
 		$this->bio = Yii::$app->formatter->cleanInput($this->bio ?? '', false);
 		$this->bio = strtr($this->bio, ['&lt;' => '<', '&gt;' => '>', '&amp;' => '&']);
 		$this->name = !empty($this->name) ? $this->name : null;
