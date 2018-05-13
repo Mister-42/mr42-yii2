@@ -26,7 +26,7 @@ echo $form->field($model, 'pdf')->checkbox(['tabindex' => ++$tab]);
 echo $form->field($model, 'active')->checkbox(['tabindex' => ++$tab]);
 
 echo Html::tag('div',
-	Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]) .
+	Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
 	Html::submitButton('Save', ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab])
 , ['class' => 'btn-toolbar float-right form-group']);
 
