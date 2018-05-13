@@ -35,10 +35,11 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$data = $data ?? self::tracksList($artist, $year, $name);
 		foreach ($data as $item) :
 			$max = max($max, $item->album->updated);
-			foreach ($item->album->tracks as $track) {
-							if ($track->lyrics)
+			foreach ($item->album->tracks as $track) :
+				if ($track->lyrics) :
 					$max = max($max, $track->lyrics->updated);
-			}
+				endif;
+			endforeach;
 		endforeach;
 		return $max;
 	}

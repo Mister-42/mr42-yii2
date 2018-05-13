@@ -17,13 +17,13 @@ class TimePickerAsset extends AssetBundle {
 
 		$language = $this->language;
 
-		if ($language !== null && $language !== 'en-US') {
+		if ($language !== null && $language !== 'en-US') :
 			$fallbackLanguage = substr($language, 0, 2);
-			if ($fallbackLanguage !== $language && !file_exists(Yii::getAlias($this->sourcePath."/i18n/jquery-ui-timepicker-{$language}.js"))) {
+			if ($fallbackLanguage !== $language && !file_exists(Yii::getAlias($this->sourcePath."/i18n/jquery-ui-timepicker-{$language}.js"))) :
 				$language = $fallbackLanguage;
-			}
+			endif;
 			$this->js[] = "i18n/jquery-ui-timepicker-{$language}.js";
-		}
+		endif;
 
 		parent::registerAssetFiles($view);
 	}

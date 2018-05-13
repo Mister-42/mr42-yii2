@@ -44,10 +44,10 @@ class Barcode extends \yii\base\Model {
 		foreach ($data['bcode'] as $value) :
 			$barWidth = round($value['w'] * $this->barWidth, 3);
 			$barHeight = round($value['h'] * $this->height / $data['maxh'], 3);
-			if ($value['t']) {
+			if ($value['t']) :
 				$top = round($value['p'] * $this->height / $data['maxh'], 3);
 				imagefilledrectangle($image, $location, $top, $location + $barWidth - 1, $top + $barHeight - 1, $fgCol);
-			}
+			endif;
 			$location += $barWidth;
 		endforeach;
 
@@ -56,17 +56,17 @@ class Barcode extends \yii\base\Model {
 		imagepng($image, $cacheFile);
 		imagedestroy($image);
 
-		if ($this->recipient) {
-					Mailer::sendFileHtml($this->recipient, 'Your barcode from '.Yii::$app->name, 'barcodeRequester', ['file' => $cacheFile, 'name' => 'Barcode.png']);
-		}
+		if ($this->recipient) :
+			Mailer::sendFileHtml($this->recipient, 'Your barcode from '.Yii::$app->name, 'barcodeRequester', ['file' => $cacheFile, 'name' => 'Barcode.png']);
+		endif;
 		Yii::$app->getSession()->setFlash('barcode-success', $cacheFile);
 		return true;
 	}
 
 	public function getTypes(bool $rules = false): array {
-		foreach (require(Yii::getAlias('@app/data/barcodeTypes.php')) as $name => $value) {
-					$list[$value] = $rules ? $value : $name;
-		}
+		foreach (require(Yii::getAlias('@app/data/barcodeTypes.php')) as $name => $value) :
+			$list[$value] = $rules ? $value : $name;
+		endforeach;
 		return $list;
 	}
 }

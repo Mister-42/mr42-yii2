@@ -15,14 +15,14 @@ class TimePicker extends DatePicker {
 
 	public function init() {
 		parent::init();
-		if (!in_array($this->mode, ['date', 'time', 'datetime'])) {
-					throw new InvalidConfigException('Unknown mode: "'.$this->mode.'". Use time, datetime or date!');
-		}
+		if (!in_array($this->mode, ['date', 'time', 'datetime'])) :
+			throw new InvalidConfigException('Unknown mode: "'.$this->mode.'". Use time, datetime or date!');
+		endif;
 
-		if ($this->size) {
+		if ($this->size) :
 			Html::addCssClass($this->options, 'input-'.$this->size);
 			Html::addCssClass($this->containerOptions, 'input-group-'.$this->size);
-		}
+		endif;
 		Html::addCssClass($this->options, 'form-control');
 		Html::addCssClass($this->containerOptions, 'input-group '.$this->mode);
 	}
@@ -30,16 +30,16 @@ class TimePicker extends DatePicker {
 	public function run() {
 		$this->clientOptions['showTime'] = $this->mode === 'date' ? false : true;
 
-		if ($this->hasModel()) {
-					$input = Html::activeTextInput($this->model, $this->attribute, $this->options);
-		} else {
-					$input = Html::textInput($this->name, $this->value, $this->options);
-		}
+		if ($this->hasModel()) :
+			$input = Html::activeTextInput($this->model, $this->attribute, $this->options);
+		else :
+			$input = Html::textInput($this->name, $this->value, $this->options);
+		endif;
 
-		if ($this->addon) {
+		if ($this->addon) :
 			$input = strtr($this->template, ['{input}' => $input, '{addon}' => Icon::fieldAddon($this->addon)]);
 			$input = Html::tag('div', $input, $this->containerOptions);
-		}
+		endif;
 
 		echo $input;
 		$this->registerClientScript();
@@ -51,11 +51,11 @@ class TimePicker extends DatePicker {
 		$name = $this->mode.'picker';
 
 		$timeAssetBundle = TimePickerAsset::register($view);
-		if ($language !== 'en-US') {
+		if ($language !== 'en') :
 			$timeAssetBundle->language = $language;
 			$dateAssetBundle = DatePickerLanguageAsset::register($view);
 			$dateAssetBundle->language = $language;
-		}
+		endif;
 
 		$this->registerClientOptions($name, $this->options['id']);
 		$this->registerClientEvents($name, $this->options['id']);

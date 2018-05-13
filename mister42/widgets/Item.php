@@ -11,10 +11,10 @@ class Item extends \yii\bootstrap4\Widget {
 	public function run(): string {
 		$class[] = 'card mb-2';
 		foreach ($this->options as $k => $v) :
-			if ($k === 'class') {
+			if ($k === 'class') :
 				$class[] = $v;
 				continue;
-			}
+			endif;
 			$option[] = ['name' => $k, 'value' => $v];
 		endforeach;
 

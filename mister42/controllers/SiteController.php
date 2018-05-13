@@ -66,12 +66,12 @@ class SiteController extends \yii\web\Controller {
 
 	public function actionContact() {
 		$model = new Contact();
-		if ($model->load(Yii::$app->request->post())) {
+		if ($model->load(Yii::$app->request->post())) :
 			$model->attachment = UploadedFile::getInstance($model, 'attachment');
-			if ($model->contact()) {
-							return $this->renderAjax('contact-success');
-			}
-		}
+			if ($model->contact()) :
+				return $this->renderAjax('contact-success');
+			endif;
+		endif;
 
 		return $this->render('contact', [
 			'model' => $model,

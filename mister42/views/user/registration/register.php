@@ -27,12 +27,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
 			])->textInput(['tabindex' => ++$tab]);
 
-			if ($module->generatePasswords === false) {
-							echo $form->field($model, 'password', [
+			if ($module->generatePasswords === false) :
+				echo $form->field($model, 'password', [
 					'options' => ['class' => 'col-6 form-group'],
 					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
 				])->passwordInput(['tabindex' => ++$tab]);
-			}
+			endif;
 		echo Html::endTag('div');
 
 		echo Form::captcha($form, $model, ++$tab);

@@ -36,10 +36,10 @@ $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->endElement();
 
 foreach ($articles as $article) :
-	if (strpos($article->content, '[readmore]')) {
+	if (strpos($article->content, '[readmore]')) :
 		$article->content = substr($article->content, 0, strpos($article->content, '[readmore]'));
 		$article->content .= Html::a('Read full article on our website', Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true)).' &raquo;';
-	}
+	endif;
 
 	$doc->startElement('item');
 	$doc->writeElement('title', $article->title);
@@ -59,12 +59,12 @@ foreach ($articles as $article) :
 		$doc->text(Yii::$app->params['shortDomain']."art{$article->id}");
 		$doc->endElement();
 	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
-	if ($article->source) {
+	if ($article->source) :
 		$doc->startElement('source');
 		$doc->writeAttribute('url', $article->source);
 		$doc->text('Source');
 		$doc->endElement();
-	}
+	endif;
 	$doc->endElement();
 endforeach;
 

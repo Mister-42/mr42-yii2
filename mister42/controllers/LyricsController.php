@@ -23,16 +23,16 @@ class LyricsController extends \yii\web\Controller {
 		$this->album = Yii::$app->request->get('album');
 		$this->size = Yii::$app->request->get('size');
 
-		if ($this->artist && $this->year && $this->album) {
+		if ($this->artist && $this->year && $this->album) :
 			$this->page = self::PAGE_ALBUM;
 			$this->lastModified = Lyrics3Tracks::lastUpdate($this->artist, $this->year, $this->album);
-		} elseif ($this->artist) {
+		elseif ($this->artist) :
 			$this->page = self::PAGE_ARTIST;
 			$this->lastModified = Lyrics2Albums::lastUpdate($this->artist);
-		} else {
+		else :
 			$this->page = self::PAGE_INDEX;
 			$this->lastModified = Lyrics1Artists::lastUpdate();
-		}
+		endif;
 
 		parent::init();
 	}
@@ -50,11 +50,11 @@ class LyricsController extends \yii\web\Controller {
 	}
 
 	public function actionIndex() {
-		switch ($this->page) {
+		switch ($this->page) :
 			case self::PAGE_INDEX:	list($page, $data) = ['1_index', Lyrics1Artists::artistsList()]; break;
 			case self::PAGE_ARTIST:	list($page, $data) = self::pageArtist(); break;
 			case self::PAGE_ALBUM:	list($page, $data) = self::pageAlbum(); break;
-		}
+		endswitch;
 
 		Yii::$app->view->registerMetaTag(['name' => 'google', 'content' => 'notranslate']);
 		return $this->render($page, [
@@ -65,9 +65,9 @@ class LyricsController extends \yii\web\Controller {
 	public function actionAlbumpdf() {
 		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
-		if (!ArrayHelper::keyExists(0, $tracks) || !$tracks[0]->album->active) {
-					throw new NotFoundHttpException('Album not found.');
-		}
+		if (!ArrayHelper::keyExists(0, $tracks) || !$tracks[0]->album->active) :
+			throw new NotFoundHttpException('Album not found.');
+		endif;
 		self::redirectIfNotUrl('albumpdf', $tracks);
 
 		$fileName = Lyrics2Albums::buildPdf($tracks[0]->album, $this->renderPartial('albumPdf', ['tracks' => $tracks]));
@@ -77,9 +77,9 @@ class LyricsController extends \yii\web\Controller {
 	public function actionAlbumcover() {
 		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
-		if (!ArrayHelper::keyExists(0, $tracks) || !ArrayHelper::isIn($this->size, [100, 500, 800, 'cover'])) {
-					throw new NotFoundHttpException('Cover not found.');
-		}
+		if (!ArrayHelper::keyExists(0, $tracks) || !ArrayHelper::isIn($this->size, [100, 500, 800, 'cover'])) :
+			throw new NotFoundHttpException('Cover not found.');
+		endif;
 		self::redirectIfNotUrl('albumcover', $tracks);
 
 		list($fileName, $image) = Lyrics2Albums::getCover($this->size, $tracks);
@@ -89,13 +89,13 @@ class LyricsController extends \yii\web\Controller {
 	private function pageArtist(): array {
 		$albums = Lyrics2Albums::albumsList($this->artist);
 
-		if (count($albums) === 0) {
-					throw new NotFoundHttpException('Artist not found.');
-		}
+		if (count($albums) === 0) :
+			throw new NotFoundHttpException('Artist not found.');
+		endif;
 
-		if ($albums[0]->artist->url !== $this->artist) {
-					$this->redirect(['index', 'artist' => $albums[0]->artist->url], 301)->send();
-		}
+		if ($albums[0]->artist->url !== $this->artist) :
+			$this->redirect(['index', 'artist' => $albums[0]->artist->url], 301)->send();
+		endif;
 
 		return ['2_artist', $albums];
 	}
@@ -103,24 +103,24 @@ class LyricsController extends \yii\web\Controller {
 	private function pageAlbum(): array {
 		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
-		if (!ArrayHelper::keyExists(0, $tracks) || (!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active)) {
-					throw new NotFoundHttpException('Album not found.');
-		}
+		if (!ArrayHelper::keyExists(0, $tracks) || (!Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active)) :
+			throw new NotFoundHttpException('Album not found.');
+		endif;
 		self::redirectIfNotUrl('index', $tracks);
 
 		Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
-		if ($tracks[0]->album->image) {
-					Yii::$app->view->registerMetaTag(['property' => 'og:image', 'content' => Url::to(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 'cover'], true)]);
-		}
+		if ($tracks[0]->album->image) :
+			Yii::$app->view->registerMetaTag(['property' => 'og:image', 'content' => Url::to(['cover', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => 'cover'], true)]);
+		endif;
 		Yii::$app->view->registerMetaTag(['property' => 'og:type', 'content' => 'music.album']);
 
 		return ['3_album', $tracks];
 	}
 
 	private function redirectIfNotUrl(string $page, array $data): bool {
-		if ($data[0]->artist->url !== $this->artist || $data[0]->album->url !== $this->album) {
-					$this->redirect([$page, 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], 301)->send();
-		}
+		if ($data[0]->artist->url !== $this->artist || $data[0]->album->url !== $this->album) :
+			$this->redirect([$page, 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], 301)->send();
+		endif;
 		return true;
 	}
 }

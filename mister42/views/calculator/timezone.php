@@ -16,13 +16,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h1', $this->title);
 		echo Html::tag('div', 'With this calculator you can check the date and time in any timezone around the globe.', ['class' => 'alert alert-info']);
 
-		if ($flash = Yii::$app->session->getFlash('timezone-success')) {
+		if ($flash = Yii::$app->session->getFlash('timezone-success')) :
 			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
 				echo Html::tag('div', date('l F j, Y, H:i', strtotime($model->datetime)).' in '.str_replace('_', ' ', $model->source));
 				echo Html::tag('div', 'equals');
 				echo Html::tag('div', Html::tag('strong', $flash->format('l F j, Y, H:i')).' in '.Html::tag('strong', str_replace('_', ' ', $model->target)));
 			Alert::end();
-		}
+		endif;
 
 		$form = ActiveForm::begin();
 

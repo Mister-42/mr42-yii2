@@ -18,9 +18,9 @@ class RecentTracks extends \yii\db\ActiveRecord {
 	}
 
 	public function display(int $userid) {
-		if (time() - self::lastSeen($userid, true) > 300) {
-					self::updateUser(Profile::findOne(['user_id' => $userid]), time());
-		}
+		if (time() - self::lastSeen($userid, true) > 300) :
+			self::updateUser(Profile::findOne(['user_id' => $userid]), time());
+		endif;
 
 		$tracks = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit($this->limit)->all();
 
@@ -29,9 +29,9 @@ class RecentTracks extends \yii\db\ActiveRecord {
 				$data[] = Html::beginTag('div', ['class' => 'd-flex justify-content-between']);
 					$data[] = Html::beginTag('span', ['class' => 'text-truncate']);
 						$data[] = $track['artist'];
-						if ($track['time'] === 0) {
-													$data[] = Icon::show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
-						}
+						if ($track['time'] === 0) :
+							$data[] = Icon::show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
+						endif;
 					$data[] = Html::endTag('span');
 					$data[] = Html::tag('span', $track['track'], ['class' => 'text-truncate text-right']);
 				$data[] = Html::endTag('div');
@@ -53,22 +53,22 @@ class RecentTracks extends \yii\db\ActiveRecord {
 			->where(['userid' => $userid])
 			->one();
 
-		if ($update) {
-					self::updateAll(['seen' => time()], 'userid = '.$userid);
-		}
+		if ($update) :
+			self::updateAll(['seen' => time()], 'userid = '.$userid);
+		endif;
 
 		return $lastSeen->seen;
 	}
 
 	public function updateUser(Profile $profile, int $lastSeen) {
-		if (isset($profile->lastfm)) {
+		if (isset($profile->lastfm)) :
 			$response = Webrequest::getLastfmApi('user.getrecenttracks', $profile->lastfm, $this->limit);
-			if (!$response->isOK) {
-							return false;
-			}
+			if (!$response->isOK) :
+				return false;
+			endif;
 
 			$playcount = (int) $response->data['recenttracks']['@attributes']['total'];
-			foreach ($response->data['recenttracks']['track'] as $track) {
+			foreach ($response->data['recenttracks']['track'] as $track) :
 				$time = (bool) ArrayHelper::getValue($track, '@attributes.nowplaying', false) ? 0 : (int) strtotime($track['date']);
 				$addTrack = self::findOne(['userid' => $profile->user_id, 'time' => $time]) ?? new RecentTracks();
 				$addTrack->userid = $profile->user_id;
@@ -79,19 +79,19 @@ class RecentTracks extends \yii\db\ActiveRecord {
 				$addTrack->seen = $lastSeen;
 				$addTrack->save();
 
-				if (++$count === $this->limit) {
-									break;
-				}
-			}
+				if (++$count === $this->limit) :
+					break;
+				endif;
+			endforeach;
 
 			self::cleanDb($profile->user_id);
-		}
+		endif;
 	}
 
 	private function cleanDb(int $userid) {
 		$items = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit(999)->offset($this->limit)->all();
-		foreach ($items as $item) {
-					$item->delete();
-		}
+		foreach ($items as $item) :
+			$item->delete();
+		endforeach;
 	}
 }

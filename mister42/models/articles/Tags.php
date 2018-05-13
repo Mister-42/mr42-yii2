@@ -4,9 +4,9 @@ use yii\helpers\StringHelper;
 
 class Tags extends BaseArticles {
 	public static function findTagWeights(): array {
-		if (empty($tags = self::getTags())) {
-					return [];
-		}
+		if (empty($tags = self::getTags())) :
+			return [];
+		endif;
 		foreach ($tags as $key => $value) :
 			$list[$key]['count'] = $value;
 			$list[$key]['weight'] = 8 + (int) (16 * $value / (array_sum($tags) + 10));
@@ -25,9 +25,9 @@ class Tags extends BaseArticles {
 
 	private function getTags(): array {
 		foreach (self::find()->select('tags')->all() as $tag) :
-			foreach (StringHelper::explode($tag->tags) as $item) {
-							$list[$item]++;
-			}
+			foreach (StringHelper::explode($tag->tags) as $item) :
+				$list[$item]++;
+			endforeach;
 		endforeach;
 		return $list;
 	}

@@ -12,7 +12,7 @@ echo Html::tag('h1', $this->title);
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
-		if ($barcode = Yii::$app->session->getFlash('barcode-success')) {
+		if ($barcode = Yii::$app->session->getFlash('barcode-success')) :
 			list($width, $height) = getimagesize($barcode);
 			$imgHeight = min(150, $height);
 			$imgWidth = round($imgHeight / $height * $width);
@@ -21,7 +21,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				echo Html::tag('div', 'Your Barcode has been generated successfully.');
 				echo Html::tag('div', 'Do not link to the image on this website directly as it will be deleted shortly.');
 			Alert::end();
-		}
+		endif;
 
 		$form = ActiveForm::begin();
 

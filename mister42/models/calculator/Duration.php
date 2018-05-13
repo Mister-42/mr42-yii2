@@ -22,10 +22,10 @@ class Duration extends \yii\base\Model {
 		];
 	}
 
-	public function duration(): bool {
-		if (!$this->validate()) {
-					return false;
-		}
+	public function calculate(): bool {
+		if (!$this->validate()) :
+			return false;
+		endif;
 
 		$diff = (new DateTime($this->fromDate))->diff(new DateTime($this->toDate));
 		Yii::$app->getSession()->setFlash('duration-success', $diff);

@@ -13,9 +13,9 @@ class DownloadController extends \yii\web\Controller {
 		$archiveFile = Yii::getAlias('@assetsroot/temp/').uniqid("php{$version}-").'.tar';
 		$compressedFile = $archiveFile.'.bz2';
 
-		if (!is_readable($phpFile)) {
-					throw new HttpException(404, 'The requested file could not be found.');
-		}
+		if (!is_readable($phpFile)) :
+			throw new HttpException(404, 'The requested file could not be found.');
+		endif;
 
 		$a = new PharData($archiveFile);
 		$a->addFile(Yii::getAlias("@webroot/../../../bin/php{$version}-cli"), "bin/php{$version}-cli");

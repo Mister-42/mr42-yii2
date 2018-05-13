@@ -22,16 +22,16 @@ class FeedController extends Controller {
 		RecentTracks::deleteAll(['<=', 'seen', time() - 300]);
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::findOne(['user_id' => $user->id]);
-			if (isset($profile->lastfm)) {
+			if (isset($profile->lastfm)) :
 				$lastSeen = $recentTracks->lastSeen($user->id);
 
-				if (!$lastSeen) {
-									continue;
-				}
+				if (!$lastSeen) :
+					continue;
+				endif;
 
 				$recentTracks->updateUser($profile, $lastSeen);
 				usleep(200000);
-			}
+			endif;
 		endforeach;
 
 		return self::EXIT_CODE_NORMAL;
@@ -44,11 +44,11 @@ class FeedController extends Controller {
 		$limit = 15;
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::findOne(['user_id' => $user->id]);
-			if (isset($profile->lastfm)) {
+			if (isset($profile->lastfm)) :
 				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $limit);
-				if (!$response->isOK) {
-									continue;
-				}
+				if (!$response->isOK) :
+					continue;
+				endif;
 
 				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);
 				foreach ($response->data['weeklyartistchart']['artist'] as $artist) :
@@ -59,12 +59,12 @@ class FeedController extends Controller {
 					$addArtist->count = (int) ArrayHelper::getValue($artist, 'playcount');
 					$addArtist->save();
 
-					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $limit) {
-											break;
-					}
+					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $limit) :
+						break;
+					endif;
 				endforeach;
 				usleep(200000);
-			}
+			endif;
 		endforeach;
 
 		return self::EXIT_CODE_NORMAL;
@@ -76,9 +76,9 @@ class FeedController extends Controller {
 	public function actionWebfeed(string $type, string $name, string $url): int {
 		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
 		$response = Webrequest::getUrl('', $url);
-		if (!$response->isOK) {
-					return self::EXIT_CODE_ERROR;
-		}
+		if (!$response->isOK) :
+			return self::EXIT_CODE_ERROR;
+		endif;
 
 		Feed::deleteAll(['feed' => $name]);
 		$data = $type === 'rss' ? $response->data['channel']['item'] : $response->data['entry'];
@@ -91,9 +91,9 @@ class FeedController extends Controller {
 			$feedItem->time = strtotime(ArrayHelper::getValue($item, $type === 'rss' ? 'pubDate' : 'updated'));
 			$feedItem->save();
 
-			if (++$count === $limit) {
-							break;
-			}
+			if (++$count === $limit) :
+				break;
+			endif;
 		endforeach;
 
 		return self::EXIT_CODE_NORMAL;

@@ -83,12 +83,12 @@ $config = [
 	'params' => require(__DIR__.'/params.php'),
 ];
 
-if (YII_DEBUG && in_array($_SERVER['REMOTE_ADDR'], $secrets['params']['specialIPs'])) {
+if (YII_DEBUG && in_array($_SERVER['REMOTE_ADDR'], $secrets['params']['specialIPs'])) :
 	$config['bootstrap'][] = 'debug';
 	$config['modules']['debug'] = [
 		'class' => 'yii\debug\Module',
 		'allowedIPs' => $secrets['params']['specialIPs'],
 	];
-}
+endif;
 
 return $config;

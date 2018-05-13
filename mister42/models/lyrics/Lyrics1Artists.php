@@ -32,9 +32,9 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 
 	public function lastUpdate($data = null) {
 		$data = $data ?? self::artistsList();
-		foreach ($data as $item) {
-					$max = max($max, $item->updated);
-		}
+		foreach ($data as $item) :
+			$max = max($max, $item->updated);
+		endforeach;
 		return $max;
 	}
 

@@ -3,9 +3,9 @@ use yii\bootstrap4\{ActiveForm, Html};
 
 $this->title = $action === 'create' ? 'Create Article' : 'Edit Article';
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
-if ($action === 'edit') {
+if ($action === 'edit') :
 	$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['index', 'id' => $model->id, 'title' => $model->url]];
-}
+endif;
 $this->params['breadcrumbs'][] = $this->title;
 
 echo Html::tag('h1', $this->title);

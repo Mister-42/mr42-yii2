@@ -10,19 +10,19 @@ echo Html::beginTag('div', ['class' => 'site-lyrics']);
 	echo Html::beginTag('div', ['class' => 'row artists']);
 		$x = $y = 0;
 		foreach ($data as $artist) :
-			if ($x++ === 0) {
-							echo Html::beginTag('div', ['class' => 'col-md-3 text-center text-nowrap']);
-			}
+			if ($x++ === 0) :
+				echo Html::beginTag('div', ['class' => 'col-md-3 text-center text-nowrap']);
+			endif;
 			echo Html::a($artist->name, ['index', 'artist' => $artist->url]);
-			if (!$artist->active) {
-							echo Html::tag('span', 'Draft', ['class' => 'badge ml-1']);
-			}
+			if (!$artist->active) :
+				echo Html::tag('span', 'Draft', ['class' => 'badge ml-1']);
+			endif;
 			echo '<br>';
 
-			if (++$y === count($data) || $x === (int) ceil(count($data) / 4)) {
+			if (++$y === count($data) || $x === (int) ceil(count($data) / 4)) :
 				echo Html::endTag('div');
 				$x = 0;
-			}
+			endif;
 		endforeach;
 	echo Html::endTag('div');
 echo Html::endTag('div');

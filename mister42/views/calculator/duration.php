@@ -12,18 +12,18 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h1', $this->title);
 		echo Html::tag('div', 'This calculator calculates the number of days between two dates.', ['class' => 'alert alert-info']);
 
-		if ($flash = Yii::$app->session->getFlash('duration-success')) {
+		if ($flash = Yii::$app->session->getFlash('duration-success')) :
 			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
 				echo Html::tag('div', 'From: '.Html::tag('b', Yii::$app->formatter->asDate($model->fromDate, 'long')));
 				echo Html::tag('div', 'To: '.Html::tag('b', Yii::$app->formatter->asDate($model->toDate, 'long')));
 				echo Html::tag('div', 'Result: '.Html::tag('strong', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $flash->days])), ['class' => 'mt-3']);
 			Alert::end();
-		}
+		endif;
 
 		$form = ActiveForm::begin();
 
 		echo Html::beginTag('div', ['class' => 'row']);
-			foreach (['fromDate', 'toDate'] as $field) {
+			foreach (['fromDate', 'toDate'] as $field) :
 				echo $form->field($model, $field, [
 					'options' => ['class' => 'form-group col-md-6'],
 				])->widget(TimePicker::class, [
@@ -37,7 +37,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 					'mode' => 'date',
 					'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => ++$tab],
 				]);
-			}
+			endforeach;
 		echo Html::endTag('div');
 
 		echo Html::tag('div',

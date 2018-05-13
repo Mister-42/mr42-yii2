@@ -17,15 +17,15 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h1', $this->title);
 		echo Html::tag('div', 'A favicon (short for \'favorites icon\'), are little icons associated with a particular website, shown next to the site\'s name in the URL bar or the page\'s title on the tab of all major browsers.', ['class' => 'alert alert-info']);
 
-		foreach ($model->dimensions as $dimension) {
-					$dimensions[] = $dimension.'x'.$dimension;
-		}
+		foreach ($model->dimensions as $dimension) :
+			$dimensions[] = $dimension.'x'.$dimension;
+		endforeach;
 
-		if ($flash = Yii::$app->session->getFlash('favicon-error')) {
-					echo Alert::widget(['options' => ['class' => 'alert-danger fade show'], 'body' => $flash]);
-		}
+		if ($flash = Yii::$app->session->getFlash('favicon-error')) :
+			echo Alert::widget(['options' => ['class' => 'alert-danger fade show'], 'body' => $flash]);
+		endif;
 
-		if ($icon = Yii::$app->session->getFlash('favicon-success')) {
+		if ($icon = Yii::$app->session->getFlash('favicon-success')) :
 			Alert::begin(['options' => ['class' => 'alert-success clearfix']]);
 				echo Html::img(Url::to('@assets/temp/'.$icon), ['alt' => 'favicon.ico', 'class' => 'float-left mr-2', 'height' => 64, 'width' => 64]);
 				echo Html::tag('div', 'Your icon has been generated successfully. Save it to your website and add the code below between the &lt;head&gt; tags of your html. This will allow all major browsers to show the icon when the website is accessed and/or bookmarked.');
@@ -34,7 +34,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 					Html::tag('code', '&lt;link rel="icon" href="/path/to/'.$icon.'" type="image/x-icon" sizes="'.implode(' ', $dimensions).'" /&gt;')
 				);
 			Alert::end();
-		}
+		endif;
 
 		$form = ActiveForm::begin();
 

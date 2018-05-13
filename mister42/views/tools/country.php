@@ -10,12 +10,12 @@ $this->params['breadcrumbs'][] = Yii::$app->request->isPost ? ['label' => $title
 
 $model = new Country;
 
-if ($model->load(Yii::$app->request->post())) {
+if ($model->load(Yii::$app->request->post())) :
 	$post = Yii::$app->request->post('Country');
 	$model->iso = $post['iso'];
 	$data = $model->find()->where(['ISO3166-1-Alpha-2' => $post['iso']])->one();
 	$this->params['breadcrumbs'][] = $data['official_name_en'];
-}
+endif;
 $this->title = $model->load(Yii::$app->request->post()) ? implode(' - ', [$data['official_name_en'], $title]) : $title;
 
 echo Html::tag('h1', $model->load(Yii::$app->request->post() ? implode(' - ', [$title, $data['official_name_en']]) : $title));
@@ -37,16 +37,16 @@ echo Html::beginTag('div', ['class' => 'site-country']);
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 
-	if ($model->load(Yii::$app->request->post())) {
+	if ($model->load(Yii::$app->request->post())) :
 		foreach (require(Yii::getAlias('@app/data/countryMapping.php')) as $item => $name) :
-			if (empty($data->$item)) {
-							$data->$item = Html::tag('span', 'unknown', ['class' => 'text-muted']);
-			}
+			if (empty($data->$item)) :
+				$data->$item = Html::tag('span', 'unknown', ['class' => 'text-muted']);
+			endif;
 
 			echo Html::tag('div',
 				Html::tag('div', $name, ['class' => 'col-md-8']).
 				Html::tag('div', $data->$item, ['class' => 'col-md-4'])
 			, ['class' => 'row']);
 		endforeach;
-	}
+	endif;
 echo Html::endTag('div');

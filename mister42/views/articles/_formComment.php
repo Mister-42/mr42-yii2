@@ -12,7 +12,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 
 	$form = ActiveForm::begin(['id' => 'comment-form', 'options' => ['data-pjax' => '']]);
 
-		if (Yii::$app->user->isGuest) {
+		if (Yii::$app->user->isGuest) :
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [
 					'options' => ['class' => 'col-md-6'],
@@ -29,7 +29,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 			echo $form->field($model, 'website', [
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('globe').'{input}</div>{error}',
 			])->input('url', ['tabindex' => ++$tab]);
-		}
+		endif;
 
 		echo $form->field($model, 'title', [
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('heading').'{input}</div>{error}',
@@ -41,9 +41,9 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
 			->hint('You may use '.Html::a('Markdown Syntax', Yii::$app->params['shortDomain'].'art4', ['target' => '_blank']).'. HTML is not allowed.');
 
-		if (Yii::$app->user->isGuest) {
-					echo Form::captcha($form, $model, ++$tab);
-		}
+		if (Yii::$app->user->isGuest) :
+			echo Form::captcha($form, $model, ++$tab);
+		endif;
 
 		echo Html::tag('div',
 			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).

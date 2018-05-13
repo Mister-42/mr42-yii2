@@ -13,16 +13,16 @@ class Lightbox extends Widget {
 
 	public function init() {
 		LightboxAsset::register($this->getView());
-		if (!empty($this->options)) {
-					$this->getView()->registerJs('lightbox.option('.json_encode($this->options).')', View::POS_END);
-		}
+		if (!empty($this->options)) :
+			$this->getView()->registerJs('lightbox.option('.json_encode($this->options).')', View::POS_END);
+		endif;
 	}
 
 	public function run() {
 		foreach ($this->items as $item) :
-			if (!isset($item['thumb']) || !isset($item['image'])) {
-							continue;
-			}
+			if (!isset($item['thumb']) || !isset($item['image'])) :
+				continue;
+			endif;
 
 			$imageOptions['alt'] = isset($item['title']) ? $item['title'] : '';
 			$imageOptions['class'] = 'd-none d-md-block img-thumbnail rounded';

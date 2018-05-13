@@ -28,17 +28,17 @@ class Office365 extends \yii\base\Model {
 		];
 	}
 
-	public function calcEndDate(): bool {
-		if (!$this->validate()) {
-					return false;
-		}
+	public function calculate(): bool {
+		if (!$this->validate()) :
+			return false;
+		endif;
 
 		$diff = (new DateTime($this->sourcedate))->diff(new DateTime($this->targetdate));
 
 		$redeemDate = ($diff->invert === 0 && $diff->days <= 30) ? $this->sourcedate : $this->targetdate;
-		if ($diff->invert === 0) {
-					$diff = (new DateTime($this->targetdate))->diff(new DateTime($this->targetdate));
-		}
+		if ($diff->invert === 0) :
+			$diff = (new DateTime($this->targetdate))->diff(new DateTime($this->targetdate));
+		endif;
 
 		$upcomingYear = (new DateTime($redeemDate))->diff((new DateTime($redeemDate))->modify('1 year'));
 		$targetCount = $this->action == 'renew' ? $this->targetcount : $this->sourcecount + $this->targetcount;
@@ -47,10 +47,10 @@ class Office365 extends \yii\base\Model {
 		$newDate = new DateTime($redeemDate);
 		$newDate->modify(ceil($dateCalc).' days');
 
-		if ($newDate > (new DateTime($redeemDate))->modify('3 years')) {
+		if ($newDate > (new DateTime($redeemDate))->modify('3 years')) :
 			Yii::$app->getSession()->setFlash('office365-error', ['date' => $newDate, 'count' => $targetCount]);
 			return false;
-		}
+		endif;
 
 		Yii::$app->getSession()->setFlash('office365-success', ['date' => $newDate, 'count' => $targetCount]);
 		return true;

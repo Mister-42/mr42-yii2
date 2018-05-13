@@ -7,9 +7,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $data[0]->artist->name, 'url' => ['index', 'artist' => $data[0]->artist->url]];
 $this->params['breadcrumbs'][] = $data[0]->album->name;
 
-if ($data[0]->album->image_color) {
+if ($data[0]->album->image_color) :
 	$this->params['themeColor'] = $data[0]->album->image_color;
-}
+endif;
 
 echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 	echo Html::beginTag('div', ['class' => 'row']);
@@ -33,9 +33,9 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 					echo Html::beginTag('div', ['class' => 'row mr-3']);
 						$x = $y = 0;
 							foreach ($data as $track) :
-								if ($x++ === 0) {
-																	echo Html::beginTag('div', ['class' => 'col-md-4']);
-								}
+								if ($x++ === 0) :
+									echo Html::beginTag('div', ['class' => 'col-md-4']);
+								endif;
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
 									echo $track->track.' · ';
@@ -43,15 +43,15 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 										? Html::a($track->name, '#'.$track->track)
 										: $track->name;
 									echo $track->disambiguation.$track->feat;
-									if ($track->video) {
-																			echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
-									}
+									if ($track->video) :
+										echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
+									endif;
 								echo Html::endTag('div');
 
-								if (++$y === count($data) || $x === (int) ceil(count($data) / 3)) {
+								if (++$y === count($data) || $x === (int) ceil(count($data) / 3)) :
 									echo Html::endTag('div');
 									$x = 0;
-								}
+								endif;
 							endforeach;
 					echo Html::endTag('div');
 				echo Html::endTag('div');
@@ -63,8 +63,8 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 	echo Html::endTag('div');
 
 	foreach ($data as $track) :
-		if ($track->lyricid || $track->wip || $track->video) {
-					echo Html::tag('div',
+		if ($track->lyricid || $track->wip || $track->video) :
+			echo Html::tag('div',
 				Html::tag('div',
 					Html::a(null, null, ['class' => 'anchor', 'id' => $track->track]).
 					Html::tag('h4', implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat])).
@@ -72,6 +72,6 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 				, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']).
 				Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4' : 'col-12'])
 			, ['class' => 'row']);
-		}
+		endif;
 	endforeach;
 echo Html::endTag('div');

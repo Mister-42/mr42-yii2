@@ -33,9 +33,9 @@ class Contact extends \yii\base\Model {
 	}
 
 	public function contact(): bool {
-		if (!$this->validate()) {
-					return false;
-		}
+		if (!$this->validate()) :
+			return false;
+		endif;
 
 		$mailer = Yii::$app->mailer->compose()
 			->setTo(Yii::$app->params['secrets']['params']['adminEmail'])
@@ -43,9 +43,9 @@ class Contact extends \yii\base\Model {
 			->setSubject(Yii::$app->name.' - '.$this->title)
 			->setTextBody($this->content);
 
-		if ($this->attachment) {
-					$mailer->attach($this->attachment->tempName, ['fileName' => $this->attachment->name]);
-		}
+		if ($this->attachment) :
+			$mailer->attach($this->attachment->tempName, ['fileName' => $this->attachment->name]);
+		endif;
 
 		return $mailer->send();
 	}

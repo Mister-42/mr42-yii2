@@ -22,10 +22,10 @@ class ArticlesController extends Controller {
 
 			$html = $this->renderPartial('@app/views/articles/pdf', ['model' => $article]);
 			$fileName = Articles::buildPdf($article, $html);
-			if (!$fileName) {
+			if (!$fileName) :
 				Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED]);
 				continue;
-			}
+			endif;
 
 			Console::write(Yii::$app->formatter->asShortSize(filesize($fileName), 2), [Console::FG_GREEN], 2);
 			Console::write('OK', [Console::BOLD, Console::FG_GREEN]);

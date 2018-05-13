@@ -26,12 +26,12 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	}
 
 	public function beforeSave($insert) {
-		if (parent::beforeSave($insert)) {
+		if (parent::beforeSave($insert)) :
 			$this->url = $this->name === $this->url ? null : $this->url;
 			$this->playlist_id = substr($this->playlist_id, 2);
 			$this->active = $this->active ? 1 : 0;
 			return true;
-		}
+		endif;
 		return false;
 	}
 
@@ -60,9 +60,9 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		$data = $data ?? self::albumsList($artist);
 		foreach ($data as $item) :
 			$max = max($max, $item->updated);
-			foreach ($item->tracks as $track) {
-							$max = max($max, $track->lyrics->updated);
-			}
+			foreach ($item->tracks as $track) :
+				$max = max($max, $track->lyrics->updated);
+			endforeach;
 		endforeach;
 		return $max;
 	}
@@ -86,14 +86,14 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 
 	public function getCover($size, $album) {
 		$fileName = null;
-		if (ArrayHelper::keyExists(0, $album)) {
+		if (ArrayHelper::keyExists(0, $album)) :
 			$fileName = implode(' - ', [$album[0]->artist->url, $album[0]->album->year, $album[0]->album->url, $size]).'.jpg';
 			$album = $album[0]->album;
-		}
+		endif;
 
-		if ($size !== 'cover') {
+		if ($size !== 'cover') :
 			$process = proc_open("convert -resize {$size} -strip -quality 85% -interlace Plane - jpg:-", [['pipe', 'r'], ['pipe', 'w']], $pipes);
-			if (is_resource($process)) {
+			if (is_resource($process)) :
 				fwrite($pipes[0], $album->image);
 				fclose($pipes[0]);
 
@@ -101,8 +101,8 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 				fclose($pipes[1]);
 
 				proc_close($process);
-			}
-		}
+			endif;
+		endif;
 
 		return [$fileName, $album->image];
 	}

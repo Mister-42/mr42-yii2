@@ -36,13 +36,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		ActiveForm::end();
 
-		if ($module->enableEmailConfirmation) {
-					echo Html::tag('p', Html::a(Yii::t('usuario', 'Didn\'t receive confirmation message?'), ['/user/registration/resend']), ['class' => 'text-center']);
-		}
+		if ($module->enableEmailConfirmation) :
+			echo Html::tag('p', Html::a(Yii::t('usuario', 'Didn\'t receive confirmation message?'), ['/user/registration/resend']), ['class' => 'text-center']);
+		endif;
 
-		if ($module->enableRegistration) {
-					echo Html::tag('p', Html::a(Yii::t('usuario', 'Don\'t have an account? Sign up!'), ['/user/registration/register']), ['class' => 'text-center']);
-		}
+		if ($module->enableRegistration) :
+			echo Html::tag('p', Html::a(Yii::t('usuario', 'Don\'t have an account? Sign up!'), ['/user/registration/register']), ['class' => 'text-center']);
+		endif;
 
 		echo ConnectWidget::widget(['baseAuthUrl' => ['/user/security/auth']]);
 	echo Html::endTag('div');

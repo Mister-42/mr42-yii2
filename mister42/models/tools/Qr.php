@@ -71,10 +71,10 @@ class Qr extends \yii\base\Model {
 
 	public function generate($qrData): bool {
 		$size = StringHelper::byteLength($qrData);
-		if ($size > 2746) {
+		if ($size > 2746) :
 			Yii::$app->getSession()->setFlash('qr-size', $size - 2746);
 			return false;
-		}
+		endif;
 
 		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 		$cacheFile = Yii::getAlias('@assetsroot/temp/'.uniqid('qr').'.png');
@@ -82,35 +82,35 @@ class Qr extends \yii\base\Model {
 		$qrcode->disableBorder();
 		$qrcode->displayPNG($this->size, [255, 255, 255], [0, 0, 0], $cacheFile, 6);
 
-		if ($this->recipient) {
-					Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
-		}
+		if ($this->recipient) :
+			Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
+		endif;
 		Yii::$app->getSession()->setFlash('qr-success', $cacheFile);
 		return true;
 	}
 
 	public function getWifiAuthentication(): array {
-		foreach (['none', 'WEP', 'WPA'] as $value) {
-					$list[$value] = $value;
-		}
+		foreach (['none', 'WEP', 'WPA'] as $value) :
+			$list[$value] = $value;
+		endforeach;
 		return $list;
 	}
 
 	public function getTypes(bool $rules = false): array {
 		$dir = Yii::getAlias('@app/models/tools/qr');
 		$rename = ['FreeInput' => 'Free Input', 'EmailMessage' => 'Email Message', 'Ical' => 'iCal', 'MailTo' => 'Mail To', 'Vcard' => 'vCard'];
-		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file) {
+		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file) :
 					$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
-		}
+		endforeach;
 
 		asort($typeList, SORT_NATURAL | SORT_FLAG_CASE);
 		return $typeList;
 	}
 
 	public function getDataOrOmit(string $label, string $value, string $glue = '') {
-		if ($value) {
-					return $label.$value.$glue;
-		}
+		if ($value) :
+			return $label.$value.$glue;
+		endif;
 		return false;
 	}
 }

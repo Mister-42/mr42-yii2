@@ -18,22 +18,22 @@ $doc->writeAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/site
 
 Sitemap::lineItem($doc, Url::home(true), filemtime(View::findViewFile('@app/views/site/index')), 1);
 
-foreach (Menu::getUrlList() as $page) {
+foreach (Menu::getUrlList() as $page) :
 	Sitemap::lineItem($doc, Url::to([$page], true), filemtime(View::findViewFile('@app/views'.$page)));
-}
+endforeach;
 
 $articles = Articles::find()->orderBy('created')->with('comments')->all();
 Sitemap::lineItem($doc, Url::to(['articles/index'], true), end($articles)->updated, 0.8);
 
 foreach ($articles as $article) :
 	$lastUpdate = $article['updated'];
-	foreach ($article['comments'] as $comment) {
+	foreach ($article['comments'] as $comment) :
 			$lastUpdate = max($lastUpdate, $comment['created']);
-	}
+	endforeach;
 	Sitemap::lineItem($doc, Yii::$app->params['shortDomain']."art{$article->id}", $lastUpdate);
-	if ($article['pdf']) {
+	if ($article['pdf']) :
 			Sitemap::lineItem($doc, Url::to(['articles/pdf', 'id' => $article->id, 'title' => $article->url], true), $lastUpdate);
-	}
+	endif;
 	endforeach;
 unset($articles);
 

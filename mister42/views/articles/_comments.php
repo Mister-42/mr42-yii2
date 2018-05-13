@@ -11,7 +11,7 @@ foreach ($comments as $comment) :
 				Html::tag('h4', $comment->title, ['class' => 'comment-info'])
 			, ['class' => 'float-left']);
 
-			if ($mainmodel->belongsToViewer()):
+			if ($mainmodel->belongsToViewer()) :
 				echo Html::beginTag('div', ['class' => 'float-right']);
 					Pjax::begin(['enablePushState' => false, 'options' => ['tag' => 'span']]);
 						echo $comment->showApprovalButton();
@@ -26,17 +26,17 @@ foreach ($comments as $comment) :
 			endif;
 		echo Html::endTag('div');
 		echo $comment->content;
-		if (!empty($comment->user)) {
+		if (!empty($comment->user)) :
 			$profile = User::find()->where(['id' => $model->user->id])->one();
 			$comment->name = empty($profile->name) ? $profile->user->username : $profile->name;
 			$comment->website = $profile->website;
-		}
+		endif;
 
 		$bar[] = Icon::show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($comment->created), ['datetime' => date(DATE_W3C, $comment->created)]);
 		$bar[] = Icon::show('user', ['class' => 'text-muted mr-1']).$comment->name.($mainmodel->author === $comment->user ? Html::tag('span', 'Article Author', ['class' => 'badge badge-secondary']) : '');
-		if (!empty($comment->website)) {
-					$bar[] = Icon::show('globe', ['class' => 'text-muted mr-1']).Html::a($comment->website, $comment->website);
-		}
+		if (!empty($comment->website)) :
+			$bar[] = Icon::show('globe', ['class' => 'text-muted mr-1']).Html::a($comment->website, $comment->website);
+		endif;
 		echo Html::tag('div', implode(' · ', $bar), ['class' => 'article-toolbar my-2']);
 		unset($bar);
 	echo Html::endTag('div');

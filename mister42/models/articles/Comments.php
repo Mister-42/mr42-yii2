@@ -29,10 +29,10 @@ class Comments extends ActiveRecord {
 			[['website'], 'url', 'defaultScheme' => 'http', 'enableIDN' => true],
 		];
 
-		if (Yii::$app->user->isGuest) {
+		if (Yii::$app->user->isGuest) :
 			$rules[] = [['captcha'], 'captcha'];
 			$rules[] = [['name', 'email', 'captcha'], 'required'];
-		}
+		endif;
 		return $rules;
 	}
 
@@ -62,13 +62,13 @@ class Comments extends ActiveRecord {
 	}
 
 	public function beforeSave($insert) {
-		if (!parent::beforeSave($insert)) {
-					return false;
-		}
+		if (!parent::beforeSave($insert)) :
+			return false;
+		endif;
 
-		if (!$insert && Yii::$app->user->isGuest) {
-					throw new AccessDeniedHttpException('Please login.');
-		}
+		if (!$insert && Yii::$app->user->isGuest) :
+			throw new AccessDeniedHttpException('Please login.');
+		endif;
 
 		$this->content = Yii::$app->formatter->cleanInput($this->content, false);
 		$this->name = $this->name ?? null;
@@ -95,7 +95,7 @@ class Comments extends ActiveRecord {
 			->setSubject('A new comment has been posted on "'.$model->title.'"')
 			->send();
 
-		if (Yii::$app->user->isGuest) {
+		if (Yii::$app->user->isGuest) :
 			Yii::$app->mailer->compose(
 					['html' => 'commentToCommenter'],
 					['model' => $model, 'comment' => $comment]
@@ -104,7 +104,7 @@ class Comments extends ActiveRecord {
 				->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
 				->setSubject('Thank you for your reply on "'.$model->title.'"')
 				->send();
-		}
+		endif;
 	}
 
 	public function getArticle() {

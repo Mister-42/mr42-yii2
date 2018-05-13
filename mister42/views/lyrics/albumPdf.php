@@ -36,12 +36,12 @@ foreach ($tracks as $track) :
 	echo Html::a(null, null, ['name' => $track->track]);
 	echo Html::tag('h3', $track->name.$track->disambiguation.$track->feat);
 
-	if ($track->lyricid && !$track->wip) {
+	if ($track->lyricid && !$track->wip) :
 		echo $track->lyrics->lyrics;
-	} elseif ($track->wip) {
+	elseif ($track->wip) :
 		echo Html::tag('i', 'Work in Progress');
-	} else {
+	else :
 		echo Html::img(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/TrebleClef.png');
 		echo Html::tag('strong', 'Instrumental');
-	}
+	endif;
 endforeach;
