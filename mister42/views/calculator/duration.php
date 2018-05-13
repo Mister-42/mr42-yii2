@@ -41,7 +41,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::endTag('div');
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]) .
 			Html::submitButton('Calculate', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
