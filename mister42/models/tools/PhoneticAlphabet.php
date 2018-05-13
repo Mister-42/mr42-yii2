@@ -15,7 +15,7 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 	public function rules(): array {
 		return [
 			[['text', 'alphabet'], 'required'],
-			['alphabet', 'in', 'range' => self::getAlphabetList('lng')],
+			['alphabet', 'in', 'range' => static::getAlphabetList('lng')],
 			['numeric', 'boolean'],
 		];
 	}
@@ -37,9 +37,9 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 		$text = strtolower($this->text);
 		$text = preg_replace("/(.)/i", "\${1} ", $text);
 		$text = strtr($text, ArrayHelper::merge(
-			self::getAlpha($this->alphabet),
-			($this->numeric) ? self::getNumeric($this->alphabet) : [],
-			self::getGenericReplacements()
+			static::getAlpha($this->alphabet),
+			($this->numeric) ? static::getNumeric($this->alphabet) : [],
+			static::getGenericReplacements()
 		));
 		$text = Yii::$app->formatter->asNtext($text);
 		$text = trim($text);
@@ -48,7 +48,7 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 		return true;
 	}
 
-	public function getAlphabetList(string $column = '*'): array {
+	public static function getAlphabetList(string $column = '*'): array {
 		$list = self::find()
 			->select('lng, name')
 			->orderBy('sort, name')
@@ -60,21 +60,21 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 		return ArrayHelper::map($list, 'lng', 'name');
 	}
 
-	private function getAlpha(string $language): array {
+	private static function getAlpha(string $language): array {
 		return self::find()
 			->where(['lng' => $language])
 			->asArray()
 			->one();
 	}
 
-	private function getNumeric(string $language): array {
+	private static function getNumeric(string $language): array {
 		return PhoneticAlphabetNumeric::find()
 			->where(['lng' => $language])
 			->asArray()
 			->one();
 	}
 
-	private function getGenericReplacements(): array {
+	private static function getGenericReplacements(): array {
 		return ['   ' => ' · ',
 				' - ' => PHP_EOL,
 		];

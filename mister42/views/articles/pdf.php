@@ -1,4 +1,4 @@
-<article>
-	<?php $model->content = str_replace('[readmore]', '', $model->content); ?>
-	<?= $model->content ?>
-</article>
+<?php
+use yii\bootstrap4\Html;
+
+echo Html::tag('article', str_replace('[readmore]', '', $model->content));

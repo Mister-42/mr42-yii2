@@ -105,7 +105,7 @@ class ToolsController extends \yii\web\Controller {
 
 		return $this->render('qr', [
 			'model' => $model,
-			'qrForm' => $qrForm
+			'qrForm' => $qrForm ?? ''
 		]);
 	}
 }

@@ -9,13 +9,13 @@ class Formatter extends \yii\i18n\Formatter {
 	public function cleanInput(string $data, string $markdown = 'original', bool $allowHtml = false): string {
 		$data = $allowHtml ? parent::asRaw($data) : parent::asHtml($data, ['HTML.Allowed' => '']);
 		$data = preg_replace_callback_array([
-			'/(vimeo):(()?[[:digit:]]+):(21by9|16by9|4by3|1by1)/U'				=> 'self::getVideo',
-			'/(youtube):((PL)?[[:ascii:]]{11,32}):(21by9|16by9|4by3|1by1)/U'	=> 'self::getVideo',
+			'/(vimeo):(()?[[:digit:]]+):(21by9|16by9|4by3|1by1)/U'				=> 'static::getVideo',
+			'/(youtube):((PL)?[[:ascii:]]{11,32}):(21by9|16by9|4by3|1by1)/U'	=> 'static::getVideo',
 		], $data);
 		if ($markdown) :
 			$data = Markdown::process($data, $markdown);
 		endif;
-		$data = self::addImageResponsiveClass($data);
+		$data = self::addImageFluidClass($data);
 		return trim($data);
 	}
 
@@ -41,7 +41,7 @@ class Formatter extends \yii\i18n\Formatter {
 		return file_get_contents($cachefile);
 	}
 
-	private function addImageResponsiveClass($html) {
+	private static function addImageFluidClass($html) {
 		$html = preg_match('/<img.*? class="/', $html)
 			? $html = preg_replace('/(<img.*? class=" .*?)(".*?\="">)/', '$1 img-fluid $2', $html)
 			: $html = preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid" $2', $html);
@@ -49,7 +49,7 @@ class Formatter extends \yii\i18n\Formatter {
 		return $html;
 	}
 
-	private function getVideo(array $match): string {
+	private static function getVideo(array $match): string {
 		return Video::getEmbed($match[1], $match[2], $match[4], $match[3] === 'PL' ? true : $match[3]);
 	}
 }

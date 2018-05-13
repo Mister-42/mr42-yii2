@@ -10,7 +10,6 @@ $this->params['breadcrumbs'][] = 'Calculator';
 $this->params['breadcrumbs'][] = 'Wifi Protected Access Pre-Shared Key';
 
 $model = new Wpapsk;
-
 ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/wpapsk.js'), View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);

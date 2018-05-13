@@ -42,10 +42,10 @@ class Barcode extends \yii\base\Model {
 		$fgCol = imagecolorallocate($image, 0, 0, 0);
 
 		foreach ($data['bcode'] as $value) :
-			$barWidth = round($value['w'] * $this->barWidth, 3);
-			$barHeight = round($value['h'] * $this->height / $data['maxh'], 3);
+			$barWidth = (int) round($value['w'] * $this->barWidth);
+			$barHeight = (int) round($value['h'] * $this->height / $data['maxh']);
 			if ($value['t']) :
-				$top = round($value['p'] * $this->height / $data['maxh'], 3);
+				$top = (int) round($value['p'] * $this->height / $data['maxh']);
 				imagefilledrectangle($image, $location, $top, $location + $barWidth - 1, $top + $barHeight - 1, $fgCol);
 			endif;
 			$location += $barWidth;
@@ -67,6 +67,6 @@ class Barcode extends \yii\base\Model {
 		foreach (require(Yii::getAlias('@app/data/barcodeTypes.php')) as $name => $value) :
 			$list[$value] = $rules ? $value : $name;
 		endforeach;
-		return $list;
+		return $list ?? [];
 	}
 }

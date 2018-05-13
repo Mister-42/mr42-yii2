@@ -12,11 +12,11 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	const STATUS_INACTIVE = false;
 	const STATUS_ACTIVE = true;
 
-	public static function tableName() {
+	public static function tableName(): string {
 		return '{{%articles}}';
 	}
 
-	public function rules() {
+	public function rules(): array {
 		return [
 			[['title', 'content'], 'required'],
 			['content', 'string'],
@@ -26,7 +26,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		];
 	}
 
-	public function attributeLabels() {
+	public function attributeLabels(): array {
 		return [
 			'url' => 'URL',
 			'source' => 'Source URL',
@@ -34,7 +34,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		];
 	}
 
-	public function behaviors() {
+	public function behaviors(): array{
 		return [
 			[
 				'class' => TimestampBehavior::class,
@@ -51,11 +51,11 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		return $comment->save();
 	}
 
-	public function beforeDelete() {
+	public function beforeDelete(): bool {
 		return (parent::beforeDelete() && $this->belongsToViewer()) ? true : false;
 	}
 
-	public function beforeSave($insert) {
+	public function beforeSave($insert): bool {
 		if (Yii::$app->user->isGuest) :
 			throw new AccessDeniedHttpException('Please login.');
 		endif;
@@ -76,11 +76,11 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		return true;
 	}
 
-	public function belongsToViewer() {
-		return Yii::$app->user->isGuest ? false : $this->author === Yii::$app->user->id;
+	public function belongsToViewer(): bool {
+		return $this->author === Yii::$app->user->id;
 	}
 
-	public function buildPdf($model, $html) {
+	public function buildPdf($model, string $html) {
 		$user = new Profile();
 		$profile = $user->find($model->user->id)->one();
 		$name = empty($profile->name) ? $model->user->username : $profile->name;

@@ -4,13 +4,13 @@ namespace app\models\user;
 class RegistrationForm extends \Da\User\Form\RegistrationForm {
 	public $captcha;
 
-	public function attributeLabels() {
+	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 		$labels['captcha'] = 'CAPTCHA';
 		return $labels;
 	}
 
-	public function rules() {
+	public function rules(): array {
 		$rules = parent::rules();
 
 		$rules[] = ['captcha', 'required'];

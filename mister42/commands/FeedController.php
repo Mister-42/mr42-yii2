@@ -47,7 +47,7 @@ class FeedController extends Controller {
 			if (isset($profile->lastfm)) :
 				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $limit);
 				if (!$response->isOK) :
-					continue;
+					return self::EXIT_CODE_ERROR;
 				endif;
 
 				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);

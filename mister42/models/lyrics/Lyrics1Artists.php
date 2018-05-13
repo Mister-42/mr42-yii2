@@ -6,7 +6,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	const STATUS_INACTIVE = '0';
 	const STATUS_ACTIVE = '1';
 
-	public static function tableName() {
+	public static function tableName(): string {
 		return '{{%lyrics_1_artists}}';
 	}
 
@@ -17,20 +17,20 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 		$this->active = (bool) $this->active;
 	}
 
-	public function artistsList() {
-		return self::find()
+	public static function artistsList() {
+		return parent::find()
 			->orderBy('name')
 			->all();
 	}
 
-	public function albumsList() {
-		return self::find()
+	public static function albumsList() {
+		return parent::find()
 			->orderBy('name')
 			->with('albums')
 			->each();
 	}
 
-	public function lastUpdate($data = null) {
+	public static function lastUpdate($data = null): int {
 		$data = $data ?? self::artistsList();
 		foreach ($data as $item) :
 			$max = max($max, $item->updated);

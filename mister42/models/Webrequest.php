@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use yii\httpclient\{Client, Response};
 
 class Webrequest {
-	public function getLastfmApi(string $method, string $user, int $limit): Response {
+	public static function getLastfmApi(string $method, string $user, int $limit): Response {
 		return self::getUrl('https://ws.audioscrobbler.com/2.0/', '', [
 			'api_key' => Yii::$app->params['secrets']['last.fm']['API'],
 			'limit' => $limit,
@@ -14,7 +14,7 @@ class Webrequest {
 		]);
 	}
 
-	public function getYoutubeApi(string $id, string $content): Response {
+	public static function getYoutubeApi(string $id, string $content): Response {
 		return self::getUrl('https://www.googleapis.com/youtube/v3', $content, [
 			'id' => $id,
 			'key' => Yii::$app->params['secrets']['google']['API'],
@@ -22,7 +22,7 @@ class Webrequest {
 		]);
 	}
 
-	public function getUrl(string $base, string $url, array $data = []): Response {
+	public static function getUrl(string $base, string $url, array $data = []): Response {
 		$client = new Client(['baseUrl' => $base]);
 		return $client->createRequest()
 			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Url::to(['site/index'], true).')'])

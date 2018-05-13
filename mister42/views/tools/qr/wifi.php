@@ -4,6 +4,7 @@ use app\models\tools\Qr;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 
+$this->registerJs(Yii::$app->formatter->jspack('togglePassword.js'), View::POS_READY);
 $this->registerJs('$("#qr-authentication").on("change",function(){if($(this).val()=="none"){$(".field-qr-password").addClass("d-none")}else{$(".field-qr-password").removeClass("d-none")}}).change();', View::POS_READY);
 
 $tab = 1;
@@ -23,8 +24,8 @@ echo $form->field($model, 'ssid', [
 
 echo $form->field($model, 'password', [
 		'options' => ['class' => 'required'],
-		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
-	])->textInput(['tabindex' => ++$tab]);
+		'template' => '{label}<div class="input-group" id="pwdToggle">'.Icon::fieldAddon('lock').'{input}<span class="input-group-append">'.Html::button(Icon::show('eye', ['class' => 'append']).Icon::show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']).'</span></div>{error}',
+	])->passwordInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'hidden')->checkBox(['tabindex' => ++$tab]);
 

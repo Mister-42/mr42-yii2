@@ -69,8 +69,7 @@ class ArticlesController extends \yii\web\Controller {
 			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 		endif;
 
-		$html = $this->renderPartial('pdf', ['model' => $model]);
-		$fileName = Articles::buildPdf($model, $html);
+		$fileName = Articles::buildPdf($model, $this->renderPartial('pdf', ['model' => $model]));
 		Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
 	}
 

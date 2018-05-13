@@ -1,5 +1,6 @@
 <?php
 namespace app\assets;
+use Yii;
 use yii\web\AssetBundle;
 
 class TimePickerAsset extends AssetBundle {
@@ -17,7 +18,7 @@ class TimePickerAsset extends AssetBundle {
 
 		$language = $this->language;
 
-		if ($language !== null && $language !== 'en-US') :
+		if ($language !== null && $language !== 'en') :
 			$fallbackLanguage = substr($language, 0, 2);
 			if ($fallbackLanguage !== $language && !file_exists(Yii::getAlias($this->sourcePath."/i18n/jquery-ui-timepicker-{$language}.js"))) :
 				$language = $fallbackLanguage;

@@ -6,10 +6,10 @@ use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
 class RecentTracks extends \yii\db\ActiveRecord {
-	public $limit = 20;
+	static $limit = 20;
 
 	public function init() {
-		$this->limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : $this->limit;
+		self::$limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : self::$limit;
 		parent::init();
 	}
 
@@ -17,12 +17,12 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		 return '{{%lastfm_recenttracks}}';
 	}
 
-	public function display(int $userid) {
+	public static function display(int $userid) {
 		if (time() - self::lastSeen($userid, true) > 300) :
 			self::updateUser(Profile::findOne(['user_id' => $userid]), time());
 		endif;
 
-		$tracks = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit($this->limit)->all();
+		$tracks = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit(self::$limit)->all();
 
 		foreach ($tracks as $track) :
 			$data[] = Html::beginTag('div', ['class' => 'clearfix']);
@@ -47,7 +47,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		return implode($data);
 	}
 
-	public function lastSeen(int $userid, bool $update = false) {
+	public static function lastSeen(int $userid, bool $update = false) {
 		$lastSeen = self::find()
 			->select(['seen' => 'max(seen)'])
 			->where(['userid' => $userid])
@@ -60,9 +60,9 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		return $lastSeen->seen;
 	}
 
-	public function updateUser(Profile $profile, int $lastSeen) {
+	public static function updateUser(Profile $profile, int $lastSeen) {
 		if (isset($profile->lastfm)) :
-			$response = Webrequest::getLastfmApi('user.getrecenttracks', $profile->lastfm, $this->limit);
+			$response = Webrequest::getLastfmApi('user.getrecenttracks', $profile->lastfm, self::$limit);
 			if (!$response->isOK) :
 				return false;
 			endif;
@@ -79,7 +79,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 				$addTrack->seen = $lastSeen;
 				$addTrack->save();
 
-				if (++$count === $this->limit) :
+				if (++$count === self::$limit) :
 					break;
 				endif;
 			endforeach;
@@ -88,8 +88,8 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		endif;
 	}
 
-	private function cleanDb(int $userid) {
-		$items = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit(999)->offset($this->limit)->all();
+	private static function cleanDb(int $userid) {
+		$items = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit(999)->offset(self::$limit)->all();
 		foreach ($items as $item) :
 			$item->delete();
 		endforeach;

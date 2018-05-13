@@ -23,6 +23,8 @@ class Video {
 			return $isPlaylist ? "https://vimeo.com/album/{$id}" : "https://vimeo.com/{$id}";
 		elseif ($source === 'youtube') :
 			return $isPlaylist ? 'https://www.youtube.com/playlist?'.http_build_query(['list' => $id]) : "https://youtu.be/{$id}";
+		else :
+			return 'Only Vimeo and YouTube are supported at this moment.';
 		endif;
 	}
 }

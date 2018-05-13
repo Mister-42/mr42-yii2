@@ -13,11 +13,11 @@ class Comments extends ActiveRecord {
 	const STATUS_INACTIVE = false;
 	const STATUS_ACTIVE = true;
 
-	public static function tableName() {
+	public static function tableName(): string {
 		return '{{%articles_comments}}';
 	}
 
-	public function rules() {
+	public function rules(): array {
 		$rules = [
 			[['title', 'content'], 'required'],
 			[['name', 'email', 'website', 'title', 'content'], 'trim'],
@@ -36,7 +36,7 @@ class Comments extends ActiveRecord {
 		return $rules;
 	}
 
-	public function attributeLabels() {
+	public function attributeLabels(): array {
 		return [
 			'content' => 'Comment',
 			'email' => 'Email Address',
@@ -45,7 +45,7 @@ class Comments extends ActiveRecord {
 		];
 	}
 
-	public function behaviors() {
+	public function behaviors(): array {
 		return [
 			[
 				'class' => TimestampBehavior::class,
@@ -61,7 +61,7 @@ class Comments extends ActiveRecord {
 		$this->content = Yii::$app->formatter->cleanInput($this->content, 'gfm-comment');
 	}
 
-	public function beforeSave($insert) {
+	public function beforeSave($insert): bool {
 		if (!parent::beforeSave($insert)) :
 			return false;
 		endif;
@@ -77,7 +77,7 @@ class Comments extends ActiveRecord {
 		return true;
 	}
 
-	public function showApprovalButton() {
+	public function showApprovalButton(): string {
 		return Html::a(
 			$this->active ? Icon::show('thumbs-down').' Renounce' : Icon::show('thumbs-up').' Approve',
 			['commentstatus', 'id' => $this->id, 'action' => 'toggleapproval'],

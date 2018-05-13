@@ -6,7 +6,7 @@ use app\models\Video;
 class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public $video;
 
-	public static function tableName() {
+	public static function tableName(): string {
 		return '{{%lyrics_3_tracks}}';
 	}
 
@@ -19,8 +19,8 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->video = $this->video_id && $this->video_ratio ? Video::getEmbed('youtube', $this->video_id, $this->video_ratio) : null;
 	}
 
-	public function tracksList($artist, $year, $name) {
-		return self::find()
+	public static function tracksList($artist, $year, $name) {
+		return parent::find()
 			->orderBy('track')
 			->joinWith('artist')
 			->with('album', 'lyrics')
@@ -31,7 +31,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 			->all();
 	}
 
-	public function lastUpdate($artist, $year, $name, $data = null) {
+	public static function lastUpdate($artist, $year, $name, $data = null) {
 		$data = $data ?? self::tracksList($artist, $year, $name);
 		foreach ($data as $item) :
 			$max = max($max, $item->album->updated);

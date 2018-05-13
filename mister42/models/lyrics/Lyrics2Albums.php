@@ -11,7 +11,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public $playlist_embed;
 	public $playlist_url;
 
-	public static function tableName() {
+	public static function tableName(): string {
 		return '{{%lyrics_2_albums}}';
 	}
 
@@ -25,7 +25,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		$this->active = (bool) $this->active;
 	}
 
-	public function beforeSave($insert) {
+	public function beforeSave($insert): bool {
 		if (parent::beforeSave($insert)) :
 			$this->url = $this->name === $this->url ? null : $this->url;
 			$this->playlist_id = substr($this->playlist_id, 2);
@@ -35,7 +35,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return false;
 	}
 
-	public function behaviors() {
+	public function behaviors(): array {
 		return [
 			[
 				'class' => TimestampBehavior::class,
@@ -46,8 +46,8 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		];
 	}
 
-	public function albumsList($artist) {
-		return self::find()
+	public static function albumsList($artist) {
+		return parent::find()
 			->orderBy('year DESC, name')
 			->joinWith('artist')
 			->with('tracks')
@@ -67,7 +67,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return $max;
 	}
 
-	public function buildPdf($album, $html) {
+	public function buildPdf($album, $html): string {
 		$pdf = new Pdf();
 		return $pdf->create(
 			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
@@ -84,7 +84,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		);
 	}
 
-	public function getCover($size, $album) {
+	public static function getCover($size, $album): array {
 		$fileName = null;
 		if (ArrayHelper::keyExists(0, $album)) :
 			$fileName = implode(' - ', [$album[0]->artist->url, $album[0]->album->year, $album[0]->album->url, $size]).'.jpg';

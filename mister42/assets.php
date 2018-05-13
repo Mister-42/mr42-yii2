@@ -1,4 +1,6 @@
 <?php
+use Yii;
+
 $sass = 'sass --scss --sourcemap=none -C -t compressed -I '.Yii::getAlias('@bower/bootstrap/scss').' {from} {to}';
 
 return [

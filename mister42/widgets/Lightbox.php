@@ -18,7 +18,7 @@ class Lightbox extends Widget {
 		endif;
 	}
 
-	public function run() {
+	public function run(): string {
 		foreach ($this->items as $item) :
 			if (!isset($item['thumb']) || !isset($item['image'])) :
 				continue;
@@ -35,6 +35,6 @@ class Lightbox extends Widget {
 			$content[] = Html::a($image, $item['image'], $linkOptions);
 		endforeach;
 
-		return implode($content);
+		return implode($content ?? []);
 	}
 }

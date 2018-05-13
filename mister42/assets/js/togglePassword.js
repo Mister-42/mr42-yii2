@@ -1,4 +1,7 @@
 $("#pwdToggle button").on('click', function(event) {
+	$.each($('form').data('yiiActiveForm').attributes, function() {
+		this.status = 3;
+	});
 	event.preventDefault();
 	if ($('#pwdToggle input').attr('type') == 'text') {
 		$('#pwdToggle input').attr('type', 'password');

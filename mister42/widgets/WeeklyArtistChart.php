@@ -11,10 +11,10 @@ class WeeklyArtistChart extends Widget {
 	public function run(): string {
 		$user = User::find()->where(['username' => $this->profile])->one();
 		$items = WeeklyArtist::find()->where(['userid' => $user->id])->orderBy('rank')->all();
-		return empty($items) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : $this->renderFeed($items);
+		return empty($items) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderFeed($items);
 	}
 
-	public function renderFeed(array $items): string {
+	private function renderFeed(array $items): string {
 		foreach ($items as $item) :
 			$feed[] = Html::tag('div',
 				Html::tag('span', $item['rank'], ['class' => 'float-left']).
