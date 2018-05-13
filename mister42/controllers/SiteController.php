@@ -32,26 +32,26 @@ class SiteController extends \yii\web\Controller {
 						'roles' => ['@'],
 					],
 				],
-				'denyCallback' => function () {
+				'denyCallback' => function() {
 					throw new NotFoundHttpException('Page not found.');
 				}
 			], [
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function () {
+				'etagSeed' => function() {
 					return serialize(file(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico'));
 				},
-				'lastModified' => function () {
+				'lastModified' => function() {
 					return filemtime(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico');
 				},
 				'only' => ['faviconico'],
 			], [
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function (BaseObject $action) {
+				'etagSeed' => function(BaseObject $action) {
 					return serialize([phpversion(), file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
 				},
-				'lastModified' => function (BaseObject $action) {
+				'lastModified' => function(BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
 				},
 				'only' => ['browserconfigxml', 'robotstxt'],

@@ -16,14 +16,14 @@ class TimePicker extends DatePicker {
 	public function init() {
 		parent::init();
 		if (!in_array($this->mode, ['date', 'time', 'datetime']))
-			throw new InvalidConfigException('Unknown mode: "' . $this->mode . '". Use time, datetime or date!');
+			throw new InvalidConfigException('Unknown mode: "'.$this->mode.'". Use time, datetime or date!');
 
 		if ($this->size) {
-			Html::addCssClass($this->options, 'input-' . $this->size);
-			Html::addCssClass($this->containerOptions, 'input-group-' . $this->size);
+			Html::addCssClass($this->options, 'input-'.$this->size);
+			Html::addCssClass($this->containerOptions, 'input-group-'.$this->size);
 		}
 		Html::addCssClass($this->options, 'form-control');
-		Html::addCssClass($this->containerOptions, 'input-group ' . $this->mode);
+		Html::addCssClass($this->containerOptions, 'input-group '.$this->mode);
 	}
 
 	public function run() {
@@ -46,7 +46,7 @@ class TimePicker extends DatePicker {
 	public function registerClientScript() {
 		$view = $this->getView();
 		$language = $this->language ? $this->language : Yii::$app->language;
-		$name = $this->mode . 'picker';
+		$name = $this->mode.'picker';
 
 		$timeAssetBundle = TimePickerAsset::register($view);
 		if ($language !== 'en-US') {

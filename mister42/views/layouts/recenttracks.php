@@ -4,16 +4,16 @@ use yii\bootstrap4\Html;
 use yii\helpers\{Json, Url};
 
 $this->beginContent('@app/views/layouts/main.php');
-$this->registerJs('(function refresh(){$(\'aside .tracks\').load(' . Json::htmlEncode('/user/recenttracks/' . basename(Url::current())) . ');setTimeout(refresh,60000)})();');
+$this->registerJs('(function refresh(){$(\'aside .tracks\').load('.Json::htmlEncode('/user/recenttracks/'.basename(Url::current())).');setTimeout(refresh,60000)})();');
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::tag('div', $content, ['class' => 'col-12 col-lg-8']);
 
 	echo Html::tag('aside',
 		Html::tag('div',
-			Html::tag('div', 'Recently Played Tracks', ['class' => 'card-header']) .
+			Html::tag('div', 'Recently Played Tracks', ['class' => 'card-header']).
 			Html::tag('div', Html::tag('span', 'Loading…', ['class' => 'mx-2']), ['class' => 'tracks'])
-		, ['class' => 'card mb-2']) .
+		, ['class' => 'card mb-2']).
 		Html::tag('div',
 			Item::widget([
 				'body' => WeeklyArtistChart::widget(['profile' => basename(Url::current())]),

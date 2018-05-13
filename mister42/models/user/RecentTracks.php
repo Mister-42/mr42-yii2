@@ -52,7 +52,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 			->one();
 
 		if ($update)
-			self::updateAll(['seen' => time()], 'userid = ' . $userid);
+			self::updateAll(['seen' => time()], 'userid = '.$userid);
 
 		return $lastSeen->seen;
 	}
@@ -64,7 +64,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 				return false;
 
 			$playcount = (int) $response->data['recenttracks']['@attributes']['total'];
-			foreach($response->data['recenttracks']['track'] as $track) {
+			foreach ($response->data['recenttracks']['track'] as $track) {
 				$time = (bool) ArrayHelper::getValue($track, '@attributes.nowplaying', false) ? 0 : (int) strtotime($track['date']);
 				$addTrack = self::findOne(['userid' => $profile->user_id, 'time' => $time]) ?? new RecentTracks();
 				$addTrack->userid = $profile->user_id;

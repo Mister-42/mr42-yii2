@@ -13,8 +13,8 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public function afterFind() {
 		parent::afterFind();
 		$this->track = sprintf('%02d', $this->track);
-		$this->disambiguation = $this->disambiguation ? ' (' . $this->disambiguation . ')' : null;
-		$this->feat = $this->feat ? ' (feat. ' . $this->feat . ')' : null;
+		$this->disambiguation = $this->disambiguation ? ' ('.$this->disambiguation.')' : null;
+		$this->feat = $this->feat ? ' (feat. '.$this->feat.')' : null;
 		$this->wip = (bool) $this->wip;
 		$this->video = $this->video_id && $this->video_ratio ? Video::getEmbed('youtube', $this->video_id, $this->video_ratio) : null;
 	}

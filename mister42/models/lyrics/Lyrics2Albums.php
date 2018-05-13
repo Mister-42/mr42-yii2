@@ -18,7 +18,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function afterFind() {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
-		$this->playlist_id = $this->playlist_id ? 'PL' . $this->playlist_id : null;
+		$this->playlist_id = $this->playlist_id ? 'PL'.$this->playlist_id : null;
 		$this->playlist_embed = $this->playlist_id && $this->playlist_ratio ? Video::getEmbed('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
 		$this->playlist_url = $this->playlist_id ? Video::getUrl('youtube', $this->playlist_id, true) : null;
 		$this->updated = strtotime($this->updated);

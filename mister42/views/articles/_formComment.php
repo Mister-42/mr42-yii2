@@ -39,13 +39,13 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Icon::fieldAddon('comment').'{input}</div> {hint} {error}'
 			])
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
-			->hint('You may use ' . Html::a('Markdown Syntax', Yii::$app->params['shortDomain'] . 'art4', ['target' => '_blank']) . '. HTML is not allowed.');
+			->hint('You may use '.Html::a('Markdown Syntax', Yii::$app->params['shortDomain'].'art4', ['target' => '_blank']).'. HTML is not allowed.');
 
 		if (Yii::$app->user->isGuest)
 			echo Form::captcha($form, $model, ++$tab);
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
 			Html::submitButton('Submit', ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 

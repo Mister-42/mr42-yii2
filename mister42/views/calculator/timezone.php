@@ -18,9 +18,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		if ($flash = Yii::$app->session->getFlash('timezone-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
-				echo Html::tag('div', date('l F j, Y, H:i', strtotime($model->datetime)) . ' in ' . str_replace('_', ' ', $model->source));
+				echo Html::tag('div', date('l F j, Y, H:i', strtotime($model->datetime)).' in '.str_replace('_', ' ', $model->source));
 				echo Html::tag('div', 'equals');
-				echo Html::tag('div', Html::tag('strong', $flash->format('l F j, Y, H:i')) . ' in ' . Html::tag('strong', str_replace('_', ' ', $model->target)));
+				echo Html::tag('div', Html::tag('strong', $flash->format('l F j, Y, H:i')).' in '.Html::tag('strong', str_replace('_', ' ', $model->target)));
 			Alert::end();
 		}
 
@@ -52,7 +52,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::endTag('div');
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
 			Html::submitButton('Convert', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 

@@ -10,13 +10,13 @@ $this->params['breadcrumbs'][] = $data[0]->artist->name;
 echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 	echo Html::tag('div',
 		Html::tag('div',
-			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']) .
+			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']).
 			Html::tag('div',
 				($data[0]->artist->buy
-					? Html::a(Icon::show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => 'Buy music of ' . $data[0]->artist->name])
-					: '') .
+					? Html::a(Icon::show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => 'Buy music of '.$data[0]->artist->name])
+					: '').
 				($data[0]->artist->website
-					? Html::a(Icon::show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => 'Website of ' . $data[0]->artist->name])
+					? Html::a(Icon::show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => 'Website of '.$data[0]->artist->name])
 					: '')
 			, ['class' => 'float-right'])
 		, ['class' => 'col'])
@@ -27,14 +27,14 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			echo Html::beginTag('div', ['class' => ' col mb-2']);
 				echo Html::beginTag('div', ['class' => 'card']);
 					echo Html::tag('div',
-						Html::tag('h4', "{$album->year} · " . ((Yii::$app->user->identity->isAdmin || $album->active) && $album->tracks
+						Html::tag('h4', "{$album->year} · ".((Yii::$app->user->identity->isAdmin || $album->active) && $album->tracks
 							? Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
 							: $album->name
-						), ['class' => 'float-left']) .
+						), ['class' => 'float-left']).
 						Html::tag('div',
 							($album->playlist_url
 								? Html::a(Icon::show('youtube', ['prefix' => 'fab fa-']).' Play', $album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
-								: '') .
+								: '').
 							($album->active
 								? Html::a(Icon::show('file-pdf').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-light ml-1'])
 								: '')
@@ -52,7 +52,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 									$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->lyricid || $track->video)
 										? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 										: $track->name;
-									echo implode(' · ', [$track->track, $track->name]) . $track->disambiguation . $track->feat;
+									echo implode(' · ', [$track->track, $track->name]).$track->disambiguation.$track->feat;
 									if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video)
 										echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
 								echo Html::endTag('div');
@@ -66,7 +66,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 
 						if ($album->image && count($album->tracks) > 0)
 							echo Lightbox::widget([
-								'imageOptions' => ['style' => 'background-color:' . $album->image_color],
+								'imageOptions' => ['style' => 'background-color:'.$album->image_color],
 								'items' => [
 									[
 										'thumb'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],

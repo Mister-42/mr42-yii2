@@ -92,7 +92,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 				'author' => $name,
 				'created' => $model->created,
 				'footer' => $tags.': '.$model->tags.'|Author: '.$name.'|Page {PAGENO} of {nb}',
-				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, Yii::$app->params['shortDomain']."art{$model->id}").'|' . date('D, j M Y', $model->updated),
+				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, Yii::$app->params['shortDomain']."art{$model->id}").'|'.date('D, j M Y', $model->updated),
 				'keywords' => $model->tags,
 				'subject' => $model->title,
 				'title' => $model->title,

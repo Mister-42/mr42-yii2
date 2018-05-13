@@ -42,13 +42,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->hint('If you enter your email address the favicon will be mailed to that address.');
 
 		echo $form->field($model, 'sourceImage', [
-				'template' => Html::tag('label', $model->getAttributeLabel('sourceImage'), ['for' => 'sourceFile']) . '<div class="input-group">'.Icon::fieldAddon('image').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
+				'template' => Html::tag('label', $model->getAttributeLabel('sourceImage'), ['for' => 'sourceFile']).'<div class="input-group">'.Icon::fieldAddon('image').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
 			])->fileInput(['accept' => 'image/*', 'class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
-			->hint('For best result upload a square image. Your icon will be generated in ' . Inflector::sentence($dimensions) . ' pixels.')
+			->hint('For best result upload a square image. Your icon will be generated in '.Inflector::sentence($dimensions).' pixels.')
 			->label('Select an image', ['class' => 'custom-file-label text-truncate']);
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab+2]) .
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
 			Html::submitButton('Convert Image', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 

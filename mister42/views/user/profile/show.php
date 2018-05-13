@@ -14,7 +14,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::beginTag('div', ['class' => 'col text-truncate']);
 				if (!empty($profile->location))
-					echo Icon::show('map-marker', ['class' => 'fa-fw text-muted mr-1']) . $profile->location;
+					echo Icon::show('map-marker', ['class' => 'fa-fw text-muted mr-1']).$profile->location;
 			echo Html::endTag('div');
 			echo Html::beginTag('div', ['class' => 'col text-truncate text-right']);
 				if (!empty($profile->location)) {
@@ -27,7 +27,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo Html::beginTag('div', ['class' => 'col text-truncate']);
 				if (!empty($profile->website))
-					echo Icon::show('globe', ['class' => 'fa-fw text-muted mr-1']) . Html::a($profile->website, $profile->website);
+					echo Icon::show('globe', ['class' => 'fa-fw text-muted mr-1']).Html::a($profile->website, $profile->website);
 			echo Html::endTag('div');
 			echo Html::beginTag('div', ['class' => 'col text-truncate text-right']);
 				if ($profile->user->created_at != $profile->user->updated_at) {

@@ -25,6 +25,6 @@ class Bookmark extends \app\models\tools\Qr {
 	public function generateQr(): bool {
 		$data[] = $this->getDataOrOmit('TITLE:', $this->title, ';');
 		$data[] = $this->getDataOrOmit('URL:', $this->url, ';');
-		return parent::generate('MEBKM:' . implode($data) . ';');
+		return parent::generate('MEBKM:'.implode($data).';');
 	}
 }

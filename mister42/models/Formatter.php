@@ -23,7 +23,7 @@ class Formatter extends \yii\i18n\Formatter {
 		$cachefile = Yii::getAlias("@runtime/assets/js/{$file}");
 
 		if (!file_exists($filename))
-			return $file . ' does not exist.';
+			return "{$file} does not exist.";
 
 		if (!file_exists($cachefile) || filemtime($cachefile) < filemtime($filename)) {
 			FileHelper::createDirectory(Yii::getAlias('@runtime/assets/js'));
@@ -42,7 +42,7 @@ class Formatter extends \yii\i18n\Formatter {
 		$html = preg_match('/<img.*? class="/', $html)
 			? $html = preg_replace('/(<img.*? class=" .*?)(".*?\="">)/', '$1 img-fluid $2', $html)
 			: $html = preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid" $2', $html);
-		$html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html);
+		$html = preg_replace('/(width|height)=\"\d*\"\s/', "", $html);
 		return $html;
 	}
 

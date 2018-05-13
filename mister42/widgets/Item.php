@@ -19,7 +19,7 @@ class Item extends \yii\bootstrap4\Widget {
 		endforeach;
 
 		return Html::tag('div',
-			($this->header ? Html::tag('div', $this->header, ['class' => 'card-header']) : '') .
+			($this->header ? Html::tag('div', $this->header, ['class' => 'card-header']) : '').
 			$this->body
 		, ArrayHelper::merge(['class' => implode(' ', $class)], ArrayHelper::map($option, 'name', 'value')));
 	}
