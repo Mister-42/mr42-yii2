@@ -6,7 +6,7 @@ use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
 class RecentTracks extends \yii\db\ActiveRecord {
-	static $limit = 20;
+	private static $limit = 20;
 
 	public function init() {
 		self::$limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : self::$limit;

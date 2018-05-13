@@ -80,7 +80,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		return $this->author === Yii::$app->user->id;
 	}
 
-	public function buildPdf($model, string $html) {
+	public static function buildPdf($model, string $html) {
 		$user = new Profile();
 		$profile = $user->find($model->user->id)->one();
 		$name = empty($profile->name) ? $model->user->username : $profile->name;
