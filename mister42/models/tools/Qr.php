@@ -54,7 +54,7 @@ class Qr extends \yii\base\Model {
 			$form->field($this, 'size', [
 				'options' => ['class' => 'form-group col-md-6'],
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt').'{input}</div>{error}',
-			])->input('number', ['tabindex' => ++$tab]).
+			])->input('number', ['tabindex' => ++$tab]) .
 			$form->field($this, 'recipient', [
 				'options' => ['class' => 'form-group col-md-6'],
 				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',
