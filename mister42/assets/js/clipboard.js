@@ -2,7 +2,7 @@ $('.clipboard-js-init').on('mouseleave', function() {
 	$(this).removeClass('btn-success').addClass('btn-primary').tooltip('hide').attr('data-original-title', 'Copy to Clipboard');
 });
 
-cb = new Clipboard('.clipboard-js-init');
+var cb = new ClipboardJS('.clipboard-js-init');
 
 cb.on('success', function(e) {
 	e.clearSelection();

@@ -20,13 +20,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'email', [
 			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{error}',
-		])->input('email', ['tabindex' => 1]);
+		])->input('email', ['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'username', [
 			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
-		])->textInput(['tabindex' => 2]);
+		])->textInput(['tabindex' => ++$tab]);
 
-		echo Html::submitButton(Yii::t('usuario', 'Continue'), ['class' => 'btn btn-success', 'tabindex' => 3]);
+		echo Html::submitButton(Yii::t('usuario', 'Continue'), ['class' => 'btn btn-success', 'tabindex' => ++$tab]);
 
 		ActiveForm::end();
 

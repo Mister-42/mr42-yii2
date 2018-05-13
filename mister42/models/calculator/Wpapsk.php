@@ -9,8 +9,8 @@ class Wpapsk extends \yii\base\Model {
 	public function rules(): array {
 		return [
 			[['ssid', 'pass'], 'required'],
-			['ssid', 'string', 'max'=>32],
-			['pass', 'string', 'min'=>8, 'max'=>63],
+			['ssid', 'string', 'max' => 32],
+			['pass', 'string', 'min' => 8, 'max' => 63],
 		];
 	}
 

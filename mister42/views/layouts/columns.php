@@ -37,7 +37,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 	if ($isHome)
 		echo Html::tag('aside', $this->blocks['widgets'], ['class' => 'col-3 d-none d-lg-block']);
 	echo Html::beginTag('aside', ['class' => 'col-4 col-lg-3 d-none d-md-block']);
-		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'method' => 'get', 'options' => ['role' => 'search']]);
+		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'id' => 'search', 'method' => 'get', 'options' => ['role' => 'search']]);
 		echo $form->field($search, 'search', [
 				'options' => ['class' => 'form-group mb-2'],
 				'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('div', Html::submitButton(Icon::show('search'), ['class' => 'btn btn-outline-primary']), ['class' => 'input-group-append']) . "</div>",

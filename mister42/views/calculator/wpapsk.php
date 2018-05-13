@@ -24,7 +24,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h1', Html::tag('abbr', 'WPA', ['title' => 'Wifi Protected Access']) . '-' . Html::tag('abbr', 'PSK', ['title' => 'Pre-Shared Key']) . ' Calculator');
 		echo Html::beginTag('div', ['class' => 'alert alert-info']);
 			echo Html::tag('div', 'This WPA-PSK calculator provides an easy way to convert a ' . Html::tag('abbr', 'SSID', ['title' => 'Service Set Identifier']) . ' and WPA Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.');
-			echo Html::tag('div', 'Type or paste in your SSID and WPA Passphrase below. Click \'Calculate PSK\' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <strong>None</strong> of this information will be sent over the network.');
+			echo Html::tag('div', 'Type or paste in your SSID and WPA Passphrase below. Click ' . Html::tag('span', 'Calculate', ['class' => 'font-italic']) . ' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. ' . Html::tag('b', 'None') . ' of this information will be sent over the network.');
 		echo Html::endTag('div');
 
 		$form = ActiveForm::begin([
@@ -60,8 +60,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		, ['class' => 'd-none form-group current-progress']);
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'id' => 'disable', 'tabindex' => $tab+2, 'onclick' => 'reset_psk()']) .
-			Html::button('Calculate PSK', ['class' => 'btn btn-primary ml-1', 'id' => 'disable', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1 suppress', 'tabindex' => $tab+2, 'onclick' => 'reset_psk()']) .
+			Html::button('Calculate', ['class' => 'btn btn-primary ml-1 suppress', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();

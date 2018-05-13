@@ -17,9 +17,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'email', [
 			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>',
-		])->passwordInput(['autofocus' => true, 'tabindex' => 1]);
+		])->passwordInput(['autofocus' => true, 'tabindex' => ++$tab]);
 
-		echo Html::submitButton(Yii::t('usuario', 'Continue'), ['class' => 'btn btn-primary btn-block', 'autofocus' => 2]);
+		echo Html::submitButton(Yii::t('usuario', 'Continue'), ['class' => 'btn btn-primary btn-block', 'tabindex' => ++$tab]);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

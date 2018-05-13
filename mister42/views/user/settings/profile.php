@@ -29,8 +29,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'horizontalCssClasses' => [
 					'error' => '',
 					'hint' => '',
-					'label' => 'col-3',
-					'wrapper' => 'col-9',
+					'label' => 'col-md-3',
+					'wrapper' => 'col-md-9',
 				],
 			],
 			'layout' => 'horizontal',
@@ -47,7 +47,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'lastfm', [
 			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('lastfm', ['prefix' => 'fab fa-']).'{input}</div>',
-		])->textInput(['tabindex' => 3]);
+		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'location', [
 			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('map-marker').'{input}</div>',

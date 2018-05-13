@@ -3,31 +3,34 @@ use yii\bootstrap4\{ActiveForm, Html};
 
 $this->beginContent('@Da/User/resources/views/admin/update.php', ['user' => $user]);
 
-$form = ActiveForm::begin(
-	[
-		'layout' => 'horizontal',
-		'enableAjaxValidation' => true,
-		'enableClientValidation' => false,
-		'fieldConfig' => [
-			'horizontalCssClasses' => [
-				'wrapper' => 'col-sm-9',
-			],
+$form = ActiveForm::begin([
+	'layout' => 'horizontal',
+	'enableAjaxValidation' => true,
+	'enableClientValidation' => false,
+	'fieldConfig' => [
+		'horizontalCssClasses' => [
+			'label' => 'col-md-3',
+			'wrapper' => 'col-md-9',
 		],
-	]
-); ?>
+	],
+]);
 
-<?= $form->field($profile, 'name') ?>
-<?= $form->field($profile, 'website') ?>
-<?= $form->field($profile, 'lastfm') ?>
-<?= $form->field($profile, 'location') ?>
-<?= $form->field($profile, 'bio')->textarea(['rows' => 8, 'tabindex' => 6]) ?>
+echo $form->field($profile, 'name')->textInput(['tabindex' => ++$tab]);
 
-<div class="form-group">
-	<div class="col-md-12 col-lg-9 mx-auto">
-		<?= Html::submitButton(Yii::t('usuario', 'Update'), ['class' => 'btn btn-block btn-success']) ?>
-	</div>
-</div>
+echo $form->field($profile, 'website')->textInput(['tabindex' => ++$tab]);
 
-<?php ActiveForm::end();
+echo $form->field($profile, 'lastfm')->textInput(['tabindex' => ++$tab]);
+
+echo $form->field($profile, 'location')->textInput(['tabindex' => ++$tab]);
+
+echo $form->field($profile, 'bio')->textarea(['rows' => 8, 'tabindex' => ++$tab]);
+
+echo Html::tag('div',
+	Html::tag('div',
+		Html::submitButton(Yii::t('usuario', 'Update'), ['class' => 'btn btn-block btn-success', 'tabindex' => ++$tab])
+	, ['class' => 'col-md-9 ml-auto btn-toolbar float-right'])
+, ['class' => 'form-group row']);
+
+ActiveForm::end();
 
 $this->endContent();

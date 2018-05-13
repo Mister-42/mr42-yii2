@@ -23,12 +23,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'login', [
 			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
-		])->textInput(['autofocus' => true, 'class' => 'form-control', 'tabindex' => ++$tab]);
+		])->textInput(['autofocus' => true, 'tabindex' => ++$tab]);
 
 		echo $form->field($model, 'password', [
 			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
-		])->passwordInput(['class' => 'form-control', 'tabindex' => ++$tab])
-		->label(Yii::t('usuario', 'Password') . ($module->allowPasswordRecovery ? ' (' . Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request'], ['tabindex' => '5']) . ')' : ''));
+		])->passwordInput(['tabindex' => ++$tab])
+		->label(Yii::t('usuario', 'Password') . ($module->allowPasswordRecovery ? ' (' . Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request']) . ')' : ''));
 
 		echo $form->field($model, 'rememberMe')->checkBox(['tabindex' => ++$tab]);
 

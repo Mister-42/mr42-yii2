@@ -19,7 +19,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>',
 		])->textInput(['autofocus' => true, 'tabindex' => ++$tab]);
 
-		echo Html::submitButton(Yii::t('usuario', 'Continue'), ['class' => 'btn btn-primary btn-block', 'autofocus' => ++$tab]);
+		echo Html::submitButton(Yii::t('usuario', 'Continue'), ['class' => 'btn btn-primary btn-block', 'tabindex' => ++$tab]);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

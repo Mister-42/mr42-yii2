@@ -1,5 +1,5 @@
 function print_psk(key) {
-	$('#wpapsk #disable').removeAttr('disabled');
+	$('#wpapsk .suppress').removeAttr('disabled');
 	$('.current-progress, .field-wpapsk-psk').toggleClass('d-none');
 	$('.progress-bar').width('');
 	$('#wpapsk-psk').val(key);
@@ -19,7 +19,7 @@ function cal_psk() {
 		return false;
 	}
 
-	$('#wpapsk #disable').attr('disabled', true);
+	$('#wpapsk .suppress').attr('disabled', true);
 	$('.field-wpapsk-psk').addClass('d-none');
 	$('.current-progress').removeClass('d-none');
 	var pskgen = new PBKDF2($('#wpapsk-pass').val(), $('#wpapsk-ssid').val(), 4096, 32);

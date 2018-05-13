@@ -13,7 +13,7 @@ class Icon {
 
 		$fa = file_get_contents(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"));
 		$svg = simplexml_load_string($fa, 'SimpleXMLElement');
-		list($width, $height) = StringHelper::explode(str_replace('0', '', $svg->attributes()->viewBox), ' ', true, true);
+		list($width, $height) = StringHelper::explode($svg->attributes()->viewBox, ' ', function($e) { return ltrim($e, '0'); }, true);
 
 		return Html::tag('svg',
 			Html::tag('path', null, ['d' => $svg->path->attributes()->d, 'fill' => 'currentColor'])
