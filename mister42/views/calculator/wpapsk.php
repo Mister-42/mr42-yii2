@@ -52,14 +52,14 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->textInput(['placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
 
 		echo Html::tag('div',
-			Html::tag('label', 'Progress') .
+			Html::tag('label', 'Progress').
 			Progress::widget([
 				'options' => ['class' => 'progress-bar progress-bar-striped progress-bar-animated']
 			])
 		, ['class' => 'd-none form-group current-progress']);
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1 suppress', 'tabindex' => $tab + 2, 'onclick' => 'reset_psk()']) .
+			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1 suppress', 'tabindex' => $tab + 2, 'onclick' => 'reset_psk()']).
 			Html::button('Calculate', ['class' => 'btn btn-primary ml-1 suppress', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
