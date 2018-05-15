@@ -43,8 +43,8 @@ class Formatter extends \yii\i18n\Formatter {
 
 	private static function addImageFluidClass($html) {
 		$html = preg_match('/<img.*? class="/', $html)
-			? $html = preg_replace('/(<img.*? class=" .*?)(".*?\="">)/', '$1 img-fluid $2', $html)
-			: $html = preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid" $2', $html);
+			? $html = preg_replace("/<img (.*?) class=\"(.*?)\"(.*?)>/i", '<img $1 class="$2 img-fluid"$3>', $html)
+			: $html = preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid"$2', $html);
 		$html = preg_replace('/(width|height)=\"\d*\"\s/', "", $html);
 		return $html;
 	}

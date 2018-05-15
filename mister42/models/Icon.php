@@ -1,5 +1,6 @@
 <?php
 namespace app\models;
+use DOMDocument;
 use Yii;
 use yii\bootstrap4\Html;
 use yii\helpers\{ArrayHelper, StringHelper};
@@ -12,21 +13,20 @@ class Icon {
 			return static::show('question-circle', $options);
 		endif;
 
-		$fa = file_get_contents(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"));
-		$svg = simplexml_load_string($fa, 'SimpleXMLElement');
-		list($width, $height) = StringHelper::explode($svg->attributes()->viewBox, ' ', function($e) { return ltrim($e, '0'); }, true);
-
-		return Html::tag('svg',
-			Html::tag('path', null, ['d' => $svg->path->attributes()->d, 'fill' => 'currentColor'])
-		, [
-			'aria-hidden' => 'true',
-			'class' => trim(implode(' ', ['fa', 'w-'.ceil($width / $height * 16), ArrayHelper::getValue($options, 'class')])),
-			'data-icon' => $name,
-			'data-prefix' => (explode(' ', $classPrefix))[0],
-			'role' => 'img',
-			'viewbox' => $svg->attributes()->viewBox,
-			'xmlns' => 'http://www.w3.org/2000/svg'
-		]);
+		$doc = new DOMDocument();
+		$doc->load(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"));
+		foreach($doc->getElementsByTagName('svg') as $svg) :
+			$svg->setAttribute('aria-hidden', 'true');
+			list($width, $height) = StringHelper::explode($svg->getAttribute('viewBox'), ' ', function($e) { return ltrim($e, '0'); }, true);
+			$svg->setAttribute('class', trim(implode(' ', ['fa', 'w-'.ceil($width / $height * 16), ArrayHelper::getValue($options, 'class')])));
+			$svg->setAttribute('data-icon', $name);
+			$svg->setAttribute('data-prefix', (explode(' ', $classPrefix))[0]);
+			$svg->setAttribute('role', 'img');
+		endforeach;
+		foreach($doc->getElementsByTagName('path') as $path) :
+			$path->setAttribute('fill', 'currentColor');
+		endforeach;
+		return $doc->saveXML($doc->documentElement);
 	}
 
 	public static function fieldAddon(string $name, array $options = []): string {
