@@ -41,6 +41,7 @@ class Barcode extends \yii\base\Model {
 		imagefill($image, 0, 0, imagecolorallocate($image, 255, 255, 255));
 		$fgCol = imagecolorallocate($image, 0, 0, 0);
 
+		$location = 0;
 		foreach ($data['bcode'] as $value) :
 			$barWidth = (int) round($value['w'] * $this->barWidth);
 			$barHeight = (int) round($value['h'] * $this->height / $data['maxh']);
@@ -63,7 +64,7 @@ class Barcode extends \yii\base\Model {
 		return true;
 	}
 
-	public function getTypes(bool $rules = false): array {
+	public static function getTypes(bool $rules = false): array {
 		foreach (require(Yii::getAlias('@app/data/barcodeTypes.php')) as $name => $value) :
 			$list[$value] = $rules ? $value : $name;
 		endforeach;

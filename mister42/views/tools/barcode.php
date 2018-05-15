@@ -24,6 +24,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		endif;
 
 		$form = ActiveForm::begin();
+		$tab = 0;
 
 		echo $form->field($model, 'type', [
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('th-list').'{input}</div>{error}',

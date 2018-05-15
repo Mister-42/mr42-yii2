@@ -4,7 +4,7 @@ use Yii;
 use yii\bootstrap4\Html;
 
 class Video {
-	public function getEmbed(string $source, string $id, string $ratio, bool $isPlaylist = false): string {
+	public static function getEmbed(string $source, string $id, string $ratio, bool $isPlaylist = false): string {
 		if ($source === 'vimeo') :
 			$src = "https://player.vimeo.com/video/{$id}?".http_build_query(['byline' => 0, 'portrait' => 0, 'title' => 0]);
 		elseif ($source === 'youtube') :
@@ -18,7 +18,7 @@ class Video {
 		, ['class' => "embed-responsive embed-responsive-{$ratio}"]);
 	}
 
-	public function getUrl(string $source, string $id, bool $isPlaylist = false): string {
+	public static function getUrl(string $source, string $id, bool $isPlaylist = false): string {
 		if ($source === 'vimeo') :
 			return $isPlaylist ? "https://vimeo.com/album/{$id}" : "https://vimeo.com/{$id}";
 		elseif ($source === 'youtube') :

@@ -18,7 +18,6 @@ class IconTest extends TestCase {
 	}
 
 	public function testFieldAddon() {
-		$field = '<div class="input-group-prepend"><div class="input-group-text">'.$this->solidIcon.'</div></div>';
-		$this->assertEquals($field, Icon::fieldAddon('rss'));
+		$this->assertEquals('<div class="input-group-prepend"><div class="input-group-text">'.$this->solidIcon.'</div></div>', Icon::fieldAddon('rss'));
 	}
 }

@@ -6,8 +6,8 @@ use GK\JavascriptPacker;
 use yii\helpers\{FileHelper, Markdown};
 
 class Formatter extends \yii\i18n\Formatter {
-	public function cleanInput(string $data, string $markdown = 'original', bool $allowHtml = false): string {
-		$data = $allowHtml ? parent::asRaw($data) : parent::asHtml($data, ['HTML.Allowed' => '']);
+	public static function cleanInput(string $data, string $markdown = 'original', bool $allowHtml = false): string {
+		$data = $allowHtml ? Yii::$app->formatter->asRaw($data) : Yii::$app->formatter->asHtml($data, ['HTML.Allowed' => '']);
 		$data = preg_replace_callback_array([
 			'/(vimeo):(()?[[:digit:]]+):(21by9|16by9|4by3|1by1)/U'				=> 'static::getVideo',
 			'/(youtube):((PL)?[[:ascii:]]{11,32}):(21by9|16by9|4by3|1by1)/U'	=> 'static::getVideo',
@@ -19,7 +19,7 @@ class Formatter extends \yii\i18n\Formatter {
 		return trim($data);
 	}
 
-	public function jspack(string $file, array $replace = []): string {
+	public static function jspack(string $file, array $replace = []): string {
 		$filename = Yii::getAlias("@app/assets/js/{$file}");
 		$cachefile = Yii::getAlias("@runtime/assets/js/{$file}");
 
@@ -43,8 +43,8 @@ class Formatter extends \yii\i18n\Formatter {
 
 	private static function addImageFluidClass($html) {
 		$html = preg_match('/<img.*? class="/', $html)
-			? $html = preg_replace("/<img (.*?) class=\"(.*?)\"(.*?)>/i", '<img $1 class="$2 img-fluid"$3>', $html)
-			: $html = preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid"$2', $html);
+			? preg_replace("/<img (.*?) class=\"(.*?)\"(.*?)>/i", '<img $1 class="$2 img-fluid"$3>', $html)
+			: preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid"$2', $html);
 		$html = preg_replace('/(width|height)=\"\d*\"\s/', "", $html);
 		return $html;
 	}

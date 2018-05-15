@@ -31,6 +31,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	}
 
 	public static function lastUpdate($data = null): int {
+		$max = 0;
 		$data = $data ?? self::artistsList();
 		foreach ($data as $item) :
 			$max = max($max, $item->updated);
@@ -46,7 +47,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	public static function find() {
 		return parent::find()
 			->onCondition(
-				php_sapi_name() === 'cli' || (Yii::$app->user->identity->isAdmin && Yii::$app->controller->action->id !== 'sitemap')
+				php_sapi_name() === 'cli' || Yii::$app->user->identity->isAdmin
 					? ['or', [self::tableName().'.`active`' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
 					: [self::tableName().'.`active`' => Self::STATUS_ACTIVE]
 			);

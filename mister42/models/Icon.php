@@ -15,7 +15,7 @@ class Icon {
 
 		$doc = new DOMDocument();
 		$doc->load(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"));
-		foreach($doc->getElementsByTagName('svg') as $svg) :
+		foreach ($doc->getElementsByTagName('svg') as $svg) :
 			$svg->setAttribute('aria-hidden', 'true');
 			list($width, $height) = StringHelper::explode($svg->getAttribute('viewBox'), ' ', function($e) { return ltrim($e, '0'); }, true);
 			$svg->setAttribute('class', trim(implode(' ', ['fa', 'w-'.ceil($width / $height * 16), ArrayHelper::getValue($options, 'class')])));
@@ -23,7 +23,7 @@ class Icon {
 			$svg->setAttribute('data-prefix', (explode(' ', $classPrefix))[0]);
 			$svg->setAttribute('role', 'img');
 		endforeach;
-		foreach($doc->getElementsByTagName('path') as $path) :
+		foreach ($doc->getElementsByTagName('path') as $path) :
 			$path->setAttribute('fill', 'currentColor');
 		endforeach;
 		return $doc->saveXML($doc->documentElement);

@@ -21,6 +21,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		endif;
 
 		$form = ActiveForm::begin();
+		$tab = 0;
 
 		echo Html::beginTag('div', ['class' => 'row']);
 			foreach (['fromDate', 'toDate'] as $field) :

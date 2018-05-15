@@ -9,7 +9,7 @@ echo Html::tag('div', 'This website is merely a hobby project. Some parts are cr
 
 echo Html::beginTag('ul', ['class' => 'list-unstyled']);
 foreach (Menu::getItemList() as $menu) :
-	if ($menu['items']) :
+	if (isset($menu['items'])) :
 		foreach ($menu['items'] as $submenu) :
 			if (isset($submenu['url']) && (!isset($submenu['visible']) || $submenu['visible'])) :
 							$submenuItems[] = isset($submenu['url'])

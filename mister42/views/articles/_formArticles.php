@@ -11,6 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 echo Html::tag('h1', $this->title);
 
 $form = ActiveForm::begin();
+$tab = 0;
 
 echo $form->field($model, 'title')->textInput(['maxlength' => 255, 'tabindex' => ++$tab]);
 

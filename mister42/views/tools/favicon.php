@@ -37,6 +37,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		endif;
 
 		$form = ActiveForm::begin();
+		$tab = 0;
 
 		echo $form->field($model, 'recipient', [
 				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',

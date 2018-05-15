@@ -114,7 +114,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	public static function find() {
 		return parent::find()
 			->onCondition(
-				php_sapi_name() === 'cli' || (Yii::$app->user->identity->isAdmin && Yii::$app->controller->action->id !== 'sitemap')
+				php_sapi_name() === 'cli' || Yii::$app->user->identity->isAdmin
 					? ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
 					: ['active' => Self::STATUS_ACTIVE]
 			);

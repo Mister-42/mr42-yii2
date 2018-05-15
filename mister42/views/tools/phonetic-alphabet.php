@@ -17,6 +17,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		endif;
 
 		$form = ActiveForm::begin();
+		$tab = 0;
 
 		echo $form->field($model, 'text', [
 				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('comment').'{input}</div>{error}',

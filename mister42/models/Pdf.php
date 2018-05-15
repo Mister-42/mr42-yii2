@@ -31,7 +31,7 @@ class Pdf {
 		return $filename;
 	}
 
-	private function replaceLine(string $filename, string $search, string $replace) {
+	private static function replaceLine(string $filename, string $search, string $replace) {
 		$reading = fopen($filename, 'r');
 		$writing = fopen($filename.'.tmp', 'w');
 

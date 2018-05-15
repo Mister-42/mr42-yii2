@@ -26,10 +26,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::tag('div', 'Type or paste in your SSID and WPA Passphrase below. Click '.Html::tag('span', 'Calculate', ['class' => 'font-italic']).' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. '.Html::tag('b', 'None').' of this information will be sent over the network.');
 		echo Html::endTag('div');
 
-		$form = ActiveForm::begin([
-			'action' => false,
-			'id' => 'wpapsk',
-		]);
+		$form = ActiveForm::begin(['action' => false, 'id' => 'wpapsk']);
+		$tab = 0;
 
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'ssid', [

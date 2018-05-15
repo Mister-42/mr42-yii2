@@ -56,18 +56,19 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->all();
 	}
 
-	public function lastUpdate($artist, $data = null) {
+	public static function lastUpdate($artist, $data = null) {
 		$data = $data ?? self::albumsList($artist);
+		$max = 0;
 		foreach ($data as $item) :
 			$max = max($max, $item->updated);
 			foreach ($item->tracks as $track) :
-				$max = max($max, $track->lyrics->updated);
+				$max = max($max, $track->lyrics->updated ?? 0);
 			endforeach;
 		endforeach;
 		return $max;
 	}
 
-	public function buildPdf($album, $html): string {
+	public static function buildPdf($album, $html): string {
 		$pdf = new Pdf();
 		return $pdf->create(
 			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
@@ -123,7 +124,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public static function find() {
 		return parent::find()
 			->onCondition(
-				php_sapi_name() === 'cli' || (Yii::$app->user->identity->isAdmin && Yii::$app->controller->action->id !== 'sitemap')
+				php_sapi_name() === 'cli' || Yii::$app->user->identity->isAdmin
 					? ['or', [self::tableName().'.`active`' => [Lyrics1Artists::STATUS_INACTIVE, Lyrics1Artists::STATUS_ACTIVE]]]
 					: [self::tableName().'.`active`' => Lyrics1Artists::STATUS_ACTIVE]
 			);

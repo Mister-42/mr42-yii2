@@ -25,6 +25,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		endif;
 
 		$form = ActiveForm::begin();
+		$tab = 0;
 
 		foreach (['source', 'target'] as $field) :
 			echo Html::beginTag('div', ['class' => 'row']);

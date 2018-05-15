@@ -19,6 +19,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::tag('div', 'If you have inquiries or other questions, please fill out the following form to contact '.Yii::$app->name.'. Thank you.', ['class' => 'alert alert-info']);
 
 			$form = ActiveForm::begin(['options' => ['data-pjax' => '']]);
+			$tab = 0;
 
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [

@@ -20,6 +20,7 @@ class Feed extends Widget {
 	}
 
 	private function renderFeed(array $items, int $limit): string {
+		$count = 0;
 		foreach ($items as $item) :
 			$feed[] = $item['title'] === $item['description'] || empty($item['description'])
 				? Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link']), ['class' => 'list-group-item text-truncate'])

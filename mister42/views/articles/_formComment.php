@@ -11,6 +11,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 	echo Html::tag('h3', 'Leave a Comment');
 
 	$form = ActiveForm::begin(['id' => 'comment-form', 'options' => ['data-pjax' => '']]);
+	$tab = 0;
 
 		if (Yii::$app->user->isGuest) :
 			echo '<div class="row">';

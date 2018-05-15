@@ -61,7 +61,7 @@ echo Html::tag('main',
 		'activeItemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item active']),
 		'homeLink' => ['label' => Yii::$app->name, 'url' => Yii::$app->homeUrl],
 		'itemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item']),
-		'links' => $this->params['breadcrumbs'],
+		'links' => $this->params['breadcrumbs'] ?? null,
 	]).
 	$content
 , ['class' => 'container position-relative']);

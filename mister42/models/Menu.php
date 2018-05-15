@@ -4,7 +4,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 class Menu {
-	public function getItemList(): array {
+	public static function getItemList(): array {
 		$menuItems = require(Yii::getAlias('@app/data/menu.php'));
 
 		if (Yii::$app->controller->action->id === 'sitemap') :
@@ -14,7 +14,7 @@ class Menu {
 		return $menuItems;
 	}
 
-	public function getUrlList($items = null): array {
+	public static function getUrlList($items = null): array {
 		foreach ($items ?? self::getItemList() as $item) :
 			if (!is_array($item) || ArrayHelper::keyExists('visible', $item)) :
 				continue;

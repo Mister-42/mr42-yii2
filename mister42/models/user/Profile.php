@@ -33,7 +33,7 @@ class Profile extends \Da\User\Model\Profile {
 		return true;
 	}
 
-	public function show($user) {
+	public static function show($user) {
 		$replace = ['%age%' => (new DateTime())->diff(new DateTime($user->birthday))->y];
 		$user->bio = Yii::$app->formatter->cleanInput(strtr($user->bio, $replace), 'gfm-comment');
 		return empty($user->bio) ? false : $user->bio;
