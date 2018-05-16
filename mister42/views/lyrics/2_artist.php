@@ -27,7 +27,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			echo Html::beginTag('div', ['class' => ' col mb-2']);
 				echo Html::beginTag('div', ['class' => 'card']);
 					echo Html::tag('div',
-						Html::tag('h4', "{$album->year} · ".((Yii::$app->user->identity->isAdmin || $album->active) && $album->tracks
+						Html::tag('h4', "{$album->year} · ".($album->active && $album->tracks
 							? Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
 							: $album->name
 						), ['class' => 'float-left']).
@@ -50,11 +50,11 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 								endif;
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
-									$track->name = (Yii::$app->user->identity->isAdmin || $album->active) && ($track->lyricid || $track->video)
+									$track->name = $album->active && ($track->lyricid || $track->video)
 										? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name]).$track->disambiguation.$track->feat;
-									if ((Yii::$app->user->identity->isAdmin || $album->active) && $track->video) :
+									if ($album->active && $track->video) :
 										echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
 									endif;
 								echo Html::endTag('div');

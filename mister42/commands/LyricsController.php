@@ -178,7 +178,7 @@ class LyricsController extends Controller {
 		return self::EXIT_CODE_NORMAL;
 	}
 
-	private function getAverageImageColor(string $image): string {
+	private static function getAverageImageColor(string $image): string {
 		$i = imagecreatefromstring($image);
 		list($width, $height) = getimagesizefromstring($image);
 		for ($x = 0; $x < $width; $x++) :

@@ -10,10 +10,14 @@ class FormatterTest extends TestCase {
 
 	public function testFormatter() {
 		$this->assertEquals('<p>test</p>', Formatter::cleanInput('test'));
-		$this->assertEquals('<p> test</p>', Formatter::cleanInput(' test'));
+		$this->assertEquals('<p>test</p>', Formatter::cleanInput(' test'));
+		$this->assertEquals('<p>test</p>', Formatter::cleanInput('test '));
 		$this->assertEquals('<p> Test</p>', Formatter::cleanInput('<img src="test.png"> Test'));
 		$this->assertEquals('<p><img src="test.png" class="img-fluid">Test</p>', Formatter::cleanInput('<img src="test.png">Test', 'original', true));
 		$this->assertEquals('<p><img src="test.png" class="img-fluid">Test</p>', Formatter::cleanInput('<img src="test.png" width="1">Test', 'original', true));
+		$this->assertEquals('<p><img src="test.png" class="img-fluid">Test</p>', Formatter::cleanInput('<img src="test.png" height="1">Test', 'original', true));
+		$this->assertEquals('<p><img src="test.png" class="img-fluid">Test</p>', Formatter::cleanInput('<img src="test.png" width="1" height="1">Test', 'original', true));
+		$this->assertEquals('<p><img src="test.png" class="img-fluid">Test</p>', Formatter::cleanInput('<img src="test.png" height="1" width="1">Test', 'original', true));
 		$this->assertEquals('<p><img src="test.png" class="testClass img-fluid">Test</p>', Formatter::cleanInput('<img src="test.png" class="testClass">Test', 'original', true));
 	}
 

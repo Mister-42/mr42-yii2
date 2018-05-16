@@ -71,7 +71,7 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 		echo Html::tag('span', '&copy; 2014-'.date('Y').' '.Yii::$app->name);
 		echo Html::beginTag('div', ['class' => 'float-right']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') :
-				if (Yii::$app->user->identity->isAdmin) :
+				if (php_sapi_name() !== 'cli' && Yii::$app->user->identity->isAdmin) :
 									echo Html::a(Icon::show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
 				endif;
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact '.Yii::$app->name]);

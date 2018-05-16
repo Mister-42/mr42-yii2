@@ -3,7 +3,7 @@ namespace app\models\feed;
 use XMLWriter;
 
 class Sitemap {
-	public function lineItem(XMLWriter $doc, string $url, int $age = null, float $priority = null): XMLWriter {
+	public static function lineItem(XMLWriter $doc, string $url, int $age = null, float $priority = null): XMLWriter {
 		$priority = $priority ?? self::getPriority($age);
 		$doc->startElement('url');
 		$doc->writeElement('loc', $url);
@@ -16,7 +16,7 @@ class Sitemap {
 		return $doc;
 	}
 
-	private function getChangefreq(float $priority): string {
+	private static function getChangefreq(float $priority): string {
 		if ($priority >= 0.9) :
 			$freq = 'daily';
 		elseif ($priority >= 0.8) :
@@ -29,7 +29,7 @@ class Sitemap {
 		return $freq ?? 'never';
 	}
 
-	private function getPriority(int $age): float {
+	private static function getPriority(int $age): float {
 		if ($age > strtotime("-1 week")) :
 			$prio = 0.9;
 		elseif ($age > strtotime("-1 month")) :

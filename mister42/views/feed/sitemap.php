@@ -8,7 +8,7 @@ use yii\helpers\{ArrayHelper, Url};
 
 $doc = new XMLWriter();
 $doc->openMemory();
-$doc->setIndent(YII_DEBUG && Yii::$app->user->identity->isAdmin);
+$doc->setIndent(YII_DEBUG && php_sapi_name() !== 'cli' && Yii::$app->user->identity->isAdmin);
 
 $doc->startDocument('1.0', 'UTF-8');
 $doc->startElement('urlset');

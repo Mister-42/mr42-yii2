@@ -26,12 +26,9 @@ class FeedController extends \yii\web\Controller {
 	}
 
 	public function actionRss() {
-		if (!StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs'])) :
+		if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs'])) :
 			$this->redirect('http://f.mr42.me/Mr42')->send();
 		endif;
-
-		Yii::$app->response->format = Response::FORMAT_RAW;
-		Yii::$app->response->headers->add('Content-Type', 'application/rss+xml');
 
 		$articles = Articles::find()
 			->orderBy('updated DESC')
@@ -39,6 +36,8 @@ class FeedController extends \yii\web\Controller {
 			->limit(5)
 			->all();
 
+		Yii::$app->response->format = Response::FORMAT_RAW;
+		Yii::$app->response->headers->add('Content-Type', 'application/rss+xml');
 		return $this->renderPartial('rss', [
 			'articles' => $articles,
 		]);

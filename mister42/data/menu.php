@@ -1,10 +1,9 @@
 <?php
-use Yii;
 use app\models\Icon;
 use app\models\articles\Comments;
 use yii\bootstrap4\Html;
 
-$isGuest = Yii::$app->controller->action->id === 'sitemap' ? true : Yii::$app->user->isGuest;
+$isGuest = php_sapi_name() === 'cli' || Yii::$app->controller->action->id === 'sitemap' ? true : Yii::$app->user->isGuest;
 $isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
 $unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACTIVE])->count() : 0;
 $unreadBadge = $unread > 0 ? Html::tag('span', $unread, ['class' => 'badge badge-info ml-1']) : '';

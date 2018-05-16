@@ -26,9 +26,9 @@ class Tags extends BaseArticles {
 	private static function getTags(): array {
 		foreach (parent::find()->select('tags')->all() as $tag) :
 			foreach (StringHelper::explode($tag->tags) as $item) :
-				$list[$item]++;
+				isset($list[$item]) ? $list[$item]++ : $list[$item] = 1;
 			endforeach;
 		endforeach;
-		return $list;
+		return $list ?? [];
 	}
 }

@@ -17,7 +17,7 @@ class Webmanifest {
 		];
 	}
 
-	private function getIcons(array $files): array {
+	private static function getIcons(array $files): array {
 		foreach ($files as $icon) :
 			$size = getimagesize(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/'.$icon);
 			$icons[] = [
