@@ -84,11 +84,11 @@ class RecentTracks extends \yii\db\ActiveRecord {
 				endif;
 			endforeach;
 
-			$this->cleanDb($profile->user_id);
+			self::cleanDb($profile->user_id);
 		endif;
 	}
 
-	private function cleanDb(int $userid) {
+	private static function cleanDb(int $userid) {
 		$items = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit(999)->offset(self::$limit)->all();
 		foreach ($items as $item) :
 			$item->delete();

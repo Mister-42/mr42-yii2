@@ -1,5 +1,6 @@
 <?php
 namespace app\models;
+use Yii;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\captcha\Captcha;
 
