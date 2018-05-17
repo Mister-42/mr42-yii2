@@ -21,9 +21,6 @@ return [
 				'yii\bootstrap4\BootstrapPluginAsset' => [
 					'js' => [YII_DEBUG ? 'js/bootstrap.js' : 'js/bootstrap.min.js'],
 				],
-				'yii\bootstrap4\PopperAsset' => [
-					'js' => [YII_DEBUG ? 'umd/popper.js' : 'umd/popper.min.js'],
-				],
 				'yii\jui\JuiAsset' => [
 					'css' => [YII_DEBUG ? 'themes/smoothness/jquery-ui.css' : 'themes/smoothness/jquery-ui.min.css'],
 					'js' => [YII_DEBUG ? 'jquery-ui.js' : 'jquery-ui.min.js'],
