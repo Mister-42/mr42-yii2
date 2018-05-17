@@ -7,7 +7,6 @@ use yii\helpers\ArrayHelper;
 
 class RecentTracks extends \yii\db\ActiveRecord {
 	private static $limit = 20;
-	private $profile;
 
 	public function init() {
 		self::$limit = is_int(Yii::$app->params['recentTracksCount']) ? Yii::$app->params['recentTracksCount'] : self::$limit;
