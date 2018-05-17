@@ -10,7 +10,7 @@ class Icon {
 		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fas fa-');
 		$style = (explode(' ', $classPrefix))[0] === 'fab' ? 'brands' : 'solid';
 		if (!file_exists(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"))) :
-			return static::show('question-circle', $options);
+			return $this->show('question-circle', $options);
 		endif;
 
 		$doc = new DOMDocument();
