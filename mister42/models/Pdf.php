@@ -23,15 +23,15 @@ class Pdf {
 				endif;
 			endforeach;
 			$pdf->render();
-			self::replaceLine($filename, '/Producer', $pdf->api->_UTF16BEtextstring('Yii Framework'));
-			self::replaceLine($filename, '/CreationDate', $pdf->api->_textstring(date('YmdHis', $created).substr(date('O', $created), 0, 3)."'".substr(date('O', $created), 3, 2)."'"));
-			self::replaceLine($filename, '/ModDate', $pdf->api->_textstring(date('YmdHis', $updated).substr(date('O', $updated), 0, 3)."'".substr(date('O', $updated), 3, 2)."'"));
+			$this->replaceLine($filename, '/Producer', $pdf->api->_UTF16BEtextstring('Yii Framework'));
+			$this->replaceLine($filename, '/CreationDate', $pdf->api->_textstring(date('YmdHis', $created).substr(date('O', $created), 0, 3)."'".substr(date('O', $created), 3, 2)."'"));
+			$this->replaceLine($filename, '/ModDate', $pdf->api->_textstring(date('YmdHis', $updated).substr(date('O', $updated), 0, 3)."'".substr(date('O', $updated), 3, 2)."'"));
 			touch($filename, $updated);
 		endif;
 		return $filename;
 	}
 
-	private static function replaceLine(string $filename, string $search, string $replace) {
+	private function replaceLine(string $filename, string $search, string $replace) {
 		$reading = fopen($filename, 'r');
 		$writing = fopen($filename.'.tmp', 'w');
 

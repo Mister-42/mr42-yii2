@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 
@@ -45,7 +44,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 				echo $form->field($model, $field.'count', [
 					'options' => ['class' => 'form-group col-md-6'],
-					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
+					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
 				])
 				->input('number', ['class' => 'form-control', 'tabindex' => ++$tab]);
 			echo Html::endTag('div');
@@ -53,7 +52,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'action', [
 			'options' => ['class' => 'form-group'],
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('cloud').'{input}</div>{error}',
+			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('cloud').'{input}</div>{error}',
 		])->dropDownList([
 			'renew' => 'I am renewing these licenses',
 			'add' => 'I am adding these licenses',

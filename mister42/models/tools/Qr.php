@@ -1,7 +1,7 @@
 <?php
 namespace app\models\tools;
 use Yii;
-use app\models\{Icon, Mailer};
+use app\models\Mailer;
 use app\widgets\TimePicker;
 use Mpdf\QrCode\QrCode;
 use yii\bootstrap4\{ActiveForm, Html};
@@ -53,11 +53,11 @@ class Qr extends \yii\base\Model {
 		$footer[] = Html::tag('div',
 			$form->field($this, 'size', [
 				'options' => ['class' => 'form-group col-md-6'],
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('arrows-alt').'{input}</div>{error}',
 			])->input('number', ['tabindex' => ++$tab]).
 			$form->field($this, 'recipient', [
 				'options' => ['class' => 'form-group col-md-6'],
-				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',
+				'template' => '{label} (optional)<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => ++$tab])
 			->hint('If you enter your email address the '.Html::tag('span', 'QR Code', ['class' => 'text-nowrap']).' will be mailed to that address.')
 		, ['class' => 'row form-group']);

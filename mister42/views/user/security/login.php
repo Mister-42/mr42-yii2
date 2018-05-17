@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use Da\User\Widget\ConnectWidget;
 use yii\bootstrap4\{ActiveForm, Html};
 
@@ -22,11 +21,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 		]);
 
 		echo $form->field($model, 'login', [
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
+			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
 		])->textInput(['autofocus' => true, 'tabindex' => ++$tab]);
 
 		echo $form->field($model, 'password', [
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
+			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('lock').'{input}</div>{error}',
 		])->passwordInput(['tabindex' => ++$tab])
 		->label(Yii::t('usuario', 'Password').($module->allowPasswordRecovery ? ' ('.Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request']).')' : ''));
 

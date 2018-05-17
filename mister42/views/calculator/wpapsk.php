@@ -1,6 +1,5 @@
 <?php
 use app\assets\ClipboardJsAsset;
-use app\models\Icon;
 use app\models\calculator\Wpapsk;
 use yii\bootstrap4\{ActiveForm, Html, Progress};
 use yii\web\View;
@@ -32,20 +31,20 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'ssid', [
 					'options' => ['class' => 'form-group col-md-6'],
-					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('wifi').'{input}</div>{error}',
+					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('wifi').'{input}</div>{error}',
 				])
 				->textInput(['tabindex' => ++$tab]);
 
 			echo $form->field($model, 'pass', [
 					'options' => ['class' => 'form-group col-md-6'],
-					'template' => '{label}<div class="input-group" id="pwdToggle">'.Icon::fieldAddon('lock').'{input}<span class="input-group-append">'.Html::button(Icon::show('eye', ['class' => 'append']).Icon::show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']).'</span></div>{error}',
+					'template' => '{label}<div class="input-group" id="pwdToggle">'.Yii::$app->icon->fieldAddon('lock').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('eye', ['class' => 'append']).Yii::$app->icon->show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']).'</span></div>{error}',
 				])
 				->passwordInput(['tabindex' => ++$tab]);
 		echo Html::endTag('div');
 
 		echo $form->field($model, 'psk', [
 				'options' => ['class' => 'form-group has-success'],
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('key').'{input}<span class="input-group-append">'.Html::button(Icon::show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard']).'</span></div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('key').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard']).'</span></div>{error}',
 			])
 			->textInput(['placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
 

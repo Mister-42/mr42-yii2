@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
@@ -27,7 +26,7 @@ echo Html::beginTag('div', ['class' => 'row form-group']);
 echo Html::endTag('div');
 
 echo $form->field($model, 'summary', [
-		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('comment').'{input}</div>{error}',
+		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div>{error}',
 	])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);

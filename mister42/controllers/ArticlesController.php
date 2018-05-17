@@ -34,7 +34,7 @@ class ArticlesController extends \yii\web\Controller {
 
 	public function actionIndex(int $id = 0, string $action = '', string $q = ''): string {
 		if ($id !== 0) :
-			return self::pageIndex($id);
+			return $this->pageArticle($id);
 		endif;
 
 		$query = Articles::find()->orderBy('id DESC');
@@ -138,7 +138,7 @@ class ArticlesController extends \yii\web\Controller {
 		return false;
 	}
 
-	private function pageIndex(int $id): string {
+	private function pageArticle(int $id): string {
 		$model = $this->findModel($id, ['comments']);
 		$comment = new Comments;
 

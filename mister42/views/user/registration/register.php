@@ -1,5 +1,5 @@
 <?php
-use app\models\{Form, Icon};
+use app\models\Form;
 use yii\bootstrap4\{ActiveForm, Html};
 
 $this->title = Yii::t('usuario', 'Sign up');
@@ -18,19 +18,19 @@ echo Html::beginTag('div', ['class' => 'row']);
 		);
 
 		echo $form->field($model, 'email', [
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{error}',
+			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{error}',
 		])->input('email', ['tabindex' => ++$tab]);
 
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'username', [
 				'options' => ['class' => 'col-6 form-group'],
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
 			])->textInput(['tabindex' => ++$tab]);
 
 			if ($module->generatePasswords === false) :
 				echo $form->field($model, 'password', [
 					'options' => ['class' => 'col-6 form-group'],
-					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>{error}',
+					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('lock').'{input}</div>{error}',
 				])->passwordInput(['tabindex' => ++$tab]);
 			endif;
 		echo Html::endTag('div');

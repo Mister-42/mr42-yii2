@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\widgets\TimePicker;
 use Da\User\Helper\TimezoneHelper;
 use yii\bootstrap4\{ActiveForm, Html};
@@ -38,19 +37,19 @@ echo Html::beginTag('div', ['class' => 'row']);
 		]);
 
 		echo $form->field($model, 'name', [
-			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>',
+			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>',
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'website', [
-			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('globe').'{input}</div>',
+			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('globe').'{input}</div>',
 		])->input('url', ['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'lastfm', [
-			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('lastfm', ['prefix' => 'fab fa-']).'{input}</div>',
+			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('lastfm', ['prefix' => 'fab fa-']).'{input}</div>',
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'location', [
-			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('map-marker').'{input}</div>',
+			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('map-marker').'{input}</div>',
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'birthday')->widget(TimePicker::class, [
@@ -68,13 +67,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 		]);
 
 		echo $form->field($model, 'bio', [
-				'inputTemplate' => '<div class="row"><div id="chars" class="col-12 text-right"></div></div><div class="input-group">'.Icon::fieldAddon('info-circle').'{input}</div>',
+				'inputTemplate' => '<div class="row"><div id="chars" class="col-12 text-right"></div></div><div class="input-group">'.Yii::$app->icon->fieldAddon('info-circle').'{input}</div>',
 			])
 			->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => ++$tab])
 			->hint('You may use '.Html::a('Markdown Syntax', Yii::$app->params['shortDomain'].'art4', ['target' => '_blank']).' and <code>%age%</code> to show your age, calculated from <nobr>'.Html::tag('code', $model->getAttributeLabel('birthday')).'</nobr>. HTML is not allowed.');
 
 		echo $form->field($model, 'timezone', [
-			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('clock').'{input}</div>',
+			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('clock').'{input}</div>',
 		])->dropDownList(ArrayHelper::map($timezoneHelper->getAll(), 'timezone', 'name'), ['tabindex' => ++$tab]);
 
 		echo Html::tag('div',

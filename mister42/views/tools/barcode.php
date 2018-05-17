@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\models\tools\Barcode;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\helpers\Url;
@@ -27,29 +26,29 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'type', [
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('th-list').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('th-list').'{input}</div>{error}',
 			])->dropDownList(Barcode::getTypes(), [
 				'prompt' => 'Select a Type',
 				'tabindex' => ++$tab,
 			]);
 
 		echo $form->field($model, 'code', [
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('barcode').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('barcode').'{input}</div>{error}',
 			])->input('number', ['tabindex' => ++$tab]);
 
 		echo Html::tag('div',
 			$form->field($model, 'height', [
 				'options' => ['class' => 'col-sm-6'],
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt-v').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('arrows-alt-v').'{input}</div>{error}',
 			])->input('number', ['tabindex' => ++$tab]).
 			$form->field($model, 'barWidth', [
 				'options' => ['class' => 'col-sm-6'],
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('arrows-alt-h').'{input}</div>{hint} {error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('arrows-alt-h').'{input}</div>{hint} {error}',
 			])->input('number', ['step' => '0.5', 'tabindex' => ++$tab])
 		, ['class' => 'row']);
 
 		echo $form->field($model, 'recipient', [
-				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',
+				'template' => '{label} (optional)<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => ++$tab])
 			->hint('If you enter your email address the barcode will be mailed to that address.');
 

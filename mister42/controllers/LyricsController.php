@@ -52,8 +52,8 @@ class LyricsController extends \yii\web\Controller {
 	public function actionIndex() {
 		switch ($this->page) :
 			case self::PAGE_INDEX:	list($page, $data) = ['1_index', Lyrics1Artists::artistsList()]; break;
-			case self::PAGE_ARTIST:	list($page, $data) = self::pageArtist(); break;
-			case self::PAGE_ALBUM:	list($page, $data) = self::pageAlbum(); break;
+			case self::PAGE_ARTIST:	list($page, $data) = $this->pageArtist(); break;
+			case self::PAGE_ALBUM:	list($page, $data) = $this->pageAlbum(); break;
 		endswitch;
 
 		Yii::$app->view->registerMetaTag(['name' => 'google', 'content' => 'notranslate']);
@@ -68,7 +68,7 @@ class LyricsController extends \yii\web\Controller {
 		if (!ArrayHelper::keyExists(0, $tracks) || !$tracks[0]->album->active) :
 			throw new NotFoundHttpException('Album not found.');
 		endif;
-		self::redirectIfNotUrl('albumpdf', $tracks);
+		$this->redirectIfNotUrl('albumpdf', $tracks);
 
 		$fileName = Lyrics2Albums::buildPdf($tracks[0]->album, $this->renderPartial('albumPdf', ['tracks' => $tracks]));
 		return Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]).'.pdf');
@@ -80,7 +80,7 @@ class LyricsController extends \yii\web\Controller {
 		if (!ArrayHelper::keyExists(0, $tracks) || !ArrayHelper::isIn($this->size, [100, 500, 800, 'cover'])) :
 			throw new NotFoundHttpException('Cover not found.');
 		endif;
-		self::redirectIfNotUrl('albumcover', $tracks);
+		$this->redirectIfNotUrl('albumcover', $tracks);
 
 		list($fileName, $image) = Lyrics2Albums::getCover($this->size, $tracks);
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
@@ -106,7 +106,7 @@ class LyricsController extends \yii\web\Controller {
 		if (!ArrayHelper::keyExists(0, $tracks) || (php_sapi_name() !== 'cli' && !Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active)) :
 			throw new NotFoundHttpException('Album not found.');
 		endif;
-		self::redirectIfNotUrl('index', $tracks);
+		$this->redirectIfNotUrl('index', $tracks);
 
 		Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
 		if ($tracks[0]->album->image) :

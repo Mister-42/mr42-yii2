@@ -60,6 +60,9 @@ return [
 		'formatter' => [
 			'class' => 'app\models\Formatter',
 		],
+		'icon' => [
+			'class' => 'app\models\Icon',
+		],
 		'i18n' => [
 			'translations' => [
 				'site' => [

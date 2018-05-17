@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\models\articles\{Articles, Comments};
 use app\widgets\{Feed, Item, RecentArticles, RecentChangelog, RecentComments, TagCloud};
 use yii\base\DynamicModel;
@@ -41,7 +40,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'id' => 'search', 'method' => 'get', 'options' => ['role' => 'search']]);
 		echo $form->field($search, 'search', [
 				'options' => ['class' => 'form-group mb-2'],
-				'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Icon::show('search'), ['class' => 'btn btn-outline-primary']), ['class' => 'input-group-append'])."</div>",
+				'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->show('search'), ['class' => 'btn btn-outline-primary']), ['class' => 'input-group-append'])."</div>",
 			])
 			->label(false)
 			->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => 'Search Articles…', 'value' => Yii::$app->request->get('q')]);

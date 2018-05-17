@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\assets\ClipboardJsAsset;
 use yii\bootstrap4\Html;
 use yii\web\View;
@@ -26,7 +25,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				echo Html::label('Password Length', null, ['class' => 'control-label']);
 				echo Html::beginTag('div', ['class' => 'input-group']);
 					echo Html::tag('div',
-						Html::tag('span', Icon::show('th-list'), ['class' => 'input-group-text'])
+						Html::tag('span', Yii::$app->icon->show('th-list'), ['class' => 'input-group-text'])
 					, ['class' => 'input-group-prepend']);
 					echo Html::dropDownList('length', 12, $passLength, ['class' => 'form-control']);
 				echo Html::endTag('div');
@@ -36,11 +35,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 				echo Html::label('Password', null, ['class' => 'control-label']);
 				echo Html::beginTag('div', ['class' => 'input-group passform-password']);
 					echo Html::tag('div',
-						Html::tag('span', Icon::show('lock'), ['class' => 'input-group-text'])
+						Html::tag('span', Yii::$app->icon->show('lock'), ['class' => 'input-group-text'])
 					, ['class' => 'input-group-prepend']);
 					echo Html::textInput('password', null, ['class' => 'form-control', 'id' => 'password', 'placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
 					echo Html::tag('span',
-						Html::button(Icon::show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#password', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard'])
+						Html::button(Yii::$app->icon->show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#password', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard'])
 					, ['class' => 'input-group-append']);
 				echo Html::endTag('div');
 			echo Html::endTag('div');

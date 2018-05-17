@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use Da\User\Model\User;
 use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
@@ -17,7 +16,7 @@ foreach ($comments as $comment) :
 						echo $comment->showApprovalButton();
 					Pjax::end();
 
-					echo Html::a(Icon::show('trash-alt').' Delete', ['commentstatus', 'id' => $comment->id, 'action' => 'delete'], [
+					echo Html::a(Yii::$app->icon->show('trash-alt').' Delete', ['commentstatus', 'id' => $comment->id, 'action' => 'delete'], [
 						'class' => 'badge badge-danger ml-1',
 						'data-confirm' => 'Are you sure you want to delete this comment?',
 						'data-method' => 'post',
@@ -32,10 +31,10 @@ foreach ($comments as $comment) :
 			$comment->website = $profile->website;
 		endif;
 
-		$bar[] = Icon::show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($comment->created), ['datetime' => date(DATE_W3C, $comment->created)]);
-		$bar[] = Icon::show('user', ['class' => 'text-muted mr-1']).$comment->name.($mainmodel->author === $comment->user ? Html::tag('span', 'Article Author', ['class' => 'badge badge-secondary']) : '');
+		$bar[] = Yii::$app->icon->show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($comment->created), ['datetime' => date(DATE_W3C, $comment->created)]);
+		$bar[] = Yii::$app->icon->show('user', ['class' => 'text-muted mr-1']).$comment->name.($mainmodel->author === $comment->user ? Html::tag('span', 'Article Author', ['class' => 'badge badge-secondary']) : '');
 		if (!empty($comment->website)) :
-			$bar[] = Icon::show('globe', ['class' => 'text-muted mr-1']).Html::a($comment->website, $comment->website);
+			$bar[] = Yii::$app->icon->show('globe', ['class' => 'text-muted mr-1']).Html::a($comment->website, $comment->website);
 		endif;
 		echo Html::tag('div', implode(' · ', $bar), ['class' => 'article-toolbar my-2']);
 		unset($bar);

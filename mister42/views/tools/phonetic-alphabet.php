@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\models\tools\PhoneticAlphabet;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 
@@ -20,11 +19,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'text', [
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('comment').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div>{error}',
 			])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'alphabet', [
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('th-list').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('th-list').'{input}</div>{error}',
 			])->dropDownList(PhoneticAlphabet::getAlphabetList(), ['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'numeric')->checkBox(['tabindex' => ++$tab]);

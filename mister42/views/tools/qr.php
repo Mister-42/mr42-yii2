@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\models\tools\Qr;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
@@ -34,7 +33,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		$form = ActiveForm::begin();
 		echo $form->field($model, 'type', [
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('th-list').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('th-list').'{input}</div>{error}',
 			])->dropDownList(Qr::getTypes(), [
 				'prompt' => 'Select a Type',
 				'onchange'=> new JsExpression("if(!this.value){\$('#form').empty()}else{\$('#form').load('',{'type':this.value})}"),

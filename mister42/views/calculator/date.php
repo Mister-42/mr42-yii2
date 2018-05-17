@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 
@@ -40,7 +39,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo $form->field($model, 'days', [
 				'options' => ['class' => 'form-group col-md-6'],
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('calendar-plus').'{input}</div>{hint}{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('calendar-plus').'{input}</div>{hint}{error}',
 			])	->hint('Use the minus sign (-) to subtract days.')
 				->input('number', ['tabindex' => ++$tab]);
 		echo Html::endTag('div');

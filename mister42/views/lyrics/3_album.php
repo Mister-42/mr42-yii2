@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use yii\bootstrap4\Html;
 
 $this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name, 'Lyrics']);
@@ -21,10 +20,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 					, ['class' => 'float-left']).
 					Html::tag('div',
 						($data[0]->album->playlist_url
-							? Html::a(Icon::show('youtube', ['prefix' => 'fab fa-']).' Play', $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
+							? Html::a(Yii::$app->icon->show('youtube', ['prefix' => 'fab fa-']).' Play', $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
 							: '').
 						($data[0]->album->active
-							? Html::a(Icon::show('file-pdf').' PDF', ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-light ml-1'])
+							? Html::a(Yii::$app->icon->show('file-pdf').' PDF', ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-light ml-1'])
 							: '')
 					, ['class' => 'float-right'])
 				, ['class' => 'card-header']);
@@ -44,7 +43,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 										: $track->name;
 									echo $track->disambiguation.$track->feat;
 									if ($track->video) :
-										echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
+										echo Yii::$app->icon->show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
 									endif;
 								echo Html::endTag('div');
 

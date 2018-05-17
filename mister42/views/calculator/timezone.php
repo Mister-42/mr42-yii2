@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\web\View;
@@ -31,7 +30,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			foreach (['source', 'target'] as $field) :
 				echo $form->field($model, $field, [
 					'options' => ['class' => 'form-group col-md-6'],
-					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('globe').'{input}</div>{error}',
+					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('globe').'{input}</div>{error}',
 				])->dropDownList($model->getTimezones(true), ['tabindex' => ++$tab]);
 			endforeach;
 		echo Html::endTag('div');

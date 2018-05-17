@@ -2,7 +2,6 @@
 namespace app\widgets;
 use Yii;
 use app\assets\TimePickerAsset;
-use app\models\Icon;
 use yii\base\InvalidConfigException;
 use yii\bootstrap4\Html;
 use yii\jui\{DatePicker, DatePickerLanguageAsset};
@@ -37,7 +36,7 @@ class TimePicker extends DatePicker {
 		endif;
 
 		if ($this->addon) :
-			$input = strtr($this->template, ['{input}' => $input, '{addon}' => Icon::fieldAddon($this->addon)]);
+			$input = strtr($this->template, ['{input}' => $input, '{addon}' => Yii::$app->icon->fieldAddon($this->addon)]);
 			$input = Html::tag('div', $input, $this->containerOptions);
 		endif;
 

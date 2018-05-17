@@ -6,7 +6,7 @@ use yii\bootstrap4\Html;
 use yii\helpers\{ArrayHelper, StringHelper};
 
 class Icon {
-	public static function show(string $name, array $options = []): string {
+	public function show(string $name, array $options = []): string {
 		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fas fa-');
 		$style = (explode(' ', $classPrefix))[0] === 'fab' ? 'brands' : 'solid';
 		if (!file_exists(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"))) :
@@ -29,8 +29,8 @@ class Icon {
 		return $doc->saveXML($doc->documentElement);
 	}
 
-	public static function fieldAddon(string $name, array $options = []): string {
-		$icon = Html::tag('div', static::show($name, $options), ['class' => 'input-group-text']);
+	public function fieldAddon(string $name, array $options = []): string {
+		$icon = Html::tag('div', $this->show($name, $options), ['class' => 'input-group-text']);
 		return Html::tag('div', $icon, ['class' => 'input-group-prepend']);
 	}
 }

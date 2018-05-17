@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use nezhelskoy\highlight\HighlightAsset;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\helpers\{Inflector, Url};
@@ -40,12 +39,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'recipient', [
-				'template' => '{label} (optional)<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{hint} {error}',
+				'template' => '{label} (optional)<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => ++$tab])
 			->hint('If you enter your email address the favicon will be mailed to that address.');
 
 		echo $form->field($model, 'sourceImage', [
-				'template' => Html::tag('label', $model->getAttributeLabel('sourceImage'), ['for' => 'sourceFile']).'<div class="input-group">'.Icon::fieldAddon('image').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
+				'template' => Html::tag('label', $model->getAttributeLabel('sourceImage'), ['for' => 'sourceFile']).'<div class="input-group">'.Yii::$app->icon->fieldAddon('image').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
 			])->fileInput(['accept' => 'image/*', 'class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
 			->hint('For best result upload a square image. Your icon will be generated in '.Inflector::sentence($dimensions).' pixels.')
 			->label('Select an image', ['class' => 'custom-file-label text-truncate']);

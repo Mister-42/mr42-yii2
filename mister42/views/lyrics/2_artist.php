@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\widgets\Lightbox;
 use yii\bootstrap4\Html;
 
@@ -13,10 +12,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']).
 			Html::tag('div',
 				($data[0]->artist->buy
-					? Html::a(Icon::show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => 'Buy music of '.$data[0]->artist->name])
+					? Html::a(Yii::$app->icon->show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => 'Buy music of '.$data[0]->artist->name])
 					: '').
 				($data[0]->artist->website
-					? Html::a(Icon::show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => 'Website of '.$data[0]->artist->name])
+					? Html::a(Yii::$app->icon->show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => 'Website of '.$data[0]->artist->name])
 					: '')
 			, ['class' => 'float-right'])
 		, ['class' => 'col'])
@@ -33,10 +32,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 						), ['class' => 'float-left']).
 						Html::tag('div',
 							($album->playlist_url
-								? Html::a(Icon::show('youtube', ['prefix' => 'fab fa-']).' Play', $album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
+								? Html::a(Yii::$app->icon->show('youtube', ['prefix' => 'fab fa-']).' Play', $album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
 								: '').
 							($album->active
-								? Html::a(Icon::show('file-pdf').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-light ml-1'])
+								? Html::a(Yii::$app->icon->show('file-pdf').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-light ml-1'])
 								: '')
 						, ['class' => 'float-right'])
 					, ['class' => 'card-header']);
@@ -55,7 +54,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name]).$track->disambiguation.$track->feat;
 									if ($album->active && $track->video) :
-										echo Icon::show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
+										echo Yii::$app->icon->show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
 									endif;
 								echo Html::endTag('div');
 

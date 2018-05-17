@@ -1,5 +1,5 @@
 <?php
-use app\models\{Form, Icon};
+use app\models\Form;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 use yii\widgets\Pjax;
@@ -24,25 +24,25 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [
 					'options' => ['class' => 'col-md-6 form-group'],
-					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
+					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
 				])->textInput(['tabindex' => ++$tab]);
 
 				echo $form->field($model, 'email', [
 					'options' => ['class' => 'col-md-6 form-group'],
-					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{error}',
+					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{error}',
 				])->input('email', ['tabindex' => ++$tab]);
 			echo '</div>';
 
 			echo $form->field($model, 'title', [
-					'template' => '{label}<div class="input-group">'.Icon::fieldAddon('heading').'{input}</div>{error}',
+					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('heading').'{input}</div>{error}',
 				])->textInput(['tabindex' => ++$tab]);
 
 			echo $form->field($model, 'content', [
-				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Icon::fieldAddon('comment').'{input}</div> {hint} {error}',
+				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div> {hint} {error}',
 			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab]);
 
 			echo $form->field($model, 'attachment', [
-				'template' => Html::tag('label', $model->getAttributeLabel('attachment'), ['for' => 'sourceFile']).'<div class="input-group">'.Icon::fieldAddon('paperclip').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
+				'template' => Html::tag('label', $model->getAttributeLabel('attachment'), ['for' => 'sourceFile']).'<div class="input-group">'.Yii::$app->icon->fieldAddon('paperclip').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
 			->label('Select a file', ['class' => 'custom-file-label text-truncate']);
 

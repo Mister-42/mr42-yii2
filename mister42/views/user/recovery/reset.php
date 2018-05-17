@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use yii\bootstrap4\{ActiveForm, Html};
 
 $this->title = Yii::t('usuario', 'Reset your password');
@@ -16,7 +15,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		]);
 
 		echo $form->field($model, 'email', [
-			'inputTemplate' => '<div class="input-group">'.Icon::fieldAddon('lock').'{input}</div>',
+			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('lock').'{input}</div>',
 		])->passwordInput(['autofocus' => true, 'tabindex' => ++$tab]);
 
 		echo Html::submitButton(Yii::t('usuario', 'Continue'), ['class' => 'btn btn-primary btn-block', 'tabindex' => ++$tab]);

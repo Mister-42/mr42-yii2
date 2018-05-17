@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\models\tools\Qr;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
@@ -13,18 +12,18 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'authentication', [
-		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('cog').'{input}</div>{error}',
+		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('cog').'{input}</div>{error}',
 	])->dropDownList(Qr::getWifiAuthentication(), [
 		'tabindex' => ++$tab,
 	]);
 
 echo $form->field($model, 'ssid', [
-		'template' => '{label}<div class="input-group">'.Icon::fieldAddon('wifi').'{input}</div>{error}',
+		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('wifi').'{input}</div>{error}',
 	])->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'password', [
 		'options' => ['class' => 'required'],
-		'template' => '{label}<div class="input-group" id="pwdToggle">'.Icon::fieldAddon('lock').'{input}<span class="input-group-append">'.Html::button(Icon::show('eye', ['class' => 'append']).Icon::show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']).'</span></div>{error}',
+		'template' => '{label}<div class="input-group" id="pwdToggle">'.Yii::$app->icon->fieldAddon('lock').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('eye', ['class' => 'append']).Yii::$app->icon->show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']).'</span></div>{error}',
 	])->passwordInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'hidden')->checkBox(['tabindex' => ++$tab]);

@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\models\articles\Comments;
 use yii\bootstrap4\Html;
 
@@ -9,8 +8,8 @@ $unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACT
 $unreadBadge = $unread > 0 ? Html::tag('span', $unread, ['class' => 'badge badge-info ml-1']) : '';
 
 return [
-	['label' => Icon::show('newspaper', ['class' => 'mr-1']).'Articles', 'url' => ['/articles/index'], 'visible' => true],
-	['label' => Icon::show('calculator', ['class' => 'mr-1']).'Calculator', 'url' => null,
+	['label' => Yii::$app->icon->show('newspaper', ['class' => 'mr-1']).'Articles', 'url' => ['/articles/index'], 'visible' => true],
+	['label' => Yii::$app->icon->show('calculator', ['class' => 'mr-1']).'Calculator', 'url' => null,
 		'items' => [
 			['label' => 'Date (add/subtract)', 'url' => ['/calculator/date']],
 			['label' => 'Date to Date (duration)', 'url' => ['/calculator/duration']],
@@ -19,7 +18,7 @@ return [
 			['label' => 'Wifi Protected Access Pre-Shared Key', 'url' => ['/calculator/wpapsk']],
 		],
 	],
-	['label' => Icon::show('wrench', ['class' => 'mr-1']).'Tools', 'url' => null,
+	['label' => Yii::$app->icon->show('wrench', ['class' => 'mr-1']).'Tools', 'url' => null,
 		'items' => [
 			['label' => 'Barcode Generator', 'url' => ['/tools/barcode']],
 			['label' => 'Browser Headers', 'url' => ['/tools/headers']],
@@ -31,10 +30,10 @@ return [
 			['label' => 'QR Code Generator', 'url' => ['/tools/qr']],
 		],
 	],
-	['label' => Icon::show('music', ['class' => 'mr-1']).'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
+	['label' => Yii::$app->icon->show('music', ['class' => 'mr-1']).'Lyrics', 'url' => ['/lyrics/index'], 'visible' => true],
 	$isGuest
-		? ['label' => Icon::show('sign-in-alt', ['class' => 'mr-1']).'Login', 'url' => ['/user/security/login'], 'visible' => true]
-		:	['label' => Icon::show('user-circle', ['class' => 'mr-1']).Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
+		? ['label' => Yii::$app->icon->show('sign-in-alt', ['class' => 'mr-1']).'Login', 'url' => ['/user/security/login'], 'visible' => true]
+		:	['label' => Yii::$app->icon->show('user-circle', ['class' => 'mr-1']).Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
 				'items' => [
 					['label' => 'Create Article', 'url' => ['/articles/create'], 'visible' => $isAdmin],
 					['label' => 'Manage Users', 'url' => ['/user/admin/index'], 'visible' => $isAdmin],

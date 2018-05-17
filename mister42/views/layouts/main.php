@@ -1,6 +1,6 @@
 <?php
 use app\assets\{AppAsset, ImagesAsset};
-use app\models\{Icon, Menu};
+use app\models\Menu;
 use yii\bootstrap4\{Html, Nav, NavBar};
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
@@ -72,15 +72,15 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 		echo Html::beginTag('div', ['class' => 'float-right']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') :
 				if (php_sapi_name() !== 'cli' && Yii::$app->user->identity->isAdmin) :
-									echo Html::a(Icon::show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
+									echo Html::a(Yii::$app->icon->show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
 				endif;
 				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact '.Yii::$app->name]);
-				echo Html::a(Icon::show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => 'RSS']);
+				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => 'RSS']);
 			endif;
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 echo Html::endTag('footer');
-echo Html::a(Icon::show('chevron-up'), null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => 'Scroll to top']);
+echo Html::a(Yii::$app->icon->show('chevron-up'), null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => 'Scroll to top']);
 $this->endBody();
 
 echo Html::endTag('body');

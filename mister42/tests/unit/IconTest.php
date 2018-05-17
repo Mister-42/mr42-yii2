@@ -1,6 +1,5 @@
 <?php
 namespace app\test\unit;
-use app\models\Icon;
 use PHPUnit\Framework\TestCase;
 
 class IconTest extends TestCase {
@@ -10,14 +9,14 @@ class IconTest extends TestCase {
 	private $iconWithClass = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" aria-hidden="true" class="fa w-14 testClass" data-icon="align-justify" data-prefix="fas" role="img"><path d="M0 84V44c0-8.837 7.163-16 16-16h416c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16zm16 144h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 256h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0-128h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" fill="currentColor"/></svg>';
 
 	public function testIcons() {
-		$this->assertEquals($this->solidIcon, Icon::show('rss'));
-		$this->assertEquals($this->brandIcon, Icon::show('github', ['prefix' => 'fab fa-']));
-		$this->assertEquals($this->fallbackIcon, Icon::show('this.icon.does.not.exist'));
-		$this->assertEquals($this->fallbackIcon, Icon::show('this.icon.does.not.exist', ['prefix' => 'fab fa-']));
-		$this->assertEquals($this->iconWithClass, Icon::show('align-justify', ['class' => 'testClass']));
+		$this->assertEquals($this->solidIcon, \Yii::$app->icon->show('rss'));
+		$this->assertEquals($this->brandIcon, \Yii::$app->icon->show('github', ['prefix' => 'fab fa-']));
+		$this->assertEquals($this->fallbackIcon, \Yii::$app->icon->show('this.icon.does.not.exist'));
+		$this->assertEquals($this->fallbackIcon, \Yii::$app->icon->show('this.icon.does.not.exist', ['prefix' => 'fab fa-']));
+		$this->assertEquals($this->iconWithClass, \Yii::$app->icon->show('align-justify', ['class' => 'testClass']));
 	}
 
 	public function testFieldAddon() {
-		$this->assertEquals('<div class="input-group-prepend"><div class="input-group-text">'.$this->solidIcon.'</div></div>', Icon::fieldAddon('rss'));
+		$this->assertEquals('<div class="input-group-prepend"><div class="input-group-text">'.$this->solidIcon.'</div></div>', \Yii::$app->icon->fieldAddon('rss'));
 	}
 }

@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use app\models\tools\Country;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;
@@ -27,7 +26,7 @@ echo Html::beginTag('div', ['class' => 'site-country']);
 
 			$countries = $model->find()->select('ISO3166-1-Alpha-2, official_name_en')->orderBy('official_name_en')->all();
 			echo $form->field($model, 'iso', [
-				'template' => '{label}<div class="input-group">'.Icon::fieldAddon('th-list').'{input}</div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('th-list').'{input}</div>{error}',
 			])->dropDownList(ArrayHelper::map($countries, 'ISO3166-1-Alpha-2', 'official_name_en'), [
 				'onchange' => 'if(this.value!=0){this.form.submit();}',
 				'prompt' => $model->load(Yii::$app->request->post()) ? null : 'Select a country',

@@ -1,5 +1,4 @@
 <?php
-use app\models\Icon;
 use yii\bootstrap4\{Alert, ActiveForm, Html};
 
 $this->title = Yii::t('usuario', 'Sign in');
@@ -19,11 +18,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 		]);
 
 		echo $form->field($model, 'email', [
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('at').'{input}</div>{error}',
+			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{error}',
 		])->input('email', ['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'username', [
-			'template' => '{label}<div class="input-group">'.Icon::fieldAddon('user').'{input}</div>{error}',
+			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo Html::submitButton(Yii::t('usuario', 'Continue'), ['class' => 'btn btn-success', 'tabindex' => ++$tab]);

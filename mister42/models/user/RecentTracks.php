@@ -1,7 +1,7 @@
 <?php
 namespace app\models\user;
 use Yii;
-use app\models\{Icon, Webrequest};
+use app\models\Webrequest;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
@@ -30,7 +30,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 					$data[] = Html::beginTag('span', ['class' => 'text-truncate']);
 						$data[] = $track['artist'];
 						if ($track['time'] === 0) :
-							$data[] = Icon::show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
+							$data[] = Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
 						endif;
 					$data[] = Html::endTag('span');
 					$data[] = Html::tag('span', $track['track'], ['class' => 'text-truncate text-right']);
@@ -84,11 +84,11 @@ class RecentTracks extends \yii\db\ActiveRecord {
 				endif;
 			endforeach;
 
-			self::cleanDb($profile->user_id);
+			$this->cleanDb($profile->user_id);
 		endif;
 	}
 
-	private static function cleanDb(int $userid) {
+	private function cleanDb(int $userid) {
 		$items = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit(999)->offset(self::$limit)->all();
 		foreach ($items as $item) :
 			$item->delete();
