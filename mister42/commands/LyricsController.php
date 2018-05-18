@@ -189,7 +189,7 @@ class LyricsController extends Controller {
 							Console::write('Not embeddable', [Console::BOLD, Console::FG_RED]);
 						endif;
 
-						onsole::newLine();
+						Console::newLine();
 						continue;
 					endif;
 				endforeach;
