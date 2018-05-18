@@ -1,5 +1,6 @@
 <?php
 use app\assets\ClipboardJsAsset;
+use app\models\Form;
 use app\models\calculator\Wpapsk;
 use yii\bootstrap4\{ActiveForm, Html, Progress};
 use yii\web\View;
@@ -13,7 +14,6 @@ ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/wpapsk.js'), View::POS_HEAD);
 $this->registerJs('reset_psk();', View::POS_READY);
 $this->registerJs('$("input").keypress(function(e){if(e.which==13){cal_psk();return false}});', View::POS_READY);
-$this->registerJs(Yii::$app->formatter->jspack('togglePassword.js'), View::POS_READY);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/pbkdf2.js'), View::POS_END);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/sha1.js'), View::POS_END);
 
@@ -35,11 +35,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				])
 				->textInput(['tabindex' => ++$tab]);
 
-			echo $form->field($model, 'pass', [
-					'options' => ['class' => 'form-group col-md-6'],
-					'template' => '{label}<div class="input-group" id="pwdToggle">'.Yii::$app->icon->fieldAddon('lock').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('eye', ['class' => 'append']).Yii::$app->icon->show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => 'Show Password']).'</span></div>{error}',
-				])
-				->passwordInput(['tabindex' => ++$tab]);
+			echo Form::togglePassword($form, $model, $this, ['class' => 'form-group col-md-6', 'tab' => ++$tab]);
 		echo Html::endTag('div');
 
 		echo $form->field($model, 'psk', [

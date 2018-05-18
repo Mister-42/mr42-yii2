@@ -33,7 +33,7 @@ class Qr extends \yii\base\Model {
 		return 'qr';
 	}
 
-	public function getBirthdayCalendar(ActiveForm $form, Qr $model, int $tab): string {
+	public static function getBirthdayCalendar(ActiveForm $form, Qr $model, int $tab): string {
 		return $form->field($model, 'birthday')->widget(TimePicker::class, [
 				'clientOptions' => [
 					'changeMonth' => true,
@@ -89,7 +89,7 @@ class Qr extends \yii\base\Model {
 		return true;
 	}
 
-	public function getWifiAuthentication(bool $rules = false): array {
+	public static function getWifiAuthentication(bool $rules = false): array {
 		return $rules ? ['none', 'wep', 'wpa'] : ['none' => 'none', 'wep' => 'WEP', 'wpa' => 'WPA'];
 	}
 

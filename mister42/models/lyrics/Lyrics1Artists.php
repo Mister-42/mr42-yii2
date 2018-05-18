@@ -24,7 +24,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	}
 
 	public static function albumsList() {
-		return parent::find()
+		return self::find()
 			->orderBy('name')
 			->with('albums')
 			->each();
@@ -47,7 +47,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	public static function find() {
 		return parent::find()
 			->onCondition(
-				php_sapi_name() === 'cli' || Yii::$app->user->identity->isAdmin
+				php_sapi_name() === 'cli' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)
 					? ['or', [self::tableName().'.`active`' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
 					: [self::tableName().'.`active`' => Self::STATUS_ACTIVE]
 			);

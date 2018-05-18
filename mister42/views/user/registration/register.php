@@ -16,6 +16,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'enableClientValidation' => true,
 			]
 		);
+		$tab = 0;
 
 		echo $form->field($model, 'email', [
 			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{error}',

@@ -8,6 +8,9 @@ use yii\db\Expression;
 use yii\helpers\{ArrayHelper, Url};
 
 class Lyrics2Albums extends \yii\db\ActiveRecord {
+	const STATUS_INACTIVE = '0';
+	const STATUS_ACTIVE = '1';
+
 	public $playlist_embed;
 	public $playlist_url;
 
@@ -47,7 +50,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	}
 
 	public static function albumsList($artist) {
-		return parent::find()
+		return self::find()
 			->orderBy('year DESC, name')
 			->joinWith('artist')
 			->with('tracks')
@@ -124,9 +127,9 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public static function find() {
 		return parent::find()
 			->onCondition(
-				php_sapi_name() === 'cli' || Yii::$app->user->identity->isAdmin
-					? ['or', [self::tableName().'.`active`' => [Lyrics1Artists::STATUS_INACTIVE, Lyrics1Artists::STATUS_ACTIVE]]]
-					: [self::tableName().'.`active`' => Lyrics1Artists::STATUS_ACTIVE]
+				php_sapi_name() === 'cli' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)
+					? ['or', [self::tableName().'.`active`' => [self::STATUS_INACTIVE, self::STATUS_ACTIVE]]]
+					: [self::tableName().'.`active`' => self::STATUS_ACTIVE]
 			);
 	}
 }

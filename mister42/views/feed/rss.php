@@ -4,7 +4,7 @@ use yii\helpers\{StringHelper, Url};
 
 $doc = new XMLWriter();
 $doc->openMemory();
-$doc->setIndent(YII_DEBUG && php_sapi_name() !== 'cli' && Yii::$app->user->identity->isAdmin);
+$doc->setIndent(YII_DEBUG && php_sapi_name() !== 'cli' && (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin));
 
 $doc->startDocument('1.0', 'UTF-8');
 $doc->startElement('rss');

@@ -35,6 +35,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			'layout' => 'horizontal',
 			'validateOnBlur' => false,
 		]);
+		$tab = 0;
 
 		echo $form->field($model, 'name', [
 			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>',

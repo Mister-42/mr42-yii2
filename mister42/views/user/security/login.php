@@ -19,6 +19,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			'validateOnType'			=> false,
 			'validateOnChange'			=> false,
 		]);
+		$tab = 0;
 
 		echo $form->field($model, 'login', [
 			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
