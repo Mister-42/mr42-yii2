@@ -18,9 +18,8 @@ class LyricsController extends Controller {
 	 * Perform image & PDF actions.
 	 */
 	public function actionIndex() {
-		Console::clearScreen();
-		self::actionAlbumImage();
-		self::actionAlbumPdf();
+		$this->actionAlbumImage();
+		$this->actionAlbumPdf();
 	}
 
 	/**
@@ -204,6 +203,7 @@ class LyricsController extends Controller {
 
 	private static function getAverageImageColor(string $image): string {
 		$i = imagecreatefromstring($image);
+		$rTotal = $gTotal = $bTotal = $total = 0;
 		list($width, $height) = getimagesizefromstring($image);
 		for ($x = 0; $x < $width; $x++) :
 			for ($y = 0; $y < $height; $y++) :
