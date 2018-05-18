@@ -15,9 +15,10 @@ class LyricsController extends Controller {
 	public $defaultAction = 'index';
 
 	/**
-	 * Perform all actions.
+	 * Perform image & PDF actions.
 	 */
 	public function actionIndex() {
+		Console::clearScreen();
 		self::actionAlbumImage();
 		self::actionAlbumPdf();
 	}
@@ -26,8 +27,12 @@ class LyricsController extends Controller {
 	 * Resizes all album covers to the default dimensions if they exceed this limit.
 	 */
 	public function actionAlbumImage() {
-		foreach (Lyrics1Artists::albumsList() as $artist) :
+		$x = 0;
+		$count = self::getCountAlbums($artists = Lyrics1Artists::albumsList());
+		Console::startProgress(0, $count);
+		foreach ($artists as $artist) :
 			foreach ($artist->albums as $album) :
+				Console::updateProgress(++$x, $count);
 				list($width, $height) = getimagesizefromstring($album->image);
 				$exif = exif_read_data("data://image/jpeg;base64,".base64_encode($album->image));
 				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' && !is_null($album->image_color)) :
@@ -66,6 +71,9 @@ class LyricsController extends Controller {
 			endforeach;
 		endforeach;
 
+		Console::endProgress();
+		Console::write('Completed processing images', [Console::BOLD, Console::FG_RED]);
+		Console::newLine();
 		return self::EXIT_CODE_NORMAL;
 	}
 
@@ -73,9 +81,13 @@ class LyricsController extends Controller {
 	 * Builds all albums PDF files, unless already cached and up-to-date.
 	 */
 	public function actionAlbumPdf() {
-		foreach (Lyrics1Artists::albumsList() as $artist) :
+		$x = 0;
+		$count = self::getCountAlbums($artists = Lyrics1Artists::albumsList());
+		Console::startProgress(0, $count);
+		foreach ($artists as $artist) :
 			foreach ($artist->albums as $album) :
-				if (!$album->active) :
+				Console::updateProgress(++$x, $count);
+				if (!$album->active || $fileName = Lyrics2Albums::buildPdf($album, $this->renderPartial('@app/views/lyrics/albumPdf', ['tracks' => $album->tracks]))) :
 					continue;
 				endif;
 
@@ -83,7 +95,6 @@ class LyricsController extends Controller {
 				Console::write($album->year, [Console::FG_GREEN]);
 				Console::write($album->name, [Console::FG_GREEN], 8);
 
-				$fileName = Lyrics2Albums::buildPdf($album, $this->renderPartial('@app/views/lyrics/albumPdf', ['tracks' => $album->tracks]));
 				if (!$fileName) :
 					Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED]);
 					continue;
@@ -94,6 +105,9 @@ class LyricsController extends Controller {
 			endforeach;
 		endforeach;
 
+		Console::endProgress();
+		Console::write('Completed processing PDFs', [Console::BOLD, Console::FG_RED]);
+		Console::newLine();
 		return self::EXIT_CODE_NORMAL;
 	}
 
@@ -101,6 +115,7 @@ class LyricsController extends Controller {
 	 * Checking status of album playlist.
 	 */
 	public function actionAlbumPlaylist() {
+		$x = 0;
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
 				if (isset($album->playlist_id)) :
@@ -119,24 +134,29 @@ class LyricsController extends Controller {
 					endif;
 
 					foreach ($data as $albumData) :
-						Console::write($albumData['artist'], [Console::FG_PURPLE], 3);
-						Console::write($albumData['year'], [Console::FG_GREEN]);
-						Console::write($albumData['name'], [Console::FG_GREEN], 8);
+						if (!ArrayHelper::keyExists($albumData['id'], $response, false) || ArrayHelper::getValue($response, "{$albumData['id']}.status.privacyStatus") !== 'public') :
+							Console::write($albumData['artist'], [Console::FG_PURPLE], 3);
+							Console::write($albumData['year'], [Console::FG_GREEN]);
+							Console::write($albumData['name'], [Console::FG_GREEN], 8);
 
-						if (!ArrayHelper::keyExists($albumData['id'], $response, false)) :
-							Console::writeError('Not Found', [Console::BOLD, Console::FG_RED]);
+							if (!ArrayHelper::keyExists($albumData['id'], $response, false)) :
+								Console::writeError('Not Found', [Console::BOLD, Console::FG_RED]);
+							elseif (ArrayHelper::getValue($response, "{$albumData['id']}.status.privacyStatus") !== 'public'):
+								Console::writeError('Not Public', [Console::BOLD, Console::FG_RED]);
+							endif;
+
+							Console::newLine();
 							continue;
 						endif;
-
-						Console::write(ArrayHelper::getValue($response, "{$albumData['id']}.contentDetails.itemCount")." found", [Console::BOLD, Console::FG_GREEN], 2);
-						Console::write(ArrayHelper::getValue($response, "{$albumData['id']}.status.privacyStatus"), [Console::BOLD, Console::FG_GREEN], 0);
-						Console::newLine();
 					endforeach;
 
 					unset($data, $response);
 				endif;
 			endforeach;
 		endforeach;
+
+		Console::write('Completed processing playlists', [Console::BOLD, Console::FG_RED]);
+		Console::newLine();
 		return self::EXIT_CODE_NORMAL;
 	}
 
@@ -144,6 +164,7 @@ class LyricsController extends Controller {
 	 * Checking status of tracks video.
 	 */
 	public function actionTrackVideo() {
+		$x = 0;
 		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]])->all();
 		foreach ($query as $track) :
 			$data[] = ['id' => $track->video_id, 'name' => $track->name];
@@ -152,29 +173,32 @@ class LyricsController extends Controller {
 			else :
 				$response = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'videos');
 				if (!$response->isOK || $response->data['pageInfo']['totalResults'] === 0) :
-					Console::writeError('Error', [Console::BOLD, Console::FG_RED]);
+					Console::writeError('Error: Could not get response from server', [Console::BOLD, Console::FG_RED]);
 					return self::EXIT_CODE_ERROR;
 				else :
 					$response = ArrayHelper::index($response->data['items'], 'id');
 				endif;
 
 				foreach ($data as $trackData) :
-					Console::write($trackData['name'], [Console::FG_PURPLE], 5);
+					if (!ArrayHelper::keyExists($trackData['id'], $response, false) || !ArrayHelper::getValue($response, "{$trackData['id']}.status.embeddable")) :
+						Console::write($trackData['name'], [Console::FG_PURPLE], 5);
 
-					if (!ArrayHelper::keyExists($trackData['id'], $response, false)) :
-						Console::writeError('Not Found', [Console::BOLD, Console::FG_RED]);
+						if (!ArrayHelper::keyExists($trackData['id'], $response, false)) :
+							Console::writeError('Not Found', [Console::BOLD, Console::FG_RED]);
+						elseif (!ArrayHelper::getValue($response, "{$trackData['id']}.status.embeddable")) :
+							Console::write('Not embeddable', [Console::BOLD, Console::FG_RED]);
+						endif;
+
+						onsole::newLine();
 						continue;
 					endif;
-
-					ArrayHelper::getValue($response, "{$trackData['id']}.status.embeddable")
-						? Console::write('Embeddable', [Console::FG_GREEN], 2)
-						: Console::write('Not embeddable', [Console::BOLD, Console::FG_RED], 2);
-					Console::write(ArrayHelper::getValue($response, "{$trackData['id']}.snippet.title"), [Console::FG_GREEN]);
-					Console::newLine();
 				endforeach;
 				unset($data, $response);
 			endif;
 		endforeach;
+
+		Console::write('Completed processing videos', [Console::BOLD, Console::FG_RED]);
+		Console::newLine();
 		return self::EXIT_CODE_NORMAL;
 	}
 
@@ -194,5 +218,15 @@ class LyricsController extends Controller {
 			endfor;
 		endfor;
 		return sprintf('#%02X%02X%02X', $rTotal / $total, $gTotal / $total, $bTotal / $total); 
+	}
+
+	private static function getCountAlbums($list): int {
+		$count = 0;
+		foreach ($list as $artist) :
+			foreach ($artist->albums as $album) :
+				$count++;
+			endforeach;
+		endforeach;
+		return $count;
 	}
 }

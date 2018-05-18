@@ -23,4 +23,7 @@ return [
 		],
 	],
 	'controllerNamespace' => 'app\commands',
+	'modules' => [
+		'user' =>  Da\User\Module::class,
+	],
 ];

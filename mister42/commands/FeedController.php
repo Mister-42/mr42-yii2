@@ -74,6 +74,7 @@ class FeedController extends Controller {
 	 * Retrieves and stores an Atom or RSS feed.
 	 */
 	public function actionWebfeed(string $type, string $name, string $url): int {
+		$count = 0;
 		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
 		$response = Webrequest::getUrl('', $url);
 		if (!$response->isOK) :
