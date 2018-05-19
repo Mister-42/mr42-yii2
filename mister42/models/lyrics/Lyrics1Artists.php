@@ -1,6 +1,7 @@
 <?php
 namespace app\models\lyrics;
 use Yii;
+use yii\db\BatchQueryResult;
 
 class Lyrics1Artists extends \yii\db\ActiveRecord {
 	const STATUS_INACTIVE = '0';
@@ -17,13 +18,13 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 		$this->active = (bool) $this->active;
 	}
 
-	public static function artistsList() {
-		return parent::find()
+	public static function artistsList(): array {
+		return self::find()
 			->orderBy('name')
 			->all();
 	}
 
-	public static function albumsList() {
+	public static function albumsList(): BatchQueryResult {
 		return self::find()
 			->orderBy('name')
 			->with('albums')

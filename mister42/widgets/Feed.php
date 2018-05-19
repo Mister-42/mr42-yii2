@@ -6,17 +6,15 @@ use app\models\feed\Feed as FeedModel;
 
 class Feed extends Widget {
 	public $name;
-	public $limit;
+	public $limit = 10;
 
 	public function run(): string {
-		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 10;
-		$limit = $this->limit ?? $limit;
 		$items = FeedModel::find()
 			->where(['feed' => $this->name])
 			->orderBy('time DESC')
-			->limit($limit)
+			->limit($this->limit)
 			->all();
-		return empty($items) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderFeed($items, $limit);
+		return empty($items) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderFeed($items, $this->limit);
 	}
 
 	private function renderFeed(array $items, int $limit): string {
@@ -25,7 +23,7 @@ class Feed extends Widget {
 			$feed[] = $item['title'] === $item['description'] || empty($item['description'])
 				? Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link']), ['class' => 'list-group-item text-truncate'])
 				: Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link', 'title' => Html::tag('div', $item['title'], ['class' => 'font-weight-bold']).$item['description'], 'data-html' => 'true', 'data-toggle' => 'tooltip', 'data-placement' => 'left']), ['class' => 'list-group-item text-truncate']);
-			if (++$count === $limit) :
+			if (++$count === $this->limit) :
 				break;
 			endif;
 		endforeach;

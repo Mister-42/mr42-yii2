@@ -49,7 +49,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		];
 	}
 
-	public static function albumsList($artist) {
+	public static function albumsList(string $artist) {
 		return self::find()
 			->orderBy('year DESC, name')
 			->joinWith('artist')
@@ -59,7 +59,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->all();
 	}
 
-	public static function lastUpdate($artist, $data = null) {
+	public static function lastUpdate(string $artist, $data = null): int {
 		$data = $data ?? self::albumsList($artist);
 		$max = 0;
 		foreach ($data as $item) :
@@ -71,7 +71,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return $max;
 	}
 
-	public static function buildPdf($album, $html): string {
+	public static function buildPdf($album, string $html): string {
 		$pdf = new Pdf();
 		return $pdf->create(
 			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
@@ -88,7 +88,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		);
 	}
 
-	public static function getCover($size, $album): array {
+	public static function getCover(int $size, $album): array {
 		$fileName = null;
 		if (ArrayHelper::keyExists(0, $album)) :
 			$fileName = implode(' - ', [$album[0]->artist->url, $album[0]->album->year, $album[0]->album->url, $size]).'.jpg';

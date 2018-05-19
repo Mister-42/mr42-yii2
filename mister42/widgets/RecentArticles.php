@@ -5,11 +5,12 @@ use app\models\articles\Articles;
 use yii\bootstrap4\{Html, Widget};
 
 class RecentArticles extends Widget {
+	public $limit = 5;
+
 	public function run(): string {
-		$limit = is_int(Yii::$app->params['recentArticles']) ? Yii::$app->params['recentArticles'] : 5;
 		$articles = Articles::find()
 			->orderBy('updated DESC')
-			->limit($limit)
+			->limit($this->limit)
 			->all();
 		return empty($articles) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderArticles($articles);
 	}

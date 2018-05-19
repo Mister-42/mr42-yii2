@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
  */
 class FeedController extends Controller {
 	public $defaultAction = 'webfeed';
+	public $limit = 25;
 
 	/**
 	 * Retrieves and stores Recent Tracks from Last.fm.
@@ -41,11 +42,10 @@ class FeedController extends Controller {
 	 * Retrieves and stores Weekly Artist Chart from Last.fm.
 	 */
 	public function actionLastfmWeeklyArtist(): int {
-		$limit = 15;
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::findOne(['user_id' => $user->id]);
 			if (isset($profile->lastfm)) :
-				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $limit);
+				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $this->limit);
 				if (!$response->isOK) :
 					return self::EXIT_CODE_ERROR;
 				endif;
@@ -59,7 +59,7 @@ class FeedController extends Controller {
 					$addArtist->count = (int) ArrayHelper::getValue($artist, 'playcount');
 					$addArtist->save();
 
-					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $limit) :
+					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $this->limit) :
 						break;
 					endif;
 				endforeach;
@@ -75,7 +75,6 @@ class FeedController extends Controller {
 	 */
 	public function actionWebfeed(string $type, string $name, string $url): int {
 		$count = 0;
-		$limit = is_int(Yii::$app->params['feedItemCount']) ? Yii::$app->params['feedItemCount'] : 25;
 		$response = Webrequest::getUrl('', $url);
 		if (!$response->isOK) :
 			return self::EXIT_CODE_ERROR;
@@ -92,7 +91,7 @@ class FeedController extends Controller {
 			$feedItem->time = strtotime(ArrayHelper::getValue($item, $type === 'rss' ? 'pubDate' : 'updated'));
 			$feedItem->save();
 
-			if (++$count === $limit) :
+			if (++$count === $this->limit) :
 				break;
 			endif;
 		endforeach;
