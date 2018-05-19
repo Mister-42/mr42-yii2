@@ -1,2 +1,4 @@
 /composer.lock
 /mister42/secrets.php
+/webroot/.htaccess
+/webroot/php.ini

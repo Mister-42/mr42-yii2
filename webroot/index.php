@@ -7,8 +7,8 @@ require(__DIR__ . '/../../vendor/yiisoft/yii2/Yii.php');
 
 $domain = substr($_SERVER['HTTP_HOST'], 0, 4) == 'www.' ? substr($_SERVER['HTTP_HOST'], 4) : $_SERVER['HTTP_HOST'];
 switch ($domain) {
-	case 'mister42.me'			: $cfg = getConfig(['mr42/mister42']);						break;
-	case 'mr42.me'				: $cfg = getConfig(['mr42/mister42', 'mr42/mr42']);			break;
+	case 'mister42.me': $cfg = getConfig(['mr42/mister42']); break;
+	case 'mr42.me': $cfg = getConfig(['mr42/mister42', 'mr42/mr42']); break;
 }
 
 (new yii\web\Application($cfg))->run();
