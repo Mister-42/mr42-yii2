@@ -22,7 +22,7 @@ function cal_psk() {
 	$('#wpapsk .suppress').attr('disabled', true);
 	$('.field-wpapsk-psk').addClass('d-none');
 	$('.current-progress').removeClass('d-none');
-	var pskgen = new PBKDF2($('#wpapsk-pass').val(), $('#wpapsk-ssid').val(), 4096, 32);
+	var pskgen = new PBKDF2($('#wpapsk-password').val(), $('#wpapsk-ssid').val(), 4096, 32);
 	pskgen.deriveKey(status, print_psk)
 }
 
