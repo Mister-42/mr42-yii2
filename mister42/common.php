@@ -4,7 +4,7 @@ $secrets = require(__DIR__.'/secrets.php');
 return [
 	'aliases' => [
 		'@assets' => '//s.mister42.me',
-		'@assetsroot' => __DIR__.'/../../www/assets/me.mister42.s',
+		'@assetsroot' => __DIR__.'/../../webassets/me.mister42.s',
 		'@bower' => '@vendor/bower-asset',
 		'@npm' => '@vendor/npm-asset',
 	],
@@ -46,7 +46,7 @@ return [
 			'dsn' => 'mysql:host='.$secrets['MySQL']['host'].';dbname='.$secrets['MySQL']['db'],
 			'username' => $secrets['MySQL']['user'],
 			'password' => $secrets['MySQL']['pass'],
-			'charset' => 'utf8',
+			'charset' => 'utf8mb4',
 			'tablePrefix' => 'mister42_',
 
 			'enableSchemaCache' => true,
