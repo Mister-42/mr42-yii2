@@ -3,8 +3,8 @@ use app\models\tools\Country;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;
 
-$title = 'Country Information';
-$this->params['breadcrumbs'][] = 'Tools';
+$title = Yii::t('mr42', 'Country Information');
+$this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
 $this->params['breadcrumbs'][] = Yii::$app->request->isPost ? ['label' => $title, 'url' => ['country']] : $title;
 
 $model = new Country;

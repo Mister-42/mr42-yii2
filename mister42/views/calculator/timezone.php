@@ -3,8 +3,8 @@ use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\web\View;
 
-$this->title = 'Time Zone Converter';
-$this->params['breadcrumbs'][] = 'Calculator';
+$this->title = Yii::t('mr42', 'Time Zone Converter');
+$this->params['breadcrumbs'][] = Yii::t('mr42', 'Calculator');
 $this->params['breadcrumbs'][] = $this->title;
 
 $model->source = Yii::$app->request->isPost ? $model->source : 'Europe/Berlin';
@@ -13,13 +13,13 @@ $model->target = Yii::$app->request->isPost ? $model->target : 'America/New_York
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
 		echo Html::tag('h1', $this->title);
-		echo Html::tag('div', 'With this calculator you can check the date and time in any timezone around the globe.', ['class' => 'alert alert-info']);
+		echo Html::tag('div', Yii::t('mr42', 'With this calculator you can check the date and time in any timezone around the world.'), ['class' => 'alert alert-info']);
 
 		if ($flash = Yii::$app->session->getFlash('timezone-success')) :
 			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
-				echo Html::tag('div', date('l F j, Y, H:i', strtotime($model->datetime)).' in '.str_replace('_', ' ', $model->source));
-				echo Html::tag('div', 'equals');
-				echo Html::tag('div', Html::tag('strong', $flash->format('l F j, Y, H:i')).' in '.Html::tag('strong', str_replace('_', ' ', $model->target)));
+				echo Html::tag('div', Yii::t('mr42', '{a} in {b}', ['a' => Yii::$app->formatter->asDate($model->datetime.' '.Yii::$app->timeZone, 'full').' '.Yii::$app->formatter->asTime($model->datetime.' '.Yii::$app->timeZone, 'short'), 'b' => str_replace('_', ' ', $model->source)]));
+				echo Html::tag('div', Yii::t('mr42', 'equals'));
+				echo Html::tag('div', Yii::t('mr42', '{a} in {b}', ['a' => Html::tag('strong', Yii::$app->formatter->asDate($flash->format('Y-m-d H:i').' '.Yii::$app->timeZone, 'full').' '.Yii::$app->formatter->asTime($flash->format('Y-m-d H:i').' '.Yii::$app->timeZone, 'short')), 'b' => Html::tag('strong', str_replace('_', ' ', $model->target))]));
 			Alert::end();
 		endif;
 
@@ -52,8 +52,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::endTag('div');
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
-			Html::submitButton('Convert', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
+			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
+			Html::submitButton(Yii::t('mr42', 'Calculate'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();

@@ -39,10 +39,10 @@ class SiteController extends \yii\web\Controller {
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
 				'etagSeed' => function() {
-					return serialize(file(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico'));
+					return serialize(file(Yii::getAlias('@assetsroot/images/favicon.ico')));
 				},
 				'lastModified' => function() {
-					return filemtime(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico');
+					return filemtime(Yii::getAlias('@assetsroot/images/favicon.ico'));
 				},
 				'only' => ['faviconico'],
 			], [
@@ -79,7 +79,7 @@ class SiteController extends \yii\web\Controller {
 	}
 
 	public function actionFaviconico() {
-		Yii::$app->response->sendFile(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/favicon.ico', 'favicon.ico', ['inline' => true]);
+		Yii::$app->response->sendFile(Yii::getAlias('@assetsroot/images/favicon.ico'), 'favicon.ico', ['inline' => true]);
 	}
 
 	public function actionOffline() {

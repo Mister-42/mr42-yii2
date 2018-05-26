@@ -8,9 +8,9 @@ use yii\db\ActiveRecord;
 class Profile extends \Da\User\Model\Profile {
 	public function attributeLabels() {
 		$labels = parent::attributeLabels();
-		$labels['lastfm'] = 'Last.fm Username';
-		$labels['birthday'] = 'Date of Birth';
-		$labels['bio'] = 'Profile';
+		$labels['lastfm'] = Yii::t('mr42', 'Last.fm Username');
+		$labels['birthday'] = Yii::t('mr42', 'Date of Birth');
+		$labels['bio'] = Yii::t('usuario', 'Profile');
 		return $labels;
 	}
 

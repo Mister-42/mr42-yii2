@@ -20,8 +20,9 @@ class Geographic extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['lat'] = 'Latitude';
-		$labels['lng'] = 'Longitude';
+		$labels['lat'] = Yii::t('mr42', 'Latitude');
+		$labels['lng'] = Yii::t('mr42', 'Longitude');
+		$labels['altitude'] = Yii::t('mr42', 'Altitude');
 		return $labels;
 	}
 

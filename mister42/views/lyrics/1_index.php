@@ -1,7 +1,7 @@
 <?php
 use yii\bootstrap4\Html;
 
-$this->title = 'Lyrics';
+$this->title = Yii::t('mr42', 'Lyrics');
 $this->params['breadcrumbs'][] = $this->title;
 
 echo Html::tag('h1', $this->title);
@@ -15,7 +15,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics']);
 			endif;
 			echo Html::a($artist->name, ['index', 'artist' => $artist->url]);
 			if (!$artist->active) :
-				echo Html::tag('span', 'Draft', ['class' => 'badge ml-1']);
+				echo Html::tag('span', Yii::t('mr42', 'Draft'), ['class' => 'badge ml-1']);
 			endif;
 			echo '<br>';
 

@@ -20,9 +20,9 @@ class Timezone extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'source' => 'Source Time Zone',
-			'datetime' => 'Date & Time in Source Time Zone',
-			'target' => 'Target Time Zone',
+			'source' => Yii::t('mr42', 'Source Time Zone'),
+			'datetime' => Yii::t('mr42', 'Date & Time in Source Time Zone'),
+			'target' => Yii::t('mr42', 'Target Time Zone'),
 		];
 	}
 

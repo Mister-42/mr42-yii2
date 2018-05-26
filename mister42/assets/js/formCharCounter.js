@@ -1,10 +1,11 @@
 $('#formContent').keyup(function() {
 	len = $(this).val().length;
-	char = %max% - len;
+	char = formCharCount.chars - len;
 
-	if(len > %max%) {
-		$('#chars').text(Math.abs(char)+' characters over the limit.').addClass('alert-danger')
+	if(len > formCharCount.chars) {
+		$('#chars').html(formCharCount.lang.overLimit).addClass('alert-danger')
 	} else {
-		$('#chars').text(char+' characters left').removeClass('alert-danger');
+		$('#chars').html(formCharCount.lang.charsLeft).removeClass('alert-danger');
 	}
+	$('#chars span.charcount').text(Math.abs(char));
 }).keyup();

@@ -19,7 +19,8 @@ class Favicon extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'recipient' => 'Email Address',
+			'sourceImage' => Yii::t('mr42', 'Source Image'),
+			'recipient' => Yii::t('mr42', 'Email Address'),
 		];
 	}
 

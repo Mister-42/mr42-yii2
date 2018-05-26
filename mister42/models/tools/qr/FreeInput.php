@@ -16,7 +16,7 @@ class FreeInput extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['qrdata'] = 'QR Data';
+		$labels['qrdata'] = Yii::t('mr42', 'QR Data');
 		return $labels;
 	}
 

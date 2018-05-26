@@ -31,7 +31,20 @@ class Vcard extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['email'] = 'Email Address';
+		$labels['firstName'] = Yii::t('mr42', 'First Name');
+		$labels['lastName'] = Yii::t('mr42', 'Last Name');
+		$labels['fullName'] = Yii::t('mr42', 'Full Name');
+		$labels['homeAddress'] = Yii::t('mr42', 'Home Address');
+		$labels['homePhone'] = Yii::t('mr42', 'Home Telephone Number');
+		$labels['organization'] = Yii::t('mr42', 'Organization');
+		$labels['title'] = Yii::t('mr42', 'Title');
+		$labels['role'] = Yii::t('mr42', 'Role');
+		$labels['workAddress'] = Yii::t('mr42', 'Work Address');
+		$labels['workPhone'] = Yii::t('mr42', 'Work Telephone Number');
+		$labels['email'] = Yii::t('mr42', 'Email Address');
+		$labels['website'] = Yii::t('mr42', 'Website URL');
+		$labels['birthday'] = Yii::t('mr42', 'Birthday');
+		$labels['note'] = Yii::t('mr42', 'Note');
 		return $labels;
 	}
 

@@ -62,7 +62,7 @@ class ArticlesController extends \yii\web\Controller {
 		$model = $this->findModel($id);
 
 		if (!$model->pdf) :
-			throw new NotFoundHttpException('File not found.');
+			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 		endif;
 
 		if (empty($title) || $title != $model->url) :
@@ -92,7 +92,7 @@ class ArticlesController extends \yii\web\Controller {
 
 		$model = BaseArticles::findOne(['id' => $id]);
 		if (!$model->belongsToViewer()) :
-			throw new UnauthorizedHttpException('You do not have permission to edit this article.');
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
 		endif;
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) :
@@ -108,7 +108,7 @@ class ArticlesController extends \yii\web\Controller {
 	public function actionDelete(int $id) {
 		$model = BaseArticles::findOne(['id' => $id]);
 		if (!$model->belongsToViewer()) :
-			throw new UnauthorizedHttpException('You do not have permission to delete this article.');
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
 		endif;
 
 		$model->delete();
@@ -120,13 +120,13 @@ class ArticlesController extends \yii\web\Controller {
 		$article = $this->findModel($comment->parent);
 
 		if (!$article->belongsToViewer()) :
-			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
 		endif;
 
 		$comment->active = $comment->active ? Comments::STATUS_INACTIVE : Comments::STATUS_ACTIVE;
 		if ($action == "toggleapproval") :
 			if (!Yii::$app->request->isAjax) :
-				throw new MethodNotAllowedHttpException('Method Not Allowed.');
+				throw new MethodNotAllowedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
 			endif;
 			$comment->update();
 			return $comment->showApprovalButton();
@@ -149,16 +149,16 @@ class ArticlesController extends \yii\web\Controller {
 					$comment->email = Yii::$app->user->identity->email;
 				endif;
 				$comment->sendCommentMail($model, $comment);
-				return Html::tag('div', 'Your comment has been saved. It will not be visible until approved by an administrator.', ['class' => 'alert alert-success']);
+				return Html::tag('div', Yii::t('mr42', 'Your comment has been saved. It will not be visible until approved by an administrator.'), ['class' => 'alert alert-success']);
 			endif;
-			return Html::tag('div', 'Something went wrong, Your comment has not been saved.', ['class' => 'alert alert-danger']);
+			return Html::tag('div', Yii::t('mr42', 'Something went wrong, Your comment has not been saved.'), ['class' => 'alert alert-danger']);
 		endif;
 
 		if (Yii::$app->request->get('title') != $model->url) :
 			$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
 		endif;
 
-		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['shortDomain']."art{$model->id}"]);
+		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(['permalink/articles', 'id' => $model->id])]);
 		if ($model->pdf) :
 			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
 		endif;
@@ -176,12 +176,12 @@ class ArticlesController extends \yii\web\Controller {
 			->one();
 
 		if (!$model) :
-			throw new NotFoundHttpException('Comment not found.');
+			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 		endif;
 
 		$article = $this->findModel($id);
 		if (!$article->belongsToViewer()) :
-			throw new UnauthorizedHttpException('You do not have permission to edit this comment.');
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
 		endif;
 
 		return $model;
@@ -199,7 +199,7 @@ class ArticlesController extends \yii\web\Controller {
 		$model = $query->one();
 
 		if (!$model) :
-			throw new NotFoundHttpException('Page not found.');
+			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 		endif;
 
 		return $model;

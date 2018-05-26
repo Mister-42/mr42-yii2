@@ -17,8 +17,8 @@ class Duration extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'fromDate' => 'Start Date',
-			'toDate' => 'End Date',
+			'fromDate' => Yii::t('mr42', 'Start Date'),
+			'toDate' => Yii::t('mr42', 'End Date'),
 		];
 	}
 

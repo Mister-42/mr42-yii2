@@ -25,7 +25,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 					$data[] = Html::beginTag('span', ['class' => 'text-truncate']);
 						$data[] = $track['artist'];
 						if ($track['time'] === 0) :
-							$data[] = Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => 'Currently playing']);
+							$data[] = Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => Yii::t('mr42', 'Currently playing')]);
 						endif;
 					$data[] = Html::endTag('span');
 					$data[] = Html::tag('span', $track['track'], ['class' => 'text-truncate text-right']);
@@ -34,9 +34,9 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		endforeach;
 
 		$data[] = empty($tracks)
-			? Html::tag('div', 'No items to display.', ['class' => 'ml-2'])
+			? Html::tag('div', Yii::t('mr42', Yii::t('general', 'No items to display.')), ['class' => 'ml-2'])
 			: Html::tag('div',
-				Html::tag('span', 'Total tracks played:', ['class' => 'font-weight-bold float-left']).
+				Html::tag('span', Yii::t('mr42', 'Total tracks played:'), ['class' => 'font-weight-bold float-left']).
 				Html::tag('span', Yii::$app->formatter->asInteger($tracks[0]['count']), ['class' => 'font-weight-bold float-right'])
 			);
 		return implode($data);

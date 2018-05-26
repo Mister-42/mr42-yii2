@@ -23,9 +23,9 @@ class Qr extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'type' => 'Type of QR Code to generate',
-			'size' => 'Size in pixels',
-			'recipient' => 'Email Address'
+			'type' => Yii::t('mr42', 'Type of QR Code to generate'),
+			'size' => Yii::t('mr42', 'Size in pixels'),
+			'recipient' => Yii::t('mr42', 'Email Address'),
 		];
 	}
 
@@ -57,13 +57,13 @@ class Qr extends \yii\base\Model {
 			])->input('number', ['tabindex' => ++$tab]).
 			$form->field($this, 'recipient', [
 				'options' => ['class' => 'form-group col-md-6'],
-				'template' => '{label} (optional)<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{hint} {error}',
+				'template' => '{label} '.Yii::t('mr42', '(optional)').'<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{hint} {error}',
 			])->input('email', ['tabindex' => ++$tab])
-			->hint('If you enter your email address the '.Html::tag('span', 'QR Code', ['class' => 'text-nowrap']).' will be mailed to that address.')
+			->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'))
 		, ['class' => 'row form-group']);
 
 		$footer[] = Html::tag('div',
-			Html::submitButton('Generate QR Code', ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
+			Html::submitButton(Yii::t('mr42', 'Generate QR Code'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		return implode($footer);
@@ -90,7 +90,7 @@ class Qr extends \yii\base\Model {
 	}
 
 	public static function getWifiAuthentication(bool $rules = false): array {
-		return $rules ? ['none', 'wep', 'wpa'] : ['none' => 'none', 'wep' => 'WEP', 'wpa' => 'WPA'];
+		return $rules ? ['none', 'wep', 'wpa'] : ['none' => Yii::t('mr42', 'none'), 'wep' => Yii::t('mr42', 'WEP'), 'wpa' => Yii::t('mr42', 'WPA')];
 	}
 
 	public static function getTypes(bool $rules = false): array {

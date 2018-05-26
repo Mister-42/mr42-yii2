@@ -15,33 +15,27 @@ class Formatter extends \yii\i18n\Formatter {
 		if ($markdown) :
 			$data = Markdown::process($data, $markdown);
 		endif;
-		$data = $this->addImageFluidClass($data);
+		$data = $this->addImageResponsiveClass($data);
 		return trim($data);
 	}
 
-	public function jspack(string $file, array $replace = []): string {
-		$filename = Yii::getAlias("@app/assets/js/{$file}");
-		$cachefile = Yii::getAlias("@runtime/assets/js/{$file}");
-
-		if (!file_exists($filename)) :
+	public function jspack(string $file): string {
+		if (!file_exists($fileName = Yii::getAlias("@app/assets/js/{$file}"))) :
 			return "{$file} does not exist.";
 		endif;
 
-		if (!file_exists($cachefile) || filemtime($cachefile) < filemtime($filename)) :
+		$cacheFile = Yii::getAlias("@runtime/assets/js/{$file}");
+		if (!file_exists($cacheFile) || filemtime($cacheFile) < filemtime($fileName)) :
 			FileHelper::createDirectory(Yii::getAlias('@runtime/assets/js'));
-			$js = strtr(file_get_contents($filename), $replace);
-			$jp = new JavascriptPacker($js, 0);
-			if (!empty($replace)) :
-				return $jp->pack();
-			endif;
-			FileHelper::createDirectory(dirname($cachefile));
-			file_put_contents($cachefile, $jp->pack());
-			touch($cachefile, filemtime($filename));
+			$jp = new JavascriptPacker(file_get_contents($fileName), 0);
+			FileHelper::createDirectory(dirname($cacheFile));
+			file_put_contents($cacheFile, $jp->pack());
+			touch($cacheFile, filemtime($fileName));
 		endif;
-		return file_get_contents($cachefile);
+		return file_get_contents($cacheFile);
 	}
 
-	private function addImageFluidClass($html) {
+	private function addImageResponsiveClass($html) {
 		$html = preg_match('/<img.*? class="/', $html)
 			? preg_replace("/<img (.*?) class=\"(.*?)\"(.*?)>/i", '<img $1 class="$2 img-fluid"$3>', $html)
 			: preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid"$2', $html);

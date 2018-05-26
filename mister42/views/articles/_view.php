@@ -15,20 +15,20 @@ echo Html::beginTag('article', ['class' => 'mb-3']);
 		echo Html::tag('h3', (isset($view) && $view === 'full') ? $model->title : Html::a($model->title, ['index', 'id' => $model->id, 'title' => $model->url]), ['class' => 'float-left']);
 		echo Html::beginTag('div', ['class' => 'float-right']);
 			if ($model->belongsToViewer()) :
-				echo Html::a(Yii::$app->icon->show('edit').' Edit', ['update', 'id' => $model->id], ['class' => 'badge badge-primary ml-1']);
-				echo Html::a(Yii::$app->icon->show('trash-alt').' Delete', ['delete', 'id' => $model->id], [
+				echo Html::a(Yii::$app->icon->show('edit', ['class' => 'mr-1']).Yii::t('mr42', 'Edit'), ['update', 'id' => $model->id], ['class' => 'badge badge-primary ml-1']);
+				echo Html::a(Yii::$app->icon->show('trash-alt', ['class' => 'mr-1']).Yii::t('yii', 'Delete'), ['delete', 'id' => $model->id], [
 					'class' => 'badge badge-danger ml-1',
-					'data-confirm' => 'Are you sure you want to delete this article?',
+					'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
 					'data-method' => 'post',
 				]);
 			endif;
 			if ($model->pdf) :
-				echo Html::a(Yii::$app->icon->show('file-pdf').' PDF', ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'badge badge-warning ml-1']);
+				echo Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'badge badge-warning ml-1']);
 			endif;
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 
-	echo Html::tag('p', Yii::$app->formatter->asDate($model->updated).' by '.$authorPage, ['class' => 'text-secondary']);
+	echo Html::tag('p', Yii::t('mr42', '{date} by {author}', ['date' => Yii::$app->formatter->asDate($model->updated), 'author' => $authorPage]), ['class' => 'text-secondary']);
 
 	echo Html::beginTag('div');
 		if (strpos($model->content, '[readmore]')) :
@@ -37,7 +37,7 @@ echo Html::beginTag('article', ['class' => 'mb-3']);
 			else :
 				$model->content = substr($model->content, 0, strpos($model->content, '[readmore]'));
 				$model->content .= Html::tag('div',
-					Html::a('Read full article &raquo;', ['index', 'id' => $model->id, 'title' => $model->url], ['class' => 'float-right btn btn-primary'])
+					Html::a(Yii::t('mr42', 'Read full article').' &raquo;', ['index', 'id' => $model->id, 'title' => $model->url], ['class' => 'float-right btn btn-primary'])
 				, ['class' => 'clearfix']);
 			endif;
 		endif;
@@ -47,18 +47,18 @@ echo Html::beginTag('article', ['class' => 'mb-3']);
 
 	if (isset($view) && $view === 'full') :
 		if ($model->active == 0) :
-			$bar[] = Html::tag('div', 'Not published', ['class' => 'badge badge-warning']);
+			$bar[] = Html::tag('div', Yii::t('mr42', 'Not published'), ['class' => 'badge badge-warning']);
 		endif;
 
-		$bar[] = Yii::$app->icon->show('link', ['class' => 'mr-1 text-muted']).Html::a('permalink', Yii::$app->params['shortDomain']."art{$model->id}");
+		$bar[] = Yii::$app->icon->show('link', ['class' => 'mr-1 text-muted']).Html::a(Yii::t('mr42', 'permalink'), ['/permalink/articles', 'id' => $model->id]);
 
-		$commentText = Yii::t('site', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
+		$commentText = Yii::t('mr42', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
 		$bar[] = Yii::$app->icon->show('comment', ['class' => 'mr-1 text-muted']).Html::a($commentText, ['index', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);
 
 		$tags = StringHelper::explode($model->tags);
 		if (count($tags) > 0) :
 			foreach ($tags as $tag) :
-				$tagArray[] = Html::a($tag, ['index', 'action' => 'tag', 'tag' => $tag]);
+				$tagArray[] = Html::a($tag, ['index', 'action' => 'tag', 'q' => $tag]);
 			endforeach;
 			$bar[] = Yii::$app->icon->show(count($tags) === 1 ? 'tag' : 'tags', ['class' => 'mr-1 text-muted']).implode(', ', $tagArray);
 		endif;

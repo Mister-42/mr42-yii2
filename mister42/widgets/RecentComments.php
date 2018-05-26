@@ -5,15 +5,16 @@ use app\models\articles\Comments;
 use yii\bootstrap4\{Html, Widget};
 
 class RecentComments extends Widget {
+	public $limit = 5;
+
 	public function run(): string {
-		$limit = is_int(Yii::$app->params['recentArticles']) ? Yii::$app->params['recentArticles'] : 5;
 		$comments = Comments::find()
 			->orderBy('created DESC')
 			->with('article')
 			->where(['active' => Comments::STATUS_ACTIVE])
-			->limit($limit)
+			->limit($this->limit)
 			->all();
-		return empty($comments) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderComments($comments);
+		return empty($comments) ? Html::tag('div', Yii::t('mr42', 'No items to display.'), ['class' => 'ml-2']) : self::renderComments($comments);
 	}
 
 	private function renderComments(array $comments): string {

@@ -1,4 +1,6 @@
 <?php
+$secrets = require(__DIR__.'/../mister42/secrets.php');
+
 return [
 	'basePath' => __DIR__,
 	'components' => [
@@ -15,6 +17,9 @@ return [
 					'logTable' => 'log_mr42_error',
 				],
 			],
+		],
+		'request' => [
+			'cookieValidationKey' => $secrets['cookieValidationKey'],
 		],
 		'urlManager' => [
 			'rules' => [

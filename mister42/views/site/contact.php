@@ -4,19 +4,18 @@ use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 use yii\widgets\Pjax;
 
-$this->title = 'Contact';
+$this->title = Yii::t('mr42', 'Contact');
 $this->params['breadcrumbs'][] = $this->title;
 
-$rules = $model->rules();
-$this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' => $rules['charCount']['max']]), View::POS_READY);
-$this->registerJs(Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
+$this->registerJs("var formCharCount = {chars:{$model->rules()['charCount']['max']}, lang:{overLimit:'".Yii::t('mr42', '{x} characters over the limit', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."', charsLeft:'".Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."'}};".Yii::$app->formatter->jspack('formCharCounter.js'), View::POS_READY);
+$this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
 		echo Html::tag('h1', $this->title);
 
 		Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger']);
-			echo Html::tag('div', 'If you have inquiries or other questions, please fill out the following form to contact '.Yii::$app->name.'. Thank you.', ['class' => 'alert alert-info']);
+			echo Html::tag('div', Yii::t('mr42', 'If you have inquiries or other questions, please fill out the following form to contact {siteName}. Thank you.', ['siteName' => Yii::$app->name]), ['class' => 'alert alert-info']);
 
 			$form = ActiveForm::begin(['options' => ['data-pjax' => '']]);
 			$tab = 0;
@@ -44,13 +43,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'attachment', [
 				'template' => Html::tag('label', $model->getAttributeLabel('attachment'), ['for' => 'sourceFile']).'<div class="input-group">'.Yii::$app->icon->fieldAddon('paperclip').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
-			->label('Select a file', ['class' => 'custom-file-label text-truncate']);
+			->label(Yii::t('mr42', 'Select a file'), ['class' => 'custom-file-label text-truncate']);
 
 			echo Form::captcha($form, $model, ++$tab);
 
 			echo Html::tag('div',
-				Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
-				Html::submitButton('Send', ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab])
+				Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
+				Html::submitButton(Yii::t('mr42', 'Send'), ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab])
 			, ['class' => 'btn-toolbar float-right form-group']);
 
 			ActiveForm::end();

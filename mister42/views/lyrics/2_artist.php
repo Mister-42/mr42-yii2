@@ -3,7 +3,7 @@ use app\widgets\Lightbox;
 use yii\bootstrap4\Html;
 
 $this->title = implode(' - ', [$data[0]->artist->name, 'Lyrics']);
-$this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $data[0]->artist->name;
 
 echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
@@ -12,10 +12,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']).
 			Html::tag('div',
 				($data[0]->artist->buy
-					? Html::a(Yii::$app->icon->show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => 'Buy music of '.$data[0]->artist->name])
+					? Html::a(Yii::$app->icon->show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy music of {artist}', ['artist' => $data[0]->artist->name])])
 					: '').
 				($data[0]->artist->website
-					? Html::a(Yii::$app->icon->show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => 'Website of '.$data[0]->artist->name])
+					? Html::a(Yii::$app->icon->show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])])
 					: '')
 			, ['class' => 'float-right'])
 		, ['class' => 'col'])
@@ -32,10 +32,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 						), ['class' => 'float-left']).
 						Html::tag('div',
 							($album->playlist_url
-								? Html::a(Yii::$app->icon->show('youtube', ['prefix' => 'fab fa-']).' Play', $album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
+								? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
 								: '').
 							($album->active
-								? Html::a(Yii::$app->icon->show('file-pdf').' PDF', ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-light ml-1'])
+								? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-light ml-1'])
 								: '')
 						, ['class' => 'float-right'])
 					, ['class' => 'card-header']);

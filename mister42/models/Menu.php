@@ -8,8 +8,8 @@ class Menu {
 		$menuItems = require(Yii::getAlias('@app/data/menu.php'));
 
 		if (Yii::$app->controller->action->id === 'sitemap') :
-			$menuItems[] = ['label' => 'Create Account', 'url' => ['/user/registration/register']];
-			$menuItems[] = ['label' => 'Contact', 'url' => ['/site/contact']];
+			$menuItems[] = ['label' => null, 'url' => ['/user/registration/register']];
+			$menuItems[] = ['label' => null, 'url' => ['/site/contact']];
 		endif;
 		return $menuItems;
 	}

@@ -19,8 +19,9 @@ class Ical extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['start'] = 'Start Date';
-		$labels['end'] = 'End Date';
+		$labels['start'] = Yii::t('mr42', 'Start Date');
+		$labels['end'] = Yii::t('mr42', 'End Date');
+		$labels['summary'] = Yii::t('mr42', 'Summary');
 		return $labels;
 	}
 

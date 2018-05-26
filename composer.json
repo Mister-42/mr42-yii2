@@ -21,6 +21,7 @@
         "bower-asset/lightbox2": "^2.9",
         "bower-asset/to-markdown": "^3.0",
         "2amigos/yii2-usuario": "~1.0",
+        "codemix/yii2-localeurls": "^1.7",
         "gkralik/php-uglifyjs": "^1.0",
         "kartik-v/yii2-mpdf": "*",
         "kop/yii2-scroll-pager": "*",

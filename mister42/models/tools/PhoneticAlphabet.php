@@ -22,9 +22,9 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 
 	public function attributeLabels(): array {
 		return [
-			'text' => 'Text to convert',
-			'alphabet' => 'Phonetic Alphabet to use',
-			'numeric' => 'Convert digits',
+			'text' => Yii::t('mr42', 'Text to convert'),
+			'alphabet' => Yii::t('mr42', 'Phonetic Alphabet to use'),
+			'numeric' => Yii::t('mr42', 'Convert Digits'),
 		];
 	}
 

@@ -16,6 +16,16 @@ class Bitcoin extends \app\models\tools\Qr {
 		return $rules;
 	}
 
+	public function attributeLabels(): array {
+		$labels = parent::attributeLabels();
+
+		$labels['address'] = Yii::t('mr42', 'Address');
+		$labels['amount'] = Yii::t('mr42', 'Amount');
+		$labels['name'] = Yii::t('mr42', 'Name');
+		$labels['message'] = Yii::t('mr42', 'Message');
+		return $labels;
+	}
+
 	public function generateQr(): bool {
 		$data['amount'] = $this->amount;
 		$data['label'] = $this->name;

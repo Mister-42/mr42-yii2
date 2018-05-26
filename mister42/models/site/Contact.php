@@ -25,10 +25,12 @@ class Contact extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'email' => 'Email Address',
-			'title' => 'Subject',
-			'content' => 'Message',
-			'captcha' => 'CAPTCHA',
+			'name' => Yii::t('mr42', 'Name'),
+			'email' => Yii::t('mr42', 'Email Address'),
+			'title' => Yii::t('mr42', 'Subject'),
+			'content' => Yii::t('mr42', 'Message'),
+			'attachment' => Yii::t('mr42', 'Attachment'),
+			'captcha' => Yii::t('mr42', 'CAPTCHA'),
 		];
 	}
 

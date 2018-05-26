@@ -13,7 +13,7 @@ class Articles extends BaseArticles {
 
 		if ($this->source) :
 			$this->content .= Html::tag('div',
-				Html::a('Source', $this->source, ['class' => 'btn btn-secondary float-right'])
+				Html::a(Yii::t('mr42', 'Source'), $this->source, ['class' => 'btn btn-secondary float-right'])
 			, ['class' => 'clearfix']);
 		endif;
 	}

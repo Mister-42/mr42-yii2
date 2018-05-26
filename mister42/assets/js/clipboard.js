@@ -1,12 +1,12 @@
 $('.clipboard-js-init').on('mouseleave', function() {
-	$(this).removeClass('btn-success').addClass('btn-primary').tooltip('hide').attr('data-original-title', 'Copy to Clipboard');
+	$(this).removeClass('btn-success').addClass('btn-primary').tooltip('hide').attr('data-original-title', genpass.lang.copy);
 });
 
 var cb = new ClipboardJS('.clipboard-js-init');
 
 cb.on('success', function(e) {
 	e.clearSelection();
-	btnSucces('Copied!');
+	btnSucces(genpass.lang.copied);
 });
 
 cb.on('error', function(e) {

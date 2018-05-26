@@ -41,7 +41,7 @@ foreach ($tracks as $track) :
 	elseif ($track->wip) :
 		echo Html::tag('i', 'Work in Progress');
 	else :
-		echo Html::img(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/TrebleClef.png');
+		echo Html::img('@assets/images/TrebleClef.png');
 		echo Html::tag('strong', 'Instrumental');
 	endif;
 endforeach;

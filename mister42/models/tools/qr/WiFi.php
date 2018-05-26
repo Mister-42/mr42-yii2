@@ -25,8 +25,10 @@ class WiFi extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['ssid'] = 'SSID';
-		$labels['hidden'] = 'Hidden Network';
+		$labels['authentication'] = Yii::t('mr42', 'Authentication');
+		$labels['ssid'] = Yii::t('mr42', 'SSID');
+		$labels['password'] = Yii::t('mr42', 'Password');
+		$labels['hidden'] = Yii::t('mr42', 'Hidden Network');
 		return $labels;
 	}
 

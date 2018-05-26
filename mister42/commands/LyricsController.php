@@ -1,7 +1,7 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Console, Webrequest};
+use app\models\{Console, Video, Webrequest};
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
@@ -181,6 +181,7 @@ class LyricsController extends Controller {
 				foreach ($data as $trackData) :
 					if (!ArrayHelper::keyExists($trackData['id'], $response, false) || !ArrayHelper::getValue($response, "{$trackData['id']}.status.embeddable")) :
 						Console::write($trackData['name'], [Console::FG_PURPLE], 5);
+						Console::write(video::getUrl('youtube', $trackData['id']), [Console::FG_PURPLE], 5);
 
 						if (!ArrayHelper::keyExists($trackData['id'], $response, false)) :
 							Console::writeError('Not Found', [Console::BOLD, Console::FG_RED]);
@@ -188,7 +189,6 @@ class LyricsController extends Controller {
 							Console::write('Not embeddable', [Console::BOLD, Console::FG_RED]);
 						endif;
 
-						Console::newLine();
 						continue;
 					endif;
 				endforeach;

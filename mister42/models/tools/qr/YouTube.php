@@ -16,7 +16,7 @@ class YouTube extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['id'] = 'YouTube Video ID';
+		$labels['id'] = Yii::t('mr42', 'YouTube Video ID');
 		return $labels;
 	}
 

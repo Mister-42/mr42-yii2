@@ -4,18 +4,17 @@ use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 use yii\widgets\Pjax;
 
-$rules = $model->rules();
-$this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' => $rules['charCount']['max']]), View::POS_READY);
+$this->registerJs("var formCharCount = {chars:{$model->rules()['charCount']['max']}, lang:{overLimit:'".Yii::t('mr42', '{x} characters over the limit', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."', charsLeft:'".Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."'}};".Yii::$app->formatter->jspack('formCharCounter.js'), View::POS_READY);
 
 Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]);
-	echo Html::tag('h3', 'Leave a Comment');
+	echo Html::tag('h3', Yii::t('mr42', 'Leave a Comment'));
 
 	$form = ActiveForm::begin(['id' => 'comment-form', 'options' => ['data-pjax' => '']]);
 	$tab = 0;
 
 		if (Yii::$app->user->isGuest) :
 			echo '<div class="row">';
-				echo $form->field($model, 'name', [
+				echo $form->field($model, 'nameField', [
 					'options' => ['class' => 'col-md-6'],
 					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
 				])->textInput(['tabindex' => ++$tab]);
@@ -24,7 +23,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 					'options' => ['class' => 'col-md-6'],
 					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('envelope').'{input}</div>{hint}{error}',
 				])->input('email', ['tabindex' => ++$tab])
-				->hint('This will never be published.');
+				->hint(Yii::t('mr42', 'This will never be published.'));
 			echo '</div>';
 
 			echo $form->field($model, 'website', [
@@ -40,15 +39,15 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div> {hint} {error}'
 			])
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
-			->hint('You may use '.Html::a('Markdown Syntax', Yii::$app->params['shortDomain'].'art4', ['target' => '_blank']).'. HTML is not allowed.');
+			->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), ['/permalink/articles', 'id' => 4], ['target' => '_blank'])]));
 
 		if (Yii::$app->user->isGuest) :
 			echo Form::captcha($form, $model, ++$tab);
 		endif;
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
-			Html::submitButton('Submit', ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab])
+			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
+			Html::submitButton(Yii::t('mr42', 'Submit'), ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 	ActiveForm::end();

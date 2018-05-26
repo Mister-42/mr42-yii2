@@ -21,10 +21,11 @@ class Office365 extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'sourcedate' => 'Current End Date',
-			'sourcecount' => 'Current Amount of Licenses',
-			'targetdate' => 'Date of Product Key Redemption',
-			'targetcount' => 'Amount of Licenses You Are Activating',
+			'sourcedate' => Yii::t('mr42', 'Current End Date'),
+			'sourcecount' => Yii::t('mr42', 'Current Amount of Licenses'),
+			'targetdate' => Yii::t('mr42', 'Date of Product Key Redemption'),
+			'targetcount' => Yii::t('mr42', 'Amount of Licenses You Are Activating'),
+			'action' => Yii::t('mr42', 'Action'),
 		];
 	}
 

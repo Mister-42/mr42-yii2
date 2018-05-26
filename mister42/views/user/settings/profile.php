@@ -9,7 +9,7 @@ $this->title = Yii::t('usuario', 'Profile settings');
 $this->params['breadcrumbs'][] = $this->title;
 $timezoneHelper = $model->make(TimezoneHelper::class);
 
-$this->registerJs(Yii::$app->formatter->jspack('formCharCounter.js', ['%max%' => $model->rules()['bioString']['max']]), View::POS_READY);
+$this->registerJs("var formCharCount = {chars:{$model->rules()['bioString']['max']}, lang:{overLimit:'".Yii::t('mr42', '{x} characters over the limit', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."', charsLeft:'".Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."'}};".Yii::$app->formatter->jspack('formCharCounter.js'), View::POS_READY);
 
 echo $this->render('@Da/User/resources/views/shared/_alert', ['module' => Yii::$app->getModule('user')]);
 
@@ -71,7 +71,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'inputTemplate' => '<div class="row"><div id="chars" class="col-12 text-right"></div></div><div class="input-group">'.Yii::$app->icon->fieldAddon('info-circle').'{input}</div>',
 			])
 			->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => ++$tab])
-			->hint('You may use '.Html::a('Markdown Syntax', Yii::$app->params['shortDomain'].'art4', ['target' => '_blank']).' and <code>%age%</code> to show your age, calculated from <nobr>'.Html::tag('code', $model->getAttributeLabel('birthday')).'</nobr>. HTML is not allowed.');
+			->hint(Yii::t('mr42', 'You may use {markdown} and {age} to show your age, calculated from <nobr>{birthday}</nobr>. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), ['/permalink/articles', 'id' => 4], ['target' => '_blank']), 'age' => '<code>%age%</code>', 'birthday' => Html::tag('code', $model->getAttributeLabel('birthday'))]));
 
 		echo $form->field($model, 'timezone', [
 			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('clock').'{input}</div>',

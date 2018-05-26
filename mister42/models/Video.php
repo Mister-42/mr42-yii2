@@ -11,6 +11,8 @@ class Video {
 			$src = $isPlaylist
 				? 'https://www.youtube-nocookie.com/embed/videoseries?'.http_build_query(['disablekb' => 1, 'list' => $id, 'showinfo' => 0])
 				: "https://www.youtube-nocookie.com/embed/{$id}?".http_build_query(['disablekb' => 1, 'rel' => 0, 'showinfo' => 0]);
+		else :
+			return Yii::t('mr42', 'Sorry, {source} is not supported.', ['source' => $source]);
 		endif;
 
 		return Html::tag('div',
@@ -24,7 +26,7 @@ class Video {
 		elseif ($source === 'youtube') :
 			return $isPlaylist ? 'https://www.youtube.com/playlist?'.http_build_query(['list' => $id]) : "https://youtu.be/{$id}";
 		else :
-			return 'Only Vimeo and YouTube are supported at this moment.';
+			return Yii::t('mr42', 'Sorry, {source} is not supported.', ['source' => $source]);
 		endif;
 	}
 }

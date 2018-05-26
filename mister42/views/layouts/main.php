@@ -1,12 +1,11 @@
 <?php
-use app\assets\{AppAsset, ImagesAsset};
+use app\assets\AppAsset;
 use app\models\Menu;
 use yii\bootstrap4\{Html, Nav, NavBar};
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
-ImagesAsset::register($this);
 
 $this->beginPage();
 
@@ -23,9 +22,9 @@ if (Yii::$app->controller->id !== 'articles' || Yii::$app->controller->action->i
 	$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
 endif;
 $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
-$this->registerLinkTag(['rel' => 'icon', 'sizes' => '64x64 48x48 32x32 16x16', 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/favicon.ico']);
-$this->registerLinkTag(['rel' => 'mask-icon', 'color' => Yii::$app->params['themeColor'], 'type' => 'image/x-icon', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/safari-pinned-tab.svg']);
-$this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href' => Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/apple-touch-icon.png']);
+$this->registerLinkTag(['rel' => 'icon', 'sizes' => '64x64 48x48 32x32 16x16', 'type' => 'image/x-icon', 'href' => Url::to('@assets/images/favicon.ico')]);
+$this->registerLinkTag(['rel' => 'mask-icon', 'color' => Yii::$app->params['themeColor'], 'type' => 'image/x-icon', 'href' => Url::to('@assets/images/safari-pinned-tab.svg')]);
+$this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href' => Url::to('@assets/images/apple-touch-icon.png')]);
 $this->registerLinkTag(['rel' => 'manifest', 'href' => Url::to(['/site/webmanifest'])]);
 $this->registerMetaTag(['name' => 'msapplication-config', 'content' => Url::to(['/site/browserconfigxml'])]);
 $this->registerMetaTag(['name' => 'theme-color', 'content' => $this->params['themeColor'] ?? Yii::$app->params['themeColor']]);
@@ -69,18 +68,28 @@ echo Html::tag('main',
 echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 	echo Html::beginTag('div', ['class' => 'container']);
 		echo Html::tag('span', '&copy; 2014-'.date('Y').' '.Yii::$app->name);
-		echo Html::beginTag('div', ['class' => 'float-right']);
+		echo Html::beginTag('div', ['class' => 'float-right dropup']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') :
+				echo Html::a(Yii::t('mr42', 'Contact'), ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact '.Yii::$app->name]);
+
 				if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) :
-									echo Html::a(Yii::$app->icon->show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => 'Validate HTML']);
+					echo Html::a(Yii::$app->icon->show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
 				endif;
-				echo Html::a('Contact', ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact '.Yii::$app->name]);
-				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => 'RSS']);
+				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
+
+				echo Html::a(Yii::$app->icon->show('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'id' => 'dropdownMenuLink', 'role' => 'button']);
+				echo Html::beginTag('div', ['aria-labelledby' => 'dropdownMenuLink', 'class' => 'dropdown-menu']);
+					foreach (Yii::$app->params['languages'] as $lng => $desc) :
+						if ($lng !== Yii::$app->language) :
+							echo Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item']);
+						endif;
+					endforeach;
+				echo Html::endTag('div');
 			endif;
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 echo Html::endTag('footer');
-echo Html::a(Yii::$app->icon->show('chevron-up'), null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => 'Scroll to top']);
+echo Html::a(Yii::$app->icon->show('chevron-up'), null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => Yii::t('mr42', 'Scroll to top')]);
 $this->endBody();
 
 echo Html::endTag('body');

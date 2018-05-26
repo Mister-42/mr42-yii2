@@ -1,8 +1,8 @@
 <?php
 use yii\bootstrap4\Html;
 
-$this->title = 'Browser Headers';
-$this->params['breadcrumbs'][] = 'Tools';
+$this->title = Yii::t('mr42', 'Browser Headers');
+$this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
 $this->params['breadcrumbs'][] = $this->title;
 
 echo Html::tag('h1', $this->title);

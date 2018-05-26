@@ -5,9 +5,9 @@ use app\models\calculator\Wpapsk;
 use yii\bootstrap4\{ActiveForm, Html, Progress};
 use yii\web\View;
 
-$this->title = 'Wifi Protected Access Pre-Shared Key (WPA-PSK) Calculator';
-$this->params['breadcrumbs'][] = 'Calculator';
-$this->params['breadcrumbs'][] = 'Wifi Protected Access Pre-Shared Key';
+$this->title = Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key (WPA-PSK) Calculator');
+$this->params['breadcrumbs'][] = Yii::t('mr42', 'Calculator');
+$this->params['breadcrumbs'][] = Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key');
 
 $model = new Wpapsk;
 ClipboardJsAsset::register($this);
@@ -19,10 +19,10 @@ $this->registerJs(Yii::$app->formatter->jspack('calculator/sha1.js'), View::POS_
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
-		echo Html::tag('h1', Html::tag('abbr', 'WPA', ['title' => 'Wifi Protected Access']).'-'.Html::tag('abbr', 'PSK', ['title' => 'Pre-Shared Key']).' Calculator');
+		echo Html::tag('h1', Html::tag('abbr', 'WPA', ['title' => 'Wifi Protected Access']).'-'.Html::tag('abbr', 'PSK', ['title' => 'Pre-Shared Key']).' '.Yii::t('mr42', 'Calculator'));
 		echo Html::beginTag('div', ['class' => 'alert alert-info']);
-			echo Html::tag('div', 'This WPA-PSK calculator provides an easy way to convert a '.Html::tag('abbr', 'SSID', ['title' => 'Service Set Identifier']).' and WPA Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.');
-			echo Html::tag('div', 'Type or paste in your SSID and WPA Passphrase below. Click '.Html::tag('span', 'Calculate', ['class' => 'font-italic']).' and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. '.Html::tag('b', 'None').' of this information will be sent over the network.');
+			echo Html::tag('div', Yii::t('mr42', 'This WPA-PSK calculator provides an easy way to convert a {ssid} and WPA Passphrase to the 256-bit pre-shared ("raw") key used for key derivation.', ['ssid' => Html::tag('abbr', 'SSID', ['title' => 'Service Set Identifier'])]));
+			echo Html::tag('div', Yii::t('mr42', 'Type or paste in your SSID and WPA Passphrase below. Click {calcbutton} and wait a while as JavaScript isn\'t known for its blistering cryptographic speed. The Pre-Shared Key will be calculated by your browser. <b>None</b> of this information will be sent over the network.', ['calcbutton' => Html::tag('span', Yii::t('mr42', 'Calculate'), ['class' => 'font-italic'])]));
 		echo Html::endTag('div');
 
 		$form = ActiveForm::begin(['action' => false, 'id' => 'wpapsk']);
@@ -40,20 +40,20 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'psk', [
 				'options' => ['class' => 'form-group has-success'],
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('key').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Copy to Clipboard']).'</span></div>{error}',
+				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('key').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('mr42', 'Copy to Clipboard')]).'</span></div>{error}',
 			])
-			->textInput(['placeholder' => 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.', 'readonly' => true]);
+			->textInput(['placeholder' => Yii::t('mr42', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.'), 'readonly' => true]);
 
 		echo Html::tag('div',
-			Html::tag('label', 'Progress').
+			Html::tag('label', Yii::t('mr42', 'Progress')).
 			Progress::widget([
 				'options' => ['class' => 'progress-bar progress-bar-striped progress-bar-animated']
 			])
 		, ['class' => 'd-none form-group current-progress']);
 
 		echo Html::tag('div',
-			Html::resetButton('Reset', ['class' => 'btn btn-default ml-1 suppress', 'tabindex' => $tab + 2, 'onclick' => 'reset_psk()']).
-			Html::button('Calculate', ['class' => 'btn btn-primary ml-1 suppress', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
+			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1 suppress', 'tabindex' => $tab + 2, 'onclick' => 'reset_psk()']).
+			Html::button(Yii::t('mr42', 'Calculate'), ['class' => 'btn btn-primary ml-1 suppress', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();

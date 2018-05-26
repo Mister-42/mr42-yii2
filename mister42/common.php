@@ -1,5 +1,6 @@
 <?php
 $secrets = require(__DIR__.'/secrets.php');
+$params = require(__DIR__.'/params.php');
 
 return [
 	'aliases' => [
@@ -65,7 +66,7 @@ return [
 		],
 		'i18n' => [
 			'translations' => [
-				'site' => [
+				'*' => [
 					'class' => 'yii\i18n\PhpMessageSource',
 					'sourceLanguage' => 'en',
 				],
@@ -86,7 +87,16 @@ return [
 			'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
 		],
 		'urlManager' => [
+			'class' => 'codemix\localeurls\UrlManager',
 			'enablePrettyUrl' => true,
+			'ignoreLanguageUrlPatterns' => [
+				'#^feed/(rss|sitemap)#' => '#feed/(rss|sitemap)#',
+				'#^site/(browserconfigxml|faviconico|robotstxt|webmanifest)#' => '#site/(browserconfigxml|faviconico|robotstxt|webmanifest)#',
+				'#^lyrics/(albumpdf|albumcover)#' => '#lyrics/(albumpdf|albumcover)#',
+				'#^permalink/articles#' => '#permalink/articles#',
+				'#^articles/pdf#' => '#articles/pdf#',
+			],
+			'languages' => array_keys($params['languages']),
 			'normalizer' => [
 				'class' => 'yii\web\UrlNormalizer',
 			],
@@ -103,7 +113,7 @@ return [
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>'						=> 'lyrics/index',
 				'lyrics/<artist:.*?>'												=> 'lyrics/index',
 				'articles/<id:\d+>/<title:.*?>.pdf'									=> 'articles/pdf',
-				'art<id:\d+>'														=> 'permalink/articles',
+				$params['shortDomain'].'art<id:\d+>'								=> 'permalink/articles',
 				'articles/<id:\d+>/<title:.*?>'										=> 'articles/index',
 				'articles/<id:\d+>'													=> 'articles/index',
 				'articles/<action:search>'											=> 'articles/index',

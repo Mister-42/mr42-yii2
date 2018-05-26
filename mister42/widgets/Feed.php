@@ -14,7 +14,7 @@ class Feed extends Widget {
 			->orderBy('time DESC')
 			->limit($this->limit)
 			->all();
-		return empty($items) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderFeed($items, $this->limit);
+		return empty($items) ? Html::tag('div', Yii::t('mr42', 'No items to display.'), ['class' => 'ml-2']) : self::renderFeed($items, $this->limit);
 	}
 
 	private function renderFeed(array $items, int $limit): string {

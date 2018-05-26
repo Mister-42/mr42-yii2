@@ -19,7 +19,9 @@ class EmailMessage extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['email'] = 'Email Address';
+		$labels['email'] = Yii::t('mr42', 'Email Address');
+		$labels['subject'] = Yii::t('mr42', 'Subject');
+		$labels['message'] = Yii::t('mr42', 'Message');
 		return $labels;
 	}
 

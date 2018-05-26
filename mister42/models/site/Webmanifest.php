@@ -19,9 +19,9 @@ class Webmanifest {
 
 	private static function getIcons(array $files): array {
 		foreach ($files as $icon) :
-			$size = getimagesize(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/'.$icon);
+			$size = getimagesize(Yii::getAlias("@assetsroot/images/{$icon}"));
 			$icons[] = [
-				'src' => Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/'.$icon, Yii::$app->request->isSecureConnection ? 'https' : 'http'),
+				'src' => Url::to("@assets/images/{$icon}", Yii::$app->request->isSecureConnection ? 'https' : 'http'),
 				'sizes' => $size[0].'x'.$size[1],
 				'type' => $size['mime'],
 			];

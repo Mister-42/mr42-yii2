@@ -16,7 +16,7 @@ class MailTo extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['email'] = 'Email Address';
+		$labels['email'] = Yii::t('mr42', 'Email Address');
 		return $labels;
 	}
 

@@ -7,7 +7,7 @@ use yii\db\ActiveRecord;
 use yii\web\AccessDeniedHttpException;
 
 class Comments extends ActiveRecord {
-	public $name;
+	public $nameField;
 	public $email;
 	public $captcha;
 
@@ -21,9 +21,9 @@ class Comments extends ActiveRecord {
 	public function rules(): array {
 		$rules = [
 			[['title', 'content'], 'required'],
-			[['name', 'email', 'website', 'title', 'content'], 'trim'],
+			[['nameField', 'email', 'website', 'title', 'content'], 'trim'],
 			'charCount' => [['content'], 'string', 'max' => 4096],
-			[['name'], 'string', 'max' => 25],
+			[['nameField'], 'string', 'max' => 25],
 			[['email'], 'string', 'max' => 50],
 			[['website'], 'string', 'max' => 128],
 			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
@@ -39,10 +39,12 @@ class Comments extends ActiveRecord {
 
 	public function attributeLabels(): array {
 		return [
-			'content' => 'Comment',
-			'email' => 'Email Address',
-			'website' => 'Website URL',
-			'captcha' => 'CAPTCHA',
+			'nameField' => Yii::t('mr42', 'Name'),
+			'email' => Yii::t('mr42', 'Email Address'),
+			'website' => Yii::t('mr42', 'Website URL'),
+			'title' => Yii::t('mr42', 'Subject'),
+			'content' => Yii::t('mr42', 'Comment'),
+			'captcha' => Yii::t('mr42', 'CAPTCHA'),
 		];
 	}
 
@@ -72,7 +74,7 @@ class Comments extends ActiveRecord {
 		endif;
 
 		$this->content = Yii::$app->formatter->cleanInput($this->content, false);
-		$this->name = $this->name ?? null;
+		$this->name = $this->nameField ?? null;
 		$this->email = $this->email ?? null;
 		$this->website = $this->website ?? null;
 		return true;
@@ -80,7 +82,7 @@ class Comments extends ActiveRecord {
 
 	public function showApprovalButton(): string {
 		return Html::a(
-			$this->active ? Yii::$app->icon->show('thumbs-down').' Renounce' : Yii::$app->icon->show('thumbs-up').' Approve',
+			$this->active ? Yii::$app->icon->show('thumbs-down', ['class' => 'mr-1']).Yii::t('mr42', 'Renounce') : Yii::$app->icon->show('thumbs-up', ['class' => 'mr-1']).Yii::t('mr42', 'Approve'),
 			['commentstatus', 'id' => $this->id, 'action' => 'toggleapproval'],
 			['class' => $this->active ? 'badge badge-warning ml-1' : 'badge badge-success ml-1']
 		);

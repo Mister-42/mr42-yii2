@@ -18,8 +18,8 @@ class Date extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'from' => 'Start Date',
-			'days' => 'Days to Add',
+			'from' => Yii::t('mr42', 'Start Date'),
+			'days' => Yii::t('mr42', 'Days to Add'),
 		];
 	}
 

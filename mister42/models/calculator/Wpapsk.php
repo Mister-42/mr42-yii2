@@ -1,5 +1,6 @@
 <?php
 namespace app\models\calculator;
+use Yii;
 
 class Wpapsk extends \yii\base\Model {
 	public $ssid;
@@ -16,9 +17,9 @@ class Wpapsk extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'ssid' => 'SSID',
-			'password' => 'WPA Passphrase',
-			'psk' => 'Pre-Shared Key',
+			'ssid' => Yii::t('mr42', 'SSID'),
+			'password' => Yii::t('mr42', 'WPA Passphrase'),
+			'psk' => Yii::t('mr42', 'Pre-Shared Key'),
 		];
 	}
 }

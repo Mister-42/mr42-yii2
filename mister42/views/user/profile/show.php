@@ -3,7 +3,7 @@ use app\models\user\Profile;
 use yii\bootstrap4\Html;
 
 $this->title = $profile->name ?? $profile->user->username;
-$this->params['breadcrumbs'][] = 'Profile';
+$this->params['breadcrumbs'][] = Yii::t('usuario', 'Profile');
 $this->params['breadcrumbs'][] = $this->title;
 
 echo Html::beginTag('div', ['class' => 'row']);

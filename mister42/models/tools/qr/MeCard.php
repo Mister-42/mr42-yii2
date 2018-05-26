@@ -30,10 +30,18 @@ class MeCard extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['firstSound'] = 'First Name (phonetic)';
-		$labels['lastSound'] = 'Last Name (phonetic)';
-		$labels['phone'] = 'Telephone Number';
-		$labels['email'] = 'Email Address';
+		$labels['firstName'] = Yii::t('mr42', 'First Name');
+		$labels['lastName'] = Yii::t('mr42', 'Last Name');
+		$labels['firstSound'] = Yii::t('mr42', 'First Name (phonetic)');
+		$labels['lastSound'] = Yii::t('mr42', 'Last Name (phonetic)');
+		$labels['phone'] = Yii::t('mr42', 'Telephone Number');
+		$labels['videoPhone'] = Yii::t('mr42', 'Video Phone');
+		$labels['email'] = Yii::t('mr42', 'Email Address');
+		$labels['note'] = Yii::t('mr42', 'Note');
+		$labels['birthday'] = Yii::t('mr42', 'Birthday');
+		$labels['address'] = Yii::t('mr42', 'Address');
+		$labels['website'] = Yii::t('mr42', 'Website URL');
+		$labels['nickname'] = Yii::t('mr42', 'Nickname');
 		return $labels;
 	}
 

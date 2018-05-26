@@ -12,7 +12,7 @@ class RecentArticles extends Widget {
 			->orderBy('updated DESC')
 			->limit($this->limit)
 			->all();
-		return empty($articles) ? Html::tag('div', 'No items to display.', ['class' => 'ml-2']) : self::renderArticles($articles);
+		return empty($articles) ? Html::tag('div', Yii::t('mr42', 'No items to display.'), ['class' => 'ml-2']) : self::renderArticles($articles);
 	}
 
 	private function renderArticles(array $articles): string {

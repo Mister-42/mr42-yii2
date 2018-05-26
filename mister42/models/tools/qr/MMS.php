@@ -17,7 +17,8 @@ class MMS extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['phone'] = 'Telephone Number';
+		$labels['phone'] = Yii::t('mr42', 'Telephone Number');
+		$labels['message'] = Yii::t('mr42', 'Message');
 		return $labels;
 	}
 

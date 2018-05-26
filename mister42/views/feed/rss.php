@@ -14,7 +14,7 @@ $doc->writeAttribute('xmlns:dc', 'http://purl.org/dc/elements/1.1/');
 
 $doc->startElement('channel');
 $doc->writeElement('title', Yii::$app->name);
-$doc->writeElement('link', Url::home(true));
+$doc->writeElement('link', Yii::$app->params['shortDomain']);
 $doc->writeElement('description', Yii::$app->params['description']);
 	$doc->startElement('atom:link');
 	$doc->writeAttribute('href', Url::to(['feed/rss'], true));
@@ -27,10 +27,10 @@ $doc->writeElement('pubDate', date(DATE_RSS));
 $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->startElement('image');
 	$doc->writeElement('title', Yii::$app->name);
-	$doc->writeElement('url', Url::to(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->baseUrl.'/logo.png', Yii::$app->request->isSecureConnection ? 'https' : 'http'));
-	$doc->writeElement('link', Url::home(true));
+	$doc->writeElement('url', Url::to('@assets/images/mr42.png', Yii::$app->request->isSecureConnection ? 'https' : 'http'));
+	$doc->writeElement('link', Yii::$app->params['shortDomain']);
 	$doc->writeElement('description', Yii::$app->params['description']);
-	list($width, $height, $type, $attr) = getimagesize(Yii::$app->assetManager->getBundle('app\assets\ImagesAsset')->basePath.'/logo.png');
+	list($width, $height, $type, $attr) = getimagesize(Yii::getAlias('@assetsroot/images/mr42.png'));
 	$doc->writeElement('height', $height);
 	$doc->writeElement('width', $width);
 	$doc->endElement();
@@ -50,13 +50,13 @@ foreach ($articles as $article) :
 	$doc->writeElement('dc:creator', $article->user->username);
 	foreach (StringHelper::explode($article->tags) as $tag) :
 		$doc->startElement('category');
-		$doc->writeAttribute('domain', Url::to(['articles/index', 'action' => 'tag', 'tag' => $tag], true));
+		$doc->writeAttribute('domain', Url::to(['articles/index', 'action' => 'tag', 'q' => $tag], true));
 		$doc->text($tag);
 		$doc->endElement();
 	endforeach;
 		$doc->startElement('guid');
 		$doc->writeAttribute('isPermaLink', 'true');
-		$doc->text(Yii::$app->params['shortDomain']."art{$article->id}");
+		$doc->text(Url::to(['permalink/articles', 'id' => $article->id]));
 		$doc->endElement();
 	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
 	if ($article->source) :

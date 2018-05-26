@@ -18,7 +18,8 @@ class Bookmark extends \app\models\tools\Qr {
 	public function attributeLabels(): array {
 		$labels = parent::attributeLabels();
 
-		$labels['url'] = 'URL';
+		$labels['title'] = Yii::t('mr42', 'Title');
+		$labels['url'] = Yii::t('mr42', 'URL');
 		return $labels;
 	}
 

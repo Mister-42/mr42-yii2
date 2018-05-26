@@ -28,9 +28,12 @@ class BaseArticles extends \yii\db\ActiveRecord {
 
 	public function attributeLabels(): array {
 		return [
-			'url' => 'URL',
-			'source' => 'Source URL',
-			'pdf' => 'Create PDF',
+			'title' => Yii::t('mr42', 'Title'),
+			'content' => Yii::t('mr42', 'Content'),
+			'url' => Yii::t('mr42', 'URL'),
+			'source' => Yii::t('mr42', 'Source URL'),
+			'tags' => Yii::t('mr42', 'Tags'),
+			'pdf' => Yii::t('mr42', 'Create PDF'),
 		];
 	}
 
@@ -84,7 +87,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		$user = new Profile();
 		$profile = $user->find($model->user->id)->one();
 		$name = empty($profile->name) ? $model->user->username : $profile->name;
-		$tags = Yii::t('site', '{results, plural, =1{1 tag} other{# tags}}', ['results' => count(StringHelper::explode($model->tags))]);
+		$tags = Yii::t('mr42', '{results, plural, =1{1 tag} other{# tags}}', ['results' => count(StringHelper::explode($model->tags))]);
 
 		$pdf = new Pdf();
 		return $pdf->create(
@@ -95,7 +98,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 				'author' => $name,
 				'created' => $model->created,
 				'footer' => $tags.': '.$model->tags.'|Author: '.$name.'|Page {PAGENO} of {nb}',
-				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, Yii::$app->params['shortDomain']."art{$model->id}").'|'.date('D, j M Y', $model->updated),
+				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, ['/permalink/articles', 'id' => $model->id]).'|'.date('D, j M Y', $model->updated),
 				'keywords' => $model->tags,
 				'subject' => $model->title,
 				'title' => $model->title,

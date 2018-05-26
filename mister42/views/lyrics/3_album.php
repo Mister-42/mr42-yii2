@@ -2,7 +2,7 @@
 use yii\bootstrap4\Html;
 
 $this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name, 'Lyrics']);
-$this->params['breadcrumbs'][] = ['label' => 'Lyrics', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $data[0]->artist->name, 'url' => ['index', 'artist' => $data[0]->artist->url]];
 $this->params['breadcrumbs'][] = $data[0]->album->name;
 
@@ -20,10 +20,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 					, ['class' => 'float-left']).
 					Html::tag('div',
 						($data[0]->album->playlist_url
-							? Html::a(Yii::$app->icon->show('youtube', ['prefix' => 'fab fa-']).' Play', $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
+							? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
 							: '').
 						($data[0]->album->active
-							? Html::a(Yii::$app->icon->show('file-pdf').' PDF', ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-light ml-1'])
+							? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-light ml-1'])
 							: '')
 					, ['class' => 'float-right'])
 				, ['class' => 'card-header']);
