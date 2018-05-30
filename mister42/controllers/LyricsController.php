@@ -103,7 +103,7 @@ class LyricsController extends \yii\web\Controller {
 	private function pageAlbum(): array {
 		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
-		if (!ArrayHelper::keyExists(0, $tracks) || (php_sapi_name() !== 'cli' && !Yii::$app->user->identity->isAdmin && !$tracks[0]->album->active)) :
+		if (!ArrayHelper::keyExists(0, $tracks) || (php_sapi_name() !== 'cli' && (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) && !$tracks[0]->album->active)) :
 			throw new NotFoundHttpException('Album not found.');
 		endif;
 		$this->redirectIfNotUrl('index', $tracks);

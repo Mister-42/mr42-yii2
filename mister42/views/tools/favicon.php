@@ -1,4 +1,5 @@
 <?php
+use app\models\Form;
 use nezhelskoy\highlight\HighlightAsset;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\helpers\{Inflector, Url};
@@ -49,10 +50,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->hint(Yii::t('mr42', 'For best result upload a square image. Your icon will be generated in {dimensions} pixels.', ['dimensions' => Inflector::sentence($dimensions)]))
 			->label(Yii::t('mr42', 'Select an image'), ['class' => 'custom-file-label text-truncate']);
 
-		echo Html::tag('div',
-			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
-			Html::submitButton(Yii::t('mr42', 'Convert Image'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
-		, ['class' => 'btn-toolbar float-right form-group']);
+		echo Form::submitToolbar(Yii::t('mr42', 'Convert Image'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

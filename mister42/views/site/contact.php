@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('mr42', 'Contact');
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->registerJs("var formCharCount = {chars:{$model->rules()['charCount']['max']}, lang:{overLimit:'".Yii::t('mr42', '{x} characters over the limit', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."', charsLeft:'".Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."'}};".Yii::$app->formatter->jspack('formCharCounter.js'), View::POS_READY);
+Form::charCount($this, $model->rules()['charCount']['max']);
 $this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
 
 echo Html::beginTag('div', ['class' => 'row']);

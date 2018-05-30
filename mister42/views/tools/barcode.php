@@ -1,4 +1,5 @@
 <?php
+use app\models\Form;
 use app\models\tools\Barcode;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\helpers\Url;
@@ -52,10 +53,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			])->input('email', ['tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'));
 
-		echo Html::tag('div',
-			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
-			Html::submitButton(Yii::t('mr42', 'Generate Barcode'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
-		, ['class' => 'btn-toolbar float-right form-group']);
+		echo Form::submitToolbar(Yii::t('mr42', 'Generate Barcode'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

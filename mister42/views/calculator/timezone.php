@@ -1,4 +1,5 @@
 <?php
+use app\models\Form;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\web\View;
@@ -51,10 +52,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			]);
 		echo Html::endTag('div');
 
-		echo Html::tag('div',
-			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
-			Html::submitButton(Yii::t('mr42', 'Calculate'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
-		, ['class' => 'btn-toolbar float-right form-group']);
+		echo Form::submitToolbar(Yii::t('mr42', 'Calculate'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

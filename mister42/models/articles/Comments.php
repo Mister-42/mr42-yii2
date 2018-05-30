@@ -23,11 +23,11 @@ class Comments extends ActiveRecord {
 			[['title', 'content'], 'required'],
 			[['nameField', 'email', 'website', 'title', 'content'], 'trim'],
 			'charCount' => [['content'], 'string', 'max' => 4096],
-			[['nameField'], 'string', 'max' => 25],
-			[['email'], 'string', 'max' => 50],
-			[['website'], 'string', 'max' => 128],
-			[['email'], 'email', 'checkDNS' => true, 'enableIDN' => true],
-			[['website'], 'url', 'defaultScheme' => 'http', 'enableIDN' => true],
+			['nameField', 'string', 'max' => 25],
+			['email', 'string', 'max' => 50],
+			['website', 'string', 'max' => 128],
+			['email', 'email', 'checkDNS' => true, 'enableIDN' => true],
+			['website', 'url', 'defaultScheme' => 'http', 'enableIDN' => true],
 		];
 
 		if (Yii::$app->user->isGuest) :

@@ -7,6 +7,7 @@ use app\models\feed\Feed as FeedModel;
 class Feed extends Widget {
 	public $name;
 	public $limit = 10;
+	public $tooltip = false;
 
 	public function run(): string {
 		$items = FeedModel::find()
@@ -20,9 +21,9 @@ class Feed extends Widget {
 	private function renderFeed(array $items, int $limit): string {
 		$count = 0;
 		foreach ($items as $item) :
-			$feed[] = $item['title'] === $item['description'] || empty($item['description'])
-				? Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link']), ['class' => 'list-group-item text-truncate'])
-				: Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link', 'title' => Html::tag('div', $item['title'], ['class' => 'font-weight-bold']).$item['description'], 'data-html' => 'true', 'data-toggle' => 'tooltip', 'data-placement' => 'left']), ['class' => 'list-group-item text-truncate']);
+			$feed[] = $this->tooltip && !empty($item['description'])
+				? Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link', 'title' => Html::tag('div', $item['title'], ['class' => 'font-weight-bold']).$item['description'], 'data-html' => 'true', 'data-toggle' => 'tooltip', 'data-placement' => 'left']), ['class' => 'list-group-item text-truncate'])
+				: Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link']), ['class' => 'list-group-item text-truncate']);
 			if (++$count === $this->limit) :
 				break;
 			endif;

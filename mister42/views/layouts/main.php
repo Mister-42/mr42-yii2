@@ -67,7 +67,7 @@ echo Html::tag('main',
 
 echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 	echo Html::beginTag('div', ['class' => 'container']);
-		echo Html::tag('span', '&copy; 2014-'.date('Y').' '.Yii::$app->name);
+		echo Html::tag('div', Html::tag('span', '&copy; 2014-'.date('Y').' '.Yii::$app->name, ['class' => 'align-middle']), ['class' => 'float-left']);
 		echo Html::beginTag('div', ['class' => 'float-right dropup']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') :
 				echo Html::a(Yii::t('mr42', 'Contact'), ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => 'Contact '.Yii::$app->name]);

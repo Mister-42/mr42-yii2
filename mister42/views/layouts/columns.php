@@ -25,7 +25,7 @@ $this->beginBlock('widgets');
 	]);
 
 	echo Item::widget([
-		'body' => Feed::widget(['name' => 'ScienceDaily']),
+		'body' => Feed::widget(['name' => 'ScienceDaily', 'tooltip' => true]),
 		'header' => Yii::t('mr42', 'Science News'),
 	]);
 $this->endBlock();

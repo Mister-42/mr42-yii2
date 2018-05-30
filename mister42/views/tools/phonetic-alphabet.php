@@ -1,4 +1,5 @@
 <?php
+use app\models\Form;
 use app\models\tools\PhoneticAlphabet;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 
@@ -28,10 +29,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'numeric')->checkBox(['tabindex' => ++$tab]);
 
-		echo Html::tag('div',
-			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
-			Html::submitButton(Yii::t('mr42', 'Send'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
-		, ['class' => 'btn-toolbar float-right form-group']);
+		echo Form::submitToolbar(Yii::t('mr42', 'Convert'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

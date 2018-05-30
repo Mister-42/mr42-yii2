@@ -1,15 +1,15 @@
 <?php
+use app\models\Form;
 use app\widgets\TimePicker;
 use Da\User\Helper\TimezoneHelper;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\helpers\ArrayHelper;
-use yii\web\View;
 
 $this->title = Yii::t('usuario', 'Profile settings');
 $this->params['breadcrumbs'][] = $this->title;
 $timezoneHelper = $model->make(TimezoneHelper::class);
 
-$this->registerJs("var formCharCount = {chars:{$model->rules()['bioString']['max']}, lang:{overLimit:'".Yii::t('mr42', '{x} characters over the limit', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."', charsLeft:'".Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."'}};".Yii::$app->formatter->jspack('formCharCounter.js'), View::POS_READY);
+Form::charCount($this, $model->rules()['bioString']['max']);
 
 echo $this->render('@Da/User/resources/views/shared/_alert', ['module' => Yii::$app->getModule('user')]);
 

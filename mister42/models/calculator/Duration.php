@@ -11,7 +11,7 @@ class Duration extends \yii\base\Model {
 		return [
 			[['fromDate', 'toDate'], 'date', 'format' => 'php:Y-m-d'],
 			['fromDate', 'default', 'value' => date('Y-m-d')],
-			['toDate', 'default', 'value' => date('Y-m-d')],
+			['toDate', 'default', 'value' => date('Y-m-d', strtotime('+42 days'))],
 		];
 	}
 

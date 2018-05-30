@@ -1,10 +1,9 @@
 <?php
 use app\models\Form;
 use yii\bootstrap4\{ActiveForm, Html};
-use yii\web\View;
 use yii\widgets\Pjax;
 
-$this->registerJs("var formCharCount = {chars:{$model->rules()['charCount']['max']}, lang:{overLimit:'".Yii::t('mr42', '{x} characters over the limit', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."', charsLeft:'".Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."'}};".Yii::$app->formatter->jspack('formCharCounter.js'), View::POS_READY);
+Form::charCount($this, $model->rules()['charCount']['max']);
 
 Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]);
 	echo Html::tag('h3', Yii::t('mr42', 'Leave a Comment'));
