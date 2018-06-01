@@ -36,6 +36,7 @@ $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->endElement();
 
 foreach ($articles as $article) :
+	$article->content = preg_replace('/<img([^>]*)src=["]([^"]*)["]([^>]*)>/', '<img$1src="https:$2"$3>', $article->content);
 	if (strpos($article->content, '[readmore]')) :
 		$article->content = substr($article->content, 0, strpos($article->content, '[readmore]'));
 		$article->content .= Html::a('Read full article on our website', Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true)).' &raquo;';

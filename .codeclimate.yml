@@ -27,3 +27,4 @@ ratings:
 exclude_paths:
 - mister42/assets/
 - mister42/commands/
+- mister42/messages/
