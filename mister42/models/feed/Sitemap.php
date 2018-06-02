@@ -30,7 +30,9 @@ class Sitemap {
 		endif;
 		$doc->writeElement('changefreq', self::getChangefreq($priority));
 		$doc->writeElement('priority', round($priority, 2));
-		self::addLanguageLines($doc, $url, ArrayHelper::remove($options, 'locale', false));
+		if (ArrayHelper::remove($options, 'locale')) :
+			self::addLanguageLines($doc, $url);
+		endif;
 		$doc->endElement();
 	}
 
@@ -40,10 +42,7 @@ class Sitemap {
 		return $doc->outputMemory();
 	}
 
-	private static function addLanguageLines(XMLWriter $doc, array $url, bool $locale) {
-		if (!$locale) :
-			return;
-		endif;
+	private static function addLanguageLines(XMLWriter $doc, array $url) {
 		$languages = array_keys(Yii::$app->params['languages']);
 		foreach ($languages as $lng) :
 			ArrayHelper::setValue($url, 'language', $lng);

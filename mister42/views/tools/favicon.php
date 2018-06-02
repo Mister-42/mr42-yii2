@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
 $this->params['breadcrumbs'][] = $this->title;
 
 HighlightAsset::register($this);
-$this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
+$this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
@@ -48,7 +48,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'template' => Html::tag('label', $model->getAttributeLabel('sourceImage'), ['for' => 'sourceFile']).'<div class="input-group">'.Yii::$app->icon->fieldAddon('image').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
 			])->fileInput(['accept' => 'image/*', 'class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'For best result upload a square image. Your icon will be generated in {dimensions} pixels.', ['dimensions' => Inflector::sentence($dimensions)]))
-			->label(Yii::t('mr42', 'Select an image'), ['class' => 'custom-file-label text-truncate']);
+			->label(Yii::t('mr42', 'Select an Image'), ['class' => 'custom-file-label text-truncate']);
 
 		echo Form::submitToolbar(Yii::t('mr42', 'Convert Image'), $tab);
 

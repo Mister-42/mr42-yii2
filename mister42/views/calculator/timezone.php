@@ -18,9 +18,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		if ($flash = Yii::$app->session->getFlash('timezone-success')) :
 			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
-				echo Html::tag('div', Yii::t('mr42', '{a} in {b}', ['a' => Yii::$app->formatter->asDate($model->datetime.' '.Yii::$app->timeZone, 'full').' '.Yii::$app->formatter->asTime($model->datetime.' '.Yii::$app->timeZone, 'short'), 'b' => str_replace('_', ' ', $model->source)]));
+				echo Html::tag('div', Yii::t('mr42', '{datetime} in {timezone}', ['datetime' => Yii::$app->formatter->asDate($model->datetime.' '.Yii::$app->timeZone, 'full').' '.Yii::$app->formatter->asTime($model->datetime.' '.Yii::$app->timeZone, 'short'), 'timezone' => str_replace('_', ' ', $model->source)]));
 				echo Html::tag('div', Yii::t('mr42', 'equals'));
-				echo Html::tag('div', Yii::t('mr42', '{a} in {b}', ['a' => Html::tag('strong', Yii::$app->formatter->asDate($flash->format('Y-m-d H:i').' '.Yii::$app->timeZone, 'full').' '.Yii::$app->formatter->asTime($flash->format('Y-m-d H:i').' '.Yii::$app->timeZone, 'short')), 'b' => Html::tag('strong', str_replace('_', ' ', $model->target))]));
+				echo Html::tag('div', Yii::t('mr42', '{datetime} in {timezone}', ['datetime' => Html::tag('strong', Yii::$app->formatter->asDate($flash->format('Y-m-d H:i').' '.Yii::$app->timeZone, 'full').' '.Yii::$app->formatter->asTime($flash->format('Y-m-d H:i').' '.Yii::$app->timeZone, 'short')), 'timezone' => Html::tag('strong', str_replace('_', ' ', $model->target))]));
 			Alert::end();
 		endif;
 

@@ -8,7 +8,7 @@ $this->title = Yii::t('mr42', 'Contact');
 $this->params['breadcrumbs'][] = $this->title;
 
 Form::charCount($this, $model->rules()['charCount']['max']);
-$this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
+$this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
@@ -43,7 +43,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'attachment', [
 				'template' => Html::tag('label', $model->getAttributeLabel('attachment'), ['for' => 'sourceFile']).'<div class="input-group">'.Yii::$app->icon->fieldAddon('paperclip').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
-			->label(Yii::t('mr42', 'Select a file'), ['class' => 'custom-file-label text-truncate']);
+			->label(Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']);
 
 			echo Form::captcha($form, $model, ++$tab);
 

@@ -12,7 +12,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']).
 			Html::tag('div',
 				($data[0]->artist->buy
-					? Html::a(Yii::$app->icon->show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy music of {artist}', ['artist' => $data[0]->artist->name])])
+					? Html::a(Yii::$app->icon->show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])])
 					: '').
 				($data[0]->artist->website
 					? Html::a(Yii::$app->icon->show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])])

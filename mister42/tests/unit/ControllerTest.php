@@ -6,6 +6,8 @@ class ControllerTest extends TestCase {
 	public function testFeedController() {
 		$this->assertContains('</item>', \Yii::$app->runAction('feed/rss'));
 		$this->assertContains('</urlset>', \Yii::$app->runAction('feed/sitemap'));
+		$this->assertContains('</urlset>', \Yii::$app->runAction('feed/sitemap-articles'));
+		$this->assertContains('</urlset>', \Yii::$app->runAction('feed/sitemap-lyrics'));
 	}
 
 	public function testLyricsController() {

@@ -6,7 +6,7 @@ use yii\bootstrap4\{Html, Widget};
 
 class TagCloud extends Widget {
 	public function run(): string {
-		return empty($tags = Tags::findTagWeights()) ? Html::tag('div', Yii::t('mr42', 'No items to display.'), ['class' => 'ml-2']) : self::renderTags($tags);
+		return empty($tags = Tags::findTagWeights()) ? Html::tag('div', Yii::t('mr42', 'No Items to Display.'), ['class' => 'ml-2']) : self::renderTags($tags);
 	}
 
 	private function renderTags(array $tags): string {

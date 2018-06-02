@@ -49,7 +49,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		if ($this->beginCache('articlewidgets-'.Yii::$app->language, ['dependency' => $dependency, 'duration' => 0])) :
 			echo Item::widget([
 				'body' => RecentArticles::widget(),
-				'header' => Yii::$app->icon->show('pencil-alt', ['class' => 'mr-1']).Yii::t('mr42', 'Latest Updates'),
+				'header' => Yii::$app->icon->show('newspaper', ['class' => 'mr-1']).Yii::t('mr42', 'Latest Updates'),
 				'options' => ['id' => 'latestArticles'],
 			]);
 

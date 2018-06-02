@@ -49,6 +49,10 @@ class FeedController extends \yii\web\Controller {
 		return $this->renderPartial(Yii::$app->controller->action->id);
 	}
 
+	public function actionSitemapArticles() {
+		return $this->actionSitemap();
+	}
+
 	public function actionSitemapLyrics() {
 		return $this->actionSitemap();
 	}

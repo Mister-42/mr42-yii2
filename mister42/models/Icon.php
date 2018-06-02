@@ -8,7 +8,7 @@ use yii\helpers\{ArrayHelper, StringHelper};
 class Icon {
 	public function show(string $name, array $options = []): string {
 		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fas fa-');
-		$style = (explode(' ', $classPrefix))[0] === 'fab' ? 'brands' : 'solid';
+		$style = $this->getStyle((explode(' ', $classPrefix))[0]);
 		if (!file_exists(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"))) :
 			return $this->show('question-circle', $options);
 		endif;
@@ -32,5 +32,16 @@ class Icon {
 	public function fieldAddon(string $name, array $options = []): string {
 		$icon = Html::tag('div', $this->show($name, $options), ['class' => 'input-group-text']);
 		return Html::tag('div', $icon, ['class' => 'input-group-prepend']);
+	}
+
+	private function getStyle(string $prefix): string {
+		switch ($prefix) :
+			case 'fab':
+				return 'brands';
+			case 'far':
+				return 'regular';
+			default:
+				return 'solid';
+		endswitch;
 	}
 }

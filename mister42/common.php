@@ -107,6 +107,7 @@ return [
 				'robots.txt'														=> 'site/robotstxt',
 				'site.webmanifest'													=> 'site/webmanifest',
 				'sitemap.xml'														=> 'feed/sitemap',
+				'sitemap-articles.xml'												=> 'feed/sitemap-articles',
 				'sitemap-lyrics.xml'												=> 'feed/sitemap-lyrics',
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>.pdf'					=> 'lyrics/albumpdf',
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>-<size:.{2,5}>.jpg'	=> 'lyrics/albumcover',

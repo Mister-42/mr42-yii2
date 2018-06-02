@@ -23,8 +23,8 @@ class Qr extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'type' => Yii::t('mr42', 'Type of QR Code to generate'),
-			'size' => Yii::t('mr42', 'Size in pixels'),
+			'type' => Yii::t('mr42', 'Type of QR Code to Generate'),
+			'size' => Yii::t('mr42', 'Size in Pixels'),
 			'recipient' => Yii::t('mr42', 'Email Address'),
 		];
 	}

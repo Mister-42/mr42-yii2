@@ -27,7 +27,7 @@ class Barcode extends \yii\base\Model {
 
 	public function attributeLabels(): array {
 		return [
-			'type' => Yii::t('mr42', 'Type of Barcode to generate'),
+			'type' => Yii::t('mr42', 'Type of Barcode to Generate'),
 			'code' => Yii::t('mr42', 'Code'),
 			'height' => Yii::t('mr42', 'Height in Pixels'),
 			'barWidth' => Yii::t('mr42', 'Bar Width'),
