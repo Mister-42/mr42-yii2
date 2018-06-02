@@ -55,8 +55,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 			'options' => ['class' => 'form-group'],
 			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('cloud').'{input}</div>{error}',
 		])->dropDownList([
-			'renew' => Yii::t('mr42', 'I am renewing these licenses'),
-			'add' => Yii::t('mr42', 'I am adding these licenses'),
+			'renew' => Yii::t('mr42', 'Renewing Licenses'),
+			'add' => Yii::t('mr42', 'Adding Licenses'),
 		], ['tabindex' => ++$tab]);
 
 		echo Form::submitToolbar(Yii::t('mr42', 'Calculate'), $tab);

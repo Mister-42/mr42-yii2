@@ -21,6 +21,10 @@ $this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => Yii::getAlias('@asset
 if (Yii::$app->controller->id !== 'articles' || Yii::$app->controller->action->id !== 'index') :
 	$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
 endif;
+$this->registerLinkTag(['rel' => 'alternate', 'hreflang' => 'x-default', 'href' => Url::current(['language' => 'en'], true)]);
+foreach (array_keys(Yii::$app->params['languages']) as $lng) :
+	$this->registerLinkTag(['rel' => 'alternate', 'hreflang' => $lng, 'href' => Url::current(['language' => $lng], true)]);
+endforeach;
 $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
 $this->registerLinkTag(['rel' => 'icon', 'sizes' => '64x64 48x48 32x32 16x16', 'type' => 'image/x-icon', 'href' => Url::to('@assets/images/favicon.ico')]);
 $this->registerLinkTag(['rel' => 'mask-icon', 'color' => Yii::$app->params['themeColor'], 'type' => 'image/x-icon', 'href' => Url::to('@assets/images/safari-pinned-tab.svg')]);
@@ -58,7 +62,8 @@ echo Html::endTag('header');
 echo Html::tag('main',
 	Breadcrumbs::widget([
 		'activeItemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item active']),
-		'homeLink' => ['label' => Yii::$app->name, 'url' => Yii::$app->homeUrl],
+		'encodeLabels' => false,
+		'homeLink' => ['label' => Yii::$app->icon->show('home', ['class' => 'mr-1']).Yii::$app->name, 'url' => Yii::$app->homeUrl],
 		'itemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item']),
 		'links' => $this->params['breadcrumbs'] ?? null,
 	]).

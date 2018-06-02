@@ -21,12 +21,12 @@ $dependency = [
 $this->beginBlock('widgets');
 	echo Item::widget([
 		'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
-		'header' => Yii::t('mr42', 'Changelog'),
+		'header' => Yii::$app->icon->show('github', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Changelog'),
 	]);
 
 	echo Item::widget([
 		'body' => Feed::widget(['name' => 'ScienceDaily', 'tooltip' => true]),
-		'header' => Yii::t('mr42', 'Science News'),
+		'header' => Yii::$app->icon->show('flask', ['class' => 'mr-1']).Yii::t('mr42', 'Science News'),
 	]);
 $this->endBlock();
 
@@ -49,19 +49,19 @@ echo Html::beginTag('div', ['class' => 'row']);
 		if ($this->beginCache('articlewidgets-'.Yii::$app->language, ['dependency' => $dependency, 'duration' => 0])) :
 			echo Item::widget([
 				'body' => RecentArticles::widget(),
-				'header' => Yii::t('mr42', 'Latest Updates'),
+				'header' => Yii::$app->icon->show('pencil-alt', ['class' => 'mr-1']).Yii::t('mr42', 'Latest Updates'),
 				'options' => ['id' => 'latestArticles'],
 			]);
 
 			echo Item::widget([
 				'body' => RecentComments::widget(),
-				'header' => Yii::t('mr42', 'Latest Comments'),
+				'header' => Yii::$app->icon->show('comments', ['class' => 'mr-1']).Yii::t('mr42', 'Latest Comments'),
 				'options' => ['id' => 'latestComments'],
 			]);
 
 			echo Item::widget([
 				'body' => TagCloud::widget(),
-				'header' => Yii::t('mr42', 'Tag Cloud'),
+				'header' => Yii::$app->icon->show('tags', ['class' => 'mr-1']).Yii::t('mr42', 'Tag Cloud'),
 				'options' => ['id' => 'tags'],
 			]);
 

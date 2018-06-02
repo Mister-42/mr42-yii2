@@ -46,6 +46,10 @@ class FeedController extends \yii\web\Controller {
 	public function actionSitemap() {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/xml');
-		return $this->renderPartial('sitemap');
+		return $this->renderPartial(Yii::$app->controller->action->id);
+	}
+
+	public function actionSitemapLyrics() {
+		return $this->actionSitemap();
 	}
 }

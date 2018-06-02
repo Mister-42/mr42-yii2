@@ -24,7 +24,7 @@ class Office365 extends \yii\base\Model {
 			'sourcedate' => Yii::t('mr42', 'Current End Date'),
 			'sourcecount' => Yii::t('mr42', 'Current Amount of Licenses'),
 			'targetdate' => Yii::t('mr42', 'Date of Product Key Redemption'),
-			'targetcount' => Yii::t('mr42', 'Amount of Licenses You Are Activating'),
+			'targetcount' => Yii::t('mr42', 'Amount of Licenses to Activate'),
 			'action' => Yii::t('mr42', 'Action'),
 		];
 	}
