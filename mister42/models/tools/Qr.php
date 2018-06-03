@@ -95,12 +95,12 @@ class Qr extends \yii\base\Model {
 
 	public static function getTypes(bool $rules = false): array {
 		$dir = Yii::getAlias('@app/models/tools/qr');
-		$rename = ['FreeInput' => 'Free Input', 'EmailMessage' => 'Email Message', 'Ical' => 'iCal', 'MailTo' => 'Mail To', 'Vcard' => 'vCard'];
+		$rename = require(Yii::getAlias('@app/data/qrTypes.php'));
 		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file) :
 			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
 		endforeach;
 
-		asort($typeList, SORT_NATURAL | SORT_FLAG_CASE);
+		natcasesort($typeList);
 		return $typeList;
 	}
 

@@ -19,7 +19,6 @@ class Feed extends Widget {
 	}
 
 	private function renderFeed(array $items): string {
-		$count = 0;
 		foreach ($items as $item) :
 			$feed[] = $this->tooltip && !empty($item['description'])
 				? Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link', 'title' => Html::tag('div', $item['title'], ['class' => 'font-weight-bold']).$item['description'], 'data-html' => 'true', 'data-toggle' => 'tooltip', 'data-placement' => 'left']), ['class' => 'list-group-item text-truncate'])

@@ -11,6 +11,17 @@ class Menu {
 			$menuItems[] = ['label' => null, 'url' => ['/user/registration/register']];
 			$menuItems[] = ['label' => null, 'url' => ['/site/contact']];
 		endif;
+
+		$count = 0;
+		foreach ($menuItems as $menuItem) :
+			if (count($menuItems)-1 === $count || !ArrayHelper::keyExists('items', $menuItem)) :
+				$count++;
+				continue;
+			endif;
+			ArrayHelper::multisort($menuItem['items'], ['label', 'url']);
+			$menuItems[$count++] = $menuItem;
+		endforeach;
+
 		return $menuItems;
 	}
 

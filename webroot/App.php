@@ -17,10 +17,10 @@ class App {
 	}
 
 	private function getConfig() {
-		switch (substr($_SERVER['HTTP_HOST'], 0, 4) === 'www.' ? substr($_SERVER['HTTP_HOST'], 4) : $_SERVER['HTTP_HOST']) :
+		switch (\yii\helpers\ArrayHelper::getValue($_SERVER, 'SERVER_NAME')) :
 			case 'mister42.me':
 				return $this->loadConfig(['mister42']);
-			case 'mr42.me':
+			default:
 				return $this->loadConfig(['mister42', 'mr42']);
 		endswitch;
 	}
