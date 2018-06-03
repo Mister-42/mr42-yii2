@@ -25,6 +25,7 @@ return [
 			['label' => Yii::t('mr42', 'Country Information'), 'url' => ['/tools/country']],
 			['label' => Yii::t('mr42', 'Favicon Converter'), 'url' => ['/tools/favicon']],
 			['label' => Yii::t('mr42', 'HTML to Markdown Converter'), 'url' => ['/tools/html-to-markdown']],
+			['label' => Yii::t('mr42', 'OUI Lookup'), 'url' => ['/tools/oui']],
 			['label' => Yii::t('mr42', 'Password Generator'), 'url' => ['/tools/password']],
 			['label' => Yii::t('mr42', 'Phonetic Alphabet Translator'), 'url' => ['/tools/phonetic-alphabet']],
 			['label' => Yii::t('mr42', 'QR Code Generator'), 'url' => ['/tools/qr']],

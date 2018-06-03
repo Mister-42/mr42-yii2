@@ -14,7 +14,7 @@ class Menu {
 
 		$count = 0;
 		foreach ($menuItems as $menuItem) :
-			if (count($menuItems)-1 === $count || !ArrayHelper::keyExists('items', $menuItem)) :
+			if (count($menuItems) - 1 === $count || !ArrayHelper::keyExists('items', $menuItem)) :
 				$count++;
 				continue;
 			endif;

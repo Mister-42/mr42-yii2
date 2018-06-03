@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\tools\{Barcode, Favicon, PhoneticAlphabet, Qr};
+use app\models\tools\{Barcode, Favicon, Oui, PhoneticAlphabet, Qr};
 use yii\base\BaseObject;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
@@ -59,6 +59,15 @@ class ToolsController extends \yii\web\Controller {
 
 	public function actionHtmlToMarkdown() {
 		return $this->render('html-to-markdown');
+	}
+
+	public function actionOui() {
+		$model = new Oui;
+		$model->load(Yii::$app->request->post());
+
+		return $this->render('oui', [
+			'model' => $model,
+		]);
 	}
 
 	public function actionPassword() {
