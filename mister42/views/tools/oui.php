@@ -17,11 +17,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		if (Yii::$app->request->post()) :
 			$post = Yii::$app->request->post('Oui');
-			$mac = substr(preg_replace('/[^a-f0-9 ]/i', '', strtolower($post['oui'])), 0, 6);
+			$mac = substr(preg_replace('/[^a-f0-9 ]/i', '', strtoupper($post['oui'])), 0, 6);
 			$data = Oui::find()
 					->select(['Assignment', 'Organization_Name'])
-					->where(['Assignment' => $mac])
-					->orWhere(['LIKE', 'Organization_Name', $post['oui']])
+					->where(['like', 'Assignment', "{$mac}%", false])
+					->orWhere(['like', 'Organization_Name', $post['oui']])
 					->all();
 			Alert::begin(['options' => ['class' => 'alert-success fade show clearfix']]);
 				foreach ($data as $item) :
