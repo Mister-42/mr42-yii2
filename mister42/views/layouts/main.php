@@ -78,12 +78,12 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 				endif;
 				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
 
-				echo Html::a(Yii::$app->icon->show('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'id' => 'dropdownMenuLink', 'role' => 'button', 'title' => Yii::t('mr42', 'Change Language')]);
-				echo Html::beginTag('div', ['aria-labelledby' => 'dropdownMenuLink', 'class' => 'dropdown-menu']);
+				echo Html::a(Yii::$app->icon->show('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'id' => 'dropupLanguage', 'role' => 'button', 'title' => Yii::t('mr42', 'Change Language')]);
+				echo Html::beginTag('div', ['aria-labelledby' => 'dropupLanguage', 'class' => 'dropdown-menu']);
 					foreach (Yii::$app->params['languages'] as $lng => $desc) :
-						if ($lng !== Yii::$app->language) :
-							echo Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item']);
-						endif;
+						echo ($lng === Yii::$app->language)
+							? Html::tag('div', $desc.Yii::$app->icon->show('check', ['class' => 'ml-1']), ['class' => 'disabled dropdown-item'])
+							: Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item']);
 					endforeach;
 				echo Html::endTag('div');
 			endif;
