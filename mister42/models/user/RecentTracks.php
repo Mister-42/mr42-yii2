@@ -18,19 +18,11 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		endif;
 
 		$tracks = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit($this->limit)->all();
-
 		foreach ($tracks as $track) :
-			$data[] = Html::beginTag('div', ['class' => 'clearfix']);
-				$data[] = Html::beginTag('div', ['class' => 'd-flex justify-content-between']);
-					$data[] = Html::beginTag('span', ['class' => 'text-truncate']);
-						$data[] = $track['artist'];
-						if ($track['time'] === 0) :
-							$data[] = Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => Yii::t('mr42', 'Currently Playing')]);
-						endif;
-					$data[] = Html::endTag('span');
-					$data[] = Html::tag('span', $track['track'], ['class' => 'text-truncate text-right']);
-				$data[] = Html::endTag('div');
-			$data[] = Html::endTag('div');
+			$data[] = Html::tag('div',
+				Html::tag('span', $track['artist'].(($track['time'] === 0) ? Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => Yii::t('mr42', 'Currently Playing')]) : ''), ['class' => 'float-left text-truncate']).
+				Html::tag('span', $track['track'], ['class' => 'float-right text-truncate text-right'])
+			, ['class' => 'clearfix']);
 		endforeach;
 
 		$data[] = empty($tracks)

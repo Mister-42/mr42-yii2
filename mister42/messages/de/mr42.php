@@ -53,7 +53,7 @@ return [
     'Contact' => 'Kontakt',
     'Content' => 'Inhalt',
     'Convert' => 'Konvertieren',
-    'Convert Digits' => 'Ziffern konvertieren',
+    'Convert Numbers' => 'Zahlen konvertieren',
     'Convert Image' => 'Bild konvertieren',
     'Copied' => 'Kopiert',
     'Copy to Clipboard' => 'Kopieren nach Zwischenablage',

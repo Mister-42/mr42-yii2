@@ -12,10 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 TimePicker::widget();
 
-echo Html::tag('h1', $this->title);
-
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-lg-8 mx-auto']);
+		echo Html::tag('h1', $this->title);
 		if ($qr = Yii::$app->session->getFlash('qr-success')) :
 			$imgSize = min(250, $model->size);
 			Alert::begin(['options' => ['class' => 'alert-success fade show clearfix']]);

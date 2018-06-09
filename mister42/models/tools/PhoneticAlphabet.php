@@ -4,6 +4,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 class PhoneticAlphabet extends \yii\db\ActiveRecord {
+	public $name;
 	public $text;
 	public $alphabet;
 	public $numeric = true;
@@ -24,7 +25,7 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 		return [
 			'text' => Yii::t('mr42', 'Text to Convert'),
 			'alphabet' => Yii::t('mr42', 'Phonetic Alphabet to Use'),
-			'numeric' => Yii::t('mr42', 'Convert Digits'),
+			'numeric' => Yii::t('mr42', 'Convert Numbers'),
 		];
 	}
 
@@ -49,9 +50,8 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 	}
 
 	public static function getAlphabetList(string $column = '*'): array {
-		$name = 'name_'.Yii::$app->language;
 		$list = self::find()
-			->select("lng, {$name} AS name")
+			->select(['lng', 'name' => 'name_'.Yii::$app->language])
 			->orderBy('sort, name')
 			->all();
 

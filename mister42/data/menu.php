@@ -38,7 +38,7 @@ return [
 				'items' => [
 					['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create'], 'visible' => $isAdmin],
 					['label' => Yii::t('usuario', 'Manage users'), 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
-					['label' => Yii::t('mr42', 'PHP {version}', ['version' => phpversion()]), 'url' => ['/site/php-version'], 'visible' => $isAdmin],
+					['label' => Yii::t('mr42', 'PHP {version}', ['version' => PHP_VERSION]), 'url' => ['/site/php'], 'visible' => $isAdmin],
 					$isAdmin ? Html::tag('div', null, ['class' => 'dropdown-divider']) : '',
 					['label' => Yii::t('mr42', 'View Profile'), 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]],
 					Html::tag('div', null, ['class' => 'dropdown-divider']),

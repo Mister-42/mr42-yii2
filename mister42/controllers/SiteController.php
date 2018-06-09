@@ -25,7 +25,7 @@ class SiteController extends \yii\web\Controller {
 		return [
 			'access' => [
 				'class' => AccessControl::class,
-				'only' => ['php-version'],
+				'only' => ['php'],
 				'rules' => [
 					[
 						'allow' => true,
@@ -33,7 +33,7 @@ class SiteController extends \yii\web\Controller {
 					],
 				],
 				'denyCallback' => function() {
-					throw new NotFoundHttpException('Page not found.');
+					throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 				}
 			], [
 				'class' => HttpCache::class,
@@ -88,8 +88,8 @@ class SiteController extends \yii\web\Controller {
 		return $this->render('offline');
 	}
 
-	public function actionPhpVersion() {
-		return $this->render('php-version');
+	public function actionPhp() {
+		return $this->render('php');
 	}
 
 	public function actionBrowserconfigxml() {

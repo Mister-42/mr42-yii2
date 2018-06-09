@@ -8,10 +8,9 @@ $this->title = Yii::t('mr42', 'Barcode Generator');
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
 $this->params['breadcrumbs'][] = $this->title;
 
-echo Html::tag('h1', $this->title);
-
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
+		echo Html::tag('h1', $this->title);
 		if ($barcode = Yii::$app->session->getFlash('barcode-success')) :
 			list($width, $height) = getimagesize($barcode);
 			$imgHeight = min(150, $height);
