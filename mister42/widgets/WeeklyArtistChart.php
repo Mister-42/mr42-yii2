@@ -16,12 +16,11 @@ class WeeklyArtistChart extends Widget {
 
 	private function renderFeed(array $items): string {
 		foreach ($items as $item) :
-			$feed[] = Html::tag('div',
-				Html::tag('span', $item['rank'], ['class' => 'float-left']).
+			$feed[] = Html::tag('li',
 				Html::tag('span', $item['artist'], ['class' => 'float-left']).
 				Html::tag('span', $item['count'], ['class' => 'float-right text-right'])
-			, ['class' => 'clearfix']);
+			, ['class' => 'list-group-item text-truncate']);
 		endforeach;
-		return implode($feed);
+		return Html::tag('ul', implode($feed), ['class' => 'list-group list-group-flush']);
 	}
 }

@@ -14,12 +14,10 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::tag('div', Yii::t('mr42', 'This {oui} Lookup tool provides an easy way to look up OUIs and other MAC address prefixes. Type or paste in a OUI, MAC address, or name below.', ['oui' => Html::tag('abbr', 'OUI', ['title' => Yii::t('mr42', 'Organizationally Unique Identifier')])]));
 		echo Html::endTag('div');
 
-		if (Yii::$app->request->post()) :
-			$post = Yii::$app->request->post('Oui');
-			$mac = substr(preg_replace('/[^a-f0-9 ]/i', '', strtoupper($post['oui'])), 0, 6);
+		if ($post = Yii::$app->request->post('Oui')) :
 			$data = Oui::find()
 					->select(['Assignment', 'Organization_Name'])
-					->where(['like', 'Assignment', "{$mac}%", false])
+					->where(['like', 'Assignment', substr(preg_replace('/[^A-F0-9]+/i', '', strtoupper($post['oui'])), 0, 6).'%', false])
 					->orWhere(['like', 'Organization_Name', $post['oui']])
 					->all();
 			Alert::begin(['options' => ['class' => 'alert-success fade show clearfix']]);

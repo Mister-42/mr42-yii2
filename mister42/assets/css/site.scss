@@ -137,25 +137,16 @@ aside {
 		padding: 0.25rem 0.5rem;
 	}
 
-	#tags .card-link {
-		margin: .25rem;
+	.list-group {
+		.list-group-item {
+			&:nth-child(even) {
+				background-color: $gray-100;
+			}
+		}
 	}
 
-	.artists,
-	.tracks {
-		span {
-			padding: 0 0.5rem;
-		}
-
-		.clearfix {
-			&:nth-child(even) {
-				background-color: $lighterBlue;
-			}
-
-			&:nth-child(odd) {
-				background-color: $lightBlue;
-			}
-		}
+	#tags .card-link {
+		margin: .25rem;
 	}
 }
 

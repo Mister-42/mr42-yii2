@@ -88,7 +88,7 @@ class FeedController extends Controller {
 			$feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
 			$feedItem->url = (string) ArrayHelper::getValue($item, $type === 'rss' ? 'link' : 'link.@attributes.href');
 			$feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $type === 'rss' ? 'description' : 'content'), false);
-			$feedItem->time = strtotime(ArrayHelper::getValue($item, $type === 'rss' ? 'pubDate' : 'updated'));
+			$feedItem->time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
 			$feedItem->save();
 
 			if (++$count === $this->limit) :

@@ -2,6 +2,7 @@
 namespace app\models\user;
 use Yii;
 use app\models\Webrequest;
+use app\widgets\{Item, RecentTracks as RecentTracksWidget};
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
@@ -17,21 +18,10 @@ class RecentTracks extends \yii\db\ActiveRecord {
 			$this->updateUser(Profile::findOne(['user_id' => $userid]), time());
 		endif;
 
-		$tracks = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit($this->limit)->all();
-		foreach ($tracks as $track) :
-			$data[] = Html::tag('div',
-				Html::tag('span', $track['artist'].(($track['time'] === 0) ? Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => Yii::t('mr42', 'Currently Playing')]) : ''), ['class' => 'float-left text-truncate']).
-				Html::tag('span', $track['track'], ['class' => 'float-right text-truncate text-right'])
-			, ['class' => 'clearfix']);
-		endforeach;
-
-		$data[] = empty($tracks)
-			? Html::tag('div', Yii::t('mr42', Yii::t('general', 'No Items to Display.')), ['class' => 'ml-2'])
-			: Html::tag('div',
-				Html::tag('span', Yii::t('mr42', 'Total Tracks Played:'), ['class' => 'font-weight-bold float-left']).
-				Html::tag('span', Yii::$app->formatter->asInteger($tracks[0]['count']), ['class' => 'font-weight-bold float-right'])
-			);
-		return implode($data);
+		return Item::widget([
+			'body' => RecentTracksWidget::widget(['tracks' => self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit($this->limit)->all()]),
+			'header' => Yii::$app->icon->show('lastfm-square', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Recently Played Tracks'),
+		]);
 	}
 
 	public function lastSeen(int $userid, bool $update = false): int {
