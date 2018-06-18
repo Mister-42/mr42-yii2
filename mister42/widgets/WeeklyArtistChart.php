@@ -11,7 +11,7 @@ class WeeklyArtistChart extends Widget {
 	public function run(): string {
 		$user = User::find()->where(['username' => $this->profile])->one();
 		$items = WeeklyArtist::find()->where(['userid' => $user->id])->orderBy('rank')->all();
-		return empty($items) ? Html::tag('div', 'No Items to Display.', ['class' => 'ml-2']) : self::renderFeed($items);
+		return empty($items) ? Html::tag('div', 'No Items to Display.', ['class' => 'ml-2']) : $this->renderFeed($items);
 	}
 
 	private function renderFeed(array $items): string {

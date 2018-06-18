@@ -3,7 +3,6 @@ namespace app\models\user;
 use Yii;
 use app\models\Webrequest;
 use app\widgets\{Item, RecentTracks as RecentTracksWidget};
-use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
 class RecentTracks extends \yii\db\ActiveRecord {

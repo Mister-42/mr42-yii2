@@ -18,9 +18,11 @@ $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
 $this->registerMetaTag(['name' => 'description', 'content' => Yii::$app->params['description']]);
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
 $this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => Yii::getAlias('@assets')]);
-if (Yii::$app->controller->id !== 'articles' || Yii::$app->controller->action->id !== 'index') :
-	$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
-endif;
+$this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
+$this->registerLinkTag(['rel' => 'alternate', 'href' => Url::current(['language' => ''], true), 'hreflang' => 'x-default']);
+foreach (array_keys(Yii::$app->params['languages']) as $lng) :
+	$this->registerLinkTag(['rel' => 'alternate', 'href' => Url::current(['language' => $lng], true), 'hreflang' => $lng]);
+endforeach;
 $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
 $this->registerLinkTag(['rel' => 'icon', 'sizes' => '64x64 48x48 32x32 16x16', 'type' => 'image/x-icon', 'href' => Url::to('@assets/images/favicon.ico')]);
 $this->registerLinkTag(['rel' => 'mask-icon', 'color' => Yii::$app->params['themeColor'], 'type' => 'image/x-icon', 'href' => Url::to('@assets/images/safari-pinned-tab.svg')]);

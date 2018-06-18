@@ -7,7 +7,7 @@ class RecentTracks extends Widget {
 	public $tracks;
 
 	public function run(): string {
-		return empty($this->tracks) ? Html::tag('div', 'No Items to Display.', ['class' => 'ml-2']) : self::renderFeed($this->tracks);
+		return empty($this->tracks) ? Html::tag('div', 'No Items to Display.', ['class' => 'ml-2']) : $this->renderFeed($this->tracks);
 	}
 
 	private function renderFeed(array $items): string {

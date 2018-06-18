@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8066e923fd696bee21b03dd78a807ef",
+    "content-hash": "f1a441ab143bdb4faefbfa63f1e30fc9",
     "packages": [
         {
             "name": "2amigos/2fa-library",
@@ -351,7 +351,7 @@
             "version": "5.0.13",
             "source": {
                 "type": "git",
-                "url": "git@github.com:FortAwesome/Font-Awesome.git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
                 "reference": "bca574eca32c5a766b2a09fdcbedf382a78ebc38"
             },
             "dist": {
@@ -1072,16 +1072,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "478465659fd987669df0bd8a9bf22a8710e5f1b6"
+                "reference": "3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/478465659fd987669df0bd8a9bf22a8710e5f1b6",
-                "reference": "478465659fd987669df0bd8a9bf22a8710e5f1b6",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8",
+                "reference": "3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8",
                 "shasum": ""
             },
             "require": {
@@ -1116,7 +1116,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2018-05-29T17:25:09+00:00"
+            "time": "2018-06-11T23:09:50+00:00"
         },
         {
             "name": "nezhelskoy/yii2-highlight",
@@ -1731,18 +1731,18 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/simialbi/yii2-bootstrap4.git",
-                "reference": "35fe0eb4a1459d291e149c4291823c1621d71aa3"
+                "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
+                "reference": "5977a083a483f605e1d9260b9d8a56ceb2c6f39f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simialbi/yii2-bootstrap4/zipball/35fe0eb4a1459d291e149c4291823c1621d71aa3",
-                "reference": "35fe0eb4a1459d291e149c4291823c1621d71aa3",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/5977a083a483f605e1d9260b9d8a56ceb2c6f39f",
+                "reference": "5977a083a483f605e1d9260b9d8a56ceb2c6f39f",
                 "shasum": ""
             },
             "require": {
                 "bower-asset/bootstrap": "~4.0",
-                "yiisoft/yii2": "~2.0|~2.1@dev"
+                "yiisoft/yii2": "~2.0|~2.1@dev|~3.0@dev"
             },
             "require-dev": {
                 "phpunit/phpunit": "*",
@@ -1759,19 +1759,14 @@
                     "yii\\bootstrap4\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "yiiunit\\extensions\\bootstrap4\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "Qiang Xue",
-                    "email": "qiang.xue@gmail.com",
-                    "homepage": "http://www.yiiframework.com/"
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
                 },
                 {
                     "name": "Alexander Makarov",
@@ -1783,12 +1778,13 @@
                     "email": "amigo.cobos@gmail.com"
                 },
                 {
-                    "name": "Paul Klimov",
-                    "email": "klimov.paul@gmail.com"
-                },
-                {
                     "name": "Simon Karlen",
                     "email": "simi.albi@gmail.com"
+                },
+                {
+                    "name": "Qiang Xue",
+                    "email": "qiang.xue@gmail.com",
+                    "homepage": "http://www.yiiframework.com/"
                 }
             ],
             "description": "The Twitter Bootstrap extension for the Yii framework",
@@ -1797,14 +1793,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "support": {
-                "issues": "https://github.com/yiisoft/yii2-bootstrap4/issues",
-                "forum": "http://www.yiiframework.com/forum/",
-                "wiki": "http://www.yiiframework.com/wiki/",
-                "irc": "irc://irc.freenode.net/yii",
-                "source": "https://github.com/yiisoft/yii2-bootstrap4"
-            },
-            "time": "2018-05-29T13:19:19+00:00"
+            "time": "2018-06-17T22:47:57+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
