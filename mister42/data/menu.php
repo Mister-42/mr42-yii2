@@ -31,7 +31,12 @@ return [
 			['label' => Yii::t('mr42', 'QR Code Generator'), 'url' => ['/tools/qr']],
 		],
 	],
-	['label' => Yii::$app->icon->show('music', ['class' => 'mr-1']).Yii::t('mr42', 'Lyrics'), 'url' => ['/lyrics/index'], 'visible' => true],
+	['label' => Yii::$app->icon->show('music', ['class' => 'mr-1']).Yii::t('mr42', 'Music'), 'url' => null,
+		'items' => [
+			['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/lyrics/index'], 'visible' => true],
+			['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
+		],
+	],
 	$isGuest
 		? ['label' => Yii::$app->icon->show('sign-in-alt', ['class' => 'mr-1']).Yii::t('usuario', 'Login'), 'url' => ['/user/security/login'], 'visible' => true]
 		:	['label' => Yii::$app->icon->show('user-circle', ['class' => 'mr-1']).Yii::$app->user->identity->username.$unreadBadge, 'url' => null,

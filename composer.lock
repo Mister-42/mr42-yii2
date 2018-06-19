@@ -622,16 +622,16 @@
         },
         {
             "name": "codemix/yii2-localeurls",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codemix/yii2-localeurls.git",
-                "reference": "6f0c49e2bea65c373a6c60f306e96b512c97d436"
+                "reference": "f681040b9da5b35a8653041f98bd58c2dd84af07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codemix/yii2-localeurls/zipball/6f0c49e2bea65c373a6c60f306e96b512c97d436",
-                "reference": "6f0c49e2bea65c373a6c60f306e96b512c97d436",
+                "url": "https://api.github.com/repos/codemix/yii2-localeurls/zipball/f681040b9da5b35a8653041f98bd58c2dd84af07",
+                "reference": "f681040b9da5b35a8653041f98bd58c2dd84af07",
                 "shasum": ""
             },
             "require": {
@@ -659,7 +659,7 @@
                 "locale",
                 "yii2"
             ],
-            "time": "2018-02-13T09:07:17+00:00"
+            "time": "2018-06-18T12:11:10+00:00"
         },
         {
             "name": "doctrine/lexer",

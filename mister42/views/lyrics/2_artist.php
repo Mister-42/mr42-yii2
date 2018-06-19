@@ -3,6 +3,7 @@ use app\widgets\Lightbox;
 use yii\bootstrap4\Html;
 
 $this->title = implode(' - ', [$data[0]->artist->name, 'Lyrics']);
+$this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $data[0]->artist->name;
 

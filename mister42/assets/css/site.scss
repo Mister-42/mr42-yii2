@@ -81,6 +81,12 @@ svg.fa {
 		}
 	}
 
+	&music-collection {
+		.card {
+			min-width: 9rem;
+		}
+	}
+
 	&lyrics-lyrics {
 		.row {
 			@include dividing-line(10px, $lighterBlue);

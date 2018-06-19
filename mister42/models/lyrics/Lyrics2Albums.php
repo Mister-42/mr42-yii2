@@ -1,7 +1,7 @@
 <?php
 namespace app\models\lyrics;
 use Yii;
-use app\models\{Pdf, Video};
+use app\models\{Image, Pdf, Video};
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 use yii\db\Expression;
@@ -96,16 +96,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		endif;
 
 		if ($size !== 'cover') :
-			$process = proc_open("convert -resize {$size} -strip -quality 85% -interlace Plane - jpg:-", [['pipe', 'r'], ['pipe', 'w']], $pipes);
-			if (is_resource($process)) :
-				fwrite($pipes[0], $album->image);
-				fclose($pipes[0]);
-
-				$album->image = stream_get_contents($pipes[1]);
-				fclose($pipes[1]);
-
-				proc_close($process);
-			endif;
+			$album->image = Image::resize($album->image, $size);
 		endif;
 
 		return [$fileName, $album->image];

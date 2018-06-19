@@ -2,6 +2,7 @@
 namespace app\commands;
 use Yii;
 use app\models\Webrequest;
+use app\models\music\Collection;
 use app\models\feed\Feed;
 use app\models\user\{Profile, RecentTracks, WeeklyArtist};
 use Da\User\Model\User;
@@ -14,6 +15,34 @@ use yii\helpers\ArrayHelper;
 class FeedController extends Controller {
 	public $defaultAction = 'webfeed';
 	public $limit = 25;
+
+	/**
+	 * Retrieves and stores Discogs collection
+	 */
+	public function actionDiscogsCollection(): int {
+		$discogs = new Collection();
+		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
+			$profile = Profile::findOne(['user_id' => $user->id]);
+			if (isset($profile->discogs)) :
+				$response = Webrequest::getDiscogsApi("/users/{$profile->discogs}/collection/folders/0/releases");
+				if (!$response->isOK) :
+					continue;
+				endif;
+				Collection::deleteAll(['user_id' => $profile->user_id]);
+				$discogs->saveCollection($profile->user_id, $response->data['releases']);
+
+				for ($x = 2; $x < (int) ArrayHelper::getValue($response->data, 'pagination.pages'); $x++) :
+					$response = Webrequest::getDiscogsApi("/users/{$profile->discogs}/collection/folders/0/releases?".http_build_query(['page' => $x]));
+					if (!$response->isOK) :
+						continue;
+					endif;
+					$discogs->saveCollection($profile->user_id, $response->data['releases']);
+				endfor;
+			endif;
+		endforeach;
+
+		return self::EXIT_CODE_NORMAL;
+	}
 
 	/**
 	 * Retrieves and stores Recent Tracks from Last.fm.
@@ -47,7 +76,7 @@ class FeedController extends Controller {
 			if (isset($profile->lastfm)) :
 				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $this->limit);
 				if (!$response->isOK) :
-					return self::EXIT_CODE_ERROR;
+					continue;
 				endif;
 
 				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);

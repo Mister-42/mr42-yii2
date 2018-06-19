@@ -2,6 +2,7 @@
 use yii\bootstrap4\Html;
 
 $this->title = Yii::t('mr42', 'Lyrics');
+$this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
 $this->params['breadcrumbs'][] = $this->title;
 
 echo Html::tag('h1', $this->title);

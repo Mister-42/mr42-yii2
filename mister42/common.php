@@ -113,6 +113,7 @@ return [
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>-<size:.{2,5}>.jpg'	=> 'lyrics/albumcover',
 				'lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>'						=> 'lyrics/index',
 				'lyrics/<artist:.*?>'												=> 'lyrics/index',
+				'music/collection-cover/<id:.*>.jpg'								=> 'music/collection-cover',
 				'articles/<id:\d+>/<title:.*?>.pdf'									=> 'articles/pdf',
 				$params['shortDomain'].'art<id:\d+>'								=> 'permalink/articles',
 				'articles/<id:\d+>/<title:.*?>'										=> 'articles/index',
