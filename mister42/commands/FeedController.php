@@ -28,16 +28,17 @@ class FeedController extends Controller {
 				if (!$response->isOK) :
 					continue;
 				endif;
-				Collection::deleteAll(['user_id' => $profile->user_id]);
-				$discogs->saveCollection($profile->user_id, $response->data['releases']);
+				$ids = $discogs->saveCollection($profile->user_id, $response->data['releases']);
 
 				for ($x = 2; $x < (int) ArrayHelper::getValue($response->data, 'pagination.pages'); $x++) :
 					$response = Webrequest::getDiscogsApi("/users/{$profile->discogs}/collection/folders/0/releases?".http_build_query(['page' => $x]));
 					if (!$response->isOK) :
 						continue;
 					endif;
-					$discogs->saveCollection($profile->user_id, $response->data['releases']);
+					$subids = $discogs->saveCollection($profile->user_id, $response->data['releases']);
+					$ids = array_merge($ids, $subids);
 				endfor;
+				Collection::deleteAll(['AND', 'user_id' => $profile->user_id, ['NOT IN', 'id', $ids]]);
 			endif;
 		endforeach;
 

@@ -95,11 +95,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			$album = $album[0]->album;
 		endif;
 
-		if ($size !== 'cover') :
-			$album->image = Image::resize($album->image, $size);
-		endif;
-
-		return [$fileName, $album->image];
+		return [$fileName, Image::resize($album->image, $size)];
 	}
 
 	public function getArtist() {

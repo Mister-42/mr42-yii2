@@ -1,7 +1,6 @@
 <?php
 namespace app\models\music;
 use app\models\{Image, Webrequest};
-use yii\console\Controller;
 use yii\helpers\ArrayHelper;
 
 class Collection extends \yii\db\ActiveRecord {
@@ -9,20 +8,30 @@ class Collection extends \yii\db\ActiveRecord {
 		return '{{%discogs_collection}}';
 	}
 
-	public function saveCollection(int $user, array $data) {
+	public function saveCollection(int $user, array $data): array {
 		foreach ($data as $item) :
-			$addItem = new Collection();
-			$addItem->id = (int) ArrayHelper::getValue($item, 'basic_information.id');
-			$addItem->user_id = $user;
-			$addItem->artist = ArrayHelper::getValue($item, 'basic_information.artists.0.name');
-			$addItem->year = (int)ArrayHelper::getValue($item, 'basic_information.year');
-			$addItem->title = ArrayHelper::getValue($item, 'basic_information.title');
-			$addItem->image = null;
-			if ($image = ArrayHelper::getValue($item, 'basic_information.cover_image')) :
-				$img = Webrequest::getUrl($image, '');
-				$addItem->image = Image::resize($img->content, 250);
+			$id[] = (int) ArrayHelper::getValue($item, 'basic_information.id');
+			$insert = false;
+			if (!$collectionItem = Collection::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user])) :
+				$insert = true;
+				$collectionItem = new Collection();
 			endif;
-			$addItem->save();
+
+			$collectionItem->id = (int) ArrayHelper::getValue($item, 'basic_information.id');
+			$collectionItem->user_id = $user;
+			$collectionItem->artist = ArrayHelper::getValue($item, 'basic_information.artists.0.name');
+			$collectionItem->year = (int) ArrayHelper::getValue($item, 'basic_information.year');
+			$collectionItem->title = ArrayHelper::getValue($item, 'basic_information.title');
+			if ($insert) :
+				$collectionItem->image = null;
+				if ($image = ArrayHelper::getValue($item, 'basic_information.cover_image')) :
+					$img = Webrequest::getUrl($image, '');
+					$collectionItem->image = Image::resize($img->content, 250);
+				endif;
+			endif;
+			$collectionItem->save();
 		endforeach;
+
+		return $id;
 	}
 }

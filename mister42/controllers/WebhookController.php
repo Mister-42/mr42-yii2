@@ -1,7 +1,6 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\commands\FeedController;
 use app\models\webhook\Github;
 use yii\web\{Response, NotFoundHttpException, UnauthorizedHttpException};
 

@@ -77,7 +77,7 @@ class LyricsController extends \yii\web\Controller {
 	public function actionAlbumcover() {
 		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
-		if (!ArrayHelper::keyExists(0, $tracks) || !ArrayHelper::isIn($this->size, [100, 500, 800, 'cover'])) :
+		if (!ArrayHelper::keyExists(0, $tracks) || !ArrayHelper::isIn($this->size, [100, 500, 800])) :
 			throw new NotFoundHttpException('Cover not found.');
 		endif;
 		$this->redirectIfNotUrl('albumcover', $tracks);
