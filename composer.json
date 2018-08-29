@@ -15,7 +15,7 @@
         "yiisoft/yii2-swiftmailer": "*",
         "yiisoft/yii2-httpclient": "^2.0",
         "yiisoft/yii2-jui": "^2.0",
-        "twbs/bootstrap": "4.1.1 as 3.0.3",
+        "twbs/bootstrap": "4.1.2 as 3.0.3",
         "bower-asset/fontawesome": "^5.0",
         "bower-asset/jqueryui-timepicker-addon": "^1.6",
         "bower-asset/to-markdown": "^3.0",

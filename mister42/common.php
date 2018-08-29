@@ -20,7 +20,7 @@ return [
 					'css' => [],
 				],
 				'yii\bootstrap4\BootstrapPluginAsset' => [
-					'js' => [YII_DEBUG ? 'js/bootstrap.js' : 'js/bootstrap.min.js'],
+					'js' => [YII_DEBUG ? 'js/bootstrap.bundle.js' : 'js/bootstrap.bundle.min.js'],
 				],
 				'yii\jui\JuiAsset' => [
 					'css' => [YII_DEBUG ? 'themes/smoothness/jquery-ui.css' : 'themes/smoothness/jquery-ui.min.css'],

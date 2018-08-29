@@ -19,19 +19,21 @@ class Collection extends \yii\db\ActiveRecord {
 
 			$collectionItem->id = (int) ArrayHelper::getValue($item, 'basic_information.id');
 			$collectionItem->user_id = $user;
-			$collectionItem->artist = ArrayHelper::getValue($item, 'basic_information.artists.0.name');
+			$collectionItem->artist = trim(preg_replace('/\([0-9]+\)/', '', ArrayHelper::getValue($item, 'basic_information.artists.0.name')));
 			$collectionItem->year = (int) ArrayHelper::getValue($item, 'basic_information.year');
 			$collectionItem->title = ArrayHelper::getValue($item, 'basic_information.title');
 			if ($insert) :
 				$collectionItem->image = null;
 				if ($image = ArrayHelper::getValue($item, 'basic_information.cover_image')) :
 					$img = Webrequest::getUrl($image, '');
-					$collectionItem->image = Image::resize($img->content, 250);
+					if ($img = Image::resize($img->content, 250)) :
+						$collectionItem->image = $img;
+					endif;
 				endif;
 			endif;
 			$collectionItem->save();
 		endforeach;
 
-		return $id;
+		return $id ?? [];
 	}
 }

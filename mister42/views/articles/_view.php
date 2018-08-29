@@ -28,7 +28,7 @@ echo Html::beginTag('article', ['class' => 'mb-3']);
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 
-	echo Html::tag('p', Yii::t('mr42', '{date} by {author}', ['date' => Yii::$app->formatter->asDate($model->updated), 'author' => $authorPage]), ['class' => 'text-secondary']);
+	echo Html::tag('p', Yii::t('mr42', '{date} by {author}', ['date' => Yii::$app->formatter->asDate($model->created), 'author' => $authorPage]), ['class' => 'text-secondary']);
 
 	echo Html::beginTag('div');
 		if (strpos($model->content, '[readmore]')) :
