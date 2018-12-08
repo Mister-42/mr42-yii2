@@ -105,6 +105,7 @@ class FeedController extends Controller {
 	 */
 	public function actionWebfeed(string $type, string $name, string $url, string $desc): int {
 		$count = 0;
+		$times = [];
 		$response = Webrequest::getUrl('', $url);
 		if (!$response->isOK) :
 			return self::EXIT_CODE_ERROR;
@@ -113,12 +114,16 @@ class FeedController extends Controller {
 		Feed::deleteAll(['feed' => $name]);
 		$data = $type === 'rss' ? $response->data['channel']['item'] : $response->data['entry'];
 		foreach ($data as $item) :
+			$time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
+			$time = (ArrayHelper::isIn($time, $times)) ? ++$time : $time;
+			$times[] = $time;
+
 			$feedItem = new Feed();
 			$feedItem->feed = $name;
 			$feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
 			$feedItem->url = (string) ArrayHelper::getValue($item, $type === 'rss' ? 'link' : 'link.@attributes.href');
 			$feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $desc), false);
-			$feedItem->time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
+			$feedItem->time = $time;
 			$feedItem->save();
 
 			if (++$count === $this->limit) :

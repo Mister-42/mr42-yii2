@@ -25,7 +25,8 @@
         "gkralik/php-uglifyjs": "^1.0",
         "kartik-v/yii2-mpdf": "*",
         "kop/yii2-scroll-pager": "*",
-        "nezhelskoy/yii2-highlight": "*"
+        "nezhelskoy/yii2-highlight": "*",
+        "zenorocha/clipboardjs": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*"

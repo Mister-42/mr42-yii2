@@ -4,7 +4,7 @@ use Yii;
 use yii\web\{AssetBundle, View};
 
 class ClipboardJsAsset extends AssetBundle {
-	public $sourcePath = '@bower/bootstrap/assets/js/vendor';
+	public $sourcePath = '@bower/../zenorocha/clipboardjs/dist';
 
 	public $js = [
 		'clipboard.min.js',

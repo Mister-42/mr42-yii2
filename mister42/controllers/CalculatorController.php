@@ -66,6 +66,10 @@ class CalculatorController extends \yii\web\Controller {
 		]);
 	}
 
+	public function actionWeeknumbers() {
+		return $this->render('weeknumbers');
+	}
+
 	public function actionWpapsk() {
 		return $this->render('wpapsk');
 	}

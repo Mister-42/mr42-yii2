@@ -15,6 +15,7 @@ return [
 			['label' => Yii::t('mr42', 'Date to Date (duration)'), 'url' => ['/calculator/duration']],
 			['label' => Yii::t('mr42', 'Microsoft® Office 365® End Date'), 'url' => ['/calculator/office365']],
 			['label' => Yii::t('mr42', 'Time Zone Converter'), 'url' => ['/calculator/timezone']],
+			['label' => Yii::t('mr42', 'Week Numbers'), 'url' => ['/calculator/weeknumbers']],
 			['label' => Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key'), 'url' => ['/calculator/wpapsk']],
 		],
 	],
