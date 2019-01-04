@@ -4,8 +4,8 @@ $params = require(__DIR__.'/params.php');
 
 return [
 	'aliases' => [
-		'@assets' => '//s.mister42.me',
-		'@assetsroot' => __DIR__.'/../../webassets/me.mister42.s',
+		'@assets' => '//s.mr42.me',
+		'@assetsroot' => __DIR__.'/../../webassets/me.mr42.s',
 		'@bower' => '@vendor/bower-asset',
 		'@npm' => '@vendor/npm-asset',
 	],

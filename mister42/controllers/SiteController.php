@@ -98,6 +98,10 @@ class SiteController extends \yii\web\Controller {
 		return $this->renderPartial('browserconfigxml');
 	}
 
+	public function actionPi() {
+		return $this->render('pi');
+	}
+
 	public function actionRobotstxt() {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'text/plain');

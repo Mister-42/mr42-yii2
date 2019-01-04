@@ -13,9 +13,9 @@ class RecentTracks extends Widget {
 	private function renderFeed(array $items): string {
 		foreach ($items as $item) :
 			$feed[] = Html::tag('li',
-				Html::tag('span', $item['artist'].(($item['time'] === 0) ? Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => Yii::t('mr42', 'Currently Playing')]) : ''), ['class' => 'float-left text-truncate']).
-				Html::tag('span', $item['track'], ['class' => 'float-right text-right text-truncate'])
-			, ['class' => 'list-group-item']);
+				Html::tag('span', $item['artist'].(($item['time'] === 0) ? Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => Yii::t('mr42', 'Currently Playing')]) : ''), ['class' => 'float-left mw-100 text-truncate']).
+				Html::tag('span', $item['track'], ['class' => 'float-right text-right mw-100 text-truncate'])
+			, ['class' => 'list-group-item w-100']);
 		endforeach;
 
 		$feed[] = Html::tag('li',

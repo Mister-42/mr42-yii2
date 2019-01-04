@@ -9,12 +9,12 @@ class Icon {
 	public function show(string $name, array $options = []): string {
 		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fas fa-');
 		$style = $this->getStyle((explode(' ', $classPrefix))[0]);
-		if (!file_exists(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"))) :
+		if (!file_exists(Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg"))) :
 			return $this->show('question-circle', $options);
 		endif;
 
 		$doc = new DOMDocument();
-		$doc->load(Yii::getAlias("@bower/fontawesome/advanced-options/raw-svg/{$style}/{$name}.svg"));
+		$doc->load(Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg"));
 		foreach ($doc->getElementsByTagName('svg') as $svg) :
 			$svg->setAttribute('aria-hidden', 'true');
 			list($width, $height) = StringHelper::explode($svg->getAttribute('viewBox'), ' ', function($e) { return ltrim($e, '0'); }, true);

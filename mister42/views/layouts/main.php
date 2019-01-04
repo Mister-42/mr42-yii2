@@ -78,6 +78,7 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 				if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) :
 					echo Html::a(Yii::$app->icon->show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
 				endif;
+				echo Html::a(Yii::$app->icon->show('raspberry-pi', ['prefix' => 'fab']), ['/site/pi'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', Yii::t('mr42', 'My Raspberry Pi'))]);
 				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
 
 				echo Html::a(Yii::$app->icon->show('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'id' => 'dropupLanguage', 'role' => 'button', 'title' => Yii::t('mr42', 'Change Language')]);
