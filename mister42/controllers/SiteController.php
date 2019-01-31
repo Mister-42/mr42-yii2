@@ -102,6 +102,10 @@ class SiteController extends \yii\web\Controller {
 		return $this->render('pi');
 	}
 
+	public function actionPrivacy() {
+		return $this->render('privacy');
+	}
+
 	public function actionRobotstxt() {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'text/plain');

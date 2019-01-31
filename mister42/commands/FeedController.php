@@ -25,16 +25,14 @@ class FeedController extends Controller {
 			$profile = Profile::findOne(['user_id' => $user->id]);
 			if (isset($profile->discogs)) :
 				$response = Webrequest::getDiscogsApi("/users/{$profile->discogs}/collection/folders/0/releases");
-				if (!$response->isOK) :
+				if (!$response->isOK)
 					continue;
-				endif;
 				$ids = $discogs->saveCollection($profile->user_id, $response->data['releases']);
 
 				for ($x = 2; $x < (int) ArrayHelper::getValue($response->data, 'pagination.pages'); $x++) :
 					$response = Webrequest::getDiscogsApi("/users/{$profile->discogs}/collection/folders/0/releases?".http_build_query(['page' => $x]));
-					if (!$response->isOK) :
+					if (!$response->isOK)
 						continue;
-					endif;
 					$subids = $discogs->saveCollection($profile->user_id, $response->data['releases']);
 					$ids = array_merge($ids, $subids);
 				endfor;
@@ -56,9 +54,8 @@ class FeedController extends Controller {
 			if (isset($profile->lastfm)) :
 				$lastSeen = $recentTracks->lastSeen($user->id);
 
-				if (!$lastSeen) :
+				if (!$lastSeen)
 					continue;
-				endif;
 
 				$recentTracks->updateUser($profile, $lastSeen);
 				usleep(200000);
@@ -76,9 +73,8 @@ class FeedController extends Controller {
 			$profile = Profile::findOne(['user_id' => $user->id]);
 			if (isset($profile->lastfm)) :
 				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $this->limit);
-				if (!$response->isOK) :
+				if (!$response->isOK)
 					continue;
-				endif;
 
 				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);
 				foreach ($response->data['weeklyartistchart']['artist'] as $artist) :
@@ -89,9 +85,8 @@ class FeedController extends Controller {
 					$addArtist->count = (int) ArrayHelper::getValue($artist, 'playcount');
 					$addArtist->save();
 
-					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $this->limit) :
+					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $this->limit)
 						break;
-					endif;
 				endforeach;
 				usleep(200000);
 			endif;
@@ -105,20 +100,16 @@ class FeedController extends Controller {
 	 */
 	public function actionWebfeed(string $type, string $name, string $url, string $desc): int {
 		$count = 0;
-		$times = [];
 		$response = Webrequest::getUrl('', $url);
-		if (!$response->isOK) :
+		if (!$response->isOK)
 			return self::EXIT_CODE_ERROR;
-		endif;
 
 		Feed::deleteAll(['feed' => $name]);
 		$data = $type === 'rss' ? $response->data['channel']['item'] : $response->data['entry'];
 		foreach ($data as $item) :
 			$time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
-			$time = (ArrayHelper::isIn($time, $times)) ? ++$time : $time;
-			$times[] = $time;
 
-			$feedItem = new Feed();
+			$feedItem = Feed::findOne(['feed' => $name, 'time' => $time]) ?? new Feed();
 			$feedItem->feed = $name;
 			$feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
 			$feedItem->url = (string) ArrayHelper::getValue($item, $type === 'rss' ? 'link' : 'link.@attributes.href');
@@ -126,9 +117,8 @@ class FeedController extends Controller {
 			$feedItem->time = $time;
 			$feedItem->save();
 
-			if (++$count === $this->limit) :
+			if (++$count === $this->limit)
 				break;
-			endif;
 		endforeach;
 
 		return self::EXIT_CODE_NORMAL;

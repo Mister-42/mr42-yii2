@@ -12,16 +12,16 @@ foreach (Menu::getItemList() as $menu) :
 	if (isset($menu['items'])) :
 		foreach ($menu['items'] as $submenu) :
 			if (isset($submenu['url']) && (!isset($submenu['visible']) || $submenu['visible'])) :
-							$submenuItems[] = isset($submenu['url'])
+				$submenuItems[] = isset($submenu['url'])
 					? Html::a(Yii::$app->formatter->cleanInput($submenu['label'], false), $submenu['url'], ArrayHelper::getValue($submenu, 'linkOptions', []))
 					: Yii::$app->formatter->cleanInput($submenu['label'], false);
 			endif;
 		endforeach;
 	endif;
 	echo isset($menu['url'])
-			? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url']))
-			: Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false), ['class' => 'font-weight-bold'])
-		. Html::tag('li', Html::ul($submenuItems, ['encode' => false]));
+		? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url'], ['class' => 'font-weight-bold']))
+		: Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false), ['class' => 'font-weight-bold'])
+			. Html::tag('li', Html::ul($submenuItems, ['encode' => false]));
 	unset($submenuItems);
 endforeach;
 echo Html::endTag('ul');

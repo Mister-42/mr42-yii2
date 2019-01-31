@@ -8,8 +8,8 @@ $unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACT
 $unreadBadge = $unread > 0 ? Html::tag('span', $unread, ['class' => 'badge badge-info ml-1']) : '';
 
 return [
-	['label' => Yii::$app->icon->show('newspaper', ['class' => 'mr-1']).Yii::t('mr42', 'Articles'), 'url' => ['/articles/index'], 'visible' => true],
-	['label' => Yii::$app->icon->show('calculator', ['class' => 'mr-1']).Yii::t('mr42', 'Calculator'), 'url' => null,
+	['label' => Yii::$app->icon->show('newspaper', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true],
+	['label' => Yii::$app->icon->show('calculator', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Calculator')), 'url' => null,
 		'items' => [
 			['label' => Yii::t('mr42', 'Date (add/subtract)'), 'url' => ['/calculator/date']],
 			['label' => Yii::t('mr42', 'Date to Date (duration)'), 'url' => ['/calculator/duration']],
@@ -19,7 +19,7 @@ return [
 			['label' => Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key'), 'url' => ['/calculator/wpapsk']],
 		],
 	],
-	['label' => Yii::$app->icon->show('wrench', ['class' => 'mr-1']).Yii::t('mr42', 'Tools'), 'url' => null,
+	['label' => Yii::$app->icon->show('wrench', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Tools')), 'url' => null,
 		'items' => [
 			['label' => Yii::t('mr42', 'Barcode Generator'), 'url' => ['/tools/barcode']],
 			['label' => Yii::t('mr42', 'Browser Headers'), 'url' => ['/tools/headers']],
@@ -32,15 +32,21 @@ return [
 			['label' => Yii::t('mr42', 'QR Code Generator'), 'url' => ['/tools/qr']],
 		],
 	],
-	['label' => Yii::$app->icon->show('music', ['class' => 'mr-1']).Yii::t('mr42', 'Music'), 'url' => null,
+	['label' => Yii::$app->icon->show('music', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Music')), 'url' => null,
 		'items' => [
 			['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/lyrics/index'], 'visible' => true],
 			['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
 		],
 	],
+	['label' => Yii::$app->icon->show('dungeon', ['class' => 'mr-1']).Html::tag('span', Yii::$app->name), 'url' => null,
+		'items' => [
+			['label' => Yii::t('mr42', 'Contact'), 'url' => ['/site/contact']],
+			['label' => Yii::t('mr42', 'My Pi'), 'url' => ['/site/pi']],
+		],
+	],
 	$isGuest
-		? ['label' => Yii::$app->icon->show('sign-in-alt', ['class' => 'mr-1']).Yii::t('usuario', 'Login'), 'url' => ['/user/security/login'], 'visible' => true]
-		:	['label' => Yii::$app->icon->show('user-circle', ['class' => 'mr-1']).Yii::$app->user->identity->username.$unreadBadge, 'url' => null,
+		? ['label' => Yii::$app->icon->show('sign-in-alt', ['class' => 'mr-1']).Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]
+		:	['label' => Yii::$app->icon->show('user-circle', ['class' => 'mr-1']).Html::tag('span', Yii::$app->user->identity->username.$unreadBadge), 'url' => null,
 				'items' => [
 					['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create'], 'visible' => $isAdmin],
 					['label' => Yii::t('usuario', 'Manage users'), 'url' => ['/user/admin/index'], 'visible' => $isAdmin],

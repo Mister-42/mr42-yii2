@@ -1,9 +1,8 @@
 <?php
 use app\assets\AppAsset;
 use app\models\Menu;
-use yii\bootstrap4\{Html, Nav, NavBar};
+use yii\bootstrap4\{Breadcrumbs, Html, Nav, NavBar};
 use yii\helpers\Url;
-use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
 
@@ -42,7 +41,7 @@ NavBar::begin([
 	'brandLabel' => Yii::$app->name,
 	'brandUrl' => Yii::$app->homeUrl,
 	'options' => [
-		'class' => 'navbar-dark navbar-expand-md',
+		'class' => 'navbar-dark navbar-expand-md text-center',
 	],
 ]);
 
@@ -54,15 +53,14 @@ NavBar::begin([
 			'options' => ['class' => 'navbar-nav ml-auto'],
 		]);
 	endif;
+
 NavBar::end();
 echo Html::endTag('header');
 
 echo Html::tag('main',
 	Breadcrumbs::widget([
-		'activeItemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item active']),
 		'encodeLabels' => false,
 		'homeLink' => ['label' => Yii::$app->icon->show('home', ['class' => 'mr-1']).Yii::$app->name, 'url' => Yii::$app->homeUrl],
-		'itemTemplate' => Html::tag('li', '{link}', ['class' => 'breadcrumb-item']),
 		'links' => $this->params['breadcrumbs'] ?? null,
 	]).
 	$content
@@ -73,14 +71,11 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 		echo Html::tag('div', Html::tag('span', '&copy; 2014-'.date('Y').' '.Yii::$app->name, ['class' => 'align-middle']), ['class' => 'float-left']);
 		echo Html::beginTag('div', ['class' => 'float-right dropup']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') :
-				echo Html::a(Yii::$app->icon->show('envelope'), ['/site/contact'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Contact')]);
-
 				if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) :
 					echo Html::a(Yii::$app->icon->show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
 				endif;
-				echo Html::a(Yii::$app->icon->show('raspberry-pi', ['prefix' => 'fab']), ['/site/pi'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', Yii::t('mr42', 'My Raspberry Pi'))]);
+				echo Html::a(Yii::$app->icon->show('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Privacy Policy')]);
 				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
-
 				echo Html::a(Yii::$app->icon->show('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'id' => 'dropupLanguage', 'role' => 'button', 'title' => Yii::t('mr42', 'Change Language')]);
 				echo Html::beginTag('div', ['aria-labelledby' => 'dropupLanguage', 'class' => 'dropdown-menu']);
 					foreach (Yii::$app->params['languages'] as $lng => $desc) :

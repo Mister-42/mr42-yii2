@@ -225,6 +225,12 @@ footer {
 }
 
 @include media-breakpoint-up(md) {
+.navbar {
+	span::before {
+		content: "\A";
+		white-space: pre;
+	}
+}
 	#btn-scrolltop {
 		bottom: 40px;
 		right: 10px;

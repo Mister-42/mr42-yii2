@@ -9,8 +9,7 @@ class Menu {
 
 		if (Yii::$app->controller->action->id === 'sitemap') :
 			$menuItems[] = ['label' => null, 'url' => ['/user/registration/register']];
-			$menuItems[] = ['label' => null, 'url' => ['/site/contact']];
-			$menuItems[] = ['label' => null, 'url' => ['/site/pi']];
+			$menuItems[] = ['label' => null, 'url' => ['/site/privacy']];
 		endif;
 
 		$count = 0;
