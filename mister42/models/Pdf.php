@@ -2,6 +2,9 @@
 namespace app\models;
 use Yii;
 use kartik\mpdf\Pdf as PdfCreator;
+use Mpdf\Pdf\Protection;
+use Mpdf\Pdf\Protection\UniqidGenerator;
+use Mpdf\Writer\BaseWriter;
 use yii\helpers\FileHelper;
 
 class Pdf {
@@ -18,6 +21,7 @@ class Pdf {
 			$pdf->content = $content;
 			$pdf->filename = $filename;
 			$pdf->destination = PdfCreator::DEST_FILE;
+
 			foreach (['author', 'footer', 'header', 'keywords', 'subject', 'title'] as $x) :
 				if (isset($params[$x])) :
 					$function = 'Set'.ucfirst($x);
@@ -25,9 +29,11 @@ class Pdf {
 				endif;
 			endforeach;
 			$pdf->render();
-			$this->replaceLine($filename, '/Producer', $pdf->api->_UTF16BEtextstring('Yii Framework'));
-			$this->replaceLine($filename, '/CreationDate', $pdf->api->_textstring(date('YmdHis', $created).substr(date('O', $created), 0, 3)."'".substr(date('O', $created), 3, 2)."'"));
-			$this->replaceLine($filename, '/ModDate', $pdf->api->_textstring(date('YmdHis', $updated).substr(date('O', $updated), 0, 3)."'".substr(date('O', $updated), 3, 2)."'"));
+
+			$writer = new BaseWriter($pdf->api, new Protection(new UniqidGenerator()));
+			$this->replaceLine($filename, '/Producer', $writer->utf16BigEndianTextString('Yii Framework'));
+			$this->replaceLine($filename, '/CreationDate', $writer->string(date('YmdHis', $created).substr(date('O', $created), 0, 3)."'".substr(date('O', $created), 3, 2)."'"));
+			$this->replaceLine($filename, '/ModDate', $writer->string(date('YmdHis', $updated).substr(date('O', $updated), 0, 3)."'".substr(date('O', $updated), 3, 2)."'"));
 			touch($filename, $updated);
 		endif;
 		return $filename;

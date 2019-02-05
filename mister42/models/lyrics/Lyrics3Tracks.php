@@ -2,15 +2,18 @@
 namespace app\models\lyrics;
 use Yii;
 use app\models\Video;
+use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 class Lyrics3Tracks extends \yii\db\ActiveRecord {
+	public $max;
 	public $video;
 
 	public static function tableName(): string {
 		return '{{%lyrics_3_tracks}}';
 	}
 
-	public function afterFind() {
+	public function afterFind(): void {
 		parent::afterFind();
 		$this->track = sprintf('%02d', $this->track);
 		$this->disambiguation = $this->disambiguation ? ' ('.$this->disambiguation.')' : null;
@@ -19,11 +22,12 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->video = $this->video_id && $this->video_ratio ? Video::getEmbed('youtube', $this->video_id, $this->video_ratio) : null;
 	}
 
-	public static function tracksList($artist, $year, $name) {
-		return parent::find()
+	public static function tracksList(string $artist, string $year, string $name): array {
+		return self::find()
 			->orderBy('track')
 			->joinWith('artist')
-			->with('album', 'lyrics')
+			->with('album')
+			->innerJoinWith('lyrics')
 			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
 			->andWhere(Lyrics2Albums::tableName().'.year=:year')
 			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])
@@ -31,30 +35,36 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 			->all();
 	}
 
-	public static function lastUpdate($artist, $year, $name, $data = null) {
-		$data = $data ?? self::tracksList($artist, $year, $name);
-		$max = 0;
-		foreach ($data as $item) :
-			$max = max($max, $item->album->updated);
-			foreach ($item->album->tracks as $track) :
-				if ($track->lyrics) :
-					$max = max($max, $track->lyrics->updated);
-				endif;
-			endforeach;
-		endforeach;
-		return $max;
+	public static function lastModified(string $artist, string $year, string $name): int {
+		$max = self::find()
+			->select('GREATEST(MAX('.Lyrics2Albums::tableName().'.`updated`), MAX('.Lyrics4Lyrics::tableName().'.`updated`)) AS `max`')
+			->joinWith('artist')
+			->with('album')
+			->innerJoinWith('lyrics')
+			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
+			->andWhere(Lyrics2Albums::tableName().'.year=:year')
+			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])
+			->addParams([':artist' => $artist, ':year' => $year, ':album' => $name])
+			->one();
+		return $max->max ? Yii::$app->formatter->asTimestamp($max->max) : time();
 	}
 
-	public function getArtist() {
+	public function getArtist(): ActiveQuery {
 		return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent'])
+			->active(Lyrics1Artists::tableName())
 			->via('album');
 	}
 
-	public function getAlbum() {
-		return $this->hasOne(Lyrics2Albums::class, ['id' => 'parent']);
+	public function getAlbum(): ActiveQuery {
+		return $this->hasOne(Lyrics2Albums::className(), ['id' => 'parent'])
+			->active(Lyrics2Albums::tableName());
 	}
 
-	public function getLyrics() {
-		return $this->hasOne(Lyrics4Lyrics::class, ['id' => 'lyricid']);
+	public function getLyrics(): ActiveQuery {
+		return $this->hasOne(Lyrics4Lyrics::className(), ['id' => 'lyricid']);
+	}
+
+	public static function find(): LyricsQuery {
+		return new LyricsQuery(get_called_class());
 	}
 }

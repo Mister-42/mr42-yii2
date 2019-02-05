@@ -41,7 +41,7 @@ echo Html::beginTag('div', ['class' => 'tab-content']);
 							echo Html::tag('h5', $host, ['class' => 'text-center my-0']);
 							echo ($tab === array_key_first($tabs))
 								? Html::img("@assets/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
-								: Html::img("@assets/images/blank.png", ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
+								: Html::img("@assets/images/loading.png", ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
 						echo Html::endTag('div');
 					endforeach;
 				endforeach;

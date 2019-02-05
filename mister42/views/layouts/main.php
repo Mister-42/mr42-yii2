@@ -38,12 +38,12 @@ $this->beginBody();
 
 echo Html::beginTag('header', ['class' => 'site-header fixed-top']);
 NavBar::begin([
-	'brandLabel' => Yii::$app->name,
-	'brandUrl' => Yii::$app->homeUrl,
-	'options' => [
-		'class' => 'navbar-dark navbar-expand-md text-center',
-	],
-]);
+		'brandLabel' => Yii::$app->name,
+		'brandUrl' => Yii::$app->homeUrl,
+		'options' => [
+			'class' => 'navbar-dark navbar-expand-md text-center',
+		],
+	]);
 
 	if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') :
 		echo Nav::widget([
@@ -53,7 +53,6 @@ NavBar::begin([
 			'options' => ['class' => 'navbar-nav ml-auto'],
 		]);
 	endif;
-
 NavBar::end();
 echo Html::endTag('header');
 
@@ -74,21 +73,23 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 				if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) :
 					echo Html::a(Yii::$app->icon->show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/nu/?doc='.rawurlencode(Url::current([], true)), ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
 				endif;
-				echo Html::a(Yii::$app->icon->show('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Privacy Policy')]);
+				echo Html::a(Yii::$app->icon->show('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Privacy Policy')]);
 				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
-				echo Html::a(Yii::$app->icon->show('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'id' => 'dropupLanguage', 'role' => 'button', 'title' => Yii::t('mr42', 'Change Language')]);
-				echo Html::beginTag('div', ['aria-labelledby' => 'dropupLanguage', 'class' => 'dropdown-menu']);
-					foreach (Yii::$app->params['languages'] as $lng => $desc) :
-						echo ($lng === Yii::$app->language)
-							? Html::tag('div', $desc.Yii::$app->icon->show('check', ['class' => 'ml-1']), ['class' => 'disabled dropdown-item'])
-							: Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item']);
-					endforeach;
+				echo Html::beginTag('div', ['class' => 'btn-group dropup']);
+					echo Html::a(Yii::$app->icon->show('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'title' => Yii::t('mr42', 'Change Language')]);
+					echo Html::beginTag('div', ['class' => 'dropdown-menu']);
+						foreach (Yii::$app->params['languages'] as $lng => $desc) :
+							echo ($lng === Yii::$app->language)
+								? Html::tag('div', $desc.' &#10004;', ['class' => 'disabled dropdown-item'])
+								: Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item']);
+						endforeach;
+					echo Html::endTag('div');
 				echo Html::endTag('div');
 			endif;
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 echo Html::endTag('footer');
-echo Html::a(Yii::$app->icon->show('chevron-up'), null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => Yii::t('mr42', 'Scroll to Top')]);
+echo Html::a('&#9650;', null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => Yii::t('mr42', 'Scroll to Top')]);
 $this->endBody();
 
 echo Html::endTag('body');

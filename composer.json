@@ -6,6 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
+        "component-dir": "../vendor/components",
         "vendor-dir": "../vendor"
     },
     "require": {

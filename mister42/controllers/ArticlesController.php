@@ -37,7 +37,7 @@ class ArticlesController extends \yii\web\Controller {
 			return $this->pageArticle($id);
 		endif;
 
-		$query = Articles::find()->orderBy('id DESC');
+		$query = Articles::find()->orderBy('updated DESC');
 		if ($action === "tag" && !empty($q)) :
 			$query->where(['like', 'tags', $q]);
 		elseif ($action === "search" && !empty($q)) :

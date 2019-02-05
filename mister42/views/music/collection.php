@@ -16,7 +16,7 @@ echo Html::beginTag('div', ['class' => 'site-music-collection']);
 		foreach ($model->find()->orderBy('artist, year')->all() as $album) :
 			echo Html::beginTag('div', ['class' => 'card mb-3']);
 				echo Html::a(
-					Html::img(null, ['alt' => "{$album->artist} - {$album->year} - {$album->title}", 'class' => 'card-img-top rounded', 'data-src' => Url::to(['music/collection-cover', 'id' => $album->id])])
+					Html::img("@assets/images/blank.png", ['alt' => "{$album->artist} - {$album->year} - {$album->title}", 'class' => 'card-img-top rounded', 'data-src' => Url::to(['music/collection-cover', 'id' => $album->id])])
 				, "https://www.discogs.com/release/{$album->id}");
 				echo Html::tag('div', Html::tag('small', $album->title, ['class' => 'card-text mt-auto mx-auto font-weight-bold']), ['class' => 'card-body d-flex text-center p-2']);
 				echo Html::tag('div', Html::tag('small', $album->artist), ['class' => 'card-footer text-center p-2']);

@@ -354,16 +354,16 @@
         },
         {
             "name": "bower-asset/fontawesome",
-            "version": "5.6.3",
+            "version": "5.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "34dff97269eb4d4142218af6a9dbc44024524ba2"
+                "reference": "def7d5bda0d2df311fe069f805093c2fe019139d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/34dff97269eb4d4142218af6a9dbc44024524ba2",
-                "reference": "34dff97269eb4d4142218af6a9dbc44024524ba2",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/def7d5bda0d2df311fe069f805093c2fe019139d",
+                "reference": "def7d5bda0d2df311fe069f805093c2fe019139d",
                 "shasum": null
             },
             "type": "bower-asset"
@@ -1591,16 +1591,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.21",
+            "version": "v3.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "0d41dd7d95ed179aed6a13393b0f4f97bfa2d25c"
+                "reference": "009f8dda80930e89e8344a4e310b08f9ff07dd2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/0d41dd7d95ed179aed6a13393b0f4f97bfa2d25c",
-                "reference": "0d41dd7d95ed179aed6a13393b0f4f97bfa2d25c",
+                "url": "https://api.github.com/repos/symfony/process/zipball/009f8dda80930e89e8344a4e310b08f9ff07dd2e",
+                "reference": "009f8dda80930e89e8344a4e310b08f9ff07dd2e",
                 "shasum": ""
             },
             "require": {
@@ -1636,7 +1636,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-02T21:24:08+00:00"
+            "time": "2019-01-16T13:27:11+00:00"
         },
         {
             "name": "webcreate/jquery-ias",
@@ -1896,12 +1896,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "c4f3988553e587e0b5ed1d714c3c966872fe283b"
+                "reference": "80e5a129d2e4f1bd2d783421d19ee0faee3d75c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/c4f3988553e587e0b5ed1d714c3c966872fe283b",
-                "reference": "c4f3988553e587e0b5ed1d714c3c966872fe283b",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/80e5a129d2e4f1bd2d783421d19ee0faee3d75c3",
+                "reference": "80e5a129d2e4f1bd2d783421d19ee0faee3d75c3",
                 "shasum": ""
             },
             "require": {
@@ -1957,7 +1957,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-01-30T09:05:03+00:00"
+            "time": "2019-02-02T16:20:01+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",

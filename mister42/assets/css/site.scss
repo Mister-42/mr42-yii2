@@ -30,7 +30,7 @@ body {
 }
 
 body > .container {
-	padding: 4.5rem 15px 2rem;
+	padding: 5.4rem 15px 2rem;
 }
 
 h1, h2, h3, h4, h5, h6, .breadcrumb, label {
@@ -43,6 +43,7 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
 
 	.navbar-brand {
 		color: $lightBlue;
+		font-size: 2.25rem;
 		font-weight: $font-weight-bold;
 		text-shadow: 2px 2px 2px #444;
 
@@ -126,7 +127,7 @@ svg.fa {
 .anchor {
 	display: block;
 	position: relative;
-	top: -55px;
+	top: -4.6rem;
 	@include invisible(hidden);
 }
 
@@ -192,28 +193,21 @@ form {
 	background: #a0a0a0;
 	border-radius: 50%;
 	bottom: 0px;
+	color: #fff;
 	display: none;
+	line-height: 1.6;
 	right: calc(50% - 15px);
 	position: fixed;
 	text-align: center;
 	text-decoration: none;
 	z-index: $zindex-fixed;
 	@include size(30px);
-
-	> :first-child {
-		color: #fff;
-		position: relative;
-		top: 3px;
-		@include user-select(none);
-	}
+	@include user-select(none);
 
 	&:hover {
 		background: #666;
 		cursor: pointer;
-
-		> :first-child {
-			top: 0px;
-		}
+		line-height: 1.4;
 	}
 }
 
@@ -225,12 +219,11 @@ footer {
 }
 
 @include media-breakpoint-up(md) {
-.navbar {
-	span::before {
+	.navbar .nav-link span::before {
 		content: "\A";
 		white-space: pre;
 	}
-}
+
 	#btn-scrolltop {
 		bottom: 40px;
 		right: 10px;

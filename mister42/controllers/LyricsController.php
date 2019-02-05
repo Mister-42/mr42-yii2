@@ -3,12 +3,12 @@ namespace app\controllers;
 use Yii;
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\helpers\{ArrayHelper, Url};
-use yii\web\NotFoundHttpException;
+use yii\web\{NotFoundHttpException, Response};
 
 class LyricsController extends \yii\web\Controller {
-	const PAGE_INDEX = '0';
-	const PAGE_ARTIST = '1';
-	const PAGE_ALBUM = '2';
+	const PAGE_INDEX = 0;
+	const PAGE_ARTIST = 1;
+	const PAGE_ALBUM = 2;
 
 	public $page;
 	public $artist;
@@ -17,7 +17,7 @@ class LyricsController extends \yii\web\Controller {
 	public $size;
 	public $lastModified;
 
-	public function init() {
+	public function init(): void {
 		$this->artist = Yii::$app->request->get('artist');
 		$this->year = Yii::$app->request->get('year');
 		$this->album = Yii::$app->request->get('album');
@@ -25,19 +25,19 @@ class LyricsController extends \yii\web\Controller {
 
 		if ($this->artist && $this->year && $this->album) :
 			$this->page = self::PAGE_ALBUM;
-			$this->lastModified = Lyrics3Tracks::lastUpdate($this->artist, $this->year, $this->album);
+			$this->lastModified = Lyrics3Tracks::lastModified($this->artist, $this->year, $this->album);
 		elseif ($this->artist) :
 			$this->page = self::PAGE_ARTIST;
-			$this->lastModified = Lyrics2Albums::lastUpdate($this->artist);
+			$this->lastModified = Lyrics2Albums::lastModified($this->artist);
 		else :
 			$this->page = self::PAGE_INDEX;
-			$this->lastModified = Lyrics1Artists::lastUpdate();
+			$this->lastModified = Lyrics1Artists::lastModified();
 		endif;
 
 		parent::init();
 	}
 
-	public function behaviors() {
+	public function behaviors(): array {
 		return [
 			[
 				'class' => \yii\filters\HttpCache::class,
@@ -49,9 +49,9 @@ class LyricsController extends \yii\web\Controller {
 		];
 	}
 
-	public function actionIndex() {
+	public function actionIndex(): string {
 		switch ($this->page) :
-			case self::PAGE_INDEX:	list($page, $data) = ['1_index', Lyrics1Artists::artistsList()]; break;
+			case self::PAGE_INDEX:	list($page, $data) = ['1_index', (new Lyrics1Artists)->artistsList()]; break;
 			case self::PAGE_ARTIST:	list($page, $data) = $this->pageArtist(); break;
 			case self::PAGE_ALBUM:	list($page, $data) = $this->pageAlbum(); break;
 		endswitch;
@@ -62,7 +62,7 @@ class LyricsController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionAlbumpdf() {
+	public function actionAlbumpdf(): Response {
 		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
 		if (!ArrayHelper::keyExists(0, $tracks) || !$tracks[0]->album->active) :
@@ -74,7 +74,7 @@ class LyricsController extends \yii\web\Controller {
 		return Yii::$app->response->sendFile($fileName, implode(' - ', [$tracks[0]->artist->url, $tracks[0]->album->year, $tracks[0]->album->url]).'.pdf');
 	}
 
-	public function actionAlbumcover() {
+	public function actionAlbumcover(): Response {
 		$tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
 
 		if (!ArrayHelper::keyExists(0, $tracks) || !ArrayHelper::isIn($this->size, [100, 500, 800])) :

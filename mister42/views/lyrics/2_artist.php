@@ -45,18 +45,16 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 						echo Html::beginTag('div', ['class' => 'row mr-2 media-body']);
 							$x = $y = 0;
 							foreach ($album->tracks as $track) :
-								if ($x++ === 0) :
+								if ($x++ === 0)
 									echo Html::beginTag('div', ['class' => 'col-md-4']);
-								endif;
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
 									$track->name = $album->active && ($track->lyricid || $track->video)
 										? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name]).$track->disambiguation.$track->feat;
-									if ($album->active && $track->video) :
+									if ($album->active && $track->video)
 										echo Yii::$app->icon->show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
-									endif;
 								echo Html::endTag('div');
 
 								if (++$y === count($album->tracks) || $x === (int) ceil(count($album->tracks) / 3)) :
@@ -66,7 +64,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 							endforeach;
 						echo Html::endTag('div');
 
-						if ($album->image && count($album->tracks) > 0) :
+						if ($album->active && $album->image) :
 							echo Lightbox::widget([
 								'imageOptions' => ['style' => 'background-color:'.$album->image_color],
 								'items' => [

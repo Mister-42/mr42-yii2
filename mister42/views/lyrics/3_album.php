@@ -7,9 +7,8 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => 
 $this->params['breadcrumbs'][] = ['label' => $data[0]->artist->name, 'url' => ['index', 'artist' => $data[0]->artist->url]];
 $this->params['breadcrumbs'][] = $data[0]->album->name;
 
-if ($data[0]->album->image_color) :
+if ($data[0]->album->image_color)
 	$this->params['themeColor'] = $data[0]->album->image_color;
-endif;
 
 echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 	echo Html::beginTag('div', ['class' => 'row']);
@@ -33,9 +32,8 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 					echo Html::beginTag('div', ['class' => 'row mr-3']);
 						$x = $y = 0;
 							foreach ($data as $track) :
-								if ($x++ === 0) :
+								if ($x++ === 0)
 									echo Html::beginTag('div', ['class' => 'col-md-4']);
-								endif;
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
 									echo $track->track.' · ';
@@ -43,9 +41,8 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 										? Html::a($track->name, '#'.$track->track)
 										: $track->name;
 									echo $track->disambiguation.$track->feat;
-									if ($track->video) :
+									if ($track->video)
 										echo Yii::$app->icon->show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
-									endif;
 								echo Html::endTag('div');
 
 								if (++$y === count($data) || $x === (int) ceil(count($data) / 3)) :
