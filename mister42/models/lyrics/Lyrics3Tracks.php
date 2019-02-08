@@ -26,7 +26,6 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		return self::find()
 			->orderBy('track')
 			->joinWith('artist')
-			->with('album')
 			->innerJoinWith('lyrics')
 			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
 			->andWhere(Lyrics2Albums::tableName().'.year=:year')
@@ -35,11 +34,10 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 			->all();
 	}
 
-	public static function lastModified(string $artist, string $year, string $name): int {
+	public static function getLastModified(string $artist, string $year, string $name): int {
 		$max = self::find()
 			->select('GREATEST(MAX('.Lyrics2Albums::tableName().'.`updated`), MAX('.Lyrics4Lyrics::tableName().'.`updated`)) AS `max`')
 			->joinWith('artist')
-			->with('album')
 			->innerJoinWith('lyrics')
 			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
 			->andWhere(Lyrics2Albums::tableName().'.year=:year')
@@ -51,13 +49,13 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 
 	public function getArtist(): ActiveQuery {
 		return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent'])
-			->active(Lyrics1Artists::tableName())
+			->active()
 			->via('album');
 	}
 
 	public function getAlbum(): ActiveQuery {
 		return $this->hasOne(Lyrics2Albums::className(), ['id' => 'parent'])
-			->active(Lyrics2Albums::tableName());
+			->active();
 	}
 
 	public function getLyrics(): ActiveQuery {

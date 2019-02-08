@@ -68,11 +68,11 @@ class Sitemap {
 	}
 
 	private static function getPriority(int $age): float {
-		if ($age > strtotime("-1 week")) :
+		if ($age > strtotime('-1 week')) :
 			$prio = 0.9;
-		elseif ($age > strtotime("-1 month")) :
+		elseif ($age > strtotime('-1 month')) :
 			$prio = 0.8;
-		elseif ($age > strtotime("-1 year")) :
+		elseif ($age > strtotime('-1 year')) :
 			$prio = 0.7;
 		endif;
 		return $prio ?? 0.5;

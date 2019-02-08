@@ -17,7 +17,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 
 	public function artistsList(): array {
 		return self::find()
-			->active(self::tableName())
+			->active()
 			->orderBy('name')
 			->all();
 	}
@@ -29,16 +29,16 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 			->each();
 	}
 
-	public static function lastModified(): int {
-		$data = self::find()
-			->active(self::tableName())
-			->max('updated');
-		return Yii::$app->formatter->asTimestamp($data);
-	}
-
 	public function getAlbums(): LyricsQuery {
 		return $this->hasMany(Lyrics2Albums::className(), ['parent' => 'id'])
-			->active(Lyrics2Albums::tableName());
+			->active();
+	}
+
+	public static function getLastModified(): int {
+		$data = self::find()
+			->active()
+			->max('updated');
+		return strtotime($data);
 	}
 
 	public static function find(): LyricsQuery {

@@ -29,18 +29,8 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->innerJoinWith('artist', 'tracks')
 			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
 			->addParams([':artist' => $artist])
-			->active(self::tableName())
+			->active()
 			->all();
-	}
-
-	public static function lastModified(string $artist): int {
-		$data = self::find()
-			->innerJoinWith('artist')
-			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
-			->addParams([':artist' => $artist])
-			->active(self::tableName())
-			->max(self::tableName().'.updated');
-		return Yii::$app->formatter->asTimestamp($data);
 	}
 
 	public static function buildPdf(object $album, string $html): string {
@@ -48,11 +38,11 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return $pdf->create(
 			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
 			$html,
-			Lyrics3Tracks::lastModified($album->artist->url, $album->year, $album->url, (object) ['item' => (object) ['album' => $album]]),
+			Lyrics3Tracks::getLastModified($album->artist->url, $album->year, $album->url),
 			[
 				'author' => $album->artist->name,
-				'footer' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.$album->year.'|Page {PAGENO} of {nb}',
-				'header' => $album->artist->name.'|Lyrics|'.$album->name,
+				'footer' => implode('|', [Html::a(Yii::$app->name, Url::to(['site/index'], true)), $album->year, 'Page {PAGENO} of {nb}']),
+				'header' => implode('|', [$album->artist->name, 'Lyrics', $album->name]),
 				'keywords' => implode(', ', [$album->artist->name, $album->name, 'lyrics']),
 				'subject' => $album->artist->name.' - '.$album->name,
 				'title' => implode(' - ', [$album->artist->name, $album->name, 'Lyrics']),
@@ -70,9 +60,19 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return [$fileName, Image::resize($album->image, $size)];
 	}
 
+	public static function getLastModified(string $artist): int {
+		$data = self::find()
+			->innerJoinWith('artist')
+			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
+			->addParams([':artist' => $artist])
+			->active()
+			->max(self::tableName().'.updated');
+		return Yii::$app->formatter->asTimestamp($data);
+	}
+
 	public function getArtist(): LyricsQuery {
 		return $this->hasOne(Lyrics1Artists::className(), ['id' => 'parent'])
-			->active(Lyrics1Artists::tableName());
+			->active();
 	}
 
 	public function getTracks(): LyricsQuery {

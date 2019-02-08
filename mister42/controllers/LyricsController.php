@@ -25,13 +25,13 @@ class LyricsController extends \yii\web\Controller {
 
 		if ($this->artist && $this->year && $this->album) :
 			$this->page = self::PAGE_ALBUM;
-			$this->lastModified = Lyrics3Tracks::lastModified($this->artist, $this->year, $this->album);
+			$this->lastModified = Lyrics3Tracks::getLastModified($this->artist, $this->year, $this->album);
 		elseif ($this->artist) :
 			$this->page = self::PAGE_ARTIST;
-			$this->lastModified = Lyrics2Albums::lastModified($this->artist);
+			$this->lastModified = Lyrics2Albums::getLastModified($this->artist);
 		else :
 			$this->page = self::PAGE_INDEX;
-			$this->lastModified = Lyrics1Artists::lastModified();
+			$this->lastModified = Lyrics1Artists::getLastModified();
 		endif;
 
 		parent::init();
