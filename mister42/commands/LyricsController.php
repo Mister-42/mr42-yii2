@@ -1,7 +1,7 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Console, Video, Webrequest};
+use app\models\{Console, Image, Video, Webrequest};
 use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
@@ -34,9 +34,8 @@ class LyricsController extends Controller {
 				Console::updateProgress(++$x, $count);
 				list($width, $height) = getimagesizefromstring($album->image);
 				$exif = exif_read_data("data://image/jpeg;base64,".base64_encode($album->image));
-				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' && !is_null($album->image_color)) :
+				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' && !is_null($album->image_color))
 					continue;
-				endif;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
 				Console::write($album->year, [Console::FG_GREEN]);
@@ -52,7 +51,7 @@ class LyricsController extends Controller {
 
 				if (($width > self::ALBUM_IMAGE_DIMENSIONS && $height > self::ALBUM_IMAGE_DIMENSIONS) || !empty($exif['SectionsFound']) || $exif['MimeType'] !== 'image/jpeg') :
 					if ($width >= self::ALBUM_IMAGE_DIMENSIONS && $height >= self::ALBUM_IMAGE_DIMENSIONS) :
-						$album->image = (Lyrics2Albums::getCover(self::ALBUM_IMAGE_DIMENSIONS, $album))[1];
+						$album->image = Image::resize($album->image, self::ALBUM_IMAGE_DIMENSIONS);
 						$album->image_color = self::getAverageImageColor($album->image);
 						$album->save();
 						list($width, $height) = getimagesizefromstring($album->image);
@@ -86,9 +85,8 @@ class LyricsController extends Controller {
 		foreach ($artists as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				if (!$album->active || $fileName = Lyrics2Albums::buildPdf($album, $this->renderPartial('@app/views/lyrics/albumPdf', ['tracks' => $album->tracks]))) :
+				if (!$album->active || $fileName = Lyrics2Albums::buildPdf($album, $this->renderPartial('@app/views/lyrics/albumPdf', ['tracks' => $album->tracks])))
 					continue;
-				endif;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
 				Console::write($album->year, [Console::FG_GREEN]);

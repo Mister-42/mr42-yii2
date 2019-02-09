@@ -29,7 +29,6 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->innerJoinWith('artist', 'tracks')
 			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
 			->addParams([':artist' => $artist])
-			->active()
 			->all();
 	}
 
@@ -65,14 +64,12 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->innerJoinWith('artist')
 			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
 			->addParams([':artist' => $artist])
-			->active()
 			->max(self::tableName().'.updated');
 		return Yii::$app->formatter->asTimestamp($data);
 	}
 
 	public function getArtist(): LyricsQuery {
-		return $this->hasOne(Lyrics1Artists::className(), ['id' => 'parent'])
-			->active();
+		return $this->hasOne(Lyrics1Artists::className(), ['id' => 'parent']);
 	}
 
 	public function getTracks(): LyricsQuery {
