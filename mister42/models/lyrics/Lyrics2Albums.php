@@ -65,7 +65,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
 			->addParams([':artist' => $artist])
 			->max(self::tableName().'.updated');
-		return Yii::$app->formatter->asTimestamp($data);
+		return (int) Yii::$app->formatter->asTimestamp($data);
 	}
 
 	public function getArtist(): LyricsQuery {

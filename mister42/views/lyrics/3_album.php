@@ -1,11 +1,17 @@
 <?php
 use yii\bootstrap4\Html;
+use yii\helpers\Url;
 
 $this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name, 'Lyrics']);
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $data[0]->artist->name, 'url' => ['index', 'artist' => $data[0]->artist->url]];
 $this->params['breadcrumbs'][] = $data[0]->album->name;
+
+if ($data[0]->album->image)
+	$this->registerMetaTag(['property' => 'og:image', 'content' => Url::to(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 800], true)]);
+$this->registerMetaTag(['property' => 'og:type', 'content' => 'music.album']);
+$this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
 
 if ($data[0]->album->image_color)
 	$this->params['themeColor'] = $data[0]->album->image_color;
