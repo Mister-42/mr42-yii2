@@ -27,14 +27,13 @@ class LyricsController extends Controller {
 	 */
 	public function actionAlbumImage() {
 		$x = 0;
-		$count = self::getCountAlbums($artists = Lyrics1Artists::albumsList());
+		$count = self::getAlbumsCount($artists = Lyrics1Artists::albumsList());
 		Console::startProgress(0, $count);
 		foreach ($artists as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				list($width, $height) = getimagesizefromstring($album->image);
-				$exif = exif_read_data("data://image/jpeg;base64,".base64_encode($album->image));
-				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && empty($exif['SectionsFound']) && $exif['MimeType'] === 'image/jpeg' && !is_null($album->image_color))
+				list($width, $height, $type) = getimagesizefromstring($album->image);
+				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && $type === IMAGETYPE_JPEG && !is_null($album->image_color))
 					continue;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
@@ -49,7 +48,7 @@ class LyricsController extends Controller {
 
 				Console::write("{$width}x{$height}", [$width === self::ALBUM_IMAGE_DIMENSIONS ? Console::FG_GREEN : Console::FG_RED], 2);
 
-				if (($width > self::ALBUM_IMAGE_DIMENSIONS && $height > self::ALBUM_IMAGE_DIMENSIONS) || !empty($exif['SectionsFound']) || $exif['MimeType'] !== 'image/jpeg') :
+				if (($width > self::ALBUM_IMAGE_DIMENSIONS && $height > self::ALBUM_IMAGE_DIMENSIONS) || $type !== IMAGETYPE_JPEG) :
 					if ($width >= self::ALBUM_IMAGE_DIMENSIONS && $height >= self::ALBUM_IMAGE_DIMENSIONS) :
 						$album->image = Image::resize($album->image, self::ALBUM_IMAGE_DIMENSIONS);
 						$album->image_color = self::getAverageImageColor($album->image);
@@ -80,7 +79,7 @@ class LyricsController extends Controller {
 	 */
 	public function actionAlbumPdf() {
 		$x = 0;
-		$count = self::getCountAlbums($artists = Lyrics1Artists::albumsList());
+		$count = self::getAlbumsCount($artists = Lyrics1Artists::albumsList());
 		Console::startProgress(0, $count);
 		foreach ($artists as $artist) :
 			foreach ($artist->albums as $album) :
@@ -218,12 +217,11 @@ class LyricsController extends Controller {
 		return sprintf('#%02X%02X%02X', $rTotal / $total, $gTotal / $total, $bTotal / $total); 
 	}
 
-	private static function getCountAlbums($list): int {
+	private static function getAlbumsCount($list): int {
 		$count = 0;
 		foreach ($list as $artist) :
-			foreach ($artist->albums as $album) :
+			foreach ($artist->albums as $album)
 				$count++;
-			endforeach;
 		endforeach;
 		return $count;
 	}

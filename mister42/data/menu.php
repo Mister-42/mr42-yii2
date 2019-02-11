@@ -4,8 +4,8 @@ use yii\bootstrap4\Html;
 
 $isGuest = php_sapi_name() === 'cli' || Yii::$app->controller->action->id === 'sitemap' ? true : Yii::$app->user->isGuest;
 $isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
-$unread = $isAdmin ? Comments::find()->where(['active' => Comments::STATUS_INACTIVE])->count() : 0;
-$unreadBadge = $unread > 0 ? Html::tag('span', $unread, ['class' => 'badge badge-info ml-1']) : '';
+$unread = $isAdmin ? Comments::find()->where(['not', ['active' => true]])->count() : 0;
+$unreadBadge = $unread > 0 ? Html::tag('sup', $unread, ['class' => 'badge badge-info ml-1']) : '';
 
 return [
 	['label' => Yii::$app->icon->show('newspaper', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true],
@@ -38,7 +38,7 @@ return [
 			['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
 		],
 	],
-	['label' => Yii::$app->icon->show('dungeon', ['class' => 'mr-1']).Html::tag('span', Yii::$app->name), 'url' => null,
+	['label' => Yii::$app->icon->show('share-alt', ['class' => 'mr-1']).Html::tag('span', Yii::$app->name), 'url' => null,
 		'items' => [
 			['label' => Yii::t('mr42', 'Contact'), 'url' => ['/site/contact']],
 			['label' => Yii::t('mr42', 'My Pi'), 'url' => ['/site/pi']],

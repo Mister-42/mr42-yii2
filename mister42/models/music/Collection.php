@@ -26,9 +26,8 @@ class Collection extends \yii\db\ActiveRecord {
 				$collectionItem->image = null;
 				if ($image = ArrayHelper::getValue($item, 'basic_information.cover_image')) :
 					$img = Webrequest::getUrl($image, '');
-					if ($img = Image::resize($img->content, 250)) :
+					if ($img = Image::resize($img->content, 250))
 						$collectionItem->image = $img;
-					endif;
 				endif;
 			endif;
 			$collectionItem->save();

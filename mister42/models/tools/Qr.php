@@ -82,9 +82,9 @@ class Qr extends \yii\base\Model {
 		$qrcode->disableBorder();
 		$qrcode->displayPNG($this->size, [255, 255, 255], [0, 0, 0], $cacheFile, 6);
 
-		if ($this->recipient) :
+		if ($this->recipient)
 			Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
-		endif;
+
 		Yii::$app->getSession()->setFlash('qr-success', $cacheFile);
 		return true;
 	}
@@ -96,18 +96,16 @@ class Qr extends \yii\base\Model {
 	public static function getTypes(bool $rules = false): array {
 		$dir = Yii::getAlias('@app/models/tools/qr');
 		$rename = require(Yii::getAlias('@app/data/qrTypes.php'));
-		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file) :
+		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file)
 			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
-		endforeach;
 
 		natcasesort($typeList);
 		return $typeList;
 	}
 
 	public function getDataOrOmit(string $label, string $value, string $glue = '') {
-		if ($value) :
+		if ($value)
 			return $label.$value.$glue;
-		endif;
 		return false;
 	}
 }

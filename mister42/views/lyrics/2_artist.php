@@ -42,7 +42,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 					, ['class' => 'card-header']);
 
 					echo Html::beginTag('div', ['class' => 'container media mx-1']);
-						echo Html::beginTag('div', ['class' => 'row mr-2 media-body']);
+						echo Html::beginTag('div', ['class' => 'row mr-2 media-body text-truncate']);
 							$x = $y = 0;
 							foreach ($album->tracks as $track) :
 								if ($x++ === 0)
@@ -64,7 +64,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 							endforeach;
 						echo Html::endTag('div');
 
-						if ($album->active && $album->image) :
+						if ($album->image) :
 							echo Lightbox::widget([
 								'imageOptions' => ['style' => 'background-color:'.$album->image_color],
 								'items' => [

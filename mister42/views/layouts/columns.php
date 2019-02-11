@@ -13,8 +13,8 @@ $dependency = [
 	'class' => DbDependency::class,
 	'reusable' => true,
 	'sql' => 'SELECT GREATEST(
-		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = '.Articles::STATUS_ACTIVE.'), 1),
-		IFNULL((SELECT MAX(created) FROM '.Comments::tableName().' WHERE `active` = '.Comments::STATUS_ACTIVE.'), 1)
+		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = TRUE), 1),
+		IFNULL((SELECT MAX(created) FROM '.Comments::tableName().' WHERE `active` = TRUE), 1)
 	)',
 ];
 

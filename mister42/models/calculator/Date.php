@@ -24,9 +24,8 @@ class Date extends \yii\base\Model {
 	}
 
 	public function calculate(): bool {
-		if (!$this->validate()) :
+		if (!$this->validate())
 			return false;
-		endif;
 
 		$date = new DateTime($this->from);
 		$date->modify($this->days.' days');

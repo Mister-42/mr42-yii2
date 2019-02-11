@@ -30,9 +30,8 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 	}
 
 	public function convertText(): bool {
-		if (!$this->validate()) :
+		if (!$this->validate())
 			return false;
-		endif;
 
 		$this->text = preg_replace('/[^a-z0-9. -]+/i', '', $this->text);
 		$text = strtolower($this->text);
@@ -55,9 +54,9 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 			->orderBy('sort, name')
 			->all();
 
-		if ($column !== '*') :
+		if ($column !== '*')
 			return ArrayHelper::getColumn($list, $column);
-		endif;
+
 		return ArrayHelper::map($list, 'lng', 'name');
 	}
 

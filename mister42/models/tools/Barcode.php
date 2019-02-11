@@ -59,17 +59,16 @@ class Barcode extends \yii\base\Model {
 		imagepng($image, $cacheFile);
 		imagedestroy($image);
 
-		if ($this->recipient) :
+		if ($this->recipient)
 			Mailer::sendFileHtml($this->recipient, 'Your barcode from '.Yii::$app->name, 'barcodeRequester', ['file' => $cacheFile, 'name' => 'Barcode.png']);
-		endif;
+
 		Yii::$app->getSession()->setFlash('barcode-success', $cacheFile);
 		return true;
 	}
 
 	public static function getTypes(bool $rules = false): array {
-		foreach (require(Yii::getAlias('@app/data/barcodeTypes.php')) as $name => $value) :
+		foreach (require(Yii::getAlias('@app/data/barcodeTypes.php')) as $name => $value)
 			$list[$value] = $rules ? $value : $name;
-		endforeach;
 		return $list ?? [];
 	}
 }

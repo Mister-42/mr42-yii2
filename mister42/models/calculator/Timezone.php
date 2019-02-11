@@ -27,9 +27,8 @@ class Timezone extends \yii\base\Model {
 	}
 
 	public function calculate(): bool {
-		if (!$this->validate()) :
+		if (!$this->validate())
 			return false;
-		endif;
 
 		$time = new DateTime($this->datetime, new DateTimeZone($this->source));
 		$time->setTimezone(new DateTimeZone($this->target));
@@ -38,9 +37,8 @@ class Timezone extends \yii\base\Model {
 	}
 
 	public function getTimezones($replace): array {
-		foreach (DateTimeZone::listIdentifiers() as $timezone) :
+		foreach (DateTimeZone::listIdentifiers() as $timezone)
 			$timezones[$timezone] = $replace ? str_replace('_', ' ', $timezone) : $timezone;
-		endforeach;
 		return $timezones;
 	}
 }

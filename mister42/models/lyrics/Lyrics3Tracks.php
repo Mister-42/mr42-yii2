@@ -16,9 +16,9 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public function afterFind(): void {
 		parent::afterFind();
 		$this->track = sprintf('%02d', $this->track);
-		$this->disambiguation = $this->disambiguation ? ' ('.$this->disambiguation.')' : null;
-		$this->feat = $this->feat ? ' (feat. '.$this->feat.')' : null;
-		$this->wip = (bool) $this->wip;
+		$this->disambiguation = $this->disambiguation ? " ({$this->disambiguation})" : null;
+		$this->feat = $this->feat ? " (feat. {$this->feat})" : null;
+		$this->wip = boolval($this->wip);
 		$this->video = $this->video_id && $this->video_ratio ? Video::getEmbed('youtube', $this->video_id, $this->video_ratio) : null;
 	}
 
@@ -26,7 +26,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		return self::find()
 			->orderBy('track')
 			->joinWith('artist')
-			->innerJoinWith('lyrics')
+			->joinWith('lyrics')
 			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
 			->andWhere(Lyrics2Albums::tableName().'.year=:year')
 			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])
@@ -38,7 +38,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$max = self::find()
 			->select('GREATEST(MAX('.Lyrics2Albums::tableName().'.`updated`), MAX('.Lyrics4Lyrics::tableName().'.`updated`)) AS `max`')
 			->joinWith('artist')
-			->innerJoinWith('lyrics')
+			->joinWith('lyrics')
 			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
 			->andWhere(Lyrics2Albums::tableName().'.year=:year')
 			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])

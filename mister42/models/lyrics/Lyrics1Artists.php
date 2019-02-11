@@ -12,7 +12,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
 		$this->updated = strtotime($this->updated);
-		$this->active = (bool) $this->active;
+		$this->active = boolval($this->active);
 	}
 
 	public static function artistsList(): array {

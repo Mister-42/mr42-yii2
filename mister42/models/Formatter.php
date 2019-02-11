@@ -12,17 +12,15 @@ class Formatter extends \yii\i18n\Formatter {
 			'/(vimeo):(()?[[:digit:]]+):(21by9|16by9|4by3|1by1)/U'				=> [$this, 'getVideo'],
 			'/(youtube):((PL)?[[:ascii:]]{11,32}):(21by9|16by9|4by3|1by1)/U'	=> [$this, 'getVideo'],
 		], $data);
-		if ($markdown) :
+		if ($markdown)
 			$data = Markdown::process($data, $markdown);
-		endif;
 		$data = $this->addImageResponsiveClass($data);
 		return trim($data);
 	}
 
 	public function jspack(string $file): string {
-		if (!file_exists($fileName = Yii::getAlias("@app/assets/js/{$file}"))) :
+		if (!file_exists($fileName = Yii::getAlias("@app/assets/js/{$file}")))
 			return "{$file} does not exist.";
-		endif;
 
 		$cacheFile = Yii::getAlias("@runtime/assets/js/{$file}");
 		if (!file_exists($cacheFile) || filemtime($cacheFile) < filemtime($fileName)) :
@@ -35,7 +33,7 @@ class Formatter extends \yii\i18n\Formatter {
 		return file_get_contents($cacheFile);
 	}
 
-	private function addImageResponsiveClass($html) {
+	private function addImageResponsiveClass(string $html): string {
 		$html = preg_match('/<img.*? class="/', $html)
 			? preg_replace("/<img (.*?) class=\"(.*?)\"(.*?)>/i", '<img $1 class="$2 img-fluid"$3>', $html)
 			: preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid"$2', $html);

@@ -9,9 +9,6 @@ use yii\helpers\{StringHelper, Url};
 use yii\web\AccessDeniedHttpException;
 
 class BaseArticles extends \yii\db\ActiveRecord {
-	const STATUS_INACTIVE = false;
-	const STATUS_ACTIVE = true;
-
 	public static function tableName(): string {
 		return '{{%articles}}';
 	}
@@ -50,7 +47,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	public function addComment(Comments $comment) {
 		$comment->parent = $this->id;
 		$comment->user = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
-		$comment->active = Yii::$app->user->isGuest ? Self::STATUS_INACTIVE : Self::STATUS_ACTIVE;
+		$comment->active = Yii::$app->user->isGuest ? false : true;
 		return $comment->save();
 	}
 
@@ -59,13 +56,11 @@ class BaseArticles extends \yii\db\ActiveRecord {
 	}
 
 	public function beforeSave($insert): bool {
-		if (Yii::$app->user->isGuest) :
+		if (Yii::$app->user->isGuest)
 			throw new AccessDeniedHttpException('Please login.');
-		endif;
 
-		if (!parent::beforeSave($insert)) :
+		if (!parent::beforeSave($insert))
 			return false;
-		endif;
 
 		$this->url = !empty($this->url) ? $this->url : null;
 		$this->source = !empty($this->source) ? $this->source : null;
@@ -114,12 +109,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		return $this->hasMany(Comments::class, ['parent' => 'id']);
 	}
 
-	public static function find() {
-		return parent::find()
-			->onCondition(
-				php_sapi_name() === 'cli' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)
-					? ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
-					: ['active' => Self::STATUS_ACTIVE]
-			);
+	public static function find(): Query {
+		return new Query(get_called_class());
 	}
 }

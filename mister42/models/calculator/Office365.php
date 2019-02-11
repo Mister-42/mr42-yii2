@@ -30,16 +30,14 @@ class Office365 extends \yii\base\Model {
 	}
 
 	public function calculate(): bool {
-		if (!$this->validate()) :
+		if (!$this->validate())
 			return false;
-		endif;
 
 		$diff = (new DateTime($this->sourcedate))->diff(new DateTime($this->targetdate));
 
 		$redeemDate = ($diff->invert === 0 && $diff->days <= 30) ? $this->sourcedate : $this->targetdate;
-		if ($diff->invert === 0) :
+		if ($diff->invert === 0)
 			$diff = (new DateTime($this->targetdate))->diff(new DateTime($this->targetdate));
-		endif;
 
 		$upcomingYear = (new DateTime($redeemDate))->diff((new DateTime($redeemDate))->modify('1 year'));
 		$targetCount = $this->action == 'renew' ? $this->targetcount : $this->sourcecount + $this->targetcount;

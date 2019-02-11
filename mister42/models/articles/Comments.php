@@ -11,9 +11,6 @@ class Comments extends ActiveRecord {
 	public $email;
 	public $captcha;
 
-	const STATUS_INACTIVE = false;
-	const STATUS_ACTIVE = true;
-
 	public static function tableName(): string {
 		return '{{%articles_comments}}';
 	}
@@ -59,19 +56,17 @@ class Comments extends ActiveRecord {
 		];
 	}
 
-	public function afterFind() {
+	public function afterFind(): void {
 		parent::afterFind();
 		$this->content = Yii::$app->formatter->cleanInput($this->content, 'gfm-comment');
 	}
 
 	public function beforeSave($insert): bool {
-		if (!parent::beforeSave($insert)) :
+		if (!parent::beforeSave($insert))
 			return false;
-		endif;
 
-		if (!$insert && Yii::$app->user->isGuest) :
+		if (!$insert && Yii::$app->user->isGuest)
 			throw new AccessDeniedHttpException('Please login.');
-		endif;
 
 		$this->content = Yii::$app->formatter->cleanInput($this->content, false);
 		$this->name = $this->nameField ?? null;
@@ -88,7 +83,7 @@ class Comments extends ActiveRecord {
 		);
 	}
 
-	public function sendCommentMail($model, $comment) {
+	public function sendCommentMail($model, $comment): void {
 		Yii::$app->mailer->compose(
 				['text' => 'commentToAuthor'],
 				['model' => $model, 'comment' => $comment]
@@ -114,12 +109,7 @@ class Comments extends ActiveRecord {
 		return $this->hasOne(Articles::class, ['id' => 'parent']);
 	}
 
-	public static function find() {
-		return parent::find()
-			->onCondition(
-				php_sapi_name() === 'cli' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)
-					? ['or', ['active' => [Self::STATUS_INACTIVE, Self::STATUS_ACTIVE]]]
-					: ['active' => Self::STATUS_ACTIVE]
-			);
+	public static function find(): Query {
+		return new Query(get_called_class());
 	}
 }

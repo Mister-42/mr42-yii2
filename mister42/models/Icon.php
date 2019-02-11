@@ -9,9 +9,8 @@ class Icon {
 	public function show(string $name, array $options = []): string {
 		$classPrefix = ArrayHelper::remove($options, 'prefix', 'fas fa-');
 		$style = $this->getStyle((explode(' ', $classPrefix))[0]);
-		if (!file_exists(Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg"))) :
+		if (!file_exists(Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg")))
 			return $this->show('question-circle', $options);
-		endif;
 
 		$doc = new DOMDocument();
 		$doc->load(Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg"));
@@ -22,13 +21,11 @@ class Icon {
 			$svg->setAttribute('data-icon', $name);
 			$svg->setAttribute('data-prefix', (explode(' ', $classPrefix))[0]);
 			$svg->setAttribute('role', 'img');
-			foreach ($options as $key => $value) :
+			foreach ($options as $key => $value)
 				$svg->setAttribute($key, $value);
-			endforeach;
 		endforeach;
-		foreach ($doc->getElementsByTagName('path') as $path) :
+		foreach ($doc->getElementsByTagName('path') as $path)
 			$path->setAttribute('fill', 'currentColor');
-		endforeach;
 		return $doc->saveXML($doc->documentElement);
 	}
 
@@ -39,12 +36,9 @@ class Icon {
 
 	private function getStyle(string $prefix): string {
 		switch ($prefix) :
-			case 'fab':
-				return 'brands';
-			case 'far':
-				return 'regular';
-			default:
-				return 'solid';
+			case 'fab':	return 'brands';
+			case 'far':	return 'regular';
+			default:	return 'solid';
 		endswitch;
 	}
 }

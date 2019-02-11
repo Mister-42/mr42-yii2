@@ -2,7 +2,9 @@
 namespace app\models\lyrics;
 use Yii;
 use app\models\{Image, Pdf, Video};
+use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
+use yii\db\Expression;
 use yii\helpers\{ArrayHelper, Url};
 
 class Lyrics2Albums extends \yii\db\ActiveRecord {
@@ -20,7 +22,28 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		$this->playlist_embed = $this->playlist_id && $this->playlist_ratio ? Video::getEmbed('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
 		$this->playlist_url = $this->playlist_id ? Video::getUrl('youtube', $this->playlist_id, true) : null;
 		$this->updated = Yii::$app->formatter->asTimestamp($this->updated);
-		$this->active = (bool) $this->active;
+		$this->active = boolval($this->active);
+	}
+
+	public function beforeSave($insert): bool {
+		if (parent::beforeSave($insert)) :
+			$this->url = $this->name === $this->url ? null : $this->url;
+			$this->playlist_id = $this->playlist_id ? substr($this->playlist_id, 2) : null;
+			$this->active = $this->active ? 1 : 0;
+			return true;
+		endif;
+		return false;
+	}
+
+	public function behaviors(): array {
+		return [
+			[
+				'class' => TimestampBehavior::class,
+				'createdAtAttribute' => 'updated',
+				'updatedAtAttribute' => 'updated',
+				'value' => new Expression('NOW()'),
+			],
+		];
 	}
 
 	public static function albumsList(string $artist): array {
