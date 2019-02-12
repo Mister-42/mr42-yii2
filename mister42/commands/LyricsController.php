@@ -114,9 +114,8 @@ class LyricsController extends Controller {
 		$x = 0;
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
-				if (isset($album->playlist_id)) :
+				if (isset($album->playlist_id))
 					$data[] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
-				endif;
 
 				if (!isset($data) || (++$x !== count($artist->albums) && count($data) < 50)) :
 					continue;

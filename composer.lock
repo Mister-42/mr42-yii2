@@ -341,8 +341,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/twbs/bootstrap/zipball/4c547f2175b9a05aa43551f6927da83fe249ce42",
-                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42",
-                "shasum": null
+                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42"
             },
             "require": {
                 "bower-asset/jquery": ">=1.9.1,<4.0"
@@ -357,14 +356,13 @@
             "version": "5.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "url": "git@github.com:FortAwesome/Font-Awesome.git",
                 "reference": "def7d5bda0d2df311fe069f805093c2fe019139d"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/def7d5bda0d2df311fe069f805093c2fe019139d",
-                "reference": "def7d5bda0d2df311fe069f805093c2fe019139d",
-                "shasum": null
+                "reference": "def7d5bda0d2df311fe069f805093c2fe019139d"
             },
             "type": "bower-asset"
         },
@@ -379,8 +377,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "shasum": null
+                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7"
@@ -401,8 +398,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/9e8ec3d10fad04748176144f108d7355662ae75e",
-                "reference": "9e8ec3d10fad04748176144f108d7355662ae75e",
-                "shasum": null
+                "reference": "9e8ec3d10fad04748176144f108d7355662ae75e"
             },
             "type": "bower-asset",
             "license": [
@@ -420,8 +416,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/components/jqueryui/zipball/44ecf3794cc56b65954cc19737234a3119d036cc",
-                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc",
-                "shasum": null
+                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
             },
             "require": {
                 "bower-asset/jquery": ">=1.6"
@@ -442,8 +437,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/trentrichardson/jQuery-Timepicker-Addon/zipball/397d6ed930649ea7224123d140d341e9f3ffaba6",
-                "reference": "397d6ed930649ea7224123d140d341e9f3ffaba6",
-                "shasum": null
+                "reference": "397d6ed930649ea7224123d140d341e9f3ffaba6"
             },
             "type": "bower-asset"
         },
@@ -458,8 +452,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/brianreavis/microplugin.js/zipball/d8671e6cc769938648f8735610534427cdeeaf67",
-                "reference": "d8671e6cc769938648f8735610534427cdeeaf67",
-                "shasum": null
+                "reference": "d8671e6cc769938648f8735610534427cdeeaf67"
             },
             "type": "bower-asset",
             "license": [
@@ -477,8 +470,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/bestiejs/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "shasum": null
+                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "type": "bower-asset"
         },
@@ -493,8 +485,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/selectize/selectize.js/zipball/eb0fca364f9bd6864ae197ea58c853f2717052a9",
-                "reference": "eb0fca364f9bd6864ae197ea58c853f2717052a9",
-                "shasum": null
+                "reference": "eb0fca364f9bd6864ae197ea58c853f2717052a9"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7.0",
@@ -517,8 +508,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/brianreavis/sifter.js/zipball/2a9c84ec5ac63ceaa4516205e013113626d36a2d",
-                "reference": "2a9c84ec5ac63ceaa4516205e013113626d36a2d",
-                "shasum": null
+                "reference": "2a9c84ec5ac63ceaa4516205e013113626d36a2d"
             },
             "type": "bower-asset",
             "license": [
@@ -536,8 +526,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/domchristie/turndown/zipball/795c11e4cd901ef8becaca705d7b4e6e41011404",
-                "reference": "795c11e4cd901ef8becaca705d7b4e6e41011404",
-                "shasum": null
+                "reference": "795c11e4cd901ef8becaca705d7b4e6e41011404"
             },
             "type": "bower-asset",
             "license": [
@@ -555,8 +544,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/aef7b953107264f00234902a3880eb50dafc48be",
-                "reference": "aef7b953107264f00234902a3880eb50dafc48be",
-                "shasum": null
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be"
             },
             "require": {
                 "bower-asset/jquery": ">=1.8"
@@ -1252,12 +1240,10 @@
         },
         {
             "name": "npm-asset/bootstrap",
-            "version": "4.2.1",
+            "version": "4.3.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.2.1.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.3.0.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -1269,9 +1255,7 @@
             "version": "2.10.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/lightbox2/-/lightbox2-2.10.0.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://registry.npmjs.org/lightbox2/-/lightbox2-2.10.0.tgz"
             },
             "type": "npm-asset"
         },

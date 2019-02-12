@@ -11,7 +11,7 @@ class RecentComments extends Widget {
 		$comments = Comments::find()
 			->orderBy('created DESC')
 			->with('article')
-			->where(['active' => Comments::STATUS_ACTIVE])
+			->where(['active' => true])
 			->limit($this->limit)
 			->all();
 		return empty($comments) ? Html::tag('div', Yii::t('mr42', 'No Items to Display.'), ['class' => 'ml-2']) : self::renderComments($comments);

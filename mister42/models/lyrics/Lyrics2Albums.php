@@ -55,7 +55,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->all();
 	}
 
-	public static function buildPdf(object $album, string $html): string {
+	public static function buildPdf(self $album, string $html): string {
 		$pdf = new Pdf();
 		return $pdf->create(
 			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
@@ -66,7 +66,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 				'footer' => implode('|', [Html::a(Yii::$app->name, Url::to(['site/index'], true)), $album->year, 'Page {PAGENO} of {nb}']),
 				'header' => implode('|', [$album->artist->name, 'Lyrics', $album->name]),
 				'keywords' => implode(', ', [$album->artist->name, $album->name, 'lyrics']),
-				'subject' => $album->artist->name.' - '.$album->name,
+				'subject' => implode(' - ', [$album->artist->name, $album->name]),
 				'title' => implode(' - ', [$album->artist->name, $album->name, 'Lyrics']),
 			]
 		);

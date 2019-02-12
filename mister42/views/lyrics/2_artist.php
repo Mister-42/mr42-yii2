@@ -27,17 +27,17 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			echo Html::beginTag('div', ['class' => ' col mb-2']);
 				echo Html::beginTag('div', ['class' => 'card']);
 					echo Html::tag('div',
-						Html::tag('h4', "{$album->year} · ".($album->active && $album->tracks
+						Html::tag('h4', "{$album->year} · ".($album->tracks
 							? Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
 							: $album->name
 						), ['class' => 'float-left']).
 						Html::tag('div',
 							($album->playlist_url
-								? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
+								? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 								: '').
 							($album->active
-								? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-light ml-1'])
-								: '')
+								? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+								: Html::tag('span', Yii::$app->icon->show('asterisk', ['class' => 'mr-1']).Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1']))
 						, ['class' => 'float-right'])
 					, ['class' => 'card-header']);
 
@@ -49,11 +49,11 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 									echo Html::beginTag('div', ['class' => 'col-md-4']);
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
-									$track->name = $album->active && ($track->lyricid || $track->video)
+									$track->name = $track->lyricid || $track->video
 										? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 										: $track->name;
-									echo implode(' · ', [$track->track, $track->name]).$track->disambiguation.$track->feat;
-									if ($album->active && $track->video)
+									echo implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]);
+									if ($track->video)
 										echo Yii::$app->icon->show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
 								echo Html::endTag('div');
 
@@ -64,7 +64,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 							endforeach;
 						echo Html::endTag('div');
 
-						if ($album->image) :
+						if ($album->image && $album->tracks) :
 							echo Lightbox::widget([
 								'imageOptions' => ['style' => 'background-color:'.$album->image_color],
 								'items' => [

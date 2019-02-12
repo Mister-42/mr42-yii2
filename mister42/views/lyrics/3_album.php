@@ -26,11 +26,11 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 					, ['class' => 'float-left']).
 					Html::tag('div',
 						($data[0]->album->playlist_url
-							? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-light ml-1'])
+							? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 							: '').
 						($data[0]->album->active
-							? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-light ml-1'])
-							: '')
+							? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+							: Html::tag('span', Yii::$app->icon->show('asterisk', ['class' => 'mr-1']).Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1']))
 					, ['class' => 'float-right'])
 				, ['class' => 'card-header']);
 
@@ -58,9 +58,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 							endforeach;
 					echo Html::endTag('div');
 				echo Html::endTag('div');
-				echo Html::tag('div',
-					Html::img(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$data[0]->artist->name, $data[0]->album->name]), 'class' => 'img-fluid img-thumbnail rounded', 'height' => 500, 'width' => 500, 'style' => 'background-color:'.$data[0]->album->image_color])
-				, ['class' => 'card-body text-center']);
+				if ($data[0]->album->image)
+					echo Html::tag('div',
+						Html::img(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$data[0]->artist->name, $data[0]->album->name]), 'class' => 'img-fluid img-thumbnail rounded', 'height' => 500, 'width' => 500, 'style' => 'background-color:'.$data[0]->album->image_color])
+					, ['class' => 'card-body text-center']);
 			echo Html::endTag('div');
 		echo Html::endTag('div');
 	echo Html::endTag('div');
