@@ -18,10 +18,10 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'card mb-3']);
 			echo Html::tag('div', Yii::t('mr42', 'Current Week'), ['class' => 'card-header']);
 			echo Html::beginTag('div', ['class' => 'card-body']);
-				echo Html::tag('h1', $date->format('W'), ['class' => 'card-title display-1 font-weight-bold text-center']);
+				echo Html::tag('h1', intval($date->format('W')), ['class' => 'card-title display-1 font-weight-bold text-center']);
 				echo Html::tag('p',
 					Yii::t('mr42', 'This week starts at {start} and ends at {end}.', ['start' => Html::tag('b', Yii::$app->formatter->asDate($startWeek, 'full')), 'end' => Html::tag('b', Yii::$app->formatter->asDate($endWeek, 'full'))]),
-				['class' => 'card-text text-center']);
+				['class' => 'card-text']);
 			echo Html::endTag('div');
 		echo Html::endTag('div');
 
@@ -29,11 +29,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::tag('div', Yii::t('mr42', 'Upcoming Weeks'), ['class' => 'card-header']);
 			echo Html::beginTag('div', ['class' => 'card-body']);
 				for($x = 1; $x <= 6; $x++) :
-                    $date->modify('+1 week');
+					$date->modify('+1 week');
 					$startWeek = $date->modify('monday this week')->format('c');
 					$endWeek = $date->modify('sunday this week')->format('c');
-					echo Html::tag('b', Yii::t('mr42', 'Week {number}', ['number' => $date->format('W')]) . ': ') . Yii::t('mr42', '{start} to {end}', ['start' => Yii::$app->formatter->asDate($startWeek, 'long'), 'end' => Yii::$app->formatter->asDate($endWeek, 'long')]);
-					echo ($x === 6) ? '' : '<br>';
+					echo Html::tag('div',
+						Html::tag('b', Yii::t('mr42', 'Week {number}', ['number' => intval($date->format('W'))]).': ') . Yii::t('mr42', '{start} to {end}', ['start' => Yii::$app->formatter->asDate($startWeek, 'long'), 'end' => Yii::$app->formatter->asDate($endWeek, 'long')])
+					, ['class' => 'clearfix']);
 				endfor;
 			echo Html::endTag('div');
 		echo Html::endTag('div');

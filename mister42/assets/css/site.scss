@@ -88,31 +88,35 @@ svg.fa {
 		}
 	}
 
-	&lyrics-lyrics {
-		.row {
-			@include dividing-line(10px, $lighterBlue);
-		}
-	}
-
-	&lyrics-albums,
-	&lyrics-lyrics {
-		svg.text-muted {
-			color: $lighterBlue !important;
-		}
-
-		.text-nowrap {
-			overflow-x: hidden;
-		}
-	}
-
 	&lyrics {
 		.artists {
 			font-weight: $font-weight-bold;
-			line-height: 2.5rem;
+			line-height: 3rem;
+
+			a {
+				@include clearfix;
+			}
 		}
 
-		&-lyrics .lyrics {
-			@include user-select(all);
+		&-lyrics {
+			.row {
+				@include dividing-line(10px, $lighterBlue);
+			}
+
+			.lyrics {
+				@include user-select(all);
+			}
+		}
+
+		&-albums,
+		&-lyrics {
+			svg.text-muted {
+				color: $lighterBlue !important;
+			}
+
+			.text-nowrap {
+				overflow-x: hidden;
+			}
 		}
 	}
 }

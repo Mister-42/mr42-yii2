@@ -30,7 +30,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo Item::widget([
 				'body' => Feed::widget(['name' => 'TomsHardware', 'tooltip' => true]),
-				'header' => Yii::$app->icon->show('laptop', ['class' => 'mr-1']).'Tom\'s Hardware',
+				'header' => Yii::$app->icon->show('hammer', ['class' => 'mr-1']).'Tom\'s Hardware',
 			]);
 		echo Html::endTag('aside');
 	endif;

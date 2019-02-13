@@ -16,7 +16,6 @@ echo Html::beginTag('div', ['class' => 'site-lyrics']);
 			echo Html::a($artist->name, ['index', 'artist' => $artist->url]);
 			if (!$artist->active)
 				echo Html::tag('sup', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-warning ml-1']);
-			echo '<br>';
 
 			if (++$y === count($data) || $x === (int) ceil(count($data) / 4)) :
 				echo Html::endTag('div');

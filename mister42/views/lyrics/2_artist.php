@@ -49,7 +49,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 									echo Html::beginTag('div', ['class' => 'col-md-4']);
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
-									$track->name = $track->lyricid || $track->video
+									$track->name = ($track->lyricid || $track->video)
 										? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]);
