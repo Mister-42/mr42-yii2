@@ -39,6 +39,12 @@ $config = [
 				],
 			],
 		],
+		'reCaptcha' => [
+			'name' => 'reCaptcha',
+			'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
+			'siteKey' => $secrets['google']['reCAPTCHA']['siteKey'],
+			'secret' => $secrets['google']['reCAPTCHA']['secret'],
+		],
 		'request' => [
 			'cookieValidationKey' => $secrets['cookieValidationKey'],
 		],

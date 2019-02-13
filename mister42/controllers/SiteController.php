@@ -9,12 +9,6 @@ use yii\web\{ErrorAction, NotFoundHttpException, Response, UploadedFile};
 class SiteController extends \yii\web\Controller {
 	public function actions() {
 		return [
-			'captcha' => [
-				'class' => 'yii\captcha\CaptchaAction',
-				'backColor' => 0xffffff,
-				'foreColor' => 0x003e67,
-				'transparent' => true,
-			],
 			'error' => [
 				'class' => ErrorAction::class,
 			],
@@ -68,9 +62,8 @@ class SiteController extends \yii\web\Controller {
 		$model = new Contact();
 		if ($model->load(Yii::$app->request->post())) :
 			$model->attachment = UploadedFile::getInstance($model, 'attachment');
-			if ($model->contact()) :
+			if ($model->contact())
 				return $this->renderAjax('contact-success');
-			endif;
 		endif;
 
 		return $this->render('contact', [

@@ -1,5 +1,6 @@
 <?php
 use app\models\Form;
+use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\widgets\Pjax;
 
@@ -9,7 +10,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 	echo Html::tag('h3', Yii::t('mr42', 'Leave a Comment'));
 
 	$form = ActiveForm::begin(['id' => 'comment-form', 'options' => ['data-pjax' => '']]);
-	$tab = 0;
+		$tab = 0;
 
 		if (Yii::$app->user->isGuest) :
 			echo '<div class="row">';
@@ -18,7 +19,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
 				])->textInput(['tabindex' => ++$tab]);
 
-				echo $form->field($model, 'email', [
+				echo $form->field($model, 'emailField', [
 					'options' => ['class' => 'col-md-6'],
 					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('envelope').'{input}</div>{hint}{error}',
 				])->input('email', ['tabindex' => ++$tab])
@@ -40,9 +41,8 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), ['/permalink/articles', 'id' => 4], ['target' => '_blank'])]));
 
-		if (Yii::$app->user->isGuest) :
-			echo Form::captcha($form, $model, ++$tab);
-		endif;
+		if (Yii::$app->user->isGuest)
+			echo $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false);
 
 		echo Html::tag('div',
 			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).

@@ -1,6 +1,7 @@
 <?php
 namespace app\models\articles;
 use Yii;
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 use yii\db\ActiveRecord;
@@ -8,7 +9,7 @@ use yii\web\AccessDeniedHttpException;
 
 class Comments extends ActiveRecord {
 	public $nameField;
-	public $email;
+	public $emailField;
 	public $captcha;
 
 	public static function tableName(): string {
@@ -18,18 +19,19 @@ class Comments extends ActiveRecord {
 	public function rules(): array {
 		$rules = [
 			[['title', 'content'], 'required'],
-			[['nameField', 'email', 'website', 'title', 'content'], 'trim'],
+			[['nameField', 'emailField', 'website', 'title', 'content'], 'trim'],
 			'charCount' => [['content'], 'string', 'max' => 4096],
 			['nameField', 'string', 'max' => 25],
-			['email', 'string', 'max' => 50],
+			['emailField', 'string', 'max' => 50],
 			['website', 'string', 'max' => 128],
-			['email', 'email', 'checkDNS' => true, 'enableIDN' => true],
+			[['emailField', 'website'], 'default', 'value' => null],
+			['emailField', 'email', 'checkDNS' => true, 'enableIDN' => true],
 			['website', 'url', 'defaultScheme' => 'http', 'enableIDN' => true],
 		];
 
 		if (Yii::$app->user->isGuest) :
-			$rules[] = [['captcha'], 'captcha'];
-			$rules[] = [['name', 'email', 'captcha'], 'required'];
+			$rules[] = ['captcha', ReCaptchaValidator::className()];
+			$rules[] = [['nameField', 'emailField'], 'required'];
 		endif;
 		return $rules;
 	}
@@ -37,7 +39,7 @@ class Comments extends ActiveRecord {
 	public function attributeLabels(): array {
 		return [
 			'nameField' => Yii::t('mr42', 'Name'),
-			'email' => Yii::t('mr42', 'Email Address'),
+			'emailField' => Yii::t('mr42', 'Email Address'),
 			'website' => Yii::t('mr42', 'Website URL'),
 			'title' => Yii::t('mr42', 'Subject'),
 			'content' => Yii::t('mr42', 'Comment'),
@@ -69,9 +71,8 @@ class Comments extends ActiveRecord {
 			throw new AccessDeniedHttpException('Please login.');
 
 		$this->content = Yii::$app->formatter->cleanInput($this->content, false);
-		$this->name = $this->nameField ?? null;
-		$this->email = $this->email ?? null;
-		$this->website = $this->website ?? null;
+		$this->name = $this->nameField ?? $this->name;
+		$this->email = $this->emailField ?? $this->email;
 		return true;
 	}
 

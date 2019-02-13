@@ -1,5 +1,6 @@
 <?php
 use app\models\Form;
+use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
 use yii\widgets\Pjax;
@@ -45,7 +46,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
 			->label(Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']);
 
-			echo Form::captcha($form, $model, ++$tab);
+			echo $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false);
 
 			echo Html::tag('div',
 				Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).

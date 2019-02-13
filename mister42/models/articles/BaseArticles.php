@@ -44,7 +44,7 @@ class BaseArticles extends \yii\db\ActiveRecord {
 		];
 	}
 
-	public function addComment(Comments $comment) {
+	public function addComment(Comments $comment): bool {
 		$comment->parent = $this->id;
 		$comment->user = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
 		$comment->active = Yii::$app->user->isGuest ? false : true;

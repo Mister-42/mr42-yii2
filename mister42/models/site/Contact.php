@@ -1,6 +1,7 @@
 <?php
 namespace app\models\site;
 use Yii;
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 
 class Contact extends \yii\base\Model {
 	public $name;
@@ -12,14 +13,14 @@ class Contact extends \yii\base\Model {
 
 	public function rules(): array {
 		return [
-			[['name', 'email', 'title', 'content', 'captcha'], 'required'],
+			[['name', 'email', 'title', 'content'], 'required'],
 			[['name', 'email', 'title', 'content'], 'trim'],
 			'charCount' => ['content', 'string', 'max' => 8192],
 			['name', 'string', 'max' => 25],
 			['email', 'string', 'max' => 50],
 			['email', 'email', 'checkDNS' => true, 'enableIDN' => true],
 			['attachment', 'file', 'minSize' => 64, 'maxSize' => 1024 * 1024 * 5],
-			['captcha', 'captcha'],
+			['captcha', ReCaptchaValidator::className()],
 		];
 	}
 

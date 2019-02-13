@@ -1,5 +1,6 @@
 <?php
 use app\models\Form;
+use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\{ActiveForm, Html};
 
 $this->title = Yii::t('usuario', 'Sign up');
@@ -36,7 +37,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			endif;
 		echo Html::endTag('div');
 
-		echo Form::captcha($form, $model, ++$tab);
+		echo $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false);
 
 		echo Html::submitButton(Yii::t('usuario', 'Sign up'), ['class' => 'btn btn-success btn-block', 'tabindex' => ++$tab]);
 
