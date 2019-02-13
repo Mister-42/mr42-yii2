@@ -98,16 +98,6 @@ svg.fa {
 			}
 		}
 
-		&-lyrics {
-			.row {
-				@include dividing-line(10px, $lighterBlue);
-			}
-
-			.lyrics {
-				@include user-select(all);
-			}
-		}
-
 		&-albums,
 		&-lyrics {
 			svg.text-muted {
@@ -116,6 +106,16 @@ svg.fa {
 
 			.text-nowrap {
 				overflow-x: hidden;
+			}
+		}
+
+		&-lyrics {
+			.row:not(:first-child) {
+				@include dividing-line(10px, $lighterBlue);
+			}
+
+			.lyrics {
+				@include user-select(all);
 			}
 		}
 	}
