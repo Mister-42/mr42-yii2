@@ -1,5 +1,5 @@
 <?php
-use app\models\articles\{Articles, Comments};
+use app\models\articles\{Articles, ArticlesComments};
 use app\widgets\{Feed, Item, RecentArticles, RecentChangelog, RecentComments, TagCloud};
 use yii\base\DynamicModel;
 use yii\bootstrap4\{ActiveForm, Html};
@@ -14,7 +14,7 @@ $dependency = [
 	'reusable' => true,
 	'sql' => 'SELECT GREATEST(
 		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = TRUE), 1),
-		IFNULL((SELECT MAX(created) FROM '.Comments::tableName().' WHERE `active` = TRUE), 1)
+		IFNULL((SELECT MAX(created) FROM '.ArticlesComments::tableName().' WHERE `active` = TRUE), 1)
 	)',
 ];
 
@@ -35,10 +35,10 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::endTag('aside');
 	endif;
 	echo Html::beginTag('aside', ['class' => 'col-4 col-lg-3 d-none d-md-block']);
-		$form = ActiveForm::begin(['action' => ['articles/index', 'action' => 'search'], 'id' => 'search', 'method' => 'get', 'options' => ['role' => 'search']]);
+		$form = ActiveForm::begin(['action' => ['articles/search'], 'id' => 'search', 'method' => 'get', 'options' => ['role' => 'search']]);
 		echo $form->field($search, 'search', [
 				'options' => ['class' => 'form-group mb-2'],
-				'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->show('search'), ['class' => 'btn btn-outline-primary']), ['class' => 'input-group-append'])."</div>{error}",
+				'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->show('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append'])."</div>{error}",
 			])
 			->label(false)
 			->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')]);
@@ -66,12 +66,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 			$this->endCache();
 		endif;
 
-		if ($isHome) :
+		if ($isHome)
 			echo Item::widget([
 				'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
 				'header' => Yii::$app->icon->show('github', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Changelog'),
 			]);
-		endif;
 	echo Html::endTag('aside');
 echo Html::endTag('div');
 $this->endContent();

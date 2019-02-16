@@ -353,16 +353,16 @@
         },
         {
             "name": "bower-asset/fontawesome",
-            "version": "5.7.1",
+            "version": "5.7.2",
             "source": {
                 "type": "git",
-                "url": "git@github.com:FortAwesome/Font-Awesome.git",
-                "reference": "def7d5bda0d2df311fe069f805093c2fe019139d"
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "1cf1062e0cfda5e9b5b2cac7844721b345e1a9c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/def7d5bda0d2df311fe069f805093c2fe019139d",
-                "reference": "def7d5bda0d2df311fe069f805093c2fe019139d"
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/1cf1062e0cfda5e9b5b2cac7844721b345e1a9c5",
+                "reference": "1cf1062e0cfda5e9b5b2cac7844721b345e1a9c5"
             },
             "type": "bower-asset"
         },
@@ -1288,10 +1288,10 @@
         },
         {
             "name": "npm-asset/bootstrap",
-            "version": "4.3.0",
+            "version": "4.3.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.3.0.tgz"
+                "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.3.1.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -1928,20 +1928,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "80e5a129d2e4f1bd2d783421d19ee0faee3d75c3"
+                "reference": "bb1c15348bf97b6d16b8a6a11015c77f1402b8fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/80e5a129d2e4f1bd2d783421d19ee0faee3d75c3",
-                "reference": "80e5a129d2e4f1bd2d783421d19ee0faee3d75c3",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/bb1c15348bf97b6d16b8a6a11015c77f1402b8fc",
+                "reference": "bb1c15348bf97b6d16b8a6a11015c77f1402b8fc",
                 "shasum": ""
             },
             "require": {
-                "npm-asset/bootstrap": "~4.2",
+                "npm-asset/bootstrap": "^4.2",
                 "yiisoft/yii2": "~2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "*",
+                "phpunit/phpunit": "<7",
                 "yiisoft/yii2-coding-standards": "~2.0"
             },
             "type": "yii2-extension",
@@ -1989,7 +1989,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-02-02T16:20:01+00:00"
+            "time": "2019-02-15T07:54:22+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",

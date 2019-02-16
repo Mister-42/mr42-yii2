@@ -32,7 +32,7 @@ class FeedController extends \yii\web\Controller {
 
 		$articles = Articles::find()
 			->orderBy('updated DESC')
-			->with('user')
+			->with('author')
 			->limit(5)
 			->all();
 

@@ -1,14 +1,14 @@
 <?php
 namespace app\widgets;
 use Yii;
-use app\models\articles\Comments;
+use app\models\articles\ArticlesComments;
 use yii\bootstrap4\{Html, Widget};
 
 class RecentComments extends Widget {
 	public $limit = 5;
 
 	public function run(): string {
-		$comments = Comments::find()
+		$comments = ArticlesComments::find()
 			->orderBy('created DESC')
 			->with('article')
 			->where(['active' => true])

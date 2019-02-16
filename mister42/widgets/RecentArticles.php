@@ -11,6 +11,7 @@ class RecentArticles extends Widget {
 		$articles = Articles::find()
 			->orderBy('updated DESC')
 			->limit($this->limit)
+			->where(['active' => true])
 			->all();
 		return empty($articles) ? Html::tag('div', Yii::t('mr42', 'No Items to Display.'), ['class' => 'ml-2']) : self::renderArticles($articles);
 	}

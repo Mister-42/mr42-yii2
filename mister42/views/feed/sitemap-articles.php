@@ -13,7 +13,7 @@ foreach ($articles as $article) :
 	foreach ($article['comments'] as $comment) :
 			$lastUpdate = max($lastUpdate, $comment['created']);
 	endforeach;
-	Sitemap::lineItem($doc, ['articles/index', 'id' => $article->id, 'title' => $article->title], ['age' => $lastUpdate, 'locale' => true]);
+	Sitemap::lineItem($doc, ['articles/article', 'id' => $article->id, 'title' => $article->url], ['age' => $lastUpdate, 'locale' => true]);
 	if ($article['pdf']) :
 			Sitemap::lineItem($doc, ['articles/pdf', 'id' => $article->id, 'title' => $article->url], ['age' => $lastUpdate]);
 	endif;
@@ -24,7 +24,7 @@ $tags = Tags::findTagWeights();
 $weight = ArrayHelper::getColumn($tags, 'weight');
 foreach ($tags as $tag => $value) :
 	$lastUpdate = Tags::lastUpdate($tag);
-	Sitemap::lineItem($doc, ['articles/index', 'action' => 'tag', 'q' => $tag], ['age' => $lastUpdate, 'priority' =>  $value['weight'] / max($weight) - 0.2, 'locale' => true]);
+	Sitemap::lineItem($doc, ['/articles/tag', 'q' => $tag], ['age' => $lastUpdate, 'priority' =>  $value['weight'] / max($weight) - 0.2, 'locale' => true]);
 endforeach;
 unset($tags);
 

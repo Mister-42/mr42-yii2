@@ -2,7 +2,7 @@
 namespace app\models\articles;
 use yii\helpers\StringHelper;
 
-class Tags extends BaseArticles {
+class Tags extends Articles {
 	public static function findTagWeights(): array {
 		if (empty($tags = self::getTags()))
 			return [];

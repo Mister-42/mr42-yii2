@@ -29,7 +29,8 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 	}
 
 	public function getAlbums(): LyricsQuery {
-		return $this->hasMany(Lyrics2Albums::className(), ['parent' => 'id']);
+		return $this->hasMany(Lyrics2Albums::className(), ['parent' => 'id'])
+			->orderBy('year DESC, name ASC');
 	}
 
 	public static function getLastModified(): int {

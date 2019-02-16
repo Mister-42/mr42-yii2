@@ -2,24 +2,25 @@
 use app\models\Form;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\{ActiveForm, Html};
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 Form::charCount($this, $model->rules()['charCount']['max']);
 
 Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]);
-	echo Html::tag('h3', Yii::t('mr42', 'Leave a Comment'));
+	echo Html::tag('h3', Yii::t('mr42', 'Leave a Comment'), ['class' => 'text-center']);
 
-	$form = ActiveForm::begin(['id' => 'comment-form', 'options' => ['data-pjax' => '']]);
+	$form = ActiveForm::begin(['action' => Url::to(['newcomment', 'id' => Yii::$app->request->get('id')]), 'id' => 'comment-form', 'options' => ['data-pjax' => '']]);
 		$tab = 0;
 
 		if (Yii::$app->user->isGuest) :
 			echo '<div class="row">';
-				echo $form->field($model, 'nameField', [
+				echo $form->field($model, 'name', [
 					'options' => ['class' => 'col-md-6'],
 					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
 				])->textInput(['tabindex' => ++$tab]);
 
-				echo $form->field($model, 'emailField', [
+				echo $form->field($model, 'email', [
 					'options' => ['class' => 'col-md-6'],
 					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('envelope').'{input}</div>{hint}{error}',
 				])->input('email', ['tabindex' => ++$tab])

@@ -1,9 +1,8 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\articles\{Articles, BaseArticles, Comments};
+use app\models\articles\{Articles, ArticlesComments};
 use yii\bootstrap4\Html;
-use yii\data\ActiveDataProvider;
 use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\Url;
 use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
@@ -11,7 +10,7 @@ use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedH
 class ArticlesController extends \yii\web\Controller {
 	public $layout = 'columns';
 
-	public function behaviors() {
+	public function behaviors(): array {
 		return [
 			'access' => [
 				'class' => AccessControl::class,
@@ -26,182 +25,163 @@ class ArticlesController extends \yii\web\Controller {
 			'verbs' => [
 				'class' => VerbFilter::class,
 				'actions' => [
-					'delete' => ['post'],
+					'deletecomment' => ['post'],
+					'newcomment' => ['post'],
 				],
 			],
 		];
 	}
 
-	public function actionIndex(int $id = 0, string $action = '', string $q = ''): string {
-		if ($id !== 0) :
-			return $this->pageArticle($id);
-		endif;
+	public function actionIndex(): string {
+		$model = new Articles();
+		return $this->render('index', [
+			'model' => $model,
+		]);
+	}
 
-		$query = Articles::find()->orderBy('updated DESC');
-		if ($action === "tag" && !empty($q)) :
-			$query->where(['like', 'tags', $q]);
-		elseif ($action === "search" && !empty($q)) :
-			Yii::$app->view->registerMetaTag(['name' => 'robots', 'content' => 'noindex']);
-			$query->where(['like', 'title', $q]);
-			$query->orWhere(['like', 'content', $q]);
+	public function actionArticle(int $id): string {
+		$model = Articles::find()
+			->where(['id' => $id])
+			->with(['author', 'comments'])
+			->one();
+
+		if (!$model)
+			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+
+		if (Yii::$app->request->get('title') !== $model->url)
+			$this->redirect(['article', 'id' => $model->id, 'title' => $model->url], 301)->send();
+
+		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(['permalink/articles', 'id' => $model->id])]);
+		if ($model->pdf)
+			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
+
+		return $this->render('view', [
+			'model' => $model,
+		]);
+	}
+
+	public function actionPdf(int $id, string $title = ''): void {
+		$model = Articles::find()
+			->where(['id' => $id])
+			->with(['author'])
+			->one();
+
+		if (empty($title) || $title != $model->url)
+			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
+
+		if (!$model->pdf)
+			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+
+		$fileName = Articles::buildPdf($model);
+		Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
+	}
+
+	public function actionCreate(): string {
+		$model = new Articles();
+		return $this->doFormArticle($model);
+	}
+
+	public function actionUpdate(int $id): string {
+		$model = Articles::findOne(['id' => $id]);
+		if (!$model->belongsToViewer())
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+
+		return $this->doFormArticle($model);
+	}
+
+	public function actionDelete(int $id): void {
+		$model = Articles::findOne(['id' => $id]);
+		if (!$model->belongsToViewer())
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+
+		$model->delete();
+		$this->redirect(['index'])->send();
+	}
+
+	public function actionNewcomment(int $id): string {
+		$article = Articles::find()
+			->where(['id' => $id])
+			->with('author')
+			->one();
+
+		$comment = new ArticlesComments;
+		$comment->load(Yii::$app->request->post());
+		$comment->parent = $id;
+
+		if ($comment->saveComment($comment)) :
+			if (!Yii::$app->user->isGuest) :
+				$comment->name = Yii::$app->user->identity->username;
+				$comment->email = Yii::$app->user->identity->email;
+			endif;
+			$comment->sendCommentMail($article, $comment);
+			return Html::tag('div', Yii::t('mr42', 'Your comment has been saved. It will not be visible until approved by an administrator.'), ['class' => 'alert alert-success']);
 		endif;
+		return Html::tag('div', Yii::t('mr42', 'Something went wrong, Your comment has not been saved.'), ['class' => 'alert alert-danger']);
+	}
+
+	public function actionDeletecomment(int $id): void {
+		$comment = ArticlesComments::findOne(['id' => $id]);
+		$comment->active = $comment->active ? 0 : 1;
+
+		$article = Articles::findOne(['id' => $comment->parent]);
+		if (!$article->belongsToViewer())
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+
+		$comment->delete();
+		$this->redirect(['article', 'id' => $article->id, 'title' => $article->title, '#' => 'comments'])->send();
+	}
+
+	public function actionTogglecomment(int $id) {
+		$comment = ArticlesComments::findOne(['id' => $id]);
+		$comment->active = $comment->active ? 0 : 1;
+
+		$article = Articles::findOne(['id' => $comment->parent]);
+		if (!$article->belongsToViewer())
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+
+		if (!Yii::$app->request->isAjax)
+			throw new MethodNotAllowedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+
+		$comment->update();
+		return $comment->showApprovalButton();
+	}
+
+	public function actionSearch(string $q) {
+		$model = new Articles();
+		$query = $model->find()
+			->orderBy('updated DESC')
+			->where(['like', 'title', $q])
+			->orWhere(['like', 'content', $q]);
 
 		return $this->render('index', [
-			'dataProvider' => new ActiveDataProvider([
-				'query' => $query,
-				'pagination' => [
-					'defaultPageSize' => 1,
-				],
-			]),
-			'action' => $action,
+			'model' => $model,
+			'query' => $query,
 			'q' => $q,
 		]);
 	}
 
-	public function actionPdf(int $id, string $title = '') {
-		$model = $this->findModel($id);
+	public function actionTag(string $tag) {
+		$model = new Articles();
+		$query = $model->find()
+			->orderBy('updated DESC')
+			->where(['like', 'tags', $tag]);
 
-		if (!$model->pdf) :
-			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-		endif;
-
-		if (empty($title) || $title != $model->url) :
-			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
-		endif;
-
-		$fileName = Articles::buildPdf($model, $this->renderPartial('pdf', ['model' => $model]));
-		Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
+		return $this->render('index', [
+			'model' => $model,
+			'query' => $query,
+			'tag' => $tag,
+		]);
 	}
 
-	public function actionCreate() {
+	private function doFormArticle(Articles $model): string {
+		if ($model->load(Yii::$app->request->post())) :
+			if ($model->validate() && $model->save())
+				$this->redirect(['article', 'id' => $model->id, 'title' => $model->url])->send();
+		endif;
+
 		$this->layout = '@app/views/layouts/main.php';
-
-		$model = new BaseArticles;
-		if ($model->load(Yii::$app->request->post()) && $model->save()) :
-			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
-		endif;
-
-		return $this->render('_formArticles', [
-			'action' => 'create',
+		return $this->render('_formArticle', [
 			'model' => $model,
 		]);
-	}
-
-	public function actionUpdate(int $id) {
-		$this->layout = '@app/views/layouts/main.php';
-
-		$model = BaseArticles::findOne(['id' => $id]);
-		if (!$model->belongsToViewer()) :
-			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-		endif;
-
-		if ($model->load(Yii::$app->request->post()) && $model->save()) :
-			return $this->redirect(['index', 'id' => $model->id, 'title' => $model->url]);
-		endif;
-
-		return $this->render('_formArticles', [
-			'action' => 'edit',
-			'model' => $model,
-		]);
-	}
-
-	public function actionDelete(int $id) {
-		$model = BaseArticles::findOne(['id' => $id]);
-		if (!$model->belongsToViewer()) :
-			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-		endif;
-
-		$model->delete();
-		return $this->redirect(['index']);
-	}
-
-	public function actionCommentstatus(int $id, string $action) {
-		$comment = Comments::findOne(['id' => $id]);
-		$article = $this->findModel($comment->parent);
-
-		if (!$article->belongsToViewer()) :
-			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-		endif;
-
-		$comment->active = $comment->active ? Comments::STATUS_INACTIVE : Comments::STATUS_ACTIVE;
-		if ($action == "toggleapproval") :
-			if (!Yii::$app->request->isAjax) :
-				throw new MethodNotAllowedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-			endif;
-			$comment->update();
-			return $comment->showApprovalButton();
-		elseif ($action == "delete") :
-			$comment->delete();
-			return $this->redirect(['index', 'id' => $article->id, 'title' => $article->title, '#' => 'comments']);
-		endif;
-
-		return false;
-	}
-
-	private function pageArticle(int $id): string {
-		$model = $this->findModel($id, ['comments']);
-		$comment = new Comments;
-
-		if ($comment->load(Yii::$app->request->post())) :
-			if ($model->addComment($comment)) :
-				if (!Yii::$app->user->isGuest) :
-					$comment->name = Yii::$app->user->identity->username;
-					$comment->email = Yii::$app->user->identity->email;
-				endif;
-				$comment->sendCommentMail($model, $comment);
-				return Html::tag('div', Yii::t('mr42', 'Your comment has been saved. It will not be visible until approved by an administrator.'), ['class' => 'alert alert-success']);
-			endif;
-			return Html::tag('div', Yii::t('mr42', 'Something went wrong, Your comment has not been saved.'), ['class' => 'alert alert-danger']);
-		endif;
-
-		if (Yii::$app->request->get('title') != $model->url) :
-			$this->redirect(['index', 'id' => $model->id, 'title' => $model->url], 301)->send();
-		endif;
-
-		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(['permalink/articles', 'id' => $model->id])]);
-		if ($model->pdf) :
-			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
-		endif;
-
-		return $this->render('view', [
-			'model' => $model,
-			'comment' => $comment
-		]);
-	}
-
-	protected function findComment(int $id) {
-		$model = Comments::find()
-			->where(['id' => $id])
-			->with('user')
-			->one();
-
-		if (!$model) :
-			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-		endif;
-
-		$article = $this->findModel($id);
-		if (!$article->belongsToViewer()) :
-			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-		endif;
-
-		return $model;
-	}
-
-	protected function findModel(int $id, array $withList = []) {
-		$query = Articles::find()
-			->where(['id' => $id])
-			->with('user');
-
-		foreach ($withList as $with) :
-			$query->with($with);
-		endforeach;
-
-		$model = $query->one();
-
-		if (!$model) :
-			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-		endif;
-
-		return $model;
 	}
 }
