@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\articles\{Articles, ArticlesComments};
+use app\models\articles\{Articles, ArticlesComments, Search};
 use yii\bootstrap4\Html;
 use yii\filters\{AccessControl, VerbFilter};
 use yii\helpers\Url;
@@ -42,13 +42,12 @@ class ArticlesController extends \yii\web\Controller {
 	public function actionArticle(int $id, string $title = ''): string {
 		$model = Articles::find()
 			->where(['id' => $id])
-			->with(['author', 'comments'])
 			->one();
 
 		if (!$model)
 			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 
-		if ($title != $model->url)
+		if ($title !== $model->url)
 			$this->redirect(['article', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
 		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(['permalink/articles', 'id' => $model->id])]);
@@ -63,13 +62,12 @@ class ArticlesController extends \yii\web\Controller {
 	public function actionPdf(int $id, string $title): void {
 		$model = Articles::find()
 			->where(['id' => $id])
-			->with(['author'])
 			->one();
 
 		if (!$model->pdf)
 			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 
-		if ($title != $model->url)
+		if ($title !== $model->url)
 			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
 		$fileName = Articles::buildPdf($model);
@@ -131,7 +129,7 @@ class ArticlesController extends \yii\web\Controller {
 		$this->redirect(['article', 'id' => $article->id, 'title' => $article->title, '#' => 'comments'])->send();
 	}
 
-	public function actionTogglecomment(int $id) {
+	public function actionTogglecomment(int $id): string {
 		$comment = ArticlesComments::findOne(['id' => $id]);
 		$comment->active = $comment->active ? 0 : 1;
 
@@ -146,28 +144,24 @@ class ArticlesController extends \yii\web\Controller {
 		return $comment->showApprovalButton();
 	}
 
-	public function actionSearch(string $q) {
-		$model = new Articles();
-		$query = $model->find()
+	public function actionSearch(string $q): string {
+		$query = Articles::find()
 			->orderBy('updated DESC')
 			->where(['like', 'title', $q])
 			->orWhere(['like', 'content', $q]);
 
 		return $this->render('index', [
-			'model' => $model,
 			'query' => $query,
 			'q' => $q,
 		]);
 	}
 
-	public function actionTag(string $tag) {
-		$model = new Articles();
-		$query = $model->find()
+	public function actionTag(string $tag): string {
+		$query = Articles::find()
 			->orderBy('updated DESC')
 			->where(['like', 'tags', $tag]);
 
 		return $this->render('index', [
-			'model' => $model,
 			'query' => $query,
 			'tag' => $tag,
 		]);

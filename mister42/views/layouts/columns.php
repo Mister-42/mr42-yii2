@@ -1,14 +1,10 @@
 <?php
-use app\models\articles\{Articles, ArticlesComments};
+use app\models\articles\{Articles, ArticlesComments, Search};
 use app\widgets\{Feed, Item, RecentArticles, RecentChangelog, RecentComments, TagCloud};
-use yii\base\DynamicModel;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\caching\DbDependency;
 
 $isHome = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
-$search = new DynamicModel(['search']);
-$search->addRule('search', 'required');
-$search->addRule('search', 'string', ['min' => 3, 'max' => 25]);
 $dependency = [
 	'class' => DbDependency::class,
 	'reusable' => true,
@@ -35,13 +31,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::endTag('aside');
 	endif;
 	echo Html::beginTag('aside', ['class' => 'col-4 col-lg-3 d-none d-md-block']);
-		$form = ActiveForm::begin(['action' => ['articles/search'], 'id' => 'search', 'method' => 'get', 'options' => ['role' => 'search']]);
-		echo $form->field($search, 'search', [
+		$form = ActiveForm::begin(['action' => ['articles/search'], 'method' => 'get', 'options' => ['role' => 'search']]);
+		echo $form->field(new Search(), 'keyword', [
 				'options' => ['class' => 'form-group mb-2'],
 				'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->show('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append'])."</div>{error}",
 			])
-			->label(false)
-			->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')]);
+			->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')])
+			->label(false);
 		ActiveForm::end();
 
 		if ($this->beginCache('articlewidgets-'.Yii::$app->language, ['dependency' => $dependency, 'duration' => 0])) :

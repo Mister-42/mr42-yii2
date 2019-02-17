@@ -10,19 +10,15 @@ $dataProvider = new ActiveDataProvider([
 	],
 ]);
 
-switch (Yii::$app->controller->action->id) :
-	case 'tag':
-	case 'search':
-		$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Articles'), 'url' => ['index']];
-	case 'tag':
-		$this->title = Yii::t('mr42', '{results, plural, =0{No articles} =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $dataProvider->totalCount, 'tag' => $tag]);
-		break;
-	case 'search':
-		$this->title = Yii::t('mr42', '{results, plural, =0{No search results} =1{1 search result} other{# search results}} for "{query}"', ['results' => $dataProvider->totalCount, 'query' => $q]);
-		break;
-	default:
-		$this->title = Yii::t('mr42', 'Articles');
-endswitch;
+$this->title = Yii::t('mr42', 'Articles');
+if (Yii::$app->controller->action->id === 'search') :
+	$this->title = Yii::t('mr42', '{results, plural, =0{No search results} =1{1 search result} other{# search results}} for "{query}"', ['results' => $dataProvider->totalCount, 'query' => $q]);
+elseif (Yii::$app->controller->action->id === 'tag') :
+	$this->title = Yii::t('mr42', '{results, plural, =0{No articles} =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $dataProvider->totalCount, 'tag' => $tag]);
+endif;
+
+if (Yii::$app->controller->action->id !== 'index')
+	$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Articles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 echo ListView::widget([

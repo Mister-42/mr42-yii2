@@ -11,7 +11,7 @@ $authorPage = Html::a($profile->name ?? $model->author->username, ['/user/profil
 
 echo Html::beginTag('article', ['class' => 'card mb-3']);
 	echo Html::beginTag('div', ['class' => 'card-header']);
-		echo Html::tag('h4', (isset($view) && $view === 'full')
+		echo Html::tag('h4', (Yii::$app->controller->action->id === 'article')
 			? $model->title
 			: Html::a($model->title, ['article', 'id' => $model->id, 'title' => $model->url])
 		, ['class' => 'float-left']);
@@ -37,26 +37,29 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 			echo Html::tag('p', Yii::t('mr42', '{date} by {author}', ['date' => Yii::$app->formatter->asDate($model->created), 'author' => $authorPage]), ['class' => 'text-secondary text-right']);
 		echo Html::endTag('div');
 		echo Html::beginTag('div', ['class' => 'card-text']);
-			echo (isset($view) && $view === 'full')
+			echo (Yii::$app->controller->action->id === 'article')
 				? str_replace('[readmore]', null, $model->contentParsed)
 				: StringHelper::byteSubstr($model->contentParsed, 0, mb_strpos($model->contentParsed, '[readmore]') ?: StringHelper::byteLength($model->contentParsed), '[readmore]');
-			echo Html::endTag('div');
+		echo Html::endTag('div');
 	echo Html::endTag('div');
 
-	echo Html::beginTag('div', ['class' => 'card-footer text-right']);
-		if ($model->source)
-			echo Html::a(Yii::t('mr42', 'Source'), $model->source, ['class' => 'btn btn-outline-secondary']);
-		echo Html::a((strpos($model->contentParsed, '[readmore]')) ? Yii::t('mr42', 'Read Full Article') : Yii::t('mr42', 'Read Article').' &raquo;', ['article', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-outline-info ml-2']);
-	echo Html::endTag('div');
+	if ($model->source || Yii::$app->controller->action->id === 'index') :
+		echo Html::beginTag('div', ['class' => 'card-footer text-right']);
+			if ($model->source)
+				echo Html::a(Yii::t('mr42', 'Source'), $model->source, ['class' => 'btn btn-outline-secondary']);
+			if (Yii::$app->controller->action->id === 'index')
+				echo Html::a((strpos($model->contentParsed, '[readmore]')) ? Yii::t('mr42', 'Read Full Article') : Yii::t('mr42', 'Read Article').' &raquo;', ['article', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-outline-info ml-2']);
+		echo Html::endTag('div');
+	endif;
 
-	if (isset($view) && $view === 'full' && !empty($profile->bio) && $author = Profile::show($profile))
+	if (Yii::$app->controller->action->id === 'article' && !empty($profile->bio) && $author = Profile::show($profile))
 		echo Html::tag('div', $author, ['class' => 'card-footer']);
 
 	echo Html::beginTag('div', ['class' => 'card-footer']);
 		$bar[] = Yii::$app->icon->show('link', ['class' => 'mr-1 text-muted']).Html::a(Yii::t('mr42', 'Permalink'), ['/permalink/articles', 'id' => $model->id]);
 
 		$commentText = Yii::t('mr42', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
-		$bar[] = Yii::$app->icon->show('comment', ['class' => 'mr-1 text-muted']).Html::a($commentText, null, ['href' => '#comments']);
+		$bar[] = Yii::$app->icon->show('comment', ['class' => 'mr-1 text-muted']).Html::a($commentText, ['article', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);
 
 		$tags = StringHelper::explode($model->tags);
 		if (count($tags) > 0) :

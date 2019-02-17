@@ -55,8 +55,10 @@ class Articles extends \yii\db\ActiveRecord {
 		if (Yii::$app->controller->action->id !== 'update')
 			$this->url = $this->url ?? $this->title;
 
-		if ($this->content)
+		if ($this->content) :
 			$this->contentParsed = Yii::$app->formatter->cleanInput($this->content, 'gfm', true);
+			$this->contentParsed = str_replace(Html::tag('p', '[readmore]'), '[readmore]', $this->contentParsed);
+		endif;
 	}
 
 	public function beforeDelete(): bool {
