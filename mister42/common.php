@@ -120,7 +120,7 @@ return [
 				'articles/<id:\d+>'													=> 'articles/article',
 				'articles/<action:create|update|delete>/<id:.*>'					=> 'articles/<action>',
 				'articles/<action:new|delete|toggle>comment/<id:.*>'				=> 'articles/<action>comment',
-				'articles/<action:search>'											=> 'articles/search',
+				'articles/search'													=> 'articles/search',
 				'articles/tag/<tag:\w+>'											=> 'articles/tag',
 				'articles/page-<page:\d+>'											=> 'articles/index',
 				'<controller:articles|calculator|feed|lyrics|tools>'				=> '<controller>/index',

@@ -33,22 +33,21 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 	echo Html::endTag('div');
 
 	echo Html::beginTag('div', ['class' => 'card-body']);
-		echo Html::tag('p', Yii::t('mr42', '{date} by {author}', ['date' => Yii::$app->formatter->asDate($model->created), 'author' => $authorPage]), ['class' => 'text-secondary text-right']);
-		echo (isset($view) && $view === 'full')
-			? str_replace('[readmore]', null, $model->contentParsed)
-			: StringHelper::byteSubstr($model->contentParsed, 0, mb_strpos($model->contentParsed, '[readmore]') ?: StringHelper::byteLength($model->contentParsed), '[readmore]');
-		if ($model->source && (isset($view) && $view === 'full'))
-			echo Html::a(Yii::t('mr42', 'Source'), $model->source, ['class' => 'btn btn-outline-secondary float-right']);
+		echo Html::beginTag('div', ['class' => 'card-subtitle']);
+			echo Html::tag('p', Yii::t('mr42', '{date} by {author}', ['date' => Yii::$app->formatter->asDate($model->created), 'author' => $authorPage]), ['class' => 'text-secondary text-right']);
+		echo Html::endTag('div');
+		echo Html::beginTag('div', ['class' => 'card-text']);
+			echo (isset($view) && $view === 'full')
+				? str_replace('[readmore]', null, $model->contentParsed)
+				: StringHelper::byteSubstr($model->contentParsed, 0, mb_strpos($model->contentParsed, '[readmore]') ?: StringHelper::byteLength($model->contentParsed), '[readmore]');
+			echo Html::endTag('div');
 	echo Html::endTag('div');
 
-	if (!isset($view) && ($model->source || strpos($model->contentParsed, '[readmore]'))) :
-		echo Html::beginTag('div', ['class' => 'card-footer text-right']);
-			if ($model->source)
-				echo Html::a(Yii::t('mr42', 'Source'), $model->source, ['class' => 'btn btn-outline-secondary mr-2']);
-			if (strpos($model->contentParsed, '[readmore]'))
-				echo Html::a(Yii::t('mr42', 'Read Full Article').' &raquo;', ['article', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-outline-info']);
-		echo Html::endTag('div');
-	endif;
+	echo Html::beginTag('div', ['class' => 'card-footer text-right']);
+		if ($model->source)
+			echo Html::a(Yii::t('mr42', 'Source'), $model->source, ['class' => 'btn btn-outline-secondary']);
+		echo Html::a((strpos($model->contentParsed, '[readmore]')) ? Yii::t('mr42', 'Read Full Article') : Yii::t('mr42', 'Read Article').' &raquo;', ['article', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-outline-info ml-2']);
+	echo Html::endTag('div');
 
 	if (isset($view) && $view === 'full' && !empty($profile->bio) && $author = Profile::show($profile))
 		echo Html::tag('div', $author, ['class' => 'card-footer']);
@@ -70,8 +69,6 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 
 		if ($model->updated - $model->created > 3600)
 			$bar[] = Yii::$app->icon->show('sync', ['class' => 'mr-1 text-muted']).Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
-
-		$bar[] = Yii::$app->icon->show('user', ['class' => 'mr-1 text-muted']).Html::tag('span', $authorPage, ['class' => 'author']);
 
 		echo Html::tag('div', implode(' · ', $bar));
 	echo Html::endTag('div');

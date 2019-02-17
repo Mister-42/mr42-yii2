@@ -2,7 +2,6 @@
 use app\models\Form;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\{ActiveForm, Html};
-use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 Form::charCount($this, $model->rules()['charCount']['max']);
@@ -10,7 +9,7 @@ Form::charCount($this, $model->rules()['charCount']['max']);
 Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]);
 	echo Html::tag('h3', Yii::t('mr42', 'Leave a Comment'), ['class' => 'text-center']);
 
-	$form = ActiveForm::begin(['action' => Url::to(['newcomment', 'id' => Yii::$app->request->get('id')]), 'id' => 'comment-form', 'options' => ['data-pjax' => '']]);
+	$form = ActiveForm::begin(['action' => ['newcomment', 'id' => Yii::$app->request->get('id')], 'id' => 'comment-form', 'options' => ['data-pjax' => '']]);
 		$tab = 0;
 
 		if (Yii::$app->user->isGuest) :

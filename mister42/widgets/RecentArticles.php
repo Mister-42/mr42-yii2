@@ -18,7 +18,7 @@ class RecentArticles extends Widget {
 
 	private function renderArticles(array $articles): string {
 		foreach ($articles as $article) :
-			$link = Html::a($article->title, ['articles/index', 'id' => $article->id, 'title' => $article->url], ['class' => 'card-link']);
+			$link = Html::a($article->title, ['articles/article', 'id' => $article->id, 'title' => $article->url], ['class' => 'card-link']);
 			$items[] = Html::tag('li', $link, ['class' => 'list-group-item text-truncate']);
 		endforeach;
 		return Html::tag('ul', implode($items), ['class' => 'list-group list-group-flush']);

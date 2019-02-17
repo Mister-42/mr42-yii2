@@ -36,17 +36,17 @@ $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->endElement();
 
 foreach ($articles as $article) :
-	$article->content = preg_replace('/<img([^>]*)src=["]([^"]*)["]([^>]*)>/', '<img$1src="https:$2"$3>', $article->contentParsed);
-	if (strpos($article->content, '[readmore]')) :
-		$article->content = substr($article->content, 0, strpos($article->content, '[readmore]'));
-		$article->content .= Html::a('Read Full Article', Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url], true)).' &raquo;';
+	$article->contentParsed = preg_replace('/<img([^>]*)src=["]([^"]*)["]([^>]*)>/', '<img$1src="https:$2"$3>', $article->contentParsed);
+	if (strpos($article->contentParsed, '[readmore]')) :
+		$article->contentParsed = substr($article->contentParsed, 0, strpos($article->contentParsed, '[readmore]'));
+		$article->contentParsed .= Html::a('Read Full Article', Url::to(['articles/article', 'id' => $article->id, 'title' => $article->url], true)).' &raquo;';
 	endif;
 
 	$doc->startElement('item');
 	$doc->writeElement('title', $article->title);
 	$doc->writeElement('link', Url::to(['articles/article', 'id' => $article->id, 'title' => $article->url], true));
 		$doc->startElement('description');
-		$doc->writeCData($article->content);
+		$doc->writeCData($article->contentParsed);
 		$doc->endElement();
 	$doc->writeElement('dc:creator', $article->author->name ?? $article->author->username);
 	foreach (StringHelper::explode($article->tags) as $tag) :

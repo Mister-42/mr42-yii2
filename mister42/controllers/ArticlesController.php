@@ -39,7 +39,7 @@ class ArticlesController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionArticle(int $id): string {
+	public function actionArticle(int $id, string $title = ''): string {
 		$model = Articles::find()
 			->where(['id' => $id])
 			->with(['author', 'comments'])
@@ -48,7 +48,7 @@ class ArticlesController extends \yii\web\Controller {
 		if (!$model)
 			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 
-		if (Yii::$app->request->get('title') !== $model->url)
+		if ($title != $model->url)
 			$this->redirect(['article', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
 		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(['permalink/articles', 'id' => $model->id])]);
@@ -60,17 +60,17 @@ class ArticlesController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionPdf(int $id, string $title = ''): void {
+	public function actionPdf(int $id, string $title): void {
 		$model = Articles::find()
 			->where(['id' => $id])
 			->with(['author'])
 			->one();
 
-		if (empty($title) || $title != $model->url)
-			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
-
 		if (!$model->pdf)
 			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+
+		if ($title != $model->url)
+			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
 		$fileName = Articles::buildPdf($model);
 		Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');

@@ -6,7 +6,7 @@ use yii\widgets\ListView;
 $dataProvider = new ActiveDataProvider([
 	'query' => $query ?? $model->find()->orderBy('updated DESC'),
 	'pagination' => [
-		'defaultPageSize' => 1,
+		'defaultPageSize' => 2,
 	],
 ]);
 

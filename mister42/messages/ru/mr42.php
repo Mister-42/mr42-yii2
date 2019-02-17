@@ -157,6 +157,7 @@ return [
     'QR Code Generator' => 'Генератор QR-код',
     'QR Data' => 'QR-данные',
     'RSS' => 'RSS',
+    'Read Article' => 'Читать статью',
     'Read Full Article' => 'Читать полную статью',
     'Recently Played Tracks' => 'Недавно воспроизведенные треки',
     'Renewing Licenses' => 'Обновление лицензий',
