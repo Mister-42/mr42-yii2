@@ -17,20 +17,20 @@ class Lyrics1Artists extends \yii\db\ActiveRecord {
 
 	public static function artistsList(): array {
 		return self::find()
-			->orderBy('name')
+			->orderBy(['name' => SORT_ASC])
 			->all();
 	}
 
 	public static function albumsList(): BatchQueryResult {
 		return self::find()
-			->orderBy('name')
+			->orderBy(['name' => SORT_ASC])
 			->with('albums')
 			->each();
 	}
 
 	public function getAlbums(): LyricsQuery {
 		return $this->hasMany(Lyrics2Albums::className(), ['parent' => 'id'])
-			->orderBy('year DESC, name ASC');
+			->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC]);
 	}
 
 	public static function getLastModified(): int {

@@ -9,7 +9,7 @@ class RecentArticles extends Widget {
 
 	public function run(): string {
 		$articles = Articles::find()
-			->orderBy('updated DESC')
+			->orderBy(['updated' => SORT_DESC])
 			->limit($this->limit)
 			->where(['active' => true])
 			->all();

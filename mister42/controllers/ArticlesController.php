@@ -1,9 +1,9 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\articles\{Articles, ArticlesComments, Search};
+use app\models\articles\{Articles, ArticlesComments};
 use yii\bootstrap4\Html;
-use yii\filters\{AccessControl, VerbFilter};
+use yii\filters\{AccessControl, AjaxFilter, VerbFilter};
 use yii\helpers\Url;
 use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
 
@@ -21,6 +21,10 @@ class ArticlesController extends \yii\web\Controller {
 						'roles' => ['@'],
 					],
 				],
+			],
+			'ajax' => [
+				'class' => AjaxFilter::class,
+				'only' => ['togglecomment'],
 			],
 			'verbs' => [
 				'class' => VerbFilter::class,
@@ -81,17 +85,13 @@ class ArticlesController extends \yii\web\Controller {
 
 	public function actionUpdate(int $id): string {
 		$model = Articles::findOne(['id' => $id]);
-		if (!$model->belongsToViewer())
-			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-
+		$this->belongsToViewer($model);
 		return $this->doFormArticle($model);
 	}
 
 	public function actionDelete(int $id): void {
 		$model = Articles::findOne(['id' => $id]);
-		if (!$model->belongsToViewer())
-			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-
+		$this->belongsToViewer($model);
 		$model->delete();
 		$this->redirect(['index'])->send();
 	}
@@ -122,9 +122,7 @@ class ArticlesController extends \yii\web\Controller {
 		$comment->active = $comment->active ? 0 : 1;
 
 		$article = Articles::findOne(['id' => $comment->parent]);
-		if (!$article->belongsToViewer())
-			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-
+		$this->belongsToViewer($article);
 		$comment->delete();
 		$this->redirect(['article', 'id' => $article->id, 'title' => $article->title, '#' => 'comments'])->send();
 	}
@@ -134,31 +132,26 @@ class ArticlesController extends \yii\web\Controller {
 		$comment->active = $comment->active ? 0 : 1;
 
 		$article = Articles::findOne(['id' => $comment->parent]);
-		if (!$article->belongsToViewer())
-			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-
-		if (!Yii::$app->request->isAjax)
-			throw new MethodNotAllowedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
-
+		$this->belongsToViewer($article);
 		$comment->update();
 		return $comment->showApprovalButton();
 	}
 
 	public function actionSearch(string $q): string {
 		$query = Articles::find()
-			->orderBy('updated DESC')
+			->orderBy(['updated' => SORT_DESC])
 			->where(['like', 'title', $q])
 			->orWhere(['like', 'content', $q]);
 
 		return $this->render('index', [
 			'query' => $query,
-			'q' => $q,
+			'keyword' => $q,
 		]);
 	}
 
 	public function actionTag(string $tag): string {
 		$query = Articles::find()
-			->orderBy('updated DESC')
+			->orderBy(['updated' => SORT_DESC])
 			->where(['like', 'tags', $tag]);
 
 		return $this->render('index', [
@@ -177,5 +170,10 @@ class ArticlesController extends \yii\web\Controller {
 		return $this->render('_formArticle', [
 			'model' => $model,
 		]);
+	}
+
+	private function belongsToViewer(Articles $article): void {
+		if (!$article->belongsToViewer())
+			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
 	}
 }

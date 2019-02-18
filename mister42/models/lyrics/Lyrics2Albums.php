@@ -48,7 +48,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 
 	public static function albumsList(string $artist): array {
 		return self::find()
-			->orderBy('year DESC, name')
+			->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
 			->innerJoinWith('artist', 'tracks')
 			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
 			->addParams([':artist' => $artist])

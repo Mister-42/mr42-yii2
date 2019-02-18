@@ -12,7 +12,7 @@ class Feed extends Widget {
 	public function run(): string {
 		$items = FeedModel::find()
 			->where(['feed' => $this->name])
-			->orderBy('time DESC')
+			->orderBy(['time' => SORT_DESC])
 			->limit($this->limit)
 			->all();
 		return empty($items) ? Html::tag('div', Yii::t('mr42', 'No Items to Display.'), ['class' => 'ml-2']) : self::renderFeed($items);

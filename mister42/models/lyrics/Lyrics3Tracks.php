@@ -24,7 +24,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 
 	public static function tracksList(string $artist, string $year, string $name): array {
 		return self::find()
-			->orderBy('track')
+			->orderBy(['track' => SORT_ASC])
 			->joinWith('artist')
 			->joinWith('lyrics')
 			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])

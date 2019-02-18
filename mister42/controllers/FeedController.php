@@ -8,7 +8,7 @@ use yii\web\Response;
 
 class FeedController extends \yii\web\Controller {
 	public function behaviors() {
-		$lastUpdate = Articles::find()->select(['updated' => 'max(updated)'])->one();
+		$lastUpdate = Articles::find()->select('max(updated)')->one();
 		return [
 			[
 				'class' => HttpCache::class,
@@ -31,7 +31,7 @@ class FeedController extends \yii\web\Controller {
 		endif;
 
 		$articles = Articles::find()
-			->orderBy('updated DESC')
+			->orderBy(['updated' => SORT_DESC])
 			->with('author')
 			->limit(5)
 			->all();

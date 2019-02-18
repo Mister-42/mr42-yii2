@@ -4,7 +4,7 @@ use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 $dataProvider = new ActiveDataProvider([
-	'query' => $query ?? $model->find()->orderBy('updated DESC'),
+	'query' => $query ?? $model->find()->orderBy(['updated' => SORT_DESC]),
 	'pagination' => [
 		'defaultPageSize' => 2,
 	],
@@ -12,7 +12,7 @@ $dataProvider = new ActiveDataProvider([
 
 $this->title = Yii::t('mr42', 'Articles');
 if (Yii::$app->controller->action->id === 'search') :
-	$this->title = Yii::t('mr42', '{results, plural, =0{No search results} =1{1 search result} other{# search results}} for "{query}"', ['results' => $dataProvider->totalCount, 'query' => $q]);
+	$this->title = Yii::t('mr42', '{results, plural, =0{No search results} =1{1 search result} other{# search results}} for "{query}"', ['results' => $dataProvider->totalCount, 'query' => $keyword]);
 elseif (Yii::$app->controller->action->id === 'tag') :
 	$this->title = Yii::t('mr42', '{results, plural, =0{No articles} =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $dataProvider->totalCount, 'tag' => $tag]);
 endif;

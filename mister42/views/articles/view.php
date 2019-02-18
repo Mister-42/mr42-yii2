@@ -8,7 +8,7 @@ $this->params['breadcrumbs'][] = $model->title;
 
 echo Html::beginTag('div', ['class' => 'clearfix mb-2']);
 foreach (['<', '>'] as $z)
-	if ($art = $model->find()->where([$z, 'id', $model->id])->orderBy('updated '.($z === '<' ? 'DESC' : 'ASC'))->limit(1)->one())
+	if ($art = $model->find()->orderBy(['updated' => $z === '<' ? SORT_DESC : SORT_ASC])->where([$z, 'updated', $model->updated])->limit(1)->one())
 		echo Html::a(($z === '<' ? '&laquo; '.Yii::t('mr42', 'Previous Article') : Yii::t('mr42', 'Next Article').' &raquo;'), ['article', 'id' => $art->id, 'title' => $art->url], ['class' => 'btn btn-sm btn-outline-secondary float-'.($z === '<' ? 'left' : 'right'), 'data-toggle' => 'tooltip', 'data-placement' => ($z === '<' ? 'right' : 'left'), 'title' => $art->title]);
 echo Html::endTag('div');
 

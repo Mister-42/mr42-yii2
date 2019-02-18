@@ -9,7 +9,7 @@ class RecentComments extends Widget {
 
 	public function run(): string {
 		$comments = ArticlesComments::find()
-			->orderBy('created DESC')
+			->orderBy(['created' => SORT_DESC])
 			->with('article')
 			->where(['active' => true])
 			->limit($this->limit)
