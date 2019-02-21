@@ -1,5 +1,5 @@
 <?php
-namespace app\models\lyrics;
+namespace app\models\music;
 use Yii;
 use app\models\{Image, Pdf, Video};
 use yii\behaviors\TimestampBehavior;

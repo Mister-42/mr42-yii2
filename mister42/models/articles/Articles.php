@@ -110,6 +110,12 @@ class Articles extends \yii\db\ActiveRecord {
 		return $this->authorId === Yii::$app->user->id;
 	}
 
+	public static function getLastModified(): int {
+		$data = self::find()
+			->max('updated');
+		return $data;
+	}
+
 	public function getAuthor() {
 		return $this->hasOne(User::className(), ['id' => 'authorId']);
 	}

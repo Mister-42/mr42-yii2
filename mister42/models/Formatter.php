@@ -14,7 +14,7 @@ class Formatter extends \yii\i18n\Formatter {
 		], $data);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
-		if (Yii::$app->controller->id !== 'feed')
+		if (Yii::$app->request->isConsoleRequest || Yii::$app->controller->id !== 'feed')
 			$data = $this->addImageResponsiveClass($data);
 		return trim($data);
 	}

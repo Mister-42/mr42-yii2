@@ -14,9 +14,8 @@ class TimePicker extends DatePicker {
 
 	public function init() {
 		parent::init();
-		if (!in_array($this->mode, ['date', 'time', 'datetime'])) :
+		if (!in_array($this->mode, ['date', 'time', 'datetime']))
 			throw new InvalidConfigException('Unknown mode: "'.$this->mode.'". Use time, datetime or date!');
-		endif;
 
 		if ($this->size) :
 			Html::addCssClass($this->options, 'input-'.$this->size);
@@ -27,7 +26,7 @@ class TimePicker extends DatePicker {
 	}
 
 	public function run() {
-		$this->clientOptions['showTime'] = $this->mode === 'date' ? false : true;
+		$this->clientOptions['showTime'] = $this->mode !== 'date';
 
 		if ($this->hasModel()) :
 			$input = Html::activeTextInput($this->model, $this->attribute, $this->options);

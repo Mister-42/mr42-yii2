@@ -1,9 +1,9 @@
 <?php
 namespace app\widgets;
-use yii\bootstrap4\Html;
+use yii\bootstrap4\{Html, Widget};
 use yii\helpers\ArrayHelper;
 
-class Item extends \yii\bootstrap4\Widget {
+class Item extends Widget {
 	public $header;
 	public $body;
 	public $options;

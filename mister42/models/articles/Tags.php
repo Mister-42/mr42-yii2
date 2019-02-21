@@ -15,17 +15,16 @@ class Tags extends Articles {
 		return $list;
 	}
 
-	public static function lastUpdate(string $tag): int {
-		$lastUpdate = parent::find()
-			->select(['updated' => 'max(updated)'])
+	public static function getLastUpdate(string $tag): int {
+		$data = self::find()
 			->where(['like', 'tags', $tag])
-			->one();
-		return $lastUpdate['updated'];
+			->max('updated');
+		return $data;
 	}
 
 	private static function getTags(): array {
 		$list = [];
-		foreach (parent::find()->select('tags')->all() as $tag) :
+		foreach (self::find()->select('tags')->all() as $tag) :
 			foreach (StringHelper::explode($tag->tags) as $item)
 				isset($list[$item]) ? $list[$item]++ : $list[$item] = 1;
 		endforeach;

@@ -4,8 +4,8 @@ use yii\helpers\Url;
 
 $this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name, 'Lyrics']);
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $data[0]->artist->name, 'url' => ['index', 'artist' => $data[0]->artist->url]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
+$this->params['breadcrumbs'][] = ['label' => $data[0]->artist->name, 'url' => ['lyrics', 'artist' => $data[0]->artist->url]];
 $this->params['breadcrumbs'][] = $data[0]->album->name;
 
 if ($data[0]->album->image)
@@ -25,6 +25,9 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 						Html::tag('h4', implode(' · ', [$data[0]->artist->name, $data[0]->album->name]))
 					, ['class' => 'float-left']).
 					Html::tag('div',
+						($data[0]->album->buy
+							? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
+							: '').
 						($data[0]->album->playlist_url
 							? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 							: '').

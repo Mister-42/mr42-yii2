@@ -34,7 +34,7 @@ return [
 	],
 	['label' => Yii::$app->icon->show('music', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Music')), 'url' => null,
 		'items' => [
-			['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/lyrics/index'], 'visible' => true],
+			['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/music/lyrics'], 'visible' => true],
 			['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
 		],
 	],

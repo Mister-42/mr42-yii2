@@ -11,11 +11,11 @@ class ControllerTest extends TestCase {
 	}
 
 	public function testLyricsController() {
-		$this->assertContains('Nórdika', \Yii::$app->runAction('lyrics/index'));
+		$this->assertContains('Nórdika', \Yii::$app->runAction('music/lyrics'));
 		$_GET = ['artist' => 'Nordika'];
-		$this->assertContains('Ecstasy', \Yii::$app->runAction('lyrics/index'));
+		$this->assertContains('Ecstasy', \Yii::$app->runAction('music/lyrics'));
 		$_GET = ['artist' => 'Nordika', 'year' => 2017, 'album' => 'Ecstasy'];
-		$this->assertContains('In oblivion…', \Yii::$app->runAction('lyrics/index'));
+		$this->assertContains('In oblivion…', \Yii::$app->runAction('music/lyrics'));
 	}
 
 	public function testSiteController() {

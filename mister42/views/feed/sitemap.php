@@ -7,8 +7,7 @@ $doc = Sitemap::beginDoc();
 
 Sitemap::lineItem($doc, ['site/index'], ['age' => filemtime(View::findViewFile('@app/views/site/index')), 'locale' => true, 'priority' => 1]);
 
-foreach (Menu::getUrlList() as $page) :
+foreach (Menu::getUrlList() as $page)
 	Sitemap::lineItem($doc, [$page], ['age' => filemtime(View::findViewFile('@app/views'.$page)), 'locale' => true]);
-endforeach;
 
 echo Sitemap::endDoc($doc);

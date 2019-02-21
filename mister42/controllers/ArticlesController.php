@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\articles\{Articles, ArticlesComments};
+use app\models\articles\{Articles, ArticlesComments, Search, Tags};
 use yii\bootstrap4\Html;
 use yii\filters\{AccessControl, AjaxFilter, VerbFilter};
 use yii\helpers\Url;
@@ -138,7 +138,7 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionSearch(string $q): string {
-		$query = Articles::find()
+		$query = Search::find()
 			->orderBy(['updated' => SORT_DESC])
 			->where(['like', 'title', $q])
 			->orWhere(['like', 'content', $q]);
@@ -150,7 +150,7 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionTag(string $tag): string {
-		$query = Articles::find()
+		$query = Tags::find()
 			->orderBy(['updated' => SORT_DESC])
 			->where(['like', 'tags', $tag]);
 

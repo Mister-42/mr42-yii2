@@ -4,7 +4,7 @@ use yii\bootstrap4\Html;
 
 $this->title = implode(' - ', [$data[0]->artist->name, 'Lyrics']);
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
 $this->params['breadcrumbs'][] = $data[0]->artist->name;
 
 echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
@@ -28,10 +28,13 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 				echo Html::beginTag('div', ['class' => 'card']);
 					echo Html::tag('div',
 						Html::tag('h4', "{$album->year} · ".($album->tracks
-							? Html::a($album->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
+							? Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
 							: $album->name
 						), ['class' => 'float-left']).
 						Html::tag('div',
+							($album->buy
+								? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
+								: '').
 							($album->playlist_url
 								? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 								: '').
@@ -50,7 +53,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 
 								echo Html::beginTag('div', ['class' => 'text-truncate']);
 									$track->name = ($track->lyricid || $track->video)
-										? Html::a($track->name, ['index', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
+										? Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]);
 									if ($track->video)

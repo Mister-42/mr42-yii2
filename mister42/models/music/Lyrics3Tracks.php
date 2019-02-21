@@ -1,5 +1,5 @@
 <?php
-namespace app\models\lyrics;
+namespace app\models\music;
 use Yii;
 use app\models\Video;
 use yii\db\ActiveQuery;

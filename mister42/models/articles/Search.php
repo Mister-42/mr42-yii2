@@ -2,7 +2,7 @@
 namespace app\models\articles;
 use Yii;
 
-class Search extends \yii\base\Model {
+class Search extends Articles {
 	public $keyword;
 
 	public function rules(): array {

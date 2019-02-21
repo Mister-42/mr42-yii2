@@ -1,5 +1,5 @@
 <?php
-use app\models\lyrics\Lyrics2Albums;
+use app\models\music\Lyrics2Albums;
 use yii\bootstrap4\Html;
 
 echo '<bookmark content="track list" />';

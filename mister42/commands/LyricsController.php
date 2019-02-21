@@ -2,7 +2,7 @@
 namespace app\commands;
 use Yii;
 use app\models\{Console, Image, Video, Webrequest};
-use app\models\lyrics\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
+use app\models\music\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
 

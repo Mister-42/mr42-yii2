@@ -1,5 +1,5 @@
 <?php
-namespace app\models\lyrics;
+namespace app\models\music;
 use Yii;
 
 class Lyrics4Lyrics extends \yii\db\ActiveRecord {

@@ -13,7 +13,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics']);
 		foreach ($data as $artist) :
 			if ($x++ === 0)
 				echo Html::beginTag('div', ['class' => 'col-md-3 text-center text-nowrap']);
-			echo Html::a($artist->name, ['index', 'artist' => $artist->url]);
+			echo Html::a($artist->name, ['lyrics', 'artist' => $artist->url]);
 			if (!$artist->active)
 				echo Html::tag('sup', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-warning ml-1']);
 
