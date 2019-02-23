@@ -20,7 +20,7 @@ class ControllerTest extends TestCase {
 
 	public function testSiteController() {
 		$this->assertContains('&copy; 2014', \Yii::$app->runAction('site/index'));
-		$this->assertNull(\Yii::$app->runAction('site/faviconico'));
+		$this->assertInstanceOf(\yii\web\Response::class, \Yii::$app->runAction('site/faviconico'));
 		$this->assertContains('maintenance', \Yii::$app->runAction('site/offline'));
 		$this->assertContains('feed/rss', \Yii::$app->runAction('site/browserconfigxml'));
 		$this->assertContains('sitemap.xml', \Yii::$app->runAction('site/robotstxt'));

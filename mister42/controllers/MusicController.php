@@ -3,11 +3,10 @@ namespace app\controllers;
 use Yii;
 use app\models\Image;
 use app\models\music\{Collection, Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
-use yii\helpers\ArrayHelper;
+use yii\helpers\{ArrayHelper, Inflector, StringHelper};
 use yii\web\{NotFoundHttpException, Response};
 
 class MusicController extends \yii\web\Controller {
-	public $view;
 	public $data;
 	public $artist;
 	public $year;
@@ -27,13 +26,13 @@ class MusicController extends \yii\web\Controller {
 		elseif ($this->action->id === 'collection-cover') :
 			$this->lastModified = Collection::getEntryLastModified(Yii::$app->request->get('id'));
 		elseif ($this->artist && $this->year && $this->album) :
-			list($this->view, $this->data) = $this->getAlbum();
+			$this->data = $this->getAlbum();
 			$this->lastModified = Lyrics3Tracks::getLastModified($this->artist, $this->year, $this->album);
 		elseif ($this->artist) :
-			list($this->view, $this->data) = $this->getArtist();
+			$this->data = $this->getArtist();
 			$this->lastModified = Lyrics2Albums::getLastModified($this->artist);
 		else :
-			list($this->view, $this->data) = $this->getArtists();
+			$this->data = Lyrics1Artists::artistsList();
 			$this->lastModified = Lyrics1Artists::getLastModified();
 		endif;
 
@@ -66,13 +65,13 @@ class MusicController extends \yii\web\Controller {
 
 	public function actionLyrics(): string {
 		Yii::$app->view->registerMetaTag(['name' => 'google', 'content' => 'notranslate']);
-		return $this->render($this->view, [
+		return $this->render($this->getViewFile(), [
 			'data' => $this->data,
 		]);
 	}
 
 	public function actionAlbumpdf(): Response {
-		$pdf = Lyrics2Albums::buildPdf($this->data[0]->album, $this->renderPartial('albumPdf', ['tracks' => $this->data]));
+		$pdf = Lyrics2Albums::buildPdf($this->data[0]->album);
 		return Yii::$app->response->sendFile($pdf, implode(' - ', [$this->data[0]->artist->url, $this->data[0]->album->year, $this->data[0]->album->url]).'.pdf');
 	}
 
@@ -84,10 +83,6 @@ class MusicController extends \yii\web\Controller {
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
 	}
 
-	private function getArtists(): array {
-		return ['1_index', Lyrics1Artists::artistsList()];
-	}
-
 	private function getArtist(): array {
 		$albums = Lyrics2Albums::albumsList($this->artist);
 
@@ -97,7 +92,7 @@ class MusicController extends \yii\web\Controller {
 		if ($albums[0]->artist->url !== $this->artist)
 			$this->redirect(["/{$this->module->requestedRoute}", 'artist' => $albums[0]->artist->url], 301)->send();
 
-		return ['2_artist', $albums];
+		return $albums;
 	}
 
 	private function getAlbum(): array {
@@ -109,6 +104,12 @@ class MusicController extends \yii\web\Controller {
 		if ($tracks[0]->artist->url !== $this->artist || $tracks[0]->album->url !== $this->album)
 			$this->redirect(["/{$this->module->requestedRoute}", 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => $this->size], 301)->send();
 
-		return ['3_album', $tracks];
+		return $tracks;
+	}
+
+	private function getViewFile(): string {
+		$class = get_class($this->data[0]);
+		$class = StringHelper::basename($class);
+		return Inflector::slug($class);
 	}
 }

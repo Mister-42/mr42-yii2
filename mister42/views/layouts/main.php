@@ -48,7 +48,7 @@ NavBar::begin([
 		echo Nav::widget([
 			'activateParents' => true,
 			'encodeLabels' => false,
-			'items' => Menu::getItemList(),
+			'items' => (new Menu())->getItemList(),
 			'options' => ['class' => 'navbar-nav ml-auto'],
 		]);
 NavBar::end();

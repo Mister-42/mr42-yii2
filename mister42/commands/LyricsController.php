@@ -32,7 +32,8 @@ class LyricsController extends Controller {
 		foreach ($artists as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				list($width, $height, $type) = getimagesizefromstring($album->image);
+				if ($album->image)
+					list($width, $height, $type) = getimagesizefromstring($album->image);
 				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && $type === IMAGETYPE_JPEG && !is_null($album->image_color))
 					continue;
 
@@ -84,7 +85,7 @@ class LyricsController extends Controller {
 		foreach ($artists as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				if (!$album->active || $fileName = Lyrics2Albums::buildPdf($album, $this->renderPartial('@app/views/music/albumPdf', ['tracks' => $album->tracks])))
+				if (!$album->active || $fileName = Lyrics2Albums::buildPdf($album))
 					continue;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
@@ -102,7 +103,7 @@ class LyricsController extends Controller {
 		endforeach;
 
 		Console::endProgress();
-		Console::write('Completed processing PDFs', [Console::BOLD, Console::FG_RED]);
+		Console::write('Completed processing PDFs', [Console::BOLD, Console::FG_GREEN]);
 		Console::newLine();
 		return self::EXIT_CODE_NORMAL;
 	}

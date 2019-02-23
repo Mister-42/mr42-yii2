@@ -73,7 +73,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 		if ($track->lyricid || $track->wip || $track->video) :
 			echo Html::tag('div',
 				Html::tag('div',
-					Html::a(null, null, ['class' => 'anchor', 'id' => $track->track]).
+					Html::tag('span', null, ['class' => 'anchor', 'id' => $track->track]).
 					Html::tag('h4', implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat])).
 					Html::tag('div', $track->wip ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : ''), ['class' => 'lyrics'])
 				, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']).

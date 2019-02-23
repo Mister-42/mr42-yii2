@@ -55,11 +55,11 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			->all();
 	}
 
-	public static function buildPdf(self $album, string $html): string {
+	public static function buildPdf(self $album): string {
 		$pdf = new Pdf();
 		return $pdf->create(
 			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
-			$html,
+			Yii::$app->controller->renderPartial('@app/views/music/lyrics-album-pdf', ['tracks' => $album->tracks]),
 			Lyrics3Tracks::getLastModified($album->artist->url, $album->year, $album->url),
 			[
 				'author' => $album->artist->name,
