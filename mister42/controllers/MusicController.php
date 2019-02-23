@@ -15,22 +15,25 @@ class MusicController extends \yii\web\Controller {
 	public $size;
 	public $lastModified;
 
-	public function behaviors(): array {
-		if (ArrayHelper::isIn($this->action->id, ['collection', 'collection-cover']))
-			return [];
-
+	public function init(): void {
+		parent::init();
 		foreach (['artist', 'year', 'album', 'size'] as $val)
 			$this->$val = Yii::$app->request->get($val);
+	}
 
-		if ($this->artist && $this->year && $this->album) :
+	public function behaviors(): array {
+		if ($this->action->id === 'collection') :
+			$this->lastModified = Collection::getLastModified();
+		elseif ($this->action->id === 'collection-cover') :
+			$this->lastModified = Collection::getEntryLastModified(Yii::$app->request->get('id'));
+		elseif ($this->artist && $this->year && $this->album) :
 			list($this->view, $this->data) = $this->getAlbum();
 			$this->lastModified = Lyrics3Tracks::getLastModified($this->artist, $this->year, $this->album);
 		elseif ($this->artist) :
 			list($this->view, $this->data) = $this->getArtist();
 			$this->lastModified = Lyrics2Albums::getLastModified($this->artist);
 		else :
-			$this->view = '1_index';
-			$this->data = Lyrics1Artists::artistsList();
+			list($this->view, $this->data) = $this->getArtists();
 			$this->lastModified = Lyrics1Artists::getLastModified();
 		endif;
 
@@ -40,7 +43,7 @@ class MusicController extends \yii\web\Controller {
 				'enabled' => !YII_DEBUG,
 				'etagSeed' => function() { return serialize([phpversion(), Yii::$app->user->id, $this->lastModified]); },
 				'lastModified' => function() { return $this->lastModified; },
-				'only' => ['index', 'albumpdf', 'albumcover'],
+				'only' => ['index', 'albumpdf', 'albumcover', 'collection', 'collection-cover'],
 			],
 		];
 	}
@@ -79,6 +82,10 @@ class MusicController extends \yii\web\Controller {
 
 		list($fileName, $image) = Lyrics2Albums::getCover($this->size, $this->data);
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
+	}
+
+	private function getArtists(): array {
+		return ['1_index', Lyrics1Artists::artistsList()];
 	}
 
 	private function getArtist(): array {

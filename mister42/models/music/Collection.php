@@ -32,4 +32,15 @@ class Collection extends \yii\db\ActiveRecord {
 
 		return $id ?? [];
 	}
+
+	public static function getLastModified(): int {
+		$data = self::find()
+			->max('updated');
+		return strtotime($data);
+	}
+
+	public static function getEntryLastModified(int $id): int {
+		$data = self::findOne(['id' => $id]);
+		return strtotime($data->updated);
+	}
 }
