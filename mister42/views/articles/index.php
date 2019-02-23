@@ -4,7 +4,7 @@ use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 
 $dataProvider = new ActiveDataProvider([
-	'query' => $query ?? $model->find()->orderBy(['updated' => SORT_DESC]),
+	'query' => $query ?? $model->find()->joinWith('comments')->orderBy(['updated' => SORT_DESC]),
 	'pagination' => [
 		'defaultPageSize' => 2,
 	],

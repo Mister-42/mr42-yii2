@@ -2,16 +2,14 @@
 use app\models\articles\{Articles, ArticlesComments, Search};
 use app\widgets\{Feed, Item, RecentArticles, RecentChangelog, RecentComments, TagCloud};
 use yii\bootstrap4\{ActiveForm, Html};
-use yii\caching\DbDependency;
+use yii\caching\ExpressionDependency;
+use yii\helpers\Inflector;
 
 $isHome = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
 $dependency = [
-	'class' => DbDependency::class,
+	'class' => ExpressionDependency::class,
+	'expression' => Articles::find()->max('updated'),
 	'reusable' => true,
-	'sql' => 'SELECT GREATEST(
-		IFNULL((SELECT MAX(updated) FROM '.Articles::tableName().' WHERE `active` = TRUE), 1),
-		IFNULL((SELECT MAX(created) FROM '.ArticlesComments::tableName().' WHERE `active` = TRUE), 1)
-	)',
 ];
 
 $this->beginContent('@app/views/layouts/main.php');
@@ -40,24 +38,19 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->label(false);
 		ActiveForm::end();
 
-		if ($this->beginCache('articlewidgets-'.Yii::$app->language, ['dependency' => $dependency, 'duration' => 0])) :
-			echo Item::widget([
-				'body' => RecentArticles::widget(),
-				'header' => Yii::$app->icon->show('newspaper', ['class' => 'mr-1']).Yii::t('mr42', 'Latest Updates'),
-				'options' => ['id' => 'latestArticles'],
-			]);
+		if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0, 'enabled' => !YII_DEBUG, 'variations' => Yii::$app->language])) :
+			$widgets = [
+				Yii::t('mr42', 'Recent Articles') => ['class' => RecentArticles::widget(), 'icon' => 'newspaper'],
+				Yii::t('mr42', 'Recent Comments') => ['class' => RecentComments::widget(), 'icon' => 'comments'],
+				Yii::t('mr42', 'Tag Cloud') => ['class' => TagCloud::widget(), 'icon' => 'tags'],
+			];
 
-			echo Item::widget([
-				'body' => RecentComments::widget(),
-				'header' => Yii::$app->icon->show('comments', ['class' => 'mr-1']).Yii::t('mr42', 'Latest Comments'),
-				'options' => ['id' => 'latestComments'],
-			]);
-
-			echo Item::widget([
-				'body' => TagCloud::widget(),
-				'header' => Yii::$app->icon->show('tags', ['class' => 'mr-1']).Yii::t('mr42', 'Tag Cloud'),
-				'options' => ['id' => 'tags'],
-			]);
+			foreach ($widgets as $title => $val)
+				echo Item::widget([
+					'body' => $val['class'],
+					'header' => Yii::$app->icon->show($val['icon'], ['class' => 'mr-1']).$title,
+					'options' => ['id' => Inflector::slug($title)],
+				]);
 
 			$this->endCache();
 		endif;

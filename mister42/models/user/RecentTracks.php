@@ -24,14 +24,13 @@ class RecentTracks extends \yii\db\ActiveRecord {
 
 	public function lastSeen(int $userid, bool $update = false): int {
 		$lastSeen = self::find()
-			->select(['seen' => 'max(seen)'])
 			->where(['userid' => $userid])
-			->one();
+			->max('seen');
 
 		if ($update)
-			self::updateAll(['seen' => time()], 'userid = '.$userid);
+			self::updateAll(['seen' => time()], ['userid' => $userid]);
 
-		return $lastSeen->seen ?? 0;
+		return $lastSeen ?? 0;
 	}
 
 	public function updateUser(Profile $profile, int $lastSeen) {
@@ -61,8 +60,8 @@ class RecentTracks extends \yii\db\ActiveRecord {
 		endif;
 	}
 
-	private function cleanDb(int $userid) {
-		$items = self::find()->where(['userid' => $userid])->orderBy('count DESC')->limit(999)->offset($this->limit)->all();
+	private function cleanDb(int $userid): void {
+		$items = self::find()->where(['userid' => $userid])->orderBy(['count' => SORT_DESC])->limit(999)->offset($this->limit)->all();
 		foreach ($items as $item)
 			$item->delete();
 	}

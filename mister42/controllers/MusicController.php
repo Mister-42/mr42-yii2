@@ -19,10 +19,8 @@ class MusicController extends \yii\web\Controller {
 		if (ArrayHelper::isIn($this->action->id, ['collection', 'collection-cover']))
 			return [];
 
-		$this->artist = Yii::$app->request->get('artist');
-		$this->year = Yii::$app->request->get('year');
-		$this->album = Yii::$app->request->get('album');
-		$this->size = Yii::$app->request->get('size');
+		foreach (['artist', 'year', 'album', 'size'] as $val)
+			$this->$val = Yii::$app->request->get($val);
 
 		if ($this->artist && $this->year && $this->album) :
 			list($this->view, $this->data) = $this->getAlbum();

@@ -8,7 +8,7 @@ class TagCloud extends Widget {
 	public function run(): string {
 		foreach (Tags::findTagWeights() as $tag => $data) :
 			$title = Yii::t('mr42', '{results, plural, =0{No articles} =1{1 article} other{# articles}} with tag "{tag}"', ['results' => $data['count'], 'tag' => $tag]);
-			$items[] = Html::a($tag, ['articles/tag', 'tag' => $tag], ['class' => 'card-link', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'style' => 'font-size:'.($data['weight'] / 10).'rem', 'title' => $title]);
+			$items[] = Html::a($tag, ['articles/tag', 'tag' => $tag], ['class' => 'mx-2', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'style' => 'font-size:'.($data['weight'] / 10).'rem', 'title' => $title]);
 		endforeach;
 
 		return (!isset($items))

@@ -8,5 +8,5 @@ return [
 	],
 	'secrets' => $secrets,
 	'shortDomain' => 'https://www.mr42.me/',
-	'themeColor' => '#003E67',
+	'themeColor' => '#003865',
 ];

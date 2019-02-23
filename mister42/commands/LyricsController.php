@@ -84,7 +84,7 @@ class LyricsController extends Controller {
 		foreach ($artists as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				if (!$album->active || $fileName = Lyrics2Albums::buildPdf($album, $this->renderPartial('@app/views/lyrics/albumPdf', ['tracks' => $album->tracks])))
+				if (!$album->active || $fileName = Lyrics2Albums::buildPdf($album, $this->renderPartial('@app/views/music/albumPdf', ['tracks' => $album->tracks])))
 					continue;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);

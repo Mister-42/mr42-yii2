@@ -11,18 +11,9 @@ class Collection extends \yii\db\ActiveRecord {
 	public function saveCollection(int $user, array $data): array {
 		foreach ($data as $item) :
 			$id[] = (int) ArrayHelper::getValue($item, 'basic_information.id');
-			$insert = false;
-			if (!$collectionItem = Collection::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user])) :
-				$insert = true;
-				$collectionItem = new Collection();
-			endif;
 
-			$collectionItem->id = (int) ArrayHelper::getValue($item, 'basic_information.id');
-			$collectionItem->user_id = $user;
-			$collectionItem->artist = trim(preg_replace('/\([0-9]+\)/', '', ArrayHelper::getValue($item, 'basic_information.artists.0.name')));
-			$collectionItem->year = (int) ArrayHelper::getValue($item, 'basic_information.year');
-			$collectionItem->title = ArrayHelper::getValue($item, 'basic_information.title');
-			if ($insert) :
+			if (!$collectionItem = Collection::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user])) :
+				$collectionItem = new Collection();
 				$collectionItem->image = null;
 				if ($image = ArrayHelper::getValue($item, 'basic_information.cover_image')) :
 					$img = Webrequest::getUrl($image, '');
@@ -30,6 +21,12 @@ class Collection extends \yii\db\ActiveRecord {
 						$collectionItem->image = $img;
 				endif;
 			endif;
+
+			$collectionItem->id = (int) ArrayHelper::getValue($item, 'basic_information.id');
+			$collectionItem->user_id = $user;
+			$collectionItem->artist = trim(preg_replace('/\([0-9]+\)/', '', ArrayHelper::getValue($item, 'basic_information.artists.0.name')));
+			$collectionItem->year = (int) ArrayHelper::getValue($item, 'basic_information.year');
+			$collectionItem->title = ArrayHelper::getValue($item, 'basic_information.title');
 			$collectionItem->save();
 		endforeach;
 

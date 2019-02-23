@@ -92,7 +92,7 @@ return [
 			'ignoreLanguageUrlPatterns' => [
 				'#^feed/(rss|sitemap)#' => '#feed/(rss|sitemap)#',
 				'#^site/(browserconfigxml|faviconico|robotstxt|webmanifest)#' => '#site/(browserconfigxml|faviconico|robotstxt|webmanifest)#',
-				'#^lyrics/(albumpdf|albumcover)#' => '#lyrics/(albumpdf|albumcover)#',
+				'#^music/(albumpdf|albumcover)#' => '#music/(albumpdf|albumcover)#',
 				'#^articles/pdf#' => '#articles/pdf#',
 			],
 			'languages' => array_keys($params['languages']),

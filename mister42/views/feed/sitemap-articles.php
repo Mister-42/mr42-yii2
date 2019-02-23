@@ -11,11 +11,11 @@ Sitemap::lineItem($doc, ['articles/index'], ['age' => end($articles)->updated, '
 foreach ($articles as $article) :
 	$lastModified = $article['updated'];
 	foreach ($article['comments'] as $comment)
-			$lastModified = max($lastModified, $comment['created']);
+		$lastModified = max($lastModified, $comment['created']);
 
 	Sitemap::lineItem($doc, ['articles/article', 'id' => $article->id, 'title' => $article->url], ['age' => $lastModified, 'locale' => true]);
 	if ($article['pdf'])
-			Sitemap::lineItem($doc, ['articles/pdf', 'id' => $article->id, 'title' => $article->url], ['age' => $lastModified]);
+		Sitemap::lineItem($doc, ['articles/pdf', 'id' => $article->id, 'title' => $article->url], ['age' => $lastModified]);
 endforeach;
 unset($articles);
 

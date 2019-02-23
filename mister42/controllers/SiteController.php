@@ -7,7 +7,7 @@ use yii\filters\{AccessControl, HttpCache};
 use yii\web\{ErrorAction, NotFoundHttpException, Response, UploadedFile};
 
 class SiteController extends \yii\web\Controller {
-	public function actions() {
+	public function actions(): array {
 		return [
 			'error' => [
 				'class' => ErrorAction::class,
@@ -15,7 +15,7 @@ class SiteController extends \yii\web\Controller {
 		];
 	}
 
-	public function behaviors() {
+	public function behaviors(): array {
 		return [
 			'access' => [
 				'class' => AccessControl::class,
@@ -32,33 +32,23 @@ class SiteController extends \yii\web\Controller {
 			], [
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function() {
-					return serialize(file(Yii::getAlias('@assetsroot/images/favicon.ico')));
-				},
-				'lastModified' => function() {
-					return filemtime(Yii::getAlias('@assetsroot/images/favicon.ico'));
-				},
-				'only' => ['faviconico'],
-			], [
-				'class' => HttpCache::class,
-				'enabled' => !YII_DEBUG,
 				'etagSeed' => function(BaseObject $action) {
-					return serialize([phpversion(), file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
+					return serialize([phpversion(), file(Yii::getAlias(($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php"), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
 				},
 				'lastModified' => function(BaseObject $action) {
-					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
+					return filemtime(Yii::getAlias(($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php"));
 				},
-				'only' => ['browserconfigxml', 'robotstxt'],
+				'only' => ['browserconfigxml', 'faviconico', 'robotstxt'],
 			],
 		];
 	}
 
-	public function actionIndex() {
+	public function actionIndex(): string {
 		$this->layout = 'columns';
 		return $this->render('index');
 	}
 
-	public function actionContact() {
+	public function actionContact(): string {
 		$model = new Contact();
 		if ($model->load(Yii::$app->request->post())) :
 			$model->attachment = UploadedFile::getInstance($model, 'attachment');
@@ -71,41 +61,41 @@ class SiteController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionFaviconico() {
-		Yii::$app->response->sendFile(Yii::getAlias('@assetsroot/images/favicon.ico'), 'favicon.ico', ['inline' => true]);
+	public function actionFaviconico(): Response {
+		return Yii::$app->response->sendFile(Yii::getAlias('@assetsroot/images/favicon.ico'), 'favicon.ico', ['inline' => true]);
 	}
 
-	public function actionOffline() {
+	public function actionOffline(): string {
 		Yii::$app->response->statusCode = 503;
 		Yii::$app->response->headers->add('Retry-After', 900);
 		return $this->render('offline');
 	}
 
-	public function actionPhp() {
+	public function actionPhp(): string {
 		return $this->render('php');
 	}
 
-	public function actionBrowserconfigxml() {
+	public function actionBrowserconfigxml(): string {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/xml');
 		return $this->renderPartial('browserconfigxml');
 	}
 
-	public function actionPi() {
+	public function actionPi(): string {
 		return $this->render('pi');
 	}
 
-	public function actionPrivacy() {
+	public function actionPrivacy(): string {
 		return $this->render('privacy');
 	}
 
-	public function actionRobotstxt() {
+	public function actionRobotstxt(): string {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'text/plain');
 		return $this->renderPartial('robotstxt');
 	}
 
-	public function actionWebmanifest() {
+	public function actionWebmanifest(): Response {
 		return $this->asJson(Webmanifest::getData());
 	}
 }

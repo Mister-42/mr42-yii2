@@ -26,9 +26,8 @@ class FeedController extends \yii\web\Controller {
 	}
 
 	public function actionRss() {
-		if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs'])) :
+		if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs']))
 			$this->redirect('http://f.mr42.me/Mr42')->send();
-		endif;
 
 		$articles = Articles::find()
 			->orderBy(['updated' => SORT_DESC])
