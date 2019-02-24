@@ -5,7 +5,7 @@ use yii\helpers\Url;
 $this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name, 'Lyrics']);
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
-$this->params['breadcrumbs'][] = ['label' => $data[0]->artist->name, 'url' => ['lyrics', 'artist' => $data[0]->artist->url]];
+$this->params['breadcrumbs'][] = ['label' => Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']), 'url' => ['lyrics', 'artist' => $data[0]->artist->url]];
 $this->params['breadcrumbs'][] = $data[0]->album->name;
 
 if ($data[0]->album->image)
@@ -22,7 +22,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 			echo Html::beginTag('div', ['class' => 'card']);
 				echo Html::tag('div',
 					Html::tag('div',
-						Html::tag('h4', implode(' · ', [$data[0]->artist->name, $data[0]->album->name]))
+						Html::tag('h4', implode(' · ', [$data[0]->artist->name, $data[0]->album->name]), ['class' => 'notranslate'])
 					, ['class' => 'float-left']).
 					Html::tag('div',
 						($data[0]->album->buy
@@ -44,7 +44,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 								if ($x++ === 0)
 									echo Html::beginTag('div', ['class' => 'col-md-4']);
 
-								echo Html::beginTag('div', ['class' => 'text-truncate']);
+								echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
 									echo $track->track.' · ';
 									echo $track->lyricid || $track->video
 										? Html::a($track->name, '#'.$track->track)
@@ -74,8 +74,8 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 			echo Html::tag('div',
 				Html::tag('div',
 					Html::tag('span', null, ['class' => 'anchor', 'id' => $track->track]).
-					Html::tag('h4', implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat])).
-					Html::tag('div', $track->wip ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : ''), ['class' => 'lyrics'])
+					Html::tag('h4', implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]), ['class' => 'notranslate']).
+					Html::tag('div', $track->wip ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : ''), ['class' => 'lyrics notranslate'])
 				, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']).
 				Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4' : 'col-12'])
 			, ['class' => 'row']);

@@ -8,7 +8,7 @@ class Collection extends \yii\db\ActiveRecord {
 		return '{{%discogs_collection}}';
 	}
 
-	public function saveCollection(int $user, array $data): array {
+	public function saveCollection(int $user, array $data, string $status): array {
 		foreach ($data as $item) :
 			$id[] = (int) ArrayHelper::getValue($item, 'basic_information.id');
 
@@ -27,6 +27,7 @@ class Collection extends \yii\db\ActiveRecord {
 			$collectionItem->artist = trim(preg_replace('/\([0-9]+\)/', '', ArrayHelper::getValue($item, 'basic_information.artists.0.name')));
 			$collectionItem->year = (int) ArrayHelper::getValue($item, 'basic_information.year');
 			$collectionItem->title = ArrayHelper::getValue($item, 'basic_information.title');
+			$collectionItem->status = $status;
 			$collectionItem->save();
 		endforeach;
 

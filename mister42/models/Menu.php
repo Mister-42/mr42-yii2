@@ -18,7 +18,7 @@ class Menu extends \yii\base\Model {
 
 	public function getItemList(): array {
 		foreach ($this->menuItems as $menuItem) :
-			if ($menuItem === end($this->menuItems) || !ArrayHelper::keyExists('items', $menuItem)) :
+			if (!ArrayHelper::keyExists('items', $menuItem)) :
 				$menuItems[] = $menuItem;
 				continue;
 			endif;
@@ -26,7 +26,7 @@ class Menu extends \yii\base\Model {
 			$menuItems[] = $menuItem;
 		endforeach;
 
-		return $menuItems;
+		return ArrayHelper::merge($menuItems, $this->getUserMenu());
 	}
 
 	public function getUrlList($items = null): array {
@@ -72,8 +72,9 @@ class Menu extends \yii\base\Model {
 			],
 			['label' => Yii::$app->icon->show('music', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Music')), 'url' => null,
 				'items' => [
+					['label' => Yii::t('mr42', 'CD Collection'), 'url' => ['/music/collection']],
+					['label' => Yii::t('mr42', 'CD Wishlist'), 'url' => ['/music/wishlist']],
 					['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/music/lyrics'], 'visible' => true],
-					['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
 				],
 			],
 			['label' => Yii::$app->icon->show('share-alt', ['class' => 'mr-1']).Html::tag('span', Yii::$app->name), 'url' => null,
@@ -82,13 +83,12 @@ class Menu extends \yii\base\Model {
 					['label' => Yii::t('mr42', 'My Pi'), 'url' => ['/site/pi']],
 				],
 			],
-			$this->getUserMenu(),
 		];
 	}
 
 	private function getUserMenu(): array {
 		if ($this->isGuest())
-			return ['label' => Yii::$app->icon->show('sign-in-alt', ['class' => 'mr-1']).Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true];
+			return [['label' => Yii::$app->icon->show('sign-in-alt', ['class' => 'mr-1']).Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]];
 
 		if ($this->isAdmin()) :
 			$subMenu[] = ['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create']];
@@ -106,7 +106,7 @@ class Menu extends \yii\base\Model {
 
 		$unread = $this->isAdmin() ? ArticlesComments::find()->where(['not', ['active' => true]])->count() : 0;
 		$unreadBadge = $unread > 0 ? Html::tag('sup', $unread, ['class' => 'badge badge-info ml-1']) : '';
-		return ['label' => Yii::$app->icon->show('user-circle', ['class' => 'mr-1']).Html::tag('span', Yii::$app->user->identity->username.$unreadBadge), 'url' => null, 'items' => $subMenu];
+		return [['label' => Yii::$app->icon->show('user-circle', ['class' => 'mr-1']).Html::tag('span', Yii::$app->user->identity->username.$unreadBadge), 'url' => null, 'items' => $subMenu]];
 	}
 
 	private function isAdmin(): bool {

@@ -6,10 +6,7 @@ use yii\httpclient\{Client, Response};
 
 class Webrequest {
 	public static function getDiscogsApi(string $content): Response {
-		return self::getUrl('https://api.discogs.com/', $content, [
-			'key' => Yii::$app->params['secrets']['discogs']['Key'],
-			'secret' => Yii::$app->params['secrets']['discogs']['Secret'],
-		]);
+		return self::getUrl('https://api.discogs.com/', $content);
 	}
 
 	public static function getLastfmApi(string $method, string $user, int $limit): Response {

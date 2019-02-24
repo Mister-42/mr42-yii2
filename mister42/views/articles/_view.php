@@ -6,9 +6,6 @@ use yii\helpers\StringHelper;
 
 HighlightAsset::register($this);
 
-$profile = Profile::findOne(['user_id' => $model->authorId]);
-$authorPage = Html::a($profile->name ?? $model->author->username, ['/user/profile/show', 'username' => $model->author->username]);
-
 echo Html::beginTag('article', ['class' => 'card mb-3']);
 	echo Html::beginTag('div', ['class' => 'card-header']);
 		echo Html::tag('h4', (Yii::$app->controller->action->id === 'article')
@@ -33,13 +30,15 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 	echo Html::endTag('div');
 
 	echo Html::beginTag('div', ['class' => 'card-body']);
-		echo Html::beginTag('div', ['class' => 'card-subtitle']);
-			echo Html::tag('p', Yii::t('mr42', '{date} by {author}', ['date' => Yii::$app->formatter->asDate($model->created), 'author' => $authorPage]), ['class' => 'text-secondary text-right']);
+		echo Html::beginTag('div', ['class' => 'card-subtitle text-secondary text-right']);
+			echo Yii::t('mr42', 'Posted {date}', ['date' => Yii::$app->formatter->asDate($model->created)]);
+			if ($model->updated - $model->created > 3600)
+				echo ' · '.Yii::t('mr42', 'Updated {date}', ['date' => Yii::$app->formatter->asDate($model->updated)]);
 		echo Html::endTag('div');
 		echo Html::beginTag('div', ['class' => 'card-text']);
 			echo (Yii::$app->controller->action->id === 'article')
 				? str_replace('[readmore]', null, $model->contentParsed)
-				: StringHelper::byteSubstr($model->contentParsed, 0, mb_strpos($model->contentParsed, '[readmore]') ?: StringHelper::byteLength($model->contentParsed), '[readmore]');
+				: StringHelper::byteSubstr($model->contentParsed, 0, mb_strpos($moel->contentParsed, '[readmore]') ?: StringHelper::byteLength($model->contentParsed), '[readmore]');
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 
@@ -52,6 +51,7 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 		echo Html::endTag('div');
 	endif;
 
+	$profile = Profile::findOne(['user_id' => $model->authorId]);
 	if (Yii::$app->controller->action->id === 'article' && !empty($profile->bio) && $author = Profile::show($profile))
 		echo Html::tag('div', $author, ['class' => 'card-footer']);
 
@@ -73,6 +73,7 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 		if ($model->updated - $model->created > 3600)
 			$bar[] = Yii::$app->icon->show('sync', ['class' => 'mr-1 text-muted']).Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
 
+		$bar[] = Yii::$app->icon->show('user', ['class' => 'mr-1 text-muted']).Html::a($profile->name ?? $model->author->username, ['/user/profile/show', 'username' => $model->author->username]);
 		echo Html::tag('div', implode(' · ', $bar));
 	echo Html::endTag('div');
 echo Html::endTag('article');

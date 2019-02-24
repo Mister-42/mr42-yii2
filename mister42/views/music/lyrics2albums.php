@@ -5,7 +5,7 @@ use yii\bootstrap4\Html;
 $this->title = implode(' - ', [$data[0]->artist->name, 'Lyrics']);
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
-$this->params['breadcrumbs'][] = $data[0]->artist->name;
+$this->params['breadcrumbs'][] = Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']);
 
 echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 	echo Html::tag('div',
@@ -28,7 +28,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 				echo Html::beginTag('div', ['class' => 'card']);
 					echo Html::tag('div',
 						Html::tag('h4', "{$album->year} · ".($album->tracks
-							? Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url])
+							? Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'notranslate'])
 							: $album->name
 						), ['class' => 'float-left']).
 						Html::tag('div',
@@ -51,7 +51,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 								if ($x++ === 0)
 									echo Html::beginTag('div', ['class' => 'col-md-4']);
 
-								echo Html::beginTag('div', ['class' => 'text-truncate']);
+								echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
 									$track->name = ($track->lyricid || $track->video)
 										? Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
 										: $track->name;
@@ -74,7 +74,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 									[
 										'thumb'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
 										'image'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800'],
-										'title'	=> implode(' - ', [$album->artist->name, $album->name]),
+										'title'	=> Html::tag('span', implode(' - ', [$album->artist->name, $album->name]), ['class' => 'notranslate']),
 										'group'	=> $album->artist->url,
 									],
 								],

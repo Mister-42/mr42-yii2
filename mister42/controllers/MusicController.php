@@ -53,6 +53,10 @@ class MusicController extends \yii\web\Controller {
 		]);
 	}
 
+	public function actionWishlist(): string {
+		return $this->actionCollection();
+	}
+
 	public function actionCollectionCover(int $id): Response {
 		$album = Collection::find()->where(['id' => $id])->one();
 		if (!$album || !$album->image) :
@@ -64,7 +68,6 @@ class MusicController extends \yii\web\Controller {
 	}
 
 	public function actionLyrics(): string {
-		Yii::$app->view->registerMetaTag(['name' => 'google', 'content' => 'notranslate']);
 		return $this->render($this->getViewFile(), [
 			'data' => $this->data,
 		]);
