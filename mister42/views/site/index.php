@@ -8,8 +8,7 @@ $this->title = Yii::$app->name;
 echo Html::tag('div', Yii::t('mr42', 'This website is merely a hobby project. Some parts are created to make work or life a little bit easier, other parts are created for entertainment purposes only.'), ['class' => 'alert alert-info']);
 
 echo Html::beginTag('ul', ['class' => 'list-unstyled']);
-$menuList = new Menu();
-foreach ($menuList->getItemList() as $menu) :
+foreach ((new Menu())->getItemList() as $menu) :
 	if (isset($menu['items'])) :
 		foreach ($menu['items'] as $submenu) :
 			if (isset($submenu['url']) && (!isset($submenu['visible']) || $submenu['visible']))

@@ -45,11 +45,6 @@ class Menu extends \yii\base\Model {
 	}
 
 	private function getData(): array {
-		$isGuest = php_sapi_name() === 'cli' || Yii::$app->controller->action->id === 'sitemap' ? true : Yii::$app->user->isGuest;
-		$isAdmin = !$isGuest && Yii::$app->user->identity->isAdmin;
-		$unread = $isAdmin ? ArticlesComments::find()->where(['not', ['active' => true]])->count() : 0;
-		$unreadBadge = $unread > 0 ? Html::tag('sup', $unread, ['class' => 'badge badge-info ml-1']) : '';
-
 		return [
 			['label' => Yii::$app->icon->show('newspaper', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true],
 			['label' => Yii::$app->icon->show('calculator', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Calculator')), 'url' => null,
@@ -87,23 +82,38 @@ class Menu extends \yii\base\Model {
 					['label' => Yii::t('mr42', 'My Pi'), 'url' => ['/site/pi']],
 				],
 			],
-			$isGuest
-				? ['label' => Yii::$app->icon->show('sign-in-alt', ['class' => 'mr-1']).Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]
-				:	['label' => Yii::$app->icon->show('user-circle', ['class' => 'mr-1']).Html::tag('span', Yii::$app->user->identity->username.$unreadBadge), 'url' => null,
-						'items' => [
-							['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create'], 'visible' => $isAdmin],
-							['label' => Yii::t('usuario', 'Manage users'), 'url' => ['/user/admin/index'], 'visible' => $isAdmin],
-							['label' => Yii::t('mr42', 'PHP {version}', ['version' => PHP_VERSION]), 'url' => ['/site/php'], 'visible' => $isAdmin],
-							$isAdmin ? Html::tag('div', null, ['class' => 'dropdown-divider']) : '',
-							['label' => Yii::t('mr42', 'View Profile'), 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]],
-							Html::tag('div', null, ['class' => 'dropdown-divider']),
-							['label' => Yii::t('usuario', 'Profile settings'), 'url' => ['/user/settings/profile']],
-							['label' => Yii::t('usuario', 'Account settings'), 'url' => ['/user/settings/account']],
-							['label' => Yii::t('usuario', 'Networks'), 'url' => ['/user/settings/networks']],
-							Html::tag('div', null, ['class' => 'dropdown-divider']),
-							['label' => Yii::t('usuario', 'Logout'), 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']],
-						],
-					],
+			$this->getUserMenu(),
 		];
+	}
+
+	private function getUserMenu(): array {
+		if ($this->isGuest())
+			return ['label' => Yii::$app->icon->show('sign-in-alt', ['class' => 'mr-1']).Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true];
+
+		if ($this->isAdmin()) :
+			$subMenu[] = ['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create']];
+			$subMenu[] = ['label' => Yii::t('usuario', 'Manage users'), 'url' => ['/user/admin/index']];
+			$subMenu[] = ['label' => Yii::t('mr42', 'PHP {version}', ['version' => PHP_VERSION]), 'url' => ['/site/php']];
+			$subMenu[] = Html::tag('div', null, ['class' => 'dropdown-divider']);
+		endif;
+		$subMenu[] = ['label' => Yii::t('mr42', 'View Profile'), 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]];
+		$subMenu[] = Html::tag('div', null, ['class' => 'dropdown-divider']);
+		$subMenu[] = ['label' => Yii::t('usuario', 'Profile settings'), 'url' => ['/user/settings/profile']];
+		$subMenu[] = ['label' => Yii::t('usuario', 'Account settings'), 'url' => ['/user/settings/account']];
+		$subMenu[] = ['label' => Yii::t('usuario', 'Networks'), 'url' => ['/user/settings/networks']];
+		$subMenu[] = Html::tag('div', null, ['class' => 'dropdown-divider']);
+		$subMenu[] = ['label' => Yii::t('usuario', 'Logout'), 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']];
+
+		$unread = $this->isAdmin() ? ArticlesComments::find()->where(['not', ['active' => true]])->count() : 0;
+		$unreadBadge = $unread > 0 ? Html::tag('sup', $unread, ['class' => 'badge badge-info ml-1']) : '';
+		return ['label' => Yii::$app->icon->show('user-circle', ['class' => 'mr-1']).Html::tag('span', Yii::$app->user->identity->username.$unreadBadge), 'url' => null, 'items' => $subMenu];
+	}
+
+	private function isAdmin(): bool {
+		return !$this->isGuest() && Yii::$app->user->identity->isAdmin;
+	}
+
+	private function isGuest(): bool {
+		return php_sapi_name() === 'cli' || Yii::$app->controller->action->id === 'sitemap' ?: Yii::$app->user->isGuest;
 	}
 }
