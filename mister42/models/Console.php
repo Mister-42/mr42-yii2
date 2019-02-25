@@ -3,6 +3,16 @@ namespace app\models;
 use Yii;
 
 class Console extends \yii\helpers\Console {
+	public static function startProgress($done, $total, $prefix = '', $width = null) {
+		parent::startProgress($done, $total, self::ansiFormat($prefix, [self::BOLD, self::FG_BLUE]), $width);
+	}
+
+	public static function endProgress($remove = false, $keepPrefix = true) {
+		parent::endProgress($remove, $keepPrefix);
+		self::write('Done', [self::BOLD, self::FG_GREEN]);
+		self::newLine();
+	}
+
 	public static function write(string $msg, array $format, int $tabs = 1) {
 		$output = self::ansiFormat($msg, $format);
 		self::stdout($output);

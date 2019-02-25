@@ -2,10 +2,8 @@
 namespace app\commands;
 use Yii;
 use app\models\Webrequest;
-use app\models\music\Collection;
 use app\models\feed\Feed;
-use app\models\user\{Profile, RecentTracks, WeeklyArtist};
-use Da\User\Model\User;
+use app\models\user\{Profile, RecentTracks, User, WeeklyArtist};
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
 
@@ -15,42 +13,6 @@ use yii\helpers\ArrayHelper;
 class FeedController extends Controller {
 	public $defaultAction = 'lastfm-recent';
 	public $limit = 25;
-
-	/**
-	 * Retrieves and stores Discogs collection & wantlist
-	 */
-	public function actionDiscogs(): int {
-		$discogs = new Collection();
-		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
-			$profile = Profile::findOne(['user_id' => $user->id]);
-			if (isset($profile->discogs) && isset($profile->discogs_token)) :
-				foreach (['collection', 'wishlist'] as $action) :
-					$url = "/users/{$profile->discogs}/wants";
-					if ($action === 'collection') :
-						$response = Webrequest::getDiscogsApi("users/{$profile->discogs}/collection/folders?".http_build_query(['token' => $profile->discogs_token]));
-						if (!$response->isOK)
-							continue;
-						$url = "/users/{$profile->discogs}/collection/folders/{$response->data['folders'][1]['id']}/releases";
-					endif;
-					$response = Webrequest::getDiscogsApi("{$url}?".http_build_query(['token' => $profile->discogs_token]));
-					if (!$response->isOK)
-						continue;
-					$ids = $discogs->saveCollection($profile->user_id, $response->data[($action === 'collection') ? 'releases' : 'wants'], $action);
-
-					for ($x = 2; $x < (int) ArrayHelper::getValue($response->data, 'pagination.pages'); $x++) :
-						$response = Webrequest::getDiscogsApi("{$url}?".http_build_query(['page' => $x, 'token' => $profile->discogs_token]));
-						if (!$response->isOK)
-							continue;
-						$subids = $discogs->saveCollection($profile->user_id, $response->data[($action === 'collection') ? 'releases' : 'wants'], $action);
-						$ids = array_merge($ids, $subids);
-					endfor;
-					Collection::deleteAll(['AND', ['user_id' => $profile->user_id], ['NOT IN', 'id', $ids], ['status' => $action]]);
-				endforeach;
-			endif;
-		endforeach;
-
-		return self::EXIT_CODE_NORMAL;
-	}
 
 	/**
 	 * Retrieves and stores Recent Tracks from Last.fm.
