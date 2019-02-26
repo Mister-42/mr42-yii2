@@ -1,6 +1,7 @@
 <?php
 namespace app\models\music;
 use app\models\{Image, Webrequest};
+use app\models\user\Profile;
 use yii\helpers\ArrayHelper;
 
 class Collection extends \yii\db\ActiveRecord {
@@ -32,6 +33,17 @@ class Collection extends \yii\db\ActiveRecord {
 		endforeach;
 
 		return $id ?? [];
+	}
+
+	public static function getDiscogsUrl(string $action, Profile $profile) : ?string {
+		if ($action === 'collection') :
+			$response = Webrequest::getDiscogsApi("users/{$profile->discogs}/collection/folders?".http_build_query(['token' => $profile->discogs_token]));
+			if (!$response->isOK)
+				return null;
+			return "/users/{$profile->discogs}/collection/folders/{$response->data['folders'][1]['id']}/releases";
+		endif;
+
+		return "/users/{$profile->discogs}/wants";
 	}
 
 	public static function getLastModified(): int {

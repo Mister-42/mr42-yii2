@@ -32,7 +32,7 @@ class MusicController extends Controller {
 			$profile = Profile::findOne(['user_id' => $user->id]);
 			if (isset($profile->discogs) && isset($profile->discogs_token)) :
 				foreach (['collection', 'wishlist'] as $action) :
-					if (!$url = $this->getDiscogsUrl($action, $profile))
+					if (!$url = Collection::getDiscogsUrl($action, $profile))
 						continue;
 
 					$response = Webrequest::getDiscogsApi("{$url}?".http_build_query(['token' => $profile->discogs_token]));
@@ -85,7 +85,7 @@ class MusicController extends Controller {
 				if (($width > self::ALBUM_IMAGE_DIMENSIONS && $height > self::ALBUM_IMAGE_DIMENSIONS) || $type !== IMAGETYPE_JPEG) :
 					if ($width >= self::ALBUM_IMAGE_DIMENSIONS && $height >= self::ALBUM_IMAGE_DIMENSIONS) :
 						$album->image = Image::resize($album->image, self::ALBUM_IMAGE_DIMENSIONS);
-						$album->image_color = $this->getAverageImageColor($album->image);
+						$album->image_color = Image::getAverageImageColor($album->image);
 						$album->save();
 						list($width, $height) = getimagesizefromstring($album->image);
 						Console::write("{$width}x{$height}", [Console::BOLD, Console::FG_GREEN]);
@@ -93,7 +93,7 @@ class MusicController extends Controller {
 					Console::newLine();
 					continue;
 				elseif ($album->image && is_null($album->image_color)) :
-					$album->image_color = $this->getAverageImageColor($album->image);
+					$album->image_color = Image::getAverageImageColor($album->image);
 					$album->save();
 				endif;
 
@@ -223,35 +223,5 @@ class MusicController extends Controller {
 		Console::write('Completed processing videos', [Console::BOLD, Console::FG_RED]);
 		Console::newLine();
 		return self::EXIT_CODE_NORMAL;
-	}
-
-	private function getAverageImageColor(string $image): string {
-		$i = imagecreatefromstring($image);
-		$rTotal = $gTotal = $bTotal = $total = 0;
-		list($width, $height) = getimagesizefromstring($image);
-		for ($x = 0; $x < $width; $x++) :
-			for ($y = 0; $y < $height; $y++) :
-				$rgb = imagecolorat($i, $x, $y);
-				$r = ($rgb >> 16) & 0xFF;
-				$g = ($rgb >> 8) & 0xFF;
-				$b = $rgb & 0xFF;
-				$rTotal += $r;
-				$gTotal += $g;
-				$bTotal += $b;
-				$total++;
-			endfor;
-		endfor;
-		return sprintf('#%02X%02X%02X', $rTotal / $total, $gTotal / $total, $bTotal / $total); 
-	}
-
-	private function getDiscogsUrl(string $action, Profile $profile) : ?string {
-		if ($action === 'collection') :
-			$response = Webrequest::getDiscogsApi("users/{$profile->discogs}/collection/folders?".http_build_query(['token' => $profile->discogs_token]));
-			if (!$response->isOK)
-				return null;
-			return "/users/{$profile->discogs}/collection/folders/{$response->data['folders'][1]['id']}/releases";
-		endif;
-
-		return "/users/{$profile->discogs}/wants";
 	}
 }
