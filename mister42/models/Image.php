@@ -5,7 +5,7 @@ class Image {
 	public static function getAverageImageColor(string $image): string {
 		$i = imagecreatefromstring($image);
 		$rTotal = $gTotal = $bTotal = $total = 0;
-		list($width, $height) = getimagesizefromstring($image);
+		[$width, $height] = getimagesizefromstring($image);
 		for ($x = 0; $x < $width; $x++) :
 			for ($y = 0; $y < $height; $y++) :
 				$rgb = imagecolorat($i, $x, $y);

@@ -31,7 +31,7 @@ class Favicon extends \yii\base\Model {
 			return false;
 		endif;
 
-		list($width, $height) = getimagesize($this->sourceImage->tempName);
+		[$width, $height] = getimagesize($this->sourceImage->tempName);
 		$tmpSize = min($width, $height);
 		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 		$cacheFile = Yii::getAlias('@assetsroot/temp/'.uniqid('favicon').'.ico');

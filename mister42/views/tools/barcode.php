@@ -12,7 +12,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
 		echo Html::tag('h1', $this->title);
 		if ($barcode = Yii::$app->session->getFlash('barcode-success')) :
-			list($width, $height) = getimagesize($barcode);
+			[$width, $height] = getimagesize($barcode);
 			$imgHeight = min(150, $height);
 			$imgWidth = round($imgHeight / $height * $width);
 			Alert::begin(['options' => ['class' => 'alert-success fade show clearfix']]);

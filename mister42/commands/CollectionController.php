@@ -7,7 +7,7 @@ use app\models\user\{Profile, User};
 use yii\helpers\ArrayHelper;
 
 /**
- * Handles all actions related to music.
+ * Handles collection data.
  */
 class CollectionController extends \yii\console\Controller {
 	const ALBUM_IMAGE_DIMENSIONS = 1000;
@@ -15,7 +15,7 @@ class CollectionController extends \yii\console\Controller {
 	public $defaultAction = 'update';
 
 	/**
-	 * Retrieves and stores Discogs Collection & Wantlist
+	 * Retrieves and stores Discogs data.
 	 */
 	public function actionUpdate(): int {
 		$discogs = new Collection();

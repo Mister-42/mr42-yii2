@@ -1,5 +1,6 @@
 <?php
 namespace app\models\music;
+Use Yii;
 use app\models\{Image, Webrequest};
 use app\models\user\Profile;
 use yii\helpers\ArrayHelper;
@@ -29,6 +30,7 @@ class Collection extends \yii\db\ActiveRecord {
 			$collectionItem->year = (int) ArrayHelper::getValue($item, 'basic_information.year');
 			$collectionItem->title = ArrayHelper::getValue($item, 'basic_information.title');
 			$collectionItem->status = $status;
+			$collectionItem->created = Yii::$app->formatter->asDatetime(ArrayHelper::getValue($item, 'date_added'), 'yyyy-MM-dd HH:mm:ss');
 			$collectionItem->save();
 		endforeach;
 
@@ -48,12 +50,13 @@ class Collection extends \yii\db\ActiveRecord {
 
 	public static function getLastModified(): int {
 		$data = self::find()
-			->max('updated');
+			->where(['status' => Yii::$app->controller->action->id])
+			->max('created');
 		return strtotime($data);
 	}
 
 	public static function getEntryLastModified(int $id): int {
 		$data = self::findOne(['id' => $id]);
-		return strtotime($data->updated);
+		return strtotime($data->created);
 	}
 }

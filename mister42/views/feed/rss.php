@@ -30,7 +30,7 @@ $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->writeElement('url', Url::to('@assets/images/mr42.png', Yii::$app->request->isSecureConnection ? 'https' : 'http'));
 	$doc->writeElement('link', Yii::$app->params['shortDomain']);
 	$doc->writeElement('description', Yii::$app->params['description']);
-	list($width, $height, $type, $attr) = getimagesize(Yii::getAlias('@assetsroot/images/mr42.png'));
+	[$width, $height, $type, $attr] = getimagesize(Yii::getAlias('@assetsroot/images/mr42.png'));
 	$doc->writeElement('height', $height);
 	$doc->writeElement('width', $width);
 	$doc->endElement();

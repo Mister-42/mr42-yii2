@@ -17,7 +17,7 @@ class LyricsController extends \yii\console\Controller {
 	/**
 	 * Perform image & PDF actions.
 	 */
-	public function actionIndex() {
+	public function actionIndex(): void {
 		$this->actionAlbumImage();
 		$this->actionAlbumPdf();
 	}
@@ -25,14 +25,14 @@ class LyricsController extends \yii\console\Controller {
 	/**
 	 * Resizes all album covers to the default dimensions if they exceed this limit.
 	 */
-	public function actionAlbumImage() {
+	public function actionAlbumImage(): void {
 		$x = 0;
 		$count = (int) Lyrics2Albums::find()->count();
 		Console::startProgress(0, $count, 'Processing Images: ');
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				list($width, $height, $type) = ($album->image) ? getimagesizefromstring($album->image) : [0, 0, 0];
+				[$width, $height, $type] = ($album->image) ? getimagesizefromstring($album->image) : [0, 0, 0];
 				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && $type === IMAGETYPE_JPEG && !is_null($album->image_color))
 					continue;
 
@@ -53,7 +53,7 @@ class LyricsController extends \yii\console\Controller {
 						$album->image = Image::resize($album->image, self::ALBUM_IMAGE_DIMENSIONS);
 						$album->image_color = Image::getAverageImageColor($album->image);
 						$album->save();
-						list($width, $height) = getimagesizefromstring($album->image);
+						[$width, $height] = getimagesizefromstring($album->image);
 						Console::write("{$width}x{$height}", [Console::BOLD, Console::FG_GREEN]);
 					endif;
 					Console::newLine();
@@ -74,7 +74,7 @@ class LyricsController extends \yii\console\Controller {
 	/**
 	 * Builds all albums PDF files, unless already cached and up-to-date.
 	 */
-	public function actionAlbumPdf() {
+	public function actionAlbumPdf(): void {
 		$x = 0;
 		$count = (int) Lyrics2Albums::find()->count();
 		Console::startProgress(0, $count, 'Processing PDFs: ');
@@ -104,7 +104,7 @@ class LyricsController extends \yii\console\Controller {
 	/**
 	 * Checking status of album playlists.
 	 */
-	public function actionPlaylists() {
+	public function actionPlaylists(): int {
 		$x = 0;
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
@@ -150,12 +150,12 @@ class LyricsController extends \yii\console\Controller {
 	/**
 	 * Checking status of tracks videos.
 	 */
-	public function actionVideos() {
+	public function actionVideos(): int {
 		$x = 0;
-		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]])->all();
-		foreach ($query as $track) :
+		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]]);
+		foreach ($query->each() as $track) :
 			$data[] = ['id' => $track->video_id, 'name' => $track->name];
-			if (++$x !== count($query) && count($data) < 50)
+			if (++$x !== $query->count() && count($data) < 50)
 				continue;
 
 			$response = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'videos');

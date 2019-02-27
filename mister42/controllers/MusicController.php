@@ -42,7 +42,7 @@ class MusicController extends \yii\web\Controller {
 				'enabled' => !YII_DEBUG,
 				'etagSeed' => function() { return serialize([phpversion(), Yii::$app->user->id, $this->lastModified]); },
 				'lastModified' => function() { return $this->lastModified; },
-				'only' => ['index', 'albumpdf', 'albumcover', 'collection', 'collection-cover'],
+				'only' => ['index', 'albumpdf', 'albumcover', 'collection', 'collection-cover', 'wishlist'],
 			],
 		];
 	}
@@ -82,7 +82,7 @@ class MusicController extends \yii\web\Controller {
 		if (!ArrayHelper::isIn($this->size, [100, 500, 800]))
 			throw new NotFoundHttpException('Cover not found.');
 
-		list($fileName, $image) = Lyrics2Albums::getCover($this->size, $this->data);
+		[$fileName, $image] = Lyrics2Albums::getCover($this->size, $this->data);
 		return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
 	}
 
