@@ -38,16 +38,11 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 
 	public function attributeLabels(): array {
 		return [
-			'id' => Yii::t('mr42', 'ID'),
-			'parent' => Yii::t('mr42', 'Parent'),
 			'title' => Yii::t('mr42', 'Title'),
 			'content' => Yii::t('mr42', 'Content'),
-			'created' => Yii::t('mr42', 'Created'),
-			'user' => Yii::t('mr42', 'User'),
 			'name' => Yii::t('mr42', 'Name'),
-			'email' => Yii::t('mr42', 'Email'),
-			'website' => Yii::t('mr42', 'Website'),
-			'active' => Yii::t('mr42', 'Active'),
+			'email' => Yii::t('mr42', 'Email Address'),
+			'website' => Yii::t('mr42', 'Website URL'),
 		];
 	}
 

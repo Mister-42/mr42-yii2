@@ -1,6 +1,6 @@
 <?php
 namespace app\models\music;
-Use Yii;
+use Yii;
 use app\models\{Image, Webrequest};
 use app\models\user\Profile;
 use yii\helpers\ArrayHelper;
