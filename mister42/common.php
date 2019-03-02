@@ -49,11 +49,12 @@ return [
 			'password' => $secrets['MySQL']['pass'],
 			'charset' => 'utf8',
 			'tablePrefix' => 'mister42_',
-
+			'attributes' => [
+				PDO::MYSQL_ATTR_LOCAL_INFILE => true,
+			],
 			'enableSchemaCache' => true,
 			'schemaCache' => 'fileCache',
 			'schemaCacheDuration' => 60 * 60 * 24 * 7,
-
 			'enableQueryCache' => true,
 			'queryCache' => 'fileCache',
 			'queryCacheDuration' => 60 * 60 * 24 * 2,

@@ -61,7 +61,6 @@ class Menu extends \yii\base\Model {
 				'items' => [
 					['label' => Yii::t('mr42', 'Barcode Generator'), 'url' => ['/tools/barcode']],
 					['label' => Yii::t('mr42', 'Browser Headers'), 'url' => ['/tools/headers']],
-					['label' => Yii::t('mr42', 'Country Information'), 'url' => ['/tools/country']],
 					['label' => Yii::t('mr42', 'Favicon Converter'), 'url' => ['/tools/favicon']],
 					['label' => Yii::t('mr42', 'HTML to Markdown Converter'), 'url' => ['/tools/html-to-markdown']],
 					['label' => Yii::t('mr42', 'OUI Lookup'), 'url' => ['/tools/oui']],

@@ -3,11 +3,12 @@ namespace app\models\articles;
 use Yii;
 
 class Query extends \yii\db\ActiveQuery {
-	public function init(): ?self {
+	public function init(): self {
 		parent::init();
-		if (php_sapi_name() === 'cli' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin))
-			return null;
-
-		return $this->onCondition([$this->modelClass::tableName().'.active' => true]);
+		$alias = ($this->modelClass === Articles::class) ? 'article' : 'comment';
+		$this->alias($alias);
+		return (php_sapi_name() === 'cli' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin))
+			? $this
+			: $this->onCondition(["{$alias}.active" => true]);
 	}
 }

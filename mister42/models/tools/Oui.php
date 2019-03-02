@@ -8,7 +8,7 @@ class Oui extends \yii\db\ActiveRecord {
 	public $oui;
 
 	public static function tableName(): string {
-		return 'x_oui';
+		return '{{%oui}}';
 	}
 
 	public function rules(): array {

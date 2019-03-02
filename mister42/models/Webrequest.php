@@ -34,4 +34,16 @@ class Webrequest {
 			->setUrl($url)
 			->send();
 	}
+
+	public static function saveUrl(string $url, string $file): void {
+		$ch = curl_init();
+		$download = fopen($file, 'w');
+		curl_setopt($ch, CURLOPT_POST, 0);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FILETIME, true);
+		fwrite($download, curl_exec($ch));
+		curl_close($ch);
+		fclose($download);
+	}
 }

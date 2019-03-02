@@ -9,27 +9,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
-		echo Html::tag('h1', $this->title);
+		echo Html::tag('h1', Yii::t('mr42', '{oui} Lookup', ['oui' => Html::tag('abbr', 'OUI', ['title' => Yii::t('mr42', 'Organizationally Unique Identifier')])]));
 		echo Html::beginTag('div', ['class' => 'alert alert-info']);
-			echo Html::tag('div', Yii::t('mr42', 'This {oui} Lookup tool provides an easy way to look up OUIs and other MAC address prefixes. Type or paste in a OUI, MAC address, or name below.', ['oui' => Html::tag('abbr', 'OUI', ['title' => Yii::t('mr42', 'Organizationally Unique Identifier')])]));
+			echo Html::tag('div', Yii::t('mr42', 'This OUI Lookup tool provides an easy way to look up OUIs and other MAC address prefixes. Type or paste in a OUI, MAC address, or name below.'));
 		echo Html::endTag('div');
 
 		if ($post = Yii::$app->request->post('Oui')) :
 			$data = Oui::find()
-					->select(['Assignment', 'Organization_Name'])
-					->where(['like', 'Assignment', substr(preg_replace('/[^A-F0-9]+/i', '', strtoupper($post['oui'])), 0, 6).'%', false])
-					->orWhere(['like', 'Organization_Name', $post['oui']])
-					->all();
-			Alert::begin(['options' => ['class' => 'alert-success fade show clearfix']]);
-				foreach ($data as $item) :
+					->select(['assignment', 'name'])
+					->where(['like', 'assignment', substr(preg_replace('/[^A-F0-9]+/i', '', strtoupper($post['oui'])), 0, 6).'%', false])
+					->orWhere(['like', 'name', $post['oui']]);
+			$count = $data->count();
+
+			Alert::begin(['options' => ['class' => ($count == 0) ? 'alert-danger fade show' : 'alert-success fade show']]);
+				foreach ($data->all() as $item)
 					echo Html::tag('div',
-						Html::tag('div', wordwrap($item->Assignment, 2, ':', true), ['class' => 'col-2']).
-						Html::tag('div', $item->Organization_Name, ['class' => 'col-10'])
+						Html::tag('div', wordwrap($item->assignment, 2, ':', true), ['class' => 'col-2']).
+						Html::tag('div', $item->name, ['class' => 'col-10'])
 					, ['class' => 'row']);
-				endforeach;
-				if (count($data) === 0) :
+				if ($count == 0)
 					echo Html::tag('div', Yii::t('yii', 'No results found.'));
-				endif;
 			Alert::end();
 		endif;
 

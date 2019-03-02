@@ -3,9 +3,10 @@ namespace app\commands;
 use Yii;
 use app\models\Webrequest;
 use app\models\feed\Feed;
+use app\models\tools\Oui;
 use app\models\user\{Profile, RecentTracks, User, WeeklyArtist};
 use yii\console\Controller;
-use yii\helpers\ArrayHelper;
+use yii\helpers\{ArrayHelper, FileHelper};
 
 /**
  * Handles feeds.
@@ -63,6 +64,19 @@ class FeedController extends Controller {
 			endif;
 		endforeach;
 
+		return self::EXIT_CODE_NORMAL;
+	}
+
+	/**
+	 * Retrieves and stores the latest IEEE MA-L Assignments
+	 */
+	public function actionOui(): int {
+		$file = Yii::getAlias('@runtime/oui.csv');
+		Webrequest::saveUrl('http://standards-oui.ieee.org/oui/oui.csv', $file);
+
+		Oui::deleteAll();
+		Yii::$app->db->createCommand('LOAD DATA LOCAL INFILE "'.$file.'" IGNORE INTO TABLE '.Oui::tableName().' FIELDS TERMINATED BY "," ENCLOSED BY "\"" IGNORE 1 ROWS (@void, assignment, name) SET name=TRIM(name);')->execute();
+		FileHelper::unlink($file);
 		return self::EXIT_CODE_NORMAL;
 	}
 

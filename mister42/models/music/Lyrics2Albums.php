@@ -4,7 +4,7 @@ use Yii;
 use app\models\{Image, Pdf, Video};
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
-use yii\db\Expression;
+use yii\db\{ActiveQuery, Expression};
 use yii\helpers\{ArrayHelper, Url};
 
 class Lyrics2Albums extends \yii\db\ActiveRecord {
@@ -50,7 +50,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return self::find()
 			->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
 			->innerJoinWith('artist', 'tracks')
-			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
+			->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
 			->addParams([':artist' => $artist])
 			->all();
 	}
@@ -85,9 +85,9 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public static function getLastModified(string $artist): int {
 		$data = self::find()
 			->innerJoinWith('artist')
-			->where(['or', Lyrics1Artists::tableName().'.`name`=:artist', Lyrics1Artists::tableName().'.`url`=:artist'])
+			->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
 			->addParams([':artist' => $artist])
-			->max(self::tableName().'.updated');
+			->max('album.updated');
 		return (int) Yii::$app->formatter->asTimestamp($data);
 	}
 
@@ -95,7 +95,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return $this->hasOne(Lyrics1Artists::className(), ['id' => 'parent']);
 	}
 
-	public function getTracks(): LyricsQuery {
+	public function getTracks(): ActiveQuery {
 		return $this->hasMany(Lyrics3Tracks::className(), ['parent' => 'id']);
 	}
 

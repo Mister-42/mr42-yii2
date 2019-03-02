@@ -85,8 +85,7 @@ class Articles extends \yii\db\ActiveRecord {
 	}
 
 	public static function buildPdf(Articles $model): string {
-		$user = new Profile();
-		$profile = $user->find($model->authorId)->one();
+		$profile = (new Profile())->find($model->authorId)->one();
 		$name = empty($profile->name) ? $model->user->username : $profile->name;
 		$tags = Yii::t('mr42', '{results, plural, =1{1 tag} other{# tags}}', ['results' => count(StringHelper::explode($model->tags))]);
 		$pdf = new Pdf();
@@ -97,8 +96,8 @@ class Articles extends \yii\db\ActiveRecord {
 			[
 				'author' => $name,
 				'created' => $model->created,
-				'footer' => $tags.': '.$model->tags.'|Author: '.$name.'|Page {PAGENO} of {nb}',
-				'header' => Html::a(Yii::$app->name, Url::to(['site/index'], true)).'|'.Html::a($model->title, ['/permalink/articles', 'id' => $model->id]).'|'.date('D, j M Y', $model->updated),
+				'footer' => implode('|', ["{$tags}: {$model->tags}", "Author: {$name}", 'Page {PAGENO} of {nb}']),
+				'header' => implode('|', [Html::a(Yii::$app->name, Url::to(['site/index'], true)), Html::a($model->title, ['/permalink/articles', 'id' => $model->id]), date('D, j M Y', $model->updated)]),
 				'keywords' => $model->tags,
 				'subject' => $model->title,
 				'title' => $model->title,

@@ -27,21 +27,21 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 			->orderBy(['track' => SORT_ASC])
 			->joinWith('artist')
 			->joinWith('lyrics')
-			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
-			->andWhere(Lyrics2Albums::tableName().'.year=:year')
-			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])
+			->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
+			->andWhere('album.year=:year')
+			->andWhere(['or', 'album.name=:album', 'album.url=:album'])
 			->addParams([':artist' => $artist, ':year' => $year, ':album' => $name])
 			->all();
 	}
 
 	public static function getLastModified(string $artist, string $year, string $name): int {
 		$max = self::find()
-			->select('GREATEST(MAX('.Lyrics2Albums::tableName().'.`updated`), MAX('.Lyrics4Lyrics::tableName().'.`updated`)) AS `max`')
+			->select('GREATEST(MAX(album.updated), MAX(lyric.updated)) AS `max`')
 			->joinWith('artist')
 			->joinWith('lyrics')
-			->where(['or', Lyrics1Artists::tableName().'.name=:artist', Lyrics1Artists::tableName().'.url=:artist'])
-			->andWhere(Lyrics2Albums::tableName().'.year=:year')
-			->andWhere(['or', Lyrics2Albums::tableName().'.name=:album', Lyrics2Albums::tableName().'.url=:album'])
+			->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
+			->andWhere('album.year=:year')
+			->andWhere(['or', 'album.name=:album', 'album.url=:album'])
 			->addParams([':artist' => $artist, ':year' => $year, ':album' => $name])
 			->one();
 		return $max->max ? Yii::$app->formatter->asTimestamp($max->max) : time();
@@ -60,7 +60,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		return $this->hasOne(Lyrics4Lyrics::className(), ['id' => 'lyricid']);
 	}
 
-	public static function find(): LyricsQuery {
-		return new LyricsQuery(get_called_class());
+	public static function find(): ActiveQuery {
+		return parent::find()->alias('track');
 	}
 }

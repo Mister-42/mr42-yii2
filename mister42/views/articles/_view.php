@@ -38,7 +38,7 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 		echo Html::beginTag('div', ['class' => 'card-text']);
 			echo (Yii::$app->controller->action->id === 'article')
 				? str_replace('[readmore]', null, $model->contentParsed)
-				: StringHelper::byteSubstr($model->contentParsed, 0, mb_strpos($moel->contentParsed, '[readmore]') ?: StringHelper::byteLength($model->contentParsed), '[readmore]');
+				: StringHelper::byteSubstr($model->contentParsed, 0, mb_strpos($model->contentParsed, '[readmore]') ?: StringHelper::byteLength($model->contentParsed), '[readmore]');
 		echo Html::endTag('div');
 	echo Html::endTag('div');
 

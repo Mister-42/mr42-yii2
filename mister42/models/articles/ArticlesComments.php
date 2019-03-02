@@ -61,12 +61,6 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 		$this->parsedContent = Yii::$app->formatter->cleanInput($this->content, 'gfm-comment');
 	}
 
-	public function saveComment(self $comment): bool {
-		$comment->user = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
-		$comment->active = Yii::$app->user->isGuest ? 0 : 1;
-		return $comment->save();
-	}
-
 	public function showApprovalButton(): string {
 		return Html::a(
 			$this->active
@@ -84,7 +78,7 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 			)
 			->setTo([$model->author->email => $model->author->username])
 			->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
-			->setSubject('A new comment has been posted on "'.$model->title.'"')
+			->setSubject("A new comment has been posted on '{$model->title}'")
 			->send();
 
 		if (Yii::$app->user->isGuest) :
@@ -94,7 +88,7 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 				)
 				->setTo([$comment->email => $comment->name])
 				->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
-				->setSubject('Thank you for your reply on "'.$model->title.'"')
+				->setSubject("Thank you for your reply on '{$model->title}'.")
 				->send();
 		endif;
 	}

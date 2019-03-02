@@ -34,10 +34,6 @@ class ToolsController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionCountry() {
-		return $this->render('country');
-	}
-
 	public function actionFavicon() {
 		$model = new Favicon;
 		if ($model->load(Yii::$app->request->post())) :

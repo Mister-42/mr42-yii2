@@ -79,14 +79,26 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionCreate(): string {
-		$model = new Articles();
-		return $this->doFormArticle($model);
+		if ($this->action->id === 'create') :
+			$model = new Articles();
+		else :
+			$model = Articles::findOne(['id' => $this->request->get('id')]);
+			$this->belongsToViewer($model);
+		endif;
+
+		if ($model->load(Yii::$app->request->post())) :
+			if ($model->validate() && $model->save())
+				$this->redirect(['article', 'id' => $model->id, 'title' => $model->url])->send();
+		endif;
+
+		$this->layout = '@app/views/layouts/main.php';
+		return $this->render('_formArticle', [
+			'model' => $model,
+		]);
 	}
 
 	public function actionUpdate(int $id): string {
-		$model = Articles::findOne(['id' => $id]);
-		$this->belongsToViewer($model);
-		return $this->doFormArticle($model);
+		return $this->actionCreate();
 	}
 
 	public function actionDelete(int $id): void {
@@ -105,8 +117,10 @@ class ArticlesController extends \yii\web\Controller {
 		$comment = new ArticlesComments;
 		$comment->load(Yii::$app->request->post());
 		$comment->parent = $id;
+		$comment->user = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
+		$comment->active = (int) !Yii::$app->user->isGuest;
 
-		if ($comment->saveComment($comment)) :
+		if ($comment->save()) :
 			if (!Yii::$app->user->isGuest) :
 				$comment->name = Yii::$app->user->identity->username;
 				$comment->email = Yii::$app->user->identity->email;
@@ -157,18 +171,6 @@ class ArticlesController extends \yii\web\Controller {
 		return $this->render('index', [
 			'query' => $query,
 			'tag' => $tag,
-		]);
-	}
-
-	private function doFormArticle(Articles $model): string {
-		if ($model->load(Yii::$app->request->post())) :
-			if ($model->validate() && $model->save())
-				$this->redirect(['article', 'id' => $model->id, 'title' => $model->url])->send();
-		endif;
-
-		$this->layout = '@app/views/layouts/main.php';
-		return $this->render('_formArticle', [
-			'model' => $model,
 		]);
 	}
 
