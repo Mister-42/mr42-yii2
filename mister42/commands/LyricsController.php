@@ -33,7 +33,7 @@ class LyricsController extends \yii\console\Controller {
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
 				[$width, $height, $type] = ($album->image) ? getimagesizefromstring($album->image) : [0, 0, 0];
-				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && $type === IMAGETYPE_JPEG && !is_null($album->image_color))
+				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && $type === IMAGETYPE_JPEG && $album->image_color !== null)
 					continue;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);

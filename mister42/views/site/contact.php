@@ -46,7 +46,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
 			->label(Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']);
 
-			echo $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false);
+			echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);
 
 			echo Html::tag('div',
 				Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).

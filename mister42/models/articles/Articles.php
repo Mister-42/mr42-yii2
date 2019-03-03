@@ -24,7 +24,7 @@ class Articles extends \yii\db\ActiveRecord {
 			[['title', 'url', 'source'], 'string', 'max' => 128],
 			['source', 'url', 'enableIDN' => true],
 			[['url', 'source'], 'default', 'value' => null],
-			[['authorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['authorId' => 'id']],
+			[['authorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['authorId' => 'id']],
 			[['pdf', 'active'], 'boolean'],
 		];
 	}
@@ -116,11 +116,11 @@ class Articles extends \yii\db\ActiveRecord {
 	}
 
 	public function getAuthor() {
-		return $this->hasOne(User::className(), ['id' => 'authorId']);
+		return $this->hasOne(User::class, ['id' => 'authorId']);
 	}
 
 	public function getComments() {
-		return $this->hasMany(ArticlesComments::className(), ['parent' => 'id']);
+		return $this->hasMany(ArticlesComments::class, ['parent' => 'id']);
 	}
 
 	public static function find(): Query {

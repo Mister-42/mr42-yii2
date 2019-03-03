@@ -20,7 +20,7 @@ class Contact extends \yii\base\Model {
 			['email', 'string', 'max' => 50],
 			['email', 'email', 'checkDNS' => true, 'enableIDN' => true],
 			['attachment', 'file', 'minSize' => 64, 'maxSize' => 1024 * 1024 * 5],
-			['captcha', ReCaptchaValidator::className()],
+			['captcha', ReCaptchaValidator::class],
 		];
 	}
 

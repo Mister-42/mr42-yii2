@@ -42,7 +42,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 			->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), ['/permalink/articles', 'id' => 4], ['target' => '_blank'])]));
 
 		if (Yii::$app->user->isGuest)
-			echo $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false);
+			echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);
 
 		echo Html::tag('div',
 			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).

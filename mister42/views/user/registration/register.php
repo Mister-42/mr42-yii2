@@ -37,7 +37,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			endif;
 		echo Html::endTag('div');
 
-		echo $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false);
+		echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);
 
 		echo Html::submitButton(Yii::t('usuario', 'Sign up'), ['class' => 'btn btn-success btn-block', 'tabindex' => ++$tab]);
 

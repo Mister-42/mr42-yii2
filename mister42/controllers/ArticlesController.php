@@ -97,7 +97,7 @@ class ArticlesController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionUpdate(int $id): string {
+	public function actionUpdate(): string {
 		return $this->actionCreate();
 	}
 

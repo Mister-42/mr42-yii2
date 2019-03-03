@@ -53,11 +53,11 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	}
 
 	public function getAlbum(): ActiveQuery {
-		return $this->hasOne(Lyrics2Albums::className(), ['id' => 'parent']);
+		return $this->hasOne(Lyrics2Albums::class, ['id' => 'parent']);
 	}
 
 	public function getLyrics(): ActiveQuery {
-		return $this->hasOne(Lyrics4Lyrics::className(), ['id' => 'lyricid']);
+		return $this->hasOne(Lyrics4Lyrics::class, ['id' => 'lyricid']);
 	}
 
 	public static function find(): ActiveQuery {

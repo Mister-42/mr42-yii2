@@ -13,7 +13,7 @@ class RegistrationForm extends \Da\User\Form\RegistrationForm {
 
 	public function rules(): array {
 		$rules = parent::rules();
-		$rules[] = ['captcha', ReCaptchaValidator::className()];
+		$rules[] = ['captcha', ReCaptchaValidator::class];
 		return $rules;
 	}
 }

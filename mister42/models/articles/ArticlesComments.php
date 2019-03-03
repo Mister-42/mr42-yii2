@@ -25,12 +25,12 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 			['email', 'string', 'max' => 50],
 			[['name', 'email', 'website'], 'default', 'value' => null],
 			['active', 'default', 'value' => 0],
-			['user', 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user' => 'id']],
-			['parent', 'exist', 'skipOnError' => false, 'targetClass' => Articles::className(), 'targetAttribute' => ['parent' => 'id']],
+			['user', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user' => 'id']],
+			['parent', 'exist', 'skipOnError' => false, 'targetClass' => Articles::class, 'targetAttribute' => ['parent' => 'id']],
 		];
 
 		if (Yii::$app->user->isGuest) :
-			$rules[] = ['captcha', ReCaptchaValidator::className()];
+			$rules[] = ['captcha', ReCaptchaValidator::class];
 			$rules[] = [['name', 'email'], 'required'];
 		endif;
 		return $rules;
@@ -94,11 +94,11 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 	}
 
 	public function getAuthor() {
-		return $this->hasOne(User::className(), ['id' => 'user']);
+		return $this->hasOne(User::class, ['id' => 'user']);
 	}
 
 	public function getArticle() {
-		return $this->hasOne(Articles::className(), ['id' => 'parent']);
+		return $this->hasOne(Articles::class, ['id' => 'parent']);
 	}
 
 	public static function find() {
