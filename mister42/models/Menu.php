@@ -71,8 +71,7 @@ class Menu extends \yii\base\Model {
 			],
 			['label' => Yii::$app->icon->show('music', ['class' => 'mr-1']).Html::tag('span', Yii::t('mr42', 'Music')), 'url' => null,
 				'items' => [
-					['label' => Yii::t('mr42', 'CD Collection'), 'url' => ['/music/collection']],
-					['label' => Yii::t('mr42', 'CD Wishlist'), 'url' => ['/music/wishlist']],
+					['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
 					['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/music/lyrics'], 'visible' => true],
 				],
 			],

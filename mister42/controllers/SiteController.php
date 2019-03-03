@@ -33,12 +33,13 @@ class SiteController extends \yii\web\Controller {
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
 				'etagSeed' => function(BaseObject $action) {
-					return serialize([phpversion(), file(Yii::getAlias(($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php"), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
+					$file = ($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php";
+					return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile($file)]);
 				},
 				'lastModified' => function(BaseObject $action) {
 					return filemtime(Yii::getAlias(($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php"));
 				},
-				'only' => ['browserconfigxml', 'faviconico', 'robotstxt'],
+				'except' => ['index', 'contact', 'offline'],
 			],
 		];
 	}

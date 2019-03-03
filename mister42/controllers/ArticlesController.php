@@ -79,9 +79,8 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	public function actionCreate(): string {
-		if ($this->action->id === 'create') :
-			$model = new Articles();
-		else :
+		$model = new Articles();
+		if ($this->action->id === 'update') :
 			$model = Articles::findOne(['id' => $this->request->get('id')]);
 			$this->belongsToViewer($model);
 		endif;
@@ -91,7 +90,7 @@ class ArticlesController extends \yii\web\Controller {
 				$this->redirect(['article', 'id' => $model->id, 'title' => $model->url])->send();
 		endif;
 
-		$this->layout = '@app/views/layouts/main.php';
+		$this->layout = 'main';
 		return $this->render('_formArticle', [
 			'model' => $model,
 		]);

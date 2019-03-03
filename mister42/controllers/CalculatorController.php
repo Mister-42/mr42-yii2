@@ -12,7 +12,7 @@ class CalculatorController extends \yii\web\Controller {
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
 				'etagSeed' => function(BaseObject $action) {
-					return serialize([phpversion(), Yii::$app->user->id, file(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'), FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)]);
+					return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile("@app/views/{$action->controller->id}/{$action->id}.php")]);
 				},
 				'lastModified' => function(BaseObject $action) {
 					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));

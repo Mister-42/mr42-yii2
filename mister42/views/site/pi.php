@@ -25,7 +25,7 @@ $this->registerJs('$("img").unveil();', View::POS_READY);
 echo Html::tag('h1', $this->title);
 
 foreach ($tabs as $tab => $tabdesc)
-	$tabdata[] = Html::a(ucfirst($tabdesc['short']), "#{$tab}", ['aria-controls' => $tab, 'aria-selected' => ($tab === array_key_first($tabs)) ? 'true' : 'false', 'class' => ($tab === array_key_first($tabs)) ? 'nav-link active' : 'nav-link', 'data-toggle' => 'tab', 'id' => "{$tab}-tab", 'role' => 'tab']);
+	$tabdata[] = Html::a($tabdesc['short'], "#{$tab}", ['aria-controls' => $tab, 'aria-selected' => ($tab === array_key_first($tabs)) ? 'true' : 'false', 'class' => ($tab === array_key_first($tabs)) ? 'nav-link active' : 'nav-link', 'data-toggle' => 'tab', 'id' => "{$tab}-tab", 'role' => 'tab']);
 echo Html::ul($tabdata, ['class' => 'nav nav-tabs', 'id' => 'nav-tabs', 'encode' => false, 'itemOptions' => ['class' => 'nav-item'], 'role' => 'tablist']);
 
 echo Html::beginTag('div', ['class' => 'tab-content']);

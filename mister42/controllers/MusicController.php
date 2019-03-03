@@ -53,10 +53,6 @@ class MusicController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionWishlist(): string {
-		return $this->actionCollection();
-	}
-
 	public function actionCollectionCover(int $id): Response {
 		$album = Collection::find()->where(['id' => $id])->one();
 		if (!$album || !$album->image) :

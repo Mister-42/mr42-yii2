@@ -7,7 +7,7 @@ use yii\helpers\{ArrayHelper, StringHelper};
 use yii\web\Response;
 
 class FeedController extends \yii\web\Controller {
-	public function behaviors() {
+	public function behaviors(): array {
 		$lastModified = Articles::getLastModified();
 		return [
 			[
@@ -21,11 +21,11 @@ class FeedController extends \yii\web\Controller {
 		];
 	}
 
-	public function actionIndex() {
-		$this->redirect(['rss'], 301)->send();
+	public function actionIndex(): Response {
+		return $this->redirect(['rss'], 301);
 	}
 
-	public function actionRss() {
+	public function actionRss(): string {
 		if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs']))
 			$this->redirect('http://f.mr42.me/Mr42')->send();
 
@@ -42,17 +42,17 @@ class FeedController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionSitemap() {
+	public function actionSitemap(): string {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/xml');
 		return $this->renderPartial(Yii::$app->controller->action->id);
 	}
 
-	public function actionSitemapArticles() {
+	public function actionSitemapArticles(): string {
 		return $this->actionSitemap();
 	}
 
-	public function actionSitemapLyrics() {
+	public function actionSitemapLyrics(): string {
 		return $this->actionSitemap();
 	}
 }
