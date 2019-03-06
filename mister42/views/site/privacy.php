@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->title = Yii::t('mr42', 'Privacy Policy');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [$this->title];
 
 echo Html::tag('h1', $this->title);
 

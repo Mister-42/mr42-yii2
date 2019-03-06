@@ -2,7 +2,7 @@
 use yii\helpers\{Html, Inflector};
 
 $this->title = 'PHP '.phpversion();
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [$this->title];
 
 echo Html::tag('h1', $this->title);
 

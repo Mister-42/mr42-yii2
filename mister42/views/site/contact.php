@@ -6,7 +6,7 @@ use yii\web\View;
 use yii\widgets\Pjax;
 
 $this->title = Yii::t('mr42', 'Contact');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [$this->title];
 
 Form::charCount($this, $model->rules()['charCount']['max']);
 $this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);

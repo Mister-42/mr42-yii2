@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\web\View;
 
 $this->title = Yii::t('mr42', 'My Pi');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [$this->title];
 
 $tabs = [
 	'day' => ['short' => Yii::t('mr42', 'Day'), 'long' => Yii::t('mr42', 'Last Day')],

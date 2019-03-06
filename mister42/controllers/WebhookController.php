@@ -10,9 +10,8 @@ class WebhookController extends \yii\web\Controller {
 	public function actionGithub(): array {
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		[$algo, $hash] = explode('=', Yii::$app->request->headers->get('X-Hub-Signature', 'sha512=1'), 2);
-		if (!hash_equals($hash, hash_hmac($algo, file_get_contents('php://input'), Yii::$app->params['secrets']['github']['hook']))) :
+		if (!hash_equals($hash, hash_hmac($algo, file_get_contents('php://input'), Yii::$app->params['secrets']['github']['hook'])))
 			throw new UnauthorizedHttpException('Access denied!');
-		endif;
 
 		$github = new Github();
 		switch (Yii::$app->request->headers->get('X-GitHub-Event')) :

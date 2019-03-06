@@ -5,6 +5,7 @@ use app\models\articles\{Articles, ArticlesComments, Search, Tags};
 use yii\bootstrap4\Html;
 use yii\filters\{AccessControl, AjaxFilter, VerbFilter};
 use yii\helpers\Url;
+use yii\web\Response;
 use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException, UnauthorizedHttpException};
 
 class ArticlesController extends \yii\web\Controller {
@@ -63,7 +64,7 @@ class ArticlesController extends \yii\web\Controller {
 		]);
 	}
 
-	public function actionPdf(int $id, string $title): void {
+	public function actionPdf(int $id, string $title): Response {
 		$model = Articles::find()
 			->where(['id' => $id])
 			->one();
@@ -75,7 +76,7 @@ class ArticlesController extends \yii\web\Controller {
 			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
 		$fileName = Articles::buildPdf($model);
-		Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
+		return Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
 	}
 
 	public function actionCreate(): string {

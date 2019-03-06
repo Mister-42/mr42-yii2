@@ -23,7 +23,7 @@ class DownloadController extends \yii\web\Controller {
 			$a->addFile(Yii::getAlias("@webroot/../../../bin/lib/{$file}"), "bin/lib/{$file}");
 		endforeach;
 		$a->convertToData(Phar::TAR, Phar::BZ2);
-		unlink($archiveFile);
+		FileHelper::unlink($archiveFile);
 
 		Yii::$app->response->sendFile($compressedFile, "php{$version}.tar.bz2");
 	}

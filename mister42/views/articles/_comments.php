@@ -28,7 +28,7 @@ foreach ($data->comments as $comment) :
 		echo Html::tag('div', $comment->parsedContent, ['class' => 'card-body']);
 
 		echo Html::beginTag('div', ['class' => 'card-footer']);
-			if (!is_null($comment->user)) :
+			if ($comment->user !== null) :
 				$user = User::find(['id' => $comment->user])->with('profile')->one();
 				$comment->name = $user->profile->name ?? $user->username;
 				$comment->website = $user->profile->website;

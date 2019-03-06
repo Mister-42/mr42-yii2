@@ -24,18 +24,18 @@ echo Html::ul($tabdata, ['class' => 'nav nav-tabs', 'id' => 'nav-tabs', 'encode'
 echo Html::beginTag('div', ['class' => 'tab-content']);
 	foreach ($tabs as $tab => $tabdesc) :
 		echo Html::beginTag('div', ['aria-labelledby' => "{$tab}-tab", 'class' => ($tab === array_key_first($tabs)) ? 'tab-pane fade show active' : 'tab-pane fade', 'id' => $tab, 'role' => 'tabpanel']);
-			echo Html::beginTag('div', ['class' => 'site-music-collection']);
-				echo Html::beginTag('div', ['class' => 'card-deck']);
-					foreach ($model->find()->where(['user_id' => 1, 'status' => $tab])->orderBy(['artist' => SORT_ASC, 'year' => SORT_ASC])->all() as $album) :
-						echo Html::beginTag('div', ['class' => 'card mb-3']);
+			echo Html::beginTag('div', ['class' => 'row justify-content-center']);
+				foreach ($model->find()->where(['user_id' => 1, 'status' => $tab])->orderBy(['artist' => SORT_ASC, 'year' => SORT_ASC])->all() as $album) :
+					echo Html::beginTag('div', ['class' => 'col-12 col-sm-6 col-md-3 col-xl-2 mt-3']);
+						echo Html::beginTag('div', ['class' => 'card']);
 							echo Html::a(
 								Html::img("@assets/images/blank.png", ['alt' => "{$album->artist} - {$album->year} - {$album->title}", 'class' => 'card-img-top rounded', 'data-src' => Url::to(['music/collection-cover', 'id' => $album->id])])
 							, "https://www.discogs.com/release/{$album->id}");
 							echo Html::tag('div', Html::tag('small', $album->title, ['class' => 'card-text mt-auto mx-auto font-weight-bold notranslate']), ['class' => 'card-body d-flex text-center p-2']);
 							echo Html::tag('div', Html::tag('small', $album->artist), ['class' => 'card-footer text-center p-2 notranslate']);
 						echo Html::endTag('div');
-					endforeach;
-				echo Html::endTag('div');
+					echo Html::endTag('div');
+				endforeach;
 			echo Html::endTag('div');
 		echo Html::endTag('div');
 	endforeach;

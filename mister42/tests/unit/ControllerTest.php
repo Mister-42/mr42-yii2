@@ -10,12 +10,17 @@ class ControllerTest extends TestCase {
 		$this->assertContains('</urlset>', \Yii::$app->runAction('feed/sitemap-lyrics'));
 	}
 
-	public function testLyricsController() {
+	public function testArticlesController() {
+		$this->assertInstanceOf(\yii\web\Response::class, \Yii::$app->runAction('articles/pdf', ['id' => 4, 'title' => 'Markdown Syntax']));
+	}
+
+	public function testMusicController() {
 		$this->assertContains('Nórdika', \Yii::$app->runAction('music/lyrics'));
 		$_GET = ['artist' => 'Nordika'];
 		$this->assertContains('Ecstasy', \Yii::$app->runAction('music/lyrics'));
 		$_GET = ['artist' => 'Nordika', 'year' => 2017, 'album' => 'Ecstasy'];
 		$this->assertContains('In oblivion…', \Yii::$app->runAction('music/lyrics'));
+		$this->assertInstanceOf(\yii\web\Response::class, \Yii::$app->runAction('music/albumpdf'));
 	}
 
 	public function testSiteController() {
