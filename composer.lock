@@ -410,7 +410,7 @@
             "version": "1.12.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/components/jqueryui.git",
+                "url": "git@github.com:components/jqueryui.git",
                 "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
             },
             "dist": {
@@ -1928,12 +1928,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "a4288a72e04d754d0d4fd3e9819f96690be74f14"
+                "reference": "9f38d7cb9380b3f8080cfdc42a0298b4c0c82a1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/a4288a72e04d754d0d4fd3e9819f96690be74f14",
-                "reference": "a4288a72e04d754d0d4fd3e9819f96690be74f14",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/9f38d7cb9380b3f8080cfdc42a0298b4c0c82a1a",
+                "reference": "9f38d7cb9380b3f8080cfdc42a0298b4c0c82a1a",
                 "shasum": ""
             },
             "require": {
@@ -1989,7 +1989,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-02-27T16:47:41+00:00"
+            "time": "2019-03-08T15:05:43+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",

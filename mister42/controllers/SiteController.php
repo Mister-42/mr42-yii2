@@ -39,7 +39,7 @@ class SiteController extends \yii\web\Controller {
 				'lastModified' => function(BaseObject $action) {
 					return filemtime(Yii::getAlias(($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php"));
 				},
-				'except' => ['index', 'contact', 'offline'],
+				'except' => ['index', 'contact', 'offline', 'webmanifest'],
 			],
 		];
 	}
@@ -80,10 +80,6 @@ class SiteController extends \yii\web\Controller {
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-Type', 'application/xml');
 		return $this->renderPartial('browserconfigxml');
-	}
-
-	public function actionPi(): string {
-		return $this->render('pi');
 	}
 
 	public function actionPrivacy(): string {
