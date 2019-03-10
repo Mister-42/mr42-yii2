@@ -1,6 +1,6 @@
 <?php
-$secrets = require(__DIR__.'/secrets.php');
-$params = require(__DIR__.'/params.php');
+$secrets = require __DIR__.'/secrets.php';
+$params = require __DIR__.'/params.php';
 
 return [
 	'aliases' => [
@@ -50,7 +50,7 @@ return [
 			'charset' => 'utf8',
 			'tablePrefix' => 'mister42_',
 			'attributes' => [
-				PDO::MYSQL_ATTR_LOCAL_INFILE => true,
+				\PDO::MYSQL_ATTR_LOCAL_INFILE => true,
 			],
 			'enableSchemaCache' => true,
 			'schemaCache' => 'fileCache',
@@ -132,7 +132,7 @@ return [
 	],
 	'language' => 'en',
 	'name' => 'Mr.42',
-	'params' => require(__DIR__.'/params.php'),
+	'params' => $params,
 	'runtimePath' => __DIR__.'/../../../.cache/yii/mister42',
 	'timeZone' => 'Europe/Berlin',
 	'vendorPath' => __DIR__.'/../../vendor',

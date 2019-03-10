@@ -9,8 +9,8 @@ class App {
 		endif;
 
 		header_remove("X-Powered-By");
-		require(__DIR__.'/../../vendor/autoload.php');
-		require(__DIR__.'/../../vendor/yiisoft/yii2/Yii.php');
+		require __DIR__.'/../../vendor/autoload.php';
+		require __DIR__.'/../../vendor/yiisoft/yii2/Yii.php';
 
 		$app = new \yii\web\Application($this->getConfig());
 		$app->run();
@@ -28,8 +28,8 @@ class App {
 	private function loadConfig(array $dir): array {
 		$webConfig = $dir[1] ?? $dir[0];
 		return \yii\helpers\ArrayHelper::merge(
-			require(__DIR__.'/../'.$dir[0].'/common.php'),
-			require(__DIR__.'/../'.$webConfig.'/web.php')
+			require __DIR__.'/../'.$dir[0].'/common.php',
+			require __DIR__.'/../'.$webConfig.'/web.php'
 		);
 	}
 }

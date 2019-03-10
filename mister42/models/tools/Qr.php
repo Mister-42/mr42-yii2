@@ -94,18 +94,34 @@ class Qr extends \yii\base\Model {
 	}
 
 	public static function getTypes(bool $rules = false): array {
+		$qrCodes = [
+			'Bitcoin' 		=> Yii::t('mr42', 'Bitcoin'),
+			'Bookmark' 		=> Yii::t('mr42', 'Bookmark'),
+			'EmailMessage'	=> Yii::t('mr42', 'Email Message'),
+			'FreeInput'		=> Yii::t('mr42', 'Free Input'),
+			'Geographic'	=> Yii::t('mr42', 'Geographic'),
+			'Ical'	 		=> Yii::t('mr42', 'iCal'),
+			'MailTo' 		=> Yii::t('mr42', 'Mail To'),
+			'MeCard' 		=> Yii::t('mr42', 'MeCard'),
+			'MMS' 			=> Yii::t('mr42', 'MMS'),
+			'Phone' 		=> Yii::t('mr42', 'Phone'),
+			'SMS' 			=> Yii::t('mr42', 'SMS'),
+			'Vcard' 		=> Yii::t('mr42', 'vCard'),
+			'WiFi' 			=> Yii::t('mr42', 'WiFi'),
+			'YouTube' 		=> Yii::t('mr42', 'YouTube'),
+		];
+
 		$dir = Yii::getAlias('@app/models/tools/qr');
-		$rename = require(Yii::getAlias('@app/data/qrTypes.php'));
 		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file)
-			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $rename);
+			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $qrCodes);
 
 		natcasesort($typeList);
 		return $typeList;
 	}
 
-	public function getDataOrOmit(string $label, string $value, string $glue = '') {
+	public function getDataOrOmit(string $label, string $value, string $glue = ''): ?string {
 		if ($value)
 			return $label.$value.$glue;
-		return false;
+		return null;
 	}
 }

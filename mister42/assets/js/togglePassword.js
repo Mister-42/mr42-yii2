@@ -3,10 +3,10 @@ $("#pwdToggle button").on('click', function(event) {
 		this.status = 3;
 	});
 	event.preventDefault();
-	if ($('#pwdToggle input').attr('type') == 'text') {
+	if ($('#pwdToggle input').attr('type') === 'text') {
 		$('#pwdToggle input').attr('type', 'password');
 		$(this).prop('title', togglePassword.lang.show);
-	} else if($('#pwdToggle input').attr('type') == 'password') {
+	} else if($('#pwdToggle input').attr('type') === 'password') {
 		$('#pwdToggle input').attr('type', 'text');
 		$(this).prop('title', togglePassword.lang.hide);
 	}

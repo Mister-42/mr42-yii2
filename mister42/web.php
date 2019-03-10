@@ -1,5 +1,5 @@
 <?php
-$secrets = require(__DIR__.'/secrets.php');
+$secrets = require __DIR__.'/secrets.php';
 
 $config = [
 	'id' => 'mister42',
