@@ -1,5 +1,5 @@
 <?php
-$secrets = require(__DIR__.'/../mister42/secrets.php');
+$params = (new Params())->getValues();
 
 return [
 	'basePath' => __DIR__,
@@ -19,7 +19,7 @@ return [
 			],
 		],
 		'request' => [
-			'cookieValidationKey' => $secrets['cookieValidationKey'],
+			'cookieValidationKey' => $params['secrets']['cookieValidationKey'],
 		],
 		'urlManager' => [
 			'rules' => [

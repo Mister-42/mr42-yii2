@@ -1,27 +1,26 @@
 <?php
-$secrets = require __DIR__.'/secrets.php';
-
+$params = (new Params())->getValues();
 $config = [
 	'id' => 'mister42',
-#	'catchAll' => in_array($_SERVER['REMOTE_ADDR'], $secrets['params']['specialIPs']) ? null : ['site/offline'],
+#	'catchAll' => in_array($_SERVER['REMOTE_ADDR'], $params['secrets']['params']['specialIPs']) ? null : ['site/offline'],
 	'components' => [
 		'authClientCollection' => [
 			'class' => \yii\authclient\Collection::class,
 			'clients' => [
 				'facebook' => [
 					'class'			=> 'Da\User\AuthClient\Facebook',
-					'clientId'		=> $secrets['facebook']['Id'],
-					'clientSecret'	=> $secrets['facebook']['Secret'],
+					'clientId'		=> $params['secrets']['facebook']['Id'],
+					'clientSecret'	=> $params['secrets']['facebook']['Secret'],
 				],
 				'github' => [
 					'class'			=> 'Da\User\AuthClient\GitHub',
-					'clientId'		=> $secrets['github']['Id'],
-					'clientSecret'	=> $secrets['github']['Secret'],
+					'clientId'		=> $params['secrets']['github']['Id'],
+					'clientSecret'	=> $params['secrets']['github']['Secret'],
 				],
 				'google' => [
 					'class'			=> 'Da\User\AuthClient\Google',
-					'clientId'		=> $secrets['google']['Id'],
-					'clientSecret'	=> $secrets['google']['Secret'],
+					'clientId'		=> $params['secrets']['google']['Id'],
+					'clientSecret'	=> $params['secrets']['google']['Secret'],
 				],
 			],
 		],
@@ -42,11 +41,11 @@ $config = [
 		'reCaptcha' => [
 			'name' => 'reCaptcha',
 			'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
-			'siteKey' => $secrets['google']['reCAPTCHA']['siteKey'],
-			'secret' => $secrets['google']['reCAPTCHA']['secret'],
+			'siteKey' => $params['secrets']['google']['reCAPTCHA']['siteKey'],
+			'secret' => $params['secrets']['google']['reCAPTCHA']['secret'],
 		],
 		'request' => [
-			'cookieValidationKey' => $secrets['cookieValidationKey'],
+			'cookieValidationKey' => $params['secrets']['cookieValidationKey'],
 		],
 		'session' => [
 			'class' => 'yii\web\DbSession',
@@ -62,7 +61,7 @@ $config = [
 	],
 	'modules' => [
 		'user' => [
-			'class' => Da\User\Module::class,
+			'class' => \Da\User\Module::class,
 			'administrators' => ['admin'],
 			'allowAccountDelete' => false,
 			'classMap' => [
@@ -86,14 +85,14 @@ $config = [
 			],
 		],
 	],
-	'params' => require(__DIR__.'/params.php'),
+	'params' => $params,
 ];
 
 if (YII_DEBUG && php_sapi_name() !== 'cli') :
 	$config['bootstrap'] = ['debug'];
 	$config['modules']['debug'] = [
 		'class' => 'yii\debug\Module',
-		'allowedIPs' => $secrets['params']['specialIPs'],
+		'allowedIPs' => $params['secrets']['params']['specialIPs'],
 	];
 endif;
 

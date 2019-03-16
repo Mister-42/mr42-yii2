@@ -1,7 +1,5 @@
 <?php
-$secrets = require __DIR__.'/secrets.php';
-$params = require __DIR__.'/params.php';
-
+$params = (new Params())->getValues();
 return [
 	'aliases' => [
 		'@assets' => '//s.mr42.me',
@@ -44,9 +42,9 @@ return [
 		],
 		'db' => [
 			'class' => 'yii\db\Connection',
-			'dsn' => 'mysql:host='.$secrets['MySQL']['host'].';dbname='.$secrets['MySQL']['db'],
-			'username' => $secrets['MySQL']['user'],
-			'password' => $secrets['MySQL']['pass'],
+			'dsn' => 'mysql:host='.$params['secrets']['MySQL']['host'].';dbname='.$params['secrets']['MySQL']['db'],
+			'username' => $params['secrets']['MySQL']['user'],
+			'password' => $params['secrets']['MySQL']['pass'],
 			'charset' => 'utf8',
 			'tablePrefix' => 'mister42_',
 			'attributes' => [
@@ -77,9 +75,9 @@ return [
 			'class' => 'yii\swiftmailer\Mailer',
 			'transport' => [
 				'class' => 'Swift_SmtpTransport',
-				'host' => $secrets['email']['host'],
-				'username' => $secrets['email']['username'],
-				'password' => $secrets['email']['password'],
+				'host' => $params['secrets']['email']['host'],
+				'username' => $params['secrets']['email']['username'],
+				'password' => $params['secrets']['email']['password'],
 				'encryption' => 'tls',
 			],
 		],
