@@ -1,6 +1,8 @@
 <?php
+namespace mister42;
+
 class Params {
-	public function getValues() {
+	public function getValues(): array {
 		return [
 			'description' => 'Sharing beautiful knowledge of the world.',
 			'languages' => [

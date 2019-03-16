@@ -5,10 +5,6 @@
     "license": "GPL-3.0-only",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "autoload": {
-        "psr-0": { "": "mister42/" },
-        "psr-4": {"app\\": "mister42/"}
-    },
     "config": {
         "component-dir": "../vendor-components",
         "vendor-dir": "../vendor",

@@ -3,7 +3,7 @@ namespace app\models\tools;
 use Yii;
 use app\models\Mailer;
 use app\widgets\TimePicker;
-use Mpdf\QrCode\QrCode;
+use Da\QrCode\QrCode;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\helpers\{FileHelper, StringHelper};
 
@@ -78,9 +78,10 @@ class Qr extends \yii\base\Model {
 
 		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
 		$cacheFile = Yii::getAlias('@assetsroot/temp/'.uniqid('qr').'.png');
-		$qrcode = new QrCode(utf8_encode($qrData), 'L');
-		$qrcode->disableBorder();
-		$qrcode->displayPNG($this->size, [255, 255, 255], [0, 0, 0], $cacheFile, 6);
+		$qrCode = (new QrCode($qrData))
+			->setSize($this->size)
+			->setMargin(0);
+		$qrCode->writeFile($cacheFile);
 
 		if ($this->recipient)
 			Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
