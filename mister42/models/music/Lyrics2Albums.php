@@ -63,7 +63,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			Lyrics3Tracks::getLastModified($album->artist->url, $album->year, $album->url),
 			[
 				'author' => $album->artist->name,
-				'footer' => implode('|', [Html::a(Yii::$app->name, Url::to(['site/index'], true)), $album->year, 'Page {PAGENO} of {nb}']),
+				'footer' => implode('|', [Html::a(Yii::$app->name, Yii::$app->params['shortDomain']), $album->year, 'Page {PAGENO} of {nb}']),
 				'header' => implode('|', [$album->artist->name, 'Lyrics', $album->name]),
 				'keywords' => implode(', ', [$album->artist->name, $album->name, 'lyrics']),
 				'subject' => implode(' - ', [$album->artist->name, $album->name]),

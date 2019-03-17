@@ -85,10 +85,6 @@ class Common {
 						'encryption' => 'tls',
 					],
 				],
-				'pdf' => [
-					'class' => \kartik\mpdf\Pdf::class,
-					'mode' => \kartik\mpdf\Pdf::MODE_UTF8,
-				],
 				'urlManager' => [
 					'class' => 'codemix\localeurls\UrlManager',
 					'enablePrettyUrl' => true,
@@ -118,7 +114,6 @@ class Common {
 						'music/lyrics/<artist:.*?>'												=> 'music/lyrics',
 						'music/collection-cover/<id:.*>.jpg'									=> 'music/collection-cover',
 						'articles/<id:\d+>/<title:.*?>.pdf'										=> 'articles/pdf',
-						$params['shortDomain'].'art<id:\d+>'									=> 'permalink/articles',
 						'articles/<id:\d+>/<title:.*?>'											=> 'articles/article',
 						'articles/<id:\d+>'														=> 'articles/article',
 						'articles/<action:create|update|delete>/<id:.*>'						=> 'articles/<action>',
@@ -129,6 +124,15 @@ class Common {
 						'<controller:articles|calculator|feed|tools>'							=> '<controller>/index',
 						'articles/<action>'														=> 'articles/<action>',
 						'<alias:\w+>'															=> 'site/<alias>',
+					],
+				],
+				'urlManagerAssets' => [
+					'class' => 'codemix\localeurls\UrlManager',
+					'enablePrettyUrl' => true,
+					'showScriptName' => false,
+					'baseUrl' => $params['shortDomain'],
+					'rules' => [
+						'art<id:\d+>'															=> 'permalink/articles',
 					],
 				],
 			],

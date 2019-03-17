@@ -91,13 +91,13 @@ class Articles extends \yii\db\ActiveRecord {
 		$pdf = new Pdf();
 		return $pdf->create(
 			'@runtime/PDF/articles/'.sprintf('%05d', $model->id),
-			$model->contentParsed,
+			str_replace('[readmore]', null, $model->contentParsed),
 			$model->updated,
 			[
 				'author' => $name,
 				'created' => $model->created,
 				'footer' => implode('|', ["{$tags}: {$model->tags}", "Author: {$name}", 'Page {PAGENO} of {nb}']),
-				'header' => implode('|', [Html::a(Yii::$app->name, Url::to(['site/index'], true)), Html::a($model->title, ['/permalink/articles', 'id' => $model->id]), date('D, j M Y', $model->updated)]),
+				'header' => implode('|', [Html::a(Yii::$app->name, Yii::$app->params['shortDomain']), Html::a($model->title, Yii::$app->urlManagerAssets->createUrl(['/permalink/articles', 'id' => $model->id])), date('D, j M Y', $model->updated)]),
 				'keywords' => $model->tags,
 				'subject' => $model->title,
 				'title' => $model->title,

@@ -2,7 +2,7 @@
 use app\models\music\Lyrics2Albums;
 use yii\bootstrap4\Html;
 
-echo '<bookmark content="track list" />';
+echo '<bookmark content="tracklist" />';
 
 echo '<br><br><br>';
 echo '<div class="text-center">';
