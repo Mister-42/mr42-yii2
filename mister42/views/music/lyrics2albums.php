@@ -74,7 +74,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 									[
 										'thumb'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
 										'image'	=> ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800'],
-										'title'	=> Html::tag('span', implode(' - ', [$album->artist->name, $album->name]), ['class' => 'notranslate']),
+										'title'	=> implode(' - ', [$album->artist->name, $album->name]),
 										'group'	=> $album->artist->url,
 									],
 								],

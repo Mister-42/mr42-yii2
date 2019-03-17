@@ -28,11 +28,9 @@ class TimePicker extends DatePicker {
 	public function run() {
 		$this->clientOptions['showTime'] = $this->mode !== 'date';
 
-		if ($this->hasModel()) :
+		$input = Html::textInput($this->name, $this->value, $this->options);
+		if ($this->hasModel())
 			$input = Html::activeTextInput($this->model, $this->attribute, $this->options);
-		else :
-			$input = Html::textInput($this->name, $this->value, $this->options);
-		endif;
 
 		if ($this->addon) :
 			$input = strtr($this->template, ['{input}' => $input, '{addon}' => Yii::$app->icon->fieldAddon($this->addon)]);

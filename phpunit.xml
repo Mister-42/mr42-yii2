@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit bootstrap="mister42/tests/_bootstrap.php">
 	<testsuites>
-
-		<testsuite name="mr.42 test suite">
+		<testsuite name="Mr.42 test suite">
 			<directory>mister42/tests/unit</directory>
-				<file>IconTest.php</file>
 		</testsuite>
-
 	</testsuites>
 </phpunit>

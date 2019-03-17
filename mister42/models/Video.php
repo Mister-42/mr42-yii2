@@ -11,9 +11,10 @@ class Video {
 			$src = $isPlaylist
 				? 'https://www.youtube-nocookie.com/embed/videoseries?'.http_build_query(['disablekb' => 1, 'list' => $id, 'showinfo' => 0])
 				: "https://www.youtube-nocookie.com/embed/{$id}?".http_build_query(['disablekb' => 1, 'rel' => 0, 'showinfo' => 0]);
-		else :
-			return Yii::t('mr42', 'Sorry, {source} is not supported.', ['source' => $source]);
 		endif;
+
+		if (!isset($src))
+			return Yii::t('mr42', 'Sorry, {source} is not supported.', ['source' => $source]);
 
 		return Html::tag('div',
 			Html::tag('iframe', null, ['allowfullscreen' => true, 'class' => 'embed-responsive-item', 'src' => $src])
@@ -25,8 +26,8 @@ class Video {
 			return $isPlaylist ? "https://vimeo.com/album/{$id}" : "https://vimeo.com/{$id}";
 		elseif ($source === 'youtube') :
 			return $isPlaylist ? 'https://www.youtube.com/playlist?'.http_build_query(['list' => $id]) : "https://youtu.be/{$id}";
-		else :
-			return Yii::t('mr42', 'Sorry, {source} is not supported.', ['source' => $source]);
 		endif;
+
+		return Yii::t('mr42', 'Sorry, {source} is not supported.', ['source' => $source]);
 	}
 }
