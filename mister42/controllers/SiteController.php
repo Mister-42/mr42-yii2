@@ -1,10 +1,10 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\site\{Contact, Webmanifest};
+use app\models\site\Webmanifest;
 use yii\base\BaseObject;
 use yii\filters\{AccessControl, HttpCache};
-use yii\web\{ErrorAction, NotFoundHttpException, Response, UploadedFile};
+use yii\web\{ErrorAction, NotFoundHttpException, Response};
 
 class SiteController extends \yii\web\Controller {
 	public function actions(): array {
@@ -47,19 +47,6 @@ class SiteController extends \yii\web\Controller {
 	public function actionIndex(): string {
 		$this->layout = 'columns';
 		return $this->render('index');
-	}
-
-	public function actionContact(): string {
-		$model = new Contact();
-		if ($model->load(Yii::$app->request->post())) :
-			$model->attachment = UploadedFile::getInstance($model, 'attachment');
-			if ($model->contact())
-				return $this->renderAjax('contact-success');
-		endif;
-
-		return $this->render('contact', [
-			'model' => $model,
-		]);
 	}
 
 	public function actionFaviconico(): Response {

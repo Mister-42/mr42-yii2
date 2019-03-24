@@ -1,5 +1,5 @@
 <?php
-namespace app\models\site;
+namespace app\models\my;
 use Yii;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 
@@ -35,10 +35,7 @@ class Contact extends \yii\base\Model {
 		];
 	}
 
-	public function contact(): bool {
-		if (!$this->validate())
-			return false;
-
+	public function sendEmail(): bool {
 		$mailer = Yii::$app->mailer->compose()
 			->setTo(Yii::$app->params['secrets']['params']['adminEmail'])
 			->setFrom([$this->email => $this->name])

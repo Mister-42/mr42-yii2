@@ -1,8 +1,10 @@
 <?php
 namespace app\controllers;
 use Yii;
+use app\models\my\Contact;
 use yii\base\BaseObject;
 use yii\filters\HttpCache;
+use yii\web\UploadedFile;
 
 class MyController extends \yii\web\Controller {
 	public function behaviors(): array {
@@ -17,8 +19,22 @@ class MyController extends \yii\web\Controller {
 				'lastModified' => function(BaseObject $action) {
 					return filemtime(Yii::getAlias("@app/views/{$action->controller->id}/{$action->id}.php"));
 				},
+				'except' => ['contact'],
 			],
 		];
+	}
+
+	public function actionContact(): string {
+		$model = new Contact();
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) :
+			$model->attachment = UploadedFile::getInstance($model, 'attachment');
+			if ($model->sendEmail())
+				return $this->renderAjax('contact-success');
+		endif;
+
+		return $this->render('contact', [
+			'model' => $model,
+		]);
 	}
 
 	public function actionPi(): string {

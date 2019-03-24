@@ -71,7 +71,7 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 		$bar[] = Yii::$app->icon->show('clock', ['class' => 'mr-1 text-muted']).Html::tag('time', Yii::$app->formatter->asRelativeTime($model->created), ['datetime' => date(DATE_W3C, $model->created)]);
 
 		if ($model->updated - $model->created > 3600)
-			$bar[] = Yii::$app->icon->show('sync', ['class' => 'mr-1 text-muted']).Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
+			$bar[] = Yii::$app->icon->show('history', ['class' => 'mr-1 text-muted']).Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
 
 		$bar[] = Yii::$app->icon->show('user', ['class' => 'mr-1 text-muted']).Html::a($profile->name ?? $model->author->username, ['/user/profile/show', 'username' => $model->author->username]);
 		echo Html::tag('div', implode(' · ', $bar));

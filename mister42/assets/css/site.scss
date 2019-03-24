@@ -167,7 +167,7 @@ form {
 	.required label:not(.custom-file-label) {
 		&:after {
 			color: $red;
-			content: '*';
+			content: '\a0*';
 		}
 	}
 

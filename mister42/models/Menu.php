@@ -77,7 +77,7 @@ class Menu extends \yii\base\Model {
 			],
 			['label' => Yii::$app->icon->show('share-alt', ['class' => 'mr-1']).Html::tag('span', Yii::$app->name), 'url' => null,
 				'items' => [
-					['label' => Yii::t('mr42', 'Contact'), 'url' => ['/site/contact']],
+					['label' => Yii::t('mr42', 'Contact'), 'url' => ['/my/contact']],
 					['label' => Yii::t('mr42', 'My Pi'), 'url' => ['/my/pi']],
 				],
 			],
