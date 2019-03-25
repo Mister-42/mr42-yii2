@@ -1,4 +1,5 @@
 <?php
+use app\widgets\Lightbox;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 
@@ -63,9 +64,21 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 					echo Html::endTag('div');
 				echo Html::endTag('div');
 				if ($data[0]->album->image)
-					echo Html::tag('div',
-						Html::img(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 500], ['alt' => implode(' · ', [$data[0]->artist->name, $data[0]->album->name]), 'class' => 'img-fluid img-thumbnail rounded', 'height' => 500, 'width' => 500, 'style' => 'background-color:'.$data[0]->album->image_color])
-					, ['class' => 'card-body text-center']);
+					echo Lightbox::widget([
+						'imageOptions' => ['class' => 'img-fluid img-thumbnail rounded', 'style' => "background-color:{$data[0]->album->image_color}"],
+						'items' => [
+							[
+								'thumb'	=> ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '500'],
+								'image'	=> ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '800'],
+								'title'	=> implode(' - ', [$data[0]->artist->name, $data[0]->album->name]),
+							],
+						],
+						'linkOptions' => ['class' => 'card-body text-center'],
+						'options' => [
+							'imageFadeDuration'	=> 25,
+							'wrapAround'		=> true,
+						],
+					]);
 			echo Html::endTag('div');
 		echo Html::endTag('div');
 	echo Html::endTag('div');
