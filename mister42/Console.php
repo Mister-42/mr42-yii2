@@ -9,6 +9,7 @@ class Console {
 				'@web' => 'https://www.mister42.me/',
 				'@webroot' => __DIR__.'/../../webroot',
 			],
+			'basePath' => __DIR__,
 			'components' => [
 				'urlManager' => [
 					'baseUrl' => 'https://www.mister42.me/',

@@ -2,6 +2,7 @@
 namespace app\models\my;
 use Yii;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
+use mister42\Secrets;
 
 class Contact extends \yii\base\Model {
 	public $name;
@@ -36,10 +37,11 @@ class Contact extends \yii\base\Model {
 	}
 
 	public function sendEmail(): bool {
+		$secrets = (new Secrets())->getValues();
 		$mailer = Yii::$app->mailer->compose()
-			->setTo(Yii::$app->params['secrets']['params']['adminEmail'])
+			->setTo($secrets['params']['adminEmail'])
 			->setFrom([$this->email => $this->name])
-			->setSubject(Yii::$app->name.' - '.$this->title)
+			->setSubject(implode(' - ', [Yii::$app->name, $this->title]))
 			->setTextBody($this->content);
 
 		if ($this->attachment)

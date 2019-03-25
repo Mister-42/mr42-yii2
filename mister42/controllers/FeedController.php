@@ -2,6 +2,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\articles\Articles;
+use mister42\Secrets;
 use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, StringHelper};
 use yii\web\Response;
@@ -25,7 +26,8 @@ class FeedController extends \yii\web\Controller {
 	}
 
 	public function actionRss(): string {
-		if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, Yii::$app->params['secrets']['params']['specialIPs']))
+		$secrets = (new Secrets())->getValues();
+		if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, $secrets['params']['specialIPs']))
 			$this->redirect('http://f.mr42.me/Mr42')->send();
 
 		$articles = Articles::find()

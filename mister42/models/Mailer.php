@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 use Yii;
+use mister42\Secrets;
 use yii\swiftmailer\Message;
 
 class Mailer {
@@ -11,10 +12,11 @@ class Mailer {
 	}
 
 	public static function compose(string $recipient, string $subject, string $template, string $code): Message {
+		$secrets = (new Secrets())->getValues();
 		return Yii::$app->mailer
 			->compose([$code => $template])
 			->setTo($recipient)
-			->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
+			->setFrom([$secrets['params']['noreplyEmail'] => Yii::$app->name])
 			->setSubject($subject);
 	}
 

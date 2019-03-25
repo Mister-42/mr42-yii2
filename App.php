@@ -34,12 +34,12 @@ class App {
 	}
 
 	private function loadConfig(array $dir, string $confFile): array {
-		$common = "{$dir[0]}\\Common";
 		$config = ($dir[1] ?? $dir[0])."\\{$confFile}";
+		$common = "{$dir[0]}\\Common";
 
 		return yii\helpers\ArrayHelper::merge(
-			(new $common)->getValues(),
-			(new $config)->getValues()
+			(new $config)->getValues(),
+			(new $common)->getValues()
 		);
 	}
 }

@@ -10,8 +10,8 @@ class Params {
 				'de' => 'Deutsch',
 				'ru' => 'Русский',
 			],
-			'secrets' => (new Secrets())->getValues(),
-			'shortDomain' => 'https://www.mr42.me/',
+			'longDomain' => 'https://www.mister42.me',
+			'shortDomain' => 'https://mr42.me',
 			'themeColor' => '#003865',
 		];
 	}

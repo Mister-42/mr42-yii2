@@ -3,6 +3,7 @@ namespace app\models\articles;
 use Yii;
 use app\models\user\User;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
+use mister42\Secrets;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 
@@ -72,13 +73,14 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 	}
 
 	public function sendCommentMail(Articles $model, self $comment): void {
+		$secrets = (new Secrets())->getValues();
 		Yii::$app->mailer->compose(
 				['text' => 'commentToAuthor'],
 				['model' => $model, 'comment' => $comment]
 			)
 			->setTo([$model->author->email => $model->author->username])
-			->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
-			->setSubject("A new comment has been posted on '{$model->title}'")
+			->setFrom([$secrets['params']['noreplyEmail'] => Yii::$app->name])
+			->setSubject("A new comment has been posted on '{$model->title}'.")
 			->send();
 
 		if (Yii::$app->user->isGuest) :
@@ -87,7 +89,7 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 					['model' => $model, 'comment' => $comment]
 				)
 				->setTo([$comment->email => $comment->name])
-				->setFrom([Yii::$app->params['secrets']['params']['noreplyEmail'] => Yii::$app->name])
+				->setFrom([$secrets['params']['noreplyEmail'] => Yii::$app->name])
 				->setSubject("Thank you for your reply on '{$model->title}'.")
 				->send();
 		endif;

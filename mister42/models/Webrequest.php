@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 use Yii;
+use mister42\Secrets;
 use yii\helpers\Url;
 use yii\httpclient\{Client, Response};
 
@@ -10,8 +11,9 @@ class Webrequest {
 	}
 
 	public static function getLastfmApi(string $method, string $user, int $limit): Response {
+		$secrets = (new Secrets())->getValues();
 		return self::getUrl('https://ws.audioscrobbler.com/2.0/', '', [
-			'api_key' => Yii::$app->params['secrets']['last.fm']['API'],
+			'api_key' => $secrets['last.fm']['API'],
 			'limit' => $limit,
 			'method' => $method,
 			'user' => $user,
@@ -19,9 +21,10 @@ class Webrequest {
 	}
 
 	public static function getYoutubeApi(string $id, string $content): Response {
+		$secrets = (new Secrets())->getValues();
 		return self::getUrl('https://www.googleapis.com/youtube/v3', $content, [
 			'id' => $id,
-			'key' => Yii::$app->params['secrets']['google']['API'],
+			'key' => $secrets['google']['API'],
 			'part' => $content === 'videos' ? 'snippet,status' : 'contentDetails,status',
 		]);
 	}

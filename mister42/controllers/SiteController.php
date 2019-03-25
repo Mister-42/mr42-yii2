@@ -39,7 +39,7 @@ class SiteController extends \yii\web\Controller {
 				'lastModified' => function(BaseObject $action) {
 					return filemtime(Yii::getAlias(($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php"));
 				},
-				'except' => ['index', 'contact', 'offline', 'webmanifest'],
+				'except' => ['index', 'offline', 'webmanifest'],
 			],
 		];
 	}

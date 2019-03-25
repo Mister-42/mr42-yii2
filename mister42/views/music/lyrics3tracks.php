@@ -2,11 +2,12 @@
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 
-$this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name, 'Lyrics']);
+$this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name]);
+$this->title = implode(' ', [$this->title, 'Lyrics']);
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
 $this->params['breadcrumbs'][] = ['label' => Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']), 'url' => ['lyrics', 'artist' => $data[0]->artist->url]];
-$this->params['breadcrumbs'][] = $data[0]->album->name;
+$this->params['breadcrumbs'][] = Html::tag('span', $data[0]->album->name, ['class' => 'notranslate']);
 
 if ($data[0]->album->image)
 	$this->registerMetaTag(['property' => 'og:image', 'content' => Url::to(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 800], true)]);

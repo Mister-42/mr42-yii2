@@ -12,6 +12,6 @@ class PermalinkController extends \yii\web\Controller {
 			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
 
 		$article = $article->one();
-		$this->redirect('https://www.mister42.me'.Url::to(['articles/index', 'id' => $article->id, 'title' => $article->url]), 301)->send();
+		$this->redirect(Url::to(['articles/article', 'id' => $article->id, 'title' => $article->url]), 301)->send();
 	}
 }
