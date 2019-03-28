@@ -120,7 +120,9 @@ class Articles extends \yii\db\ActiveRecord {
 	}
 
 	public function getComments() {
-		return $this->hasMany(ArticlesComments::class, ['parent' => 'id']);
+		return $this->hasMany(ArticlesComments::class, ['parent' => 'id'])
+			->onCondition(['parent_comment' => null])
+			->with('commentReplies');
 	}
 
 	public static function find(): Query {

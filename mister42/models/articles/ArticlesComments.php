@@ -103,6 +103,10 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 		return $this->hasOne(Articles::class, ['id' => 'parent']);
 	}
 
+	public function getCommentReplies() {
+		return $this->hasMany(self::className(), ['parent_comment' => 'id']);
+	}
+
 	public static function find() {
 		return new Query(get_called_class());
 	}

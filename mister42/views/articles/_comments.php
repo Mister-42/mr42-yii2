@@ -42,4 +42,31 @@ foreach ($data->comments as $comment) :
 			unset($bar);
 		echo Html::endTag('div');
 	echo Html::endTag('article');
+
+	foreach ($comment->commentReplies as $reply) :
+		echo Html::beginTag('article', ['class' => 'card mb-3 ml-5']);
+			echo Html::beginTag('div', ['class' => 'card-header']);
+				echo Html::tag('div',
+					Html::tag('h4', "Re: {$comment->title}", ['class' => 'comment-info'])
+				, ['class' => 'float-left']);
+			echo Html::endTag('div');
+
+			echo Html::tag('div', $reply->parsedContent, ['class' => 'card-body']);
+
+			echo Html::beginTag('div', ['class' => 'card-footer']);
+				if ($reply->user !== null) :
+					$user = User::find(['id' => $reply->user])->with('profile')->one();
+					$reply->name = $user->profile->name ?? $user->username;
+					$reply->website = $user->profile->website;
+				endif;
+
+				$bar[] = Yii::$app->icon->show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($reply->created), ['datetime' => date(DATE_W3C, $reply->created)]);
+				$bar[] = Yii::$app->icon->show('user', ['class' => 'text-muted mr-1']).$reply->name.($data->authorId === $reply->user ? Html::tag('sup', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-secondary']) : '');
+				if (!empty($reply->website))
+					$bar[] = Yii::$app->icon->show('globe', ['class' => 'text-muted mr-1']).Html::a($reply->website, $reply->website);
+				echo Html::tag('div', implode(' · ', $bar));
+				unset($bar);
+			echo Html::endTag('div');
+		echo Html::endTag('article');
+	endforeach;
 endforeach;
