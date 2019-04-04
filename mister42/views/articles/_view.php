@@ -56,7 +56,7 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 		echo Html::tag('div', $author, ['class' => 'card-footer']);
 
 	echo Html::beginTag('div', ['class' => 'card-footer']);
-		$bar[] = Yii::$app->icon->show('link', ['class' => 'mr-1 text-muted']).Html::a(Yii::t('mr42', 'Permalink'), Yii::$app->urlManagerAssets->createUrl(['/permalink/articles', 'id' => $model->id]));
+		$bar[] = Yii::$app->icon->show('link', ['class' => 'mr-1 text-muted']).Html::a(Yii::t('mr42', 'Permalink'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $model->id]));
 
 		$commentText = Yii::t('mr42', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
 		$bar[] = Yii::$app->icon->show('comment', ['class' => 'mr-1 text-muted']).Html::a($commentText, ['article', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);

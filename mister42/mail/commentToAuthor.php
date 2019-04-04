@@ -5,4 +5,4 @@ use yii\helpers\Url;
 
 <?= $comment->content.PHP_EOL ?>
 
-<?= Yii::$app->urlManagerAssets->createUrl(['/permalink/articles', 'id' => $model->id]) ?>
+<?= Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $model->id]) ?>

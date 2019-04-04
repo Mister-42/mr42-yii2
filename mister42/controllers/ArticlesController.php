@@ -55,7 +55,7 @@ class ArticlesController extends \yii\web\Controller {
 		if ($title !== $model->url)
 			$this->redirect(['article', 'id' => $model->id, 'title' => $model->url], 301)->send();
 
-		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Url::to(['permalink/articles', 'id' => $model->id])]);
+		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $model->id])]);
 		if ($model->pdf)
 			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
 

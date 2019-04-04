@@ -39,7 +39,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div> {hint} {error}'
 			])
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
-			->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), ['/permalink/articles', 'id' => 4], ['target' => '_blank'])]));
+			->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank'])]));
 
 		if (Yii::$app->user->isGuest)
 			echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);

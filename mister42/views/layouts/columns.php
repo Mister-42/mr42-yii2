@@ -38,7 +38,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->label(false);
 		ActiveForm::end();
 
-		if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0, 'enabled' => !YII_DEBUG, 'variations' => Yii::$app->language])) :
+		if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0, 'enabled' => !YII_DEBUG, 'variations' => [Yii::$app->language]])) :
 			$widgets = [
 				Yii::t('mr42', 'Recent Articles') => ['class' => RecentArticles::widget(), 'icon' => 'newspaper'],
 				Yii::t('mr42', 'Recent Comments') => ['class' => RecentComments::widget(), 'icon' => 'comments'],

@@ -71,7 +71,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'inputTemplate' => '<div class="row"><div id="chars" class="col-12 text-right"></div></div><div class="input-group">'.Yii::$app->icon->fieldAddon('info-circle').'{input}</div>',
 			])
 			->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => ++$tab])
-			->hint(Yii::t('mr42', 'You may use {markdown} and {age} to show your age, calculated from <nobr>{birthday}</nobr>. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), ['/permalink/articles', 'id' => 4], ['target' => '_blank']), 'age' => '<code>%age%</code>', 'birthday' => Html::tag('code', $model->getAttributeLabel('birthday'))]));
+			->hint(Yii::t('mr42', 'You may use {markdown} and {age} to show your age, calculated from <nobr>{birthday}</nobr>. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank']), 'age' => '<code>%age%</code>', 'birthday' => Html::tag('code', $model->getAttributeLabel('birthday'))]));
 
 		echo $form->field($model, 'timezone', [
 			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('clock').'{input}</div>',

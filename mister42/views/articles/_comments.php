@@ -35,7 +35,7 @@ foreach ($data->comments as $comment) :
 			endif;
 
 			$bar[] = Yii::$app->icon->show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($comment->created), ['datetime' => date(DATE_W3C, $comment->created)]);
-			$bar[] = Yii::$app->icon->show('user', ['class' => 'text-muted mr-1']).$comment->name.($data->authorId === $comment->user ? Html::tag('sup', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-secondary']) : '');
+			$bar[] = Yii::$app->icon->show('user', ['class' => 'text-muted mr-1']).$comment->name.($data->authorId === $comment->user ? Html::tag('span', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-info']) : '');
 			if (!empty($comment->website))
 				$bar[] = Yii::$app->icon->show('globe', ['class' => 'text-muted mr-1']).Html::a($comment->website, $comment->website);
 			echo Html::tag('div', implode(' · ', $bar));
@@ -61,7 +61,7 @@ foreach ($data->comments as $comment) :
 				endif;
 
 				$bar[] = Yii::$app->icon->show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($reply->created), ['datetime' => date(DATE_W3C, $reply->created)]);
-				$bar[] = Yii::$app->icon->show('user', ['class' => 'text-muted mr-1']).$reply->name.($data->authorId === $reply->user ? Html::tag('sup', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-secondary']) : '');
+				$bar[] = Yii::$app->icon->show('user', ['class' => 'text-muted mr-1']).$reply->name.($data->authorId === $reply->user ? Html::tag('span', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-info']) : '');
 				if (!empty($reply->website))
 					$bar[] = Yii::$app->icon->show('globe', ['class' => 'text-muted mr-1']).Html::a($reply->website, $reply->website);
 				echo Html::tag('div', implode(' · ', $bar));

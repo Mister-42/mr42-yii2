@@ -8,8 +8,6 @@ use Mpdf\Writer\BaseWriter;
 use yii\helpers\FileHelper;
 
 class Pdf {
-	protected $this;
-
 	public function create(string $filename, string $content, int $updated, array $params): string {
 		$filename = Yii::getAlias($filename.'.pdf');
 		$created = $params['created'] ?? $updated;

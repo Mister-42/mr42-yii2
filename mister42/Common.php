@@ -30,7 +30,6 @@ class Common {
 	}
 
 	private function getComponents(): array {
-		$mr42components = (new \mr42\Web())->getComponents();
 		return [
 			'assetManager' => [
 				'basePath' => '@assetsroot',
@@ -144,12 +143,12 @@ class Common {
 					'<alias:\w+>'															=> 'site/<alias>',
 				],
 			],
-			'urlManagerAssets' => [
-				'class' => 'codemix\localeurls\UrlManager',
+			'urlManagerMr42' => [
+				'class' => 'yii\web\UrlManager',
 				'enablePrettyUrl' => true,
 				'showScriptName' => false,
 				'baseUrl' => $this->params['shortDomain'],
-				'rules' => $mr42components['urlManager']['rules'],
+				'rules' => ((new \mr42\Web())->getComponents())['urlManager']['rules'],
 			],
 		];
 	}

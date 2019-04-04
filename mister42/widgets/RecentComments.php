@@ -12,6 +12,7 @@ class RecentComments extends Widget {
 			->orderBy(['created' => SORT_DESC])
 			->with('article')
 			->where(['active' => true])
+			->andWhere(['parent_comment' => null])
 			->limit($this->limit)
 			->all();
 

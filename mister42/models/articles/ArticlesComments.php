@@ -79,7 +79,7 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 				['model' => $model, 'comment' => $comment]
 			)
 			->setTo([$model->author->email => $model->author->username])
-			->setFrom([$secrets['params']['noreplyEmail'] => Yii::$app->name])
+			->setFrom([$comment->email => $comment->name])
 			->setSubject("A new comment has been posted on '{$model->title}'.")
 			->send();
 

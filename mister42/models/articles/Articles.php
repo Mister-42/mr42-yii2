@@ -97,7 +97,7 @@ class Articles extends \yii\db\ActiveRecord {
 				'author' => $name,
 				'created' => $model->created,
 				'footer' => implode('|', ["{$tags}: {$model->tags}", "Author: {$name}", 'Page {PAGENO} of {nb}']),
-				'header' => implode('|', [Html::a(Yii::$app->name, Yii::$app->params['shortDomain']), Html::a($model->title, Yii::$app->urlManagerAssets->createUrl(['/permalink/articles', 'id' => $model->id])), date('D, j M Y', $model->updated)]),
+				'header' => implode('|', [Html::a(Yii::$app->name, Yii::$app->params['shortDomain']), Html::a($model->title, Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $model->id])), date('D, j M Y', $model->updated)]),
 				'keywords' => $model->tags,
 				'subject' => $model->title,
 				'title' => $model->title,
