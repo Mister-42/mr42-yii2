@@ -66,7 +66,7 @@ class Common {
 				'dsn' => 'mysql:host='.$this->secrets['MySQL']['host'].';dbname='.$this->secrets['MySQL']['db'],
 				'username' => $this->secrets['MySQL']['user'],
 				'password' => $this->secrets['MySQL']['pass'],
-				'charset' => 'utf8',
+				'charset' => 'utf8mb4',
 				'tablePrefix' => 'mister42_',
 				'attributes' => [
 					\PDO::MYSQL_ATTR_LOCAL_INFILE => true,
@@ -138,7 +138,7 @@ class Common {
 					'articles/search'														=> 'articles/search',
 					'articles/tag/<tag:\w+>'												=> 'articles/tag',
 					'articles/page-<page:\d+>'												=> 'articles/index',
-					'<controller:articles|calculator|feed|tools>'							=> '<controller>/index',
+					'<controller:articles|calculator|feed|test|tools>'						=> '<controller>/index',
 					'articles/<action>'														=> 'articles/<action>',
 					'<alias:\w+>'															=> 'site/<alias>',
 				],
