@@ -10,7 +10,7 @@ class Formatter extends \yii\i18n\Formatter {
 		$data = $allowHtml ? Yii::$app->formatter->asRaw(trim($data)) : Yii::$app->formatter->asHtml(trim($data), ['HTML.Allowed' => '']);
 		$data = preg_replace_callback_array([
 			'/(vimeo):(()?[[:digit:]]+):(21by9|16by9|4by3|1by1)/U'				=> [$this, 'getVideo'],
-			'/(youtube):((PL)?[[:ascii:]]{11,32}):(21by9|16by9|4by3|1by1)/U'	=> [$this, 'getVideo'],
+			'/(youtube):((OL|PL){0,1}?[[:ascii:]]+):(21by9|16by9|4by3|1by1)/U'	=> [$this, 'getVideo'],
 		], $data);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
@@ -43,6 +43,6 @@ class Formatter extends \yii\i18n\Formatter {
 	}
 
 	private function getVideo(array $match): string {
-		return Video::getEmbed($match[1], $match[2], $match[4], $match[3] === 'PL' ? true : $match[3]);
+		return Video::getEmbed($match[1], $match[2], $match[4], boolval($match[3]));
 	}
 }

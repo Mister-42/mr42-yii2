@@ -18,7 +18,6 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function afterFind(): void {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
-		$this->playlist_id = $this->playlist_id ? 'PL'.$this->playlist_id : null;
 		$this->playlist_embed = $this->playlist_id && $this->playlist_ratio ? Video::getEmbed('youtube', $this->playlist_id, $this->playlist_ratio, true) : null;
 		$this->playlist_url = $this->playlist_id ? Video::getUrl('youtube', $this->playlist_id, true) : null;
 		$this->updated = Yii::$app->formatter->asTimestamp($this->updated);
@@ -28,7 +27,6 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function beforeSave($insert): bool {
 		if (parent::beforeSave($insert)) :
 			$this->url = $this->name === $this->url ? null : $this->url;
-			$this->playlist_id = $this->playlist_id ? substr($this->playlist_id, 2) : null;
 			$this->active = $this->active ? 1 : 0;
 			return true;
 		endif;

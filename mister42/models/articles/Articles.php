@@ -110,9 +110,7 @@ class Articles extends \yii\db\ActiveRecord {
 	}
 
 	public static function getLastModified(): int {
-		$data = self::find()
-			->max('updated');
-		return $data;
+		return $self::find()->max('updated');
 	}
 
 	public function getAuthor() {
