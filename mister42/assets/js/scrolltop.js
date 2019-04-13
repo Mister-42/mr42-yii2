@@ -1,8 +1,8 @@
-btn = $('#btn-scrolltop');
-tp = $('html, body').offset().top + 150;
+var btn = $('#btn-scrolltop');
+var tp = $('html, body').offset().top + 150;
 
 $(document).on('scroll', function() {
-	pos = $(window).scrollTop();
+	var pos = $(window).scrollTop();
 	if (pos > tp && !btn.is(':visible')) {
 		btn.fadeIn();
 	} else if (pos < tp && btn.is(':visible')) {

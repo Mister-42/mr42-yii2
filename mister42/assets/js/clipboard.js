@@ -10,7 +10,7 @@ cb.on('success', function(e) {
 });
 
 cb.on('error', function(e) {
-	actionKey = (action === 'cut' ? 'X' : 'C');
+	var actionKey = (action === 'cut' ? 'X' : 'C');
 	if (/iPhone|iPad/i.test(navigator.userAgent)) {
 		btnSucces('No support');
 	} else if (/Mac/i.test(navigator.userAgent)) {

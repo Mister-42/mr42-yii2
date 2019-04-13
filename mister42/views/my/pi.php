@@ -9,6 +9,7 @@ $tabs = [
 	'day' => ['short' => Yii::t('mr42', 'Day'), 'long' => Yii::t('mr42', 'Last Day')],
 	'week' => ['short' => Yii::t('mr42', 'Week'), 'long' => Yii::t('mr42', 'Last Week')],
 	'month' => ['short' => Yii::t('mr42', 'Month'), 'long' => Yii::t('mr42', 'Last Month')],
+	'year' => ['short' => Yii::t('mr42', 'Year'), 'long' => Yii::t('mr42', 'Last Year')],
 ];
 $datatype = [
 	'tempload' => Yii::t('mr42', 'Temperature & Load'),

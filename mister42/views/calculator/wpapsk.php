@@ -12,8 +12,8 @@ $this->params['breadcrumbs'][] = Yii::t('mr42', 'Wifi Protected Access Pre-Share
 $model = new Wpapsk;
 ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/wpapsk.js'), View::POS_HEAD);
-$this->registerJs('reset_psk();', View::POS_READY);
-$this->registerJs('$("input").keypress(function(e){if(e.which==13){cal_psk();return false}});', View::POS_READY);
+$this->registerJs('resetPsk();', View::POS_READY);
+$this->registerJs('$("input").keypress(function(e){if(e.which==13){calcPsk();return false}});', View::POS_READY);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/pbkdf2.js'), View::POS_END);
 $this->registerJs(Yii::$app->formatter->jspack('calculator/sha1.js'), View::POS_END);
 
@@ -52,8 +52,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		, ['class' => 'd-none form-group current-progress']);
 
 		echo Html::tag('div',
-			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1 suppress', 'tabindex' => $tab + 2, 'onclick' => 'reset_psk()']).
-			Html::button(Yii::t('mr42', 'Calculate'), ['class' => 'btn btn-primary ml-1 suppress', 'tabindex' => ++$tab, 'onclick' => 'cal_psk()'])
+			Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1 suppress', 'tabindex' => $tab + 2, 'onclick' => 'resetPsk()']).
+			Html::button(Yii::t('mr42', 'Calculate'), ['class' => 'btn btn-primary ml-1 suppress', 'tabindex' => ++$tab, 'onclick' => 'calcPsk()'])
 		, ['class' => 'btn-toolbar float-right form-group']);
 
 		ActiveForm::end();
