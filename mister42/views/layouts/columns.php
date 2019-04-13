@@ -8,7 +8,7 @@ use yii\helpers\Inflector;
 $isHome = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
 $dependency = [
 	'class' => ExpressionDependency::class,
-	'expression' => Articles::find()->max('updated'),
+	'expression' => implode('-', [Articles::getLastModified(), ArticlesComments::getLastModified()]),
 	'reusable' => true,
 ];
 
@@ -28,6 +28,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			]);
 		echo Html::endTag('aside');
 	endif;
+
 	echo Html::beginTag('aside', ['class' => 'col-4 col-lg-3 d-none d-md-block']);
 		$form = ActiveForm::begin(['action' => ['articles/search'], 'method' => 'get', 'options' => ['role' => 'search']]);
 		echo $form->field(new Search(), 'keyword', [

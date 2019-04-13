@@ -95,6 +95,10 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 		endif;
 	}
 
+	public static function getLastModified(): int {
+		return self::find()->max('created');
+	}
+
 	public function getAuthor() {
 		return $this->hasOne(User::class, ['id' => 'user']);
 	}

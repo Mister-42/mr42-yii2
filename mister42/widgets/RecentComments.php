@@ -11,13 +11,13 @@ class RecentComments extends Widget {
 		$comments = ArticlesComments::find()
 			->orderBy(['created' => SORT_DESC])
 			->with('article')
-			->where(['active' => true])
-			->andWhere(['parent_comment' => null])
+			->where(['parent_comment' => null])
 			->limit($this->limit)
 			->all();
 
 		foreach ($comments as $comment) :
-			$link = Html::a($comment->title, ['articles/article', 'id' => $comment->article->id, 'title' => $comment->article->url, '#' => 'comments'], ['class' => 'card-link']);
+			$draft = ($comment->active === 1) ? '' : Html::tag('sup', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-info ml-1']);
+			$link = Html::a($comment->title.$draft, ['articles/article', 'id' => $comment->article->id, 'title' => $comment->article->url, '#' => 'comments'], ['class' => 'card-link']);
 			$items[] = Html::tag('li', $link, ['class' => 'list-group-item text-truncate']);
 		endforeach;
 
