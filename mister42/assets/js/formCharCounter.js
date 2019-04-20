@@ -3,7 +3,7 @@ $('#formContent').keyup(function() {
 	var char = formCharCount.chars - len;
 
 	if(len > formCharCount.chars) {
-		$('#chars').html(formCharCount.lang.overLimit).addClass('alert-danger')
+		$('#chars').html(formCharCount.lang.overLimit).addClass('alert-danger');
 	} else {
 		$('#chars').html(formCharCount.lang.charsLeft).removeClass('alert-danger');
 	}

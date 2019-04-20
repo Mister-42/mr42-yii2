@@ -4,7 +4,7 @@ use yii\bootstrap4\Html;
 use yii\web\View;
 
 $this->title = Yii::t('mr42', 'Password Generator');
-$this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
+$this->params['breadcrumbs'] = [Yii::t('mr42', 'Tools')];
 $this->params['breadcrumbs'][] = $this->title;
 
 ClipboardJsAsset::register($this);

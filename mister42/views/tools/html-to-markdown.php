@@ -4,7 +4,7 @@ use app\models\articles\Articles;
 use yii\bootstrap4\Html;
 
 $this->title = Yii::t('mr42', 'HTML to Markdown Converter');
-$this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
+$this->params['breadcrumbs'] = [Yii::t('mr42', 'Tools')];
 $this->params['breadcrumbs'][] = $this->title;
 
 $lastPost = Articles::findOne(['id' => 4]);
@@ -17,7 +17,7 @@ echo Html::beginTag('form', ['class' => 'html2markdown']);
 	echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('div',
 			Html::tag('h3', Yii::t('mr42', 'HTML')).
-			Html::textArea('input', $lastPost->content)
+			Html::textArea('input', $lastPost->contentParsed)
 		, ['class' => 'col']);
 		echo Html::tag('div',
 			Html::tag('h3', Yii::t('mr42', 'Markdown')).

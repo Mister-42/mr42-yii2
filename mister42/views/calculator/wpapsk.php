@@ -6,7 +6,7 @@ use yii\bootstrap4\{ActiveForm, Html, Progress};
 use yii\web\View;
 
 $this->title = Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key (WPA-PSK) Calculator');
-$this->params['breadcrumbs'][] = Yii::t('mr42', 'Calculator');
+$this->params['breadcrumbs'] = [Yii::t('mr42', 'Calculator')];
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key');
 
 $model = new Wpapsk;

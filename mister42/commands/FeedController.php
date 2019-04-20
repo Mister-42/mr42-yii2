@@ -94,7 +94,7 @@ class FeedController extends Controller {
 		foreach ($data as $item) :
 			$time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
 
-			$feedItem = Feed::findOne(['feed' => $name, 'time' => $time]) ?: new Feed();
+			$feedItem = Feed::findOne(['feed' => $name, 'time' => $time]) ?? new Feed();
 			$feedItem->feed = $name;
 			$feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
 			$feedItem->url = (string) ArrayHelper::getValue($item, $type === 'rss' ? 'link' : 'link.@attributes.href');

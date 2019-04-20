@@ -19,15 +19,15 @@ echo Html::beginTag('div', ['class' => 'row']);
 					->select(['assignment', 'name'])
 					->where(['like', 'assignment', substr(preg_replace('/[^A-F0-9]+/i', '', strtoupper($post['oui'])), 0, 6).'%', false])
 					->orWhere(['like', 'name', $post['oui']]);
-			$count = $data->count();
+			$count = (int) $data->count();
 
-			Alert::begin(['options' => ['class' => ($count == 0) ? 'alert-danger fade show' : 'alert-success fade show']]);
+			Alert::begin(['options' => ['class' => ($count === 0) ? 'alert-danger fade show' : 'alert-success fade show']]);
 				foreach ($data->all() as $item)
 					echo Html::tag('div',
 						Html::tag('div', wordwrap($item->assignment, 2, ':', true), ['class' => 'col-2']).
 						Html::tag('div', $item->name, ['class' => 'col-10'])
 					, ['class' => 'row']);
-				if ($count == 0)
+				if ($count === 0)
 					echo Html::tag('div', Yii::t('yii', 'No results found.'));
 			Alert::end();
 		endif;

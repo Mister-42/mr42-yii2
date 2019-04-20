@@ -36,9 +36,12 @@ class Icon {
 
 	private function getStyle(string $prefix): string {
 		switch ($prefix) :
-			case 'fab':	return 'brands';
-			case 'far':	return 'regular';
-			default:	return 'solid';
+			case 'fab':
+				return 'brands';
+			case 'far':
+				return 'regular';
+			default:
+				return 'solid';
 		endswitch;
 	}
 }
