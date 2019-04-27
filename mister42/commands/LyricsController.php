@@ -154,7 +154,7 @@ class LyricsController extends \yii\console\Controller {
 		$x = 0;
 		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]]);
 		foreach ($query->each() as $track) :
-			$data[] = ['id' => $track->video_id, 'name' => $track->name];
+			$data[] = ['source' => $track->video_source, 'id' => $track->video_id, 'name' => $track->name];
 			if (++$x !== $query->count() && count($data) < 50)
 				continue;
 
@@ -168,7 +168,7 @@ class LyricsController extends \yii\console\Controller {
 			foreach ($data as $trackData) :
 				if (!ArrayHelper::keyExists($trackData['id'], $response, false) || !ArrayHelper::getValue($response, "{$trackData['id']}.status.embeddable")) :
 					Console::write($trackData['name'], [Console::FG_PURPLE], 5);
-					Console::write(video::getUrl('youtube', $trackData['id']), [Console::FG_PURPLE], 5);
+					Console::write(Video::getUrl($trackData['source'], $trackData['id']), [Console::FG_PURPLE], 5);
 
 					if (!ArrayHelper::keyExists($trackData['id'], $response, false)) :
 						Console::writeError('Not Found', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);

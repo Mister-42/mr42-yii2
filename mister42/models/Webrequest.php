@@ -3,7 +3,7 @@ namespace app\models;
 use Yii;
 use mister42\Secrets;
 use yii\helpers\Url;
-use yii\httpclient\{Client, Response};
+use yii\httpclient\{Client, CurlTransport, Response};
 
 class Webrequest {
 	public static function getDiscogsApi(string $content): Response {
@@ -38,15 +38,15 @@ class Webrequest {
 			->send();
 	}
 
-	public static function saveUrl(string $url, string $file): void {
-		$ch = curl_init();
-		$download = fopen($file, 'w');
-		curl_setopt($ch, CURLOPT_POST, 0);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_FILETIME, true);
-		fwrite($download, curl_exec($ch));
-		curl_close($ch);
-		fclose($download);
+	public static function saveUrl(string $url, string $file): Response {
+		$fh = fopen($file, 'w');
+		$client = new Client(['transport' => CurlTransport::class]);
+		$response = $client->createRequest()
+			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Yii::$app->params['shortDomain'].')'])
+			->setUrl($url)
+			->setOutputFile($fh)
+			->send();
+		fclose($fh);
+		return $response;
 	}
 }

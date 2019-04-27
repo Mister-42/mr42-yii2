@@ -31,7 +31,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 							? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
 							: '').
 						($data[0]->album->playlist_url
-							? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+							? Html::a(Yii::$app->icon->show($data[0]->album->playlist_source, ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 							: '').
 						($data[0]->album->active
 							? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
@@ -41,26 +41,24 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 
 				echo Html::beginTag('div', ['class' => 'container mx-1']);
 					echo Html::beginTag('div', ['class' => 'row mr-3']);
-						$x = $y = 0;
-							foreach ($data as $track) :
-								if ($x++ === 0)
-									echo Html::beginTag('div', ['class' => 'col-md-4']);
+						$x = 0;
+						foreach ($data as $track) :
+							if ($x === 0 || $x % ceil(count($data) / 3) === 0)
+								echo Html::beginTag('div', ['class' => 'col-md-4']);
 
-								echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
-									echo $track->track.' · ';
-									echo $track->lyricid || $track->video
-										? Html::a($track->name, '#'.$track->track)
-										: $track->name;
-									echo $track->disambiguation.$track->feat;
-									if ($track->video)
-										echo Yii::$app->icon->show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
+							echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
+								echo $track->track.' · ';
+								echo $track->lyricid || $track->video
+									? Html::a($track->name, '#'.$track->track)
+									: $track->name;
+								echo $track->disambiguation.$track->feat;
+								if ($track->video)
+									echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'prefix' => 'fab fa-']);
+							echo Html::endTag('div');
+
+							if (++$x === count($data) || $x % ceil(count($data) / 3) === 0)
 								echo Html::endTag('div');
-
-								if (++$y === count($data) || $x === (int) ceil(count($data) / 3)) :
-									echo Html::endTag('div');
-									$x = 0;
-								endif;
-							endforeach;
+						endforeach;
 					echo Html::endTag('div');
 				echo Html::endTag('div');
 				if ($data[0]->album->image)
@@ -87,11 +85,15 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 		if ($track->lyricid || $track->wip || $track->video) :
 			echo Html::tag('div',
 				Html::tag('div',
-					Html::tag('span', null, ['class' => 'anchor', 'id' => $track->track]).
-					Html::tag('h4', implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]), ['class' => 'notranslate']).
-					Html::tag('div', $track->wip ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : ''), ['class' => 'lyrics notranslate'])
+					Html::tag('h4', implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]), ['class' => 'notranslate'])
 				, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']).
-				Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4' : 'col-12'])
+				Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4 order-md-12' : 'col-12']).
+				Html::tag('div',
+					Html::tag('span', null, ['class' => 'anchor', 'id' => $track->track]).
+#					Html::tag('h4', implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]), ['class' => 'notranslate']).
+					Html::tag('div', $track->wip ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : ''), ['class' => 'lyrics notranslate'])
+				, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12'])
+//				Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4' : 'col-12'])
 			, ['class' => 'row']);
 		endif;
 	endforeach;

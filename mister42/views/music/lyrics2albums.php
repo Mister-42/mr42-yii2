@@ -24,7 +24,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 
 	foreach ($data as $album) :
 		echo Html::beginTag('div', ['class' => 'row']);
-			echo Html::beginTag('div', ['class' => ' col mb-2']);
+			echo Html::beginTag('div', ['class' => ($album === end($data)) ? 'col mb-1' : 'col mb-3']);
 				echo Html::beginTag('div', ['class' => 'card']);
 					echo Html::tag('div',
 						Html::tag('h4', "{$album->year} · ".($album->tracks
@@ -36,7 +36,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 								? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
 								: '').
 							($album->playlist_url
-								? Html::a(Yii::$app->icon->show('youtube', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+								? Html::a(Yii::$app->icon->show($album->playlist_source, ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 								: '').
 							($album->active
 								? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
@@ -46,9 +46,9 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 
 					echo Html::beginTag('div', ['class' => 'container media mx-1']);
 						echo Html::beginTag('div', ['class' => 'row mr-2 media-body text-truncate']);
-							$x = $y = 0;
+							$x = 0;
 							foreach ($album->tracks as $track) :
-								if ($x++ === 0)
+								if ($x === 0 || $x % ceil(count($album->tracks) / 3) === 0)
 									echo Html::beginTag('div', ['class' => 'col-md-4']);
 
 								echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
@@ -57,13 +57,11 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]);
 									if ($track->video)
-										echo Yii::$app->icon->show($track->lyricid || $track->wip ? 'video' : 'file-video', ['class' => 'text-muted ml-1']);
+										echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'prefix' => 'fab fa-']);
 								echo Html::endTag('div');
 
-								if (++$y === count($album->tracks) || $x === (int) ceil(count($album->tracks) / 3)) :
+								if (++$x === count($album->tracks) || $x % ceil(count($album->tracks) / 3) === 0)
 									echo Html::endTag('div');
-									$x = 0;
-								endif;
 							endforeach;
 						echo Html::endTag('div');
 

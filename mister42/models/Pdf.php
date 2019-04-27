@@ -27,6 +27,7 @@ class Pdf {
 
 			$cssFile = Yii::getAlias('@runtime/assets/css/site.css');
 			$pdf->WriteHTML(file_get_contents($cssFile), HTMLParserMode::HEADER_CSS);
+			$pdf->WriteHTML('body{font-size:.8rem}', HTMLParserMode::HEADER_CSS);
 			$pdf->WriteHTML($content, HTMLParserMode::HTML_BODY);
 			$pdf->Output($filename, \Mpdf\Output\Destination::FILE);
 

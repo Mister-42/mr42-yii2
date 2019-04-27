@@ -77,8 +77,8 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 					echo Html::beginTag('div', ['class' => 'dropdown-menu']);
 						foreach (Yii::$app->params['languages'] as $lng => $desc)
 							echo ($lng === Yii::$app->language)
-								? Html::tag('div', $desc.' &#10004;', ['class' => 'disabled dropdown-item'])
-								: Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item']);
+								? Html::tag('div', $desc.' &#10004;', ['class' => 'disabled dropdown-item', 'lang' => $lng])
+								: Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item', 'lang' => $lng]);
 					echo Html::endTag('div');
 				echo Html::endTag('div');
 			endif;

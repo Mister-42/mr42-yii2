@@ -9,19 +9,16 @@ echo Html::tag('h1', $this->title);
 
 echo Html::beginTag('div', ['class' => 'site-lyrics']);
 	echo Html::beginTag('div', ['class' => 'row artists']);
-		$x = $y = 0;
+		$x = 0;
 		foreach ($data as $artist) :
-			if ($x++ === 0)
+			if ($x === 0 || $x % ceil(count($data) / 4) === 0)
 				echo Html::beginTag('div', ['class' => 'col-md-3 text-center text-nowrap']);
 
-					echo Html::a($artist->name, ['lyrics', 'artist' => $artist->url], ['class' => 'notranslate']);
-					if (!$artist->active)
-						echo Html::tag('sup', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-warning ml-1']);
+			$draft = ($artist->active) ? '' : Html::tag('sup', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-pill badge-warning ml-1']);
+			echo Html::a($artist->name.$draft, ['lyrics', 'artist' => $artist->url], ['class' => 'notranslate']);
 
-			if (++$y === count($data) || $x === (int) ceil(count($data) / 4)) :
+			if (++$x === count($data) || $x % ceil(count($data) / 4) === 0)
 				echo Html::endTag('div');
-				$x = 0;
-			endif;
 		endforeach;
 	echo Html::endTag('div');
 echo Html::endTag('div');

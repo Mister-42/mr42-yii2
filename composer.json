@@ -27,11 +27,11 @@
         "codemix/yii2-localeurls": "^1.7",
         "gkralik/php-uglifyjs": "^1.0",
         "mpdf/mpdf": "^8.0",
+        "mpdf/qrcode": "^1.0",
         "kop/yii2-scroll-pager": "*",
         "nezhelskoy/yii2-highlight": "*",
         "zenorocha/clipboardjs": "^2.0",
-        "himiklab/yii2-recaptcha-widget": "*",
-        "mpdf/qrcode": "^1.0"
+        "himiklab/yii2-recaptcha-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*"
