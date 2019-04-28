@@ -1,10 +1,9 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Console, Image, Video, Webrequest};
+use app\models\{Console, Image, Video};
 use app\models\music\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use app\models\user\{Profile, User};
-use yii\helpers\ArrayHelper;
 
 /**
  * Handles all actions related to music.
@@ -102,89 +101,45 @@ class LyricsController extends \yii\console\Controller {
 	}
 
 	/**
-	 * Checking status of album playlists.
-	 */
-	public function actionPlaylists(): int {
-		$x = 0;
-		foreach (Lyrics1Artists::albumsList() as $artist) :
-			foreach ($artist->albums as $album) :
-				if (isset($album->playlist_id))
-					$data[] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
-
-				if (!isset($data) || (++$x !== count($artist->albums) && count($data) < 50))
-					continue;
-
-				$response = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'playlists');
-				if (!$response->isOK || $response->data['pageInfo']['totalResults'] === 0) :
-					Console::writeError('Error', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-					return self::EXIT_CODE_ERROR;
-				endif;
-				$response = ArrayHelper::index($response->data['items'], 'id');
-
-				foreach ($data as $albumData) :
-					if (!ArrayHelper::keyExists($albumData['id'], $response, false) || ArrayHelper::getValue($response, "{$albumData['id']}.status.privacyStatus") !== 'public') :
-						Console::write($albumData['artist'], [Console::FG_PURPLE], 3);
-						Console::write($albumData['year'], [Console::FG_GREEN]);
-						Console::write($albumData['name'], [Console::FG_GREEN], 8);
-
-						if (!ArrayHelper::keyExists($albumData['id'], $response, false)) :
-							Console::writeError('Not Found', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-						elseif (ArrayHelper::getValue($response, "{$albumData['id']}.status.privacyStatus") !== 'public'):
-							Console::writeError('Not Public', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-						endif;
-
-						Console::newLine();
-						continue;
-					endif;
-				endforeach;
-
-				unset($data, $response);
-			endforeach;
-		endforeach;
-
-		Console::write('Completed checking playlists', [Console::BOLD, Console::FG_GREEN]);
-		Console::newLine();
-		return self::EXIT_CODE_NORMAL;
-	}
-
-	/**
-	 * Checking status of tracks videos.
+	 * Checking status of album playlists and track videos.
 	 */
 	public function actionVideos(): int {
-		$x = 0;
-		$query = Lyrics3Tracks::find()->where(['not', ['video_id' => null]]);
-		foreach ($query->each() as $track) :
-			$data[] = ['source' => $track->video_source, 'id' => $track->video_id, 'name' => $track->name];
-			if (++$x !== $query->count() && count($data) < 50)
-				continue;
-
-			$response = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), 'videos');
-			if (!$response->isOK || $response->data['pageInfo']['totalResults'] === 0) :
-				Console::writeError('Error: Could not get response from server', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-				return self::EXIT_CODE_ERROR;
+		$video = new Video();
+		foreach (['playlists', 'videos'] as $type) :
+			if ($type === 'playlists') :
+				$query = Lyrics1Artists::find()->orderBy(['name' => SORT_ASC])->with(['albums' => function ($q) { $q->where(['not', ['playlist_source' => null, 'playlist_id' => null]]); }]);
+				foreach ($query->each() as $artist)
+					foreach ($artist->albums as $album)
+						$data[$album->playlist_source][] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
+			elseif ($type === 'videos') :
+				$query = Lyrics3Tracks::find()->where(['not', ['video_source' => null, 'video_id' => null]]);
+				foreach ($query->each() as $track)
+					$data[$track->video_source][] = ['id' => $track->video_id, 'name' => $track->name];
 			endif;
-			$response = ArrayHelper::index($response->data['items'], 'id');
 
-			foreach ($data as $trackData) :
-				if (!ArrayHelper::keyExists($trackData['id'], $response, false) || !ArrayHelper::getValue($response, "{$trackData['id']}.status.embeddable")) :
-					Console::write($trackData['name'], [Console::FG_PURPLE], 5);
-					Console::write(Video::getUrl($trackData['source'], $trackData['id']), [Console::FG_PURPLE], 5);
+			foreach ($data as $source => $payload) :
+				$x = 0;
+				$function = implode(['check', ucfirst($source)]);
 
-					if (!ArrayHelper::keyExists($trackData['id'], $response, false)) :
-						Console::writeError('Not Found', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-					elseif (!ArrayHelper::getValue($response, "{$trackData['id']}.status.embeddable")) :
-						Console::write('Not embeddable', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-					endif;
+				foreach ($payload as $id) :
+					$ids[] = $id;
+					if (!isset($ids) || (++$x !== count($data[$source]) && count($ids) < 50))
+						continue;
 
-					Console::newLine();
-					continue;
-				endif;
+					$result[$source] = $video->$function($ids, $type);
+					unset($ids);
+				endforeach;
 			endforeach;
-			unset($data, $response);
+
+			if ((bool) array_product($result) === true) :
+				Console::write("Completed checking {$type}", [Console::BOLD, Console::FG_GREEN]);
+				Console::newLine();
+			endif;
+			unset($data);
 		endforeach;
 
-		Console::write('Completed checking videos', [Console::BOLD, Console::FG_GREEN]);
-		Console::newLine();
-		return self::EXIT_CODE_NORMAL;
+		if ((bool) array_product($result) === true)
+			return self::EXIT_CODE_NORMAL;
+		return self::EXIT_CODE_ERROR;
 	}
 }
