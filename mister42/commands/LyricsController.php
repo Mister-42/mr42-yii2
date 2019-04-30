@@ -119,19 +119,24 @@ class LyricsController extends \yii\console\Controller {
 
 			foreach ($data as $source => $payload) :
 				$x = 0;
-				$function = implode(['check', ucfirst($source)]);
-
 				foreach ($payload as $id) :
 					$ids[] = $id;
 					if (!isset($ids) || (++$x !== count($data[$source]) && count($ids) < 50))
 						continue;
 
-					$result[$source] = $video->$function($ids, $type);
+					switch ($source) :
+						case 'youtube':
+							$result[$type][] = $video->checkYoutube($ids, $type);
+							break;
+						default:
+							trigger_error("Checking {$source} {$type} is not supported yet.");
+					endswitch;
+
 					unset($ids);
 				endforeach;
 			endforeach;
 
-			if ((bool) array_product($result) === true) :
+			if ((bool) array_product($result[$type]) === true) :
 				Console::write("Completed checking {$type}", [Console::BOLD, Console::FG_GREEN]);
 				Console::newLine();
 			endif;

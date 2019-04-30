@@ -32,7 +32,7 @@ class Video {
 		return Yii::t('mr42', 'Sorry, {source} is not supported.', ['source' => $source]);
 	}
 
-	public function checkYoutube(array $data, string $type) {
+	public function checkYoutube(array $data, string $type): bool {
 		$result = true;
 		$request = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), $type);
 		if (!$request->isOK || $request->data['pageInfo']['totalResults'] === 0) :
@@ -42,20 +42,18 @@ class Video {
 		$items = ArrayHelper::index($request->data['items'], 'id');
 
 		foreach ($data as $listData) :
-			$status = ArrayHelper::getValue($items, "{$listData['id']}.status");
-			if (!ArrayHelper::keyExists($listData['id'], $items, false) || (ArrayHelper::getValue($status, 'privacyStatus') !== 'public' && !ArrayHelper::getValue($status, 'embeddable'))) :
+			$status = ArrayHelper::getValue($items, "{$listData['id']}.status", false);
+			if ($status === false || (ArrayHelper::getValue($status, 'privacyStatus') !== 'public' && !ArrayHelper::getValue($status, 'embeddable'))) :
 				Console::write($listData['name'], [Console::FG_PURPLE], 5);
 				Console::write(self::getUrl('youtube', $listData['id'], $type === 'playlists'), [Console::FG_PURPLE], 9);
 
 				$result = false;
-				if (!ArrayHelper::keyExists($listData['id'], $items, false))
+				if ($status === false)
 					Console::writeError('Not Found', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 				elseif (ArrayHelper::getValue($status, 'privacyStatus') !== 'public')
 					Console::writeError('Not Public', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 				elseif (!ArrayHelper::getValue($status, 'embeddable'))
 					Console::writeError('Not embeddable', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-
-				continue;
 			endif;
 		endforeach;
 

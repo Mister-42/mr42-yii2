@@ -1672,12 +1672,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "b80830c5f8c221b8bd6a830c5b2f45544f82c4d7"
+                "reference": "be563f0211bd5d4424680d0fcdef578090f08e41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/b80830c5f8c221b8bd6a830c5b2f45544f82c4d7",
-                "reference": "b80830c5f8c221b8bd6a830c5b2f45544f82c4d7",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/be563f0211bd5d4424680d0fcdef578090f08e41",
+                "reference": "be563f0211bd5d4424680d0fcdef578090f08e41",
                 "shasum": ""
             },
             "require": {
@@ -2010,16 +2010,16 @@
         },
         {
             "name": "yiisoft/yii2-httpclient",
-            "version": "2.0.9",
+            "version": "2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-httpclient.git",
-                "reference": "d788e6783c76ef043a5bff1f2b47d82cf44bbe8c"
+                "reference": "d3d780d37bc8aa092e9ae555ed38645464587a07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/d788e6783c76ef043a5bff1f2b47d82cf44bbe8c",
-                "reference": "d788e6783c76ef043a5bff1f2b47d82cf44bbe8c",
+                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/d3d780d37bc8aa092e9ae555ed38645464587a07",
+                "reference": "d3d780d37bc8aa092e9ae555ed38645464587a07",
                 "shasum": ""
             },
             "require": {
@@ -2056,7 +2056,7 @@
                 "httpclient",
                 "yii2"
             ],
-            "time": "2019-04-23T11:06:27+00:00"
+            "time": "2019-04-30T14:57:35+00:00"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -2196,16 +2196,16 @@
     "packages-dev": [
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.1.2",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "ad90eeea4312daa5d02d9ca043743fca03571874"
+                "reference": "27e36a045069e6e195a28cd4314b6e125ddcc0f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/ad90eeea4312daa5d02d9ca043743fca03571874",
-                "reference": "ad90eeea4312daa5d02d9ca043743fca03571874",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/27e36a045069e6e195a28cd4314b6e125ddcc0f9",
+                "reference": "27e36a045069e6e195a28cd4314b6e125ddcc0f9",
                 "shasum": ""
             },
             "require": {
@@ -2249,7 +2249,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2019-04-23T13:17:21+00:00"
+            "time": "2019-04-30T15:21:32+00:00"
         }
     ],
     "aliases": [],
