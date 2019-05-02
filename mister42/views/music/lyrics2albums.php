@@ -12,15 +12,23 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 		Html::tag('div',
 			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']).
 			Html::tag('div',
-				($data[0]->artist->buy
-					? Html::a(Yii::$app->icon->show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artist->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])])
+				($data[0]->artistInfo->buy
+					? Html::a(Yii::$app->icon->show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])])
 					: '').
-				($data[0]->artist->website
-					? Html::a(Yii::$app->icon->show('globe'), $data[0]->artist->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])])
+				($data[0]->artistInfo->website
+					? Html::a(Yii::$app->icon->show('globe'), $data[0]->artistInfo->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])])
 					: '')
 			, ['class' => 'float-right'])
 		, ['class' => 'col'])
 	, ['class' => 'row']);
+
+	if ($data[0]->artistInfo->summaryParsed) :
+		echo Html::tag('div',
+			Html::tag('div',
+				$data[0]->artistInfo->summaryParsed
+			, ['class' => 'col'])
+		, ['class' => 'row']);
+	endif;
 
 	foreach ($data as $album) :
 		echo Html::beginTag('div', ['class' => 'row']);

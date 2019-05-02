@@ -1,7 +1,7 @@
 <?php
 namespace app\models\music;
 use Yii;
-use yii\db\BatchQueryResult;
+use yii\db\{ActiveQuery, BatchQueryResult};
 
 class Lyrics1Artists extends \yii\db\ActiveRecord {
 	public static function tableName(): string {

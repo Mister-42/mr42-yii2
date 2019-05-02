@@ -3,21 +3,19 @@ namespace app\models;
 use Yii;
 use mister42\Secrets;
 use yii\helpers\Url;
-use yii\httpclient\{Client, CurlTransport, Response};
+use yii\httpclient\{Client, CurlTransport, Response, Request};
 
 class Webrequest {
 	public static function getDiscogsApi(string $content): Response {
-		return self::getUrl('https://api.discogs.com/', $content);
+		return self::getUrl('https://api.discogs.com/', $content)->send();
 	}
 
-	public static function getLastfmApi(string $method, string $user, int $limit): Response {
+	public static function getLastfmApi(string $method, array $data): Response {
 		$secrets = (new Secrets())->getValues();
-		return self::getUrl('https://ws.audioscrobbler.com/2.0/', '', [
+		return self::getUrl('https://ws.audioscrobbler.com/2.0/', '', array_merge($data, [
 			'api_key' => $secrets['last.fm']['API'],
-			'limit' => $limit,
 			'method' => $method,
-			'user' => $user,
-		]);
+		]))->send();
 	}
 
 	public static function getYoutubeApi(string $id, string $content): Response {
@@ -26,24 +24,20 @@ class Webrequest {
 			'id' => $id,
 			'key' => $secrets['google']['API'],
 			'part' => $content === 'videos' ? 'snippet,status' : 'contentDetails,status',
-		]);
+		])->send();
 	}
 
-	public static function getUrl(string $base, string $url, array $data = []): Response {
-		$client = new Client(['baseUrl' => $base]);
+	public static function getUrl(string $base, string $url, array $data = []): Request {
+		$client = ($base === 'file') ? new Client(['transport' => CurlTransport::class]) : new Client(['baseUrl' => $base]);
 		return $client->createRequest()
 			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Yii::$app->params['shortDomain'].')'])
 			->setData($data)
-			->setUrl($url)
-			->send();
+			->setUrl($url);
 	}
 
-	public static function saveUrl(string $url, string $file): Response {
+	public static function saveUrl(string $url, string $file, array $data = []): Response {
 		$fh = fopen($file, 'w');
-		$client = new Client(['transport' => CurlTransport::class]);
-		$response = $client->createRequest()
-			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Yii::$app->params['shortDomain'].')'])
-			->setUrl($url)
+		$response = self::getUrl('file', $url, $data)
 			->setOutputFile($fh)
 			->send();
 		fclose($fh);

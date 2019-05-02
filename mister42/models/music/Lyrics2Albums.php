@@ -48,6 +48,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return self::find()
 			->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
 			->innerJoinWith('artist', 'tracks')
+			->with('artistInfo')
 			->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
 			->addParams([':artist' => $artist])
 			->all();
@@ -91,6 +92,11 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 
 	public function getArtist(): LyricsQuery {
 		return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent']);
+	}
+
+	public function getArtistInfo(): ActiveQuery {
+		return $this->hasOne(LyricsArtistInfo::class, ['parent' => 'id'])
+			->via('artist');
 	}
 
 	public function getTracks(): ActiveQuery {

@@ -1579,7 +1579,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.26",
+            "version": "v3.4.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -1891,12 +1891,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "bbabe9f0a154146ef8a59ee8b03a02fdf269baed"
+                "reference": "0f8b00a67fee75ea8b7ffc4e94d353fb12657d27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/bbabe9f0a154146ef8a59ee8b03a02fdf269baed",
-                "reference": "bbabe9f0a154146ef8a59ee8b03a02fdf269baed",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/0f8b00a67fee75ea8b7ffc4e94d353fb12657d27",
+                "reference": "0f8b00a67fee75ea8b7ffc4e94d353fb12657d27",
                 "shasum": ""
             },
             "require": {
@@ -1952,7 +1952,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-03-30T21:00:53+00:00"
+            "time": "2019-04-30T19:59:27+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",

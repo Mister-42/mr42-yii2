@@ -1,9 +1,10 @@
 <?php
 namespace app\commands;
 use Yii;
-use app\models\{Console, Image, Video};
-use app\models\music\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
+use app\models\{Console, Image, Video, Webrequest};
+use app\models\music\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks, LyricsArtistInfo};
 use app\models\user\{Profile, User};
+use yii\helpers\ArrayHelper;
 
 /**
  * Handles all actions related to music.
@@ -101,13 +102,34 @@ class LyricsController extends \yii\console\Controller {
 	}
 
 	/**
+	 * Retrieves and stores artist information.
+	 */
+	public function actionArtistInfo() {
+		$query = LyricsArtistInfo::find()->where(['not', ['mbid' => null]]);
+		foreach ($query->each() as $artist) :
+			$response = Webrequest::getLastfmApi('artist.getInfo', ['mbid' => $artist->mbid]);
+
+			if (!$response->isOK) :
+				Console::write($artist->parent, [Console::FG_GREEN], 5);
+				Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
+				continue;
+			endif;
+
+			$artistInfo = LyricsArtistInfo::findOne(['parent' => $artist->parent]);
+			$artistInfo->mbid = ArrayHelper::getValue($response->data, 'artist.mbid');
+			$artistInfo->summary = trim(ArrayHelper::getValue($response->data, 'artist.bio.summary'));
+			$artistInfo->save();
+		endforeach;
+	}
+
+	/**
 	 * Checking status of album playlists and track videos.
 	 */
 	public function actionVideos(): int {
 		$video = new Video();
 		foreach (['playlists', 'videos'] as $type) :
 			if ($type === 'playlists') :
-				$query = Lyrics1Artists::find()->orderBy(['name' => SORT_ASC])->with(['albums' => function ($q) { $q->where(['not', ['playlist_source' => null, 'playlist_id' => null]]); }]);
+				$query = Lyrics1Artists::find()->orderBy(['name' => SORT_ASC])->with(['albums' => function($q) { $q->where(['not', ['playlist_source' => null, 'playlist_id' => null]]); }]);
 				foreach ($query->each() as $artist)
 					foreach ($artist->albums as $album)
 						$data[$album->playlist_source][] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];

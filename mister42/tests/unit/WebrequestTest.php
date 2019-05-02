@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class WebrequestTest extends TestCase {
 	public function testLastfmApi() {
-		$this->assertTrue(Webrequest::getLastfmApi('user.getweeklyartistchart', 'rj', 5)->isOK);
+		$this->assertTrue(Webrequest::getLastfmApi('user.getweeklyartistchart', ['user' => 'rj', 'limit' => 5])->isOK);
 	}
 
 	public function testYoutubeApi() {

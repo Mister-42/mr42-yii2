@@ -35,7 +35,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 
 	public function updateUser(Profile $profile, int $lastSeen) {
 		if (isset($profile->lastfm)) :
-			$response = Webrequest::getLastfmApi('user.getrecenttracks', $profile->lastfm, $this->limit);
+			$response = Webrequest::getLastfmApi('user.getrecenttracks', ['limit' => $this->limit, 'user' => $profile->lastfm]);
 			if (!$response->isOK)
 				return false;
 

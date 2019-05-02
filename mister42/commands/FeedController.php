@@ -44,7 +44,7 @@ class FeedController extends Controller {
 		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
 			$profile = Profile::findOne(['user_id' => $user->id]);
 			if (isset($profile->lastfm)) :
-				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', $profile->lastfm, $this->limit);
+				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', ['user' => $profile->lastfm, 'limit' => $this->limit]);
 				if (!$response->isOK)
 					continue;
 
@@ -85,7 +85,7 @@ class FeedController extends Controller {
 	 */
 	public function actionWebfeed(string $type, string $name, string $url, string $desc): int {
 		$count = 0;
-		$response = Webrequest::getUrl('', $url);
+		$response = Webrequest::getUrl('', $url)->send();
 		if (!$response->isOK)
 			return self::EXIT_CODE_ERROR;
 
