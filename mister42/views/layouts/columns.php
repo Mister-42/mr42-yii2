@@ -8,7 +8,7 @@ use yii\helpers\Inflector;
 $isHome = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
 $dependency = [
 	'class' => ExpressionDependency::class,
-	'expression' => implode('-', [Articles::getLastModified(), ArticlesComments::getLastModified()]),
+	'params' => ['articles' => Articles::getLastModified(), 'comments' => ArticlesComments::getLastModified()],
 	'reusable' => true,
 ];
 

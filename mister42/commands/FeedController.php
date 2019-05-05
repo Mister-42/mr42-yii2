@@ -83,21 +83,21 @@ class FeedController extends Controller {
 	/**
 	 * Retrieves and stores an Atom or RSS feed.
 	 */
-	public function actionWebfeed(string $type, string $name, string $url, string $desc): int {
+	public function actionWebfeed(string $name, string $url, string $desc): int {
 		$count = 0;
 		$response = Webrequest::getUrl('', $url)->send();
 		if (!$response->isOK)
 			return self::EXIT_CODE_ERROR;
 
+		$xml = simplexml_load_string($response->content);
 		Feed::deleteAll(['feed' => $name]);
-		$data = $type === 'rss' ? $response->data['channel']['item'] : $response->data['entry'];
-		foreach ($data as $item) :
+		foreach (($xml->getName() === 'rss') ? $response->data['channel']['item'] : $response->data['entry'] as $item) :
 			$time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
 
 			$feedItem = Feed::findOne(['feed' => $name, 'time' => $time]) ?? new Feed();
 			$feedItem->feed = $name;
 			$feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
-			$feedItem->url = (string) ArrayHelper::getValue($item, $type === 'rss' ? 'link' : 'link.@attributes.href');
+			$feedItem->url = (string) ArrayHelper::getValue($item, $xml->getName() === 'rss' ? 'link' : 'link.@attributes.href');
 			$feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $desc), false);
 			$feedItem->time = $time;
 			$feedItem->save();

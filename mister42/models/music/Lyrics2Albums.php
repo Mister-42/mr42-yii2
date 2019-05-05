@@ -18,8 +18,9 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function afterFind(): void {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
-		$this->playlist_embed = $this->playlist_id && $this->playlist_ratio ? Video::getEmbed($this->playlist_source, $this->playlist_id, $this->playlist_ratio, true) : null;
-		$this->playlist_url = $this->playlist_id ? Video::getUrl($this->playlist_source, $this->playlist_id, true) : null;
+		$this->playlist_embed = $this->playlist_source && $this->playlist_id && $this->playlist_ratio ? Video::getEmbed($this->playlist_source, $this->playlist_id, $this->playlist_ratio, true) : null;
+		$this->playlist_url = $this->playlist_source && $this->playlist_id ? Video::getUrl($this->playlist_source, $this->playlist_id, true) : null;
+		$this->created = Yii::$app->formatter->asTimestamp($this->created);
 		$this->updated = Yii::$app->formatter->asTimestamp($this->updated);
 		$this->active = boolval($this->active);
 	}
@@ -37,7 +38,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 		return [
 			[
 				'class' => TimestampBehavior::class,
-				'createdAtAttribute' => 'updated',
+				'createdAtAttribute' => 'created',
 				'updatedAtAttribute' => 'updated',
 				'value' => new Expression('NOW()'),
 			],
@@ -62,6 +63,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 			Lyrics3Tracks::getLastModified($album->artist->url, $album->year, $album->url),
 			[
 				'author' => $album->artist->name,
+				'created' => $album->created,
 				'footer' => implode('|', [Html::a(Yii::$app->name, Yii::$app->params['shortDomain']), $album->year, 'Page {PAGENO} of {nb}']),
 				'header' => implode('|', [$album->artist->name, 'Lyrics', $album->name]),
 				'keywords' => implode(', ', [$album->artist->name, $album->name, 'lyrics']),

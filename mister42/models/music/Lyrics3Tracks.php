@@ -19,7 +19,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->disambiguation = $this->disambiguation ? " ({$this->disambiguation})" : null;
 		$this->feat = $this->feat ? " (feat. {$this->feat})" : null;
 		$this->wip = boolval($this->wip);
-		$this->video = $this->video_id && $this->video_ratio ? Video::getEmbed($this->video_source, $this->video_id, $this->video_ratio) : null;
+		$this->video = $this->video_source && $this->video_id && $this->video_ratio ? Video::getEmbed($this->video_source, $this->video_id, $this->video_ratio) : null;
 	}
 
 	public static function tracksList(string $artist, string $year, string $name): array {
