@@ -79,6 +79,7 @@ return [
     'Email Address' => 'E-Mail-Addresse',
     'Email Message' => 'E-Mail Nachricht',
     'End Date' => 'Enddatum',
+    'Error {statusCode}' => 'Fehler {statusCode}',
     'Favicon Converter' => 'Favicon-Konverter',
     'File {name} Selected' => 'Datei {name} ausgewählt',
     'First Name' => 'Vorname',

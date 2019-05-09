@@ -79,6 +79,7 @@ return [
     'Email Address' => 'Адрес электронной почты',
     'Email Message' => 'Сообщение электронной почты',
     'End Date' => 'Дата окончания',
+    'Error {statusCode}' => 'Ошибка {statusCode}',
     'Favicon Converter' => 'Конвертер Favicon',
     'File {name} Selected' => 'Выбран файл {name}',
     'First Name' => 'Имя',
