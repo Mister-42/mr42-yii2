@@ -14,7 +14,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		Html::tag('div',
 			Item::widget([
 				'body' => WeeklyArtistChart::widget(['profile' => basename(Url::current())]),
-				'header' => Yii::$app->icon->show('lastfm-square', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Weekly Artist Chart'),
+				'header' => Yii::$app->icon->show('lastfm-square', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Weekly Artist Chart'),
 			])
 		)
 	, ['class' => 'd-none d-lg-inline col-4']);

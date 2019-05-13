@@ -59,7 +59,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		if ($isHome)
 			echo Item::widget([
 				'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
-				'header' => Yii::$app->icon->show('github', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Changelog'),
+				'header' => Yii::$app->icon->show('github', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Changelog'),
 			]);
 	echo Html::endTag('aside');
 echo Html::endTag('div');

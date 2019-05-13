@@ -54,7 +54,7 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
 	}
 }
 
-svg.fa {
+.icon {
 	display: inline-block;
 	font-size: inherit;
 	height: 1em;
@@ -62,12 +62,12 @@ svg.fa {
 	vertical-align: -.125em;
 
 	@for $i from 1 through 20 {
-		&.w-#{$i} {
+		&-w-#{$i} {
 			width: $i * .0625em;
 		}
 	}
 
-	&.fa-fw {
+	&-fw {
 		text-align: center;
 		width: (20em / 16);
 	}

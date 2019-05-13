@@ -57,7 +57,7 @@ echo Html::endTag('header');
 echo Html::tag('main',
 	Breadcrumbs::widget([
 		'encodeLabels' => false,
-		'homeLink' => ['label' => Yii::$app->icon->show('home', ['class' => 'mr-1']).Yii::$app->name, 'url' => Yii::$app->homeUrl],
+		'homeLink' => ['label' => Yii::$app->icon->show('home', ['class' => 'mr-1']).Yii::t('yii', 'Home'), 'url' => Yii::$app->homeUrl],
 		'links' => $this->params['breadcrumbs'] ?? null,
 	]).
 	$content
@@ -69,7 +69,7 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 		echo Html::beginTag('div', ['class' => 'float-right dropup']);
 			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') :
 				if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)
-					echo Html::a(Yii::$app->icon->show('html5', ['prefix' => 'fab fa-']), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
+					echo Html::a(Yii::$app->icon->show('html5', ['style' => 'brands']), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
 				echo Html::a(Yii::$app->icon->show('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Privacy Policy')]);
 				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
 				echo Html::beginTag('div', ['class' => 'btn-group dropup']);

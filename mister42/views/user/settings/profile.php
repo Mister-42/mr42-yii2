@@ -46,7 +46,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		])->input('url', ['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'lastfm', [
-			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('lastfm', ['prefix' => 'fab fa-']).'{input}</div>',
+			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('lastfm', ['style' => 'brands']).'{input}</div>',
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'location', [

@@ -4,7 +4,8 @@ use Yii;
 use yii\db\ActiveQuery;
 
 class LyricsArtistInfo extends \yii\db\ActiveRecord {
-	public $summaryParsed;
+	public $bioSummaryParsed;
+	public $bioFullParsed;
 
 	public static function tableName(): string {
 		return '{{%lyrics_artistinfo}}';
@@ -12,7 +13,8 @@ class LyricsArtistInfo extends \yii\db\ActiveRecord {
 
 	public function afterFind(): void {
 		parent::afterFind();
-		$this->summaryParsed = Yii::$app->formatter->cleanInput($this->summary ?? '', 'gfm-comment', true);
+		$this->bioSummaryParsed = Yii::$app->formatter->cleanInput($this->bio_summary ?? '', 'gfm-comment', true);
+		$this->bioFullParsed = Yii::$app->formatter->cleanInput($this->bio_full ?? '', 'gfm-comment', true);
 	}
 
 	public static function find(): ActiveQuery {

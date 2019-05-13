@@ -109,7 +109,7 @@ class LyricsController extends \yii\console\Controller {
 		foreach ($query->each() as $artist) :
 			$response = Webrequest::getLastfmApi('artist.getInfo', ['mbid' => $artist->mbid]);
 
-			if (!$response->isOK) :
+			if (!$response->isOK || ArrayHelper::getValue($response->data, '@attributes.status') !== 'ok') :
 				Console::write($artist->parent, [Console::FG_GREEN], 5);
 				Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 				continue;
@@ -117,7 +117,8 @@ class LyricsController extends \yii\console\Controller {
 
 			$artistInfo = LyricsArtistInfo::findOne(['parent' => $artist->parent]);
 			$artistInfo->mbid = ArrayHelper::getValue($response->data, 'artist.mbid');
-			$artistInfo->summary = trim(ArrayHelper::getValue($response->data, 'artist.bio.summary'));
+			$artistInfo->bio_summary = trim(ArrayHelper::getValue($response->data, 'artist.bio.summary')) ?? null;
+			$artistInfo->bio_full = trim(ArrayHelper::getValue($response->data, 'artist.bio.content')) ?? null;
 			$artistInfo->save();
 		endforeach;
 	}

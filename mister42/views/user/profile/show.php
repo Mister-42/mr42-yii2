@@ -13,13 +13,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::beginTag('div', ['class' => 'col text-truncate']);
 				if (!empty($profile->location)) :
-					echo Yii::$app->icon->show('map-marker', ['class' => 'fa-fw text-muted mr-1']).$profile->location;
+					echo Yii::$app->icon->show('map-marked', ['class' => 'icon-fw text-muted mr-1']).$profile->location;
 				endif;
 			echo Html::endTag('div');
 			echo Html::beginTag('div', ['class' => 'col text-truncate text-right']);
 				if (!empty($profile->location)) :
 					echo Html::tag('time', Yii::t('usuario', 'Joined on {0, date}', $profile->user->created_at), ['datetime' => date(DATE_W3C, $profile->user->created_at)]);
-					echo Yii::$app->icon->show('calendar-alt', ['class' => 'fa-fw text-muted ml-1']);
+					echo Yii::$app->icon->show('calendar-alt', ['class' => 'icon-fw text-muted ml-1']);
 				endif;
 			echo Html::endTag('div');
 
@@ -27,13 +27,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo Html::beginTag('div', ['class' => 'col text-truncate']);
 				if (!empty($profile->website)) :
-					echo Yii::$app->icon->show('globe', ['class' => 'fa-fw text-muted mr-1']).Html::a($profile->website, $profile->website);
+					echo Yii::$app->icon->show('globe', ['class' => 'icon-fw text-muted mr-1']).Html::a($profile->website, $profile->website);
 				endif;
 			echo Html::endTag('div');
 			echo Html::beginTag('div', ['class' => 'col text-truncate text-right']);
 				if ($profile->user->created_at != $profile->user->updated_at) :
 					echo Html::tag('time', Yii::t('usuario', 'Updated on {0, date}', $profile->user->updated_at), ['datetime' => date(DATE_W3C, $profile->user->updated_at)]);
-					echo Yii::$app->icon->show('calendar-alt', ['class' => 'fa-fw text-muted ml-1']);
+					echo Yii::$app->icon->show('calendar-alt', ['class' => 'icon-fw text-muted ml-1']);
 				endif;
 			echo Html::endTag('div');
 		echo Html::endTag('div');

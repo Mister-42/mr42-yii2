@@ -1,6 +1,5 @@
 <?php
 use yii\bootstrap4\Html;
-use Yii;
 
 $this->title = Yii::t('mr42', 'Error {statusCode}', ['statusCode' => Yii::$app->response->statusCode]);
 

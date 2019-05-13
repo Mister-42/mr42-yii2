@@ -13,7 +13,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']).
 			Html::tag('div',
 				($data[0]->artistInfo->buy
-					? Html::a(Yii::$app->icon->show('bandcamp', ['prefix' => 'fab fa-']), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])])
+					? Html::a(Yii::$app->icon->show('bandcamp', ['style' => 'brands']), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])])
 					: '').
 				($data[0]->artistInfo->website
 					? Html::a(Yii::$app->icon->show('globe'), $data[0]->artistInfo->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])])
@@ -22,10 +22,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 		, ['class' => 'col'])
 	, ['class' => 'row']);
 
-	if ($data[0]->artistInfo->summaryParsed) :
+	if ($data[0]->artistInfo->bioSummaryParsed) :
 		echo Html::tag('div',
 			Html::tag('div',
-				$data[0]->artistInfo->summaryParsed
+				$data[0]->artistInfo->bioSummaryParsed
 			, ['class' => 'col'])
 		, ['class' => 'row']);
 	endif;
@@ -41,10 +41,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 						), ['class' => 'float-left']).
 						Html::tag('div',
 							($album->buy
-								? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
+								? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
 								: '').
 							($album->playlist_url
-								? Html::a(Yii::$app->icon->show($album->playlist_source, ['class' => 'mr-1', 'prefix' => 'fab fa-']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+								? Html::a(Yii::$app->icon->show($album->playlist_source, ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 								: '').
 							($album->active
 								? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
@@ -65,7 +65,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 										: $track->name;
 									echo implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]);
 									if ($track->video)
-										echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'prefix' => 'fab fa-']);
+										echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
 								echo Html::endTag('div');
 
 								if (++$x === count($album->tracks) || $x % ceil(count($album->tracks) / 3) === 0)

@@ -12,5 +12,4 @@ class WebrequestTest extends TestCase {
 		$this->assertTrue(Webrequest::getYoutubeApi('tsI3RsKTqNU', 'videos')->isOK);
 		$this->assertTrue(Webrequest::getYoutubeApi('PL6ugFMfi2vpN8uPV7OM2FMOlfF1nU2WJL', 'playlists')->isOK);
 	}
-
 }
