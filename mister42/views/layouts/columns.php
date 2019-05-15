@@ -15,52 +15,64 @@ $dependency = [
 $this->beginContent('@app/views/layouts/main.php');
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::tag('div', $content, ['class' => $isHome ? 'col-12 col-md-8 col-lg-6' : 'col-12 col-md-9']);
-	if ($isHome) :
-		echo Html::beginTag('aside', ['class' => 'col-3 d-none d-lg-block']);
-			echo Item::widget([
-				'body' => Feed::widget(['name' => 'ScienceDaily', 'tooltip' => true]),
-				'header' => Yii::$app->icon->show('flask', ['class' => 'mr-1']).'ScienceDaily',
-			]);
 
-			echo Item::widget([
-				'body' => Feed::widget(['name' => 'TomsHardware', 'tooltip' => true]),
-				'header' => Yii::$app->icon->show('hammer', ['class' => 'mr-1']).'Tom\'s Hardware',
-			]);
-		echo Html::endTag('aside');
-	endif;
+	echo Html::beginTag('div', ['class' => $isHome ? 'col-4 col-lg-6 d-none d-md-block': 'col-3 d-none d-md-block']);
+		echo Html::beginTag('div', ['class' => 'row']);
+			echo Html::beginTag('aside', ['class' => 'col-12 d-none d-md-block']);
+				$form = ActiveForm::begin(['action' => ['articles/search'], 'method' => 'get', 'options' => ['role' => 'search']]);
+				echo $form->field(new Search(), 'keyword', [
+						'options' => ['class' => 'form-group mb-2'],
+						'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->show('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append'])."</div>{error}",
+					])
+					->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')])
+					->label(false);
+				ActiveForm::end();
+			echo Html::endTag('aside');
+		echo Html::endTag('div');
 
-	echo Html::beginTag('aside', ['class' => 'col-4 col-lg-3 d-none d-md-block']);
-		$form = ActiveForm::begin(['action' => ['articles/search'], 'method' => 'get', 'options' => ['role' => 'search']]);
-		echo $form->field(new Search(), 'keyword', [
-				'options' => ['class' => 'form-group mb-2'],
-				'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->show('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append'])."</div>{error}",
-			])
-			->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')])
-			->label(false);
-		ActiveForm::end();
+		echo Html::beginTag('div', ['class' => 'row']);
+			if ($isHome) :
+				echo Html::beginTag('aside', ['class' => 'col-6 d-none d-lg-block']);
+					echo Item::widget([
+						'body' => Feed::widget(['name' => 'ScienceDaily', 'tooltip' => true]),
+						'header' => Yii::$app->icon->show('flask', ['class' => 'mr-1']).'ScienceDaily',
+					]);
 
-		if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0, 'enabled' => !YII_DEBUG, 'variations' => [Yii::$app->language]])) :
-			$widgets = [
-				Yii::t('mr42', 'Recent Articles') => ['class' => RecentArticles::widget(), 'icon' => 'newspaper'],
-				Yii::t('mr42', 'Recent Comments') => ['class' => RecentComments::widget(), 'icon' => 'comments'],
-				Yii::t('mr42', 'Tag Cloud') => ['class' => TagCloud::widget(), 'icon' => 'tags'],
-			];
+					echo Item::widget([
+						'body' => Feed::widget(['name' => 'TomsHardware', 'tooltip' => true]),
+						'header' => Yii::$app->icon->show('hammer', ['class' => 'mr-1']).'Tom\'s Hardware',
+					]);
+				echo Html::endTag('aside');
+			endif;
 
-			foreach ($widgets as $title => $val)
-				echo Item::widget([
-					'body' => $val['class'],
-					'header' => Yii::$app->icon->show($val['icon'], ['class' => 'mr-1']).$title,
-					'options' => ['id' => Inflector::slug($title)],
-				]);
+			echo Html::beginTag('aside', ['class' => $isHome ? 'col-12 col-lg-6 d-none d-md-block' : 'col-12 d-none d-md-block']);
+				if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0, 'enabled' => !YII_DEBUG, 'variations' => [Yii::$app->language]])) :
+					$widgets = [
+						Yii::t('mr42', 'Recent Articles') => ['class' => RecentArticles::widget(), 'icon' => 'newspaper'],
+						Yii::t('mr42', 'Recent Comments') => ['class' => RecentComments::widget(), 'icon' => 'comments'],
+						Yii::t('mr42', 'Tag Cloud') => ['class' => TagCloud::widget(), 'icon' => 'tags'],
+					];
 
-			$this->endCache();
-		endif;
+					foreach ($widgets as $title => $val)
+						echo Item::widget([
+							'body' => $val['class'],
+							'header' => Yii::$app->icon->show($val['icon'], ['class' => 'mr-1']).$title,
+							'options' => ['id' => Inflector::slug($title)],
+						]);
 
-		if ($isHome)
-			echo Item::widget([
-				'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
-				'header' => Yii::$app->icon->show('github', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Changelog'),
-			]);
-	echo Html::endTag('aside');
+					$this->endCache();
+				endif;
+
+				if ($isHome)
+					echo Item::widget([
+						'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
+						'header' => Yii::$app->icon->show('github', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Changelog'),
+					]);
+				echo Html::endTag('aside');
+			echo Html::endTag('div');
+		echo Html::endTag('div');
+
+	echo Html::endTag('div');
 echo Html::endTag('div');
+
 $this->endContent();
