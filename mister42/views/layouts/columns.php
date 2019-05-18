@@ -74,5 +74,4 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 	echo Html::endTag('div');
 echo Html::endTag('div');
-
 $this->endContent();

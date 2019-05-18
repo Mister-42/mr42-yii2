@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 use Yii;
+use app\models\music\{Lyrics2Albums, Lyrics3Tracks};
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
@@ -42,19 +43,30 @@ class Video {
 		$items = ArrayHelper::index($request->data['items'], 'id');
 
 		foreach ($data as $listData) :
+			$mediaStatus = 1;
 			$status = ArrayHelper::getValue($items, "{$listData['id']}.status", false);
 			if ($status === false || (ArrayHelper::getValue($status, 'privacyStatus') !== 'public' && !ArrayHelper::getValue($status, 'embeddable'))) :
+				$result = false;
+				$mediaStatus = 0;
+			endif;
+
+			if ($listData['status'] !== boolval($mediaStatus)) :
 				Console::write($listData['name'], [Console::FG_PURPLE], 5);
 				Console::write(self::getUrl('youtube', $listData['id'], $type === 'playlists'), [Console::FG_PURPLE], 9);
 
-				$result = false;
 				if ($status === false)
 					Console::writeError('Not Found', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 				elseif (ArrayHelper::getValue($status, 'privacyStatus') !== 'public')
 					Console::writeError('Not Public', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 				elseif (!ArrayHelper::getValue($status, 'embeddable'))
 					Console::writeError('Not embeddable', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
+				elseif ($mediaStatus === 1)
+					Console::writeError('Enabled', [Console::BOLD, Console::FG_GREEN, CONSOLE::BLINK]);
 			endif;
+
+			($type === 'playlists')
+				? Lyrics2Albums::updateAll(['playlist_status' => $mediaStatus], ['playlist_id' => $listData['id']])
+				: Lyrics3Tracks::updateAll(['video_status' => $mediaStatus], ['video_id' => $listData['id']]);
 		endforeach;
 
 		return $result;

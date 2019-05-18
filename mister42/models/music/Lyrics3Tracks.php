@@ -18,8 +18,18 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->track = sprintf('%02d', $this->track);
 		$this->disambiguation = $this->disambiguation ? " ({$this->disambiguation})" : null;
 		$this->feat = $this->feat ? " (feat. {$this->feat})" : null;
+		$this->video_status = boolval($this->video_status);
 		$this->wip = boolval($this->wip);
-		$this->video = $this->video_source && $this->video_id && $this->video_ratio ? Video::getEmbed($this->video_source, $this->video_id, $this->video_ratio) : null;
+		$this->video = $this->video_source && $this->video_id && $this->video_ratio && $this->video_status ? Video::getEmbed($this->video_source, $this->video_id, $this->video_ratio) : null;
+	}
+
+	public function beforeSave($insert): bool {
+		if (parent::beforeSave($insert)) :
+			$this->video_status = $this->video_status ? 1 : 0;
+			$this->wip = $this->wip ? 1 : 0;
+			return true;
+		endif;
+		return false;
 	}
 
 	public static function tracksList(string $artist, string $year, string $name): array {

@@ -133,11 +133,11 @@ class LyricsController extends \yii\console\Controller {
 				$query = Lyrics1Artists::find()->orderBy(['name' => SORT_ASC])->with(['albums' => function($q) { $q->where(['not', ['playlist_source' => null, 'playlist_id' => null]]); }]);
 				foreach ($query->each() as $artist)
 					foreach ($artist->albums as $album)
-						$data[$album->playlist_source][] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name];
+						$data[$album->playlist_source][] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name, 'status' => $album->playlist_status];
 			elseif ($type === 'videos') :
 				$query = Lyrics3Tracks::find()->where(['not', ['video_source' => null, 'video_id' => null]]);
 				foreach ($query->each() as $track)
-					$data[$track->video_source][] = ['id' => $track->video_id, 'name' => $track->name];
+					$data[$track->video_source][] = ['id' => $track->video_id, 'name' => $track->name, 'status' => $track->video_status];
 			endif;
 
 			foreach ($data as $source => $payload) :
