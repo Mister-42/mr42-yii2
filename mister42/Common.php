@@ -68,9 +68,6 @@ class Common {
 				'password' => $this->secrets['MySQL']['pass'],
 				'charset' => 'utf8mb4',
 				'tablePrefix' => 'mister42_',
-				'attributes' => [
-					\PDO::MYSQL_ATTR_LOCAL_INFILE => true,
-				],
 				'enableSchemaCache' => true,
 				'schemaCache' => 'fileCache',
 				'schemaCacheDuration' => 60 * 60 * 24 * 7,

@@ -72,10 +72,16 @@ class FeedController extends Controller {
 	 */
 	public function actionOui(): int {
 		$file = Yii::getAlias('@runtime/oui.csv');
-		Webrequest::saveUrl('http://standards-oui.ieee.org/oui/oui.csv', $file);
+		$response = Webrequest::saveUrl('http://standards-oui.ieee.org/oui/oui.csv', $file);
+		if (!$response->isOK)
+			return self::EXIT_CODE_ERROR;
+
+		$csv = array_map('str_getcsv', file($file));
+		$csv = array_map(function ($x) { return [$x[1], trim($x[2])]; }, $csv);
+		array_shift($csv);
 
 		Oui::deleteAll();
-		Yii::$app->db->createCommand('LOAD DATA LOCAL INFILE "'.$file.'" IGNORE INTO TABLE '.Oui::tableName().' FIELDS TERMINATED BY "," ENCLOSED BY "\"" IGNORE 1 ROWS (@void, assignment, name) SET name=TRIM(name);')->execute();
+		Yii::$app->db->createCommand()->batchInsert(Oui::tableName(), ['assignment', 'name'], $csv)->execute();
 		FileHelper::unlink($file);
 		return self::EXIT_CODE_NORMAL;
 	}
