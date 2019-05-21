@@ -40,7 +40,7 @@ class Office365 extends \yii\base\Model {
 			$diff = (new DateTime($this->targetdate))->diff(new DateTime($this->targetdate));
 
 		$upcomingYear = (new DateTime($redeemDate))->diff((new DateTime($redeemDate))->modify('1 year'));
-		$targetCount = $this->action == 'renew' ? $this->targetcount : $this->sourcecount + $this->targetcount;
+		$targetCount = $this->action === 'renew' ? $this->targetcount : $this->sourcecount + $this->targetcount;
 		$dateCalc = (($diff->days * $this->sourcecount) + ($upcomingYear->days * $this->targetcount)) / $targetCount;
 
 		$newDate = new DateTime($redeemDate);
