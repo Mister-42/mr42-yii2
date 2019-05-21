@@ -1,4 +1,5 @@
 $('a').attr('target', function() {
-	if(this.host != location.host)
-		return '_blank'
+	if(this.host !== location.host) {
+		return '_blank';
+	}
 });
