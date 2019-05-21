@@ -1,6 +1,4 @@
-$('a').each(function() {
-	var a = new RegExp('/' + window.location.host + '/');
-	if(!a.test(this.href)) {
-		$(this).attr('target', '_blank');
-	}
+$('a').attr('target', function() {
+	if(this.host != location.host)
+		return '_blank'
 });

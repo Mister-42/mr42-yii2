@@ -41,23 +41,20 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
 
 				echo Html::beginTag('div', ['class' => 'container mx-1']);
 					echo Html::beginTag('div', ['class' => 'row mr-3']);
-						$x = 0;
-						foreach ($data as $track) :
-							if ($x === 0 || $x % ceil(count($data) / 3) === 0)
-								echo Html::beginTag('div', ['class' => 'col-md-4']);
-
-							echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
-								echo $track->track.' · ';
-								echo $track->lyricid || $track->video
-									? Html::a($track->name, '#'.$track->track)
-									: $track->name;
-								echo $track->disambiguation.$track->feat;
-								if ($track->video)
-									echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
-							echo Html::endTag('div');
-
-							if (++$x === count($data) || $x % ceil(count($data) / 3) === 0)
+						foreach (array_chunk($data, ceil(count($data) / 3)) as $tracks) :
+							echo Html::beginTag('div', ['class' => 'col-md-4']);
+							foreach ($tracks as $track) :
+								echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
+									echo $track->track.' · ';
+									echo $track->lyricid || $track->video
+										? Html::a($track->name, '#'.$track->track)
+										: $track->name;
+									echo $track->disambiguation.$track->feat;
+									if ($track->video)
+										echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
 								echo Html::endTag('div');
+							endforeach;
+							echo Html::endTag('div');
 						endforeach;
 					echo Html::endTag('div');
 				echo Html::endTag('div');

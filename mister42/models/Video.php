@@ -34,7 +34,6 @@ class Video {
 	}
 
 	public function checkYoutube(array $data, string $type): bool {
-		$result = true;
 		$request = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), $type);
 		if (!$request->isOK || $request->data['pageInfo']['totalResults'] === 0) :
 			Console::writeError('Error: Could not get response from server', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
@@ -45,10 +44,8 @@ class Video {
 		foreach ($data as $listData) :
 			$mediaStatus = 1;
 			$status = ArrayHelper::getValue($items, "{$listData['id']}.status", false);
-			if ($status === false || (ArrayHelper::getValue($status, 'privacyStatus') !== 'public' && !ArrayHelper::getValue($status, 'embeddable'))) :
-				$result = false;
+			if ($status === false || (ArrayHelper::getValue($status, 'privacyStatus') !== 'public' && !ArrayHelper::getValue($status, 'embeddable')))
 				$mediaStatus = 0;
-			endif;
 
 			if ($listData['status'] !== boolval($mediaStatus)) :
 				Console::write($listData['name'], [Console::FG_PURPLE], 5);
@@ -69,6 +66,6 @@ class Video {
 				: Lyrics3Tracks::updateAll(['video_status' => $mediaStatus], ['video_id' => $listData['id']]);
 		endforeach;
 
-		return $result;
+		return true;
 	}
 }

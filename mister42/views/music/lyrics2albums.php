@@ -54,22 +54,19 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 
 					echo Html::beginTag('div', ['class' => 'container media mx-1']);
 						echo Html::beginTag('div', ['class' => 'row mr-2 media-body text-truncate']);
-							$x = 0;
-							foreach ($album->tracks as $track) :
-								if ($x === 0 || $x % ceil(count($album->tracks) / 3) === 0)
-									echo Html::beginTag('div', ['class' => 'col-md-4']);
-
-								echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
-									$track->name = ($track->lyricid || $track->video)
-										? Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
-										: $track->name;
-									echo implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]);
-									if ($track->video)
-										echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
-								echo Html::endTag('div');
-
-								if (++$x === count($album->tracks) || $x % ceil(count($album->tracks) / 3) === 0)
+							foreach (array_chunk($album->tracks, ceil(count($album->tracks) / 3)) as $tracks) :
+								echo Html::beginTag('div', ['class' => 'col-md-4']);
+								foreach ($tracks as $track) :
+									echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
+										$track->name = ($track->lyricid || $track->video)
+											? Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
+											: $track->name;
+										echo implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]);
+										if ($track->video)
+											echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
 									echo Html::endTag('div');
+								endforeach;
+								echo Html::endTag('div');
 							endforeach;
 						echo Html::endTag('div');
 

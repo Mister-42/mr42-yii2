@@ -141,21 +141,14 @@ class LyricsController extends \yii\console\Controller {
 			endif;
 
 			foreach ($data as $source => $payload) :
-				$x = 0;
-				foreach ($payload as $id) :
-					$ids[] = $id;
-					if (!isset($ids) || (++$x !== count($data[$source]) && count($ids) < 50))
-						continue;
-
+				foreach (array_chunk($payload, 50) as $media) :
 					switch ($source) :
 						case 'youtube':
-							$result[$type][] = $video->checkYoutube($ids, $type);
+							$result[$type][] = $video->checkYoutube($media, $type);
 							break;
 						default:
 							trigger_error("Checking {$source} {$type} is not supported yet.");
 					endswitch;
-
-					unset($ids);
 				endforeach;
 			endforeach;
 
