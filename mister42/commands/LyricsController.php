@@ -147,7 +147,7 @@ class LyricsController extends \yii\console\Controller {
 							$result[$type][] = $video->checkYoutube($media, $type);
 							break;
 						default:
-							trigger_error("Checking {$source} {$type} is not supported yet.");
+							trigger_error("Checking {$source} {$type} is not supported.");
 					endswitch;
 				endforeach;
 			endforeach;

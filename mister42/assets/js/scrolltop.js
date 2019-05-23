@@ -12,5 +12,5 @@ $(document).on('scroll', function() {
 
 btn.on('click', function(e){
 	$('html,body').animate({scrollTop: 0}, 1000);
-	history.pushState({}, "", $("link[rel='canonical']").attr('href'));
+	history.pushState({}, '', $('link[rel=\'canonical\']').attr('href'));
 });

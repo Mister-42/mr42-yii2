@@ -2,6 +2,10 @@ $('.clipboard-js-init').on('mouseleave', function() {
 	$(this).removeClass('btn-success').addClass('btn-primary').tooltip('hide').attr('data-original-title', genpass.lang.copy);
 });
 
+function btnSucces(txt) {
+	$('.clipboard-js-init').removeClass('btn-primary').addClass('btn-success').attr('data-original-title', txt).tooltip('show');
+}
+
 var cb = new ClipboardJS('.clipboard-js-init');
 
 cb.on('success', function(e) {
@@ -19,7 +23,3 @@ cb.on('error', function(e) {
 		btnSucces('Press Ctrl-' + actionKey + ' to ' + action);
 	}
 });
-
-function btnSucces(txt) {
-	$('.clipboard-js-init').removeClass('btn-primary').addClass('btn-success').attr('data-original-title', txt).tooltip('show');
-}

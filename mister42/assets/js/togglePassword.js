@@ -1,4 +1,4 @@
-$("#pwdToggle button").on('click', function(event) {
+$('#pwdToggle button').on('click', function(event) {
 	$.each($('form').data('yiiActiveForm').attributes, function() {
 		this.status = 3;
 	});

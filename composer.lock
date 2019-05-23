@@ -527,16 +527,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.7",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "709f21f92707308cdf8f9bcfa1af4cb26586521e"
+                "reference": "c26463ff9241f27907112fbcd0c86fa670cfef98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/709f21f92707308cdf8f9bcfa1af4cb26586521e",
-                "reference": "709f21f92707308cdf8f9bcfa1af4cb26586521e",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/c26463ff9241f27907112fbcd0c86fa670cfef98",
+                "reference": "c26463ff9241f27907112fbcd0c86fa670cfef98",
                 "shasum": ""
             },
             "require": {
@@ -580,7 +580,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2018-12-04T22:38:24+00:00"
+            "time": "2019-05-16T22:02:54+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1891,12 +1891,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "0f8b00a67fee75ea8b7ffc4e94d353fb12657d27"
+                "reference": "b30c85cb45f17807f228f8979177c5c059486b47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/0f8b00a67fee75ea8b7ffc4e94d353fb12657d27",
-                "reference": "0f8b00a67fee75ea8b7ffc4e94d353fb12657d27",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/b30c85cb45f17807f228f8979177c5c059486b47",
+                "reference": "b30c85cb45f17807f228f8979177c5c059486b47",
                 "shasum": ""
             },
             "require": {
@@ -1952,7 +1952,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-04-30T19:59:27+00:00"
+            "time": "2019-05-23T15:57:32+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",

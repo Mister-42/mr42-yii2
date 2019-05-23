@@ -15,7 +15,7 @@ function calcPsk() {
 	});
 	$('#wpapsk').yiiActiveForm('validate');
 
-	if ($('#wpapsk').find(".is-invalid").length) {
+	if ($('#wpapsk').find('.is-invalid').length) {
 		return false;
 	}
 
@@ -23,7 +23,7 @@ function calcPsk() {
 	$('.field-wpapsk-psk').addClass('d-none');
 	$('.current-progress').removeClass('d-none');
 	var pskgen = new PBKDF2($('#wpapsk-password').val(), $('#wpapsk-ssid').val(), 4096, 32);
-	pskgen.deriveKey(status, printPsk)
+	pskgen.deriveKey(status, printPsk);
 }
 
 function resetPsk() {
