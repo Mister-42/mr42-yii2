@@ -111,7 +111,7 @@ class LyricsController extends \yii\console\Controller {
 
 			if (!$response->isOK || ArrayHelper::getValue($response->data, '@attributes.status') !== 'ok') :
 				Console::write($artist->parent, [Console::FG_GREEN], 5);
-				Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
+				Console::writeError('ERROR!', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 				continue;
 			endif;
 
@@ -147,7 +147,8 @@ class LyricsController extends \yii\console\Controller {
 							$result[$type][] = $video->checkYoutube($media, $type);
 							break;
 						default:
-							trigger_error("Checking {$source} {$type} is not supported.");
+							Console::writeError("Checking {$source} {$type} is not supported.", [Console::BOLD, Console::FG_RED]);
+							return self::EXIT_CODE_ERROR;
 					endswitch;
 				endforeach;
 			endforeach;

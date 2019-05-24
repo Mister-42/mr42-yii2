@@ -3,7 +3,7 @@ namespace app\controllers\user;
 use Yii;
 use app\models\user\RecentTracks;
 use Da\User\Query\{ProfileQuery, UserQuery};
-use yii\base\{BaseObject, Module};
+use yii\base\Module;
 use yii\filters\HttpCache;
 use yii\helpers\ArrayHelper;
 use yii\web\{MethodNotAllowedHttpException, NotFoundHttpException};
@@ -24,10 +24,10 @@ class ProfileController extends \Da\User\Controller\ProfileController {
 			[
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function(BaseObject $action) {
+				'etagSeed' => function() {
 					return serialize([Yii::$app->user->id, Yii::$app->request->get('username')]);
 				},
-				'lastModified' => function(BaseObject $action) {
+				'lastModified' => function() {
 					$user = $this->userQuery->whereUsername(Yii::$app->request->get('username'))->one();
 					$profile = $this->profileQuery->whereUserId($user->id)->one();
 					return $profile->user->updated_at;
