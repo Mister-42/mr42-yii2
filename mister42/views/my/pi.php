@@ -1,4 +1,5 @@
 <?php
+use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -26,27 +27,27 @@ $this->registerJs('$("img").unveil();', View::POS_READY);
 
 echo Html::tag('h1', $this->title);
 
-foreach ($tabs as $tab => $tabdesc)
-	$tabdata[] = Html::a($tabdesc['short'], "#{$tab}", ['aria-controls' => $tab, 'aria-selected' => ($tab === array_key_first($tabs)) ? 'true' : 'false', 'class' => ($tab === array_key_first($tabs)) ? 'nav-link active' : 'nav-link', 'data-toggle' => 'tab', 'id' => "{$tab}-tab", 'role' => 'tab']);
-echo Html::ul($tabdata, ['class' => 'nav nav-tabs', 'id' => 'nav-tabs', 'encode' => false, 'itemOptions' => ['class' => 'nav-item'], 'role' => 'tablist']);
+foreach ($tabs as $tab => $tabdesc) :
+	$$tab[] = Html::beginTag('div', ['class' => 'row']);
+		$$tab[] = Html::tag('div', Html::tag('h3', $tabdesc['long'], ['class' => 'text-center mt-2']), ['class' => 'col-12']);
+		foreach ($datatype as $dt => $dtdesc) :
+			$$tab[] = Html::tag('h4', $dtdesc, ['class' => 'w-100 text-center mt-2 mb-0']);
+			foreach ($hosts as $host) :
+				$$tab[] = Html::beginTag('div', ['class' => 'col-md-6 h-100']);
+					$$tab[] = Html::tag('h5', $host, ['class' => 'text-center my-0']);
+					$$tab[] = ($tab === array_key_first($tabs))
+						? Html::img("@assets/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host])." ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
+						: Html::img("@assets/images/loading.png", ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host])." ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
+				$$tab[] = Html::endTag('div');
+			endforeach;
+		endforeach;
+	$$tab[] = Html::endTag('div');
 
-echo Html::beginTag('div', ['class' => 'tab-content']);
-	foreach ($tabs as $tab => $tabdesc) :
-		echo Html::beginTag('div', ['aria-labelledby' => "{$tab}-tab", 'class' => ($tab === array_key_first($tabs)) ? 'tab-pane fade show active' : 'tab-pane fade', 'id' => $tab, 'role' => 'tabpanel']);
-			echo Html::beginTag('div', ['class' => 'row']);
-				echo Html::tag('div', Html::tag('h3', $tabdesc['long'], ['class' => 'text-center mt-2']), ['class' => 'col-12']);
-				foreach ($datatype as $dt => $dtdesc) :
-					echo Html::tag('h4', $dtdesc, ['class' => 'w-100 text-center mt-2 mb-0']);
-					foreach ($hosts as $host) :
-						echo Html::beginTag('div', ['class' => 'col-md-6 h-100']);
-							echo Html::tag('h5', $host, ['class' => 'text-center my-0']);
-							echo ($tab === array_key_first($tabs))
-								? Html::img("@assets/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host])." ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
-								: Html::img("@assets/images/loading.png", ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host])." ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
-						echo Html::endTag('div');
-					endforeach;
-				endforeach;
-			echo Html::endTag('div');
-		echo Html::endTag('div');
-	endforeach;
-echo Html::endTag('div');
+	$items[$tab]['label'] = $tabdesc['short'];
+	$items[$tab]['content'] = implode($$tab);
+	$items[$tab]['active'] = $tab === array_key_first($tabs);
+endforeach;
+
+echo Tabs::widget([
+	'items' => $items,
+]);
