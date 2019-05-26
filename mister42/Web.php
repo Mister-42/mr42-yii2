@@ -99,7 +99,9 @@ class Web {
 				],
 				'controllerMap' => [
 					'profile' => ['class' => 'app\controllers\user\ProfileController'],
-
+				],
+				'mailParams' => [
+					'fromEmail' => $this->secrets['params']['noreplyEmail'],
 				],
 				'routes' => [
 					'profile/<username:\w+>'					=> 'profile/show',

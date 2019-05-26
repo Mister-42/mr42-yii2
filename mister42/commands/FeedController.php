@@ -77,7 +77,7 @@ class FeedController extends Controller {
 			return self::EXIT_CODE_ERROR;
 
 		$csv = array_map('str_getcsv', file($file));
-		$csv = array_map(function ($x) { return [$x[1], trim($x[2])]; }, $csv);
+		$csv = array_map(function($x) { return [$x[1], trim($x[2])]; }, $csv);
 		array_shift($csv);
 
 		Oui::deleteAll();

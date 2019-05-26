@@ -126,7 +126,7 @@ class LyricsController extends \yii\console\Controller {
 				foreach ($query->each() as $artist)
 					foreach ($artist->albums as $album)
 						$data[$album->playlist_source][] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name, 'status' => $album->playlist_status];
-			elseif ($type === 'videos') :
+			else :
 				$query = Lyrics3Tracks::find()->where(['not', ['video_source' => null, 'video_id' => null]]);
 				foreach ($query->each() as $track)
 					$data[$track->video_source][] = ['id' => $track->video_id, 'name' => $track->name, 'status' => $track->video_status];

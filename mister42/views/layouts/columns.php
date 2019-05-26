@@ -16,7 +16,7 @@ $this->beginContent('@app/views/layouts/main.php');
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::tag('div', $content, ['class' => $isHome ? 'col-12 col-md-8 col-lg-6' : 'col-12 col-md-9']);
 
-	echo Html::beginTag('div', ['class' => $isHome ? 'col-4 col-lg-6 d-none d-md-block': 'col-3 d-none d-md-block']);
+	echo Html::beginTag('div', ['class' => $isHome ? 'col-4 col-lg-6 d-none d-md-block' : 'col-3 d-none d-md-block']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::beginTag('aside', ['class' => 'col-12 d-none d-md-block']);
 				$form = ActiveForm::begin(['action' => ['articles/search'], 'method' => 'get', 'options' => ['role' => 'search']]);

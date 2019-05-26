@@ -36,7 +36,7 @@ class Video {
 	public function checkYoutube(array $data, string $type): bool {
 		$request = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), $type);
 		if (!$request->isOK || $request->data['pageInfo']['totalResults'] === 0) :
-			Console::writeError('Error: Could not get response from server', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
+			Console::writeError('Error: Could not get response from server.', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 			return false;
 		endif;
 		$items = ArrayHelper::index($request->data['items'], 'id');
@@ -53,12 +53,12 @@ class Video {
 
 				if ($status === false)
 					Console::writeError('Not Found', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
+				elseif ($mediaStatus === 1)
+					Console::writeError('Enabled', [Console::BOLD, Console::FG_GREEN, CONSOLE::BLINK]);
 				elseif (ArrayHelper::getValue($status, 'privacyStatus') !== 'public')
 					Console::writeError('Not Public', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 				elseif (!ArrayHelper::getValue($status, 'embeddable'))
-					Console::writeError('Not embeddable', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-				elseif ($mediaStatus === 1)
-					Console::writeError('Enabled', [Console::BOLD, Console::FG_GREEN, CONSOLE::BLINK]);
+					Console::writeError('Not Embeddable', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 			endif;
 
 			($type === 'playlists')
