@@ -4,18 +4,13 @@ namespace app\models;
 class Image {
 	public static function getAverageImageColor(string $image): string {
 		$i = imagecreatefromstring($image);
-		$rTotal = $gTotal = $bTotal = $total = 0;
 		[$width, $height] = getimagesizefromstring($image);
-		for ($x = 0; $x < $width; $x++) :
-			for ($y = 0; $y < $height; $y++) :
-				$rgb = imagecolorat($i, $x, $y);
-				$rTotal += ($rgb >> 16) & 0xFF;
-				$gTotal += ($rgb >> 8) & 0xFF;
-				$bTotal += $rgb & 0xFF;
-				$total++;
-			endfor;
-		endfor;
-		return sprintf('#%02X%02X%02X', $rTotal / $total, $gTotal / $total, $bTotal / $total);
+
+		$tmp = imagecreatetruecolor(1, 1);
+		imagecopyresampled($tmp, $i, 0, 0, 0, 0, 1, 1, $width, $height);
+
+		$rgb = imagecolorat($tmp, 0, 0);
+		return sprintf('#%02X%02X%02X', ($rgb >> 16) & 0xFF, ($rgb >> 8) & 0xFF, $rgb & 0xFF);
 	}
 
 	public static function resize(string $image, int $size): string {

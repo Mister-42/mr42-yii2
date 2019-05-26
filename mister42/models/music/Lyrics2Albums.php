@@ -29,7 +29,8 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function beforeSave($insert): bool {
 		if (parent::beforeSave($insert)) :
 			$this->url = $this->name === $this->url ? null : $this->url;
-			$this->$this->playlist_status = $this->$this->playlist_status ? 1 : 0;
+			$this->playlist_status = $this->playlist_status ? 1 : 0;
+			$this->created = $this->oldAttributes['created'];
 			$this->active = $this->active ? 1 : 0;
 			return true;
 		endif;

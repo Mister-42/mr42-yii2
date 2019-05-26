@@ -48,9 +48,7 @@ class MusicController extends \yii\web\Controller {
 	}
 
 	public function actionCollection(): string {
-		return $this->render('collection', [
-			'model' => new Collection(),
-		]);
+		return $this->render('collection');
 	}
 
 	public function actionCollectionCover(int $id): Response {

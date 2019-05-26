@@ -41,29 +41,23 @@ class LyricsController extends \yii\console\Controller {
 				Console::write($album->name, [Console::FG_GREEN], 8);
 
 				if (!$album->image) :
-					Console::write('Missing', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-					Console::newLine();
+					Console::writeError('Missing', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 					continue;
 				endif;
 
 				Console::write("{$width}x{$height}", [$width === self::ALBUM_IMAGE_DIMENSIONS ? Console::FG_GREEN : Console::FG_RED], 2);
 
 				if (($width > self::ALBUM_IMAGE_DIMENSIONS && $height > self::ALBUM_IMAGE_DIMENSIONS) || $type !== IMAGETYPE_JPEG) :
-					if ($width >= self::ALBUM_IMAGE_DIMENSIONS && $height >= self::ALBUM_IMAGE_DIMENSIONS) :
-						$album->image = Image::resize($album->image, self::ALBUM_IMAGE_DIMENSIONS);
-						$album->image_color = Image::getAverageImageColor($album->image);
-						$album->save();
-						[$width, $height] = getimagesizefromstring($album->image);
-						Console::write("{$width}x{$height}", [Console::BOLD, Console::FG_GREEN]);
-					endif;
-					Console::newLine();
-					continue;
-				elseif ($album->image && is_null($album->image_color)) :
-					$album->image_color = Image::getAverageImageColor($album->image);
-					$album->save();
+					$album->image = Image::resize($album->image, self::ALBUM_IMAGE_DIMENSIONS);
+					$album->image_color = null;
+					[$width, $height] = getimagesizefromstring($album->image);
+					Console::write("{$width}x{$height}", [Console::BOLD, Console::FG_GREEN]);
 				endif;
 
-				Console::write("OK", [Console::BOLD, Console::FG_GREEN]);
+				if (is_null($album->image_color))
+					$album->image_color = Image::getAverageImageColor($album->image);
+
+				$album->save();
 				Console::newLine();
 			endforeach;
 		endforeach;

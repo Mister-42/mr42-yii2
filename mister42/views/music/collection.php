@@ -1,4 +1,5 @@
 <?php
+use app\models\music\Collection;
 use yii\bootstrap4\Tabs;
 use yii\helpers\{Html, Url};
 use yii\web\View;
@@ -20,7 +21,7 @@ echo Html::tag('h1', $this->title);
 
 foreach ($tabs as $tab => $tabdesc) :
 	$$tab[] = Html::beginTag('div', ['class' => 'row justify-content-center']);
-		foreach ($model->find()->where(['user_id' => 1, 'status' => $tab])->orderBy(['artist' => SORT_ASC, 'year' => SORT_ASC])->all() as $album) :
+		foreach (Collection::find()->where(['user_id' => 1, 'status' => $tab])->orderBy(['artist' => SORT_ASC, 'year' => SORT_ASC])->all() as $album) :
 			$$tab[] = Html::beginTag('div', ['class' => 'col-12 col-sm-6 col-md-3 col-xl-2 mt-3']);
 				$$tab[] = Html::beginTag('div', ['class' => 'card']);
 					$$tab[] = Html::a(
