@@ -32,8 +32,8 @@ class LyricsController extends \yii\console\Controller {
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				[$width, $height, $type] = ($album->image) ? getimagesizefromstring($album->image) : [0, 0, 0];
-				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && $type === IMAGETYPE_JPEG && $album->image_color !== null)
+				[$width, $height] = ($album->image) ? getimagesizefromstring($album->image) : [0, 0, 0];
+				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && !is_null($album->image_color))
 					continue;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
@@ -47,7 +47,7 @@ class LyricsController extends \yii\console\Controller {
 
 				Console::write("{$width}x{$height}", [$width === self::ALBUM_IMAGE_DIMENSIONS ? Console::FG_GREEN : Console::FG_RED], 2);
 
-				if (($width > self::ALBUM_IMAGE_DIMENSIONS && $height > self::ALBUM_IMAGE_DIMENSIONS) || $type !== IMAGETYPE_JPEG) :
+				if (min($width, $height) > self::ALBUM_IMAGE_DIMENSIONS) :
 					$album->image = Image::resize($album->image, self::ALBUM_IMAGE_DIMENSIONS);
 					$album->image_color = null;
 					[$width, $height] = getimagesizefromstring($album->image);
