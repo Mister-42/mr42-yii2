@@ -26,14 +26,13 @@ class LyricsController extends \yii\console\Controller {
 	 * Resizes all album covers to the default dimensions if they exceed this limit.
 	 */
 	public function actionAlbumImage(): void {
-		$x = 0;
 		$count = (int) Lyrics2Albums::find()->count();
-		Console::startProgress(0, $count, 'Processing Images: ');
+		Console::startProgress($x = 0, $count, 'Processing Images: ');
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				[$width, $height] = ($album->image) ? getimagesizefromstring($album->image) : [0, 0, 0];
-				if ($width === self::ALBUM_IMAGE_DIMENSIONS && $height === self::ALBUM_IMAGE_DIMENSIONS && !is_null($album->image_color))
+				[$width, $height] = ($album->image) ? getimagesizefromstring($album->image) : [0, 0];
+				if (empty(array_diff([$width, $height], [self::ALBUM_IMAGE_DIMENSIONS])) && !is_null($album->image_color))
 					continue;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
@@ -45,7 +44,7 @@ class LyricsController extends \yii\console\Controller {
 					continue;
 				endif;
 
-				Console::write("{$width}x{$height}", [$width === self::ALBUM_IMAGE_DIMENSIONS ? Console::FG_GREEN : Console::FG_RED], 2);
+				Console::write("{$width}x{$height}", [Console::FG_RED], 2);
 
 				if (min($width, $height) > self::ALBUM_IMAGE_DIMENSIONS) :
 					$album->image = Image::resize($album->image, self::ALBUM_IMAGE_DIMENSIONS);
@@ -69,9 +68,8 @@ class LyricsController extends \yii\console\Controller {
 	 * Builds all albums PDF files, unless already cached and up-to-date.
 	 */
 	public function actionAlbumPdf(): void {
-		$x = 0;
 		$count = (int) Lyrics2Albums::find()->count();
-		Console::startProgress(0, $count, 'Processing PDFs: ');
+		Console::startProgress($x = 0, $count, 'Processing PDFs: ');
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
@@ -98,7 +96,7 @@ class LyricsController extends \yii\console\Controller {
 	/**
 	 * Retrieves and stores artist information.
 	 */
-	public function actionArtistInfo() {
+	public function actionArtistInfo(): void {
 		$query = LyricsArtistInfo::find()->where(['not', ['mbid' => null]]);
 		foreach ($query->each() as $artist) :
 			$response = Webrequest::getLastfmApi('artist.getInfo', ['mbid' => $artist->mbid]);
