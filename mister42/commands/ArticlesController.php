@@ -26,14 +26,7 @@ class ArticlesController extends Controller {
 			Console::write($article->id, [Console::FG_PURPLE]);
 			Console::write(Yii::$app->formatter->asDate($article->updated, 'medium'), [Console::FG_GREEN], 2);
 			Console::write($article->title, [Console::FG_GREEN], 8);
-
-			if (!$fileName) :
-				Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-				continue;
-			endif;
-
-			Console::write(Yii::$app->formatter->asShortSize(filesize($fileName), 2), [Console::BOLD, Console::FG_GREEN]);
-			Console::newLine();
+			Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 		endforeach;
 
 		Console::endProgress(true);

@@ -79,14 +79,7 @@ class LyricsController extends \yii\console\Controller {
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
 				Console::write($album->year, [Console::FG_GREEN]);
 				Console::write($album->name, [Console::FG_GREEN], 8);
-
-				if (!$fileName) :
-					Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
-					continue;
-				endif;
-
-				Console::write(Yii::$app->formatter->asShortSize(filesize($fileName), 2), [Console::BOLD, Console::FG_GREEN]);
-				Console::newLine();
+				Console::writeError("ERROR!", [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
 			endforeach;
 		endforeach;
 
@@ -120,18 +113,17 @@ class LyricsController extends \yii\console\Controller {
 	 */
 	public function actionVideos(): int {
 		$video = new Video();
-		foreach (['playlists', 'videos'] as $type) :
-			if ($type === 'playlists') :
-				$query = Lyrics1Artists::find()->orderBy(['name' => SORT_ASC])->with(['albums' => function($q) { $q->where(['not', ['playlist_source' => null, 'playlist_id' => null]]); }]);
-				foreach ($query->each() as $artist)
-					foreach ($artist->albums as $album)
-						$data[$album->playlist_source][] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name, 'status' => $album->playlist_status];
-			else :
-				$query = Lyrics3Tracks::find()->where(['not', ['video_source' => null, 'video_id' => null]]);
-				foreach ($query->each() as $track)
-					$data[$track->video_source][] = ['id' => $track->video_id, 'name' => $track->name, 'status' => $track->video_status];
-			endif;
 
+		$query = Lyrics1Artists::find()->orderBy(['name' => SORT_ASC])->with(['albums' => function($q) { $q->where(['not', ['playlist_source' => null, 'playlist_id' => null]]); }]);
+		foreach ($query->each() as $artist)
+			foreach ($artist->albums as $album)
+				$media['playlists'][$album->playlist_source][] = ['id' => $album->playlist_id, 'artist' => $artist->name, 'year' => $album->year, 'name' => $album->name, 'status' => $album->playlist_status];
+
+		$query = Lyrics3Tracks::find()->where(['not', ['video_source' => null, 'video_id' => null]]);
+		foreach ($query->each() as $track)
+			$media['videos'][$track->video_source][] = ['id' => $track->video_id, 'name' => $track->name, 'status' => $track->video_status];
+
+		foreach ($media as $type => $data) :
 			foreach ($data as $source => $payload) :
 				foreach (array_chunk($payload, 50) as $media) :
 					switch ($source) :
@@ -149,7 +141,6 @@ class LyricsController extends \yii\console\Controller {
 				Console::write("Completed checking {$type}", [Console::BOLD, Console::FG_GREEN]);
 				Console::newLine();
 			endif;
-			unset($data);
 		endforeach;
 
 		if ((bool) array_product($result) === true)
