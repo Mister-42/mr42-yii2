@@ -4,7 +4,7 @@ use DOMDocument;
 use Yii;
 use app\models\Video;
 use GK\JavascriptPacker;
-use yii\helpers\{FileHelper, Html, Markdown};
+use yii\helpers\{FileHelper, Markdown};
 
 class Formatter extends \yii\i18n\Formatter {
 	public function cleanInput(string $data, string $markdown = 'original', bool $allowHtml = false): string {
@@ -18,12 +18,10 @@ class Formatter extends \yii\i18n\Formatter {
 		if (Yii::$app->request->isConsoleRequest || Yii::$app->controller->id !== 'feed') :
 			$dom = new DOMDocument;
 			$dom->loadHTML($data);
-			foreach ($dom->getelementsbytagname('img') as $img) :
-				$attr['class'] = explode(' ', $img->getAttribute('class'));
-				Html::addCssClass($attr, 'img-fluid');
-				$img->setAttribute('class', implode(' ', array_filter($attr['class'])));
-				$img->removeattribute('width');
-				$img->removeattribute('height');
+			foreach ($dom->getElementsByTagName('img') as $img) :
+				$img->setAttribute('class', implode(' ', array_filter([$img->getAttribute('class'), 'img-fluid'])));
+				$img->removeAttribute('width');
+				$img->removeAttribute('height');
 			endforeach;
 			$data = $dom->saveHTML();
 		endif;
