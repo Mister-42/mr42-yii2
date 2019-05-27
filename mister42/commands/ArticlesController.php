@@ -20,7 +20,7 @@ class ArticlesController extends Controller {
 		Console::startProgress($x = 0, $count, 'Processing PDFs: ');
 		foreach ($query->each() as $article) :
 			Console::updateProgress(++$x, $count);
-			if ($fileName = Articles::buildPdf($article))
+			if (Articles::buildPdf($article))
 				continue;
 
 			Console::write($article->id, [Console::FG_PURPLE]);

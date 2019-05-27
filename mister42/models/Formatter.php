@@ -1,9 +1,10 @@
 <?php
 namespace app\models;
+use DOMDocument;
 use Yii;
 use app\models\Video;
 use GK\JavascriptPacker;
-use yii\helpers\{FileHelper, Markdown};
+use yii\helpers\{FileHelper, Html, Markdown};
 
 class Formatter extends \yii\i18n\Formatter {
 	public function cleanInput(string $data, string $markdown = 'original', bool $allowHtml = false): string {
@@ -14,8 +15,18 @@ class Formatter extends \yii\i18n\Formatter {
 		], $data);
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
-		if (Yii::$app->request->isConsoleRequest || Yii::$app->controller->id !== 'feed')
-			$data = $this->addImageResponsiveClass($data);
+		if (Yii::$app->request->isConsoleRequest || Yii::$app->controller->id !== 'feed') :
+			$dom = new DOMDocument;
+			$dom->loadHTML($data);
+			foreach ($dom->getelementsbytagname('img') as $img) :
+				$attr['class'] = explode(' ', $img->getAttribute('class'));
+				Html::addCssClass($attr, 'img-fluid');
+				$img->setAttribute('class', implode(' ', array_filter($attr['class'])));
+				$img->removeattribute('width');
+				$img->removeattribute('height');
+			endforeach;
+			$data = $dom->saveHTML();
+		endif;
 		return trim($data);
 	}
 
@@ -32,14 +43,6 @@ class Formatter extends \yii\i18n\Formatter {
 			touch($cacheFile, filemtime($fileName));
 		endif;
 		return file_get_contents($cacheFile);
-	}
-
-	private function addImageResponsiveClass(string $html): string {
-		$html = preg_match('/<img.*? class="/', $html)
-			? preg_replace("/<img (.*?) class=\"(.*?)\"(.*?)>/i", '<img $1 class="$2 img-fluid"$3>', $html)
-			: preg_replace('/(<img.*?)(\>)/', '$1 class="img-fluid"$2', $html);
-		$html = preg_replace('/(width|height)=\"\d*\"\s/', "", $html);
-		return $html;
 	}
 
 	private function getVideo(array $match): string {

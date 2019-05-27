@@ -73,7 +73,7 @@ class LyricsController extends \yii\console\Controller {
 		foreach (Lyrics1Artists::albumsList() as $artist) :
 			foreach ($artist->albums as $album) :
 				Console::updateProgress(++$x, $count);
-				if (!$album->active || $fileName = Lyrics2Albums::buildPdf($album))
+				if (!$album->active || Lyrics2Albums::buildPdf($album))
 					continue;
 
 				Console::write($artist->name, [Console::FG_PURPLE], 3);
