@@ -25,6 +25,7 @@
 	"npm-asset/lightbox2": "^2.10",
         "2amigos/yii2-usuario": "~1.0",
         "codemix/yii2-localeurls": "^1.7",
+        "voku/simple_html_dom": "^4.5",
         "gkralik/php-uglifyjs": "^1.0",
         "mpdf/mpdf": "^8.0",
         "mpdf/qrcode": "^1.0",

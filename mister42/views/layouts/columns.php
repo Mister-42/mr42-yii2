@@ -68,8 +68,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 						'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
 						'header' => Yii::$app->icon->show('github', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Changelog'),
 					]);
-				echo Html::endTag('aside');
-			echo Html::endTag('div');
+			echo Html::endTag('aside');
 		echo Html::endTag('div');
 
 	echo Html::endTag('div');

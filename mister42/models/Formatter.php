@@ -4,6 +4,7 @@ use DOMDocument;
 use Yii;
 use app\models\Video;
 use GK\JavascriptPacker;
+use voku\helper\HtmlDomParser;
 use yii\helpers\{FileHelper, Markdown};
 
 class Formatter extends \yii\i18n\Formatter {
@@ -16,14 +17,13 @@ class Formatter extends \yii\i18n\Formatter {
 		if ($markdown)
 			$data = Markdown::process($data, $markdown);
 		if (Yii::$app->request->isConsoleRequest || Yii::$app->controller->id !== 'feed') :
-			$dom = new DOMDocument;
-			$dom->loadHTML($data);
-			foreach ($dom->getElementsByTagName('img') as $img) :
+			$dom = HtmlDomParser::str_get_html($data);
+			foreach ($dom->find('img') as $img) :
 				$img->setAttribute('class', implode(' ', array_filter([$img->getAttribute('class'), 'img-fluid'])));
 				$img->removeAttribute('width');
 				$img->removeAttribute('height');
 			endforeach;
-			$data = $dom->saveHTML();
+			$data = $dom->html();
 		endif;
 		return trim($data);
 	}
