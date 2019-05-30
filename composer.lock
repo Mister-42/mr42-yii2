@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59a7f0d439adb3c5b8214447580e8961",
+    "content-hash": "eb83fda01c6960bf6607a9db68232943",
     "packages": [
         {
             "name": "2amigos/yii2-selectize-widget",
@@ -1344,16 +1344,16 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v4.2.9",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "48eddf66950fa57996e1be4a55916d65c10c604a"
+                "reference": "105c98bb0c5d8635bea056135304bd8edcc42b4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/48eddf66950fa57996e1be4a55916d65c10c604a",
-                "reference": "48eddf66950fa57996e1be4a55916d65c10c604a",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/105c98bb0c5d8635bea056135304bd8edcc42b4d",
+                "reference": "105c98bb0c5d8635bea056135304bd8edcc42b4d",
                 "shasum": ""
             },
             "require": {
@@ -1362,7 +1362,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -1393,7 +1393,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-16T20:31:39+00:00"
+            "time": "2019-01-16T21:53:39+00:00"
         },
         {
             "name": "symfony/polyfill-iconv",
@@ -2003,12 +2003,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "0611c3a8d7ec377441211806d4bcab002a2f9a37"
+                "reference": "c2fadd4effc19520a1d930a67e6af233450f7687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/0611c3a8d7ec377441211806d4bcab002a2f9a37",
-                "reference": "0611c3a8d7ec377441211806d4bcab002a2f9a37",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/c2fadd4effc19520a1d930a67e6af233450f7687",
+                "reference": "c2fadd4effc19520a1d930a67e6af233450f7687",
                 "shasum": ""
             },
             "require": {
@@ -2064,7 +2064,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-05-28T06:13:55+00:00"
+            "time": "2019-05-30T16:21:50+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -2374,6 +2374,6 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.3.3"
+        "php": "7.3.6"
     }
 }

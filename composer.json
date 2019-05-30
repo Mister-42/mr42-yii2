@@ -9,7 +9,7 @@
         "component-dir": "../vendor-components",
         "vendor-dir": "../vendor",
         "platform": {
-            "php": "7.3.3"
+            "php": "7.3.6"
         }
     },
     "require": {

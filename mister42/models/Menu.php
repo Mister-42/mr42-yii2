@@ -93,14 +93,14 @@ class Menu extends \yii\base\Model {
 			$subMenu[] = ['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create']];
 			$subMenu[] = ['label' => Yii::t('usuario', 'Manage users'), 'url' => ['/user/admin/index']];
 			$subMenu[] = ['label' => Yii::t('mr42', 'PHP {version}', ['version' => PHP_VERSION]), 'url' => ['/site/php']];
-			$subMenu[] = Html::tag('div', null, ['class' => 'dropdown-divider']);
+			$subMenu[] = '-';
 		endif;
 		$subMenu[] = ['label' => Yii::t('mr42', 'View Profile'), 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]];
-		$subMenu[] = Html::tag('div', null, ['class' => 'dropdown-divider']);
+		$subMenu[] = '-';
 		$subMenu[] = ['label' => Yii::t('usuario', 'Profile settings'), 'url' => ['/user/settings/profile']];
 		$subMenu[] = ['label' => Yii::t('usuario', 'Account settings'), 'url' => ['/user/settings/account']];
 		$subMenu[] = ['label' => Yii::t('usuario', 'Networks'), 'url' => ['/user/settings/networks']];
-		$subMenu[] = Html::tag('div', null, ['class' => 'dropdown-divider']);
+		$subMenu[] = '-';
 		$subMenu[] = ['label' => Yii::t('usuario', 'Logout'), 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']];
 
 		$unread = $this->isAdmin() ? ArticlesComments::find()->where(['not', ['active' => true]])->count() : 0;

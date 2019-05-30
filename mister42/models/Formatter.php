@@ -1,6 +1,5 @@
 <?php
 namespace app\models;
-use DOMDocument;
 use Yii;
 use app\models\Video;
 use GK\JavascriptPacker;
