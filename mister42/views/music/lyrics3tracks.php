@@ -21,7 +21,7 @@ if ($data[0]->album->image_color)
 	$this->params['themeColor'] = $data[0]->album->image_color;
 
 $items[] = [
-	'label' => Html::tag('h4', implode(' - ', [$data[0]->artist->name, $data[0]->album->name]), ['class' => 'notranslate']),
+	'label' => Html::tag('span', implode(' - ', [$data[0]->artist->name, $data[0]->album->name]), ['class' => 'h4 notranslate']),
 	'content' => ($data[0]->album->image)
 		? Lightbox::widget([
 			'imageOptions' => ['class' => 'img-fluid img-thumbnail rounded', 'style' => "background-color:{$data[0]->album->image_color}"],
@@ -61,7 +61,7 @@ foreach ($data as $track) :
 			HTml::tag('i', 'Instrumental', ['class' => 'w-100']);
 
 	$items[] = [
-		'label' => implode(' · ', [$track->track, $track->name.$track->nameExtra]),
+		'label' => Html::tag('span', implode(' · ', [$track->track, $track->name.$track->nameExtra]), ['class' => 'h5 notranslate']),
 		'content' => Html::tag('div', $content, ['class' => 'row container']),
 		'options' => ['id' => $track->track]
 	];

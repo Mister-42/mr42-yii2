@@ -32,7 +32,7 @@ class Icon {
 		$doc->load($fileName);
 		foreach ($doc->getElementsByTagName('svg') as $svg) :
 			$svg->setAttribute('aria-hidden', 'true');
-			if (!isset($options['height']) && !isset($options['width'])) :
+			if (min($options['height'], $options['width']) === null) :
 				list($width, $height) = StringHelper::explode($svg->getAttribute('viewBox'), ' ', function($e) { return ltrim($e, '0'); }, true);
 				$svg->setAttribute('class', trim(implode(' ', ['icon', 'icon-w-'.ceil($width / $height * 16), ArrayHelper::remove($options, 'class')])));
 			endif;
