@@ -92,24 +92,13 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
 			}
 		}
 
-		&-albums,
-		&-lyrics {
+		&-albums {
 			svg.text-muted {
 				color: $lighterBlue !important;
 			}
 
 			.text-nowrap {
 				overflow-x: hidden;
-			}
-		}
-
-		&-lyrics {
-			.row:not(:first-child) {
-				@include dividing-line(10px, $lighterBlue);
-			}
-
-			.lyrics {
-				@include user-select(all);
 			}
 		}
 	}
@@ -131,6 +120,10 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
 	position: relative;
 	top: -4.6rem;
 	@include invisible(hidden);
+}
+
+.accordion .card-body .notranslate {
+	@include user-select(all);
 }
 
 aside {

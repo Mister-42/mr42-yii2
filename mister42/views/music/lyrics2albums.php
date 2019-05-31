@@ -58,10 +58,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 								echo Html::beginTag('div', ['class' => 'col-md-4']);
 								foreach ($tracks as $track) :
 									echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
-										$track->name = ($track->lyricid || $track->video)
-											? Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track])
-											: $track->name;
-										echo implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]);
+										$track->name = Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track]);
+										echo implode(' · ', [$track->track, $track->name.$track->nameExtra]);
+										if (!$track->lyricid && !$track->wip)
+											echo Yii::$app->icon->show('music', ['class' => 'text-muted ml-1']);
 										if ($track->video)
 											echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
 									echo Html::endTag('div');

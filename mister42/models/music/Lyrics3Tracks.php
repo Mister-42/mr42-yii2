@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 
 class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public $max;
+	public $nameExtra;
 	public $video;
 
 	public static function tableName(): string {
@@ -16,8 +17,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public function afterFind(): void {
 		parent::afterFind();
 		$this->track = sprintf('%02d', $this->track);
-		$this->disambiguation = $this->disambiguation ? " ({$this->disambiguation})" : null;
-		$this->feat = $this->feat ? " (feat. {$this->feat})" : null;
+		$this->nameExtra = ($this->disambiguation ? " ({$this->disambiguation})" : null).($this->feat ? " (feat. {$this->feat})" : null);
 		$this->video_status = boolval($this->video_status);
 		$this->wip = boolval($this->wip);
 		$this->video = $this->video_source && $this->video_id && $this->video_ratio && $this->video_status ? Video::getEmbed($this->video_source, $this->video_id, $this->video_ratio) : null;

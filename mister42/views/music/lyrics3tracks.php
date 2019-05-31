@@ -1,10 +1,10 @@
 <?php
 use app\widgets\Lightbox;
-use yii\bootstrap4\Html;
+use yii\bootstrap4\{Accordion, Html};
 use yii\helpers\Url;
+use yii\web\View;
 
-$this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name]);
-$this->title = implode(' ', [$this->title, 'Lyrics']);
+$this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name, 'Lyrics']);
 $this->params['breadcrumbs'] = [Yii::t('mr42', 'Music')];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
 $this->params['breadcrumbs'][] = ['label' => Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']), 'url' => ['lyrics', 'artist' => $data[0]->artist->url]];
@@ -14,82 +14,61 @@ if ($data[0]->album->image)
 	$this->registerMetaTag(['property' => 'og:image', 'content' => Url::to(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 800], true)]);
 $this->registerMetaTag(['property' => 'og:type', 'content' => 'music.album']);
 $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
+$this->registerJs(Yii::$app->formatter->jspack('accordionAnchor.js'), View::POS_READY);
+$this->registerJs(Yii::$app->formatter->jspack('accordionScroll.js'), View::POS_READY);
 
 if ($data[0]->album->image_color)
 	$this->params['themeColor'] = $data[0]->album->image_color;
 
-echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
-	echo Html::beginTag('div', ['class' => 'row']);
-		echo Html::beginTag('div', ['class' => 'col mb-2']);
-			echo Html::beginTag('div', ['class' => 'card']);
-				echo Html::tag('div',
-					Html::tag('div',
-						Html::tag('h4', implode(' · ', [$data[0]->artist->name, $data[0]->album->name]), ['class' => 'notranslate'])
-					, ['class' => 'float-left']).
-					Html::tag('div',
-						($data[0]->album->buy
-							? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
-							: '').
-						($data[0]->album->playlist_url
-							? Html::a(Yii::$app->icon->show($data[0]->album->playlist_source, ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
-							: '').
-						($data[0]->album->active
-							? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
-							: Html::tag('span', Yii::$app->icon->show('asterisk', ['class' => 'mr-1']).Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1']))
-					, ['class' => 'float-right'])
-				, ['class' => 'card-header']);
+$items[] = [
+	'label' => Html::tag('h4', implode(' - ', [$data[0]->artist->name, $data[0]->album->name]), ['class' => 'notranslate']),
+	'content' => ($data[0]->album->image)
+		? Lightbox::widget([
+			'imageOptions' => ['class' => 'img-fluid img-thumbnail rounded', 'style' => "background-color:{$data[0]->album->image_color}"],
+			'items' => [
+				[
+					'thumb'	=> ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '500'],
+					'image'	=> ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '800'],
+					'title'	=> implode(' - ', [$data[0]->artist->name, $data[0]->album->name]),
+				],
+			],
+			'options' => [
+				'imageFadeDuration'	=> 25,
+				'wrapAround'		=> true,
+			]
+		])
+		: null,
+	'footer' => ($data[0]->album->buy
+		? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
+		: null).
+		($data[0]->album->playlist_url
+			? Html::a(Yii::$app->icon->show($data[0]->album->playlist_source, ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+			: null).
+		($data[0]->album->active
+			? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+			: Html::tag('span', Yii::$app->icon->show('asterisk', ['class' => 'mr-1']).Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
+	'contentOptions' => ['class' => 'text-center'],
+	'options' => ['id' => 'frontCover']
+];
 
-				echo Html::beginTag('div', ['class' => 'container mx-1']);
-					echo Html::beginTag('div', ['class' => 'row mr-3']);
-						foreach (array_chunk($data, ceil(count($data) / 3)) as $tracks) :
-							echo Html::beginTag('div', ['class' => 'col-md-4']);
-							foreach ($tracks as $track) :
-								echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
-									echo $track->track.' · ';
-									echo $track->lyricid || $track->video
-										? Html::a($track->name, '#'.$track->track)
-										: $track->name;
-									echo $track->disambiguation.$track->feat;
-									if ($track->video)
-										echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
-								echo Html::endTag('div');
-							endforeach;
-							echo Html::endTag('div');
-						endforeach;
-					echo Html::endTag('div');
-				echo Html::endTag('div');
-				if ($data[0]->album->image)
-					echo Lightbox::widget([
-						'imageOptions' => ['class' => 'img-fluid img-thumbnail rounded', 'style' => "background-color:{$data[0]->album->image_color}"],
-						'items' => [
-							[
-								'thumb'	=> ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '500'],
-								'image'	=> ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '800'],
-								'title'	=> implode(' - ', [$data[0]->artist->name, $data[0]->album->name]),
-							],
-						],
-						'linkOptions' => ['class' => 'card-body text-center'],
-						'options' => [
-							'imageFadeDuration'	=> 25,
-							'wrapAround'		=> true,
-						],
-					]);
-			echo Html::endTag('div');
-		echo Html::endTag('div');
-	echo Html::endTag('div');
+foreach ($data as $track) :
+	$content = ($track->lyricid || $track->wip || $track->video)
+		? Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4 order-md-12' : 'col-12']).
+			Html::tag('div',
+				($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
+			, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8 notranslate' : 'col-12 notranslate'])
+		: Yii::$app->icon->show('instrumental', ['height' => 250, 'width' => 250]).
+			HTml::tag('i', 'Instrumental', ['class' => 'w-100']);
 
-	foreach ($data as $track) :
-		if ($track->lyricid || $track->wip || $track->video) :
-			echo Html::beginTag('div', ['class' => 'row']);
-				echo Html::tag('div',
-					Html::tag('h4', implode(' · ', [$track->track, $track->name.$track->disambiguation.$track->feat]), ['class' => 'notranslate'])
-				, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']);
-				echo Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4 order-md-12' : 'col-12']);
-				echo Html::tag('div',
-					Html::tag('span', null, ['class' => 'anchor', 'id' => $track->track]).
-					Html::tag('div', $track->wip ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : ''), ['class' => 'lyrics notranslate'])
-				, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']);
-			echo Html::endTag('div');
-		endif;
-	endforeach;
-echo Html::endTag('div');
+	$items[] = [
+		'label' => implode(' · ', [$track->track, $track->name.$track->nameExtra]),
+		'content' => Html::tag('div', $content, ['class' => 'row container']),
+		'options' => ['id' => $track->track]
+	];
+endforeach;
+
+echo Accordion::widget([
+	'encodeLabels' => false,
+	'items' => $items,
+	'itemToggleOptions' => ['class' => 'w-100 text-left notranslate'],
+]);

@@ -8,22 +8,25 @@ use yii\helpers\{ArrayHelper, StringHelper};
 class Icon {
 	public function show(string $name, array $options = []): string {
 		$style = ArrayHelper::remove($options, 'style', 'solid');
-		if (!file_exists(Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg")))
+		$target = ArrayHelper::remove($options, 'target', 'html');
+		if (!file_exists(Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg")) && $name !== 'instrumental')
 			return $this->show('question-circle', $options);
 
 		$doc = new DOMDocument();
-		$doc->load(Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg"));
+		$doc->load($name === 'instrumental' ? Yii::getAlias('@assetsroot/images/instrumental.svg') : Yii::getAlias("@bower/fontawesome/svgs/{$style}/{$name}.svg"));
 		foreach ($doc->getElementsByTagName('svg') as $svg) :
 			$svg->setAttribute('aria-hidden', 'true');
 			list($width, $height) = StringHelper::explode($svg->getAttribute('viewBox'), ' ', function($e) { return ltrim($e, '0'); }, true);
-			$svg->setAttribute('class', trim(implode(' ', ['icon', 'icon-w-'.ceil($width / $height * 16), ArrayHelper::remove($options, 'class')])));
+			if (!isset($options['height']) && !isset($options['width']))
+				$svg->setAttribute('class', trim(implode(' ', ['icon', 'icon-w-'.ceil($width / $height * 16), ArrayHelper::remove($options, 'class')])));
 			$svg->setAttribute('data-icon', $name);
 			$svg->setAttribute('role', 'img');
 			foreach ($options as $key => $value)
 				$svg->setAttribute($key, $value);
 		endforeach;
-		foreach ($doc->getElementsByTagName('path') as $path)
-			$path->setAttribute('fill', 'currentColor');
+		if ($target !== 'pdf')
+			foreach ($doc->getElementsByTagName('path') as $path)
+				$path->setAttribute('fill', 'currentColor');
 		return $doc->saveXML($doc->documentElement);
 	}
 
