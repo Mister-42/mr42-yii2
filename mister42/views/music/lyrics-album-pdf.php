@@ -41,7 +41,7 @@ foreach ($tracks as $track) :
 	elseif ($track->wip) :
 		echo Html::tag('i', 'Work in Progress');
 	else :
-		echo Yii::$app->icon->show('instrumental', ['height' => 250, 'width' => 250, 'target' => 'pdf']);
+		echo Yii::$app->icon->instrumental(250, ['target' => 'pdf']);
 		echo Html::tag('p', Html::tag('i', 'Instrumental'));
 	endif;
 endforeach;

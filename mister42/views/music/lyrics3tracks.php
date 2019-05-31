@@ -57,7 +57,7 @@ foreach ($data as $track) :
 			Html::tag('div',
 				($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
 			, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8 notranslate' : 'col-12 notranslate'])
-		: Yii::$app->icon->show('instrumental', ['height' => 250, 'width' => 250]).
+		: Yii::$app->icon->instrumental(250).
 			HTml::tag('i', 'Instrumental', ['class' => 'w-100']);
 
 	$items[] = [
