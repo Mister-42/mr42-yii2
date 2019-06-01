@@ -59,7 +59,7 @@ foreach ($data as $track) :
 	$content .= Html::tag('div',
 		($track->lyricid || $track->wip || $track->video)
 			? ($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
-			: Yii::$app->icon->instrumental(250, ['class' => 'img-fluid']).Html::tag('p', Html::tag('i', 'Instrumental'))
+			: Yii::$app->icon->instrumental(['class' => 'img-fluid', 'height' => 250]).Html::tag('p', Html::tag('i', 'Instrumental'))
 	, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']);
 
 	$items[] = [

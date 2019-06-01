@@ -1,5 +1,8 @@
 <?php
 namespace app\models;
+use DOMDocument;
+use Yii;
+use yii\helpers\{ArrayHelper, Html};
 
 class Image {
 	public static function getAverageImageColor(string $image): string {
@@ -11,6 +14,40 @@ class Image {
 
 		$rgb = imagecolorat($tmp, 0, 0);
 		return sprintf('#%02X%02X%02X', ($rgb >> 16) & 0xFF, ($rgb >> 8) & 0xFF, $rgb & 0xFF);
+	}
+
+	public static function loadSvg(string $fileName): DOMDocument {
+		$doc = new DOMDocument();
+		if (!file_exists(Yii::getAlias($fileName)))
+			$fileName = '@bower/fontawesome/svgs/solid/question-circle.svg';
+
+		$doc->load(Yii::getAlias($fileName));
+		return $doc;
+	}
+
+	public static function processSvg(DOMDocument $doc, string $name, array $options): string {
+		ArrayHelper::setValue($options, 'aria-hidden', 'true');
+		ArrayHelper::setValue($options, 'data-icon', $name);
+		ArrayHelper::setValue($options, 'role', 'img');
+
+		$svg = $doc->getElementsByTagName('svg')->item(0);
+		[, , $svgWidth, $svgHeight] = explode(' ', $svg->getAttribute('viewBox'));
+		switch ($height = ArrayHelper::getValue($options, 'height', 0)) :
+			case 0:
+				Html::addCssClass($options, 'icon');
+				Html::addCssClass($options, 'icon-w-'.ceil($svgWidth / $svgHeight * 16));
+				break;
+			default:
+				ArrayHelper::setValue($options, 'width', round($height * $svgWidth / $svgHeight));
+		endswitch;
+
+		if (ArrayHelper::remove($options, 'target', 'web') !== 'pdf')
+			foreach ($doc->getElementsByTagName('path') as $path)
+				$path->setAttribute('fill', 'currentColor');
+
+		foreach ($options as $key => $value)
+			$svg->setAttribute($key, $value);
+		return $doc->saveXML($svg);
 	}
 
 	public static function resize(string $image, int $size): string {
