@@ -52,17 +52,19 @@ $items[] = [
 ];
 
 foreach ($data as $track) :
-	$content = ($track->lyricid || $track->wip || $track->video)
-		? Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4 order-md-12' : 'col-12']).
-			Html::tag('div',
-				($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
-			, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8 notranslate' : 'col-12 notranslate'])
-		: Yii::$app->icon->instrumental(250).
-			HTml::tag('i', 'Instrumental', ['class' => 'w-100']);
+	$content = ($track->video)
+		? Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4 order-md-12' : 'col-12'])
+		: null;
+
+	$content .= Html::tag('div',
+		($track->lyricid || $track->wip || $track->video)
+			? ($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
+			: Yii::$app->icon->instrumental(250, ['class' => 'img-fluid']).Html::tag('p', Html::tag('i', 'Instrumental'))
+	, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']);
 
 	$items[] = [
 		'label' => Html::tag('span', implode(' · ', [$track->track, $track->name.$track->nameExtra]), ['class' => 'h5 notranslate']),
-		'content' => Html::tag('div', $content, ['class' => 'row container']),
+		'content' => Html::tag('div', $content, ['class' => 'row container notranslate']),
 		'options' => ['id' => $track->track]
 	];
 endforeach;
