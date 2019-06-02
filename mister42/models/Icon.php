@@ -13,12 +13,13 @@ class Icon {
 
 	public function instrumental(array $options = []): string {
 		$svg = Image::loadSvg('@assetsroot/images/instrumental.svg');
-		return Image::processSvg($svg, 'instrumental', $options);
+		ArrayHelper::setValue($options, 'title', 'Instrumental');
+		return Image::processSvg($svg, $options);
 	}
 
 	public function show(string $name, array $options = []): string {
 		$style = ArrayHelper::remove($options, 'style', 'solid');
 		$svg = Image::loadSvg("@bower/fontawesome/svgs/{$style}/{$name}.svg");
-		return Image::processSvg($svg, $name, $options);
+		return Image::processSvg($svg, $options);
 	}
 }

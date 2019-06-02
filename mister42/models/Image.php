@@ -27,13 +27,14 @@ class Image {
 		return $doc;
 	}
 
-	public static function processSvg(DOMDocument $doc, string $name, array $options): string {
+	public static function processSvg(DOMDocument $doc, array $options): string {
 		ArrayHelper::setValue($options, 'aria-hidden', 'true');
-		ArrayHelper::setValue($options, 'data-icon', $name);
 		ArrayHelper::setValue($options, 'role', 'img');
 
 		$svg = $doc->getElementsByTagName('svg')->item(0);
-		[, , $svgWidth, $svgHeight] = explode(' ', $svg->getAttribute('viewBox'));
+		if ($title = ArrayHelper::remove($options, 'title'))
+			$svg->appendChild($doc->createElement('title', $title));
+		[,, $svgWidth, $svgHeight] = explode(' ', $svg->getAttribute('viewBox'));
 		switch ($height = ArrayHelper::getValue($options, 'height', 0)) :
 			case 0:
 				Html::addCssClass($options, 'icon');

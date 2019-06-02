@@ -38,9 +38,10 @@ $items[] = [
 			]
 		])
 		: null,
-	'footer' => ($data[0]->album->buy
-		? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
-		: null).
+	'footer' =>
+		($data[0]->album->buy
+			? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
+			: null).
 		($data[0]->album->playlist_url
 			? Html::a(Yii::$app->icon->show($data[0]->album->playlist_source, ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 			: null).
@@ -53,18 +54,18 @@ $items[] = [
 
 foreach ($data as $track) :
 	$content = ($track->video)
-		? Html::tag('div', $track->video, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-4 order-md-12' : 'col-12'])
+		? Html::tag('div', $track->video, ['class' => ($track->lyricid || $track->wip) ? 'col-12 col-md-4 order-md-12' : 'col-12'])
 		: null;
 
 	$content .= Html::tag('div',
 		($track->lyricid || $track->wip || $track->video)
 			? ($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
-			: Yii::$app->icon->instrumental(['class' => 'img-fluid', 'height' => 250]).Html::tag('p', Html::tag('i', 'Instrumental'))
-	, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8' : 'col-12']);
+			: Yii::$app->icon->instrumental(['class' => 'img-fluid', 'height' => 250])
+	, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8 notranslate' : 'col-12 notranslate']);
 
 	$items[] = [
 		'label' => Html::tag('span', implode(' · ', [$track->track, $track->name.$track->nameExtra]), ['class' => 'h5 notranslate']),
-		'content' => Html::tag('div', $content, ['class' => 'row container notranslate']),
+		'content' => Html::tag('div', $content, ['class' => 'row container']),
 		'options' => ['id' => $track->track]
 	];
 endforeach;

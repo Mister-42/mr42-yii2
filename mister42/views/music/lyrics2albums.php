@@ -60,7 +60,9 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 									echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
 										$track->name = Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track]);
 										echo implode(' · ', [$track->track, $track->name.$track->nameExtra]);
-										if (!$track->lyricid && !$track->wip)
+										if ($track->wip)
+											echo Yii::$app->icon->show('plus', ['class' => 'text-muted ml-1']);
+										elseif (!$track->lyricid)
 											echo Yii::$app->icon->show('music', ['class' => 'text-muted ml-1']);
 										if ($track->video)
 											echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
