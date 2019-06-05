@@ -18,8 +18,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'card mb-3']);
 			echo Html::tag('div', Yii::t('mr42', 'Current Week'), ['class' => 'card-header']);
 			echo Html::beginTag('div', ['class' => 'card-body']);
-				echo Html::tag('h1', intval($date->format('W')), ['class' => 'card-title display-1 font-weight-bold text-center']);
-				echo Html::tag('p',
+				echo Html::tag('div', intval($date->format('W')), ['class' => 'card-title h1 display-1 font-weight-bold text-center']);
+				echo Html::tag('div',
 					Yii::t('mr42', 'This week starts at {start} and ends at {end}.', ['start' => Html::tag('b', Yii::$app->formatter->asDate($startWeek, 'full')), 'end' => Html::tag('b', Yii::$app->formatter->asDate($endWeek, 'full'))]),
 				['class' => 'card-text']);
 			echo Html::endTag('div');
