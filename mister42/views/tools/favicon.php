@@ -1,6 +1,6 @@
 <?php
+use app\assets\HighlightAsset;
 use app\models\Form;
-use nezhelskoy\highlight\HighlightAsset;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\helpers\{Inflector, Url};
 use yii\web\View;

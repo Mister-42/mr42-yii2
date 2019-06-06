@@ -1,6 +1,6 @@
 <?php
+use app\assets\HighlightAsset;
 use app\models\user\Profile;
-use nezhelskoy\highlight\HighlightAsset;
 use yii\bootstrap4\Html;
 use yii\helpers\StringHelper;
 
