@@ -44,7 +44,7 @@ NavBar::begin([
 		],
 	]);
 
-	if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline')
+	if (Yii::$app->requestedRoute !== 'site/offline')
 		echo Nav::widget([
 			'activateParents' => true,
 			'encodeLabels' => false,
@@ -67,7 +67,7 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 	echo Html::beginTag('div', ['class' => 'container']);
 		echo Html::tag('div', Html::tag('span', '&copy; 2014-'.date('Y').' '.Yii::$app->name, ['class' => 'align-middle']), ['class' => 'float-left']);
 		echo Html::beginTag('div', ['class' => 'float-right dropup']);
-			if (Yii::$app->controller->id !== 'site' || Yii::$app->controller->action->id !== 'offline') :
+			if (Yii::$app->requestedRoute !== 'site/offline') :
 				if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)
 					echo Html::a(Yii::$app->icon->show('html5', ['style' => 'brands']), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
 				echo Html::a(Yii::$app->icon->show('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Privacy Policy')]);

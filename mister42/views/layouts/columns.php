@@ -5,7 +5,7 @@ use yii\bootstrap4\{ActiveForm, Html};
 use yii\caching\ExpressionDependency;
 use yii\helpers\Inflector;
 
-$isHome = Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index';
+$isHome = Yii::$app->requestedRoute === 'site/index';
 $dependency = [
 	'class' => ExpressionDependency::class,
 	'params' => ['articles' => Articles::getLastModified(), 'comments' => ArticlesComments::getLastModified()],

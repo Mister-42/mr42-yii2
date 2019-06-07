@@ -13,7 +13,7 @@ class Form extends ActiveForm {
 		return $form->field($model, 'password', [
 			'options' => ['class' => implode(' ', ['form-group', $class])],
 			'template' => '{label}<div class="input-group" id="pwdToggle">'.Yii::$app->icon->fieldAddon('lock').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('eye', ['class' => 'append']).Yii::$app->icon->show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => Yii::t('mr42', 'Show Password')]).'</span></div>{error}',
-		])->passwordInput(['tabindex' => ++$tab]);
+		])->passwordInput(['tabindex' => $tab]);
 	}
 
 	public static function submitToolbar(string $text, int $tab): string {
