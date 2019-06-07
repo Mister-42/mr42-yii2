@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "babe44fb4978e575ea5e413556ca1e97",
+    "content-hash": "00eca89f1e9460178c2e59be7c7de8f1",
     "packages": [
         {
             "name": "2amigos/yii2-selectize-widget",
@@ -1307,7 +1307,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v4.3.0",
+            "version": "v4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -1966,16 +1966,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "55efb604d9c6185a30e678a36661be4f373aa011"
+                "reference": "724c0d275128717f6a27a26303f650451beb120b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/55efb604d9c6185a30e678a36661be4f373aa011",
-                "reference": "55efb604d9c6185a30e678a36661be4f373aa011",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/724c0d275128717f6a27a26303f650451beb120b",
+                "reference": "724c0d275128717f6a27a26303f650451beb120b",
                 "shasum": ""
             },
             "require": {
-                "npm-asset/bootstrap": "^4.2",
+                "npm-asset/bootstrap": "^4.3",
                 "yiisoft/yii2": "~2.0"
             },
             "require-dev": {
@@ -2027,7 +2027,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-06-04T12:50:48+00:00"
+            "time": "2019-06-07T20:57:52+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",

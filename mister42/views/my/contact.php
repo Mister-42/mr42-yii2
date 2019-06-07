@@ -1,5 +1,5 @@
 <?php
-use app\models\Form;
+use app\assets\{CharCounterAsset, InputFileAsset};
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\web\View;
@@ -9,8 +9,8 @@ $this->title = Yii::t('mr42', 'Contact');
 $this->params['breadcrumbs'] = [Yii::$app->name];
 $this->params['breadcrumbs'][] = $this->title;
 
-Form::charCount($this, $model->rules()['charCount']['max']);
-$this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
+CharCounterAsset::register($this, $model->rules()['charCount']['max']);
+InputFileAsset::register($this);
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);

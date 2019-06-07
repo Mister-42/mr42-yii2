@@ -6,10 +6,6 @@ use yii\helpers\ArrayHelper;
 use yii\web\View;
 
 class Form extends ActiveForm {
-	public static function charCount(View $model, int $chars): void {
-		$model->registerJs("var formCharCount = {chars:{$chars}, lang:{overLimit:'".Yii::t('mr42', '{x} characters over the limit', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."', charsLeft:'".Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])])."'}};".Yii::$app->formatter->jspack('formCharCounter.js'), View::POS_READY);
-	}
-
 	public static function togglePassword(ActiveForm $form, $model, View $view, array $options = []): string {
 		$class = ArrayHelper::remove($options, 'class');
 		$tab = ArrayHelper::remove($options, 'tab', 1);

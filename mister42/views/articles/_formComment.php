@@ -1,10 +1,10 @@
 <?php
-use app\models\Form;
+use app\assets\CharCounterAsset;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\{ActiveForm, Html};
 use yii\widgets\Pjax;
 
-Form::charCount($this, $model->rules()['charCount']['max']);
+CharCounterAsset::register($this, $model->rules()['charCount']['max']);
 
 Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'options' => ['class' => 'comment-form']]);
 	echo Html::tag('h3', Yii::t('mr42', 'Leave a Comment'), ['class' => 'text-center']);

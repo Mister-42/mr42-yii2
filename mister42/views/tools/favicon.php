@@ -1,5 +1,5 @@
 <?php
-use app\assets\HighlightAsset;
+use app\assets\{HighlightAsset, InputFileAsset};
 use app\models\Form;
 use yii\bootstrap4\{ActiveForm, Alert, Html};
 use yii\helpers\{Inflector, Url};
@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
 $this->params['breadcrumbs'][] = $this->title;
 
 HighlightAsset::register($this);
-$this->registerJs("var inputFile = {lang:{selected:'".Yii::t('mr42', 'File {name} Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])."'}};".Yii::$app->formatter->jspack('inputFile.js'), View::POS_READY);
+InputFileAsset::register($this);
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);

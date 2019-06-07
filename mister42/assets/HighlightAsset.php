@@ -11,7 +11,7 @@ class HighlightAsset extends AssetBundle {
 	public $sourcePath = '@npm/highlightjs/';
  
 	public $js = [
-		'highlight.pack.min.js',
+		'highlight.pack'.(YII_DEBUG ? '' : '.min').'.js',
 	];
 
 	public $css = [

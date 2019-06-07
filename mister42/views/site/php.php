@@ -2,10 +2,10 @@
 use yii\bootstrap4\Html;
 use yii\helpers\Inflector;
 
-$this->title = 'PHP '.phpversion().' &amp; '.'Yii2 '.Yii::getVersion();
+$this->title = 'PHP '.phpversion().' &amp; '.'Yii '.Yii::getVersion();
 $this->params['breadcrumbs'] = [$this->title];
 
-echo Html::tag('h1', $this->title);
+echo Html::tag('h1', 'PHP '.phpversion());
 
 foreach (get_loaded_extensions() as $i => $ext)
 	$modules[phpversion($ext)][] = $ext;
@@ -18,6 +18,8 @@ echo Html::beginTag('div', ['class' => 'site-php-version']);
 			Html::tag('div', Inflector::sentence($items, ' &amp; '), ['class' => 'col']).
 			Html::tag('div', $version, ['class' => 'col-auto text-right'])
 		, ['class' => 'row']);
+
+	echo Html::tag('div', 'Yii '.Yii::getVersion(), ['class' => 'h1 mt-3']);
 
 	foreach ($this->context->module->extensions as $data) :
 		echo Html::beginTag('div', ['class' => 'row']);

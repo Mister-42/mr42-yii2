@@ -1,5 +1,5 @@
 <?php
-use app\models\Form;
+use app\assets\CharCounterAsset;
 use app\widgets\TimePicker;
 use Da\User\Helper\TimezoneHelper;
 use yii\bootstrap4\{ActiveForm, Html};
@@ -9,7 +9,7 @@ $this->title = Yii::t('usuario', 'Profile settings');
 $this->params['breadcrumbs'][] = $this->title;
 $timezoneHelper = $model->make(TimezoneHelper::class);
 
-Form::charCount($this, $model->rules()['bioString']['max']);
+CharCounterAsset::register($this, $model->rules()['bioString']['max']);
 
 echo $this->render('@Da/User/resources/views/shared/_alert', ['module' => Yii::$app->getModule('user')]);
 

@@ -47,7 +47,7 @@ class Menu extends \yii\base\Model {
 	private function getData(): array {
 		return [
 			['label' => Yii::$app->icon->show('certificate', ['class' => 'icon-fw mr-1']).Html::tag('span', 'Test'), 'url' => ['/test/index'], 'visible' => $this->isAdmin()],
-			['label' => Yii::$app->icon->show('newspaper', ['class' => 'icon-fw mr-1']).Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true],
+			['label' => Yii::$app->icon->show('newspaper', ['class' => 'icon-fw mr-1']).Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true, 'active' => Yii::$app->controller->id === 'articles'],
 			['label' => Yii::$app->icon->show('calculator', ['class' => 'icon-fw mr-1']).Html::tag('span', Yii::t('mr42', 'Calculator')),
 				'items' => [
 					['label' => Yii::t('mr42', 'Date (add/subtract)'), 'url' => ['/calculator/date']],
