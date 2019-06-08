@@ -81,7 +81,7 @@ return [
     'End Date' => 'Дата окончания',
     'Error {statusCode}' => 'Ошибка {statusCode}',
     'Favicon Converter' => 'Конвертер Favicon',
-    'File {name} Selected' => 'Выбран файл {name}',
+    'File \'{name}\' Selected' => 'Выбран файл \'{name}\'',
     'First Name' => 'Имя',
     'First Name (phonetic)' => 'Имя (фонетический)',
     'For best result upload a square image. Your icon will be generated in {dimensions} pixels.' => 'Для лучшего результата загрузите квадратное изображение. Ваш значок будет сгенерирован в {dimensions} пикселей.',

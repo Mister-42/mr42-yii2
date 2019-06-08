@@ -81,7 +81,7 @@ return [
     'End Date' => 'Enddatum',
     'Error {statusCode}' => 'Fehler {statusCode}',
     'Favicon Converter' => 'Favicon-Konverter',
-    'File {name} Selected' => 'Datei {name} ausgewählt',
+    'File \'{name}\' Selected' => 'Datei \'{name}\' ausgewählt',
     'First Name' => 'Vorname',
     'First Name (phonetic)' => 'Vorname (Lautschrift)',
     'For best result upload a square image. Your icon will be generated in {dimensions} pixels.' => 'Für ein optimales Ergebnis laden Sie ein quadratisches Bild hoch. Ihr Icon wird in {dimensions} Pixeln generiert.',

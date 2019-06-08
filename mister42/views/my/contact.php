@@ -36,16 +36,15 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo $form->field($model, 'title', [
 				'inputTemplate' => Yii::$app->icon->inputTemplate('heading'),
-				])->textInput(['tabindex' => ++$tab]);
+			])->textInput(['tabindex' => ++$tab]);
 
 			echo $form->field($model, 'content', [
 				'inputTemplate' => '<div id="chars" class="float-right"></div>'.Yii::$app->icon->inputTemplate('comment'),
 			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab]);
 
 			echo $form->field($model, 'attachment', [
-				'template' => Html::tag('label', $model->getAttributeLabel('attachment'), ['for' => 'sourceFile']).'<div class="input-group">'.Yii::$app->icon->fieldAddon('paperclip').'<div class="custom-file">{input}{label}</div></div>{hint} {error}',
-			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
-			->label(Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']);
+				'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('paperclip').Html::tag('div', '{input}'.Html::tag('label', Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']).'</div>',
+			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab]);
 
 			echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);
 

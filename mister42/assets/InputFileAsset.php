@@ -9,7 +9,7 @@ class InputFileAsset extends AssetBundle {
 	public static function register($view) {
 		$options = Json::encode([
 			'lang' => [
-				'selected' => Yii::t('mr42', 'File {name} Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])
+				'selected' => Yii::t('mr42', 'File \'{name}\' Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])
 			]
 		]);
 
