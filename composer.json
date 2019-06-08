@@ -23,7 +23,7 @@
         "bower-asset/jqueryui-timepicker-addon": "^1.6",
         "bower-asset/to-markdown": "^3.0",
         "npm-asset/highlightjs": "^9.0",
-        "npm-asset/lightbox2": "^2.10",
+        "npm-asset/lightbox2": "^2.0",
         "2amigos/yii2-usuario": "~1.0",
         "codemix/yii2-localeurls": "^1.7",
         "gkralik/php-uglifyjs": "^1.0",

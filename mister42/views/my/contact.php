@@ -25,21 +25,21 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [
 					'options' => ['class' => 'col-md-6 form-group'],
-					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
+					'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 				])->textInput(['tabindex' => ++$tab]);
 
 				echo $form->field($model, 'email', [
 					'options' => ['class' => 'col-md-6 form-group'],
-					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{error}',
+					'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
 				])->input('email', ['tabindex' => ++$tab]);
 			echo '</div>';
 
 			echo $form->field($model, 'title', [
-					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('heading').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('heading'),
 				])->textInput(['tabindex' => ++$tab]);
 
 			echo $form->field($model, 'content', [
-				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div> {hint} {error}',
+				'inputTemplate' => '<div id="chars" class="float-right"></div>'.Yii::$app->icon->inputTemplate('comment'),
 			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab]);
 
 			echo $form->field($model, 'attachment', [

@@ -39,7 +39,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'recipient', [
-				'template' => '{label} '.Yii::t('mr42', '(optional)').'<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{hint} {error}',
+				'template' => '{label} '.Yii::t('mr42', '(optional)').'{input}{hint}{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
 			])->input('email', ['tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'));
 

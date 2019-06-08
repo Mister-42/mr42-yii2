@@ -7,15 +7,15 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'email', [
-		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{error}',
+		'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
 	])->input('email', ['tabindex' => ++$tab]);
 
 echo $form->field($model, 'subject', [
-		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('heading').'{input}</div>{error}',
+		'inputTemplate' => Yii::$app->icon->inputTemplate('heading'),
 	])->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'message', [
-		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div>{error}',
+		'inputTemplate' => Yii::$app->icon->inputTemplate('comment'),
 	])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);

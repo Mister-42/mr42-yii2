@@ -38,19 +38,19 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'name', [
-			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'website', [
-			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('globe').'{input}</div>',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('globe'),
 		])->input('url', ['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'lastfm', [
-			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('lastfm', ['style' => 'brands']).'{input}</div>',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('lastfm', ['style' => 'brands']),
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'location', [
-			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('map-marker').'{input}</div>',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('map-marker'),
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'birthday')->widget(TimePicker::class, [
@@ -68,13 +68,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 		]);
 
 		echo $form->field($model, 'bio', [
-				'inputTemplate' => '<div class="row"><div id="chars" class="col-12 text-right"></div></div><div class="input-group">'.Yii::$app->icon->fieldAddon('info-circle').'{input}</div>',
+				'inputTemplate' => '<div id="chars" class="float-right"></div>'.Yii::$app->icon->inputTemplate('info-circle'),
 			])
 			->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'You may use {markdown} and {age} to show your age, calculated from <nobr>{birthday}</nobr>. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank']), 'age' => '<code>%age%</code>', 'birthday' => Html::tag('code', $model->getAttributeLabel('birthday'))]));
 
 		echo $form->field($model, 'timezone', [
-			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('clock').'{input}</div>',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('clock'),
 		])->dropDownList(ArrayHelper::map($timezoneHelper->getAll(), 'timezone', 'name'), ['tabindex' => ++$tab]);
 
 		echo Html::tag('div',

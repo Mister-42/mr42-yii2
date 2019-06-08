@@ -32,7 +32,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		$form = ActiveForm::begin();
 		echo $form->field($model, 'type', [
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('th-list').'{input}</div>{error}',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('th-list'),
 			])->dropDownList(Qr::getTypes(), [
 				'prompt' => Yii::t('mr42', 'Select a Type'),
 				'onchange'=> new JsExpression("if(!this.value){\$('#form').empty()}else{\$('#form').load('',{'type':this.value})}"),

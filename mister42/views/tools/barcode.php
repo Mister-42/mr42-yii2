@@ -26,29 +26,30 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'type', [
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('th-list').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('th-list'),
 			])->dropDownList(Barcode::getTypes(), [
 				'prompt' => Yii::t('mr42', 'Select a Type'),
 				'tabindex' => ++$tab,
 			]);
 
 		echo $form->field($model, 'code', [
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('barcode').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('barcode'),
 			])->input('number', ['tabindex' => ++$tab]);
 
 		echo Html::tag('div',
 			$form->field($model, 'height', [
 				'options' => ['class' => 'col-sm-6'],
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('arrows-alt-v').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('arrows-alt-v'),
 			])->input('number', ['tabindex' => ++$tab]).
 			$form->field($model, 'barWidth', [
 				'options' => ['class' => 'col-sm-6'],
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('arrows-alt-h').'{input}</div>{hint} {error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('arrows-alt-h'),
 			])->input('number', ['step' => '0.5', 'tabindex' => ++$tab])
 		, ['class' => 'row form-group']);
 
 		echo $form->field($model, 'recipient', [
-				'template' => '{label} '.Yii::t('mr42', '(optional)').'<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{hint} {error}',
+				'template' => '{label} '.Yii::t('mr42', '(optional)').'{input}{hint} {error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
 			])->input('email', ['tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'));
 

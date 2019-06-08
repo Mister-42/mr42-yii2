@@ -12,13 +12,13 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'authentication', [
-		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('cog').'{input}</div>{error}',
+		'inputTemplate' => Yii::$app->icon->inputTemplate('cog'),
 	])->dropDownList(Qr::getWifiAuthentication(), [
 		'tabindex' => ++$tab,
 	]);
 
 echo $form->field($model, 'ssid', [
-		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('wifi').'{input}</div>{error}',
+		'inputTemplate' => Yii::$app->icon->inputTemplate('wifi'),
 	])->textInput(['tabindex' => ++$tab]);
 
 echo Form::togglePassword($form, $model, $this, ['class' => 'required', 'tab' => ++$tab]);

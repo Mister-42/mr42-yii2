@@ -31,7 +31,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'ssid', [
 					'options' => ['class' => 'form-group col-md-6'],
-					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('wifi').'{input}</div>{error}',
+					'inputTemplate' => Yii::$app->icon->inputTemplate('wifi'),
 				])
 				->textInput(['tabindex' => ++$tab]);
 

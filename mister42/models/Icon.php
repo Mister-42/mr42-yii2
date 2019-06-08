@@ -11,6 +11,10 @@ class Icon {
 		return Html::tag('div', $icon, ['class' => 'input-group-prepend']);
 	}
 
+	public function inputTemplate(string $name, array $options = []): string {
+		return Html::tag('div', $this->fieldAddon($name, $options).'{input}', ['class' => 'input-group']);
+	}
+
 	public function instrumental(array $options = []): string {
 		$svg = Image::loadSvg('@assetsroot/images/instrumental.svg');
 		ArrayHelper::setValue($options, 'title', 'Instrumental');

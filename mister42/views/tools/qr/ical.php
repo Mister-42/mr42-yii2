@@ -26,7 +26,7 @@ echo Html::beginTag('div', ['class' => 'row form-group']);
 echo Html::endTag('div');
 
 echo $form->field($model, 'summary', [
-		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div>{error}',
+	'inputTemplate' => Yii::$app->icon->inputTemplate('comment'),
 	])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);

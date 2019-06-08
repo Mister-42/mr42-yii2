@@ -20,11 +20,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'text', [
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('comment'),
 			])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'alphabet', [
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('th-list').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('th-list'),
 			])->dropDownList(PhoneticAlphabet::getAlphabetList(), ['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'numeric')->checkBox(['tabindex' => ++$tab]);

@@ -16,27 +16,27 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [
 					'options' => ['class' => 'col-md-6'],
-					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
+					'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 				])->textInput(['tabindex' => ++$tab]);
 
 				echo $form->field($model, 'email', [
 					'options' => ['class' => 'col-md-6'],
-					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('envelope').'{input}</div>{hint}{error}',
+					'inputTemplate' => Yii::$app->icon->inputTemplate('envelope'),
 				])->input('email', ['tabindex' => ++$tab])
 				->hint(Yii::t('mr42', 'This will never be published.'));
 			echo '</div>';
 
 			echo $form->field($model, 'website', [
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('globe').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('globe'),
 			])->input('url', ['tabindex' => ++$tab]);
 		endif;
 
 		echo $form->field($model, 'title', [
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('heading').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('heading'),
 			])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'content', [
-				'template' => '{label} <div id="chars" class="float-right"></div><div class="input-group">'.Yii::$app->icon->fieldAddon('comment').'{input}</div> {hint} {error}'
+			'inputTemplate' => Yii::$app->icon->inputTemplate('comment'),
 			])
 			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank'])]));

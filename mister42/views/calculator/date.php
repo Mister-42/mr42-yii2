@@ -40,7 +40,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo $form->field($model, 'days', [
 				'options' => ['class' => 'form-group col-md-6'],
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('calendar-plus').'{input}</div>{hint}{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('calendar-plus'),
 			])	->hint(Yii::t('mr42', 'Use the minus sign (-) to subtract days.'))
 				->input('number', ['tabindex' => ++$tab]);
 		echo Html::endTag('div');

@@ -31,7 +31,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			foreach (['source', 'target'] as $field) :
 				echo $form->field($model, $field, [
 					'options' => ['class' => 'form-group col-md-6'],
-					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('globe').'{input}</div>{error}',
+					'inputTemplate' => Yii::$app->icon->inputTemplate('globe'),
 				])->dropDownList($model->getTimezones(true), ['tabindex' => ++$tab]);
 			endforeach;
 		echo Html::endTag('div');

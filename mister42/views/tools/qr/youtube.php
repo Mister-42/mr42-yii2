@@ -7,7 +7,7 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'id', [
-		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('video').'{input}</div>{error}',
+		'inputTemplate' => Yii::$app->icon->inputTemplate('youtube', ['style' => 'brands']),
 	])->textInput(['tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);

@@ -45,7 +45,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 				echo $form->field($model, $field.'count', [
 					'options' => ['class' => 'form-group col-md-6'],
-					'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
+					'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 				])
 				->input('number', ['class' => 'form-control', 'tabindex' => ++$tab]);
 			echo Html::endTag('div');
@@ -53,7 +53,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'action', [
 			'options' => ['class' => 'form-group'],
-			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('cloud').'{input}</div>{error}',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('cloud'),
 		])->dropDownList([
 			'renew' => Yii::t('mr42', 'Renewing Licenses'),
 			'add' => Yii::t('mr42', 'Adding Licenses'),

@@ -7,7 +7,7 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'email', [
-		'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{error}',
+	'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
 	])->input('email', ['tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);

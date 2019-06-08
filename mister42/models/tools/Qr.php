@@ -53,11 +53,12 @@ class Qr extends \yii\base\Model {
 		$footer[] = Html::tag('div',
 			$form->field($this, 'size', [
 				'options' => ['class' => 'form-group col-md-6'],
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('arrows-alt').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('arrows-alt'),
 			])->input('number', ['tabindex' => ++$tab]).
 			$form->field($this, 'recipient', [
 				'options' => ['class' => 'form-group col-md-6'],
-				'template' => '{label} '.Yii::t('mr42', '(optional)').'<div class="input-group">'.Yii::$app->icon->fieldAddon('at').'{input}</div>{hint} {error}',
+				'template' => '{label} '.Yii::t('mr42', '(optional)').'{input}{hint}{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
 			])->input('email', ['tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'))
 		, ['class' => 'row form-group']);

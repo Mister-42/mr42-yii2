@@ -22,11 +22,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'login', [
-			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('user').'{input}</div>{error}',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 		])->textInput(['autofocus' => true, 'tabindex' => ++$tab]);
 
 		echo $form->field($model, 'password', [
-			'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('lock').'{input}</div>{error}',
+			'inputTemplate' => Yii::$app->icon->inputTemplate('lock'),
 		])->passwordInput(['tabindex' => ++$tab])
 		->label(Yii::t('usuario', 'Password').($module->allowPasswordRecovery ? ' ('.Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request']).')' : ''));
 

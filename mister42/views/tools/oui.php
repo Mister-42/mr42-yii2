@@ -36,7 +36,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'oui', [
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('desktop').'{input}</div>{error}',
+				'inputTemplate' => Yii::$app->icon->inputTemplate('desktop'),
 			])->textInput(['tabindex' => ++$tab]);
 
 		echo Form::submitToolbar(Yii::t('mr42', 'Submit'), $tab);
