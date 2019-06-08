@@ -1,7 +1,7 @@
 <?php
-use app\models\Form;
+use app\models\ActiveForm;
 use app\widgets\TimePicker;
-use yii\bootstrap4\{ActiveForm, Alert, Html};
+use yii\bootstrap4\{Alert, Html};
 
 $this->title = Yii::t('mr42', 'Date Calculator (add/subtract)');
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Calculator');
@@ -45,7 +45,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				->input('number', ['tabindex' => ++$tab]);
 		echo Html::endTag('div');
 
-		echo Form::submitToolbar(Yii::t('mr42', 'Calculate'), $tab);
+		echo $form->submitToolbar(Yii::t('mr42', 'Calculate'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

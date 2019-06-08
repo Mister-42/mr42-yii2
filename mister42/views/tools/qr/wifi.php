@@ -1,7 +1,7 @@
 <?php
-use app\models\Form;
+use app\models\ActiveForm;
 use app\models\tools\Qr;
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 use yii\web\View;
 
 $this->registerJs('$("#qr-authentication").on("change",function(){if($(this).val()=="none"){$(".field-qr-password").addClass("d-none")}else{$(".field-qr-password").removeClass("d-none")}}).change();', View::POS_READY);
@@ -21,7 +21,7 @@ echo $form->field($model, 'ssid', [
 		'inputTemplate' => Yii::$app->icon->inputTemplate('wifi'),
 	])->textInput(['tabindex' => ++$tab]);
 
-echo Form::togglePassword($form, $model, $this, ['class' => 'required', 'tab' => ++$tab]);
+echo $form->togglePassword($model, ++$tab, ['class' => 'required']);
 
 echo $form->field($model, 'hidden')->checkBox(['tabindex' => ++$tab]);
 

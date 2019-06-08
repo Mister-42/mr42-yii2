@@ -24,9 +24,8 @@ class CalculatorController extends \yii\web\Controller {
 
 	public function actionDate() {
 		$model = new Date;
-		if ($model->load(Yii::$app->request->post())) :
+		if ($model->load(Yii::$app->request->post()))
 			$model->calculate();
-		endif;
 
 		return $this->render('date', [
 			'model' => $model,
@@ -35,9 +34,8 @@ class CalculatorController extends \yii\web\Controller {
 
 	public function actionDuration() {
 		$model = new Duration;
-		if ($model->load(Yii::$app->request->post())) :
+		if ($model->load(Yii::$app->request->post()))
 			$model->calculate();
-		endif;
 
 		return $this->render('duration', [
 			'model' => $model,
@@ -46,9 +44,8 @@ class CalculatorController extends \yii\web\Controller {
 
 	public function actionOffice365() {
 		$model = new Office365;
-		if ($model->load(Yii::$app->request->post())) :
+		if ($model->load(Yii::$app->request->post()))
 			$model->calculate();
-		endif;
 
 		return $this->render('office365', [
 			'model' => $model,
@@ -57,9 +54,10 @@ class CalculatorController extends \yii\web\Controller {
 
 	public function actionTimezone() {
 		$model = new Timezone;
-		if ($model->load(Yii::$app->request->post())) :
+		$model->source = 'Europe/Berlin';
+		$model->target = 'Europe/Moscow';
+		if ($model->load(Yii::$app->request->post()))
 			$model->calculate();
-		endif;
 
 		return $this->render('timezone', [
 			'model' => $model,

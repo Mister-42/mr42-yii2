@@ -1,7 +1,7 @@
 <?php
-use app\models\Form;
+use app\models\ActiveForm;
 use app\models\tools\PhoneticAlphabet;
-use yii\bootstrap4\{ActiveForm, Alert, Html};
+use yii\bootstrap4\Alert, Html};
 
 $this->title = Yii::t('mr42', 'Phonetic Alphabet Translator');
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
@@ -29,7 +29,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo $form->field($model, 'numeric')->checkBox(['tabindex' => ++$tab]);
 
-		echo Form::submitToolbar(Yii::t('mr42', 'Convert'), $tab);
+		echo $form->submitToolbar(Yii::t('mr42', 'Convert'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

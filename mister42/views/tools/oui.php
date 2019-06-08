@@ -1,7 +1,7 @@
 <?php
-use app\models\Form;
+use app\models\ActiveForm;
 use app\models\tools\Oui;
-use yii\bootstrap4\{ActiveForm, Alert, Html};
+use yii\bootstrap4\{Alert, Html};
 
 $this->title = Yii::t('mr42', 'OUI Lookup');
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
@@ -39,7 +39,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'inputTemplate' => Yii::$app->icon->inputTemplate('desktop'),
 			])->textInput(['tabindex' => ++$tab]);
 
-		echo Form::submitToolbar(Yii::t('mr42', 'Submit'), $tab);
+		echo $form->submitToolbar(Yii::t('mr42', 'Submit'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

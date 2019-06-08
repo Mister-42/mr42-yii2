@@ -1,7 +1,7 @@
 <?php
-use app\models\Form;
+use app\models\ActiveForm;
 use app\models\tools\Barcode;
-use yii\bootstrap4\{ActiveForm, Alert, Html};
+use yii\bootstrap4\{Alert, Html};
 use yii\helpers\Url;
 
 $this->title = Yii::t('mr42', 'Barcode Generator');
@@ -53,7 +53,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			])->input('email', ['tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'));
 
-		echo Form::submitToolbar(Yii::t('mr42', 'Generate Barcode'), $tab);
+		echo $form->submitToolbar(Yii::t('mr42', 'Generate Barcode'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

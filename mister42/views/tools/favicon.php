@@ -1,7 +1,7 @@
 <?php
 use app\assets\{HighlightAsset, InputFileAsset};
-use app\models\Form;
-use yii\bootstrap4\{ActiveForm, Alert, Html};
+use app\models\ActiveForm;
+use yii\bootstrap4\{Alert, Html};
 use yii\helpers\{Inflector, Url};
 use yii\web\View;
 
@@ -50,7 +50,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->hint(Yii::t('mr42', 'For best result upload a square image. Your icon will be generated in {dimensions} pixels.', ['dimensions' => Inflector::sentence($dimensions)]))
 			->label(Yii::t('mr42', 'Select an Image'), ['class' => 'custom-file-label text-truncate']);
 
-		echo Form::submitToolbar(Yii::t('mr42', 'Convert Image'), $tab);
+		echo $form->submitToolbar(Yii::t('mr42', 'Convert Image'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

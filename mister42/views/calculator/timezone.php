@@ -1,15 +1,12 @@
 <?php
-use app\models\Form;
+use app\models\ActiveForm;
 use app\widgets\TimePicker;
-use yii\bootstrap4\{ActiveForm, Alert, Html};
+use yii\bootstrap4\{Alert, Html};
 use yii\web\View;
 
 $this->title = Yii::t('mr42', 'Time Zone Converter');
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Calculator');
 $this->params['breadcrumbs'][] = $this->title;
-
-$model->source = Yii::$app->request->isPost ? $model->source : 'Europe/Berlin';
-$model->target = Yii::$app->request->isPost ? $model->target : 'America/New_York';
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
@@ -32,7 +29,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				echo $form->field($model, $field, [
 					'options' => ['class' => 'form-group col-md-6'],
 					'inputTemplate' => Yii::$app->icon->inputTemplate('globe'),
-				])->dropDownList($model->getTimezones(true), ['tabindex' => ++$tab]);
+				])->dropDownList($model->getTimezones(), ['tabindex' => ++$tab]);
 			endforeach;
 		echo Html::endTag('div');
 
@@ -52,7 +49,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			]);
 		echo Html::endTag('div');
 
-		echo Form::submitToolbar(Yii::t('mr42', 'Calculate'), $tab);
+		echo $form->submitToolbar(Yii::t('mr42', 'Calculate'), $tab);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

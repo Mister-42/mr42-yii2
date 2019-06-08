@@ -1,8 +1,8 @@
 <?php
 use app\assets\ClipboardJsAsset;
-use app\models\Form;
+use app\models\ActiveForm;
 use app\models\calculator\Wpapsk;
-use yii\bootstrap4\{ActiveForm, Html, Progress};
+use yii\bootstrap4\{Html, Progress};
 use yii\web\View;
 
 $this->title = Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key (WPA-PSK) Calculator');
@@ -35,7 +35,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				])
 				->textInput(['tabindex' => ++$tab]);
 
-			echo Form::togglePassword($form, $model, $this, ['class' => 'form-group col-md-6', 'tab' => ++$tab]);
+			echo $form->togglePassword($model, ++$tab, ['class' => 'col-md-6']);
 		echo Html::endTag('div');
 
 		echo $form->field($model, 'psk', [
