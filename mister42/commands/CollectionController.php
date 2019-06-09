@@ -1,6 +1,5 @@
 <?php
 namespace app\commands;
-use Yii;
 use app\models\Webrequest;
 use app\models\music\Collection;
 use app\models\user\{Profile, User};

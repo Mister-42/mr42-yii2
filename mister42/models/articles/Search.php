@@ -1,6 +1,5 @@
 <?php
 namespace app\models\articles;
-use Yii;
 
 class Search extends Articles {
 	public $keyword;

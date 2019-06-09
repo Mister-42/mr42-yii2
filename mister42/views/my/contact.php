@@ -2,7 +2,6 @@
 use app\assets\{CharCounterAsset, InputFileAsset};
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\{ActiveForm, Html};
-use yii\web\View;
 use yii\widgets\Pjax;
 
 $this->title = Yii::t('mr42', 'Contact');

@@ -1,6 +1,5 @@
 <?php
 namespace app\assets;
-use yii\helpers\Json;
 use yii\web\{AssetBundle, View};
 
 class HighlightAsset extends AssetBundle {

@@ -3,7 +3,6 @@ namespace app\models\music;
 use Yii;
 use app\models\Video;
 use yii\db\ActiveQuery;
-use yii\helpers\ArrayHelper;
 
 class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public $max;

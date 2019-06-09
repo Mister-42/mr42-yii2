@@ -2,7 +2,6 @@
 namespace app\models\user;
 use DateTime;
 use Yii;
-use yii\bootstrap4\Html;
 use yii\db\ActiveRecord;
 
 class Profile extends \Da\User\Model\Profile {

@@ -2,7 +2,6 @@
 namespace app\models;
 use Yii;
 use mister42\Secrets;
-use yii\helpers\Url;
 use yii\httpclient\{Client, CurlTransport, Response, Request};
 
 class Webrequest {

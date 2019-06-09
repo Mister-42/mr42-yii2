@@ -1,6 +1,5 @@
 <?php
 namespace app\commands;
-use Yii;
 use app\models\{Console, Image, Video, Webrequest};
 use app\models\music\{Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks, LyricsArtistInfo};
 use app\models\user\{Profile, User};

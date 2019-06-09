@@ -1,7 +1,6 @@
 <?php
 namespace app\models;
 use Yii;
-use app\models\Video;
 use GK\JavascriptPacker;
 use voku\helper\HtmlDomParser;
 use yii\helpers\{FileHelper, Markdown};

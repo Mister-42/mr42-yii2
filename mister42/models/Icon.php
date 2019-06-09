@@ -1,6 +1,5 @@
 <?php
 namespace app\models;
-use Yii;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 

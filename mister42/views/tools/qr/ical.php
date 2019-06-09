@@ -1,7 +1,6 @@
 <?php
 use app\widgets\TimePicker;
 use yii\bootstrap4\{ActiveForm, Html};
-use yii\web\View;
 
 $tab = 1;
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);

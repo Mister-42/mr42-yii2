@@ -3,7 +3,6 @@ use app\assets\{HighlightAsset, InputFileAsset};
 use app\models\ActiveForm;
 use yii\bootstrap4\{Alert, Html};
 use yii\helpers\{Inflector, Url};
-use yii\web\View;
 
 $this->title = Yii::t('mr42', 'Favicon Converter');
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');

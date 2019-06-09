@@ -1,6 +1,4 @@
 <?php
-use yii\helpers\Url;
-
 echo $comment->title.PHP_EOL;
 
 echo $comment->content.PHP_EOL;

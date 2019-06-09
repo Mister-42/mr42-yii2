@@ -1,6 +1,5 @@
 <?php
 namespace app\models;
-use Yii;
 
 class Console extends \yii\helpers\Console {
 	public static function startProgress($done, $total, $prefix = '', $width = null): void {

@@ -1,18 +1,17 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\Image;
 use app\models\music\{Collection, Lyrics1Artists, Lyrics2Albums, Lyrics3Tracks};
 use yii\helpers\{ArrayHelper, Inflector, StringHelper};
 use yii\web\{NotFoundHttpException, Response};
 
 class MusicController extends \yii\web\Controller {
-	public $data;
-	public $artist;
-	public $year;
-	public $album;
-	public $size;
-	public $lastModified;
+	private $data;
+	private $artist;
+	private $year;
+	private $album;
+	private $size;
+	private $lastModified;
 
 	public function init(): void {
 		parent::init();
@@ -42,7 +41,7 @@ class MusicController extends \yii\web\Controller {
 				'enabled' => !YII_DEBUG,
 				'etagSeed' => function() { return serialize([phpversion(), Yii::$app->user->id, $this->lastModified]); },
 				'lastModified' => function() { return $this->lastModified; },
-				'only' => ['index', 'albumpdf', 'albumcover', 'collection', 'collection-cover', 'wishlist'],
+				'only' => ['index', 'albumpdf', 'albumcover', 'collection', 'collection-cover'],
 			],
 		];
 	}
@@ -106,7 +105,7 @@ class MusicController extends \yii\web\Controller {
 
 	private function getViewFile(): string {
 		$class = get_class($this->data[0]);
-		$class = StringHelper::basename($class);
-		return Inflector::slug($class);
+		$class = explode('\\', $class);
+		return Inflector::slug(end($class));
 	}
 }

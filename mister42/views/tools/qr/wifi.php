@@ -1,7 +1,6 @@
 <?php
 use app\models\ActiveForm;
 use app\models\tools\Qr;
-use yii\bootstrap4\Html;
 use yii\web\View;
 
 $this->registerJs('$("#qr-authentication").on("change",function(){if($(this).val()=="none"){$(".field-qr-password").addClass("d-none")}else{$(".field-qr-password").removeClass("d-none")}}).change();', View::POS_READY);

@@ -2,7 +2,6 @@
 use app\models\ActiveForm;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{Alert, Html};
-use yii\web\View;
 
 $this->title = Yii::t('mr42', 'Time Zone Converter');
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Calculator');
