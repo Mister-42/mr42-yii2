@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c66f4d70f984907aa06ed90d870ae500",
+    "content-hash": "2398fdebf6011a1724ab9fd7739aa878",
     "packages": [
         {
             "name": "2amigos/yii2-selectize-widget",
@@ -1649,6 +1649,48 @@
             "time": "2019-05-22T12:54:11+00:00"
         },
         {
+            "name": "thoulah/yii2-fontawesome-inline",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Thoulah/yii2-fontawesome-inline.git",
+                "reference": "a32850e09c2f077fa22b0679543718ab17488d58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Thoulah/yii2-fontawesome-inline/zipball/a32850e09c2f077fa22b0679543718ab17488d58",
+                "reference": "a32850e09c2f077fa22b0679543718ab17488d58",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/fontawesome": "^5.1",
+                "ext-dom": "*",
+                "php": ">=7.1.0",
+                "yiisoft/yii2": "~2.0",
+                "yiisoft/yii2-bootstrap4": "~2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "Thoulah\\FontAwesomeInline\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "description": "Inline Font Awesome icons for Yii2",
+            "keywords": [
+                "FontAwesome",
+                "font awesome",
+                "yii2"
+            ],
+            "time": "2019-06-10T18:09:48+00:00"
+        },
+        {
             "name": "voku/simple_html_dom",
             "version": "4.5.3",
             "source": {
@@ -1968,20 +2010,20 @@
         },
         {
             "name": "yiisoft/yii2-bootstrap4",
-            "version": "dev-master",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "724c0d275128717f6a27a26303f650451beb120b"
+                "reference": "dce3d0421188cf8ff6d4ec79707e6e2effd02e05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/724c0d275128717f6a27a26303f650451beb120b",
-                "reference": "724c0d275128717f6a27a26303f650451beb120b",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/dce3d0421188cf8ff6d4ec79707e6e2effd02e05",
+                "reference": "dce3d0421188cf8ff6d4ec79707e6e2effd02e05",
                 "shasum": ""
             },
             "require": {
-                "npm-asset/bootstrap": "^4.3",
+                "npm-asset/bootstrap": "^4.2",
                 "yiisoft/yii2": "~2.0"
             },
             "require-dev": {
@@ -2033,7 +2075,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-06-07T20:57:52+00:00"
+            "time": "2019-06-04T12:50:33+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -2336,7 +2378,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "yiisoft/yii2-bootstrap4": 20
+        "thoulah/yii2-fontawesome-inline": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

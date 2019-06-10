@@ -1,7 +1,8 @@
 <?php
+use app\models\ActiveForm;
 use app\models\tools\Qr;
 use app\widgets\TimePicker;
-use yii\bootstrap4\{ActiveForm, Alert, Html};
+use yii\bootstrap4\{Alert, Html};
 use yii\helpers\Url;
 use yii\web\JsExpression;
 use yii\widgets\Pjax;
@@ -32,12 +33,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		$form = ActiveForm::begin();
 		echo $form->field($model, 'type', [
-			'inputTemplate' => Yii::$app->icon->inputTemplate('th-list'),
-			])->dropDownList(Qr::getTypes(), [
-				'prompt' => Yii::t('mr42', 'Select a Type'),
-				'onchange'=> new JsExpression("if(!this.value){\$('#form').empty()}else{\$('#form').load('',{'type':this.value})}"),
-				'tabindex' => 1,
-			]);
+			'icon' => 'th-list',
+		])->dropDownList($model->getTypes(), [
+			'prompt' => Yii::t('mr42', 'Select a Type'),
+			'onchange'=> new JsExpression("if(!this.value){\$('#form').empty()}else{\$('#form').load('',{'type':this.value})}"),
+			'tabindex' => 1,
+		]);
 		ActiveForm::end();
 
 		Pjax::begin(['id' => 'form']);

@@ -1,6 +1,7 @@
 <?php
+use app\models\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 
 $this->title = Yii::t('usuario', 'Sign up');
 $this->params['breadcrumbs'][] = $this->title;
@@ -17,21 +18,20 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'email', [
-			'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
+			'icon' => 'at',
 		])->input('email', ['tabindex' => ++$tab]);
 
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'username', [
+				'icon' => 'user',
 				'options' => ['class' => 'col-6 form-group'],
-				'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 			])->textInput(['tabindex' => ++$tab]);
 
-			if ($module->generatePasswords === false) :
+			if ($module->generatePasswords === false)
 				echo $form->field($model, 'password', [
+					'icon' => 'lock',
 					'options' => ['class' => 'col-6 form-group'],
-					'inputTemplate' => Yii::$app->icon->inputTemplate('lock'),
 				])->passwordInput(['tabindex' => ++$tab]);
-			endif;
 		echo Html::endTag('div');
 
 		echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);

@@ -12,7 +12,7 @@ class Webmanifest {
 			'icons' => self::getIcons(['android-chrome-192x192.png', 'android-chrome-512x512.png']),
 			'theme_color' => Yii::$app->params['themeColor'],
 			'background_color' => '#FFFFFF',
-			'start_url' => Yii::$app->params['shortDomain'],
+			'start_url' => '/',
 			'display' => 'standalone',
 		];
 	}

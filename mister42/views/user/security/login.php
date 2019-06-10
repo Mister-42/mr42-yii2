@@ -1,6 +1,7 @@
 <?php
+use app\models\ActiveForm;
 use Da\User\Widget\ConnectWidget;
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 
 $this->title = Yii::t('usuario', 'Sign in');
 $this->params['breadcrumbs'][] = $this->title;
@@ -22,11 +23,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 		$tab = 0;
 
 		echo $form->field($model, 'login', [
-			'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
+			'icon' => 'user',
 		])->textInput(['autofocus' => true, 'tabindex' => ++$tab]);
 
 		echo $form->field($model, 'password', [
-			'inputTemplate' => Yii::$app->icon->inputTemplate('lock'),
+			'icon' => 'lock',
 		])->passwordInput(['tabindex' => ++$tab])
 		->label(Yii::t('usuario', 'Password').($module->allowPasswordRecovery ? ' ('.Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request']).')' : ''));
 
@@ -36,13 +37,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		ActiveForm::end();
 
-		if ($module->enableEmailConfirmation) :
+		if ($module->enableEmailConfirmation)
 			echo Html::tag('p', Html::a(Yii::t('usuario', 'Didn\'t receive confirmation message?'), ['/user/registration/resend']), ['class' => 'text-center']);
-		endif;
 
-		if ($module->enableRegistration) :
+		if ($module->enableRegistration)
 			echo Html::tag('p', Html::a(Yii::t('usuario', 'Don\'t have an account? Sign up!'), ['/user/registration/register']), ['class' => 'text-center']);
-		endif;
 
 		echo ConnectWidget::widget(['baseAuthUrl' => ['/user/security/auth']]);
 	echo Html::endTag('div');

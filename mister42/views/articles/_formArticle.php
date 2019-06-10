@@ -1,5 +1,6 @@
 <?php
-use yii\bootstrap4\{ActiveForm, Html};
+use app\models\ActiveForm;
+use yii\bootstrap4\Html;
 
 $this->title = Yii::$app->controller->action->id === 'create' ? Yii::t('mr42', 'Create Article') : Yii::t('mr42', 'Edit Article');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Articles'), 'url' => ['index']];

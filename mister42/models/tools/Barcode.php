@@ -3,7 +3,7 @@ namespace app\models\tools;
 use Yii;
 use app\models\Mailer;
 use Mpdf\Barcode as BarcodeData;
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 use yii\helpers\FileHelper;
 
 class Barcode extends \yii\base\Model {

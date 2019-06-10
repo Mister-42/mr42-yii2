@@ -35,6 +35,9 @@ class Common {
 				'basePath' => '@assetsroot',
 				'baseUrl' => '@assets',
 				'bundles' => [
+					'Thoulah\FontAwesomeInline\FontAwesomeAsset' => [
+						'css' => [],
+					],
 					'yii\bootstrap4\BootstrapAsset' => [
 						'css' => [],
 					],
@@ -83,6 +86,7 @@ class Common {
 			],
 			'icon' => [
 				'class' => 'app\models\Icon',
+				'prefix' => 'icon',
 			],
 			'i18n' => [
 				'translations' => [

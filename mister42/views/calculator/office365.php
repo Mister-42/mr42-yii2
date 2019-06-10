@@ -44,16 +44,16 @@ echo Html::beginTag('div', ['class' => 'row']);
 				]);
 
 				echo $form->field($model, $field.'count', [
+					'icon' => 'user',
 					'options' => ['class' => 'form-group col-md-6'],
-					'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 				])
 				->input('number', ['class' => 'form-control', 'tabindex' => ++$tab]);
 			echo Html::endTag('div');
 		endforeach;
 
 		echo $form->field($model, 'action', [
+			'icon' => 'cloud',
 			'options' => ['class' => 'form-group'],
-			'inputTemplate' => Yii::$app->icon->inputTemplate('cloud'),
 		])->dropDownList([
 			'renew' => Yii::t('mr42', 'Renewing Licenses'),
 			'add' => Yii::t('mr42', 'Adding Licenses'),

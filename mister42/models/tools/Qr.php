@@ -1,10 +1,10 @@
 <?php
 namespace app\models\tools;
 use Yii;
-use app\models\Mailer;
+use app\models\{ActiveForm, Mailer};
 use app\widgets\TimePicker;
 use Mpdf\QrCode\{Output, QrCode};
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 use yii\helpers\{FileHelper, StringHelper};
 
 class Qr extends \yii\base\Model {
@@ -15,7 +15,7 @@ class Qr extends \yii\base\Model {
 	public function rules(): array {
 		return [
 			[['type', 'size'], 'required'],
-			['type', 'in', 'range' => static::getTypes(true)],
+			['type', 'in', 'range' => $this->getTypes(true)],
 			['size', 'double', 'min' => 50, 'max' => 1500],
 			['recipient', 'email', 'checkDNS' => true, 'enableIDN' => true],
 		];
@@ -33,8 +33,8 @@ class Qr extends \yii\base\Model {
 		return 'qr';
 	}
 
-	public static function getBirthdayCalendar(ActiveForm $form, Qr $model, int $tab): string {
-		return $form->field($model, 'birthday')->widget(TimePicker::class, [
+	public function getBirthdayCalendar(ActiveForm $form, int $tab): string {
+		return $form->field($this, 'birthday')->widget(TimePicker::class, [
 				'clientOptions' => [
 					'changeMonth' => true,
 					'changeYear' => true,
@@ -52,15 +52,15 @@ class Qr extends \yii\base\Model {
 	public function getFormFooter(ActiveForm $form, int $tab): string {
 		$footer[] = Html::tag('div',
 			$form->field($this, 'size', [
+				'icon' => 'arrows-alt',
 				'options' => ['class' => 'form-group col-md-6'],
-				'inputTemplate' => Yii::$app->icon->inputTemplate('arrows-alt'),
 			])->input('number', ['tabindex' => ++$tab]).
 			$form->field($this, 'recipient', [
+				'icon' => 'at',
 				'options' => ['class' => 'form-group col-md-6'],
-				'template' => '{label} '.Yii::t('mr42', '(optional)').'{input}{hint}{error}',
-				'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
-			])->input('email', ['tabindex' => ++$tab])
-			->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'))
+			])->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'))
+			->input('email', ['tabindex' => ++$tab])
+			->label($this->getAttributeLabel('recipient').' '.Yii::t('mr42', '(optional)'))
 		, ['class' => 'row form-group']);
 
 		$footer[] = Html::tag('div',
@@ -91,11 +91,11 @@ class Qr extends \yii\base\Model {
 		return true;
 	}
 
-	public static function getWifiAuthentication(bool $rules = false): array {
+	public function getWifiAuthentication(bool $rules = false): array {
 		return $rules ? ['none', 'wep', 'wpa'] : ['none' => Yii::t('mr42', 'none'), 'wep' => Yii::t('mr42', 'WEP'), 'wpa' => Yii::t('mr42', 'WPA')];
 	}
 
-	public static function getTypes(bool $rules = false): array {
+	public function getTypes(bool $rules = false): array {
 		$qrCodes = [
 			'Bitcoin' 		=> Yii::t('mr42', 'Bitcoin'),
 			'Bookmark' 		=> Yii::t('mr42', 'Bookmark'),

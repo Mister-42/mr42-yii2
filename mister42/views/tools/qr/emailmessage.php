@@ -1,5 +1,6 @@
 <?php
-use yii\bootstrap4\{ActiveForm, Html};
+use app\models\ActiveForm;
+use yii\bootstrap4\Html;
 
 $tab = 1;
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
@@ -7,16 +8,16 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'email', [
-		'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
-	])->input('email', ['tabindex' => ++$tab]);
+	'icon' => 'at',
+])->input('email', ['tabindex' => ++$tab]);
 
 echo $form->field($model, 'subject', [
-		'inputTemplate' => Yii::$app->icon->inputTemplate('heading'),
-	])->textInput(['tabindex' => ++$tab]);
+	'icon' => 'heading',
+])->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'message', [
-		'inputTemplate' => Yii::$app->icon->inputTemplate('comment'),
-	])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
+	'icon' => 'envelope',
+])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);
 

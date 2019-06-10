@@ -19,9 +19,9 @@ foreach ((new Menu())->getItemList() as $menu) :
 	endif;
 	echo (isset($menu['url']))
 		? (!isset($menu['visible']) || $menu['visible'])
-			? Html::tag('li', Html::a($menu['label'], $menu['url'], ['class' => 'font-weight-bold']))
+			? Html::tag('li', Html::a(Yii::$app->formatter->cleanInput($menu['label'], false), $menu['url'], ['class' => 'font-weight-bold']))
 			: ''
-		: Html::tag('li', $menu['label'], ['class' => 'font-weight-bold']).Html::tag('li', Html::ul($submenuItems, ['encode' => false]));
+		: Html::tag('li', Yii::$app->formatter->cleanInput($menu['label'], false), ['class' => 'font-weight-bold']).Html::tag('li', Html::ul($submenuItems, ['encode' => false]));
 	unset($submenuItems);
 endforeach;
 echo Html::endTag('ul');

@@ -30,19 +30,17 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'ssid', [
-					'options' => ['class' => 'form-group col-md-6'],
-					'inputTemplate' => Yii::$app->icon->inputTemplate('wifi'),
-				])
-				->textInput(['tabindex' => ++$tab]);
+				'icon' => 'wifi',
+				'options' => ['class' => 'form-group col-md-6'],
+			])->textInput(['tabindex' => ++$tab]);
 
 			echo $form->togglePassword($model, ++$tab, ['class' => 'col-md-6']);
 		echo Html::endTag('div');
 
 		echo $form->field($model, 'psk', [
-				'options' => ['class' => 'form-group has-success'],
-				'template' => '{label}<div class="input-group">'.Yii::$app->icon->fieldAddon('key').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('mr42', 'Copy to Clipboard')]).'</span></div>{error}',
-			])
-			->textInput(['placeholder' => Yii::t('mr42', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.'), 'readonly' => true]);
+			'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->activeFieldIcon('key').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('mr42', 'Copy to Clipboard')]).'</span></div>',
+			'options' => ['class' => 'form-group has-success'],
+		])->textInput(['placeholder' => Yii::t('mr42', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.'), 'readonly' => true]);
 
 		echo Html::tag('div',
 			Html::tag('label', Yii::t('mr42', 'Progress')).

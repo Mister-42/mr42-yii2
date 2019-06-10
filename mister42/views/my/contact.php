@@ -1,7 +1,8 @@
 <?php
 use app\assets\{CharCounterAsset, InputFileAsset};
+use app\models\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
 
 $this->title = Yii::t('mr42', 'Contact');
@@ -23,26 +24,26 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [
+					'icon' => 'user',
 					'options' => ['class' => 'col-md-6 form-group'],
-					'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 				])->textInput(['tabindex' => ++$tab]);
 
 				echo $form->field($model, 'email', [
+					'icon' => 'at',
 					'options' => ['class' => 'col-md-6 form-group'],
-					'inputTemplate' => Yii::$app->icon->inputTemplate('at'),
 				])->input('email', ['tabindex' => ++$tab]);
 			echo '</div>';
 
 			echo $form->field($model, 'title', [
-				'inputTemplate' => Yii::$app->icon->inputTemplate('heading'),
+				'icon' => 'heading',
 			])->textInput(['tabindex' => ++$tab]);
 
 			echo $form->field($model, 'content', [
-				'inputTemplate' => '<div id="chars" class="float-right"></div>'.Yii::$app->icon->inputTemplate('comment'),
+				'inputTemplate' => '<div id="chars" class="float-right"></div>'.Yii::$app->icon->activeFieldAddon('comment'),
 			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab]);
 
 			echo $form->field($model, 'attachment', [
-				'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->fieldAddon('paperclip').Html::tag('div', '{input}'.Html::tag('label', Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']).'</div>',
+				'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->activeFieldIcon('paperclip').Html::tag('div', '{input}'.Html::tag('label', Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']).'</div>',
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab]);
 
 			echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);

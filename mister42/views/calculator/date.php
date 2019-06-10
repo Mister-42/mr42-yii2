@@ -39,8 +39,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 			]);
 
 			echo $form->field($model, 'days', [
+				'icon' => 'calendar-plus',
 				'options' => ['class' => 'form-group col-md-6'],
-				'inputTemplate' => Yii::$app->icon->inputTemplate('calendar-plus'),
 			])	->hint(Yii::t('mr42', 'Use the minus sign (-) to subtract days.'))
 				->input('number', ['tabindex' => ++$tab]);
 		echo Html::endTag('div');

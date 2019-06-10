@@ -1,5 +1,6 @@
 <?php
-use yii\bootstrap4\{ActiveForm, Html};
+use app\models\ActiveForm;
+use yii\bootstrap4\Html;
 
 $tab = 1;
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
@@ -7,12 +8,12 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'phone', [
-		'inputTemplate' => Yii::$app->icon->inputTemplate('phone'),
-	])->input('tel', ['tabindex' => ++$tab]);
+	'icon' => 'phone',
+])->input('tel', ['tabindex' => ++$tab]);
 
 echo $form->field($model, 'message', [
-		'inputTemplate' => Yii::$app->icon->inputTemplate('sms'),
-	])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
+	'icon' => 'sms',
+])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);
 

@@ -1,6 +1,7 @@
 <?php
+use app\models\ActiveForm;
 use app\widgets\TimePicker;
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 
 $tab = 1;
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
@@ -25,8 +26,8 @@ echo Html::beginTag('div', ['class' => 'row form-group']);
 echo Html::endTag('div');
 
 echo $form->field($model, 'summary', [
-	'inputTemplate' => Yii::$app->icon->inputTemplate('comment'),
-	])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
+	'icon' => 'comment',
+])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);
 

@@ -1,5 +1,6 @@
 <?php
-use yii\bootstrap4\{ActiveForm, Html};
+use app\models\ActiveForm;
+use yii\bootstrap4\Html;
 
 $this->beginContent('@Da/User/resources/views/admin/update.php', ['user' => $user]);
 

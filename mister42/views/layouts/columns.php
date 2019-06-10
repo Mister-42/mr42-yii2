@@ -1,7 +1,8 @@
 <?php
+use app\models\ActiveForm;
 use app\models\articles\{Articles, ArticlesComments, Search};
 use app\widgets\{Feed, Item, RecentArticles, RecentChangelog, RecentComments, TagCloud};
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 use yii\caching\ExpressionDependency;
 use yii\helpers\Inflector;
 
@@ -20,12 +21,10 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::beginTag('aside', ['class' => 'col-12 d-none d-md-block']);
 				$form = ActiveForm::begin(['action' => ['articles/search'], 'method' => 'get', 'options' => ['role' => 'search']]);
-				echo $form->field(new Search(), 'keyword', [
+					echo $form->field(new Search(), 'keyword', [
 						'options' => ['class' => 'form-group mb-2'],
-						'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->show('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append'])."</div>{error}",
-					])
-					->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')])
-					->label(false);
+						'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->show('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append'])."</div>",
+					])->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')]);
 				ActiveForm::end();
 			echo Html::endTag('aside');
 		echo Html::endTag('div');

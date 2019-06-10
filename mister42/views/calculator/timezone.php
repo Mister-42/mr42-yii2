@@ -26,8 +26,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::beginTag('div', ['class' => 'row']);
 			foreach (['source', 'target'] as $field) :
 				echo $form->field($model, $field, [
+					'icon' => 'globe',
 					'options' => ['class' => 'form-group col-md-6'],
-					'inputTemplate' => Yii::$app->icon->inputTemplate('globe'),
 				])->dropDownList($model->getTimezones(), ['tabindex' => ++$tab]);
 			endforeach;
 		echo Html::endTag('div');

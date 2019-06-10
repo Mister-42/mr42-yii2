@@ -4,3 +4,4 @@
 /mister42/views/test/
 /webroot/.htaccess
 /webroot/php.ini
+/.php_cs.cache

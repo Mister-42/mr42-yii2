@@ -1,7 +1,8 @@
 <?php
 use app\assets\CharCounterAsset;
+use app\models\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
-use yii\bootstrap4\{ActiveForm, Html};
+use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
 
 CharCounterAsset::register($this, $model->rules()['charCount']['max']);
@@ -15,31 +16,30 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 		if (Yii::$app->user->isGuest) :
 			echo '<div class="row">';
 				echo $form->field($model, 'name', [
+					'icon' => 'user',
 					'options' => ['class' => 'col-md-6'],
-					'inputTemplate' => Yii::$app->icon->inputTemplate('user'),
 				])->textInput(['tabindex' => ++$tab]);
 
 				echo $form->field($model, 'email', [
+					'icon' => 'envelope',
 					'options' => ['class' => 'col-md-6'],
-					'inputTemplate' => Yii::$app->icon->inputTemplate('envelope'),
 				])->input('email', ['tabindex' => ++$tab])
 				->hint(Yii::t('mr42', 'This will never be published.'));
 			echo '</div>';
 
 			echo $form->field($model, 'website', [
-				'inputTemplate' => Yii::$app->icon->inputTemplate('globe'),
+				'icon' => 'globe',
 			])->input('url', ['tabindex' => ++$tab]);
 		endif;
 
 		echo $form->field($model, 'title', [
-				'inputTemplate' => Yii::$app->icon->inputTemplate('heading'),
-			])->textInput(['tabindex' => ++$tab]);
+			'icon' => 'header',
+		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'content', [
-			'inputTemplate' => Yii::$app->icon->inputTemplate('comment'),
-			])
-			->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
-			->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank'])]));
+			'inputTemplate' => Yii::$app->icon->activeFieldAddon('comment'),
+		])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
+		->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank'])]));
 
 		if (Yii::$app->user->isGuest)
 			echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);
