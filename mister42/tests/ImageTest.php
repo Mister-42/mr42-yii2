@@ -1,9 +1,8 @@
 <?php
-namespace app\test\unit;
+namespace app\tests;
 use app\models\Image;
-use PHPUnit\Framework\TestCase;
 
-class ImageTest extends TestCase {
+class ImageTest extends \PHPUnit\Framework\TestCase {
 	public function testAverageColor() {
 		$imgTesla = file_get_contents(\Yii::getAlias('@assetsroot/images/article/014_Elon_Musks_Tesla_Roadster.jpg'));
 		$this->assertEquals('#201C23', Image::getAverageImageColor($imgTesla));

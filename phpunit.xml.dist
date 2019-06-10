@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="mister42/tests/_bootstrap.php"
+		colors="true"
+		verbose="true"
+		convertErrorsToExceptions="true"
+		convertNoticesToExceptions="true"
+		convertWarningsToExceptions="true"
+		stopOnFailure="false">
+		<testsuites>
+			<testsuite name="Mr.42 test suite">
+				<directory>mister42/tests</directory>
+			</testsuite>
+		</testsuites>
+</phpunit>

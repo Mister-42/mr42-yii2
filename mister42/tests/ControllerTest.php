@@ -1,8 +1,7 @@
 <?php
-namespace app\test\unit;
-use PHPUnit\Framework\TestCase;
+namespace app\test;
 
-class ControllerTest extends TestCase {
+class ControllerTest extends \PHPUnit\Framework\TestCase {
 	public function testFeedController() {
 		$this->assertContains('</item>', \Yii::$app->runAction('feed/rss'));
 		$this->assertContains('</urlset>', \Yii::$app->runAction('feed/sitemap'));

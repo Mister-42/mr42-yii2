@@ -46,8 +46,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 				echo $form->field($model, $field.'count', [
 					'icon' => 'user',
 					'options' => ['class' => 'form-group col-md-6'],
-				])
-				->input('number', ['class' => 'form-control', 'tabindex' => ++$tab]);
+				])->input('number', ['class' => 'form-control', 'tabindex' => ++$tab]);
 			echo Html::endTag('div');
 		endforeach;
 

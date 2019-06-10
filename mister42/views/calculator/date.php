@@ -41,8 +41,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 			echo $form->field($model, 'days', [
 				'icon' => 'calendar-plus',
 				'options' => ['class' => 'form-group col-md-6'],
-			])	->hint(Yii::t('mr42', 'Use the minus sign (-) to subtract days.'))
-				->input('number', ['tabindex' => ++$tab]);
+			])->hint(Yii::t('mr42', 'Use the minus sign (-) to subtract days.'))
+			->input('number', ['tabindex' => ++$tab]);
 		echo Html::endTag('div');
 
 		echo $form->submitToolbar(Yii::t('mr42', 'Calculate'), $tab);
