@@ -35,7 +35,7 @@ class Common {
 				'basePath' => '@assetsroot',
 				'baseUrl' => '@assets',
 				'bundles' => [
-					'Thoulah\FontAwesomeInline\FontAwesomeAsset' => [
+					'thoulah\fontawesome\FontAwesomeAsset' => [
 						'css' => [],
 					],
 					'yii\bootstrap4\BootstrapAsset' => [

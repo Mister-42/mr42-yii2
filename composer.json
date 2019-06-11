@@ -37,6 +37,9 @@
     "require-dev": {
         "yiisoft/yii2-debug": "*"
     },
+    "replace": {
+        "yiisoft/yii2-bootstrap": "*"
+    },
     "repositories": [
         {
             "type": "composer",

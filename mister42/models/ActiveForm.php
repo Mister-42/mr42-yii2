@@ -4,7 +4,7 @@ use Yii;
 use yii\bootstrap4\Html;
 use yii\web\View;
 
-class ActiveForm extends \Thoulah\FontAwesomeInline\bootstrap4\ActiveForm {
+class ActiveForm extends \thoulah\fontawesome\bootstrap4\ActiveForm {
 	public function togglePassword($model, int $tab, array $options = []): string {
 		$this->getView()->registerJs("var togglePassword = {lang:{hide:'".Yii::t('mr42', 'Hide Password')."', show:'".Yii::t('mr42', 'Show Password')."'}};".Yii::$app->formatter->jspack('togglePassword.js'), View::POS_READY);
 		Html::addCssClass($options, 'form-group');
