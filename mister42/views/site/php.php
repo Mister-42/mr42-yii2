@@ -24,14 +24,12 @@ echo Html::beginTag('div', ['class' => 'site-php-version']);
 	foreach ($this->context->module->extensions as $data) :
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::tag('div', $data['name'], ['class' => 'col']);
-			echo Html::beginTag('div', ['class' => 'col-auto text-nowrap']);
-				foreach ($data['alias'] as $alias => $path) :
-					echo Html::tag('div',
-						Html::tag('div', $alias, ['class' => 'col w-50 text-right']).
-						Html::tag('div', str_replace(realpath(Yii::getAlias('@vendor')).'/', '', $path), ['class' => 'col w-50'])
-					, ['class' => 'row']);
-				endforeach;
+
+			echo Html::beginTag('div', ['class' => 'col text-left']);
+				foreach (array_keys($data['alias']) as $alias)
+					echo Html::tag('div', $alias, ['class' => 'text-nowrap']);
 			echo Html::endTag('div');
+
 			echo Html::tag('div', $data['version'], ['class' => 'col text-right']);
 		echo Html::endTag('div');
 	endforeach;

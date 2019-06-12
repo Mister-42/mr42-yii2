@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67e0215b4741c8bcd70e4c5e16fdcf8c",
+    "content-hash": "373404e5a97467ce11b9ea54d19f94f2",
     "packages": [
         {
             "name": "2amigos/yii2-selectize-widget",
@@ -145,21 +145,6 @@
                 "yii2-user"
             ],
             "time": "2019-04-19T14:48:39+00:00"
-        },
-        {
-            "name": "bower-asset/fontawesome",
-            "version": "5.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "ba907eaec40fab01d410c3023a5572b2cb46cea6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/ba907eaec40fab01d410c3023a5572b2cb46cea6",
-                "reference": "ba907eaec40fab01d410c3023a5572b2cb46cea6"
-            },
-            "type": "bower-asset"
         },
         {
             "name": "bower-asset/inputmask",
@@ -613,6 +598,69 @@
                 "html"
             ],
             "time": "2018-02-23T01:58:20+00:00"
+        },
+        {
+            "name": "fortawesome/font-awesome",
+            "version": "5.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "ba907eaec40fab01d410c3023a5572b2cb46cea6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/ba907eaec40fab01d410c3023a5572b2cb46cea6",
+                "reference": "ba907eaec40fab01d410c3023a5572b2cb46cea6",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-4.0",
+                "OFL-1.1",
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Travis Chase",
+                    "homepage": "http://twitter.com/supercodepoet"
+                },
+                {
+                    "name": "Dave Gandy",
+                    "homepage": "http://twitter.com/davegandy"
+                },
+                {
+                    "name": "Rob Madole",
+                    "homepage": "http://twitter.com/robmadole"
+                },
+                {
+                    "name": "Jory Raphael",
+                    "homepage": "http://twitter.com/sensibleworld"
+                },
+                {
+                    "name": "Geremia Taglialatela",
+                    "homepage": "http://twitter.com/gtagliala"
+                },
+                {
+                    "name": "Brian Talbot",
+                    "homepage": "http://twitter.com/talbs"
+                },
+                {
+                    "name": "Mike Wilkerson",
+                    "homepage": "http://twitter.com/mw77"
+                }
+            ],
+            "description": "The iconic font, CSS, and SVG framework",
+            "homepage": "https://fontawesome.com",
+            "keywords": [
+                "FontAwesome",
+                "awesome",
+                "bootstrap",
+                "font",
+                "icon",
+                "svg"
+            ],
+            "time": "2019-06-04T21:18:16+00:00"
         },
         {
             "name": "gkralik/php-uglifyjs",
@@ -1633,17 +1681,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Thoulah/yii2-fontawesome-inline.git",
-                "reference": "d08dfd0f7414f3738f2c38af8d56c19c31f992a7"
+                "reference": "81e51e9478c2ec33b9d71f3883453ca0c557fdb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Thoulah/yii2-fontawesome-inline/zipball/d08dfd0f7414f3738f2c38af8d56c19c31f992a7",
-                "reference": "d08dfd0f7414f3738f2c38af8d56c19c31f992a7",
+                "url": "https://api.github.com/repos/Thoulah/yii2-fontawesome-inline/zipball/81e51e9478c2ec33b9d71f3883453ca0c557fdb8",
+                "reference": "81e51e9478c2ec33b9d71f3883453ca0c557fdb8",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/fontawesome": "^5.1",
                 "ext-dom": "*",
+                "fortawesome/font-awesome": "~5.1",
                 "php": ">=7.1.0",
                 "yiisoft/yii2": "~2.0",
                 "yiisoft/yii2-bootstrap4": "~2.0"
@@ -1652,6 +1700,11 @@
                 "phpunit/phpunit": "^7.0"
             },
             "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "thoulah\\fontawesome\\": "src"
@@ -1659,7 +1712,18 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-3.0-only"
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thoulah",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Mr.42",
+                    "homepage": "https://mr42.me/",
+                    "role": "Tester"
+                }
             ],
             "description": "Inline Font Awesome icons for Yii2 – without JavaScript",
             "keywords": [
@@ -1667,7 +1731,7 @@
                 "font awesome",
                 "yii2"
             ],
-            "time": "2019-06-11T20:20:30+00:00"
+            "time": "2019-06-12T21:38:41+00:00"
         },
         {
             "name": "voku/simple_html_dom",
