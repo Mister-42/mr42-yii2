@@ -16,4 +16,5 @@ install:
   - travis_retry composer install --prefer-dist --no-interaction
 
 script:
-  - ../vendor/bin/phpunit --verbose $PHPUNIT_FLAGS
+  - find $HOME -type d -name vendor
+  - phpunit --verbose $PHPUNIT_FLAGS

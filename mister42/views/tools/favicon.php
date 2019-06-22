@@ -43,7 +43,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 			->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'));
 
 		echo $form->field($model, 'sourceImage', [
-				'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->activeFieldIcon('image').Html::tag('div', '{input}'.Html::tag('label', Yii::t('mr42', 'Select an Image'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']).'</div>',
+				'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->name('image')->activeFieldIcon().Html::tag('div', '{input}'.Html::tag('label', Yii::t('mr42', 'Select an Image'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']).'</div>',
 			])->fileInput(['accept' => 'image/*', 'class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab])
 			->hint(Yii::t('mr42', 'For best result upload a square image. Your icon will be generated in {dimensions} pixels.', ['dimensions' => Inflector::sentence($dimensions)]));
 

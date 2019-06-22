@@ -33,11 +33,11 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 		endif;
 
 		echo $form->field($model, 'title', [
-			'icon' => 'header',
+			'icon' => 'heading',
 		])->textInput(['tabindex' => ++$tab]);
 
 		echo $form->field($model, 'content', [
-			'inputTemplate' => Yii::$app->icon->activeFieldAddon('comment'),
+			'inputTemplate' => Yii::$app->icon->name('comment')->activeFieldAddon(),
 		])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
 		->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank'])]));
 

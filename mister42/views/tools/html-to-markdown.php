@@ -27,7 +27,7 @@ echo Html::beginTag('form', ['class' => 'html2markdown']);
 
 	echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('div',
-			Html::checkbox('gfm', false, ['label' => Yii::$app->icon->show('github', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'GitHub Flavored Markdown')])
+			Html::checkbox('gfm', false, ['label' => Yii::$app->icon->name('github', 'brands')->class('mr-1').Yii::t('mr42', 'GitHub Flavored Markdown')])
 		, ['class' => 'col']);
 	echo Html::endTag('div');
 echo Html::endTag('form');

@@ -24,12 +24,10 @@ echo Html::beginTag('div', ['class' => 'site-php-version']);
 	foreach ($this->context->module->extensions as $data) :
 		echo Html::beginTag('div', ['class' => 'row']);
 			echo Html::tag('div', $data['name'], ['class' => 'col']);
-
 			echo Html::beginTag('div', ['class' => 'col text-left']);
 				foreach (array_keys($data['alias']) as $alias)
 					echo Html::tag('div', $alias, ['class' => 'text-nowrap']);
 			echo Html::endTag('div');
-
 			echo Html::tag('div', $data['version'], ['class' => 'col text-right']);
 		echo Html::endTag('div');
 	endforeach;

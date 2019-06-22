@@ -18,7 +18,7 @@ class RecentTracks extends \yii\db\ActiveRecord {
 
 		return Item::widget([
 			'body' => RecentTracksWidget::widget(['tracks' => self::find()->where(['userid' => $userid])->orderBy(['count' => SORT_DESC])->limit($this->limit)->all()]),
-			'header' => Yii::$app->icon->show('lastfm-square', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Recently Played Tracks'),
+			'header' => Yii::$app->icon->name('lastfm-square', 'brands')->class('mr-1').Yii::t('mr42', 'Recently Played Tracks'),
 		]);
 	}
 

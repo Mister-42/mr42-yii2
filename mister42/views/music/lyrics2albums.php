@@ -13,10 +13,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 			Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']).
 			Html::tag('div',
 				($data[0]->artistInfo->buy
-					? Html::a(Yii::$app->icon->show('bandcamp', ['style' => 'brands']), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])])
+					? Html::a(Yii::$app->icon->name('bandcamp', 'brands'), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])])
 					: '').
 				($data[0]->artistInfo->website
-					? Html::a(Yii::$app->icon->show('globe'), $data[0]->artistInfo->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])])
+					? Html::a(Yii::$app->icon->name('globe'), $data[0]->artistInfo->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])])
 					: '')
 			, ['class' => 'float-right'])
 		, ['class' => 'col'])
@@ -41,14 +41,14 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 						), ['class' => 'float-left']).
 						Html::tag('div',
 							($album->buy
-								? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
+								? Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1').Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
 								: '').
 							($album->playlist_url
-								? Html::a(Yii::$app->icon->show($album->playlist_source, ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+								? Html::a(Yii::$app->icon->name($album->playlist_source, 'brands')->class('mr-1').Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 								: '').
 							($album->active
-								? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
-								: Html::tag('span', Yii::$app->icon->show('asterisk', ['class' => 'mr-1']).Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1']))
+								? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1').Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+								: Html::tag('span', Yii::$app->icon->name('asterisk')->class('mr-1').Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1']))
 						, ['class' => 'float-right'])
 					, ['class' => 'card-header']);
 
@@ -59,13 +59,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 								foreach ($tracks as $track) :
 									echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
 										$track->name = Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track]);
-										echo implode(' · ', [$track->track, $track->name.$track->nameExtra]);
-										if ($track->wip)
-											echo Yii::$app->icon->show('plus', ['class' => 'text-muted ml-1']);
-										elseif (!$track->lyricid)
-											echo Yii::$app->icon->show('music', ['class' => 'text-muted ml-1']);
-										if ($track->video)
-											echo Yii::$app->icon->show($track->video_source, ['class' => 'text-muted ml-1', 'style' => 'brands']);
+										echo implode(' · ', [$track->track, $track->name.$track->nameExtra]).$track->icons;
 									echo Html::endTag('div');
 								endforeach;
 								echo Html::endTag('div');

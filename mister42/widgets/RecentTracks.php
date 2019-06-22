@@ -9,7 +9,7 @@ class RecentTracks extends Widget {
 	public function run(): string {
 		foreach ($this->tracks as $item)
 			$feed[] = Html::tag('li',
-				Html::tag('span', $item['artist'].(($item['time'] === 0) ? Yii::$app->icon->show('volume-up', ['class' => 'ml-1', 'title' => Yii::t('mr42', 'Currently Playing')]) : ''), ['class' => 'float-left mw-100 text-truncate']).
+				Html::tag('span', $item['artist'].(($item['time'] === 0) ? Yii::$app->icon->name('volume-up')->class('ml-1')->title(Yii::t('mr42', 'Currently Playing')) : ''), ['class' => 'float-left mw-100 text-truncate']).
 				Html::tag('span', $item['track'], ['class' => 'float-right text-right mw-100 text-truncate'])
 			, ['class' => 'list-group-item w-100']);
 

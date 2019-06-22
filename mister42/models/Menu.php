@@ -46,9 +46,9 @@ class Menu extends \yii\base\Model {
 
 	private function getData(): array {
 		return [
-			['label' => Yii::$app->icon->show('certificate').Html::tag('span', 'Test'), 'url' => ['/test/index'], 'visible' => $this->isAdmin()],
-			['label' => Yii::$app->icon->show('newspaper').Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true, 'active' => Yii::$app->controller->id === 'articles'],
-			['label' => Yii::$app->icon->show('calculator').Html::tag('span', Yii::t('mr42', 'Calculator')),
+			['label' => Yii::$app->icon->name('certificate').Html::tag('span', 'Test'), 'url' => ['/test/index'], 'visible' => $this->isAdmin()],
+			['label' => Yii::$app->icon->name('newspaper').Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true, 'active' => Yii::$app->controller->id === 'articles'],
+			['label' => Yii::$app->icon->name('calculator').Html::tag('span', Yii::t('mr42', 'Calculator')),
 				'items' => [
 					['label' => Yii::t('mr42', 'Date (add/subtract)'), 'url' => ['/calculator/date']],
 					['label' => Yii::t('mr42', 'Date to Date (duration)'), 'url' => ['/calculator/duration']],
@@ -58,7 +58,7 @@ class Menu extends \yii\base\Model {
 					['label' => Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key'), 'url' => ['/calculator/wpapsk']],
 				],
 			],
-			['label' => Yii::$app->icon->show('tools').Html::tag('span', Yii::t('mr42', 'Tools')),
+			['label' => Yii::$app->icon->name('tools').Html::tag('span', Yii::t('mr42', 'Tools')),
 				'items' => [
 					['label' => Yii::t('mr42', 'Barcode Generator'), 'url' => ['/tools/barcode']],
 					['label' => Yii::t('mr42', 'Browser Headers'), 'url' => ['/tools/headers']],
@@ -70,13 +70,13 @@ class Menu extends \yii\base\Model {
 					['label' => Yii::t('mr42', 'QR Code Generator'), 'url' => ['/tools/qr']],
 				],
 			],
-			['label' => Yii::$app->icon->show('music').Html::tag('span', Yii::t('mr42', 'Music')),
+			['label' => Yii::$app->icon->name('music').Html::tag('span', Yii::t('mr42', 'Music')),
 				'items' => [
 					['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
 					['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/music/lyrics'], 'visible' => true],
 				],
 			],
-			['label' => Yii::$app->icon->show('share-alt').Html::tag('span', Yii::$app->name),
+			['label' => Yii::$app->icon->name('share-alt').Html::tag('span', Yii::$app->name),
 				'items' => [
 					['label' => Yii::t('mr42', 'Contact'), 'url' => ['/my/contact']],
 					['label' => Yii::t('mr42', 'My Pi'), 'url' => ['/my/pi']],
@@ -87,7 +87,7 @@ class Menu extends \yii\base\Model {
 
 	private function getUserMenu(): array {
 		if ($this->isGuest())
-			return [['label' => Yii::$app->icon->show('sign-in-alt').Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]];
+			return [['label' => Yii::$app->icon->name('sign-in-alt').Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]];
 
 		if ($this->isAdmin()) :
 			$subMenu[] = ['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create']];
@@ -105,7 +105,7 @@ class Menu extends \yii\base\Model {
 
 		$unread = $this->isAdmin() ? ArticlesComments::find()->where(['not', ['active' => true]])->count() : 0;
 		$unreadBadge = $unread > 0 ? Html::tag('sup', $unread, ['class' => 'badge badge-info ml-1']) : '';
-		return [['label' => Yii::$app->icon->show('user-circle').Html::tag('span', Yii::$app->user->identity->username.$unreadBadge), 'items' => $subMenu]];
+		return [['label' => Yii::$app->icon->name('user-circle').Html::tag('span', Yii::$app->user->identity->username.$unreadBadge), 'items' => $subMenu]];
 	}
 
 	private function isAdmin(): bool {

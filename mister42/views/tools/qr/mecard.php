@@ -8,7 +8,7 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['firstName', 'lastName'] as $name) 
+	foreach (['firstName', 'lastName'] as $name)
 		echo $form->field($model, $name, [
 			'icon' => 'user',
 			'options' => ['class' => 'col-md-6'],

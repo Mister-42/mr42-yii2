@@ -16,7 +16,7 @@ foreach ($data->comments as $comment) :
 						echo $comment->showApprovalButton();
 					Pjax::end();
 
-					echo Html::a(Yii::$app->icon->show('trash-alt', ['class' => 'mr-1']).Yii::t('yii', 'Delete'), ['deletecomment', 'id' => $comment->id], [
+					echo Html::a(Yii::$app->icon->name('trash-alt')->class('mr-1').Yii::t('yii', 'Delete'), ['deletecomment', 'id' => $comment->id], [
 						'class' => 'btn btn-sm btn-outline-danger ml-1',
 						'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
 						'data-method' => 'post',
@@ -34,10 +34,10 @@ foreach ($data->comments as $comment) :
 				$comment->website = $user->profile->website;
 			endif;
 
-			$bar[] = Yii::$app->icon->show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($comment->created), ['datetime' => date(DATE_W3C, $comment->created)]);
-			$bar[] = Yii::$app->icon->show('user', ['class' => 'text-muted mr-1']).$comment->name.($data->authorId === $comment->user ? Html::tag('span', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-info']) : '');
+			$bar[] = Yii::$app->icon->name('clock')->class('mr-1 text-muted').Html::tag('time', Yii::$app->formatter->asRelativeTime($comment->created), ['datetime' => date(DATE_W3C, $comment->created)]);
+			$bar[] = Yii::$app->icon->name('user')->class('mr-1 text-muted').$comment->name.($data->authorId === $comment->user ? Html::tag('span', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-info']) : '');
 			if (!empty($comment->website))
-				$bar[] = Yii::$app->icon->show('globe', ['class' => 'text-muted mr-1']).Html::a($comment->website, $comment->website);
+				$bar[] = Yii::$app->icon->name('globe')->class('mr-1 text-muted').Html::a($comment->website, $comment->website);
 			echo Html::tag('div', implode(' · ', $bar));
 			unset($bar);
 		echo Html::endTag('div');
@@ -60,10 +60,10 @@ foreach ($data->comments as $comment) :
 					$reply->website = $user->profile->website;
 				endif;
 
-				$bar[] = Yii::$app->icon->show('clock', ['class' => 'text-muted mr-1']).Html::tag('time', Yii::$app->formatter->asRelativeTime($reply->created), ['datetime' => date(DATE_W3C, $reply->created)]);
-				$bar[] = Yii::$app->icon->show('user', ['class' => 'text-muted mr-1']).$reply->name.($data->authorId === $reply->user ? Html::tag('span', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-info']) : '');
+				$bar[] = Yii::$app->icon->name('clock')->class('mr-1 text-muted').Html::tag('time', Yii::$app->formatter->asRelativeTime($reply->created), ['datetime' => date(DATE_W3C, $reply->created)]);
+				$bar[] = Yii::$app->icon->name('user')->class('mr-1 text-muted').$reply->name.($data->authorId === $reply->user ? Html::tag('span', Yii::t('mr42', 'Article Author'), ['class' => 'ml-1 badge badge-info']) : '');
 				if (!empty($reply->website))
-					$bar[] = Yii::$app->icon->show('globe', ['class' => 'text-muted mr-1']).Html::a($reply->website, $reply->website);
+					$bar[] = Yii::$app->icon->name('globe')->class('mr-1 text-muted').Html::a($reply->website, $reply->website);
 				echo Html::tag('div', implode(' · ', $bar));
 				unset($bar);
 			echo Html::endTag('div');

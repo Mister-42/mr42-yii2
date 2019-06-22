@@ -65,8 +65,8 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 	public function showApprovalButton(): string {
 		return Html::a(
 			$this->active
-				? Yii::$app->icon->show('thumbs-down', ['class' => 'mr-1']).Yii::t('mr42', 'Renounce')
-				: Yii::$app->icon->show('thumbs-up', ['class' => 'mr-1']).Yii::t('mr42', 'Approve'),
+				? Yii::$app->icon->name('thumbs-down')->class('mr-1').Yii::t('mr42', 'Renounce')
+				: Yii::$app->icon->name('thumbs-up')->class('mr-1').Yii::t('mr42', 'Approve'),
 			['togglecomment', 'id' => $this->id],
 			['class' => $this->active ? 'btn btn-sm btn-outline-warning ml-1' : 'btn btn-sm btn-outline-success ml-1']
 		);

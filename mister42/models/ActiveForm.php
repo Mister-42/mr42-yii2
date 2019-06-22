@@ -9,7 +9,7 @@ class ActiveForm extends \thoulah\fontawesome\bootstrap4\ActiveForm {
 		$this->getView()->registerJs("var togglePassword = {lang:{hide:'".Yii::t('mr42', 'Hide Password')."', show:'".Yii::t('mr42', 'Show Password')."'}};".Yii::$app->formatter->jspack('togglePassword.js'), View::POS_READY);
 		Html::addCssClass($options, 'form-group');
 		return $this->field($model, 'password', [
-			'inputTemplate' => '<div class="input-group" id="pwdToggle">'.Yii::$app->icon->activeFieldIcon('lock').'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->show('eye', ['class' => 'append']).Yii::$app->icon->show('eye-slash', ['class' => 'd-none append']), ['class' => 'btn btn-primary', 'title' => Yii::t('mr42', 'Show Password')]).'</span></div>',
+			'inputTemplate' => '<div class="input-group" id="pwdToggle">'.Yii::$app->icon->name('lock')->activeFieldIcon().'{input}<span class="input-group-append">'.Html::button(Yii::$app->icon->name('eye')->class('append').Yii::$app->icon->name('eye-slash')->class('append d-none'), ['class' => 'btn btn-primary', 'title' => Yii::t('mr42', 'Show Password')]).'</span></div>',
 			'options' => $options,
 		])->passwordInput(['tabindex' => $tab]);
 	}

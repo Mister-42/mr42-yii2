@@ -40,14 +40,14 @@ $items[] = [
 		: null,
 	'footer' =>
 		($data[0]->album->buy
-			? Html::a(Yii::$app->icon->show('bandcamp', ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
+			? Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1').Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
 			: null).
 		($data[0]->album->playlist_url
-			? Html::a(Yii::$app->icon->show($data[0]->album->playlist_source, ['class' => 'mr-1', 'style' => 'brands']).Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+			? Html::a(Yii::$app->icon->name($data[0]->album->playlist_source, 'brands')->class('mr-1').Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
 			: null).
 		($data[0]->album->active
-			? Html::a(Yii::$app->icon->show('file-pdf', ['class' => 'mr-1']).Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
-			: Html::tag('span', Yii::$app->icon->show('asterisk', ['class' => 'mr-1']).Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
+			? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1').Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
+			: Html::tag('span', Yii::$app->icon->name('asterisk', ['class' => 'mr-1']).Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
 	'contentOptions' => ['class' => 'text-center'],
 	'options' => ['id' => 'frontCover']
 ];
@@ -60,11 +60,11 @@ foreach ($data as $track) :
 	$content .= Html::tag('div',
 		($track->lyricid || $track->wip || $track->video)
 			? ($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
-			: Yii::$app->icon->instrumental(['class' => 'img-fluid', 'height' => 250])
+			: Yii::$app->icon->instrumental()->class('img-fluid')->height(250)
 	, ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8 notranslate' : 'col-12 notranslate']);
 
 	$items[] = [
-		'label' => Html::tag('span', implode(' · ', [$track->track, $track->name.$track->nameExtra]), ['class' => 'h5 notranslate']),
+		'label' => Html::tag('span', implode(' · ', [$track->track, $track->name.$track->nameExtra]).$track->icons, ['class' => 'h5 notranslate']),
 		'content' => Html::tag('div', $content, ['class' => 'row container']),
 		'options' => ['id' => $track->track]
 	];

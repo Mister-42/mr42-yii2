@@ -57,7 +57,7 @@ echo Html::endTag('header');
 echo Html::tag('main',
 	Breadcrumbs::widget([
 		'encodeLabels' => false,
-		'homeLink' => ['label' => Yii::$app->icon->show('home', ['class' => 'mr-1']).Yii::t('yii', 'Home'), 'url' => Yii::$app->homeUrl],
+		'homeLink' => ['label' => Yii::$app->icon->name('home')->class('mr-1').Yii::t('yii', 'Home'), 'url' => Yii::$app->homeUrl],
 		'links' => $this->params['breadcrumbs'] ?? null,
 	]).
 	$content
@@ -69,11 +69,11 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
 		echo Html::beginTag('div', ['class' => 'float-right dropup']);
 			if (Yii::$app->requestedRoute !== 'site/offline') :
 				if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)
-					echo Html::a(Yii::$app->icon->show('html5', ['style' => 'brands']), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
-				echo Html::a(Yii::$app->icon->show('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Privacy Policy')]);
-				echo Html::a(Yii::$app->icon->show('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
+					echo Html::a(Yii::$app->icon->name('html5', 'brands'), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
+				echo Html::a(Yii::$app->icon->name('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Privacy Policy')]);
+				echo Html::a(Yii::$app->icon->name('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
 				echo Html::beginTag('div', ['class' => 'btn-group dropup']);
-					echo Html::a(Yii::$app->icon->show('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'title' => Yii::t('mr42', 'Change Language')]);
+					echo Html::a(Yii::$app->icon->name('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'title' => Yii::t('mr42', 'Change Language')]);
 					echo Html::beginTag('div', ['class' => 'dropdown-menu']);
 						foreach (Yii::$app->params['languages'] as $lng => $desc)
 							echo ($lng === Yii::$app->language)

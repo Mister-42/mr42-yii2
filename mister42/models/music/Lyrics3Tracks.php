@@ -7,6 +7,7 @@ use yii\db\ActiveQuery;
 class Lyrics3Tracks extends \yii\db\ActiveRecord {
 	public $max;
 	public $nameExtra;
+	public $icons;
 	public $video;
 
 	public static function tableName(): string {
@@ -20,6 +21,15 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord {
 		$this->video_status = boolval($this->video_status);
 		$this->wip = boolval($this->wip);
 		$this->video = $this->video_source && $this->video_id && $this->video_ratio && $this->video_status ? Video::getEmbed($this->video_source, $this->video_id, $this->video_ratio) : null;
+
+		$icons = [];
+		if ($this->video)
+			$icons[] = Yii::$app->icon->name($this->video_source, 'brands')->class('text-muted ml-1')->title(Yii::t('mr42', 'Video'));
+		if ($this->wip)
+			$icons[] = Yii::$app->icon->name('plus')->class('text-muted ml-1')->title(Yii::t('mr42', 'Work in Progress'));
+		elseif (!$this->lyricid)
+			$icons[] = Yii::$app->icon->name('music')->class('text-muted ml-1')->title(Yii::t('mr42', 'Instrumental'));
+		$this->icons = implode($icons);
 	}
 
 	public function beforeSave($insert): bool {
