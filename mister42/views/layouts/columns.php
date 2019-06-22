@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use app\models\articles\{Articles, ArticlesComments, Search};
 use app\widgets\{Feed, Item, RecentArticles, RecentChangelog, RecentComments, TagCloud};
@@ -23,50 +24,52 @@ echo Html::beginTag('div', ['class' => 'row']);
 				$form = ActiveForm::begin(['action' => ['articles/search'], 'method' => 'get', 'options' => ['role' => 'search']]);
 					echo $form->field(new Search(), 'keyword', [
 						'options' => ['class' => 'form-group mb-2'],
-						'template' => '<div class="input-group input-group-sm">{input}'.Html::tag('div', Html::submitButton(Yii::$app->icon->name('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append'])."</div>",
+						'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('div', Html::submitButton(Yii::$app->icon->name('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append']) . '</div>',
 					])->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')]);
 				ActiveForm::end();
 			echo Html::endTag('aside');
 		echo Html::endTag('div');
 
 		echo Html::beginTag('div', ['class' => 'row']);
-			if ($isHome) :
+			if ($isHome) {
 				echo Html::beginTag('aside', ['class' => 'col-6 d-none d-lg-block']);
-					echo Item::widget([
+				echo Item::widget([
 						'body' => Feed::widget(['name' => 'ScienceDaily', 'tooltip' => true]),
-						'header' => Yii::$app->icon->name('flask')->class('mr-1').'ScienceDaily',
+						'header' => Yii::$app->icon->name('flask')->class('mr-1') . 'ScienceDaily',
 					]);
 
-					echo Item::widget([
+				echo Item::widget([
 						'body' => Feed::widget(['name' => 'TomsHardware', 'tooltip' => true]),
-						'header' => Yii::$app->icon->name('hammer')->class('mr-1').'Tom\'s Hardware',
+						'header' => Yii::$app->icon->name('hammer')->class('mr-1') . 'Tom\'s Hardware',
 					]);
 				echo Html::endTag('aside');
-			endif;
+			}
 
 			echo Html::beginTag('aside', ['class' => $isHome ? 'col-12 col-lg-6 d-none d-md-block' : 'col-12 d-none d-md-block']);
-				if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0, 'enabled' => !YII_DEBUG, 'variations' => [Yii::$app->language]])) :
+				if ($this->beginCache('articlewidgets', ['dependency' => $dependency, 'duration' => 0, 'enabled' => !YII_DEBUG, 'variations' => [Yii::$app->language]])) {
 					$widgets = [
 						Yii::t('mr42', 'Recent Articles') => ['class' => RecentArticles::widget(), 'icon' => 'newspaper'],
 						Yii::t('mr42', 'Recent Comments') => ['class' => RecentComments::widget(), 'icon' => 'comments'],
 						Yii::t('mr42', 'Tag Cloud') => ['class' => TagCloud::widget(), 'icon' => 'tags'],
 					];
 
-					foreach ($widgets as $title => $val)
+					foreach ($widgets as $title => $val) {
 						echo Item::widget([
 							'body' => $val['class'],
-							'header' => Yii::$app->icon->name($val['icon'])->class('mr-1').$title,
+							'header' => Yii::$app->icon->name($val['icon'])->class('mr-1') . $title,
 							'options' => ['id' => Inflector::slug($title)],
 						]);
+					}
 
 					$this->endCache();
-				endif;
+				}
 
-				if ($isHome)
+				if ($isHome) {
 					echo Item::widget([
 						'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
-						'header' => Yii::$app->icon->name('github', 'brands')->class('mr-1').Yii::t('mr42', 'Changelog'),
+						'header' => Yii::$app->icon->name('github', 'brands')->class('mr-1') . Yii::t('mr42', 'Changelog'),
 					]);
+				}
 			echo Html::endTag('aside');
 		echo Html::endTag('div');
 

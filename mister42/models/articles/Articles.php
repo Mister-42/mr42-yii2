@@ -1,8 +1,10 @@
 <?php
+
 namespace app\models\articles;
-use Yii;
+
 use app\models\Pdf;
-use app\models\user\{User, Profile};
+use app\models\user\{Profile, User};
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 use yii\helpers\{StringHelper, Url};
@@ -40,7 +42,7 @@ class Articles extends \yii\db\ActiveRecord {
 		];
 	}
 
-	public function behaviors(): array{
+	public function behaviors(): array {
 		return [
 			[
 				'class' => TimestampBehavior::class,
@@ -52,13 +54,14 @@ class Articles extends \yii\db\ActiveRecord {
 
 	public function afterFind(): void {
 		parent::afterFind();
-		if (Yii::$app->controller->action->id !== 'update')
+		if (Yii::$app->controller->action->id !== 'update') {
 			$this->url = $this->url ?? $this->title;
+		}
 
-		if ($this->content) :
+		if ($this->content) {
 			$this->contentParsed = Yii::$app->formatter->cleanInput($this->content, 'gfm', true);
 			$this->contentParsed = str_replace(Html::tag('p', '[readmore]'), '[readmore]', $this->contentParsed);
-		endif;
+		}
 	}
 
 	public function beforeDelete(): bool {
@@ -66,31 +69,31 @@ class Articles extends \yii\db\ActiveRecord {
 	}
 
 	public function beforeSave($insert): bool {
-		if (!parent::beforeSave($insert))
+		if (!parent::beforeSave($insert)) {
 			return false;
-
-		if (Yii::$app->user->isGuest)
+		}
+		if (Yii::$app->user->isGuest) {
 			throw new AccessDeniedHttpException('Please login.');
-
+		}
 		$this->url = !empty($this->url) ? $this->url : null;
 		$this->source = !empty($this->source) ? $this->source : null;
 
-		if ($insert) :
+		if ($insert) {
 			$this->authorId = Yii::$app->user->id;
-		elseif (!$this->belongsToViewer()) :
+		} elseif (!$this->belongsToViewer()) {
 			return false;
-		endif;
+		}
 
 		return true;
 	}
 
-	public static function buildPdf(Articles $model): string {
+	public static function buildPdf(self $model): string {
 		$profile = (new Profile())->find($model->authorId)->one();
 		$name = empty($profile->name) ? $model->user->username : $profile->name;
 		$tags = Yii::t('mr42', '{results, plural, =1{1 tag} other{# tags}}', ['results' => count(StringHelper::explode($model->tags))]);
 		$pdf = new Pdf();
 		return $pdf->create(
-			'@runtime/PDF/articles/'.sprintf('%05d', $model->id),
+			'@runtime/PDF/articles/' . sprintf('%05d', $model->id),
 			str_replace('[readmore]', null, $model->contentParsed),
 			$model->updated,
 			[

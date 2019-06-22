@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\tools\qr;
+
 use Yii;
 
 class Ical extends \app\models\tools\Qr {
@@ -26,11 +28,11 @@ class Ical extends \app\models\tools\Qr {
 	}
 
 	public function generateQr(): bool {
-		$data[] = "BEGIN:VEVENT";
+		$data[] = 'BEGIN:VEVENT';
 		$data[] = $this->getDataOrOmit('SUMMARY:', $this->summary);
 		$data[] = $this->getDataOrOmit('DTSTART:', $this->start ? date('Ymd\THis\Z', strtotime($this->start)) : '');
 		$data[] = $this->getDataOrOmit('DTEND:', $this->end ? date('Ymd\THis\Z', strtotime($this->end)) : '');
-		$data[] = "END:VEVENT";
+		$data[] = 'END:VEVENT';
 		return parent::generate(implode("\n", array_filter($data)));
 	}
 }

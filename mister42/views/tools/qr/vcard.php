@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use yii\bootstrap4\Html;
 
@@ -8,11 +9,12 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['firstName', 'lastName'] as $name)
+	foreach (['firstName', 'lastName'] as $name) {
 		echo $form->field($model, $name, [
 			'icon' => 'user',
 			'options' => ['class' => 'col-md-6'],
 		])->textInput(['tabindex' => ++$tab]);
+	}
 echo Html::endTag('div');
 
 echo $form->field($model, 'fullName', [
@@ -32,11 +34,12 @@ echo $form->field($model, 'organization', [
 ])->textInput(['tabindex' => ++$tab]);
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['role' => 'certificate', 'title' => 'bookmark'] as $name => $icon)
+	foreach (['role' => 'certificate', 'title' => 'bookmark'] as $name => $icon) {
 		echo $form->field($model, $name, [
 			'icon' => $icon,
 			'options' => ['class' => 'col-md-6'],
 		])->textInput(['tabindex' => ++$tab]);
+	}
 echo Html::endTag('div');
 
 echo $form->field($model, 'workAddress', [

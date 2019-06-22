@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use yii\bootstrap4\Html;
 
@@ -26,11 +27,15 @@ echo $form->field($profile, 'location')->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($profile, 'bio')->textarea(['rows' => 8, 'tabindex' => ++$tab]);
 
-echo Html::tag('div',
-	Html::tag('div',
-		Html::submitButton(Yii::t('usuario', 'Update'), ['class' => 'btn btn-block btn-success', 'tabindex' => ++$tab])
-	, ['class' => 'col-md-9 ml-auto btn-toolbar float-right'])
-, ['class' => 'form-group row']);
+echo Html::tag(
+	'div',
+	Html::tag(
+		'div',
+		Html::submitButton(Yii::t('usuario', 'Update'), ['class' => 'btn btn-block btn-success', 'tabindex' => ++$tab]),
+		['class' => 'col-md-9 ml-auto btn-toolbar float-right']
+	),
+	['class' => 'form-group row']
+);
 
 ActiveForm::end();
 

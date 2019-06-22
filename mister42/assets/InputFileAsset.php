@@ -1,5 +1,7 @@
 <?php
+
 namespace app\assets;
+
 use Yii;
 use yii\bootstrap4\Html;
 use yii\helpers\Json;
@@ -9,8 +11,8 @@ class InputFileAsset extends AssetBundle {
 	public static function register($view) {
 		$options = Json::encode([
 			'lang' => [
-				'selected' => Yii::t('mr42', 'File \'{name}\' Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])])
-			]
+				'selected' => Yii::t('mr42', 'File \'{name}\' Selected', ['name' => Html::tag('span', null, ['class' => 'filename'])]),
+			],
 		]);
 
 		$view->registerJs("var inputFile = {$options};", View::POS_READY);

@@ -1,4 +1,5 @@
 <?php
+
 namespace mister42;
 
 class Common {
@@ -14,7 +15,7 @@ class Common {
 		return [
 			'aliases' => [
 				'@assets' => '//s.mr42.me',
-				'@assetsroot' => __DIR__.'/../../webassets/me.mr42.s',
+				'@assetsroot' => __DIR__ . '/../../webassets/me.mr42.s',
 				'@bower' => '@vendor/bower-asset',
 				'@npm' => '@vendor/npm-asset',
 			],
@@ -23,9 +24,9 @@ class Common {
 			'language' => 'en',
 			'name' => 'Mr.42',
 			'params' => $this->params,
-			'runtimePath' => __DIR__.'/../../../.cache/yii/mister42',
+			'runtimePath' => __DIR__ . '/../../../.cache/yii/mister42',
 			'timeZone' => 'Europe/Berlin',
-			'vendorPath' => __DIR__.'/../../vendor',
+			'vendorPath' => __DIR__ . '/../../vendor',
 		];
 	}
 
@@ -63,7 +64,7 @@ class Common {
 			],
 			'db' => [
 				'class' => 'yii\db\Connection',
-				'dsn' => 'mysql:host='.$this->secrets['MySQL']['host'].';dbname='.$this->secrets['MySQL']['db'],
+				'dsn' => 'mysql:host=' . $this->secrets['MySQL']['host'] . ';dbname=' . $this->secrets['MySQL']['db'],
 				'username' => $this->secrets['MySQL']['user'],
 				'password' => $this->secrets['MySQL']['pass'],
 				'charset' => 'utf8mb4',
@@ -121,30 +122,30 @@ class Common {
 				],
 				'showScriptName' => false,
 				'rules' => [
-					''																		=> 'site/index',
-					'browserconfig.xml'														=> 'site/browserconfigxml',
-					'favicon.ico'															=> 'site/faviconico',
-					'robots.txt'															=> 'site/robotstxt',
-					'site.webmanifest'														=> 'site/webmanifest',
-					'sitemap.xml'															=> 'feed/sitemap',
-					'sitemap-articles.xml'													=> 'feed/sitemap-articles',
-					'sitemap-lyrics.xml'													=> 'feed/sitemap-lyrics',
-					'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>.pdf'				=> 'music/albumpdf',
-					'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>-<size:.{2,5}>.jpg'	=> 'music/albumcover',
-					'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>'					=> 'music/lyrics',
-					'music/lyrics/<artist:.*?>'												=> 'music/lyrics',
-					'music/collection-cover/<id:.*>.jpg'									=> 'music/collection-cover',
-					'articles/<id:\d+>/<title:.*?>.pdf'										=> 'articles/pdf',
-					'articles/<id:\d+>/<title:.*?>'											=> 'articles/article',
-					'articles/<id:\d+>'														=> 'articles/article',
-					'articles/<action:create|update|delete>/<id:.*>'						=> 'articles/<action>',
-					'articles/<action:new|delete|toggle>comment/<id:.*>'					=> 'articles/<action>comment',
-					'articles/search'														=> 'articles/search',
-					'articles/tag/<tag:\w+>'												=> 'articles/tag',
-					'articles/page-<page:\d+>'												=> 'articles/index',
-					'<controller:articles|calculator|feed|test|tools>'						=> '<controller>/index',
-					'articles/<action>'														=> 'articles/<action>',
-					'<alias:\w+>'															=> 'site/<alias>',
+					'' => 'site/index',
+					'browserconfig.xml' => 'site/browserconfigxml',
+					'favicon.ico' => 'site/faviconico',
+					'robots.txt' => 'site/robotstxt',
+					'site.webmanifest' => 'site/webmanifest',
+					'sitemap.xml' => 'feed/sitemap',
+					'sitemap-articles.xml' => 'feed/sitemap-articles',
+					'sitemap-lyrics.xml' => 'feed/sitemap-lyrics',
+					'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>.pdf' => 'music/albumpdf',
+					'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>-<size:.{2,5}>.jpg' => 'music/albumcover',
+					'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>' => 'music/lyrics',
+					'music/lyrics/<artist:.*?>' => 'music/lyrics',
+					'music/collection-cover/<id:.*>.jpg' => 'music/collection-cover',
+					'articles/<id:\d+>/<title:.*?>.pdf' => 'articles/pdf',
+					'articles/<id:\d+>/<title:.*?>' => 'articles/article',
+					'articles/<id:\d+>' => 'articles/article',
+					'articles/<action:create|update|delete>/<id:.*>' => 'articles/<action>',
+					'articles/<action:new|delete|toggle>comment/<id:.*>' => 'articles/<action>comment',
+					'articles/search' => 'articles/search',
+					'articles/tag/<tag:\w+>' => 'articles/tag',
+					'articles/page-<page:\d+>' => 'articles/index',
+					'<controller:articles|calculator|feed|test|tools>' => '<controller>/index',
+					'articles/<action>' => 'articles/<action>',
+					'<alias:\w+>' => 'site/<alias>',
 				],
 			],
 			'urlManagerMr42' => [

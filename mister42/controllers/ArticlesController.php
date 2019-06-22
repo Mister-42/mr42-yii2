@@ -1,7 +1,9 @@
 <?php
+
 namespace app\controllers;
-use Yii;
+
 use app\models\articles\{Articles, ArticlesComments, Search, Tags};
+use Yii;
 use yii\bootstrap4\Html;
 use yii\filters\{AccessControl, AjaxFilter, VerbFilter};
 use yii\helpers\Url;
@@ -49,15 +51,17 @@ class ArticlesController extends \yii\web\Controller {
 			->where(['id' => $id])
 			->one();
 
-		if (!$model)
+		if (!$model) {
 			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-
-		if ($title !== $model->url)
+		}
+		if ($title !== $model->url) {
 			$this->redirect(['article', 'id' => $model->id, 'title' => $model->url], 301)->send();
+		}
 
 		Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $model->id])]);
-		if ($model->pdf)
+		if ($model->pdf) {
 			Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
+		}
 
 		return $this->render('view', [
 			'model' => $model,
@@ -69,27 +73,29 @@ class ArticlesController extends \yii\web\Controller {
 			->where(['id' => $id])
 			->one();
 
-		if (!$model->pdf)
+		if (!$model->pdf) {
 			throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-
-		if ($title !== $model->url)
+		}
+		if ($title !== $model->url) {
 			$this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
+		}
 
 		$fileName = Articles::buildPdf($model);
-		return Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]).'.pdf');
+		return Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]) . '.pdf');
 	}
 
 	public function actionCreate(): string {
 		$model = new Articles();
-		if ($this->action->id === 'update') :
+		if ($this->action->id === 'update') {
 			$model = Articles::findOne(['id' => $this->request->get('id')]);
 			$this->belongsToViewer($model);
-		endif;
+		}
 
-		if ($model->load(Yii::$app->request->post())) :
-			if ($model->validate() && $model->save())
+		if ($model->load(Yii::$app->request->post())) {
+			if ($model->validate() && $model->save()) {
 				$this->redirect(['article', 'id' => $model->id, 'title' => $model->url])->send();
-		endif;
+			}
+		}
 
 		$this->layout = 'main';
 		return $this->render('_formArticle', [
@@ -114,20 +120,20 @@ class ArticlesController extends \yii\web\Controller {
 			->with('author')
 			->one();
 
-		$comment = new ArticlesComments;
+		$comment = new ArticlesComments();
 		$comment->load(Yii::$app->request->post());
 		$comment->parent = $id;
 		$comment->user = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
 		$comment->active = (int) !Yii::$app->user->isGuest;
 
-		if ($comment->save()) :
-			if (!Yii::$app->user->isGuest) :
+		if ($comment->save()) {
+			if (!Yii::$app->user->isGuest) {
 				$comment->name = Yii::$app->user->identity->username;
 				$comment->email = Yii::$app->user->identity->email;
-			endif;
+			}
 			$comment->sendCommentMail($article, $comment);
 			return Html::tag('div', Yii::t('mr42', 'Your comment has been saved. It will not be visible until approved by an administrator.'), ['class' => 'alert alert-success']);
-		endif;
+		}
 		return Html::tag('div', Yii::t('mr42', 'Something went wrong, Your comment has not been saved.'), ['class' => 'alert alert-danger']);
 	}
 
@@ -175,7 +181,8 @@ class ArticlesController extends \yii\web\Controller {
 	}
 
 	private function belongsToViewer(Articles $article): void {
-		if (!$article->belongsToViewer())
+		if (!$article->belongsToViewer()) {
 			throw new UnauthorizedHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+		}
 	}
 }

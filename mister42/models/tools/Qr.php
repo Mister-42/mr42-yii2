@@ -1,9 +1,11 @@
 <?php
+
 namespace app\models\tools;
-use Yii;
+
 use app\models\{ActiveForm, Mailer};
 use app\widgets\TimePicker;
 use Mpdf\QrCode\{Output, QrCode};
+use Yii;
 use yii\bootstrap4\Html;
 use yii\helpers\{FileHelper, StringHelper};
 
@@ -50,42 +52,47 @@ class Qr extends \yii\base\Model {
 	}
 
 	public function getFormFooter(ActiveForm $form, int $tab): string {
-		$footer[] = Html::tag('div',
+		$footer[] = Html::tag(
+			'div',
 			$form->field($this, 'size', [
 				'icon' => 'arrows-alt',
 				'options' => ['class' => 'form-group col-md-6'],
-			])->input('number', ['tabindex' => ++$tab]).
+			])->input('number', ['tabindex' => ++$tab]) .
 			$form->field($this, 'recipient', [
 				'icon' => 'at',
 				'options' => ['class' => 'form-group col-md-6'],
 			])->hint(Yii::t('mr42', 'If you enter your email address the image will be mailed to that address.'))
 			->input('email', ['tabindex' => ++$tab])
-			->label($this->getAttributeLabel('recipient').' '.Yii::t('mr42', '(optional)'))
-		, ['class' => 'row form-group']);
+			->label($this->getAttributeLabel('recipient') . ' ' . Yii::t('mr42', '(optional)')),
+			['class' => 'row form-group']
+		);
 
-		$footer[] = Html::tag('div',
-			Html::submitButton(Yii::t('mr42', 'Generate QR Code'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab])
-		, ['class' => 'btn-toolbar float-right form-group']);
+		$footer[] = Html::tag(
+			'div',
+			Html::submitButton(Yii::t('mr42', 'Generate QR Code'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab]),
+			['class' => 'btn-toolbar float-right form-group']
+		);
 
 		return implode($footer);
 	}
 
 	public function generate($qrData): bool {
 		$size = StringHelper::byteLength($qrData);
-		if ($size > 2746) :
+		if ($size > 2746) {
 			Yii::$app->getSession()->setFlash('qr-size', $size - 2746);
 			return false;
-		endif;
+		}
 
 		FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-		$cacheFile = Yii::getAlias('@assetsroot/temp/'.uniqid('qr').'.png');
+		$cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('qr') . '.png');
 		$qrCode = new QrCode($qrData);
 		$qrCode->disableBorder();
 		$output = new Output\Png();
 		file_put_contents($cacheFile, $output->output($qrCode, $this->size, [255, 255, 255], [0, 0, 0], 9));
 
-		if ($this->recipient)
-			Mailer::sendFileHtml($this->recipient, 'Your QR Code from '.Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
+		if ($this->recipient) {
+			Mailer::sendFileHtml($this->recipient, 'Your QR Code from ' . Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
+		}
 
 		Yii::$app->getSession()->setFlash('qr-success', $cacheFile);
 		return true;
@@ -97,33 +104,35 @@ class Qr extends \yii\base\Model {
 
 	public function getTypes(bool $rules = false): array {
 		$qrCodes = [
-			'Bitcoin' 		=> Yii::t('mr42', 'Bitcoin'),
-			'Bookmark' 		=> Yii::t('mr42', 'Bookmark'),
-			'EmailMessage'	=> Yii::t('mr42', 'Email Message'),
-			'FreeInput'		=> Yii::t('mr42', 'Free Input'),
-			'Geographic'	=> Yii::t('mr42', 'Geographic'),
-			'Ical'	 		=> Yii::t('mr42', 'iCal'),
-			'MailTo' 		=> Yii::t('mr42', 'Mail To'),
-			'MeCard' 		=> Yii::t('mr42', 'MeCard'),
-			'MMS' 			=> Yii::t('mr42', 'MMS'),
-			'Phone' 		=> Yii::t('mr42', 'Phone'),
-			'SMS' 			=> Yii::t('mr42', 'SMS'),
-			'Vcard' 		=> Yii::t('mr42', 'vCard'),
-			'WiFi' 			=> Yii::t('mr42', 'WiFi'),
-			'YouTube' 		=> Yii::t('mr42', 'YouTube'),
+			'Bitcoin' => Yii::t('mr42', 'Bitcoin'),
+			'Bookmark' => Yii::t('mr42', 'Bookmark'),
+			'EmailMessage' => Yii::t('mr42', 'Email Message'),
+			'FreeInput' => Yii::t('mr42', 'Free Input'),
+			'Geographic' => Yii::t('mr42', 'Geographic'),
+			'Ical' => Yii::t('mr42', 'iCal'),
+			'MailTo' => Yii::t('mr42', 'Mail To'),
+			'MeCard' => Yii::t('mr42', 'MeCard'),
+			'MMS' => Yii::t('mr42', 'MMS'),
+			'Phone' => Yii::t('mr42', 'Phone'),
+			'SMS' => Yii::t('mr42', 'SMS'),
+			'Vcard' => Yii::t('mr42', 'vCard'),
+			'WiFi' => Yii::t('mr42', 'WiFi'),
+			'YouTube' => Yii::t('mr42', 'YouTube'),
 		];
 
 		$dir = Yii::getAlias('@app/models/tools/qr');
-		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file)
+		foreach (FileHelper::findFiles($dir, ['only' => ['*.php']]) as $file) {
 			$typeList[basename($file, '.php')] = $rules ? basename($file, '.php') : strtr(basename($file, '.php'), $qrCodes);
+		}
 
 		natcasesort($typeList);
 		return $typeList;
 	}
 
 	public function getDataOrOmit(string $label, string $value, string $glue = ''): ?string {
-		if ($value)
-			return $label.$value.$glue;
+		if ($value) {
+			return $label . $value . $glue;
+		}
 		return null;
 	}
 }

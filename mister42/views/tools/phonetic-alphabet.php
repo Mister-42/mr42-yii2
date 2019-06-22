@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use app\models\tools\PhoneticAlphabet;
 use yii\bootstrap4\{Alert, Html};
@@ -12,8 +13,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h1', $this->title);
 		echo Html::tag('div', Yii::t('mr42', 'This {title} will phoneticise any text that you enter in the below box. Spelling alphabet, radio alphabet, or telephone alphabet is a set of words which are used to stand for the letters of an alphabet. Each word in the spelling alphabet typically replaces the name of the letter with which it starts.', ['title' => $this->title]), ['class' => 'alert alert-info']);
 
-		if ($flash = Yii::$app->session->getFlash('phonetic-alphabet-success'))
+		if ($flash = Yii::$app->session->getFlash('phonetic-alphabet-success')) {
 			echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $flash]);
+		}
 
 		$form = ActiveForm::begin();
 		$tab = 0;

@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\calculator;
+
 use DateTime;
 use DateTimeZone;
 use Yii;
@@ -27,9 +29,9 @@ class Timezone extends \yii\base\Model {
 	}
 
 	public function calculate(): bool {
-		if (!$this->validate())
+		if (!$this->validate()) {
 			return false;
-
+		}
 		$time = new DateTime($this->datetime, new DateTimeZone($this->source));
 		$time->setTimezone(new DateTimeZone($this->target));
 		Yii::$app->getSession()->setFlash('timezone-success', $time);
@@ -37,8 +39,9 @@ class Timezone extends \yii\base\Model {
 	}
 
 	public function getTimezones(bool $replace = true): array {
-		foreach (DateTimeZone::listIdentifiers() as $timezone)
+		foreach (DateTimeZone::listIdentifiers() as $timezone) {
 			$timezones[$timezone] = $replace ? str_replace('_', ' ', $timezone) : $timezone;
+		}
 		return $timezones;
 	}
 }

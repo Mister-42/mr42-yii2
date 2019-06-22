@@ -1,8 +1,10 @@
 <?php
+
 namespace app\models;
-use Yii;
+
 use mister42\Secrets;
-use yii\httpclient\{Client, CurlTransport, Response, Request};
+use Yii;
+use yii\httpclient\{Client, CurlTransport, Request, Response};
 
 class Webrequest {
 	public static function getDiscogsApi(string $content): Response {
@@ -29,7 +31,7 @@ class Webrequest {
 	public static function getUrl(string $base, string $url, array $data = []): Request {
 		$client = ($base === 'file') ? new Client(['transport' => CurlTransport::class]) : new Client(['baseUrl' => $base]);
 		return $client->createRequest()
-			->addHeaders(['user-agent' => Yii::$app->name.' (+'.Yii::$app->params['shortDomain'].')'])
+			->addHeaders(['user-agent' => Yii::$app->name . ' (+' . Yii::$app->params['shortDomain'] . ')'])
 			->setData($data)
 			->setUrl($url);
 	}

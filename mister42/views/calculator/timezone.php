@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{Alert, Html};
@@ -12,24 +13,24 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h1', $this->title);
 		echo Html::tag('div', Yii::t('mr42', 'With this calculator you can check the date and time in any timezone around the world.'), ['class' => 'alert alert-info']);
 
-		if ($flash = Yii::$app->session->getFlash('timezone-success')) :
+		if ($flash = Yii::$app->session->getFlash('timezone-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
-				echo Html::tag('div', Yii::t('mr42', '{datetime} in {timezone}', ['datetime' => Yii::$app->formatter->asDate($model->datetime.' '.Yii::$app->timeZone, 'full').' '.Yii::$app->formatter->asTime($model->datetime.' '.Yii::$app->timeZone, 'short'), 'timezone' => str_replace('_', ' ', $model->source)]));
-				echo Html::tag('div', Yii::t('mr42', 'equals'));
-				echo Html::tag('div', Yii::t('mr42', '{datetime} in {timezone}', ['datetime' => Html::tag('strong', Yii::$app->formatter->asDate($flash->format('Y-m-d H:i').' '.Yii::$app->timeZone, 'full').' '.Yii::$app->formatter->asTime($flash->format('Y-m-d H:i').' '.Yii::$app->timeZone, 'short')), 'timezone' => Html::tag('strong', str_replace('_', ' ', $model->target))]));
+			echo Html::tag('div', Yii::t('mr42', '{datetime} in {timezone}', ['datetime' => Yii::$app->formatter->asDate($model->datetime . ' ' . Yii::$app->timeZone, 'full') . ' ' . Yii::$app->formatter->asTime($model->datetime . ' ' . Yii::$app->timeZone, 'short'), 'timezone' => str_replace('_', ' ', $model->source)]));
+			echo Html::tag('div', Yii::t('mr42', 'equals'));
+			echo Html::tag('div', Yii::t('mr42', '{datetime} in {timezone}', ['datetime' => Html::tag('strong', Yii::$app->formatter->asDate($flash->format('Y-m-d H:i') . ' ' . Yii::$app->timeZone, 'full') . ' ' . Yii::$app->formatter->asTime($flash->format('Y-m-d H:i') . ' ' . Yii::$app->timeZone, 'short')), 'timezone' => Html::tag('strong', str_replace('_', ' ', $model->target))]));
 			Alert::end();
-		endif;
+		}
 
 		$form = ActiveForm::begin();
 		$tab = 0;
 
 		echo Html::beginTag('div', ['class' => 'row']);
-			foreach (['source', 'target'] as $field) :
+			foreach (['source', 'target'] as $field) {
 				echo $form->field($model, $field, [
 					'icon' => 'globe',
 					'options' => ['class' => 'form-group col-md-6'],
 				])->dropDownList($model->getTimezones(), ['tabindex' => ++$tab]);
-			endforeach;
+			}
 		echo Html::endTag('div');
 
 		echo Html::beginTag('div', ['class' => 'row']);

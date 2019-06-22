@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\site;
+
 use Yii;
 use yii\helpers\Url;
 
@@ -18,14 +20,14 @@ class Webmanifest {
 	}
 
 	private static function getIcons(array $files): array {
-		foreach ($files as $icon) :
+		foreach ($files as $icon) {
 			$size = getimagesize(Yii::getAlias("@assetsroot/images/{$icon}"));
 			$icons[] = [
 				'src' => Url::to("@assets/images/{$icon}", Yii::$app->request->isSecureConnection ? 'https' : 'http'),
-				'sizes' => $size[0].'x'.$size[1],
+				'sizes' => $size[0] . 'x' . $size[1],
 				'type' => $size['mime'],
 			];
-		endforeach;
+		}
 		return $icons;
 	}
 }

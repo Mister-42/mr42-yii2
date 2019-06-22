@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\calculator;
+
 use DateTime;
 use Yii;
 
@@ -24,11 +26,11 @@ class Date extends \yii\base\Model {
 	}
 
 	public function calculate(): bool {
-		if (!$this->validate())
+		if (!$this->validate()) {
 			return false;
-
+		}
 		$date = new DateTime($this->from);
-		$date->modify($this->days.' days');
+		$date->modify($this->days . ' days');
 		Yii::$app->getSession()->setFlash('date-success', $date);
 		return true;
 	}

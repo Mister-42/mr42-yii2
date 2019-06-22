@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\tools\qr;
+
 use Yii;
 
 class Phone extends \app\models\tools\Qr {

@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\articles;
+
 use Yii;
 
 class Query extends \yii\db\ActiveQuery {

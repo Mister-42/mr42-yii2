@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\tools\qr;
+
 use Yii;
 
 class MailTo extends \app\models\tools\Qr {

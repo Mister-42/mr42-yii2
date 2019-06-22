@@ -1,8 +1,10 @@
 <?php
+
 namespace app\controllers;
-use Yii;
+
 use app\models\articles\Articles;
 use mister42\Secrets;
+use Yii;
 use yii\filters\HttpCache;
 use yii\helpers\{ArrayHelper, StringHelper};
 use yii\web\Response;
@@ -14,8 +16,8 @@ class FeedController extends \yii\web\Controller {
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
 				'except' => ['index'],
-				'etagSeed' => function() { return serialize([phpversion(), Yii::$app->user->id, Articles::getLastModified()]); },
-				'lastModified' => function() { return Articles::getLastModified(); },
+				'etagSeed' => function () { return serialize([phpversion(), Yii::$app->user->id, Articles::getLastModified()]); },
+				'lastModified' => function () { return Articles::getLastModified(); },
 				'only' => ['rss', 'sitemap-articles'],
 			],
 		];
@@ -27,8 +29,9 @@ class FeedController extends \yii\web\Controller {
 
 	public function actionRss(): string {
 		$secrets = (new Secrets())->getValues();
-		if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, $secrets['params']['specialIPs']))
+		if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, $secrets['params']['specialIPs'])) {
 			$this->redirect('http://f.mr42.me/Mr42')->send();
+		}
 
 		$articles = Articles::find()
 			->orderBy(['updated' => SORT_DESC])

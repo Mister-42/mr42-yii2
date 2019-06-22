@@ -1,6 +1,6 @@
 <?php
+
 use app\models\ActiveForm;
-use yii\bootstrap4\Html;
 
 $tab = 1;
 $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);

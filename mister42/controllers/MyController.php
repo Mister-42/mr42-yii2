@@ -1,7 +1,9 @@
 <?php
+
 namespace app\controllers;
-use Yii;
+
 use app\models\my\Contact;
+use Yii;
 use yii\base\BaseObject;
 use yii\filters\HttpCache;
 use yii\web\UploadedFile;
@@ -12,11 +14,11 @@ class MyController extends \yii\web\Controller {
 			[
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function(BaseObject $action) {
+				'etagSeed' => function (BaseObject $action) {
 					$file = "@app/views/{$action->controller->id}/{$action->id}.php";
 					return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile($file)]);
 				},
-				'lastModified' => function(BaseObject $action) {
+				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias("@app/views/{$action->controller->id}/{$action->id}.php"));
 				},
 				'except' => ['contact'],
@@ -26,11 +28,12 @@ class MyController extends \yii\web\Controller {
 
 	public function actionContact(): string {
 		$model = new Contact();
-		if ($model->load(Yii::$app->request->post()) && $model->validate()) :
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 			$model->attachment = UploadedFile::getInstance($model, 'attachment');
-			if ($model->sendEmail())
+			if ($model->sendEmail()) {
 				return $this->renderAjax('contact-success');
-		endif;
+			}
+		}
 
 		return $this->render('contact', [
 			'model' => $model,

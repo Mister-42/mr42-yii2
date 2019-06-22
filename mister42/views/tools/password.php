@@ -1,4 +1,5 @@
 <?php
+
 use app\assets\ClipboardJsAsset;
 use yii\bootstrap4\Html;
 use yii\web\View;
@@ -11,8 +12,9 @@ ClipboardJsAsset::register($this);
 $this->registerJs(Yii::$app->formatter->jspack('tools/genpass.js'), View::POS_HEAD);
 $this->registerJs('$("[name=\'length\']").change(function(){get();}).change();', View::POS_READY);
 
-for ($x = 6; $x <= 64; $x++)
+for ($x = 6; $x <= 64; $x++) {
 	$passLength[$x] = Yii::t('mr42', '{x} characters', ['x' => $x]);
+}
 
 echo Html::beginTag('div', ['class' => 'row']);
 	echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
@@ -33,15 +35,19 @@ echo Html::beginTag('div', ['class' => 'row']);
 				echo Html::beginTag('div', ['class' => 'input-group passform-password']);
 					echo Yii::$app->icon->name('lock')->activeFieldIcon();
 					echo Html::textInput('password', null, ['class' => 'form-control', 'id' => 'password', 'placeholder' => Yii::t('mr42', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.'), 'readonly' => true]);
-					echo Html::tag('span',
-						Html::button(Yii::$app->icon->name('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#password', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('mr42', 'Copy to Clipboard')])
-					, ['class' => 'input-group-append']);
+					echo Html::tag(
+						'span',
+						Html::button(Yii::$app->icon->name('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#password', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('mr42', 'Copy to Clipboard')]),
+						['class' => 'input-group-append']
+					);
 				echo Html::endTag('div');
 			echo Html::endTag('div');
 
-			echo Html::tag('div',
-				Html::button(Yii::t('mr42', 'Generate Password'), ['class' => 'btn btn-block btn-primary', 'onclick' => 'get()'])
-			, ['class' => 'btn-toolbar form-group']);
+			echo Html::tag(
+				'div',
+				Html::button(Yii::t('mr42', 'Generate Password'), ['class' => 'btn btn-block btn-primary', 'onclick' => 'get()']),
+				['class' => 'btn-toolbar form-group']
+			);
 		echo Html::endTag('form');
 	echo Html::endTag('div');
 echo Html::endTag('div');

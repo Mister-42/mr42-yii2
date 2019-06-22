@@ -1,4 +1,5 @@
 <?php
+
 namespace mister42;
 
 class Params {

@@ -1,5 +1,7 @@
 <?php
+
 namespace app\assets;
+
 use Yii;
 use yii\web\{AssetBundle, View};
 
@@ -11,10 +13,10 @@ class Html2MarkdownAsset extends AssetBundle {
 	];
 
 	public $depends = [
- 		'app\assets\AppAsset',
+		'app\assets\AppAsset',
 	];
 
-	public function registerAssetFiles($view) {
+	public function registerAssetFiles($view): void {
 		parent::registerAssetFiles($view);
 		Yii::$app->view->registerJs(Yii::$app->formatter->jspack('tools/html-to-markdown.js'), View::POS_READY);
 	}

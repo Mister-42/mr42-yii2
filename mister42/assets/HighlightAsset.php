@@ -1,12 +1,14 @@
 <?php
+
 namespace app\assets;
+
 use yii\web\{AssetBundle, View};
 
 class HighlightAsset extends AssetBundle {
 	public $sourcePath = '@npm/highlightjs/';
 
 	public $js = [
-		'highlight.pack'.(YII_DEBUG ? '' : '.min').'.js',
+		'highlight.pack' . (YII_DEBUG ? '' : '.min') . '.js',
 	];
 
 	public $css = [

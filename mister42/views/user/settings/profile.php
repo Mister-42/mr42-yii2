@@ -1,4 +1,5 @@
 <?php
+
 use app\assets\CharCounterAsset;
 use app\models\ActiveForm;
 use app\widgets\TimePicker;
@@ -15,9 +16,11 @@ CharCounterAsset::register($this, $model->rules()['bioString']['max']);
 echo $this->render('@Da/User/resources/views/shared/_alert', ['module' => Yii::$app->getModule('user')]);
 
 echo Html::beginTag('div', ['class' => 'row']);
-	echo Html::tag('div',
-		$this->render('@Da/User/resources/views/settings/_menu')
-	, ['class' => 'col-3']);
+	echo Html::tag(
+		'div',
+		$this->render('@Da/User/resources/views/settings/_menu'),
+		['class' => 'col-3']
+	);
 	echo Html::beginTag('div', ['class' => 'col-9']);
 		echo Html::tag('h3', $this->title);
 
@@ -69,7 +72,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		]);
 
 		echo $form->field($model, 'bio', [
-			'inputTemplate' => '<div id="chars" class="float-right"></div>'.Yii::$app->icon->name('info-circle')->activeFieldAddon(),
+			'inputTemplate' => '<div id="chars" class="float-right"></div>' . Yii::$app->icon->name('info-circle')->activeFieldAddon(),
 		])->hint(Yii::t('mr42', 'You may use {markdown} and {age} to show your age, calculated from <nobr>{birthday}</nobr>. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank']), 'age' => '<code>%age%</code>', 'birthday' => Html::tag('code', $model->getAttributeLabel('birthday'))]))
 		->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => ++$tab]);
 
@@ -77,9 +80,11 @@ echo Html::beginTag('div', ['class' => 'row']);
 			'icon' => 'clock',
 		])->dropDownList(ArrayHelper::map($timezoneHelper->getAll(), 'timezone', 'name'), ['tabindex' => ++$tab]);
 
-		echo Html::tag('div',
-			Html::submitButton(Yii::t('usuario', 'Save'), ['class' => 'btn btn-success', 'tabindex' => ++$tab])
-		, ['class' => 'btn-toolbar float-right form-group']);
+		echo Html::tag(
+			'div',
+			Html::submitButton(Yii::t('usuario', 'Save'), ['class' => 'btn btn-success', 'tabindex' => ++$tab]),
+			['class' => 'btn-toolbar float-right form-group']
+		);
 
 		ActiveForm::end();
 	echo Html::endTag('div');

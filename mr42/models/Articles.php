@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 class Articles extends \yii\db\ActiveRecord {
@@ -9,7 +10,7 @@ class Articles extends \yii\db\ActiveRecord {
 		return '{{%articles}}';
 	}
 
-	public function afterFind() {
+	public function afterFind(): void {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->title;
 	}

@@ -1,4 +1,5 @@
 <?php
+
 $this->beginPage();
 $this->beginBody();
 echo $content;

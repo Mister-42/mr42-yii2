@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models\feed;
 
 class Feed extends \yii\db\ActiveRecord {

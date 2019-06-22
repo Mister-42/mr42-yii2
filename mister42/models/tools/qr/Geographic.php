@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\tools\qr;
+
 use Yii;
 
 class Geographic extends \app\models\tools\Qr {
@@ -30,6 +32,6 @@ class Geographic extends \app\models\tools\Qr {
 		$data[] = $this->getDataOrOmit('', $this->lat);
 		$data[] = $this->getDataOrOmit('', $this->lng);
 		$data[] = $this->getDataOrOmit('', $this->altitude);
-		return parent::generate('GEO:'.implode(',', array_filter($data)));
+		return parent::generate('GEO:' . implode(',', array_filter($data)));
 	}
 }

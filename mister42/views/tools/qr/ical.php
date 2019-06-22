@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use app\widgets\TimePicker;
 use yii\bootstrap4\Html;
@@ -9,7 +10,7 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['start', 'end'] as $name) :
+	foreach (['start', 'end'] as $name) {
 		echo $form->field($model, $name, [
 			'options' => ['class' => 'col-md-6'],
 		])->widget(TimePicker::class, [
@@ -22,7 +23,7 @@ echo Html::beginTag('div', ['class' => 'row form-group']);
 			],
 			'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => ++$tab],
 		]);
-	endforeach;
+	}
 echo Html::endTag('div');
 
 echo $form->field($model, 'summary', [

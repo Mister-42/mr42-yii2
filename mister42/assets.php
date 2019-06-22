@@ -1,9 +1,10 @@
 <?php
-$sass = 'sass --scss --sourcemap=none -C -t compressed -I '.Yii::getAlias('@npm/bootstrap/scss').' {from} {to}';
+
+$sass = 'sass --scss --sourcemap=none -C -t compressed -I ' . Yii::getAlias('@npm/bootstrap/scss') . ' {from} {to}';
 
 return [
 	'bundles' => [
-		'app\assets\AppAssetCompress'
+		'app\assets\AppAssetCompress',
 	],
 	'cssCompressor' => $sass,
 	'deleteSource' => true,

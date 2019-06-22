@@ -1,8 +1,10 @@
 <?php
+
 namespace app\models\my;
-use Yii;
+
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use mister42\Secrets;
+use Yii;
 
 class Contact extends \yii\base\Model {
 	public $name;
@@ -44,8 +46,9 @@ class Contact extends \yii\base\Model {
 			->setSubject(implode(' - ', [Yii::$app->name, $this->title]))
 			->setTextBody($this->content);
 
-		if ($this->attachment)
+		if ($this->attachment) {
 			$mailer->attach($this->attachment->tempName, ['fileName' => $this->attachment->name]);
+		}
 
 		return $mailer->send();
 	}

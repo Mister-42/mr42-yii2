@@ -25,6 +25,7 @@ ratings:
   - "**.js"
   - "**.php"
 exclude_paths:
+- cs/
 - mister42/assets/
 - mister42/commands/
 - mister42/messages/

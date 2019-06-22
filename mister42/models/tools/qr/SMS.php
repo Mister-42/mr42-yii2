@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models\tools\qr;
 
 class SMS extends Phone {

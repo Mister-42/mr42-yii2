@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models\articles;
 
 class Search extends Articles {

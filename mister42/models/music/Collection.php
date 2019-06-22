@@ -1,8 +1,10 @@
 <?php
+
 namespace app\models\music;
-use Yii;
-use app\models\{Image, Webrequest};
+
 use app\models\user\Profile;
+use app\models\{Image, Webrequest};
+use Yii;
 use yii\helpers\ArrayHelper;
 
 class Collection extends \yii\db\ActiveRecord {
@@ -11,18 +13,19 @@ class Collection extends \yii\db\ActiveRecord {
 	}
 
 	public function saveCollection(int $user, array $data, string $status): array {
-		foreach ($data as $item) :
+		foreach ($data as $item) {
 			$id[] = (int) ArrayHelper::getValue($item, 'basic_information.id');
 
-			if (!$collectionItem = Collection::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user])) :
-				$collectionItem = new Collection();
+			if (!$collectionItem = self::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user])) {
+				$collectionItem = new self();
 				$collectionItem->image = null;
-				if ($image = ArrayHelper::getValue($item, 'basic_information.cover_image')) :
+				if ($image = ArrayHelper::getValue($item, 'basic_information.cover_image')) {
 					$img = Webrequest::getUrl($image, '')->send();
-					if ($img = Image::resize($img->content, 250))
+					if ($img = Image::resize($img->content, 250)) {
 						$collectionItem->image = $img;
-				endif;
-			endif;
+					}
+				}
+			}
 
 			$collectionItem->id = (int) ArrayHelper::getValue($item, 'basic_information.id');
 			$collectionItem->user_id = $user;
@@ -32,18 +35,19 @@ class Collection extends \yii\db\ActiveRecord {
 			$collectionItem->status = $status;
 			$collectionItem->created = Yii::$app->formatter->asDatetime(ArrayHelper::getValue($item, 'date_added'), 'yyyy-MM-dd HH:mm:ss');
 			$collectionItem->save();
-		endforeach;
+		}
 
 		return $id ?? [];
 	}
 
 	public static function getDiscogsUrl(string $action, Profile $profile) : ?string {
-		if ($action === 'collection') :
-			$response = Webrequest::getDiscogsApi("users/{$profile->discogs}/collection/folders?".http_build_query(['token' => $profile->discogs_token]));
-			if (!$response->isOK)
+		if ($action === 'collection') {
+			$response = Webrequest::getDiscogsApi("users/{$profile->discogs}/collection/folders?" . http_build_query(['token' => $profile->discogs_token]));
+			if (!$response->isOK) {
 				return null;
+			}
 			return "/users/{$profile->discogs}/collection/folders/{$response->data['folders'][1]['id']}/releases";
-		endif;
+		}
 
 		return "/users/{$profile->discogs}/wants";
 	}

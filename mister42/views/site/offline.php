@@ -1,4 +1,5 @@
 <?php
+
 use yii\bootstrap4\Html;
 
 $this->title = 'Maintenance Mode';

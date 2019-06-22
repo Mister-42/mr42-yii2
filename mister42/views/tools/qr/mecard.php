@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use yii\bootstrap4\Html;
 
@@ -8,27 +9,30 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['firstName', 'lastName'] as $name)
+	foreach (['firstName', 'lastName'] as $name) {
 		echo $form->field($model, $name, [
 			'icon' => 'user',
 			'options' => ['class' => 'col-md-6'],
 		])->textInput(['tabindex' => ++$tab]);
+	}
 echo Html::endTag('div');
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['firstSound', 'lastSound'] as $name)
+	foreach (['firstSound', 'lastSound'] as $name) {
 		echo $form->field($model, $name, [
 			'icon' => 'assistive-listening-systems',
 			'options' => ['class' => 'col-md-6'],
 		])->textInput(['tabindex' => ++$tab]);
+	}
 echo Html::endTag('div');
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['phone' => 'phone', 'videoPhone' => 'video'] as $name => $icon)
+	foreach (['phone' => 'phone', 'videoPhone' => 'video'] as $name => $icon) {
 		echo $form->field($model, $name, [
 			'icon' => $icon,
 			'options' => ['class' => 'col-md-6'],
 		])->textInput(['tabindex' => ++$tab]);
+	}
 echo Html::endTag('div');
 
 echo $form->field($model, 'email', [

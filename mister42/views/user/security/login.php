@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use Da\User\Widget\ConnectWidget;
 use yii\bootstrap4\Html;
@@ -13,12 +14,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h3', $this->title);
 
 		$form = ActiveForm::begin([
-			'id'						=> $model->formName(),
-			'enableAjaxValidation'		=> true,
-			'enableClientValidation'	=> false,
-			'validateOnBlur'			=> false,
-			'validateOnType'			=> false,
-			'validateOnChange'			=> false,
+			'id' => $model->formName(),
+			'enableAjaxValidation' => true,
+			'enableClientValidation' => false,
+			'validateOnBlur' => false,
+			'validateOnType' => false,
+			'validateOnChange' => false,
 		]);
 		$tab = 0;
 
@@ -29,7 +30,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo $form->field($model, 'password', [
 			'icon' => 'lock',
 		])->passwordInput(['tabindex' => ++$tab])
-		->label(Yii::t('usuario', 'Password').($module->allowPasswordRecovery ? ' ('.Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request']).')' : ''));
+		->label(Yii::t('usuario', 'Password') . ($module->allowPasswordRecovery ? ' (' . Html::a(Yii::t('usuario', 'Forgot password?'), ['/user/recovery/request']) . ')' : ''));
 
 		echo $form->field($model, 'rememberMe')->checkBox(['tabindex' => ++$tab]);
 
@@ -37,11 +38,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 
 		ActiveForm::end();
 
-		if ($module->enableEmailConfirmation)
+		if ($module->enableEmailConfirmation) {
 			echo Html::tag('p', Html::a(Yii::t('usuario', 'Didn\'t receive confirmation message?'), ['/user/registration/resend']), ['class' => 'text-center']);
+		}
 
-		if ($module->enableRegistration)
+		if ($module->enableRegistration) {
 			echo Html::tag('p', Html::a(Yii::t('usuario', 'Don\'t have an account? Sign up!'), ['/user/registration/register']), ['class' => 'text-center']);
+		}
 
 		echo ConnectWidget::widget(['baseAuthUrl' => ['/user/security/auth']]);
 	echo Html::endTag('div');

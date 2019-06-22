@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\tools\qr;
+
 use Yii;
 
 class WiFi extends \app\models\tools\Qr {
@@ -12,9 +14,9 @@ class WiFi extends \app\models\tools\Qr {
 		$rules = parent::rules();
 
 		$rules[] = [['authentication', 'ssid'], 'required'];
-		$rules[] = ['password', 'required', 'when' => function() {
-						return $this->authentication !== 'none';
-					}, 'whenClient' => "function(attribute,value){return $('#qr-authentication').val()!='none';}"];
+		$rules[] = ['password', 'required', 'when' => function () {
+			return $this->authentication !== 'none';
+		}, 'whenClient' => "function(attribute,value){return $('#qr-authentication').val()!='none';}"];
 		$rules[] = ['authentication', 'in', 'range' => parent::getWifiAuthentication(true)];
 		$rules[] = ['ssid', 'string', 'max' => 32];
 		$rules[] = ['password', 'string', 'min' => 8, 'max' => 63];
@@ -37,7 +39,7 @@ class WiFi extends \app\models\tools\Qr {
 		$data[] = "S:{$this->ssid}";
 		$password = ctype_xdigit($this->password) ? $this->password : "\"{$this->password}\"";
 		$data[] = $this->authentication !== 'none' ? "P:{$password}" : null;
-		$data[] = $this->hidden ? "H:true" : null;
-		return parent::generate("WIFI:".implode(';', array_filter($data)).';');
+		$data[] = $this->hidden ? 'H:true' : null;
+		return parent::generate('WIFI:' . implode(';', array_filter($data)) . ';');
 	}
 }

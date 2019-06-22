@@ -1,9 +1,11 @@
 <?php
+
 namespace app\models\articles;
-use Yii;
+
 use app\models\user\User;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use mister42\Secrets;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 
@@ -30,10 +32,10 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 			['parent', 'exist', 'skipOnError' => false, 'targetClass' => Articles::class, 'targetAttribute' => ['parent' => 'id']],
 		];
 
-		if (Yii::$app->user->isGuest) :
+		if (Yii::$app->user->isGuest) {
 			$rules[] = ['captcha', ReCaptchaValidator::class];
 			$rules[] = [['name', 'email'], 'required'];
-		endif;
+		}
 		return $rules;
 	}
 
@@ -47,7 +49,7 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 		];
 	}
 
-	public function behaviors(): array{
+	public function behaviors(): array {
 		return [
 			[
 				'class' => TimestampBehavior::class,
@@ -65,8 +67,8 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 	public function showApprovalButton(): string {
 		return Html::a(
 			$this->active
-				? Yii::$app->icon->name('thumbs-down')->class('mr-1').Yii::t('mr42', 'Renounce')
-				: Yii::$app->icon->name('thumbs-up')->class('mr-1').Yii::t('mr42', 'Approve'),
+				? Yii::$app->icon->name('thumbs-down')->class('mr-1') . Yii::t('mr42', 'Renounce')
+				: Yii::$app->icon->name('thumbs-up')->class('mr-1') . Yii::t('mr42', 'Approve'),
 			['togglecomment', 'id' => $this->id],
 			['class' => $this->active ? 'btn btn-sm btn-outline-warning ml-1' : 'btn btn-sm btn-outline-success ml-1']
 		);
@@ -75,24 +77,24 @@ class ArticlesComments extends \yii\db\ActiveRecord {
 	public function sendCommentMail(Articles $model, self $comment): void {
 		$secrets = (new Secrets())->getValues();
 		Yii::$app->mailer->compose(
-				['text' => 'commentToAuthor'],
-				['model' => $model, 'comment' => $comment]
+			['text' => 'commentToAuthor'],
+			['model' => $model, 'comment' => $comment]
 			)
 			->setTo([$model->author->email => $model->author->username])
 			->setFrom([$comment->email => $comment->name])
 			->setSubject("A new comment has been posted on '{$model->title}'.")
 			->send();
 
-		if (Yii::$app->user->isGuest) :
+		if (Yii::$app->user->isGuest) {
 			Yii::$app->mailer->compose(
-					['html' => 'commentToCommenter'],
-					['model' => $model, 'comment' => $comment]
+				['html' => 'commentToCommenter'],
+				['model' => $model, 'comment' => $comment]
 				)
 				->setTo([$comment->email => $comment->name])
 				->setFrom([$secrets['params']['noreplyEmail'] => Yii::$app->name])
 				->setSubject("Thank you for your reply on '{$model->title}'.")
 				->send();
-		endif;
+		}
 	}
 
 	public static function getLastModified(): int {

@@ -1,4 +1,5 @@
 <?php
+
 namespace mister42;
 
 class Console {
@@ -7,7 +8,7 @@ class Console {
 			'id' => 'mister42-console',
 			'aliases' => [
 				'@web' => 'https://www.mister42.me/',
-				'@webroot' => __DIR__.'/../../webroot',
+				'@webroot' => __DIR__ . '/../../webroot',
 			],
 			'basePath' => __DIR__,
 			'components' => [
@@ -29,7 +30,7 @@ class Console {
 			],
 			'controllerNamespace' => 'app\commands',
 			'modules' => [
-				'user' =>  \Da\User\Module::class,
+				'user' => \Da\User\Module::class,
 			],
 		];
 	}

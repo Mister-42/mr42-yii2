@@ -1,7 +1,9 @@
 <?php
+
 namespace app\widgets;
-use Yii;
+
 use app\models\user\{User, WeeklyArtist};
+use Yii;
 use yii\bootstrap4\{Html, Widget};
 
 class WeeklyArtistChart extends Widget {
@@ -16,11 +18,14 @@ class WeeklyArtistChart extends Widget {
 			->limit($this->limit)
 			->all();
 
-		foreach ($items as $item)
-			$feed[] = Html::tag('li',
-				Html::tag('span', $item['artist'], ['class' => 'float-left']).
-				Html::tag('span', $item['count'], ['class' => 'float-right text-right'])
-			, ['class' => 'list-group-item text-truncate']);
+		foreach ($items as $item) {
+			$feed[] = Html::tag(
+				'li',
+				Html::tag('span', $item['artist'], ['class' => 'float-left']) .
+				Html::tag('span', $item['count'], ['class' => 'float-right text-right']),
+				['class' => 'list-group-item text-truncate']
+			);
+		}
 
 		return (!isset($feed))
 			? Html::tag('div', 'No Items to Display.', ['class' => 'ml-2'])

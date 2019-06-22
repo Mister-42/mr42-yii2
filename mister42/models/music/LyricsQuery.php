@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\music;
+
 use Yii;
 
 class LyricsQuery extends \yii\db\ActiveQuery {

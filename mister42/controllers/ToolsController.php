@@ -1,11 +1,13 @@
 <?php
+
 namespace app\controllers;
-use Yii;
+
 use app\models\tools\{Barcode, Favicon, Oui, PhoneticAlphabet, Qr};
+use Yii;
 use yii\base\BaseObject;
 use yii\helpers\ArrayHelper;
-use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 class ToolsController extends \yii\web\Controller {
 	public function behaviors() {
@@ -13,11 +15,11 @@ class ToolsController extends \yii\web\Controller {
 			[
 				'class' => \yii\filters\HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function(BaseObject $action) {
+				'etagSeed' => function (BaseObject $action) {
 					return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile("@app/views/{$action->controller->id}/{$action->id}.php")]);
 				},
-				'lastModified' => function(BaseObject $action) {
-					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
+				'lastModified' => function (BaseObject $action) {
+					return filemtime(Yii::getAlias('@app/views/' . $action->controller->id . '/' . $action->id . '.php'));
 				},
 				'only' => ['html-to-markdown', 'password'],
 			],
@@ -25,9 +27,10 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionBarcode() {
-		$model = new Barcode;
-		if ($model->load(Yii::$app->request->post()) && $model->validate())
+		$model = new Barcode();
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 			$model->generate();
+		}
 
 		return $this->render('barcode', [
 			'model' => $model,
@@ -35,12 +38,13 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionFavicon() {
-		$model = new Favicon;
-		if ($model->load(Yii::$app->request->post())) :
+		$model = new Favicon();
+		if ($model->load(Yii::$app->request->post())) {
 			$model->sourceImage = UploadedFile::getInstance($model, 'sourceImage');
-			if ($model->convertImage())
+			if ($model->convertImage()) {
 				return $this->refresh();
-		endif;
+			}
+		}
 
 		return $this->render('favicon', [
 			'model' => $model,
@@ -56,7 +60,7 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionOui() {
-		$model = new Oui;
+		$model = new Oui();
 		$model->load(Yii::$app->request->post());
 
 		return $this->render('oui', [
@@ -69,9 +73,10 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionPhoneticAlphabet() {
-		$model = new PhoneticAlphabet;
-		if ($model->load(Yii::$app->request->post()) && $model->validate())
+		$model = new PhoneticAlphabet();
+		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 			$model->convertText();
+		}
 
 		return $this->render('phonetic-alphabet', [
 			'model' => $model,
@@ -79,33 +84,35 @@ class ToolsController extends \yii\web\Controller {
 	}
 
 	public function actionQr() {
-		$model = new Qr;
-		if (Yii::$app->request->isPost) :
+		$model = new Qr();
+		if (Yii::$app->request->isPost) {
 			$type = ArrayHelper::getValue(Yii::$app->request->post(), 'type') ?? ArrayHelper::getValue(Yii::$app->request->post(), 'qr.type');
-			if (!in_array($type, $model->getTypes(true)))
-				throw new NotFoundHttpException('Type '.$type.' not found.');
-
+			if (!in_array($type, $model->getTypes(true))) {
+				throw new NotFoundHttpException('Type ' . $type . ' not found.');
+			}
 			$modelName = "\\app\\models\\tools\\qr\\{$type}";
-			$model = new $modelName;
+			$model = new $modelName();
 			$model->type = $type === 'SMS' ? 'Phone' : $type;
 
-			if (Yii::$app->request->isAjax)
-				return $this->renderAjax('qr/'.strtolower($model->type), [
+			if (Yii::$app->request->isAjax) {
+				return $this->renderAjax('qr/' . mb_strtolower($model->type), [
 					'model' => $model,
 				]);
+			}
 
 			$model = ArrayHelper::merge($model, ArrayHelper::getValue(Yii::$app->request->post(), 'qr'));
-			if ($model->validate())
+			if ($model->validate()) {
 				$model->generateQr();
+			}
 
-			$qrForm = $this->renderPartial('qr/'.strtolower($model->type), [
-				'model' => $model
+			$qrForm = $this->renderPartial('qr/' . mb_strtolower($model->type), [
+				'model' => $model,
 			]);
-		endif;
+		}
 
 		return $this->render('qr', [
 			'model' => $model,
-			'qrForm' => $qrForm ?? ''
+			'qrForm' => $qrForm ?? '',
 		]);
 	}
 }

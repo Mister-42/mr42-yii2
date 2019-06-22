@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\calculator;
+
 use Yii;
 
 class Wpapsk extends \yii\base\Model {

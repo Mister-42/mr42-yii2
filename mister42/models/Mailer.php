@@ -1,7 +1,9 @@
 <?php
+
 namespace app\models;
-use Yii;
+
 use mister42\Secrets;
+use Yii;
 use yii\swiftmailer\Message;
 
 class Mailer {

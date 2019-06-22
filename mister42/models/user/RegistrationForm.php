@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\user;
+
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 
 class RegistrationForm extends \Da\User\Form\RegistrationForm {

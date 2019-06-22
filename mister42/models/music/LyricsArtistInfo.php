@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\music;
+
 use Yii;
 use yii\db\ActiveQuery;
 

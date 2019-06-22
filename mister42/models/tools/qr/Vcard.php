@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\tools\qr;
+
 use Yii;
 
 class Vcard extends \app\models\tools\Qr {
@@ -64,8 +66,8 @@ class Vcard extends \app\models\tools\Qr {
 		$data[] = $this->getDataOrOmit('URL:', $this->website);
 		$data[] = $this->getDataOrOmit('BDAY:', $this->birthday ? date('Ymd', strtotime($this->birthday)) : '');
 		$data[] = $this->getDataOrOmit('NOTE:', $this->note);
-		$data[] = 'REV:'.date('Ymd\THis\Z');
-		$data[] = "END:VCARD";
+		$data[] = 'REV:' . date('Ymd\THis\Z');
+		$data[] = 'END:VCARD';
 		return parent::generate(implode("\n", array_filter($data)));
 	}
 }

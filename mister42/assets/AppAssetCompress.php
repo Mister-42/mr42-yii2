@@ -1,5 +1,7 @@
 <?php
+
 namespace app\assets;
+
 use yii\web\AssetBundle;
 
 class AppAssetCompress extends AssetBundle {

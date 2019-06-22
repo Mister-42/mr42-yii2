@@ -1,8 +1,10 @@
 <?php
+
 namespace app\controllers\user;
-use Yii;
+
 use app\models\user\RecentTracks;
 use Da\User\Query\{ProfileQuery, UserQuery};
+use Yii;
 use yii\base\Module;
 use yii\filters\HttpCache;
 use yii\helpers\ArrayHelper;
@@ -24,10 +26,10 @@ class ProfileController extends \Da\User\Controller\ProfileController {
 			[
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function() {
+				'etagSeed' => function () {
 					return serialize([Yii::$app->user->id, Yii::$app->request->get('username')]);
 				},
-				'lastModified' => function() {
+				'lastModified' => function () {
 					$user = $this->userQuery->whereUsername(Yii::$app->request->get('username'))->one();
 					$profile = $this->profileQuery->whereUserId($user->id)->one();
 					return $profile->user->updated_at;
@@ -39,28 +41,28 @@ class ProfileController extends \Da\User\Controller\ProfileController {
 
 	public function actionShow($username) {
 		$user = $this->userQuery->whereUsername($username)->one();
-		if (!$user) :
+		if (!$user) {
 			throw new NotFoundHttpException('User not found.');
-		endif;
+		}
 
 		$profile = $this->profileQuery->whereUserId($user->id)->one();
-		if ($profile->lastfm) :
+		if ($profile->lastfm) {
 			$this->layout = '@app/views/layouts/recenttracks.php';
-		endif;
+		}
 
 		return parent::actionShow($user->id);
 	}
 
 	public function actionRecenttracks($username) {
 		$user = $this->userQuery->whereUsername($username)->one();
-		if (!$user) :
+		if (!$user) {
 			throw new NotFoundHttpException('Profile not found.');
-		endif;
+		}
 
-		if (!Yii::$app->request->isAjax) :
+		if (!Yii::$app->request->isAjax) {
 			throw new MethodNotAllowedHttpException('Method Not Allowed.');
-		endif;
+		}
 
-		return (new RecentTracks)->display($user->id);
+		return (new RecentTracks())->display($user->id);
 	}
 }

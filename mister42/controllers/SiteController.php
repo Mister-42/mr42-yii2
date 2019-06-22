@@ -1,7 +1,9 @@
 <?php
+
 namespace app\controllers;
-use Yii;
+
 use app\models\site\Webmanifest;
+use Yii;
 use yii\base\BaseObject;
 use yii\filters\{AccessControl, HttpCache};
 use yii\web\{ErrorAction, NotFoundHttpException, Response};
@@ -26,17 +28,17 @@ class SiteController extends \yii\web\Controller {
 						'roles' => ['@'],
 					],
 				],
-				'denyCallback' => function() {
+				'denyCallback' => function (): void {
 					throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-				}
+				},
 			], [
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function(BaseObject $action) {
+				'etagSeed' => function (BaseObject $action) {
 					$file = ($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php";
 					return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile($file)]);
 				},
-				'lastModified' => function(BaseObject $action) {
+				'lastModified' => function (BaseObject $action) {
 					return filemtime(Yii::getAlias(($action->id === 'faviconico') ? '@assetsroot/images/favicon.ico' : "@app/views/{$action->controller->id}/{$action->id}.php"));
 				},
 				'except' => ['index', 'offline', 'php', 'webmanifest'],

@@ -1,7 +1,9 @@
 <?php
+
 namespace app\controllers;
-use Yii;
+
 use app\models\calculator\{Date, Duration, Office365, Timezone};
+use Yii;
 use yii\base\BaseObject;
 use yii\filters\HttpCache;
 
@@ -11,11 +13,11 @@ class CalculatorController extends \yii\web\Controller {
 			[
 				'class' => HttpCache::class,
 				'enabled' => !YII_DEBUG,
-				'etagSeed' => function(BaseObject $action) {
+				'etagSeed' => function (BaseObject $action) {
 					return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile("@app/views/{$action->controller->id}/{$action->id}.php")]);
 				},
-				'lastModified' => function(BaseObject $action) {
-					return filemtime(Yii::getAlias('@app/views/'.$action->controller->id.'/'.$action->id.'.php'));
+				'lastModified' => function (BaseObject $action) {
+					return filemtime(Yii::getAlias('@app/views/' . $action->controller->id . '/' . $action->id . '.php'));
 				},
 				'only' => ['wpapsk'],
 			],
@@ -23,9 +25,10 @@ class CalculatorController extends \yii\web\Controller {
 	}
 
 	public function actionDate() {
-		$model = new Date;
-		if ($model->load(Yii::$app->request->post()))
+		$model = new Date();
+		if ($model->load(Yii::$app->request->post())) {
 			$model->calculate();
+		}
 
 		return $this->render('date', [
 			'model' => $model,
@@ -33,9 +36,10 @@ class CalculatorController extends \yii\web\Controller {
 	}
 
 	public function actionDuration() {
-		$model = new Duration;
-		if ($model->load(Yii::$app->request->post()))
+		$model = new Duration();
+		if ($model->load(Yii::$app->request->post())) {
 			$model->calculate();
+		}
 
 		return $this->render('duration', [
 			'model' => $model,
@@ -43,9 +47,10 @@ class CalculatorController extends \yii\web\Controller {
 	}
 
 	public function actionOffice365() {
-		$model = new Office365;
-		if ($model->load(Yii::$app->request->post()))
+		$model = new Office365();
+		if ($model->load(Yii::$app->request->post())) {
 			$model->calculate();
+		}
 
 		return $this->render('office365', [
 			'model' => $model,
@@ -53,11 +58,12 @@ class CalculatorController extends \yii\web\Controller {
 	}
 
 	public function actionTimezone() {
-		$model = new Timezone;
+		$model = new Timezone();
 		$model->source = 'Europe/Berlin';
 		$model->target = 'Europe/Moscow';
-		if ($model->load(Yii::$app->request->post()))
+		if ($model->load(Yii::$app->request->post())) {
 			$model->calculate();
+		}
 
 		return $this->render('timezone', [
 			'model' => $model,

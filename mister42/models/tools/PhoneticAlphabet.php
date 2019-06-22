@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\tools;
+
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -30,12 +32,12 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 	}
 
 	public function convertText(): bool {
-		if (!$this->validate())
+		if (!$this->validate()) {
 			return false;
-
+		}
 		$this->text = preg_replace('/[^a-z0-9. -]+/i', '', $this->text);
-		$text = strtolower($this->text);
-		$text = preg_replace("/(.)/i", "\${1} ", $text);
+		$text = mb_strtolower($this->text);
+		$text = preg_replace('/(.)/i', '${1} ', $text);
 		$text = strtr($text, ArrayHelper::merge(
 			static::getAlpha($this->alphabet),
 			($this->numeric) ? static::getNumeric($this->alphabet) : [],
@@ -50,13 +52,13 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord {
 
 	public static function getAlphabetList(string $column = '*'): array {
 		$list = self::find()
-			->select(['lng', 'name' => 'name_'.Yii::$app->language])
+			->select(['lng', 'name' => 'name_' . Yii::$app->language])
 			->orderBy('sort, name')
 			->all();
 
-		if ($column !== '*')
+		if ($column !== '*') {
 			return ArrayHelper::getColumn($list, $column);
-
+		}
 		return ArrayHelper::map($list, 'lng', 'name');
 	}
 

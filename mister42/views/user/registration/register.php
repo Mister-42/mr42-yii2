@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\Html;
@@ -27,11 +28,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 				'options' => ['class' => 'col-6 form-group'],
 			])->textInput(['tabindex' => ++$tab]);
 
-			if ($module->generatePasswords === false)
+			if ($module->generatePasswords === false) {
 				echo $form->field($model, 'password', [
 					'icon' => 'lock',
 					'options' => ['class' => 'col-6 form-group'],
 				])->passwordInput(['tabindex' => ++$tab]);
+			}
 		echo Html::endTag('div');
 
 		echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);

@@ -1,4 +1,5 @@
 <?php
+
 use app\assets\{CharCounterAsset, InputFileAsset};
 use app\models\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
@@ -39,19 +40,21 @@ echo Html::beginTag('div', ['class' => 'row']);
 			])->textInput(['tabindex' => ++$tab]);
 
 			echo $form->field($model, 'content', [
-				'inputTemplate' => '<div id="chars" class="float-right"></div>'.Yii::$app->icon->name('comment')->activeFieldAddon(),
+				'inputTemplate' => '<div id="chars" class="float-right"></div>' . Yii::$app->icon->name('comment')->activeFieldAddon(),
 			])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab]);
 
 			echo $form->field($model, 'attachment', [
-				'inputTemplate' => '<div class="input-group">'.Yii::$app->icon->name('paperclip')->activeFieldIcon().Html::tag('div', '{input}'.Html::tag('label', Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']).'</div>',
+				'inputTemplate' => '<div class="input-group">' . Yii::$app->icon->name('paperclip')->activeFieldIcon() . Html::tag('div', '{input}' . Html::tag('label', Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']) . '</div>',
 			])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab]);
 
 			echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);
 
-			echo Html::tag('div',
-				Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]).
-				Html::submitButton(Yii::t('mr42', 'Send'), ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab])
-			, ['class' => 'btn-toolbar float-right form-group']);
+			echo Html::tag(
+				'div',
+				Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]) .
+				Html::submitButton(Yii::t('mr42', 'Send'), ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab]),
+				['class' => 'btn-toolbar float-right form-group']
+			);
 
 			ActiveForm::end();
 		Pjax::end();

@@ -1,7 +1,9 @@
 <?php
+
 namespace app\models\music;
-use Yii;
+
 use app\models\{Image, Pdf, Video};
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 use yii\db\{ActiveQuery, Expression};
@@ -18,22 +20,22 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public function afterFind(): void {
 		parent::afterFind();
 		$this->url = $this->url ?? $this->name;
-		$this->playlist_status = boolval($this->playlist_status);
+		$this->playlist_status = (bool) ($this->playlist_status);
 		$this->playlist_embed = $this->playlist_source && $this->playlist_id && $this->playlist_ratio && $this->playlist_status ? Video::getEmbed($this->playlist_source, $this->playlist_id, $this->playlist_ratio, true) : null;
 		$this->playlist_url = $this->playlist_source && $this->playlist_id ? Video::getUrl($this->playlist_source, $this->playlist_id, true) : null;
 		$this->created = Yii::$app->formatter->asTimestamp($this->created);
 		$this->updated = Yii::$app->formatter->asTimestamp($this->updated);
-		$this->active = boolval($this->active);
+		$this->active = (bool) ($this->active);
 	}
 
 	public function beforeSave($insert): bool {
-		if (parent::beforeSave($insert)) :
+		if (parent::beforeSave($insert)) {
 			$this->url = $this->name === $this->url ? null : $this->url;
 			$this->playlist_status = $this->playlist_status ? 1 : 0;
 			$this->created = $this->oldAttributes['created'];
 			$this->active = $this->active ? 1 : 0;
 			return true;
-		endif;
+		}
 		return false;
 	}
 
@@ -61,7 +63,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 	public static function buildPdf(self $album): string {
 		$pdf = new Pdf();
 		return $pdf->create(
-			'@runtime/PDF/lyrics/'.implode(' - ', [$album->artist->url, $album->year, $album->url]),
+			'@runtime/PDF/lyrics/' . implode(' - ', [$album->artist->url, $album->year, $album->url]),
 			Yii::$app->controller->renderPartial('@app/views/music/lyrics-album-pdf', ['tracks' => $album->tracks]),
 			Lyrics3Tracks::getLastModified($album->artist->url, $album->year, $album->url),
 			[
@@ -78,10 +80,10 @@ class Lyrics2Albums extends \yii\db\ActiveRecord {
 
 	public static function getCover(int $size, array $album): array {
 		$fileName = null;
-		if (ArrayHelper::keyExists(0, $album)) :
-			$fileName = implode(' - ', [$album[0]->artist->url, $album[0]->album->year, $album[0]->album->url, $size]).'.jpg';
+		if (ArrayHelper::keyExists(0, $album)) {
+			$fileName = implode(' - ', [$album[0]->artist->url, $album[0]->album->year, $album[0]->album->url, $size]) . '.jpg';
 			$album = $album[0]->album;
-		endif;
+		}
 
 		return [$fileName, Image::resize($album->image, $size)];
 	}

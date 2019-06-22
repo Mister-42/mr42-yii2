@@ -1,4 +1,5 @@
 <?php
+
 use app\models\ActiveForm;
 use app\widgets\TimePicker;
 use yii\bootstrap4\{Alert, Html};
@@ -12,13 +13,13 @@ echo Html::beginTag('div', ['class' => 'row']);
 		echo Html::tag('h1', $this->title);
 		echo Html::tag('div', Yii::t('mr42', 'This calculator enables you to add or subtract days to a date to calculate a future or past date.'), ['class' => 'alert alert-info']);
 
-		if ($flash = Yii::$app->session->getFlash('date-success')) :
+		if ($flash = Yii::$app->session->getFlash('date-success')) {
 			Alert::begin(['options' => ['class' => 'alert-success fade show']]);
-				echo Html::tag('div', Yii::t('mr42', 'From: {from}', ['from' => Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long'))]));
-				echo Html::tag('div', Yii::t('mr42', 'Adding: {add}', ['add' => Html::tag('b', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days]))]));
-				echo Html::tag('div', Yii::t('mr42', 'Result: {result}', ['result' => Html::tag('strong', Yii::$app->formatter->asDate($flash, 'long'))]), ['class' => 'mt-3']);
+			echo Html::tag('div', Yii::t('mr42', 'From: {from}', ['from' => Html::tag('b', Yii::$app->formatter->asDate($model->from, 'long'))]));
+			echo Html::tag('div', Yii::t('mr42', 'Adding: {add}', ['add' => Html::tag('b', Yii::t('yii', '{delta, plural, =1{1 day} other{# days}}', ['delta' => $model->days]))]));
+			echo Html::tag('div', Yii::t('mr42', 'Result: {result}', ['result' => Html::tag('strong', Yii::$app->formatter->asDate($flash, 'long'))]), ['class' => 'mt-3']);
 			Alert::end();
-		endif;
+		}
 
 		$form = ActiveForm::begin();
 		$tab = 0;

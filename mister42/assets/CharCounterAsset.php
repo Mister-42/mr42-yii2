@@ -1,5 +1,7 @@
 <?php
+
 namespace app\assets;
+
 use Yii;
 use yii\bootstrap4\Html;
 use yii\helpers\Json;
@@ -11,8 +13,8 @@ class CharCounterAsset extends AssetBundle {
 			'chars' => $chars,
 			'lang' => [
 				'overLimit' => Yii::t('mr42', '{x} characters over the limit', ['x' => Html::tag('span', null, ['class' => 'charcount'])]),
-				'charsLeft' => Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])])
-			]
+				'charsLeft' => Yii::t('mr42', '{x} characters left', ['x' => Html::tag('span', null, ['class' => 'charcount'])]),
+			],
 		]);
 
 		$view->registerJs("var formCharCount = {$options};", View::POS_READY);

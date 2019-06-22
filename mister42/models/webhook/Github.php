@@ -1,7 +1,9 @@
 <?php
+
 namespace app\models\webhook;
-use Yii;
+
 use app\commands\FeedController;
+use Yii;
 
 class Github extends \yii\base\Model {
 	public function push(): array {

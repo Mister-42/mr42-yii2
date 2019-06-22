@@ -1,5 +1,7 @@
 <?php
+
 namespace app\assets;
+
 use yii\web\AssetBundle;
 
 class LightboxAsset extends AssetBundle {
@@ -10,7 +12,7 @@ class LightboxAsset extends AssetBundle {
 	];
 
 	public $css = [
-		'css/lightbox.min.css'
+		'css/lightbox.min.css',
 	];
 
 	public $depends = [

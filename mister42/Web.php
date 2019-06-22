@@ -1,4 +1,5 @@
 <?php
+
 namespace mister42;
 
 class Web {
@@ -10,19 +11,19 @@ class Web {
 
 	public function getValues(): array {
 		$config['id'] = 'mister42';
-#		$config['catchAll'] = in_array($_SERVER['REMOTE_ADDR'], $this->secrets['params']['specialIPs']) ? null : ['site/offline'];
+//		$config['catchAll'] = in_array($_SERVER['REMOTE_ADDR'], $this->secrets['params']['specialIPs']) ? null : ['site/offline'];
 		$config['basePath'] = __DIR__;
 		$config['components'] = $this->getComponents();
 		$config['modules'] = $this->getModules();
 		$config['params'] = (new Params())->getValues();
 
-		if (YII_DEBUG && php_sapi_name() !== 'cli') :
+		if (YII_DEBUG && php_sapi_name() !== 'cli') {
 			$config['bootstrap'] = ['debug'];
 			$config['modules']['debug'] = [
 				'class' => 'yii\debug\Module',
 				'allowedIPs' => $this->secrets['params']['specialIPs'],
 			];
-		endif;
+		}
 
 		return $config;
 	}
@@ -33,19 +34,19 @@ class Web {
 				'class' => \yii\authclient\Collection::class,
 				'clients' => [
 					'facebook' => [
-						'class'			=> 'Da\User\AuthClient\Facebook',
-						'clientId'		=> $this->secrets['facebook']['Id'],
-						'clientSecret'	=> $this->secrets['facebook']['Secret'],
+						'class' => 'Da\User\AuthClient\Facebook',
+						'clientId' => $this->secrets['facebook']['Id'],
+						'clientSecret' => $this->secrets['facebook']['Secret'],
 					],
 					'github' => [
-						'class'			=> 'Da\User\AuthClient\GitHub',
-						'clientId'		=> $this->secrets['github']['Id'],
-						'clientSecret'	=> $this->secrets['github']['Secret'],
+						'class' => 'Da\User\AuthClient\GitHub',
+						'clientId' => $this->secrets['github']['Id'],
+						'clientSecret' => $this->secrets['github']['Secret'],
 					],
 					'google' => [
-						'class'			=> 'Da\User\AuthClient\Google',
-						'clientId'		=> $this->secrets['google']['Id'],
-						'clientSecret'	=> $this->secrets['google']['Secret'],
+						'class' => 'Da\User\AuthClient\Google',
+						'clientId' => $this->secrets['google']['Id'],
+						'clientSecret' => $this->secrets['google']['Secret'],
 					],
 				],
 			],
@@ -79,7 +80,7 @@ class Web {
 			'view' => [
 				'theme' => [
 					'pathMap' => [
-						'@Da/User/resources/views' => '@app/views/user'
+						'@Da/User/resources/views' => '@app/views/user',
 					],
 				],
 			],
@@ -104,14 +105,14 @@ class Web {
 					'fromEmail' => $this->secrets['params']['noreplyEmail'],
 				],
 				'routes' => [
-					'profile/<username:\w+>'					=> 'profile/show',
-					'recenttracks/<username:\w+>'				=> 'profile/recenttracks',
-					'<action:(login|logout)>'					=> 'security/<action>',
-					'<action:(register|resend)>'				=> 'registration/<action>',
-					'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>'	=> 'registration/confirm',
-					'forgot'									=> 'recovery/request',
-					'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>'	=> 'recovery/reset',
-					'settings/<action:\w+>'						=> 'settings/<action>',
+					'profile/<username:\w+>' => 'profile/show',
+					'recenttracks/<username:\w+>' => 'profile/recenttracks',
+					'<action:(login|logout)>' => 'security/<action>',
+					'<action:(register|resend)>' => 'registration/<action>',
+					'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
+					'forgot' => 'recovery/request',
+					'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'recovery/reset',
+					'settings/<action:\w+>' => 'settings/<action>',
 				],
 			],
 		];

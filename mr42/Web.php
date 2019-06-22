@@ -1,4 +1,5 @@
 <?php
+
 namespace mr42;
 
 class Web {
@@ -33,8 +34,8 @@ class Web {
 			'urlManager' => [
 				'baseUrl' => $params['longDomain'],
 				'rules' => [
-					'art<id:\d+>'				=> 'permalink/articles',
-					'dl/php<version:\d+>'		=> 'download/php',
+					'art<id:\d+>' => 'permalink/articles',
+					'dl/php<version:\d+>' => 'download/php',
 				],
 			],
 	];

@@ -36,7 +36,13 @@
         "zenorocha/clipboardjs": "^2.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2.15.0",
         "yiisoft/yii2-debug": "*"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "mister42\\cs\\": "cs"
+        }
     },
     "replace": {
         "yiisoft/yii2-bootstrap": "*"

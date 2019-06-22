@@ -1,10 +1,12 @@
 <?php
+
 namespace app\commands;
-use Yii;
-use app\models\Webrequest;
+
 use app\models\feed\Feed;
 use app\models\tools\Oui;
 use app\models\user\{Profile, RecentTracks, User, WeeklyArtist};
+use app\models\Webrequest;
+use Yii;
 use yii\console\Controller;
 use yii\helpers\{ArrayHelper, FileHelper};
 
@@ -19,20 +21,20 @@ class FeedController extends Controller {
 	 * Retrieves and stores Recent Tracks from Last.fm.
 	 */
 	public function actionLastfmRecent(): int {
-		$recentTracks = new RecentTracks;
+		$recentTracks = new RecentTracks();
 		RecentTracks::deleteAll(['<=', 'seen', time() - 300]);
-		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
+		foreach (User::find()->where(['blocked_at' => null])->all() as $user) {
 			$profile = Profile::findOne(['user_id' => $user->id]);
-			if (isset($profile->lastfm)) :
+			if (isset($profile->lastfm)) {
 				$lastSeen = $recentTracks->lastSeen($user->id);
 
-				if (!$lastSeen)
+				if (!$lastSeen) {
 					continue;
-
+				}
 				$recentTracks->updateUser($profile, $lastSeen);
 				usleep(200000);
-			endif;
-		endforeach;
+			}
+		}
 
 		return self::EXIT_CODE_NORMAL;
 	}
@@ -41,15 +43,15 @@ class FeedController extends Controller {
 	 * Retrieves and stores Weekly Artist Chart from Last.fm.
 	 */
 	public function actionLastfmWeeklyArtist(): int {
-		foreach (User::find()->where(['blocked_at' => null])->all() as $user) :
+		foreach (User::find()->where(['blocked_at' => null])->all() as $user) {
 			$profile = Profile::findOne(['user_id' => $user->id]);
-			if (isset($profile->lastfm)) :
+			if (isset($profile->lastfm)) {
 				$response = Webrequest::getLastfmApi('user.getweeklyartistchart', ['user' => $profile->lastfm, 'limit' => $this->limit]);
-				if (!$response->isOK)
+				if (!$response->isOK) {
 					continue;
-
+				}
 				WeeklyArtist::deleteAll(['userid' => $profile->user_id]);
-				foreach ($response->data['weeklyartistchart']['artist'] as $artist) :
+				foreach ($response->data['weeklyartistchart']['artist'] as $artist) {
 					$addArtist = new WeeklyArtist();
 					$addArtist->userid = $profile->user_id;
 					$addArtist->rank = (int) ArrayHelper::getValue($artist, '@attributes.rank');
@@ -57,27 +59,28 @@ class FeedController extends Controller {
 					$addArtist->count = (int) ArrayHelper::getValue($artist, 'playcount');
 					$addArtist->save();
 
-					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $this->limit)
+					if ((int) ArrayHelper::getValue($artist, '@attributes.rank') === $this->limit) {
 						break;
-				endforeach;
+					}
+				}
 				usleep(200000);
-			endif;
-		endforeach;
+			}
+		}
 
 		return self::EXIT_CODE_NORMAL;
 	}
 
 	/**
-	 * Retrieves and stores the latest IEEE MA-L Assignments
+	 * Retrieves and stores the latest IEEE MA-L Assignments.
 	 */
 	public function actionOui(): int {
 		$file = Yii::getAlias('@runtime/oui.csv');
 		$response = Webrequest::saveUrl('http://standards-oui.ieee.org/oui/oui.csv', $file);
-		if (!$response->isOK)
+		if (!$response->isOK) {
 			return self::EXIT_CODE_ERROR;
-
+		}
 		$csv = array_map('str_getcsv', file($file));
-		$csv = array_map(function($x) { return [$x[1], trim($x[2])]; }, $csv);
+		$csv = array_map(function ($x) { return [$x[1], trim($x[2])]; }, $csv);
 		array_shift($csv);
 
 		Oui::deleteAll();
@@ -92,12 +95,12 @@ class FeedController extends Controller {
 	public function actionWebfeed(string $name, string $url, string $desc): int {
 		$count = 0;
 		$response = Webrequest::getUrl('', $url)->send();
-		if (!$response->isOK)
+		if (!$response->isOK) {
 			return self::EXIT_CODE_ERROR;
-
+		}
 		$xml = simplexml_load_string($response->content);
 		Feed::deleteAll(['feed' => $name]);
-		foreach (($xml->getName() === 'rss') ? $response->data['channel']['item'] : $response->data['entry'] as $item) :
+		foreach (($xml->getName() === 'rss') ? $response->data['channel']['item'] : $response->data['entry'] as $item) {
 			$time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
 
 			$feedItem = Feed::findOne(['feed' => $name, 'time' => $time]) ?? new Feed();
@@ -108,9 +111,10 @@ class FeedController extends Controller {
 			$feedItem->time = $time;
 			$feedItem->save();
 
-			if (++$count === $this->limit)
+			if (++$count === $this->limit) {
 				break;
-		endforeach;
+			}
+		}
 
 		return self::EXIT_CODE_NORMAL;
 	}

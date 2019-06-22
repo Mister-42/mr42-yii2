@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\tools\qr;
+
 use Yii;
 
 class EmailMessage extends \app\models\tools\Qr {
@@ -29,6 +31,6 @@ class EmailMessage extends \app\models\tools\Qr {
 		$data[] = $this->getDataOrOmit('TO:', $this->email, ';');
 		$data[] = $this->getDataOrOmit('SUB:', $this->subject, ';');
 		$data[] = $this->getDataOrOmit('BODY:', $this->message, ';');
-		return parent::generate('MATMSG:'.implode($data).';');
+		return parent::generate('MATMSG:' . implode($data) . ';');
 	}
 }

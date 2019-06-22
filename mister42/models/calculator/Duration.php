@@ -1,5 +1,7 @@
 <?php
+
 namespace app\models\calculator;
+
 use DateTime;
 use Yii;
 
@@ -23,9 +25,9 @@ class Duration extends \yii\base\Model {
 	}
 
 	public function calculate(): bool {
-		if (!$this->validate())
+		if (!$this->validate()) {
 			return false;
-
+		}
 		$diff = (new DateTime($this->fromDate))->diff(new DateTime($this->toDate));
 		Yii::$app->getSession()->setFlash('duration-success', $diff);
 		return true;

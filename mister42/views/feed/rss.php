@@ -1,4 +1,5 @@
 <?php
+
 use yii\bootstrap4\Html;
 use yii\helpers\{StringHelper, Url};
 
@@ -22,7 +23,7 @@ $doc->writeElement('description', Yii::$app->params['description']);
 	$doc->writeAttribute('type', 'application/rss+xml');
 	$doc->endElement();
 $doc->writeElement('language', Yii::$app->language);
-$doc->writeElement('copyright', '2014-'.date('Y').' '.Yii::$app->name);
+$doc->writeElement('copyright', '2014-' . date('Y') . ' ' . Yii::$app->name);
 $doc->writeElement('pubDate', date(DATE_RSS));
 $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->startElement('image');
@@ -35,39 +36,39 @@ $doc->writeElement('lastBuildDate', date(DATE_RSS, $articles[0]->updated));
 	$doc->writeElement('width', $width);
 	$doc->endElement();
 
-foreach ($articles as $article) :
+foreach ($articles as $article) {
 	$article->contentParsed = preg_replace('/<img([^>]*)src=["]([^"]*)["]([^>]*)>/', '<img$1src="https:$2"$3>', $article->contentParsed);
-	if (strpos($article->contentParsed, '[readmore]')) :
-		$article->contentParsed = substr($article->contentParsed, 0, strpos($article->contentParsed, '[readmore]'));
-		$article->contentParsed .= Html::a('Read Full Article', Url::to(['articles/article', 'id' => $article->id, 'title' => $article->url], true)).' &raquo;';
-	endif;
+	if (mb_strpos($article->contentParsed, '[readmore]')) {
+		$article->contentParsed = mb_substr($article->contentParsed, 0, mb_strpos($article->contentParsed, '[readmore]'));
+		$article->contentParsed .= Html::a('Read Full Article', Url::to(['articles/article', 'id' => $article->id, 'title' => $article->url], true)) . ' &raquo;';
+	}
 
 	$doc->startElement('item');
 	$doc->writeElement('title', $article->title);
 	$doc->writeElement('link', Url::to(['articles/article', 'id' => $article->id, 'title' => $article->url], true));
-		$doc->startElement('description');
-		$doc->writeCData($article->contentParsed);
-		$doc->endElement();
+	$doc->startElement('description');
+	$doc->writeCData($article->contentParsed);
+	$doc->endElement();
 	$doc->writeElement('dc:creator', $article->author->name ?? $article->author->username);
-	foreach (StringHelper::explode($article->tags) as $tag) :
+	foreach (StringHelper::explode($article->tags) as $tag) {
 		$doc->startElement('category');
 		$doc->writeAttribute('domain', Url::to(['articles/tag', 'tag' => $tag], true));
 		$doc->text($tag);
 		$doc->endElement();
-	endforeach;
-		$doc->startElement('guid');
-		$doc->writeAttribute('isPermaLink', 'true');
-		$doc->text(Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $article->id]));
-		$doc->endElement();
+	}
+	$doc->startElement('guid');
+	$doc->writeAttribute('isPermaLink', 'true');
+	$doc->text(Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $article->id]));
+	$doc->endElement();
 	$doc->writeElement('pubDate', date(DATE_RSS, $article->created));
-	if ($article->source) :
+	if ($article->source) {
 		$doc->startElement('source');
 		$doc->writeAttribute('url', $article->source);
 		$doc->text('Source');
 		$doc->endElement();
-	endif;
+	}
 	$doc->endElement();
-endforeach;
+}
 
 $doc->endElement();
 $doc->endDocument();

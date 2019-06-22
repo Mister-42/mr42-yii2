@@ -1,7 +1,9 @@
 <?php
+
 namespace app\models;
-use Yii;
+
 use app\models\articles\ArticlesComments;
+use Yii;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 
@@ -10,45 +12,47 @@ class Menu extends \yii\base\Model {
 
 	public function init(): void {
 		$this->menuItems = $this->getData();
-		if (Yii::$app->controller->action->id === 'sitemap') :
+		if (Yii::$app->controller->action->id === 'sitemap') {
 			$this->menuItems[] = ['label' => null, 'url' => ['/user/registration/register']];
 			$this->menuItems[] = ['label' => null, 'url' => ['/site/privacy']];
-		endif;
+		}
 	}
 
 	public function getItemList(): array {
-		foreach ($this->menuItems as $menuItem) :
-			if (!ArrayHelper::keyExists('items', $menuItem)) :
+		foreach ($this->menuItems as $menuItem) {
+			if (!ArrayHelper::keyExists('items', $menuItem)) {
 				$menuItems[] = $menuItem;
 				continue;
-			endif;
+			}
 			ArrayHelper::multisort($menuItem['items'], ['label', 'url']);
 			$menuItems[] = $menuItem;
-		endforeach;
+		}
 
 		return ArrayHelper::merge($menuItems, $this->getUserMenu());
 	}
 
 	public function getUrlList($items = null): array {
-		foreach ($items ?? self::getItemList() as $item) :
-			if (!is_array($item) || ArrayHelper::keyExists('visible', $item))
+		foreach ($items ?? self::getItemList() as $item) {
+			if (!is_array($item) || ArrayHelper::keyExists('visible', $item)) {
 				continue;
-
-			if (isset($item['url']))
+			}
+			if (isset($item['url'])) {
 				$pages[] = ArrayHelper::getValue($item, 'url.0');
+			}
 
-			if (isset($item['items']))
+			if (isset($item['items'])) {
 				$pages[] = self::getUrlList($item['items']);
-		endforeach;
-		array_walk_recursive($pages, function($val) use (&$list) { $list[] = $val; });
+			}
+		}
+		array_walk_recursive($pages, function ($val) use (&$list): void { $list[] = $val; });
 		return $list;
 	}
 
 	private function getData(): array {
 		return [
-			['label' => Yii::$app->icon->name('certificate').Html::tag('span', 'Test'), 'url' => ['/test/index'], 'visible' => $this->isAdmin()],
-			['label' => Yii::$app->icon->name('newspaper').Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true, 'active' => Yii::$app->controller->id === 'articles'],
-			['label' => Yii::$app->icon->name('calculator').Html::tag('span', Yii::t('mr42', 'Calculator')),
+			['label' => Yii::$app->icon->name('certificate') . Html::tag('span', 'Test'), 'url' => ['/test/index'], 'visible' => $this->isAdmin()],
+			['label' => Yii::$app->icon->name('newspaper') . Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true, 'active' => Yii::$app->controller->id === 'articles'],
+			['label' => Yii::$app->icon->name('calculator') . Html::tag('span', Yii::t('mr42', 'Calculator')),
 				'items' => [
 					['label' => Yii::t('mr42', 'Date (add/subtract)'), 'url' => ['/calculator/date']],
 					['label' => Yii::t('mr42', 'Date to Date (duration)'), 'url' => ['/calculator/duration']],
@@ -58,7 +62,7 @@ class Menu extends \yii\base\Model {
 					['label' => Yii::t('mr42', 'Wifi Protected Access Pre-Shared Key'), 'url' => ['/calculator/wpapsk']],
 				],
 			],
-			['label' => Yii::$app->icon->name('tools').Html::tag('span', Yii::t('mr42', 'Tools')),
+			['label' => Yii::$app->icon->name('tools') . Html::tag('span', Yii::t('mr42', 'Tools')),
 				'items' => [
 					['label' => Yii::t('mr42', 'Barcode Generator'), 'url' => ['/tools/barcode']],
 					['label' => Yii::t('mr42', 'Browser Headers'), 'url' => ['/tools/headers']],
@@ -70,13 +74,13 @@ class Menu extends \yii\base\Model {
 					['label' => Yii::t('mr42', 'QR Code Generator'), 'url' => ['/tools/qr']],
 				],
 			],
-			['label' => Yii::$app->icon->name('music').Html::tag('span', Yii::t('mr42', 'Music')),
+			['label' => Yii::$app->icon->name('music') . Html::tag('span', Yii::t('mr42', 'Music')),
 				'items' => [
 					['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
 					['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/music/lyrics'], 'visible' => true],
 				],
 			],
-			['label' => Yii::$app->icon->name('share-alt').Html::tag('span', Yii::$app->name),
+			['label' => Yii::$app->icon->name('share-alt') . Html::tag('span', Yii::$app->name),
 				'items' => [
 					['label' => Yii::t('mr42', 'Contact'), 'url' => ['/my/contact']],
 					['label' => Yii::t('mr42', 'My Pi'), 'url' => ['/my/pi']],
@@ -86,15 +90,15 @@ class Menu extends \yii\base\Model {
 	}
 
 	private function getUserMenu(): array {
-		if ($this->isGuest())
-			return [['label' => Yii::$app->icon->name('sign-in-alt').Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]];
-
-		if ($this->isAdmin()) :
+		if ($this->isGuest()) {
+			return [['label' => Yii::$app->icon->name('sign-in-alt') . Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]];
+		}
+		if ($this->isAdmin()) {
 			$subMenu[] = ['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create']];
 			$subMenu[] = ['label' => Yii::t('usuario', 'Manage users'), 'url' => ['/user/admin/index']];
 			$subMenu[] = ['label' => Yii::t('mr42', 'PHP {version}', ['version' => PHP_VERSION]), 'url' => ['/site/php']];
 			$subMenu[] = '-';
-		endif;
+		}
 		$subMenu[] = ['label' => Yii::t('mr42', 'View Profile'), 'url' => ['/user/profile/show', 'username' => Yii::$app->user->identity->username]];
 		$subMenu[] = '-';
 		$subMenu[] = ['label' => Yii::t('usuario', 'Profile settings'), 'url' => ['/user/settings/profile']];
@@ -105,7 +109,7 @@ class Menu extends \yii\base\Model {
 
 		$unread = $this->isAdmin() ? ArticlesComments::find()->where(['not', ['active' => true]])->count() : 0;
 		$unreadBadge = $unread > 0 ? Html::tag('sup', $unread, ['class' => 'badge badge-info ml-1']) : '';
-		return [['label' => Yii::$app->icon->name('user-circle').Html::tag('span', Yii::$app->user->identity->username.$unreadBadge), 'items' => $subMenu]];
+		return [['label' => Yii::$app->icon->name('user-circle') . Html::tag('span', Yii::$app->user->identity->username . $unreadBadge), 'items' => $subMenu]];
 	}
 
 	private function isAdmin(): bool {
