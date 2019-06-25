@@ -4,35 +4,39 @@ namespace app\models\tools\qr;
 
 use Yii;
 
-class Bitcoin extends \app\models\tools\Qr {
-	public $address;
-	public $amount;
-	public $name;
-	public $message;
+class Bitcoin extends \app\models\tools\Qr
+{
+    public $address;
+    public $amount;
+    public $name;
+    public $message;
 
-	public function rules(): array {
-		$rules = parent::rules();
+    public function rules(): array
+    {
+        $rules = parent::rules();
 
-		$rules[] = [['address', 'amount'], 'required'];
-		$rules[] = [['address', 'name', 'message'], 'string'];
-		return $rules;
-	}
+        $rules[] = [['address', 'amount'], 'required'];
+        $rules[] = [['address', 'name', 'message'], 'string'];
+        return $rules;
+    }
 
-	public function attributeLabels(): array {
-		$labels = parent::attributeLabels();
+    public function attributeLabels(): array
+    {
+        $labels = parent::attributeLabels();
 
-		$labels['address'] = Yii::t('mr42', 'Address');
-		$labels['amount'] = Yii::t('mr42', 'Amount');
-		$labels['name'] = Yii::t('mr42', 'Name');
-		$labels['message'] = Yii::t('mr42', 'Message');
-		return $labels;
-	}
+        $labels['address'] = Yii::t('mr42', 'Address');
+        $labels['amount'] = Yii::t('mr42', 'Amount');
+        $labels['name'] = Yii::t('mr42', 'Name');
+        $labels['message'] = Yii::t('mr42', 'Message');
+        return $labels;
+    }
 
-	public function generateQr(): bool {
-		$data['amount'] = $this->amount;
-		$data['label'] = $this->name;
-		$data['message'] = $this->message;
-		$query = http_build_query(array_filter($data));
-		return parent::generate("bitcoin:{$this->address}?{$query}");
-	}
+    public function generateQr(): bool
+    {
+        $data['amount'] = $this->amount;
+        $data['label'] = $this->name;
+        $data['message'] = $this->message;
+        $query = http_build_query(array_filter($data));
+        return parent::generate("bitcoin:{$this->address}?{$query}");
+    }
 }

@@ -9,59 +9,59 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['firstName', 'lastName'] as $name) {
-		echo $form->field($model, $name, [
-			'icon' => 'user',
-			'options' => ['class' => 'col-md-6'],
-		])->textInput(['tabindex' => ++$tab]);
-	}
+    foreach (['firstName', 'lastName'] as $name) {
+        echo $form->field($model, $name, [
+            'icon' => 'user',
+            'options' => ['class' => 'col-md-6'],
+        ])->textInput(['tabindex' => ++$tab]);
+    }
 echo Html::endTag('div');
 
 echo $form->field($model, 'fullName', [
-	'icon' => 'user',
+    'icon' => 'user',
 ])->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'homeAddress', [
-	'icon' => 'home',
+    'icon' => 'home',
 ])->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'homePhone', [
-	'icon' => 'home',
+    'icon' => 'home',
 ])->input('tel', ['tabindex' => ++$tab]);
 
 echo $form->field($model, 'organization', [
-	'icon' => 'briefcase',
+    'icon' => 'briefcase',
 ])->textInput(['tabindex' => ++$tab]);
 
 echo Html::beginTag('div', ['class' => 'row form-group']);
-	foreach (['role' => 'certificate', 'title' => 'bookmark'] as $name => $icon) {
-		echo $form->field($model, $name, [
-			'icon' => $icon,
-			'options' => ['class' => 'col-md-6'],
-		])->textInput(['tabindex' => ++$tab]);
-	}
+    foreach (['role' => 'certificate', 'title' => 'bookmark'] as $name => $icon) {
+        echo $form->field($model, $name, [
+            'icon' => $icon,
+            'options' => ['class' => 'col-md-6'],
+        ])->textInput(['tabindex' => ++$tab]);
+    }
 echo Html::endTag('div');
 
 echo $form->field($model, 'workAddress', [
-	'icon' => 'home',
+    'icon' => 'home',
 ])->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'workPhone', [
-	'icon' => 'phone',
+    'icon' => 'phone',
 ])->input('tel', ['tabindex' => ++$tab]);
 
 echo $form->field($model, 'email', [
-	'icon' => 'envelope',
+    'icon' => 'envelope',
 ])->input('email', ['tabindex' => ++$tab]);
 
 echo $form->field($model, 'website', [
-	'icon' => 'globe',
+    'icon' => 'globe',
 ])->input('url', ['tabindex' => ++$tab]);
 
 echo $model->getBirthdayCalendar($form, ++$tab);
 
 echo $form->field($model, 'note', [
-	'icon' => 'comment',
+    'icon' => 'comment',
 ])->textArea(['rows' => 6, 'tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);

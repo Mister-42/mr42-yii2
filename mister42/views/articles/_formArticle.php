@@ -6,7 +6,7 @@ use yii\bootstrap4\Html;
 $this->title = Yii::$app->controller->action->id === 'create' ? Yii::t('mr42', 'Create Article') : Yii::t('mr42', 'Edit Article');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Articles'), 'url' => ['index']];
 if (Yii::$app->controller->action->id === 'update') {
-	$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['article', 'id' => $model->id, 'title' => $model->url]];
+    $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['article', 'id' => $model->id, 'title' => $model->url]];
 }
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -30,10 +30,10 @@ echo $form->field($model, 'pdf')->checkbox(['tabindex' => ++$tab]);
 echo $form->field($model, 'active')->checkbox(['tabindex' => ++$tab]);
 
 echo Html::tag(
-	'div',
-	Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]) .
-	Html::submitButton('Save', ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab]),
-	['class' => 'btn-toolbar float-right form-group']
+    'div',
+    Html::resetButton('Reset', ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]) .
+    Html::submitButton('Save', ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab]),
+    ['class' => 'btn-toolbar float-right form-group']
 );
 
 ActiveForm::end();

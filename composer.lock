@@ -497,16 +497,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.8",
+            "version": "2.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "c26463ff9241f27907112fbcd0c86fa670cfef98"
+                "reference": "128cc721d771ec2c46ce59698f4ca42b73f71b25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/c26463ff9241f27907112fbcd0c86fa670cfef98",
-                "reference": "c26463ff9241f27907112fbcd0c86fa670cfef98",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/128cc721d771ec2c46ce59698f4ca42b73f71b25",
+                "reference": "128cc721d771ec2c46ce59698f4ca42b73f71b25",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-05-16T22:02:54+00:00"
+            "time": "2019-06-23T10:14:27+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1598,12 +1598,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Thoulah/yii2-fontawesome-inline.git",
-                "reference": "5060402c32968ff7403d31ab8d945cc6f3e56bae"
+                "reference": "f8ba6776558401e54ab7f5f6905afe7f659419a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Thoulah/yii2-fontawesome-inline/zipball/5060402c32968ff7403d31ab8d945cc6f3e56bae",
-                "reference": "5060402c32968ff7403d31ab8d945cc6f3e56bae",
+                "url": "https://api.github.com/repos/Thoulah/yii2-fontawesome-inline/zipball/f8ba6776558401e54ab7f5f6905afe7f659419a7",
+                "reference": "f8ba6776558401e54ab7f5f6905afe7f659419a7",
                 "shasum": ""
             },
             "require": {
@@ -1615,7 +1615,8 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "~2.15.0",
-                "phpunit/phpunit": ">=7.5"
+                "phpunit/phpunit": ">=7.5",
+                "yiisoft/yii2-apidoc": "~2.1.0"
             },
             "type": "yii2-extension",
             "extra": {
@@ -1661,7 +1662,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2019-06-22T22:14:04+00:00"
+            "time": "2019-06-23T18:19:34+00:00"
         },
         {
             "name": "voku/simple_html_dom",

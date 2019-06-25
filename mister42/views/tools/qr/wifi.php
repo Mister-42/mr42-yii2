@@ -11,11 +11,11 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'authentication', [
-	'icon' => 'cog',
+    'icon' => 'cog',
 ])->dropDownList($model->getWifiAuthentication(), ['tabindex' => ++$tab]);
 
 echo $form->field($model, 'ssid', [
-	'icon' => 'wifi',
+    'icon' => 'wifi',
 ])->textInput(['tabindex' => ++$tab]);
 
 echo $form->togglePassword($model, ++$tab, ['class' => 'required']);

@@ -9,16 +9,16 @@ $this->params['breadcrumbs'] = [Yii::$app->name];
 $this->params['breadcrumbs'][] = $this->title;
 
 $tabs = [
-	'day' => ['short' => Yii::t('mr42', 'Day'), 'long' => Yii::t('mr42', 'Last Day')],
-	'week' => ['short' => Yii::t('mr42', 'Week'), 'long' => Yii::t('mr42', 'Last Week')],
-	'month' => ['short' => Yii::t('mr42', 'Month'), 'long' => Yii::t('mr42', 'Last Month')],
-	'year' => ['short' => Yii::t('mr42', 'Year'), 'long' => Yii::t('mr42', 'Last Year')],
+    'day' => ['short' => Yii::t('mr42', 'Day'), 'long' => Yii::t('mr42', 'Last Day')],
+    'week' => ['short' => Yii::t('mr42', 'Week'), 'long' => Yii::t('mr42', 'Last Week')],
+    'month' => ['short' => Yii::t('mr42', 'Month'), 'long' => Yii::t('mr42', 'Last Month')],
+    'year' => ['short' => Yii::t('mr42', 'Year'), 'long' => Yii::t('mr42', 'Last Year')],
 ];
 $datatype = [
-	'tempload' => Yii::t('mr42', 'Temperature & Load'),
-	'network' => Yii::t('mr42', 'Network Traffic'),
-	'memory' => Yii::t('mr42', 'Memory Usage'),
-	'diskspace' => Yii::t('mr42', 'Disk Space Usage'),
+    'tempload' => Yii::t('mr42', 'Temperature & Load'),
+    'network' => Yii::t('mr42', 'Network Traffic'),
+    'memory' => Yii::t('mr42', 'Memory Usage'),
+    'diskspace' => Yii::t('mr42', 'Disk Space Usage'),
 ];
 $hosts = ['dnspi', 'musicpi'];
 
@@ -29,26 +29,26 @@ $this->registerJs('$("img").unveil();', View::POS_READY);
 echo Html::tag('h1', $this->title);
 
 foreach ($tabs as $tab => $tabdesc) {
-	$$tab[] = Html::beginTag('div', ['class' => 'row']);
-	$$tab[] = Html::tag('div', Html::tag('h3', $tabdesc['long'], ['class' => 'text-center mt-2']), ['class' => 'col-12']);
-	foreach ($datatype as $dt => $dtdesc) {
-		$$tab[] = Html::tag('h4', $dtdesc, ['class' => 'w-100 text-center mt-2 mb-0']);
-		foreach ($hosts as $host) {
-			$$tab[] = Html::beginTag('div', ['class' => 'col-md-6 h-100']);
-			$$tab[] = Html::tag('h5', $host, ['class' => 'text-center my-0']);
-			$$tab[] = ($tab === array_key_first($tabs))
-						? Html::img("@assets/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
-						: Html::img('@assets/images/loading.png', ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
-			$$tab[] = Html::endTag('div');
-		}
-	}
-	$$tab[] = Html::endTag('div');
+    $$tab[] = Html::beginTag('div', ['class' => 'row']);
+    $$tab[] = Html::tag('div', Html::tag('h3', $tabdesc['long'], ['class' => 'text-center mt-2']), ['class' => 'col-12']);
+    foreach ($datatype as $dt => $dtdesc) {
+        $$tab[] = Html::tag('h4', $dtdesc, ['class' => 'w-100 text-center mt-2 mb-0']);
+        foreach ($hosts as $host) {
+            $$tab[] = Html::beginTag('div', ['class' => 'col-md-6 h-100']);
+            $$tab[] = Html::tag('h5', $host, ['class' => 'text-center my-0']);
+            $$tab[] = ($tab === array_key_first($tabs))
+                        ? Html::img("@assets/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
+                        : Html::img('@assets/images/loading.png', ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
+            $$tab[] = Html::endTag('div');
+        }
+    }
+    $$tab[] = Html::endTag('div');
 
-	$items[$tab]['label'] = $tabdesc['short'];
-	$items[$tab]['content'] = implode($$tab);
-	$items[$tab]['active'] = $tab === array_key_first($tabs);
+    $items[$tab]['label'] = $tabdesc['short'];
+    $items[$tab]['content'] = implode($$tab);
+    $items[$tab]['active'] = $tab === array_key_first($tabs);
 }
 
 echo Tabs::widget([
-	'items' => $items,
+    'items' => $items,
 ]);

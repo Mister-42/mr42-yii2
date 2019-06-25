@@ -8,11 +8,11 @@ $form = ActiveForm::begin(['id' => Yii::$app->request->post('type')]);
 echo $form->field($model, 'type')->hiddenInput()->label(false);
 
 echo $form->field($model, 'title', [
-	'icon' => 'heading',
+    'icon' => 'heading',
 ])->textInput(['tabindex' => ++$tab]);
 
 echo $form->field($model, 'url', [
-	'icon' => 'globe',
+    'icon' => 'globe',
 ])->input('url', ['tabindex' => ++$tab]);
 
 echo $model->getFormFooter($form, $tab);

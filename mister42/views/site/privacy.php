@@ -15,21 +15,21 @@ echo Html::tag('h4', 'General Data Protection Regulation (GDPR)');
 echo Html::tag('p', 'We are a Data Controller of your information. If you\'d like to learn more about GDPR and your rights under GDPR, please visit ' . Html::a('gdpr-info.eu', 'https://gdpr-info.eu/') . '.');
 echo Html::tag('p', Yii::$app->name . ' legal basis for collecting and using the personal information described in this Privacy Policy depends on the Personal Information we collect and the specific context in which we collect the information:');
 echo Html::ul([
-	Yii::$app->name . ' needs to perform a contract with you',
-	'You have given ' . Yii::$app->name . ' permission to do so',
-	'Processing your personal information is in ' . Yii::$app->name . ' legitimate interests',
-	Yii::$app->name . ' needs to comply with the law',
+    Yii::$app->name . ' needs to perform a contract with you',
+    'You have given ' . Yii::$app->name . ' permission to do so',
+    'Processing your personal information is in ' . Yii::$app->name . ' legitimate interests',
+    Yii::$app->name . ' needs to comply with the law',
 ]);
 echo Html::tag('p', Yii::$app->name . ' will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use your information to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our policies.');
 echo Html::tag('p', 'If you are a resident of the European Economic Area (EEA), you have certain data protection rights. If you wish to be informed what Personal Information we hold about you and if you want it to be removed from our systems, please contact us.');
 echo Html::tag('p', 'In certain circumstances, you have the following data protection rights:');
 echo Html::ul([
-	'The right to access, update or to delete the information we have on you',
-	'The right of rectification',
-	'The right to object',
-	'The right of restriction',
-	'The right to data portability',
-	'The right to withdraw consent',
+    'The right to access, update or to delete the information we have on you',
+    'The right of rectification',
+    'The right to object',
+    'The right of restriction',
+    'The right to data portability',
+    'The right to withdraw consent',
 ]);
 
 echo Html::tag('h4', 'Log Files');
