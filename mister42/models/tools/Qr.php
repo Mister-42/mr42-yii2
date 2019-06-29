@@ -14,19 +14,9 @@ use yii\helpers\StringHelper;
 
 class Qr extends \yii\base\Model
 {
-    public $type;
-    public $size = 150;
     public $recipient;
-
-    public function rules(): array
-    {
-        return [
-            [['type', 'size'], 'required'],
-            ['type', 'in', 'range' => $this->getTypes(true)],
-            ['size', 'double', 'min' => 50, 'max' => 1500],
-            ['recipient', 'email', 'checkDNS' => true, 'enableIDN' => true],
-        ];
-    }
+    public $size = 150;
+    public $type;
 
     public function attributeLabels(): array
     {
@@ -40,6 +30,29 @@ class Qr extends \yii\base\Model
     public function formName(): string
     {
         return 'qr';
+    }
+
+    public function generate($qrData): bool
+    {
+        $size = StringHelper::byteLength($qrData);
+        if ($size > 2746) {
+            Yii::$app->getSession()->setFlash('qr-size', $size - 2746);
+            return false;
+        }
+
+        FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
+        $cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('qr') . '.png');
+        $qrCode = new QrCode($qrData);
+        $qrCode->disableBorder();
+        $output = new Output\Png();
+        file_put_contents($cacheFile, $output->output($qrCode, $this->size, [255, 255, 255], [0, 0, 0], 9));
+
+        if ($this->recipient) {
+            Mailer::sendFileHtml($this->recipient, 'Your QR Code from ' . Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
+        }
+
+        Yii::$app->getSession()->setFlash('qr-success', $cacheFile);
+        return true;
     }
 
     public function getBirthdayCalendar(ActiveForm $form, int $tab): string
@@ -57,6 +70,14 @@ class Qr extends \yii\base\Model
                 'mode' => 'date',
                 'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab],
             ]);
+    }
+
+    public function getDataOrOmit(string $label, string $value, string $glue = ''): ?string
+    {
+        if ($value) {
+            return $label . $value . $glue;
+        }
+        return null;
     }
 
     public function getFormFooter(ActiveForm $form, int $tab): string
@@ -83,34 +104,6 @@ class Qr extends \yii\base\Model
         );
 
         return implode($footer);
-    }
-
-    public function generate($qrData): bool
-    {
-        $size = StringHelper::byteLength($qrData);
-        if ($size > 2746) {
-            Yii::$app->getSession()->setFlash('qr-size', $size - 2746);
-            return false;
-        }
-
-        FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
-        $cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('qr') . '.png');
-        $qrCode = new QrCode($qrData);
-        $qrCode->disableBorder();
-        $output = new Output\Png();
-        file_put_contents($cacheFile, $output->output($qrCode, $this->size, [255, 255, 255], [0, 0, 0], 9));
-
-        if ($this->recipient) {
-            Mailer::sendFileHtml($this->recipient, 'Your QR Code from ' . Yii::$app->name, 'qrRequester', ['file' => $cacheFile, 'name' => 'QRcode.png']);
-        }
-
-        Yii::$app->getSession()->setFlash('qr-success', $cacheFile);
-        return true;
-    }
-
-    public function getWifiAuthentication(bool $rules = false): array
-    {
-        return $rules ? ['none', 'wep', 'wpa'] : ['none' => Yii::t('mr42', 'none'), 'wep' => Yii::t('mr42', 'WEP'), 'wpa' => Yii::t('mr42', 'WPA')];
     }
 
     public function getTypes(bool $rules = false): array
@@ -141,11 +134,18 @@ class Qr extends \yii\base\Model
         return $typeList;
     }
 
-    public function getDataOrOmit(string $label, string $value, string $glue = ''): ?string
+    public function getWifiAuthentication(bool $rules = false): array
     {
-        if ($value) {
-            return $label . $value . $glue;
-        }
-        return null;
+        return $rules ? ['none', 'wep', 'wpa'] : ['none' => Yii::t('mr42', 'none'), 'wep' => Yii::t('mr42', 'WEP'), 'wpa' => Yii::t('mr42', 'WPA')];
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['type', 'size'], 'required'],
+            ['type', 'in', 'range' => $this->getTypes(true)],
+            ['size', 'double', 'min' => 50, 'max' => 1500],
+            ['recipient', 'email', 'checkDNS' => true, 'enableIDN' => true],
+        ];
     }
 }

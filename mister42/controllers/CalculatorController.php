@@ -12,23 +12,6 @@ use yii\filters\HttpCache;
 
 class CalculatorController extends \yii\web\Controller
 {
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => HttpCache::class,
-                'enabled' => !YII_DEBUG,
-                'etagSeed' => function (BaseObject $action) {
-                    return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile("@app/views/{$action->controller->id}/{$action->id}.php")]);
-                },
-                'lastModified' => function (BaseObject $action) {
-                    return filemtime(Yii::getAlias('@app/views/' . $action->controller->id . '/' . $action->id . '.php'));
-                },
-                'only' => ['wpapsk'],
-            ],
-        ];
-    }
-
     public function actionDate()
     {
         $model = new Date();
@@ -87,5 +70,21 @@ class CalculatorController extends \yii\web\Controller
     public function actionWpapsk()
     {
         return $this->render('wpapsk');
+    }
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => HttpCache::class,
+                'enabled' => !YII_DEBUG,
+                'etagSeed' => function (BaseObject $action) {
+                    return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile("@app/views/{$action->controller->id}/{$action->id}.php")]);
+                },
+                'lastModified' => function (BaseObject $action) {
+                    return filemtime(Yii::getAlias('@app/views/' . $action->controller->id . '/' . $action->id . '.php'));
+                },
+                'only' => ['wpapsk'],
+            ],
+        ];
     }
 }

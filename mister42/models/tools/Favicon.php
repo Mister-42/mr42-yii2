@@ -8,18 +8,9 @@ use yii\helpers\FileHelper;
 
 class Favicon extends \yii\base\Model
 {
+    public $dimensions = [64, 48, 32, 16];
     public $recipient;
     public $sourceImage;
-    public $dimensions = [64, 48, 32, 16];
-
-    public function rules(): array
-    {
-        return [
-            ['recipient', 'email', 'checkDNS' => true, 'enableIDN' => true],
-            ['sourceImage', 'required'],
-            ['sourceImage', 'image', 'maxHeight' => 2500, 'maxWidth' => 2500, 'minHeight' => 256, 'minWidth' => 256],
-        ];
-    }
 
     public function attributeLabels(): array
     {
@@ -50,5 +41,14 @@ class Favicon extends \yii\base\Model
 
         Yii::$app->getSession()->setFlash('favicon-success', basename($cacheFile));
         return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            ['recipient', 'email', 'checkDNS' => true, 'enableIDN' => true],
+            ['sourceImage', 'required'],
+            ['sourceImage', 'image', 'maxHeight' => 2500, 'maxWidth' => 2500, 'minHeight' => 256, 'minWidth' => 256],
+        ];
     }
 }

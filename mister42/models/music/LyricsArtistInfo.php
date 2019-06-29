@@ -7,13 +7,8 @@ use yii\db\ActiveQuery;
 
 class LyricsArtistInfo extends \yii\db\ActiveRecord
 {
-    public $bioSummaryParsed;
     public $bioFullParsed;
-
-    public static function tableName(): string
-    {
-        return '{{%lyrics_artistinfo}}';
-    }
+    public $bioSummaryParsed;
 
     public function afterFind(): void
     {
@@ -25,5 +20,10 @@ class LyricsArtistInfo extends \yii\db\ActiveRecord
     public static function find(): ActiveQuery
     {
         return parent::find()->alias('info');
+    }
+
+    public static function tableName(): string
+    {
+        return '{{%lyrics_artistinfo}}';
     }
 }

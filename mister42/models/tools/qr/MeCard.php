@@ -6,30 +6,18 @@ use Yii;
 
 class MeCard extends \app\models\tools\Qr
 {
+    public $address;
+    public $birthday;
+    public $email;
     public $firstName;
-    public $lastName;
     public $firstSound;
+    public $lastName;
     public $lastSound;
+    public $nickname;
+    public $note;
     public $phone;
     public $videoPhone;
-    public $email;
-    public $note;
-    public $birthday;
-    public $address;
     public $website;
-    public $nickname;
-
-    public function rules(): array
-    {
-        $rules = parent::rules();
-
-        $rules[] = ['firstName', 'required'];
-        $rules[] = [['email'], 'email', 'enableIDN' => true];
-        $rules[] = [['phone', 'videoPhone'], 'string', 'length' => [1, 24]];
-        $rules[] = ['birthday', 'date', 'format' => 'php:Y-m-d'];
-        $rules[] = ['website', 'url', 'defaultScheme' => 'http', 'enableIDN' => true];
-        return $rules;
-    }
 
     public function attributeLabels(): array
     {
@@ -63,5 +51,17 @@ class MeCard extends \app\models\tools\Qr
         $data[] = $this->getDataOrOmit('URL:', $this->website, ';');
         $data[] = $this->getDataOrOmit('NICKNAME:', $this->nickname, ';');
         return parent::generate('MECARD:' . implode($data) . ';');
+    }
+
+    public function rules(): array
+    {
+        $rules = parent::rules();
+
+        $rules[] = ['firstName', 'required'];
+        $rules[] = [['email'], 'email', 'enableIDN' => true];
+        $rules[] = [['phone', 'videoPhone'], 'string', 'length' => [1, 24]];
+        $rules[] = ['birthday', 'date', 'format' => 'php:Y-m-d'];
+        $rules[] = ['website', 'url', 'defaultScheme' => 'http', 'enableIDN' => true];
+        return $rules;
     }
 }

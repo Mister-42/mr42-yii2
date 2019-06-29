@@ -8,9 +8,11 @@ class Oui extends \yii\db\ActiveRecord
 {
     public $oui;
 
-    public static function tableName(): string
+    public function attributeLabels(): array
     {
-        return '{{%oui}}';
+        return [
+            'oui' => Yii::t('mr42', 'OUI, MAC address, or name'),
+        ];
     }
 
     public function rules(): array
@@ -20,10 +22,8 @@ class Oui extends \yii\db\ActiveRecord
         ];
     }
 
-    public function attributeLabels(): array
+    public static function tableName(): string
     {
-        return [
-            'oui' => Yii::t('mr42', 'OUI, MAC address, or name'),
-        ];
+        return '{{%oui}}';
     }
 }

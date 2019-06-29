@@ -6,31 +6,20 @@ use Yii;
 
 class Vcard extends \app\models\tools\Qr
 {
+    public $birthday;
+    public $email;
     public $firstName;
-    public $lastName;
     public $fullName;
     public $homeAddress;
     public $homePhone;
+    public $lastName;
+    public $note;
     public $organization;
-    public $title;
     public $role;
+    public $title;
+    public $website;
     public $workAddress;
     public $workPhone;
-    public $email;
-    public $website;
-    public $birthday;
-    public $note;
-
-    public function rules(): array
-    {
-        $rules = parent::rules();
-
-        $rules[] = ['firstName', 'required'];
-        $rules[] = ['email', 'email', 'enableIDN' => true];
-        $rules[] = ['website', 'url', 'defaultScheme' => 'http', 'enableIDN' => true];
-        $rules[] = ['birthday', 'date', 'format' => 'php:Y-m-d'];
-        return $rules;
-    }
 
     public function attributeLabels(): array
     {
@@ -73,5 +62,16 @@ class Vcard extends \app\models\tools\Qr
         $data[] = 'REV:' . date('Ymd\THis\Z');
         $data[] = 'END:VCARD';
         return parent::generate(implode("\n", array_filter($data)));
+    }
+
+    public function rules(): array
+    {
+        $rules = parent::rules();
+
+        $rules[] = ['firstName', 'required'];
+        $rules[] = ['email', 'email', 'enableIDN' => true];
+        $rules[] = ['website', 'url', 'defaultScheme' => 'http', 'enableIDN' => true];
+        $rules[] = ['birthday', 'date', 'format' => 'php:Y-m-d'];
+        return $rules;
     }
 }

@@ -8,15 +8,15 @@ use yii\web\View;
 
 class ClipboardJsAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/../zenorocha/clipboardjs/dist';
+    public $depends = [
+        'app\assets\AppAsset',
+    ];
 
     public $js = [
         'clipboard.min.js',
     ];
 
-    public $depends = [
-        'app\assets\AppAsset',
-    ];
+    public $sourcePath = '@vendor/zenorocha/clipboardjs/dist';
 
     public function registerAssetFiles($view): void
     {

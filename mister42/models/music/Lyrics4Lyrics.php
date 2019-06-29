@@ -7,11 +7,6 @@ use yii\db\ActiveQuery;
 
 class Lyrics4Lyrics extends \yii\db\ActiveRecord
 {
-    public static function tableName(): string
-    {
-        return '{{%lyrics_4_lyrics}}';
-    }
-
     public function afterFind(): void
     {
         parent::afterFind();
@@ -22,5 +17,9 @@ class Lyrics4Lyrics extends \yii\db\ActiveRecord
     public static function find(): ActiveQuery
     {
         return parent::find()->alias('lyric');
+    }
+    public static function tableName(): string
+    {
+        return '{{%lyrics_4_lyrics}}';
     }
 }

@@ -8,17 +8,8 @@ class Bitcoin extends \app\models\tools\Qr
 {
     public $address;
     public $amount;
-    public $name;
     public $message;
-
-    public function rules(): array
-    {
-        $rules = parent::rules();
-
-        $rules[] = [['address', 'amount'], 'required'];
-        $rules[] = [['address', 'name', 'message'], 'string'];
-        return $rules;
-    }
+    public $name;
 
     public function attributeLabels(): array
     {
@@ -38,5 +29,14 @@ class Bitcoin extends \app\models\tools\Qr
         $data['message'] = $this->message;
         $query = http_build_query(array_filter($data));
         return parent::generate("bitcoin:{$this->address}?{$query}");
+    }
+
+    public function rules(): array
+    {
+        $rules = parent::rules();
+
+        $rules[] = [['address', 'amount'], 'required'];
+        $rules[] = [['address', 'name', 'message'], 'string'];
+        return $rules;
     }
 }

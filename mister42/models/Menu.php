@@ -11,15 +11,6 @@ class Menu extends \yii\base\Model
 {
     private $menuItems;
 
-    public function init(): void
-    {
-        $this->menuItems = $this->getData();
-        if (Yii::$app->controller->action->id === 'sitemap') {
-            $this->menuItems[] = ['label' => null, 'url' => ['/user/registration/register']];
-            $this->menuItems[] = ['label' => null, 'url' => ['/site/privacy']];
-        }
-    }
-
     public function getItemList(): array
     {
         foreach ($this->menuItems as $menuItem) {
@@ -52,6 +43,15 @@ class Menu extends \yii\base\Model
             $list[] = $val;
         });
         return $list;
+    }
+
+    public function init(): void
+    {
+        $this->menuItems = $this->getData();
+        if (Yii::$app->controller->action->id === 'sitemap') {
+            $this->menuItems[] = ['label' => null, 'url' => ['/user/registration/register']];
+            $this->menuItems[] = ['label' => null, 'url' => ['/site/privacy']];
+        }
     }
 
     private function getData(): array

@@ -12,11 +12,6 @@ class RecentTracks extends \yii\db\ActiveRecord
 {
     public $limit = 20;
 
-    public static function tableName(): string
-    {
-        return '{{%lastfm_recenttracks}}';
-    }
-
     public function display(int $userid): string
     {
         if (time() - $this->lastSeen($userid, true) > 300) {
@@ -40,6 +35,11 @@ class RecentTracks extends \yii\db\ActiveRecord
         }
 
         return $lastSeen ?? 0;
+    }
+
+    public static function tableName(): string
+    {
+        return '{{%lastfm_recenttracks}}';
     }
 
     public function updateUser(Profile $profile, int $lastSeen)

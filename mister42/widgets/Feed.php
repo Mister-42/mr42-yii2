@@ -9,8 +9,8 @@ use yii\bootstrap4\Widget;
 
 class Feed extends Widget
 {
-    public $name;
     public $limit = 10;
+    public $name;
     public $tooltip = false;
 
     public function run(): string

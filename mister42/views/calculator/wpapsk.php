@@ -55,7 +55,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
         echo Html::tag(
             'div',
-            Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1 suppress', 'tabindex' => $tab + 2, 'onclick' => 'resetPsk()']) .
+            Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-light ml-1 suppress', 'tabindex' => $tab + 2, 'onclick' => 'resetPsk()']) .
             Html::button(Yii::t('mr42', 'Calculate'), ['class' => 'btn btn-primary ml-1 suppress', 'tabindex' => ++$tab, 'onclick' => 'calcPsk()']),
             ['class' => 'btn-toolbar float-right form-group']
         );

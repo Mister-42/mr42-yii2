@@ -13,6 +13,47 @@ use yii\web\Response;
 
 class SiteController extends \yii\web\Controller
 {
+    public function actionBrowserconfigxml(): string
+    {
+        Yii::$app->response->format = Response::FORMAT_RAW;
+        Yii::$app->response->headers->add('Content-Type', 'application/xml');
+        return $this->renderPartial('browserconfigxml');
+    }
+
+    public function actionFaviconico(): Response
+    {
+        return Yii::$app->response->sendFile(Yii::getAlias('@assetsroot/images/favicon.ico'), 'favicon.ico', ['inline' => true]);
+    }
+
+    public function actionIndex(): string
+    {
+        $this->layout = 'columns';
+        return $this->render('index');
+    }
+
+    public function actionOffline(): string
+    {
+        Yii::$app->response->statusCode = 503;
+        Yii::$app->response->headers->add('Retry-After', 900);
+        return $this->render('offline');
+    }
+
+    public function actionPhp(): string
+    {
+        return $this->render('php');
+    }
+
+    public function actionPrivacy(): string
+    {
+        return $this->render('privacy');
+    }
+
+    public function actionRobotstxt(): string
+    {
+        Yii::$app->response->format = Response::FORMAT_RAW;
+        Yii::$app->response->headers->add('Content-Type', 'text/plain');
+        return $this->renderPartial('robotstxt');
+    }
     public function actions(): array
     {
         return [
@@ -20,6 +61,11 @@ class SiteController extends \yii\web\Controller
                 'class' => ErrorAction::class,
             ],
         ];
+    }
+
+    public function actionWebmanifest(): Response
+    {
+        return $this->asJson(Webmanifest::getData());
     }
 
     public function behaviors(): array
@@ -50,52 +96,5 @@ class SiteController extends \yii\web\Controller
                 'except' => ['index', 'offline', 'php', 'webmanifest'],
             ],
         ];
-    }
-
-    public function actionIndex(): string
-    {
-        $this->layout = 'columns';
-        return $this->render('index');
-    }
-
-    public function actionFaviconico(): Response
-    {
-        return Yii::$app->response->sendFile(Yii::getAlias('@assetsroot/images/favicon.ico'), 'favicon.ico', ['inline' => true]);
-    }
-
-    public function actionOffline(): string
-    {
-        Yii::$app->response->statusCode = 503;
-        Yii::$app->response->headers->add('Retry-After', 900);
-        return $this->render('offline');
-    }
-
-    public function actionPhp(): string
-    {
-        return $this->render('php');
-    }
-
-    public function actionBrowserconfigxml(): string
-    {
-        Yii::$app->response->format = Response::FORMAT_RAW;
-        Yii::$app->response->headers->add('Content-Type', 'application/xml');
-        return $this->renderPartial('browserconfigxml');
-    }
-
-    public function actionPrivacy(): string
-    {
-        return $this->render('privacy');
-    }
-
-    public function actionRobotstxt(): string
-    {
-        Yii::$app->response->format = Response::FORMAT_RAW;
-        Yii::$app->response->headers->add('Content-Type', 'text/plain');
-        return $this->renderPartial('robotstxt');
-    }
-
-    public function actionWebmanifest(): Response
-    {
-        return $this->asJson(Webmanifest::getData());
     }
 }

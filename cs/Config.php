@@ -18,6 +18,9 @@ class Config extends \PhpCsFixer\Config
 
         $this->setRules([
             '@PSR2' => true,
+            'ordered_class_elements' => [
+                'sortAlgorithm' => 'alpha',
+            ],
         ]);
     }
 }

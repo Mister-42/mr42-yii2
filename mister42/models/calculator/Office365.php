@@ -7,21 +7,11 @@ use Yii;
 
 class Office365 extends \yii\base\Model
 {
-    public $sourcedate;
-    public $sourcecount;
-    public $targetdate;
-    public $targetcount;
     public $action;
-
-    public function rules(): array
-    {
-        return [
-            [['sourcedate', 'sourcecount', 'targetcount', 'action'], 'required'],
-            [['sourcedate', 'targetdate'], 'date', 'format' => 'php:Y-m-d'],
-            [['sourcecount', 'targetcount'], 'double', 'min' => 1],
-            ['targetdate', 'default', 'value' => date('Y-m-d')],
-        ];
-    }
+    public $sourcecount;
+    public $sourcedate;
+    public $targetcount;
+    public $targetdate;
 
     public function attributeLabels(): array
     {
@@ -60,5 +50,15 @@ class Office365 extends \yii\base\Model
 
         Yii::$app->getSession()->setFlash('office365-success', ['date' => $newDate, 'count' => $targetCount]);
         return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['sourcedate', 'sourcecount', 'targetcount', 'action'], 'required'],
+            [['sourcedate', 'targetdate'], 'date', 'format' => 'php:Y-m-d'],
+            [['sourcecount', 'targetcount'], 'double', 'min' => 1],
+            ['targetdate', 'default', 'value' => date('Y-m-d')],
+        ];
     }
 }

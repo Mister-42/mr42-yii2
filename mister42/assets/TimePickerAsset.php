@@ -7,13 +7,13 @@ use yii\web\AssetBundle;
 
 class TimePickerAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/jqueryui-timepicker-addon/dist';
-
     public $depends = [
         'yii\jui\JuiAsset',
     ];
 
     public $language;
+
+    public $sourcePath = '@bower/jqueryui-timepicker-addon/dist';
 
     public function registerAssetFiles($view): void
     {

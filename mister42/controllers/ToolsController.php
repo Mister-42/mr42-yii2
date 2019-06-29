@@ -15,23 +15,6 @@ use yii\web\UploadedFile;
 
 class ToolsController extends \yii\web\Controller
 {
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\filters\HttpCache::class,
-                'enabled' => !YII_DEBUG,
-                'etagSeed' => function (BaseObject $action) {
-                    return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile("@app/views/{$action->controller->id}/{$action->id}.php")]);
-                },
-                'lastModified' => function (BaseObject $action) {
-                    return filemtime(Yii::getAlias('@app/views/' . $action->controller->id . '/' . $action->id . '.php'));
-                },
-                'only' => ['html-to-markdown', 'password'],
-            ],
-        ];
-    }
-
     public function actionBarcode()
     {
         $model = new Barcode();
@@ -128,5 +111,21 @@ class ToolsController extends \yii\web\Controller
             'model' => $model,
             'qrForm' => $qrForm ?? '',
         ]);
+    }
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\filters\HttpCache::class,
+                'enabled' => !YII_DEBUG,
+                'etagSeed' => function (BaseObject $action) {
+                    return serialize([phpversion(), Yii::$app->user->id, Yii::$app->view->renderFile("@app/views/{$action->controller->id}/{$action->id}.php")]);
+                },
+                'lastModified' => function (BaseObject $action) {
+                    return filemtime(Yii::getAlias('@app/views/' . $action->controller->id . '/' . $action->id . '.php'));
+                },
+                'only' => ['html-to-markdown', 'password'],
+            ],
+        ];
     }
 }

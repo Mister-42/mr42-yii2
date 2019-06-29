@@ -11,13 +11,13 @@ use app\widgets\RecentChangelog;
 use app\widgets\RecentComments;
 use app\widgets\TagCloud;
 use yii\bootstrap4\Html;
-use yii\caching\ExpressionDependency;
+use yii\caching\TagDependency;
 use yii\helpers\Inflector;
 
 $isHome = Yii::$app->requestedRoute === 'site/index';
 $dependency = [
-    'class' => ExpressionDependency::class,
-    'params' => ['articles' => Articles::getLastModified(), 'comments' => ArticlesComments::getLastModified()],
+    'class' => TagDependency::class,
+    'tags' => ['articles' => Articles::getLastModified(), 'comments' => ArticlesComments::getLastModified()],
     'reusable' => true,
 ];
 

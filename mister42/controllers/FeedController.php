@@ -12,24 +12,6 @@ use yii\web\Response;
 
 class FeedController extends \yii\web\Controller
 {
-    public function behaviors(): array
-    {
-        return [
-            [
-                'class' => HttpCache::class,
-                'enabled' => !YII_DEBUG,
-                'except' => ['index'],
-                'etagSeed' => function () {
-                    return serialize([phpversion(), Yii::$app->user->id, Articles::getLastModified()]);
-                },
-                'lastModified' => function () {
-                    return Articles::getLastModified();
-                },
-                'only' => ['rss', 'sitemap-articles'],
-            ],
-        ];
-    }
-
     public function actionIndex(): Response
     {
         return $this->redirect(['rss'], 301);
@@ -70,5 +52,22 @@ class FeedController extends \yii\web\Controller
     public function actionSitemapLyrics(): string
     {
         return $this->actionSitemap();
+    }
+    public function behaviors(): array
+    {
+        return [
+            [
+                'class' => HttpCache::class,
+                'enabled' => !YII_DEBUG,
+                'except' => ['index'],
+                'etagSeed' => function () {
+                    return serialize([phpversion(), Yii::$app->user->id, Articles::getLastModified()]);
+                },
+                'lastModified' => function () {
+                    return Articles::getLastModified();
+                },
+                'only' => ['rss', 'sitemap-articles'],
+            ],
+        ];
     }
 }

@@ -8,15 +8,15 @@ use yii\web\View;
 
 class Html2MarkdownAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/to-markdown/dist';
+    public $depends = [
+        'app\assets\AppAsset',
+    ];
 
     public $js = [
         'to-markdown.js',
     ];
 
-    public $depends = [
-        'app\assets\AppAsset',
-    ];
+    public $sourcePath = '@bower/to-markdown/dist';
 
     public function registerAssetFiles($view): void
     {

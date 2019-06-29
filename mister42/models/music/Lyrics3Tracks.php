@@ -8,15 +8,10 @@ use yii\db\ActiveQuery;
 
 class Lyrics3Tracks extends \yii\db\ActiveRecord
 {
+    public $icons;
     public $max;
     public $nameExtra;
-    public $icons;
     public $video;
-
-    public static function tableName(): string
-    {
-        return '{{%lyrics_3_tracks}}';
-    }
 
     public function afterFind(): void
     {
@@ -49,17 +44,20 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord
         return false;
     }
 
-    public static function tracksList(string $artist, string $year, string $name): array
+    public static function find(): ActiveQuery
     {
-        return self::find()
-            ->orderBy(['track' => SORT_ASC])
-            ->joinWith('artist')
-            ->joinWith('lyrics')
-            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
-            ->andWhere('album.year=:year')
-            ->andWhere(['or', 'album.name=:album', 'album.url=:album'])
-            ->addParams([':artist' => $artist, ':year' => $year, ':album' => $name])
-            ->all();
+        return parent::find()->alias('track');
+    }
+
+    public function getAlbum(): ActiveQuery
+    {
+        return $this->hasOne(Lyrics2Albums::class, ['id' => 'parent']);
+    }
+
+    public function getArtist(): ActiveQuery
+    {
+        return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent'])
+            ->via('album');
     }
 
     public static function getLastModified(string $artist, string $year, string $name): int
@@ -76,24 +74,26 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord
         return $max->max ? Yii::$app->formatter->asTimestamp($max->max) : time();
     }
 
-    public function getArtist(): ActiveQuery
-    {
-        return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent'])
-            ->via('album');
-    }
-
-    public function getAlbum(): ActiveQuery
-    {
-        return $this->hasOne(Lyrics2Albums::class, ['id' => 'parent']);
-    }
-
     public function getLyrics(): ActiveQuery
     {
         return $this->hasOne(Lyrics4Lyrics::class, ['id' => 'lyricid']);
     }
 
-    public static function find(): ActiveQuery
+    public static function tableName(): string
     {
-        return parent::find()->alias('track');
+        return '{{%lyrics_3_tracks}}';
+    }
+
+    public static function tracksList(string $artist, string $year, string $name): array
+    {
+        return self::find()
+            ->orderBy(['track' => SORT_ASC])
+            ->joinWith('artist')
+            ->joinWith('lyrics')
+            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
+            ->andWhere('album.year=:year')
+            ->andWhere(['or', 'album.name=:album', 'album.url=:album'])
+            ->addParams([':artist' => $artist, ':year' => $year, ':album' => $name])
+            ->all();
     }
 }

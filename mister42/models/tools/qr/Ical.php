@@ -6,19 +6,9 @@ use Yii;
 
 class Ical extends \app\models\tools\Qr
 {
-    public $start;
     public $end;
+    public $start;
     public $summary;
-
-    public function rules(): array
-    {
-        $rules = parent::rules();
-
-        $rules[] = [['start', 'end'], 'required'];
-        $rules[] = [['start', 'end'], 'date', 'format' => 'php:Y-m-d H:i'];
-        $rules[] = ['summary', 'string'];
-        return $rules;
-    }
 
     public function attributeLabels(): array
     {
@@ -38,5 +28,15 @@ class Ical extends \app\models\tools\Qr
         $data[] = $this->getDataOrOmit('DTEND:', $this->end ? date('Ymd\THis\Z', strtotime($this->end)) : '');
         $data[] = 'END:VEVENT';
         return parent::generate(implode("\n", array_filter($data)));
+    }
+
+    public function rules(): array
+    {
+        $rules = parent::rules();
+
+        $rules[] = [['start', 'end'], 'required'];
+        $rules[] = [['start', 'end'], 'date', 'format' => 'php:Y-m-d H:i'];
+        $rules[] = ['summary', 'string'];
+        return $rules;
     }
 }

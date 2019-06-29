@@ -1,7 +1,7 @@
 <?php
 
 use app\assets\CharCounterAsset;
-use app\assets\InputFileAsset;
+use app\assets\FileInputAsset;
 use app\models\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap4\Html;
@@ -12,7 +12,7 @@ $this->params['breadcrumbs'] = [Yii::$app->name];
 $this->params['breadcrumbs'][] = $this->title;
 
 CharCounterAsset::register($this, $model->rules()['charCount']['max']);
-InputFileAsset::register($this);
+FileInputAsset::register($this);
 
 echo Html::beginTag('div', ['class' => 'row']);
     echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
@@ -52,9 +52,9 @@ echo Html::beginTag('div', ['class' => 'row']);
 
             echo Html::tag(
                 'div',
-                Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]) .
+                Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-light ml-1', 'tabindex' => $tab + 2]) .
                 Html::submitButton(Yii::t('mr42', 'Send'), ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab]),
-                ['class' => 'btn-toolbar float-right form-group']
+                ['class' => 'form-group float-right btn-toolbar']
             );
 
             ActiveForm::end();

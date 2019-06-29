@@ -87,11 +87,9 @@ class Common
                 'class' => 'app\models\Formatter',
             ],
             'icon' => [
-                'class' => 'app\models\Icon',
-                'config' => [
-                    'prefix' => 'icon',
-                    'registerAssets' => false,
-                ],
+                'class' => 'thoulah\fontawesome\IconComponent',
+                'prefix' => 'icon',
+                'registerAssets' => false,
             ],
             'i18n' => [
                 'translations' => [

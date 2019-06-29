@@ -4,14 +4,6 @@ namespace mr42;
 
 class Web
 {
-    public function getValues(): array
-    {
-        $config['id'] = 'mr42';
-        $config['basePath'] = __DIR__;
-        $config['components'] = $this->getComponents();
-        return $config;
-    }
-
     public function getComponents(): array
     {
         $params = (new \mister42\Params())->getValues();
@@ -42,5 +34,12 @@ class Web
                 ],
             ],
     ];
+    }
+    public function getValues(): array
+    {
+        $config['id'] = 'mr42';
+        $config['basePath'] = __DIR__;
+        $config['components'] = $this->getComponents();
+        return $config;
     }
 }

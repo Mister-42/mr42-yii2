@@ -24,15 +24,6 @@ class LyricsController extends \yii\console\Controller
     public $defaultAction = 'index';
 
     /**
-     * Perform image & PDF actions.
-     */
-    public function actionIndex(): void
-    {
-        $this->actionAlbumImage();
-        $this->actionAlbumPdf();
-    }
-
-    /**
      * Resizes all album covers to the default dimensions if they exceed this limit.
      */
     public function actionAlbumImage(): void
@@ -120,6 +111,15 @@ class LyricsController extends \yii\console\Controller
             $artistInfo->bio_full = trim(ArrayHelper::getValue($response->data, 'artist.bio.content')) ?? null;
             $artistInfo->save();
         }
+    }
+
+    /**
+     * Perform image & PDF actions.
+     */
+    public function actionIndex(): void
+    {
+        $this->actionAlbumImage();
+        $this->actionAlbumPdf();
     }
 
     /**

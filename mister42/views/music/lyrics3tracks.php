@@ -64,7 +64,7 @@ foreach ($data as $track) {
         'div',
         ($track->lyricid || $track->wip || $track->video)
             ? ($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
-            : Yii::$app->icon->instrumental()->class('img-fluid')->height(250),
+        : Yii::$app->icon->name('@assetsroot/images/instrumental.svg')->class('img-fluid')->height(250)->title(Yii::t('mr42', 'Instrumental')),
         ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8 notranslate' : 'col-12 notranslate']
     );
 

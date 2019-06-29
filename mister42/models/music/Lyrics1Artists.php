@@ -8,17 +8,20 @@ use yii\db\BatchQueryResult;
 
 class Lyrics1Artists extends \yii\db\ActiveRecord
 {
-    public static function tableName(): string
-    {
-        return '{{%lyrics_1_artists}}';
-    }
-
     public function afterFind(): void
     {
         parent::afterFind();
         $this->url = $this->url ?? $this->name;
         $this->updated = strtotime($this->updated);
         $this->active = (bool) ($this->active);
+    }
+
+    public static function albumsList(): BatchQueryResult
+    {
+        return self::find()
+            ->orderBy(['name' => SORT_ASC])
+            ->with('albums')
+            ->each();
     }
 
     public static function artistsList(): array
@@ -28,12 +31,9 @@ class Lyrics1Artists extends \yii\db\ActiveRecord
             ->all();
     }
 
-    public static function albumsList(): BatchQueryResult
+    public static function find(): LyricsQuery
     {
-        return self::find()
-            ->orderBy(['name' => SORT_ASC])
-            ->with('albums')
-            ->each();
+        return new LyricsQuery(get_called_class());
     }
 
     public function getAlbums(): LyricsQuery
@@ -48,9 +48,8 @@ class Lyrics1Artists extends \yii\db\ActiveRecord
             ->max('updated');
         return strtotime($data);
     }
-
-    public static function find(): LyricsQuery
+    public static function tableName(): string
     {
-        return new LyricsQuery(get_called_class());
+        return '{{%lyrics_1_artists}}';
     }
 }

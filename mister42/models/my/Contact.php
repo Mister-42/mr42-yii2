@@ -8,12 +8,24 @@ use Yii;
 
 class Contact extends \yii\base\Model
 {
-    public $name;
-    public $email;
-    public $title;
-    public $content;
     public $attachment;
     public $captcha;
+    public $content;
+    public $email;
+    public $name;
+    public $title;
+
+    public function attributeLabels(): array
+    {
+        return [
+            'name' => Yii::t('mr42', 'Name'),
+            'email' => Yii::t('mr42', 'Email Address'),
+            'title' => Yii::t('mr42', 'Subject'),
+            'content' => Yii::t('mr42', 'Message'),
+            'attachment' => Yii::t('mr42', 'Attachment'),
+            'captcha' => Yii::t('mr42', 'CAPTCHA'),
+        ];
+    }
 
     public function rules(): array
     {
@@ -26,18 +38,6 @@ class Contact extends \yii\base\Model
             ['email', 'email', 'checkDNS' => true, 'enableIDN' => true],
             ['attachment', 'file', 'minSize' => 64, 'maxSize' => 1024 * 1024 * 5],
             ['captcha', ReCaptchaValidator::class],
-        ];
-    }
-
-    public function attributeLabels(): array
-    {
-        return [
-            'name' => Yii::t('mr42', 'Name'),
-            'email' => Yii::t('mr42', 'Email Address'),
-            'title' => Yii::t('mr42', 'Subject'),
-            'content' => Yii::t('mr42', 'Message'),
-            'attachment' => Yii::t('mr42', 'Attachment'),
-            'captcha' => Yii::t('mr42', 'CAPTCHA'),
         ];
     }
 

@@ -15,19 +15,49 @@ use yii\web\Response;
 
 class MusicController extends \yii\web\Controller
 {
-    private $data;
-    private $artist;
-    private $year;
     private $album;
-    private $size;
+    private $artist;
+    private $data;
     private $lastModified;
+    private $size;
+    private $year;
 
-    public function init(): void
+    public function actionAlbumcover(): Response
     {
-        parent::init();
-        foreach (['artist', 'year', 'album', 'size'] as $val) {
-            $this->$val = Yii::$app->request->get($val);
+        if (!ArrayHelper::isIn($this->size, [100, 500, 800])) {
+            throw new NotFoundHttpException('Cover not found.');
         }
+        [$fileName, $image] = Lyrics2Albums::getCover($this->size, $this->data);
+        return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
+    }
+
+    public function actionAlbumpdf(): Response
+    {
+        $pdf = Lyrics2Albums::buildPdf($this->data[0]->album);
+        return Yii::$app->response->sendFile($pdf, implode(' - ', [$this->data[0]->artist->url, $this->data[0]->album->year, $this->data[0]->album->url]) . '.pdf');
+    }
+
+    public function actionCollection(): string
+    {
+        return $this->render('collection');
+    }
+
+    public function actionCollectionCover(int $id): Response
+    {
+        $album = Collection::find()->where(['id' => $id])->one();
+        if (!$album || !$album->image) {
+            $image = file_get_contents(Yii::getAlias('@assetsroot/images/nocdcover.png'));
+            return Yii::$app->response->sendContentAsFile($image, 'nocdcover.png', ['mimeType' => 'image/png', 'inline' => true]);
+        }
+
+        return Yii::$app->response->sendContentAsFile($album->image, "{$id}.jpg", ['mimeType' => 'image/jpeg', 'inline' => true]);
+    }
+
+    public function actionLyrics(): string
+    {
+        return $this->render($this->getViewFile(), [
+            'data' => $this->data,
+        ]);
     }
 
     public function behaviors(): array
@@ -62,56 +92,12 @@ class MusicController extends \yii\web\Controller
         ];
     }
 
-    public function actionCollection(): string
+    public function init(): void
     {
-        return $this->render('collection');
-    }
-
-    public function actionCollectionCover(int $id): Response
-    {
-        $album = Collection::find()->where(['id' => $id])->one();
-        if (!$album || !$album->image) {
-            $image = file_get_contents(Yii::getAlias('@assetsroot/images/nocdcover.png'));
-            return Yii::$app->response->sendContentAsFile($image, 'nocdcover.png', ['mimeType' => 'image/png', 'inline' => true]);
+        parent::init();
+        foreach (['artist', 'year', 'album', 'size'] as $val) {
+            $this->$val = Yii::$app->request->get($val);
         }
-
-        return Yii::$app->response->sendContentAsFile($album->image, "{$id}.jpg", ['mimeType' => 'image/jpeg', 'inline' => true]);
-    }
-
-    public function actionLyrics(): string
-    {
-        return $this->render($this->getViewFile(), [
-            'data' => $this->data,
-        ]);
-    }
-
-    public function actionAlbumpdf(): Response
-    {
-        $pdf = Lyrics2Albums::buildPdf($this->data[0]->album);
-        return Yii::$app->response->sendFile($pdf, implode(' - ', [$this->data[0]->artist->url, $this->data[0]->album->year, $this->data[0]->album->url]) . '.pdf');
-    }
-
-    public function actionAlbumcover(): Response
-    {
-        if (!ArrayHelper::isIn($this->size, [100, 500, 800])) {
-            throw new NotFoundHttpException('Cover not found.');
-        }
-        [$fileName, $image] = Lyrics2Albums::getCover($this->size, $this->data);
-        return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
-    }
-
-    private function getArtist(): array
-    {
-        $albums = Lyrics2Albums::albumsList($this->artist);
-
-        if (count($albums) === 0) {
-            throw new NotFoundHttpException('Artist not found.');
-        }
-        if ($albums[0]->artist->url !== $this->artist) {
-            $this->redirect(["/{$this->module->requestedRoute}", 'artist' => $albums[0]->artist->url], 301)->send();
-        }
-
-        return $albums;
     }
 
     private function getAlbum(): array
@@ -126,6 +112,20 @@ class MusicController extends \yii\web\Controller
         }
 
         return $tracks;
+    }
+
+    private function getArtist(): array
+    {
+        $albums = Lyrics2Albums::albumsList($this->artist);
+
+        if (count($albums) === 0) {
+            throw new NotFoundHttpException('Artist not found.');
+        }
+        if ($albums[0]->artist->url !== $this->artist) {
+            $this->redirect(["/{$this->module->requestedRoute}", 'artist' => $albums[0]->artist->url], 301)->send();
+        }
+
+        return $albums;
     }
 
     private function getViewFile(): string

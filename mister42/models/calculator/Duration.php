@@ -10,15 +10,6 @@ class Duration extends \yii\base\Model
     public $fromDate;
     public $toDate;
 
-    public function rules(): array
-    {
-        return [
-            [['fromDate', 'toDate'], 'date', 'format' => 'php:Y-m-d'],
-            ['fromDate', 'default', 'value' => date('Y-m-d')],
-            ['toDate', 'default', 'value' => date('Y-m-d', strtotime('+42 days'))],
-        ];
-    }
-
     public function attributeLabels(): array
     {
         return [
@@ -35,5 +26,14 @@ class Duration extends \yii\base\Model
         $diff = (new DateTime($this->fromDate))->diff(new DateTime($this->toDate));
         Yii::$app->getSession()->setFlash('duration-success', $diff);
         return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['fromDate', 'toDate'], 'date', 'format' => 'php:Y-m-d'],
+            ['fromDate', 'default', 'value' => date('Y-m-d')],
+            ['toDate', 'default', 'value' => date('Y-m-d', strtotime('+42 days'))],
+        ];
     }
 }

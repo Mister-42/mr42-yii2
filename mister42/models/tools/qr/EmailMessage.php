@@ -7,18 +7,8 @@ use Yii;
 class EmailMessage extends \app\models\tools\Qr
 {
     public $email;
-    public $subject;
     public $message;
-
-    public function rules(): array
-    {
-        $rules = parent::rules();
-
-        $rules[] = [['email', 'subject', 'message'], 'required'];
-        $rules[] = ['email', 'email', 'enableIDN' => true];
-        $rules[] = [['subject', 'message'], 'string'];
-        return $rules;
-    }
+    public $subject;
 
     public function attributeLabels(): array
     {
@@ -36,5 +26,15 @@ class EmailMessage extends \app\models\tools\Qr
         $data[] = $this->getDataOrOmit('SUB:', $this->subject, ';');
         $data[] = $this->getDataOrOmit('BODY:', $this->message, ';');
         return parent::generate('MATMSG:' . implode($data) . ';');
+    }
+
+    public function rules(): array
+    {
+        $rules = parent::rules();
+
+        $rules[] = [['email', 'subject', 'message'], 'required'];
+        $rules[] = ['email', 'email', 'enableIDN' => true];
+        $rules[] = [['subject', 'message'], 'string'];
+        return $rules;
     }
 }

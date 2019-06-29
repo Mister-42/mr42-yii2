@@ -42,6 +42,6 @@ foreach ($tracks as $track) {
     } elseif ($track->wip) {
         echo Html::tag('i', 'Work in Progress');
     } else {
-        echo Yii::$app->icon->instrumental()->class('img-fluid')->height(250);
+        echo Yii::$app->icon->name('@assetsroot/images/instrumental.svg')->class('img-fluid')->height(250)->title(Yii::t('mr42', 'Instrumental'));
     }
 }

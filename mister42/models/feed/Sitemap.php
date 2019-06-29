@@ -24,6 +24,13 @@ class Sitemap
         return $doc;
     }
 
+    public static function endDoc(XMLWriter $doc): string
+    {
+        $doc->endElement();
+        $doc->endDocument();
+        return $doc->outputMemory();
+    }
+
     public static function lineItem(XMLWriter $doc, array $url, array $options = []): void
     {
         $age = (int) ArrayHelper::remove($options, 'age', 0);
@@ -40,13 +47,6 @@ class Sitemap
             self::addLanguageLines($doc, $url);
         }
         $doc->endElement();
-    }
-
-    public static function endDoc(XMLWriter $doc): string
-    {
-        $doc->endElement();
-        $doc->endDocument();
-        return $doc->outputMemory();
     }
 
     private static function addLanguageLines(XMLWriter $doc, array $url): void

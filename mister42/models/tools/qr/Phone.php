@@ -8,15 +8,6 @@ class Phone extends \app\models\tools\Qr
 {
     public $phone;
 
-    public function rules(): array
-    {
-        $rules = parent::rules();
-
-        $rules[] = ['phone', 'required'];
-        $rules[] = ['phone', 'string'];
-        return $rules;
-    }
-
     public function attributeLabels(): array
     {
         $labels = parent::attributeLabels();
@@ -28,5 +19,14 @@ class Phone extends \app\models\tools\Qr
     public function generateQr(): bool
     {
         return parent::generate("TEL:{$this->phone}");
+    }
+
+    public function rules(): array
+    {
+        $rules = parent::rules();
+
+        $rules[] = ['phone', 'required'];
+        $rules[] = ['phone', 'string'];
+        return $rules;
     }
 }

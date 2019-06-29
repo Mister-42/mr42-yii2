@@ -8,8 +8,8 @@ use yii\helpers\ArrayHelper;
 
 class Item extends Widget
 {
-    public $header;
     public $body;
+    public $header;
     public $options;
 
     public function run(): string

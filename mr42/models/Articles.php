@@ -4,13 +4,8 @@ namespace app\models;
 
 class Articles extends \yii\db\ActiveRecord
 {
-    const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
-
-    public static function tableName()
-    {
-        return '{{%articles}}';
-    }
+    const STATUS_INACTIVE = 0;
 
     public function afterFind(): void
     {
@@ -22,5 +17,10 @@ class Articles extends \yii\db\ActiveRecord
     {
         return parent::find()
             ->onCondition(['active' => Self::STATUS_ACTIVE]);
+    }
+
+    public static function tableName()
+    {
+        return '{{%articles}}';
     }
 }

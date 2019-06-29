@@ -16,24 +16,17 @@ class Articles extends \yii\db\ActiveRecord
 {
     public $contentParsed;
 
-    public static function tableName(): string
+    public function afterFind(): void
     {
-        return '{{%articles}}';
-    }
+        parent::afterFind();
+        if (Yii::$app->controller->action->id !== 'update') {
+            $this->url = $this->url ?? $this->title;
+        }
 
-    public function rules(): array
-    {
-        return [
-            [['content', 'tags'], 'string'],
-            [['created', 'updated', 'authorId', 'pdf', 'active'], 'integer'],
-            [['title', 'content'], 'required'],
-            [['authorId'], 'required'],
-            [['title', 'url', 'source'], 'string', 'max' => 128],
-            ['source', 'url', 'enableIDN' => true],
-            [['url', 'source'], 'default', 'value' => null],
-            [['authorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['authorId' => 'id']],
-            [['pdf', 'active'], 'boolean'],
-        ];
+        if ($this->content) {
+            $this->contentParsed = Yii::$app->formatter->cleanInput($this->content, 'gfm', true);
+            $this->contentParsed = str_replace(Html::tag('p', '[readmore]'), '[readmore]', $this->contentParsed);
+        }
     }
 
     public function attributeLabels(): array
@@ -46,30 +39,6 @@ class Articles extends \yii\db\ActiveRecord
             'tags' => Yii::t('mr42', 'Tags'),
             'pdf' => Yii::t('mr42', 'Create PDF'),
         ];
-    }
-
-    public function behaviors(): array
-    {
-        return [
-            [
-                'class' => TimestampBehavior::class,
-                'createdAtAttribute' => 'created',
-                'updatedAtAttribute' => 'updated',
-            ],
-        ];
-    }
-
-    public function afterFind(): void
-    {
-        parent::afterFind();
-        if (Yii::$app->controller->action->id !== 'update') {
-            $this->url = $this->url ?? $this->title;
-        }
-
-        if ($this->content) {
-            $this->contentParsed = Yii::$app->formatter->cleanInput($this->content, 'gfm', true);
-            $this->contentParsed = str_replace(Html::tag('p', '[readmore]'), '[readmore]', $this->contentParsed);
-        }
     }
 
     public function beforeDelete(): bool
@@ -97,6 +66,22 @@ class Articles extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function behaviors(): array
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created',
+                'updatedAtAttribute' => 'updated',
+            ],
+        ];
+    }
+
+    public function belongsToViewer(): bool
+    {
+        return $this->authorId === Yii::$app->user->id;
+    }
+
     public static function buildPdf(self $model): string
     {
         $profile = (new Profile())->find($model->authorId)->one();
@@ -119,14 +104,9 @@ class Articles extends \yii\db\ActiveRecord
         );
     }
 
-    public function belongsToViewer(): bool
+    public static function find(): Query
     {
-        return $this->authorId === Yii::$app->user->id;
-    }
-
-    public static function getLastModified(): int
-    {
-        return self::find()->max('updated');
+        return new Query(get_called_class());
     }
 
     public function getAuthor()
@@ -141,8 +121,28 @@ class Articles extends \yii\db\ActiveRecord
             ->with('commentReplies');
     }
 
-    public static function find(): Query
+    public static function getLastModified(): int
     {
-        return new Query(get_called_class());
+        return self::find()->max('updated');
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['content', 'tags'], 'string'],
+            [['created', 'updated', 'authorId', 'pdf', 'active'], 'integer'],
+            [['title', 'content'], 'required'],
+            [['authorId'], 'required'],
+            [['title', 'url', 'source'], 'string', 'max' => 128],
+            ['source', 'url', 'enableIDN' => true],
+            [['url', 'source'], 'default', 'value' => null],
+            [['authorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['authorId' => 'id']],
+            [['pdf', 'active'], 'boolean'],
+        ];
+    }
+
+    public static function tableName(): string
+    {
+        return '{{%articles}}';
     }
 }

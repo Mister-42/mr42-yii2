@@ -4,17 +4,16 @@ namespace app\test;
 
 class ControllerTest extends \PHPUnit\Framework\TestCase
 {
+    public function testArticlesController(): void
+    {
+        $this->assertInstanceOf(\yii\web\Response::class, \Yii::$app->runAction('articles/pdf', ['id' => 4, 'title' => 'Markdown Syntax']));
+    }
     public function testFeedController(): void
     {
         $this->assertContains('</item>', \Yii::$app->runAction('feed/rss'));
         $this->assertContains('</urlset>', \Yii::$app->runAction('feed/sitemap'));
         $this->assertContains('</urlset>', \Yii::$app->runAction('feed/sitemap-articles'));
         $this->assertContains('</urlset>', \Yii::$app->runAction('feed/sitemap-lyrics'));
-    }
-
-    public function testArticlesController(): void
-    {
-        $this->assertInstanceOf(\yii\web\Response::class, \Yii::$app->runAction('articles/pdf', ['id' => 4, 'title' => 'Markdown Syntax']));
     }
 
     public function testMusicController(): void

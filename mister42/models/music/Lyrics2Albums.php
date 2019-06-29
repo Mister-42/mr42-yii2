@@ -18,11 +18,6 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
     public $playlist_embed;
     public $playlist_url;
 
-    public static function tableName(): string
-    {
-        return '{{%lyrics_2_albums}}';
-    }
-
     public function afterFind(): void
     {
         parent::afterFind();
@@ -33,6 +28,17 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         $this->created = Yii::$app->formatter->asTimestamp($this->created);
         $this->updated = Yii::$app->formatter->asTimestamp($this->updated);
         $this->active = (bool) ($this->active);
+    }
+
+    public static function albumsList(string $artist): array
+    {
+        return self::find()
+            ->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
+            ->innerJoinWith('artist', 'tracks')
+            ->with('artistInfo')
+            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
+            ->addParams([':artist' => $artist])
+            ->all();
     }
 
     public function beforeSave($insert): bool
@@ -59,17 +65,6 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function albumsList(string $artist): array
-    {
-        return self::find()
-            ->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
-            ->innerJoinWith('artist', 'tracks')
-            ->with('artistInfo')
-            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
-            ->addParams([':artist' => $artist])
-            ->all();
-    }
-
     public static function buildPdf(self $album): string
     {
         $pdf = new Pdf();
@@ -87,6 +82,22 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
                 'title' => implode(' - ', [$album->artist->name, $album->name, 'Lyrics']),
             ]
         );
+    }
+
+    public static function find(): LyricsQuery
+    {
+        return new LyricsQuery(get_called_class());
+    }
+
+    public function getArtist(): LyricsQuery
+    {
+        return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent']);
+    }
+
+    public function getArtistInfo(): ActiveQuery
+    {
+        return $this->hasOne(LyricsArtistInfo::class, ['parent' => 'id'])
+            ->via('artist');
     }
 
     public static function getCover(int $size, array $album): array
@@ -110,24 +121,13 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         return (int) Yii::$app->formatter->asTimestamp($data);
     }
 
-    public function getArtist(): LyricsQuery
-    {
-        return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent']);
-    }
-
-    public function getArtistInfo(): ActiveQuery
-    {
-        return $this->hasOne(LyricsArtistInfo::class, ['parent' => 'id'])
-            ->via('artist');
-    }
-
     public function getTracks(): ActiveQuery
     {
         return $this->hasMany(Lyrics3Tracks::class, ['parent' => 'id']);
     }
 
-    public static function find(): LyricsQuery
+    public static function tableName(): string
     {
-        return new LyricsQuery(get_called_class());
+        return '{{%lyrics_2_albums}}';
     }
 }

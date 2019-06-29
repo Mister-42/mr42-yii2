@@ -7,24 +7,10 @@ use yii\helpers\ArrayHelper;
 
 class PhoneticAlphabet extends \yii\db\ActiveRecord
 {
-    public $name;
-    public $text;
     public $alphabet;
+    public $name;
     public $numeric = true;
-
-    public static function tableName(): string
-    {
-        return 'x_phonetic_alpha';
-    }
-
-    public function rules(): array
-    {
-        return [
-            [['text', 'alphabet'], 'required'],
-            ['alphabet', 'in', 'range' => static::getAlphabetList('lng')],
-            ['numeric', 'boolean'],
-        ];
-    }
+    public $text;
 
     public function attributeLabels(): array
     {
@@ -68,17 +54,23 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord
         return ArrayHelper::map($list, 'lng', 'name');
     }
 
+    public function rules(): array
+    {
+        return [
+            [['text', 'alphabet'], 'required'],
+            ['alphabet', 'in', 'range' => static::getAlphabetList('lng')],
+            ['numeric', 'boolean'],
+        ];
+    }
+
+    public static function tableName(): string
+    {
+        return 'x_phonetic_alpha';
+    }
+
     private static function getAlpha(string $language): array
     {
         return self::find()
-            ->where(['lng' => $language])
-            ->asArray()
-            ->one();
-    }
-
-    private static function getNumeric(string $language): array
-    {
-        return PhoneticAlphabetNumeric::find()
             ->where(['lng' => $language])
             ->asArray()
             ->one();
@@ -89,5 +81,13 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord
         return ['   ' => ' · ',
                 ' - ' => PHP_EOL,
         ];
+    }
+
+    private static function getNumeric(string $language): array
+    {
+        return PhoneticAlphabetNumeric::find()
+            ->where(['lng' => $language])
+            ->asArray()
+            ->one();
     }
 }

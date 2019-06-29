@@ -14,32 +14,10 @@ class ArticlesComments extends \yii\db\ActiveRecord
     public $captcha;
     public $parsedContent;
 
-    public static function tableName(): string
+    public function afterFind(): void
     {
-        return '{{%articles_comments}}';
-    }
-
-    public function rules(): array
-    {
-        $rules = [
-            [['parent', 'title', 'content'], 'required'],
-            [['parent', 'created', 'user', 'active'], 'integer'],
-            ['content', 'string'],
-            'charCount' => ['content', 'string', 'max' => 4096],
-            [['title', 'website'], 'string', 'max' => 128],
-            ['name', 'string', 'max' => 25],
-            ['email', 'string', 'max' => 50],
-            [['name', 'email', 'website'], 'default', 'value' => null],
-            ['active', 'default', 'value' => 0],
-            ['user', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user' => 'id']],
-            ['parent', 'exist', 'skipOnError' => false, 'targetClass' => Articles::class, 'targetAttribute' => ['parent' => 'id']],
-        ];
-
-        if (Yii::$app->user->isGuest) {
-            $rules[] = ['captcha', ReCaptchaValidator::class];
-            $rules[] = [['name', 'email'], 'required'];
-        }
-        return $rules;
+        parent::afterFind();
+        $this->parsedContent = Yii::$app->formatter->cleanInput($this->content, 'gfm-comment');
     }
 
     public function attributeLabels(): array
@@ -64,21 +42,52 @@ class ArticlesComments extends \yii\db\ActiveRecord
         ];
     }
 
-    public function afterFind(): void
+    public static function find()
     {
-        parent::afterFind();
-        $this->parsedContent = Yii::$app->formatter->cleanInput($this->content, 'gfm-comment');
+        return new Query(get_called_class());
     }
 
-    public function showApprovalButton(): string
+    public function getArticle()
     {
-        return Html::a(
-            $this->active
-                ? Yii::$app->icon->name('thumbs-down')->class('mr-1') . Yii::t('mr42', 'Renounce')
-                : Yii::$app->icon->name('thumbs-up')->class('mr-1') . Yii::t('mr42', 'Approve'),
-            ['togglecomment', 'id' => $this->id],
-            ['class' => $this->active ? 'btn btn-sm btn-outline-warning ml-1' : 'btn btn-sm btn-outline-success ml-1']
-        );
+        return $this->hasOne(Articles::class, ['id' => 'parent']);
+    }
+
+    public function getAuthor()
+    {
+        return $this->hasOne(User::class, ['id' => 'user']);
+    }
+
+    public function getCommentReplies()
+    {
+        return $this->hasMany(self::className(), ['parent_comment' => 'id']);
+    }
+
+    public static function getLastModified(): int
+    {
+        return self::find()->max('created');
+    }
+
+    public function rules(): array
+    {
+        $rules = [
+            [['parent', 'title', 'content'], 'required'],
+            [['parent', 'created', 'user', 'active'], 'integer'],
+            ['content', 'string'],
+            'charCount' => ['content', 'string', 'max' => 4096],
+            [['title', 'website'], 'string', 'max' => 128],
+            ['name', 'string', 'max' => 25],
+            ['email', 'string', 'max' => 50],
+            [['name', 'email', 'website'], 'default', 'value' => null],
+            ['active', 'default', 'value' => 0],
+            ['user', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user' => 'id']],
+            ['parent', 'exist', 'skipOnError' => false, 'targetClass' => Articles::class, 'targetAttribute' => ['parent' => 'id']],
+        ];
+
+        if (Yii::$app->user->isGuest) {
+            $rules[] = ['captcha', ReCaptchaValidator::class];
+            $rules[] = [['name', 'email'], 'required'];
+        }
+        return $rules;
     }
 
     public function sendCommentMail(Articles $model, self $comment): void
@@ -105,28 +114,19 @@ class ArticlesComments extends \yii\db\ActiveRecord
         }
     }
 
-    public static function getLastModified(): int
+    public function showApprovalButton(): string
     {
-        return self::find()->max('created');
+        return Html::a(
+            $this->active
+                ? Yii::$app->icon->name('thumbs-down')->class('mr-1') . Yii::t('mr42', 'Renounce')
+                : Yii::$app->icon->name('thumbs-up')->class('mr-1') . Yii::t('mr42', 'Approve'),
+            ['togglecomment', 'id' => $this->id],
+            ['class' => $this->active ? 'btn btn-sm btn-outline-warning ml-1' : 'btn btn-sm btn-outline-success ml-1']
+        );
     }
 
-    public function getAuthor()
+    public static function tableName(): string
     {
-        return $this->hasOne(User::class, ['id' => 'user']);
-    }
-
-    public function getArticle()
-    {
-        return $this->hasOne(Articles::class, ['id' => 'parent']);
-    }
-
-    public function getCommentReplies()
-    {
-        return $this->hasMany(self::className(), ['parent_comment' => 'id']);
-    }
-
-    public static function find()
-    {
-        return new Query(get_called_class());
+        return '{{%articles_comments}}';
     }
 }

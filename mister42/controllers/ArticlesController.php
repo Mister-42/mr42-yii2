@@ -21,41 +21,6 @@ class ArticlesController extends \yii\web\Controller
 {
     public $layout = 'columns';
 
-    public function behaviors(): array
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'only' => ['create', 'update', 'delete', 'commentstatus'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'ajax' => [
-                'class' => AjaxFilter::class,
-                'only' => ['togglecomment'],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'deletecomment' => ['post'],
-                    'newcomment' => ['post'],
-                ],
-            ],
-        ];
-    }
-
-    public function actionIndex(): string
-    {
-        $model = new Articles();
-        return $this->render('index', [
-            'model' => $model,
-        ]);
-    }
-
     public function actionArticle(int $id, string $title = ''): string
     {
         $model = Articles::find()
@@ -79,23 +44,6 @@ class ArticlesController extends \yii\web\Controller
         ]);
     }
 
-    public function actionPdf(int $id, string $title): Response
-    {
-        $model = Articles::find()
-            ->where(['id' => $id])
-            ->one();
-
-        if (!$model->pdf) {
-            throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-        }
-        if ($title !== $model->url) {
-            $this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
-        }
-
-        $fileName = Articles::buildPdf($model);
-        return Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]) . '.pdf');
-    }
-
     public function actionCreate(): string
     {
         $model = new Articles();
@@ -116,17 +64,31 @@ class ArticlesController extends \yii\web\Controller
         ]);
     }
 
-    public function actionUpdate(): string
-    {
-        return $this->actionCreate();
-    }
-
     public function actionDelete(int $id): void
     {
         $model = Articles::findOne(['id' => $id]);
         $this->belongsToViewer($model);
         $model->delete();
         $this->redirect(['index'])->send();
+    }
+
+    public function actionDeletecomment(int $id): void
+    {
+        $comment = ArticlesComments::findOne(['id' => $id]);
+        $comment->active = $comment->active ? 0 : 1;
+
+        $article = Articles::findOne(['id' => $comment->parent]);
+        $this->belongsToViewer($article);
+        $comment->delete();
+        $this->redirect(['article', 'id' => $article->id, 'title' => $article->title, '#' => 'comments'])->send();
+    }
+
+    public function actionIndex(): string
+    {
+        $model = new Articles();
+        return $this->render('index', [
+            'model' => $model,
+        ]);
     }
 
     public function actionNewcomment(int $id): string
@@ -153,26 +115,21 @@ class ArticlesController extends \yii\web\Controller
         return Html::tag('div', Yii::t('mr42', 'Something went wrong, Your comment has not been saved.'), ['class' => 'alert alert-danger']);
     }
 
-    public function actionDeletecomment(int $id): void
+    public function actionPdf(int $id, string $title): Response
     {
-        $comment = ArticlesComments::findOne(['id' => $id]);
-        $comment->active = $comment->active ? 0 : 1;
+        $model = Articles::find()
+            ->where(['id' => $id])
+            ->one();
 
-        $article = Articles::findOne(['id' => $comment->parent]);
-        $this->belongsToViewer($article);
-        $comment->delete();
-        $this->redirect(['article', 'id' => $article->id, 'title' => $article->title, '#' => 'comments'])->send();
-    }
+        if (!$model->pdf) {
+            throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+        }
+        if ($title !== $model->url) {
+            $this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
+        }
 
-    public function actionTogglecomment(int $id): string
-    {
-        $comment = ArticlesComments::findOne(['id' => $id]);
-        $comment->active = $comment->active ? 0 : 1;
-
-        $article = Articles::findOne(['id' => $comment->parent]);
-        $this->belongsToViewer($article);
-        $comment->update();
-        return $comment->showApprovalButton();
+        $fileName = Articles::buildPdf($model);
+        return Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]) . '.pdf');
     }
 
     public function actionSearch(string $q): string
@@ -198,6 +155,49 @@ class ArticlesController extends \yii\web\Controller
             'query' => $query,
             'tag' => $tag,
         ]);
+    }
+
+    public function actionTogglecomment(int $id): string
+    {
+        $comment = ArticlesComments::findOne(['id' => $id]);
+        $comment->active = $comment->active ? 0 : 1;
+
+        $article = Articles::findOne(['id' => $comment->parent]);
+        $this->belongsToViewer($article);
+        $comment->update();
+        return $comment->showApprovalButton();
+    }
+
+    public function actionUpdate(): string
+    {
+        return $this->actionCreate();
+    }
+
+    public function behaviors(): array
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['create', 'update', 'delete', 'commentstatus'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'ajax' => [
+                'class' => AjaxFilter::class,
+                'only' => ['togglecomment'],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'deletecomment' => ['post'],
+                    'newcomment' => ['post'],
+                ],
+            ],
+        ];
     }
 
     private function belongsToViewer(Articles $article): void

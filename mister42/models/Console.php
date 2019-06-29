@@ -4,16 +4,20 @@ namespace app\models;
 
 class Console extends \yii\helpers\Console
 {
-    public static function startProgress($done, $total, $prefix = '', $width = null): void
-    {
-        parent::startProgress($done, $total, self::ansiFormat($prefix, [self::BOLD, self::FG_BLUE]), $width);
-    }
-
     public static function endProgress($remove = false, $keepPrefix = true): void
     {
         parent::endProgress($remove, $keepPrefix);
         self::write('Done', [self::BOLD, self::FG_GREEN]);
         self::newLine();
+    }
+
+    public static function newLine(): void
+    {
+        self::stdout(PHP_EOL);
+    }
+    public static function startProgress($done, $total, $prefix = '', $width = null): void
+    {
+        parent::startProgress($done, $total, self::ansiFormat($prefix, [self::BOLD, self::FG_BLUE]), $width);
     }
 
     public static function write(string $msg, array $format, int $tabs = 1): void
@@ -29,10 +33,5 @@ class Console extends \yii\helpers\Console
     {
         $output = self::ansiFormat($msg, $format);
         self::error($output);
-    }
-
-    public static function newLine(): void
-    {
-        self::stdout(PHP_EOL);
     }
 }

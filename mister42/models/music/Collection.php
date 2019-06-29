@@ -10,9 +10,31 @@ use yii\helpers\ArrayHelper;
 
 class Collection extends \yii\db\ActiveRecord
 {
-    public static function tableName(): string
+    public static function getDiscogsUrl(string $action, Profile $profile) : ?string
     {
-        return '{{%discogs_collection}}';
+        if ($action === 'collection') {
+            $response = Webrequest::getDiscogsApi("users/{$profile->discogs}/collection/folders?" . http_build_query(['token' => $profile->discogs_token]));
+            if (!$response->isOK) {
+                return null;
+            }
+            return "/users/{$profile->discogs}/collection/folders/{$response->data['folders'][1]['id']}/releases";
+        }
+
+        return "/users/{$profile->discogs}/wants";
+    }
+
+    public static function getEntryLastModified(int $id): int
+    {
+        $data = self::findOne(['id' => $id]);
+        return strtotime($data->created);
+    }
+
+    public static function getLastModified(): int
+    {
+        $data = self::find()
+            ->where(['status' => Yii::$app->controller->action->id])
+            ->max('created');
+        return strtotime($data);
     }
 
     public function saveCollection(int $user, array $data, string $status): array
@@ -43,31 +65,8 @@ class Collection extends \yii\db\ActiveRecord
 
         return $id ?? [];
     }
-
-    public static function getDiscogsUrl(string $action, Profile $profile) : ?string
+    public static function tableName(): string
     {
-        if ($action === 'collection') {
-            $response = Webrequest::getDiscogsApi("users/{$profile->discogs}/collection/folders?" . http_build_query(['token' => $profile->discogs_token]));
-            if (!$response->isOK) {
-                return null;
-            }
-            return "/users/{$profile->discogs}/collection/folders/{$response->data['folders'][1]['id']}/releases";
-        }
-
-        return "/users/{$profile->discogs}/wants";
-    }
-
-    public static function getLastModified(): int
-    {
-        $data = self::find()
-            ->where(['status' => Yii::$app->controller->action->id])
-            ->max('created');
-        return strtotime($data);
-    }
-
-    public static function getEntryLastModified(int $id): int
-    {
-        $data = self::findOne(['id' => $id]);
-        return strtotime($data->created);
+        return '{{%discogs_collection}}';
     }
 }

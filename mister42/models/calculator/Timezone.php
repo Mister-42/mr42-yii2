@@ -8,19 +8,9 @@ use Yii;
 
 class Timezone extends \yii\base\Model
 {
-    public $source;
     public $datetime;
+    public $source;
     public $target;
-
-    public function rules(): array
-    {
-        return [
-            [['source', 'target'], 'required'],
-            ['datetime', 'date', 'format' => 'php:Y-m-d H:i'],
-            [['source', 'target'], 'in', 'range' => self::getTimezones(false)],
-            ['datetime', 'default', 'value' => date('Y-m-d H:i')],
-        ];
-    }
 
     public function attributeLabels(): array
     {
@@ -48,5 +38,15 @@ class Timezone extends \yii\base\Model
             $timezones[$timezone] = $replace ? str_replace('_', ' ', $timezone) : $timezone;
         }
         return $timezones;
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['source', 'target'], 'required'],
+            ['datetime', 'date', 'format' => 'php:Y-m-d H:i'],
+            [['source', 'target'], 'in', 'range' => self::getTimezones(false)],
+            ['datetime', 'default', 'value' => date('Y-m-d H:i')],
+        ];
     }
 }

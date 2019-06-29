@@ -48,7 +48,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
 
         echo Html::tag(
             'div',
-            Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-default ml-1', 'tabindex' => $tab + 2]) .
+            Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-light ml-1', 'tabindex' => $tab + 2]) .
             Html::submitButton(Yii::t('mr42', 'Submit'), ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab]),
             ['class' => 'btn-toolbar float-right form-group']
         );

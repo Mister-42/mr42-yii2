@@ -22,6 +22,35 @@ class ProfileController extends \Da\User\Controller\ProfileController
         parent::__construct($id, $module, $profileQuery, $config);
     }
 
+    public function actionRecenttracks($username)
+    {
+        $user = $this->userQuery->whereUsername($username)->one();
+        if (!$user) {
+            throw new NotFoundHttpException('Profile not found.');
+        }
+
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException('Method Not Allowed.');
+        }
+
+        return (new RecentTracks())->display($user->id);
+    }
+
+    public function actionShow($username)
+    {
+        $user = $this->userQuery->whereUsername($username)->one();
+        if (!$user) {
+            throw new NotFoundHttpException('User not found.');
+        }
+
+        $profile = $this->profileQuery->whereUserId($user->id)->one();
+        if ($profile->lastfm) {
+            $this->layout = '@app/views/layouts/recenttracks.php';
+        }
+
+        return parent::actionShow($user->id);
+    }
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -42,34 +71,5 @@ class ProfileController extends \Da\User\Controller\ProfileController
                 'only' => ['show'],
             ],
         ]);
-    }
-
-    public function actionShow($username)
-    {
-        $user = $this->userQuery->whereUsername($username)->one();
-        if (!$user) {
-            throw new NotFoundHttpException('User not found.');
-        }
-
-        $profile = $this->profileQuery->whereUserId($user->id)->one();
-        if ($profile->lastfm) {
-            $this->layout = '@app/views/layouts/recenttracks.php';
-        }
-
-        return parent::actionShow($user->id);
-    }
-
-    public function actionRecenttracks($username)
-    {
-        $user = $this->userQuery->whereUsername($username)->one();
-        if (!$user) {
-            throw new NotFoundHttpException('Profile not found.');
-        }
-
-        if (!Yii::$app->request->isAjax) {
-            throw new MethodNotAllowedHttpException('Method Not Allowed.');
-        }
-
-        return (new RecentTracks())->display($user->id);
     }
 }

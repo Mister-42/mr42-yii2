@@ -8,13 +8,8 @@ use yii\web\View;
 
 class AppAsset extends AssetBundle
 {
-    public $sourcePath = '@runtime/assets/css';
-
     public $css = [
         'site.css',
-    ];
-
-    public $js = [
     ];
 
     public $depends = [
@@ -22,10 +17,16 @@ class AppAsset extends AssetBundle
         'yii\bootstrap4\BootstrapAsset',
     ];
 
-    public function init(): void
+    public $js = [
+    ];
+
+    public $sourcePath = '@runtime/assets/css';
+
+    public function registerAssetFiles($view): void
     {
-        Yii::$app->view->registerJs(Yii::$app->formatter->jspack('scrolltop.js'), View::POS_READY);
-        Yii::$app->view->registerJs(Yii::$app->formatter->jspack('targetBlank.js'), View::POS_READY);
-        Yii::$app->view->registerJs('$(function(){$(\'[data-toggle="tooltip"]\').tooltip()});', View::POS_READY);
+        parent::registerAssetFiles($view);
+        $view->registerJs(Yii::$app->formatter->jspack('scrolltop.js'), View::POS_READY);
+        $view->registerJs(Yii::$app->formatter->jspack('targetBlank.js'), View::POS_READY);
+        $view->registerJs('$(function(){$(\'[data-toggle="tooltip"]\').tooltip()});', View::POS_READY);
     }
 }

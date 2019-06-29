@@ -9,24 +9,11 @@ use yii\helpers\FileHelper;
 
 class Barcode extends \yii\base\Model
 {
-    public $type;
+    public $barWidth = 2;
     public $code;
     public $height = 150;
-    public $barWidth = 2;
     public $recipient;
-
-    public function rules(): array
-    {
-        return [
-            [['type', 'code', 'height', 'barWidth'], 'required'],
-            ['type', 'in', 'range' => self::getTypes(true)],
-            ['code', 'string', 'max' => 25],
-            ['code', 'double'],
-            ['height', 'double', 'min' => 50, 'max' => 750],
-            ['barWidth', 'double', 'min' => 1, 'max' => 5],
-            ['recipient', 'email', 'checkDNS' => true, 'enableIDN' => true],
-        ];
-    }
+    public $type;
 
     public function attributeLabels(): array
     {
@@ -113,5 +100,18 @@ class Barcode extends \yii\base\Model
             $list[$value] = $rules ? $value : $name;
         }
         return $list;
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['type', 'code', 'height', 'barWidth'], 'required'],
+            ['type', 'in', 'range' => self::getTypes(true)],
+            ['code', 'string', 'max' => 25],
+            ['code', 'double'],
+            ['height', 'double', 'min' => 50, 'max' => 750],
+            ['barWidth', 'double', 'min' => 1, 'max' => 5],
+            ['recipient', 'email', 'checkDNS' => true, 'enableIDN' => true],
+        ];
     }
 }

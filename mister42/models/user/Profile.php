@@ -17,16 +17,6 @@ class Profile extends \Da\User\Model\Profile
         return $labels;
     }
 
-    public function rules()
-    {
-        $rules = parent::rules();
-        $rules['required'] = ['birthday', 'required'];
-        $rules['lastfm'] = ['lastfm', 'string', 'max' => 64];
-        $rules['bioString'] = ['bio', 'string', 'max' => 4096];
-        $rules[] = ['birthday', 'date', 'format' => 'php:Y-m-d', 'max' => date('Y-m-d', strtotime('-16 years')), 'min' => date('Y-m-d', strtotime('-110 years'))];
-        return $rules;
-    }
-
     public function beforeSave($insert)
     {
         if (!ActiveRecord::beforeSave($insert)) {
@@ -36,6 +26,16 @@ class Profile extends \Da\User\Model\Profile
         $this->bio = strtr($this->bio, ['&lt;' => '<', '&gt;' => '>', '&amp;' => '&']);
         $this->name = !empty($this->name) ? $this->name : null;
         return true;
+    }
+
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules['required'] = ['birthday', 'required'];
+        $rules['lastfm'] = ['lastfm', 'string', 'max' => 64];
+        $rules['bioString'] = ['bio', 'string', 'max' => 4096];
+        $rules[] = ['birthday', 'date', 'format' => 'php:Y-m-d', 'max' => date('Y-m-d', strtotime('-16 years')), 'min' => date('Y-m-d', strtotime('-110 years'))];
+        return $rules;
     }
 
     public static function show($user)

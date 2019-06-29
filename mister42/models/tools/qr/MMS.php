@@ -6,17 +6,8 @@ use Yii;
 
 class MMS extends \app\models\tools\Qr
 {
-    public $phone;
     public $message;
-
-    public function rules(): array
-    {
-        $rules = parent::rules();
-
-        $rules[] = [['phone', 'message'], 'required'];
-        $rules[] = [['phone', 'message'], 'string'];
-        return $rules;
-    }
+    public $phone;
 
     public function attributeLabels(): array
     {
@@ -30,5 +21,14 @@ class MMS extends \app\models\tools\Qr
     public function generateQr(): bool
     {
         return parent::generate("MMSTO:{$this->phone}:{$this->message}");
+    }
+
+    public function rules(): array
+    {
+        $rules = parent::rules();
+
+        $rules[] = [['phone', 'message'], 'required'];
+        $rules[] = [['phone', 'message'], 'string'];
+        return $rules;
     }
 }

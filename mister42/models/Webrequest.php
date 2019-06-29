@@ -25,6 +25,15 @@ class Webrequest
         ]))->send();
     }
 
+    public static function getUrl(string $base, string $url, array $data = []): Request
+    {
+        $client = ($base === 'file') ? new Client(['transport' => CurlTransport::class]) : new Client(['baseUrl' => $base]);
+        return $client->createRequest()
+            ->addHeaders(['user-agent' => Yii::$app->name . ' (+' . Yii::$app->params['shortDomain'] . ')'])
+            ->setData($data)
+            ->setUrl($url);
+    }
+
     public static function getYoutubeApi(string $id, string $content): Response
     {
         $secrets = (new Secrets())->getValues();
@@ -33,15 +42,6 @@ class Webrequest
             'key' => $secrets['google']['API'],
             'part' => $content === 'videos' ? 'snippet,status' : 'contentDetails,status',
         ])->send();
-    }
-
-    public static function getUrl(string $base, string $url, array $data = []): Request
-    {
-        $client = ($base === 'file') ? new Client(['transport' => CurlTransport::class]) : new Client(['baseUrl' => $base]);
-        return $client->createRequest()
-            ->addHeaders(['user-agent' => Yii::$app->name . ' (+' . Yii::$app->params['shortDomain'] . ')'])
-            ->setData($data)
-            ->setUrl($url);
     }
 
     public static function saveUrl(string $url, string $file, array $data = []): Response

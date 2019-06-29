@@ -1,7 +1,7 @@
 <?php
 
+use app\assets\FileInputAsset;
 use app\assets\HighlightAsset;
-use app\assets\InputFileAsset;
 use app\models\ActiveForm;
 use yii\bootstrap4\Alert;
 use yii\bootstrap4\Html;
@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = Yii::t('mr42', 'Tools');
 $this->params['breadcrumbs'][] = $this->title;
 
 HighlightAsset::register($this);
-InputFileAsset::register($this);
+FileInputAsset::register($this);
 
 echo Html::beginTag('div', ['class' => 'row']);
     echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);

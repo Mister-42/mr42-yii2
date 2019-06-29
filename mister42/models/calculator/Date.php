@@ -7,18 +7,8 @@ use Yii;
 
 class Date extends \yii\base\Model
 {
-    public $from;
     public $days;
-
-    public function rules(): array
-    {
-        return [
-            ['from', 'date', 'format' => 'php:Y-m-d'],
-            ['days', 'number'],
-            ['from', 'default', 'value' => date('Y-m-d')],
-            ['days', 'default', 'value' => 42],
-        ];
-    }
+    public $from;
 
     public function attributeLabels(): array
     {
@@ -37,5 +27,15 @@ class Date extends \yii\base\Model
         $date->modify($this->days . ' days');
         Yii::$app->getSession()->setFlash('date-success', $date);
         return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            ['from', 'date', 'format' => 'php:Y-m-d'],
+            ['days', 'number'],
+            ['from', 'default', 'value' => date('Y-m-d')],
+            ['days', 'default', 'value' => 42],
+        ];
     }
 }

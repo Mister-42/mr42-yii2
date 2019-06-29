@@ -7,12 +7,6 @@ use yii\web\View;
 
 class HighlightAsset extends AssetBundle
 {
-    public $sourcePath = '@npm/highlightjs/';
-
-    public $js = [
-        'highlight.pack' . (YII_DEBUG ? '' : '.min') . '.js',
-    ];
-
     public $css = [
         'styles/default.css',
     ];
@@ -20,6 +14,12 @@ class HighlightAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
     ];
+
+    public $js = [
+        'highlight.pack' . (YII_DEBUG ? '' : '.min') . '.js',
+    ];
+
+    public $sourcePath = '@npm/highlightjs/';
 
     public static function register($view)
     {

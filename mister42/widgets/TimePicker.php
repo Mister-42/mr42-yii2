@@ -11,10 +11,10 @@ use yii\jui\DatePickerLanguageAsset;
 
 class TimePicker extends DatePicker
 {
-    public $mode = 'datetime';
     public $addon = 'calendar';
-    public $template = '{addon}{input}';
+    public $mode = 'datetime';
     public $size;
+    public $template = '{addon}{input}';
 
     public function init(): void
     {
@@ -28,6 +28,23 @@ class TimePicker extends DatePicker
         }
         Html::addCssClass($this->options, 'form-control');
         Html::addCssClass($this->containerOptions, 'input-group ' . $this->mode);
+    }
+
+    public function registerClientScript(): void
+    {
+        $view = $this->getView();
+        $language = $this->language ? $this->language : Yii::$app->language;
+        $name = $this->mode . 'picker';
+
+        $timeAssetBundle = TimePickerAsset::register($view);
+        if ($language !== 'en') {
+            $timeAssetBundle->language = $language;
+            $dateAssetBundle = DatePickerLanguageAsset::register($view);
+            $dateAssetBundle->language = $language;
+        }
+
+        $this->registerClientOptions($name, $this->options['id']);
+        $this->registerClientEvents($name, $this->options['id']);
     }
 
     public function run(): void
@@ -46,22 +63,5 @@ class TimePicker extends DatePicker
 
         echo $input;
         $this->registerClientScript();
-    }
-
-    public function registerClientScript(): void
-    {
-        $view = $this->getView();
-        $language = $this->language ? $this->language : Yii::$app->language;
-        $name = $this->mode . 'picker';
-
-        $timeAssetBundle = TimePickerAsset::register($view);
-        if ($language !== 'en') {
-            $timeAssetBundle->language = $language;
-            $dateAssetBundle = DatePickerLanguageAsset::register($view);
-            $dateAssetBundle->language = $language;
-        }
-
-        $this->registerClientOptions($name, $this->options['id']);
-        $this->registerClientEvents($name, $this->options['id']);
     }
 }
