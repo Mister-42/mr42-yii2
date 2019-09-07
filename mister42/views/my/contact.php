@@ -41,11 +41,11 @@ echo Html::beginTag('div', ['class' => 'row']);
             ])->textInput(['tabindex' => ++$tab]);
 
             echo $form->field($model, 'content', [
-                'inputTemplate' => '<div id="chars" class="float-right"></div>' . Yii::$app->icon->name('comment')->activeFieldAddon(),
+                'inputTemplate' => '<div id="chars" class="float-right"></div>' . Yii::$app->icon->activeFieldAddon('comment'),
             ])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab]);
 
             echo $form->field($model, 'attachment', [
-                'inputTemplate' => '<div class="input-group">' . Yii::$app->icon->name('paperclip')->activeFieldIcon() . Html::tag('div', '{input}' . Html::tag('label', Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']) . '</div>',
+                'inputTemplate' => '<div class="input-group">' . Yii::$app->icon->activeFieldIcon('paperclip') . Html::tag('div', '{input}' . Html::tag('label', Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']) . '</div>',
             ])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab]);
 
             echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);

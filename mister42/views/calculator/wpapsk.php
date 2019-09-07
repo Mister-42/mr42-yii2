@@ -40,7 +40,7 @@ echo Html::beginTag('div', ['class' => 'row']);
         echo Html::endTag('div');
 
         echo $form->field($model, 'psk', [
-            'inputTemplate' => '<div class="input-group">' . Yii::$app->icon->name('key')->activeFieldIcon() . '{input}<span class="input-group-append">' . Html::button(Yii::$app->icon->name('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('mr42', 'Copy to Clipboard')]) . '</span></div>',
+            'inputTemplate' => '<div class="input-group">' . Yii::$app->icon->activeFieldIcon('key') . '{input}<span class="input-group-append">' . Html::button(Yii::$app->icon->name('copy'), ['class' => 'btn btn-primary clipboard-js-init', 'data-clipboard-target' => '#wpapsk-psk', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('mr42', 'Copy to Clipboard')]) . '</span></div>',
             'options' => ['class' => 'form-group has-success'],
         ])->textInput(['placeholder' => Yii::t('mr42', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.'), 'readonly' => true]);
 

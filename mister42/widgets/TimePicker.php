@@ -57,7 +57,7 @@ class TimePicker extends DatePicker
         }
 
         if ($this->addon) {
-            $input = strtr($this->template, ['{input}' => $input, '{addon}' => Yii::$app->icon->name($this->addon)->activeFieldIcon()]);
+            $input = strtr($this->template, ['{input}' => $input, '{addon}' => Yii::$app->icon->activeFieldIcon($this->addon)]);
             $input = Html::tag('div', $input, $this->containerOptions);
         }
 

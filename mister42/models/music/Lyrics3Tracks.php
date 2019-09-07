@@ -24,12 +24,12 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord
 
         $icons = [];
         if ($this->video) {
-            $icons[] = Yii::$app->icon->name($this->video_source, 'brands')->class('text-muted ml-1')->title(Yii::t('mr42', 'Video'));
+            $icons[] = (string) Yii::$app->icon->name($this->video_source, 'brands')->class('text-muted ml-1')->title(Yii::t('mr42', 'Video'));
         }
         if ($this->wip) {
-            $icons[] = Yii::$app->icon->name('plus')->class('text-muted ml-1')->title(Yii::t('mr42', 'Work in Progress'));
+            $icons[] = (string) Yii::$app->icon->name('plus')->class('text-muted ml-1')->title(Yii::t('mr42', 'Work in Progress'));
         } elseif (!$this->lyricid) {
-            $icons[] = Yii::$app->icon->name('music')->class('text-muted ml-1')->title(Yii::t('mr42', 'Instrumental'));
+            $icons[] = (string) Yii::$app->icon->name('music')->class('text-muted ml-1')->title(Yii::t('mr42', 'Instrumental'));
         }
         $this->icons = implode($icons);
     }
@@ -64,14 +64,13 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord
     {
         $max = self::find()
             ->select('GREATEST(MAX(album.updated), MAX(lyric.updated)) AS `max`')
-            ->joinWith('artist')
-            ->joinWith('lyrics')
+            ->joinWith(['artist', 'lyrics'])
             ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
             ->andWhere('album.year=:year')
             ->andWhere(['or', 'album.name=:album', 'album.url=:album'])
             ->addParams([':artist' => $artist, ':year' => $year, ':album' => $name])
-            ->one();
-        return $max->max ? Yii::$app->formatter->asTimestamp($max->max) : time();
+            ->scalar();
+        return $max ? Yii::$app->formatter->asTimestamp($max) : time();
     }
 
     public function getLyrics(): ActiveQuery

@@ -51,7 +51,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
                 $album->tracks
                             ? Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'notranslate'])
                             : $album->name
-                        ), ['class' => 'float-left']) .
+            ), ['class' => 'float-left']) .
                         Html::tag(
                             'div',
                             ($album->buy
@@ -66,7 +66,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
                             ['class' => 'float-right']
                         ),
             ['class' => 'card-header']
-                    );
+        );
 
         echo Html::beginTag('div', ['class' => 'container media mx-1']);
         echo Html::beginTag('div', ['class' => 'row mr-2 media-body text-truncate']);

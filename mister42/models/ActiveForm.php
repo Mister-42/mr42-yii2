@@ -27,7 +27,7 @@ class ActiveForm extends \thoulah\fontawesome\bootstrap4\ActiveForm
         $eyeIcons = (string) Yii::$app->icon->name('eye')->class('append');
         $eyeIcons .= (string) Yii::$app->icon->name('eye-slash')->class('append d-none');
         return $this->field($model, 'password', [
-            'inputTemplate' => '<div class="input-group" id="pwdToggle">' . Yii::$app->icon->name('lock')->activeFieldIcon() . '{input}<span class="input-group-append">' . Html::button($eyeIcons, ['class' => 'btn btn-primary', 'title' => Yii::t('mr42', 'Show Password')]) . '</span></div>',
+            'inputTemplate' => '<div class="input-group" id="pwdToggle">' . Yii::$app->icon->activeFieldIcon('lock') . '{input}<span class="input-group-append">' . Html::button($eyeIcons, ['class' => 'btn btn-primary', 'title' => Yii::t('mr42', 'Show Password')]) . '</span></div>',
             'options' => $options,
         ])->passwordInput(['tabindex' => $tab]);
     }

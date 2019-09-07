@@ -96,7 +96,7 @@ class ArticlesComments extends \yii\db\ActiveRecord
         Yii::$app->mailer->compose(
             ['text' => 'commentToAuthor'],
             ['model' => $model, 'comment' => $comment]
-            )
+        )
             ->setTo([$model->author->email => $model->author->username])
             ->setFrom([$comment->email => $comment->name])
             ->setSubject("A new comment has been posted on '{$model->title}'.")
@@ -106,7 +106,7 @@ class ArticlesComments extends \yii\db\ActiveRecord
             Yii::$app->mailer->compose(
                 ['html' => 'commentToCommenter'],
                 ['model' => $model, 'comment' => $comment]
-                )
+            )
                 ->setTo([$comment->email => $comment->name])
                 ->setFrom([$secrets['params']['noreplyEmail'] => Yii::$app->name])
                 ->setSubject("Thank you for your reply on '{$model->title}'.")

@@ -29,7 +29,7 @@ foreach ($tabs as $tab => $tabdesc) {
         $$tab[] = Html::a(
             Html::img('@assets/images/blank.png', ['alt' => "{$album->artist} - {$album->year} - {$album->title}", 'class' => 'card-img-top rounded', 'data-src' => Url::to(['music/collection-cover', 'id' => $album->id])]),
             "https://www.discogs.com/release/{$album->id}"
-                    );
+        );
         $$tab[] = Html::tag('div', Html::tag('small', $album->title, ['class' => 'card-text mt-auto mx-auto font-weight-bold notranslate']), ['class' => 'card-body d-flex text-center p-2']);
         $$tab[] = Html::tag('div', Html::tag('small', $album->artist), ['class' => 'card-footer text-center p-2 notranslate']);
         $$tab[] = Html::endTag('div');

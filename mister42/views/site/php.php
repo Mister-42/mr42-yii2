@@ -26,6 +26,7 @@ echo Html::beginTag('div', ['class' => 'site-php-version']);
 
     echo Html::tag('div', 'Yii ' . Yii::getVersion(), ['class' => 'h1 mt-3']);
 
+    ksort($this->context->module->extensions);
     foreach ($this->context->module->extensions as $data) {
         echo Html::beginTag('div', ['class' => 'row']);
         echo Html::tag('div', $data['name'], ['class' => 'col']);

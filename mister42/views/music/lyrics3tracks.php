@@ -50,7 +50,7 @@ $items[] = [
             : null) .
         ($data[0]->album->active
             ? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
-            : Html::tag('span', Yii::$app->icon->name('asterisk', ['class' => 'mr-1']) . Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
+            : Html::tag('span', Yii::$app->icon->name('asterisk')->class('mr-1') . Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
     'contentOptions' => ['class' => 'text-center'],
     'options' => ['id' => 'frontCover'],
 ];

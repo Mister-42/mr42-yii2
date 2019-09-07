@@ -25,7 +25,7 @@ echo Html::beginTag('div', ['class' => 'row']);
             echo Html::beginTag('div', ['class' => 'form-group passform-length']);
                 echo Html::label(Yii::t('mr42', 'Password Length'), null, ['class' => 'control-label']);
                 echo Html::beginTag('div', ['class' => 'input-group']);
-                    echo Yii::$app->icon->name('th-list')->activeFieldIcon();
+                    echo Yii::$app->icon->activeFieldIcon('th-list');
                     echo Html::dropDownList('length', 12, $passLength, ['class' => 'form-control']);
                 echo Html::endTag('div');
             echo Html::endTag('div');
@@ -33,7 +33,7 @@ echo Html::beginTag('div', ['class' => 'row']);
             echo Html::beginTag('div', ['class' => 'form-group passform-password']);
                 echo Html::label(Yii::t('mr42', 'Password'), null, ['class' => 'control-label']);
                 echo Html::beginTag('div', ['class' => 'input-group passform-password']);
-                    echo Yii::$app->icon->name('lock')->activeFieldIcon();
+                    echo Yii::$app->icon->activeFieldIcon('lock');
                     echo Html::textInput('password', null, ['class' => 'form-control', 'id' => 'password', 'placeholder' => Yii::t('mr42', 'JavaScript is disabled in your web browser. This tool does not work without JavaScript.'), 'readonly' => true]);
                     echo Html::tag(
                         'span',

@@ -29,7 +29,7 @@ echo Html::beginTag('div', ['class' => 'row']);
             'icon' => 'th-list',
         ])->dropDownList(PhoneticAlphabet::getAlphabetList(), ['tabindex' => ++$tab]);
 
-        echo $form->field($model, 'numeric')->checkBox(['tabindex' => ++$tab]);
+        echo $form->field($model, 'numeric', ['enableClientValidation' => false])->checkBox(['tabindex' => ++$tab]);
 
         echo $form->submitToolbar(Yii::t('mr42', 'Convert'), $tab);
 

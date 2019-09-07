@@ -72,7 +72,7 @@ echo Html::beginTag('div', ['class' => 'row']);
         ]);
 
         echo $form->field($model, 'bio', [
-            'inputTemplate' => '<div id="chars" class="float-right"></div>' . Yii::$app->icon->name('info-circle')->activeFieldAddon(),
+            'inputTemplate' => '<div id="chars" class="float-right"></div>' . Yii::$app->icon->activeFieldAddon('info-circle'),
         ])->hint(Yii::t('mr42', 'You may use {markdown} and {age} to show your age, calculated from <nobr>{birthday}</nobr>. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank']), 'age' => '<code>%age%</code>', 'birthday' => Html::tag('code', $model->getAttributeLabel('birthday'))]))
         ->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => ++$tab]);
 

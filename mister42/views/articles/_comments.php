@@ -11,7 +11,7 @@ foreach ($data->comments as $comment) {
         'div',
         Html::tag('h4', $comment->title, ['class' => 'comment-info']),
         ['class' => 'float-left']
-            );
+    );
 
     if ($data->belongsToViewer()) {
         echo Html::beginTag('div', ['class' => 'float-right']);
@@ -54,7 +54,7 @@ foreach ($data->comments as $comment) {
             'div',
             Html::tag('h4', "Re: {$comment->title}", ['class' => 'comment-info']),
             ['class' => 'float-left']
-                );
+        );
         echo Html::endTag('div');
 
         echo Html::tag('div', $reply->parsedContent, ['class' => 'card-body']);

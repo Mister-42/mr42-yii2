@@ -30,7 +30,7 @@ echo Html::beginTag('div', ['class' => 'row']);
                     Html::tag('div', wordwrap($item->assignment, 2, ':', true), ['class' => 'col-2']) .
                         Html::tag('div', $item->name, ['class' => 'col-10']),
                     ['class' => 'row']
-                    );
+                );
             }
             if ($count === 0) {
                 echo Html::tag('div', Yii::t('yii', 'No results found.'));

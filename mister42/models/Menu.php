@@ -57,7 +57,7 @@ class Menu extends \yii\base\Model
     private function getData(): array
     {
         return [
-            ['label' => Yii::$app->icon->name('certificate') . Html::tag('span', 'Test'), 'url' => ['/test/index'], 'visible' => $this->isAdmin()],
+            ['label' => Yii::$app->icon->name('mask') . Html::tag('span', 'Test'), 'url' => ['/test/index'], 'visible' => $this->isAdmin()],
             ['label' => Yii::$app->icon->name('newspaper') . Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true, 'active' => Yii::$app->controller->id === 'articles'],
             ['label' => Yii::$app->icon->name('calculator') . Html::tag('span', Yii::t('mr42', 'Calculator')),
                 'items' => [
@@ -79,6 +79,11 @@ class Menu extends \yii\base\Model
                     ['label' => Yii::t('mr42', 'Password Generator'), 'url' => ['/tools/password']],
                     ['label' => Yii::t('mr42', 'Phonetic Alphabet Translator'), 'url' => ['/tools/phonetic-alphabet']],
                     ['label' => Yii::t('mr42', 'QR Code Generator'), 'url' => ['/tools/qr']],
+                ],
+            ],
+            ['label' => Yii::$app->icon->name('code') . Html::tag('span', Yii::t('mr42', 'Yii Extensions')), 'visible' => $this->isAdmin(),
+                'items' => [
+                    ['label' => 'Font Awesome Inline', 'url' => ['/extensions/index', 'name' => 'fontawesome-inline']],
                 ],
             ],
             ['label' => Yii::$app->icon->name('music') . Html::tag('span', Yii::t('mr42', 'Music')),
