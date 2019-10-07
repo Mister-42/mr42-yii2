@@ -28,7 +28,6 @@
         "2amigos/yii2-usuario": "~1.0",
         "codemix/yii2-localeurls": "^1.7",
         "gkralik/php-uglifyjs": "^1.0",
-        "himiklab/yii2-recaptcha-widget": "*",
         "kop/yii2-scroll-pager": "^2.0",
         "mpdf/mpdf": "^8.0",
         "mpdf/qrcode": "^1.0",
@@ -44,9 +43,6 @@
         "psr-4": {
             "mister42\\cs\\": "cs"
         }
-    },
-    "replace": {
-        "yiisoft/yii2-bootstrap": "*"
     },
     "repositories": [
         {

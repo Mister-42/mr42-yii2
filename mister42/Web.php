@@ -68,10 +68,9 @@ class Web
                     ],
                 ],
             ],
-            'reCaptcha' => [
-                'name' => 'reCaptcha',
-                'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
-                'siteKey' => $this->secrets['google']['reCAPTCHA']['siteKey'],
+            'recaptcha' => [
+                'class' => 'Da\User\Component\ReCaptchaComponent',
+                'key' => $this->secrets['google']['reCAPTCHA']['key'],
                 'secret' => $this->secrets['google']['reCAPTCHA']['secret'],
             ],
             'request' => [

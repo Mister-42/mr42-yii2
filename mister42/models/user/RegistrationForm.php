@@ -2,7 +2,7 @@
 
 namespace app\models\user;
 
-use himiklab\yii2\recaptcha\ReCaptchaValidator;
+use Da\User\Validator\ReCaptchaValidator;
 
 class RegistrationForm extends \Da\User\Form\RegistrationForm
 {
@@ -18,6 +18,7 @@ class RegistrationForm extends \Da\User\Form\RegistrationForm
     public function rules(): array
     {
         $rules = parent::rules();
+        $rules[] = [['captcha'], 'safe'];
         $rules[] = ['captcha', ReCaptchaValidator::class];
         return $rules;
     }
