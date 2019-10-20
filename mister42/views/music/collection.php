@@ -24,7 +24,7 @@ echo Html::tag('h1', $this->title);
 foreach ($tabs as $tab => $tabdesc) {
     $$tab[] = Html::beginTag('div', ['class' => 'row justify-content-center']);
     foreach (Collection::find()->where(['user_id' => 1, 'status' => $tab])->orderBy(['artist' => SORT_ASC, 'year' => SORT_ASC])->all() as $album) {
-        $$tab[] = Html::beginTag('div', ['class' => 'col-12 col-sm-6 col-md-3 col-xl-2 mt-3']);
+        $$tab[] = Html::beginTag('div', ['class' => 'col-12 col-sm-6 col-md-3 col-xl-2 mt-3 d-sm-flex align-items-stretch']);
         $$tab[] = Html::beginTag('div', ['class' => 'card']);
         $$tab[] = Html::a(
             Html::img('@assets/images/blank.png', ['alt' => "{$album->artist} - {$album->year} - {$album->title}", 'class' => 'card-img-top rounded', 'data-src' => Url::to(['music/collection-cover', 'id' => $album->id])]),

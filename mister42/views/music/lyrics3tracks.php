@@ -28,7 +28,7 @@ $items[] = [
     'label' => Html::tag('span', implode(' - ', [$data[0]->artist->name, $data[0]->album->name]), ['class' => 'h4 notranslate']),
     'content' => ($data[0]->album->image)
         ? Lightbox::widget([
-            'imageOptions' => ['class' => 'img-fluid img-thumbnail rounded', 'style' => "background-color:{$data[0]->album->image_color}"],
+            'imageOptions' => ['class' => 'img-fluid img-thumbnail rounded', 'style' => ['background-color' => $data[0]->album->image_color]],
             'items' => [
                 [
                     'thumb' => ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '500'],

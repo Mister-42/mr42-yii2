@@ -108,7 +108,8 @@ class LyricsController extends \yii\console\Controller
             $artistInfo = LyricsArtistInfo::findOne(['parent' => $artist->parent]);
             $artistInfo->mbid = ArrayHelper::getValue($response->data, 'artist.mbid');
             $artistInfo->bio_summary = trim(ArrayHelper::getValue($response->data, 'artist.bio.summary')) ?? null;
-            $artistInfo->bio_full = trim(ArrayHelper::getValue($response->data, 'artist.bio.content')) ?? null;
+            $bioFull = ArrayHelper::getValue($response->data, 'artist.bio.content');
+            $artistInfo->bio_full = (!is_array($bioFull)) ? trim($bioFull) : null;
             $artistInfo->save();
         }
     }

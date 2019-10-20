@@ -9,68 +9,48 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => 
 $this->params['breadcrumbs'][] = Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']);
 
 echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
-    echo Html::tag(
-        'div',
-        Html::tag(
-            'div',
-            Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']) .
-            Html::tag(
-                'div',
-                ($data[0]->artistInfo && $data[0]->artistInfo->buy
-                    ? Html::a(Yii::$app->icon->name('bandcamp', 'brands'), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])])
-                    : '') .
-                ($data[0]->artistInfo && $data[0]->artistInfo->website
-                    ? Html::a(Yii::$app->icon->name('globe'), $data[0]->artistInfo->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])])
-                    : ''),
-                ['class' => 'float-right']
-            ),
-            ['class' => 'col']
-        ),
-        ['class' => 'row']
-    );
+    echo Html::beginTag('div', ['class' => 'row']);
+        echo Html::beginTag('div', ['class' => 'col']);
+            echo Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']);
+            echo Html::beginTag('div', ['class' => 'float-right']);
+                if ($data[0]->artistInfo && $data[0]->artistInfo->buy) {
+                    echo Html::a(Yii::$app->icon->name('bandcamp', 'brands'), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])]);
+                }
+                if ($data[0]->artistInfo && $data[0]->artistInfo->website) {
+                    echo Html::a(Yii::$app->icon->name('globe'), $data[0]->artistInfo->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])]);
+                }
+            echo Html::endTag('div');
+        echo Html::endTag('div');
+    echo Html::endTag('div');
 
-    if ($data[0]->artistInfo && $data[0]->artistInfo->bioSummaryParsed) {
-        echo Html::tag(
-            'div',
-            Html::tag(
-                'div',
-                $data[0]->artistInfo->bioSummaryParsed,
-                ['class' => 'col']
-            ),
-            ['class' => 'row']
-        );
+    if ($data[0]->artistInfo && $data[0]->artistInfo->bio_summary) {
+        echo Html::beginTag('div', ['class' => 'row']);
+        echo Html::tag('div', $data[0]->artistInfo->bioSummaryParsed, ['class' => 'col']);
+        echo Html::endTag('div');
     }
 
+    echo Html::beginTag('div', ['class' => 'container-fluid px-0']);
     foreach ($data as $album) {
-        echo Html::beginTag('div', ['class' => 'row']);
-        echo Html::beginTag('div', ['class' => ($album === end($data)) ? 'col mb-1' : 'col mb-3']);
-        echo Html::beginTag('div', ['class' => 'card']);
-        echo Html::tag(
-            'div',
-            Html::tag('h4', "{$album->year} · " . (
-                $album->tracks
-                    ? Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'notranslate'])
-                    : $album->name
-            ), ['class' => 'float-left']) .
-            Html::tag(
-                'div',
-                ($album->buy
-                    ? Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
-                    : '') .
-                ($album->playlist_url
-                    ? Html::a(Yii::$app->icon->name($album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
-                    : '') .
-                ($album->active
-                    ? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
-                    : Html::tag('span', Yii::$app->icon->name('asterisk')->class('mr-1') . Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
-                ['class' => 'float-right']
-            ),
-            ['class' => 'card-header']
-        );
-
         if ($album->tracks) {
-            echo Html::beginTag('div', ['class' => 'container media mx-1']);
-            echo Html::beginTag('div', ['class' => 'row mr-2 media-body text-truncate']);
+            echo Html::beginTag('div', ['class' => ['card', $album === end($data) ? 'mb-1' : 'mb-3']]);
+            echo Html::beginTag('div', ['class' => 'card-header px-3']);
+            echo Html::tag('h4', "{$album->year} · " . Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'notranslate']), ['class' => 'float-left']);
+            if (!$album->active) {
+                echo Html::tag('span', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-pill badge-warning ml-1']);
+            }
+            echo Html::beginTag('div', ['class' => 'float-right']);
+            if ($album->buy) {
+                echo Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')]);
+            }
+            if ($album->playlist_url) {
+                echo Html::a(Yii::$app->icon->name($album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Play Album')]);
+            }
+            echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'PDF')]);
+            echo Html::endTag('div');
+            echo Html::endTag('div');
+
+            echo Html::beginTag('div', ['class' => 'd-flex']);
+            echo Html::beginTag('div', ['class' => 'row card-body py-1']);
             foreach (array_chunk($album->tracks, ceil(count($album->tracks) / 3)) as $tracks) {
                 echo Html::beginTag('div', ['class' => 'col-md-4']);
                 foreach ($tracks as $track) {
@@ -85,26 +65,25 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 
             if ($album->image) {
                 echo Lightbox::widget([
-                    'imageOptions' => ['style' => "background-color:{$album->image_color}"],
-                    'items' => [
-                        [
-                            'thumb' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
-                            'image' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800'],
-                            'title' => implode(' - ', [$album->artist->name, $album->name]),
-                            'group' => $album->artist->url,
-                        ],
-                    ],
-                    'options' => [
-                        'imageFadeDuration' => 25,
-                        'wrapAround' => true,
-                    ],
-                ]);
+                            'imageOptions' => ['style' => ['background-color' => $album->image_color]],
+                            'linkOptions' => ['class' => 'd-none d-md-block pr-3 my-auto'],
+                            'items' => [
+                                [
+                                    'thumb' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
+                                    'image' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800'],
+                                    'title' => implode(' - ', [$album->artist->name, $album->name]) . " ({$album->year})",
+                                    'group' => $album->artist->url,
+                                ],
+                            ],
+                            'options' => [
+                                'imageFadeDuration' => 25,
+                                'wrapAround' => true,
+                            ],
+                        ]);
             }
             echo Html::endTag('div');
+            echo Html::endTag('div');
         }
-
-        echo Html::endTag('div');
-        echo Html::endTag('div');
-        echo Html::endTag('div');
     }
+    echo Html::endTag('div');
 echo Html::endTag('div');

@@ -91,12 +91,12 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
 
     public function getArtist(): LyricsQuery
     {
-        return $this->hasOne(Lyrics1Artists::class, ['id' => 'parent']);
+        return $this->hasOne(Lyrics1Artists::class, ['name' => 'parent']);
     }
 
     public function getArtistInfo(): ActiveQuery
     {
-        return $this->hasOne(LyricsArtistInfo::class, ['parent' => 'id'])
+        return $this->hasOne(LyricsArtistInfo::class, ['parent' => 'name'])
             ->via('artist');
     }
 

@@ -1,226 +1,226 @@
 $tardisBlue:		#003865;
 $middleBlue:		#6FACCF;
 $lighterBlue:		lighten(adjust_hue($middleBlue, 10), 20%);
-$lightBlue:			lighten(adjust_hue($middleBlue, 5), 10%);
-$darkBlue:			darken(adjust_hue($middleBlue, -5), 10%);
+$lightBlue:             lighten(adjust_hue($middleBlue, 5), 10%);
+$darkBlue:		darken(adjust_hue($middleBlue, -5), 10%);
 $darkerBlue:		darken(adjust_hue($middleBlue, -10), 20%);
 
 @import "bootstrap.scss";
 
 @mixin dividing-line($padding, $color) {
-	&:not(:first-child) {
-		padding-top: $padding;
-	}
+    &:not(:first-child) {
+        padding-top: $padding;
+    }
 
-	&:not(:last-child) {
-		border-bottom: 1px solid $color;
-		padding-bottom: $padding;
-	}
+    &:not(:last-child) {
+        border-bottom: 1px solid $color;
+        padding-bottom: $padding;
+    }
 }
 
 @mixin user-select($select) {
-	-ms-user-select: $select;
-		user-select: $select;
+    -ms-user-select: $select;
+        user-select: $select;
 }
 
 html,
 body {
-	max-height: 100%;
-	text-align: justify;
+    max-height: 100%;
+    text-align: justify;
 }
 
 body > .container {
-	padding: 5.4rem 15px 2rem;
+    padding: 5.4rem 15px 2rem;
 }
 
 h1, h2, h3, h4, h5, h6, .breadcrumb, label {
-	text-align: left;
+    text-align: left;
 }
 
 .navbar {
-	background: $tardisBlue;
-	@include user-select(none);
+    background: $tardisBlue;
+    @include user-select(none);
 
-	.navbar-brand {
-		color: $lightBlue;
-		font-size: 2.25rem;
-		font-weight: $font-weight-bold;
-		text-shadow: 2px 2px 2px #444;
+    .navbar-brand {
+        color: $lightBlue;
+        font-size: 2.25rem;
+        font-weight: $font-weight-bold;
+        text-shadow: 2px 2px 2px #444;
 
-		&:focus, &:hover {
-			color: $middleBlue;
-			text-shadow: 2px 2px 2px #777;
-		}
-	}
+        &:focus, &:hover {
+            color: $middleBlue;
+            text-shadow: 2px 2px 2px #777;
+        }
+    }
 }
 
 .icon {
-	display: inline-block;
-	font-size: inherit;
-	height: 1em;
-	overflow: visible;
-	vertical-align: -.125em;
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -.125em;
 
-	@for $i from 1 through 20 {
-		&-w-#{$i} {
-			width: $i * .0625em;
-		}
-	}
+    @for $i from 1 through 20 {
+        &-w-#{$i} {
+                width: $i * .0625em;
+        }
+    }
 
-	&-fw {
-		text-align: center;
-		width: (20em / 16);
-	}
+    &-fw {
+        text-align: center;
+        width: (20em / 16);
+    }
 }
 
 .site- {
-	&country,
-	&headers,
-	&php-version {
-		.row {
-			@include dividing-line(2px, $lighterBlue);
-		}
-	}
+    &country,
+    &headers,
+    &php-version {
+        .row {
+            @include dividing-line(2px, $lighterBlue);
+        }
+    }
 
-	&lyrics {
-		.artists {
-			font-weight: $font-weight-bold;
-			line-height: 3rem;
+    &lyrics {
+        .artists {
+            font-weight: $font-weight-bold;
+            line-height: 3rem;
 
-			a {
-				@include clearfix;
-			}
-		}
+            a {
+                @include clearfix;
+            }
+        }
 
-		&-albums {
-			svg.text-muted {
-				color: $lighterBlue !important;
-			}
+        &-albums {
+            svg.text-muted {
+                color: $lighterBlue !important;
+            }
 
-			.text-nowrap {
-				overflow-x: hidden;
-			}
-		}
-	}
+            .text-nowrap {
+                overflow-x: hidden;
+            }
+        }
+    }
 }
 
 .alert,
 .lyrics {
-	p:last-of-type {
-		margin-bottom: 0;
-	}
+    p:last-of-type {
+        margin-bottom: 0;
+    }
 }
 
 .card p:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .anchor {
-	display: block;
-	position: relative;
-	top: -4.6rem;
-	@include invisible(hidden);
+    display: block;
+    position: relative;
+    top: -4.6rem;
+    @include invisible(hidden);
 }
 
 .accordion .card-body .notranslate {
-	@include user-select(all);
+    @include user-select(all);
 }
 
 aside {
-	font-size: $small-font-size;
-	text-align: left;
+    font-size: $small-font-size;
+    text-align: left;
 
-	.card-header {
-		font-weight: $font-weight-bold;
-	}
+    .card-header {
+        font-weight: $font-weight-bold;
+    }
 
-	.card-header,
-	.card .list-group-item {
-		padding: 0.25rem 0.5rem;
-	}
+    .card-header,
+    .card .list-group-item {
+        padding: 0.25rem 0.5rem;
+    }
 
-	.list-group {
-		.list-group-item {
-			&:nth-child(even) {
-				background-color: $gray-100;
-			}
-		}
-	}
+    .list-group {
+        .list-group-item {
+            &:nth-child(even) {
+                background-color: $gray-100;
+            }
+        }
+    }
 
-	#tags .card-link {
-		margin: .25rem;
-	}
+    #tags .card-link {
+        margin: .25rem;
+    }
 }
 
 pre code {
-	max-height: $pre-scrollable-max-height;
+    max-height: $pre-scrollable-max-height;
 }
 
 form {
-	.required label:not(.custom-file-label) {
-		&:after {
-			color: $red;
-			content: '\a0*';
-		}
-	}
+    .required label:not(.custom-file-label) {
+        &:after {
+            color: $red;
+            content: '\a0*';
+        }
+    }
 
-	textarea {
-		resize: none;
-	}
+    textarea {
+        resize: none;
+    }
 
-	img.captcha {
-		cursor: pointer;
-	}
+    img.captcha {
+        cursor: pointer;
+    }
 
-	&.html2markdown {
-		textarea {
-			overflow: auto;
-			@include size(100%, 40rem);
-		}
-	}
+    &.html2markdown {
+        textarea {
+            overflow: auto;
+            @include size(100%, 40rem);
+        }
+    }
 
-	.validating .invalid-feedback {
-		display: block;
-	}
+    .validating .invalid-feedback {
+        display: block;
+    }
 }
 
 #btn-scrolltop {
-	background: #a0a0a0;
-	border-radius: 50%;
-	bottom: 0px;
-	color: #fff;
-	display: none;
-	line-height: 1.6;
-	right: calc(50% - 15px);
-	position: fixed;
-	text-align: center;
-	text-decoration: none;
-	z-index: $zindex-fixed;
-	@include size(30px);
-	@include user-select(none);
+    background: #a0a0a0;
+    border-radius: 50%;
+    bottom: 0px;
+    color: #fff;
+    display: none;
+    line-height: 1.6;
+    right: calc(50% - 15px);
+    position: fixed;
+    text-align: center;
+    text-decoration: none;
+    z-index: $zindex-fixed;
+    @include size(30px);
+    @include user-select(none);
 
-	&:hover {
-		background: #666;
-		cursor: pointer;
-		line-height: 1.4;
-	}
+    &:hover {
+        background: #666;
+        cursor: pointer;
+        line-height: 1.4;
+    }
 }
 
 footer {
-	background-color: $lighterBlue;
-	height: 30px;
-	padding-top: 2px;
-	@include user-select(none);
+    background-color: $lighterBlue;
+    height: 30px;
+    padding-top: 2px;
+    @include user-select(none);
 }
 
 @include media-breakpoint-up(md) {
-	.navbar .nav-link span::before {
-		content: "\A";
-		white-space: pre;
-	}
+    .navbar .nav-link span::before {
+        content: "\A";
+        white-space: pre;
+    }
 
-	#btn-scrolltop {
-		bottom: 40px;
-		right: 10px;
-	}
+    #btn-scrolltop {
+        bottom: 40px;
+        right: 10px;
+    }
 }

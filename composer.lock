@@ -721,16 +721,16 @@
         },
         {
             "name": "kop/yii2-scroll-pager",
-            "version": "2.5.0",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kop/yii2-scroll-pager.git",
-                "reference": "9b9727ce441fbfc487044535ab6ce0b7694d810b"
+                "reference": "2ec4ad54e9bb1ae946ea943f7847dedf349fe65b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kop/yii2-scroll-pager/zipball/9b9727ce441fbfc487044535ab6ce0b7694d810b",
-                "reference": "9b9727ce441fbfc487044535ab6ce0b7694d810b",
+                "url": "https://api.github.com/repos/kop/yii2-scroll-pager/zipball/2ec4ad54e9bb1ae946ea943f7847dedf349fe65b",
+                "reference": "2ec4ad54e9bb1ae946ea943f7847dedf349fe65b",
                 "shasum": ""
             },
             "require": {
@@ -765,7 +765,7 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2016-07-06T19:56:33+00:00"
+            "time": "2019-10-11T07:00:39+00:00"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1656,16 +1656,16 @@
         },
         {
             "name": "voku/simple_html_dom",
-            "version": "4.7.5",
+            "version": "4.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/voku/simple_html_dom.git",
-                "reference": "056c4c1546cffa689436306bfb8251dfdd525c15"
+                "reference": "8d69cc296abb92352b6912ebf09494def7fe52d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/voku/simple_html_dom/zipball/056c4c1546cffa689436306bfb8251dfdd525c15",
-                "reference": "056c4c1546cffa689436306bfb8251dfdd525c15",
+                "url": "https://api.github.com/repos/voku/simple_html_dom/zipball/8d69cc296abb92352b6912ebf09494def7fe52d0",
+                "reference": "8d69cc296abb92352b6912ebf09494def7fe52d0",
                 "shasum": ""
             },
             "require": {
@@ -1711,7 +1711,7 @@
                 "dom",
                 "php dom"
             ],
-            "time": "2019-09-17T14:13:41+00:00"
+            "time": "2019-10-20T12:04:20+00:00"
         },
         {
             "name": "webcreate/jquery-ias",
@@ -1755,16 +1755,16 @@
         },
         {
             "name": "yiisoft/yii2",
-            "version": "2.0.27",
+            "version": "2.0.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "6793f8f9b4cd891dbf475cfbb88cf480f74eaa85"
+                "reference": "80bf3a6e04a0128f753cb73ba7255d8e2ae3a02f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/6793f8f9b4cd891dbf475cfbb88cf480f74eaa85",
-                "reference": "6793f8f9b4cd891dbf475cfbb88cf480f74eaa85",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/80bf3a6e04a0128f753cb73ba7255d8e2ae3a02f",
+                "reference": "80bf3a6e04a0128f753cb73ba7255d8e2ae3a02f",
                 "shasum": ""
             },
             "require": {
@@ -1851,7 +1851,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-09-18T13:04:16+00:00"
+            "time": "2019-10-08T13:14:18+00:00"
         },
         {
             "name": "yiisoft/yii2-authclient",
@@ -1974,16 +1974,16 @@
         },
         {
             "name": "yiisoft/yii2-bootstrap4",
-            "version": "2.0.7",
+            "version": "2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap4.git",
-                "reference": "6745eb7cfc13ac7bc01b396adb8410aa41711fa6"
+                "reference": "c67ae3f3624c35d977841f6b18d0d752ebed6420"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/6745eb7cfc13ac7bc01b396adb8410aa41711fa6",
-                "reference": "6745eb7cfc13ac7bc01b396adb8410aa41711fa6",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap4/zipball/c67ae3f3624c35d977841f6b18d0d752ebed6420",
+                "reference": "c67ae3f3624c35d977841f6b18d0d752ebed6420",
                 "shasum": ""
             },
             "require": {
@@ -2039,7 +2039,7 @@
                 "bootstrap4",
                 "yii2"
             ],
-            "time": "2019-08-13T11:49:38+00:00"
+            "time": "2019-10-08T11:01:37+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -2098,16 +2098,16 @@
         },
         {
             "name": "yiisoft/yii2-httpclient",
-            "version": "2.0.11",
+            "version": "2.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-httpclient.git",
-                "reference": "cf532447447216bd8cb167689ac18f4e7dc1c1a7"
+                "reference": "a66a2de6d7dd6d068da3f85a12589fedd0d76855"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/cf532447447216bd8cb167689ac18f4e7dc1c1a7",
-                "reference": "cf532447447216bd8cb167689ac18f4e7dc1c1a7",
+                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/a66a2de6d7dd6d068da3f85a12589fedd0d76855",
+                "reference": "a66a2de6d7dd6d068da3f85a12589fedd0d76855",
                 "shasum": ""
             },
             "require": {
@@ -2144,7 +2144,7 @@
                 "httpclient",
                 "yii2"
             ],
-            "time": "2019-05-14T13:33:37+00:00"
+            "time": "2019-10-08T09:48:39+00:00"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -2547,16 +2547,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.4.0",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "60a97fff133b1669a5b1776aa8ab06db3f3962b7"
+                "reference": "e79f851749c3caa836d7ccc01ede5828feb762c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/60a97fff133b1669a5b1776aa8ab06db3f3962b7",
-                "reference": "60a97fff133b1669a5b1776aa8ab06db3f3962b7",
+                "url": "https://api.github.com/repos/opis/closure/zipball/e79f851749c3caa836d7ccc01ede5828feb762c7",
+                "reference": "e79f851749c3caa836d7ccc01ede5828feb762c7",
                 "shasum": ""
             },
             "require": {
@@ -2604,7 +2604,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2019-09-02T21:07:33+00:00"
+            "time": "2019-10-19T18:38:51+00:00"
         },
         {
             "name": "php-cs-fixer/diff",

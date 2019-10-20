@@ -3,7 +3,7 @@
 namespace app\models\articles;
 
 use app\models\user\User;
-use himiklab\yii2\recaptcha\ReCaptchaValidator;
+use Da\User\Validator\ReCaptchaValidator;
 use mister42\Secrets;
 use Yii;
 use yii\behaviors\TimestampBehavior;

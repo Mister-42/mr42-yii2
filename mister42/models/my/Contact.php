@@ -2,7 +2,7 @@
 
 namespace app\models\my;
 
-use himiklab\yii2\recaptcha\ReCaptchaValidator;
+use Da\User\Validator\ReCaptchaValidator;
 use mister42\Secrets;
 use Yii;
 

@@ -2,7 +2,7 @@
 
 use app\assets\CharCounterAsset;
 use app\models\ActiveForm;
-use himiklab\yii2\recaptcha\ReCaptcha;
+use Da\User\Widget\ReCaptchaWidget;
 use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
 
@@ -43,7 +43,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
         ->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank'])]));
 
         if (Yii::$app->user->isGuest) {
-            echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);
+            echo $form->field($model, 'captcha')->widget(ReCaptchaWidget::class)->label(false);
         }
 
         echo Html::tag(

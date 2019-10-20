@@ -3,7 +3,7 @@
 use app\assets\CharCounterAsset;
 use app\assets\FileInputAsset;
 use app\models\ActiveForm;
-use himiklab\yii2\recaptcha\ReCaptcha;
+use Da\User\Widget\ReCaptchaWidget;
 use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
 
@@ -48,7 +48,7 @@ echo Html::beginTag('div', ['class' => 'row']);
                 'inputTemplate' => '<div class="input-group">' . Yii::$app->icon->activeFieldIcon('paperclip') . Html::tag('div', '{input}' . Html::tag('label', Yii::t('mr42', 'Select a File'), ['class' => 'custom-file-label text-truncate']), ['class' => 'custom-file']) . '</div>',
             ])->fileInput(['class' => 'custom-file-input', 'id' => 'sourceFile', 'tabindex' => ++$tab]);
 
-            echo $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false);
+            echo $form->field($model, 'captcha')->widget(ReCaptchaWidget::class)->label(false);
 
             echo Html::tag(
                 'div',

@@ -149,6 +149,7 @@ return [
     'Phonetic Alphabet Translator' => 'Phonetischer Alphabet-Übersetzer',
     'Phonetic Alphabet to Use' => 'Phonetisches Alphabet zur Verwendung',
     'Play' => 'Abspielen',
+    'Play Album' => 'Album Abspielen',
     'Posted {date}' => 'Gepostet {date}',
     'Pre-Shared Key' => 'Pre-Shared-Schlüssel',
     'Previous Article' => 'Vorheriger Artikel',
