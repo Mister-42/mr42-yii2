@@ -24,7 +24,7 @@ class MusicController extends \yii\web\Controller
 
     public function actionAlbumcover(): Response
     {
-        if (!ArrayHelper::isIn($this->size, [100, 500, 800])) {
+        if (!ArrayHelper::isIn($this->size, [125, 500, 800])) {
             throw new NotFoundHttpException('Cover not found.');
         }
         [$fileName, $image] = Lyrics2Albums::getCover($this->size, $this->data);

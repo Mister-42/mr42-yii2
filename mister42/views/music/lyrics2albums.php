@@ -33,11 +33,8 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
     foreach ($data as $album) {
         if ($album->tracks) {
             echo Html::beginTag('div', ['class' => ['card', $album === end($data) ? 'mb-1' : 'mb-3']]);
-            echo Html::beginTag('div', ['class' => 'card-header px-3']);
-            echo Html::tag('h4', "{$album->year} · " . Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'notranslate']), ['class' => 'float-left']);
-            if (!$album->active) {
-                echo Html::tag('span', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-pill badge-warning ml-1']);
-            }
+            echo Html::beginTag('div', ['class' => array_filter(['card-header', (!$album->active) ? 'bg-warning' : null])]);
+            echo Html::tag('h4', Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'notranslate']) . " ({$album->year})", ['class' => 'float-left']);
             echo Html::beginTag('div', ['class' => 'float-right']);
             if ($album->buy) {
                 echo Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')]);
@@ -50,7 +47,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
             echo Html::endTag('div');
 
             echo Html::beginTag('div', ['class' => 'd-flex']);
-            echo Html::beginTag('div', ['class' => 'row card-body py-1']);
+            echo Html::beginTag('div', ['class' => 'row card-body']);
             foreach (array_chunk($album->tracks, ceil(count($album->tracks) / 3)) as $tracks) {
                 echo Html::beginTag('div', ['class' => 'col-md-4']);
                 foreach ($tracks as $track) {
@@ -65,21 +62,21 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
 
             if ($album->image) {
                 echo Lightbox::widget([
-                            'imageOptions' => ['style' => ['background-color' => $album->image_color]],
-                            'linkOptions' => ['class' => 'd-none d-md-block pr-3 my-auto'],
-                            'items' => [
-                                [
-                                    'thumb' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '100'],
-                                    'image' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800'],
-                                    'title' => implode(' - ', [$album->artist->name, $album->name]) . " ({$album->year})",
-                                    'group' => $album->artist->url,
-                                ],
-                            ],
-                            'options' => [
-                                'imageFadeDuration' => 25,
-                                'wrapAround' => true,
-                            ],
-                        ]);
+                    'imageOptions' => ['style' => ['background-color' => $album->image_color]],
+                    'linkOptions' => ['class' => 'd-none d-md-block my-auto'],
+                    'items' => [
+                        [
+                            'thumb' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '125'],
+                            'image' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800'],
+                            'title' => implode(' - ', [$album->artist->name, $album->name]) . " ({$album->year})",
+                            'group' => $album->artist->url,
+                        ],
+                    ],
+                    'options' => [
+                        'imageFadeDuration' => 25,
+                        'wrapAround' => true,
+                    ],
+                ]);
             }
             echo Html::endTag('div');
             echo Html::endTag('div');

@@ -83,12 +83,12 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
     }
 
     &lyrics {
-        .artists {
-            font-weight: $font-weight-bold;
-            line-height: 3rem;
-
-            a {
-                @include clearfix;
+        &-artists {
+            .list-group {
+                .list-group-item {
+                    border: 0;
+                    font-weight: $font-weight-bold;
+                }
             }
         }
 

@@ -6,11 +6,11 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\web\View;
 
-$this->title = implode(' - ', [$data[0]->artist->name, $data[0]->album->name, 'Lyrics']);
+$this->title = implode(' - ', [$data[0]->artist->name, "{$data[0]->album->name} ({$data[0]->album->year})", 'Lyrics']);
 $this->params['breadcrumbs'] = [Yii::t('mr42', 'Music')];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
 $this->params['breadcrumbs'][] = ['label' => Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']), 'url' => ['lyrics', 'artist' => $data[0]->artist->url]];
-$this->params['breadcrumbs'][] = Html::tag('span', $data[0]->album->name, ['class' => 'notranslate']);
+$this->params['breadcrumbs'][] = Html::tag('span', "{$data[0]->album->name} ({$data[0]->album->year})", ['class' => 'notranslate']);
 
 if ($data[0]->album->image) {
     $this->registerMetaTag(['property' => 'og:image', 'content' => Url::to(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 800], true)]);
@@ -25,7 +25,7 @@ if ($data[0]->album->image_color) {
 }
 
 $items[] = [
-    'label' => Html::tag('span', implode(' - ', [$data[0]->artist->name, $data[0]->album->name]), ['class' => 'h4 notranslate']),
+    'label' => Html::tag('span', implode(' - ', [$data[0]->artist->name, $data[0]->album->name]) . " ({$data[0]->album->year})", ['class' => 'h4 notranslate']),
     'content' => ($data[0]->album->image)
         ? Lightbox::widget([
             'imageOptions' => ['class' => 'img-fluid img-thumbnail rounded', 'style' => ['background-color' => $data[0]->album->image_color]],
@@ -33,7 +33,7 @@ $items[] = [
                 [
                     'thumb' => ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '500'],
                     'image' => ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '800'],
-                    'title' => implode(' - ', [$data[0]->artist->name, $data[0]->album->name]),
+                    'title' => implode(' - ', [$data[0]->artist->name, $data[0]->album->name]) . " ({$data[0]->album->year})",
                 ],
             ],
             'options' => [
@@ -50,7 +50,7 @@ $items[] = [
             : null) .
         ($data[0]->album->active
             ? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1'])
-            : Html::tag('span', Yii::$app->icon->name('asterisk')->class('mr-1') . Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
+            : Html::tag('span', Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
     'contentOptions' => ['class' => 'text-center'],
     'options' => ['id' => 'frontCover'],
 ];

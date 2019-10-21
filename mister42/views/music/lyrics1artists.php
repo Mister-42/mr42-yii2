@@ -8,13 +8,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 echo Html::tag('h1', $this->title);
 
-echo Html::beginTag('div', ['class' => 'site-lyrics']);
-    echo Html::beginTag('div', ['class' => 'row artists']);
+echo Html::beginTag('div', ['class' => 'site-lyrics-artists']);
+    echo Html::beginTag('div', ['class' => 'row text-center notranslate']);
     foreach (array_chunk($data, ceil(count($data) / 4)) as $artists) {
-        echo Html::beginTag('div', ['class' => 'col-md-3 text-center text-nowrap']);
+        echo Html::beginTag('div', ['class' => 'col-md-3 list-group']);
         foreach ($artists as $artist) {
-            $draft = ($artist->active) ? '' : Html::tag('span', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-pill badge-warning ml-1']);
-            echo Html::a($artist->name . $draft, ['lyrics', 'artist' => $artist->url], ['class' => 'notranslate']);
+            echo Html::a($artist->name, ['lyrics', 'artist' => $artist->url], ['class' => ['list-group-item', ($artist->active) ? 'list-group-item-action' : 'list-group-item-warning']]);
         }
         echo Html::endTag('div');
     }
