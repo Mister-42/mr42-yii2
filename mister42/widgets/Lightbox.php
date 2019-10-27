@@ -30,7 +30,7 @@ class Lightbox extends Widget
                 continue;
             }
             $imageOptions['alt'] = $item['title'] ?? '';
-            $imageOptions['class'] = 'img-thumbnail rounded';
+            $imageOptions['class'] = 'img-thumbnail';
             $imageOptions = ArrayHelper::merge($imageOptions, $this->imageOptions ?? []);
             $linkOptions['data-title'] = $item['title'] ?? '';
             $linkOptions['data-lightbox'] = $item['group'] ?? uniqid();

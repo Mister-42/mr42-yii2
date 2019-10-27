@@ -34,26 +34,28 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
         if ($album->tracks) {
             echo Html::beginTag('div', ['class' => ['card', $album === end($data) ? 'mb-1' : 'mb-3']]);
             echo Html::beginTag('div', ['class' => array_filter(['card-header', (!$album->active) ? 'bg-warning' : null])]);
-            echo Html::tag('h4', Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'notranslate']) . " ({$album->year})", ['class' => 'float-left']);
+            echo Html::tag('span', Html::tag('span', $album->year, ['class' => 'badge']) . Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'ml-1 notranslate']), ['class' => 'h4 float-left']);
             echo Html::beginTag('div', ['class' => 'float-right']);
             if ($album->buy) {
-                echo Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Buy This Album')]);
+                echo Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'Buy This Album')]);
             }
             if ($album->playlist_url) {
-                echo Html::a(Yii::$app->icon->name($album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'Play Album')]);
+                echo Html::a(Yii::$app->icon->name($album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'Play Album')]);
             }
-            echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1', 'title' => Yii::t('mr42', 'PDF')]);
+            echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'PDF')]);
             echo Html::endTag('div');
             echo Html::endTag('div');
 
             echo Html::beginTag('div', ['class' => 'd-flex']);
-            echo Html::beginTag('div', ['class' => 'row card-body']);
+            echo Html::beginTag('div', ['class' => 'row card-body notranslate']);
             foreach (array_chunk($album->tracks, ceil(count($album->tracks) / 3)) as $tracks) {
-                echo Html::beginTag('div', ['class' => 'col-md-4']);
+                echo Html::beginTag('div', ['class' => 'col-md-4 list-group']);
                 foreach ($tracks as $track) {
-                    echo Html::beginTag('div', ['class' => 'text-truncate notranslate']);
-                    $track->name = Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track]);
-                    echo implode(' · ', [$track->track, $track->name . $track->nameExtra]) . $track->icons;
+                    echo Html::beginTag('div', ['class' => 'list-group-item list-group-item-action text-truncate py-0']);
+                    echo Html::tag('span', $track->track, ['class' => 'badge']);
+                    echo Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track], ['class' => 'ml-1']);
+                    echo $track->nameExtra;
+                    echo $track->icons;
                     echo Html::endTag('div');
                 }
                 echo Html::endTag('div');

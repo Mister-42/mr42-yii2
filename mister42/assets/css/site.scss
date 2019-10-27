@@ -93,6 +93,12 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
         }
 
         &-albums {
+            .list-group {
+                .list-group-item {
+                    border: 0;
+                }
+            }
+
             svg.text-muted {
                 color: $lighterBlue !important;
             }
@@ -101,11 +107,18 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
                 overflow-x: hidden;
             }
         }
+
+        &-albums,
+        &-lyrics {
+            .badge {
+                background-color: $lighterBlue;
+                color: $body-color;
+            }
+        }
     }
 }
 
-.alert,
-.lyrics {
+.alert {
     p:last-of-type {
         margin-bottom: 0;
     }
@@ -168,10 +181,6 @@ form {
         resize: none;
     }
 
-    img.captcha {
-        cursor: pointer;
-    }
-
     &.html2markdown {
         textarea {
             overflow: auto;
@@ -185,7 +194,6 @@ form {
 }
 
 #btn-scrolltop {
-    background: #a0a0a0;
     border-radius: 50%;
     bottom: 0px;
     color: #fff;
@@ -200,7 +208,6 @@ form {
     @include user-select(none);
 
     &:hover {
-        background: #666;
         cursor: pointer;
         line-height: 1.4;
     }

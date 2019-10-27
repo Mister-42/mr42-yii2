@@ -41,7 +41,7 @@ echo Html::beginTag('body');
 $this->beginBody();
 
 echo Html::beginTag('header', ['class' => 'site-header fixed-top']);
-NavBar::begin([
+    NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
@@ -86,8 +86,8 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
                 echo Html::beginTag('div', ['class' => 'dropdown-menu']);
                 foreach (Yii::$app->params['languages'] as $lng => $desc) {
                     echo ($lng === Yii::$app->language)
-                                ? Html::tag('div', $desc . ' &#10004;', ['class' => 'disabled dropdown-item', 'lang' => $lng])
-                                : Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item', 'lang' => $lng]);
+                        ? Html::tag('div', $desc . ' &#10004;', ['class' => 'disabled dropdown-item', 'lang' => $lng])
+                        : Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item', 'lang' => $lng]);
                 }
                 echo Html::endTag('div');
                 echo Html::endTag('div');
@@ -95,7 +95,7 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
         echo Html::endTag('div');
     echo Html::endTag('div');
 echo Html::endTag('footer');
-echo Html::a('&#9650;', null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'title' => Yii::t('mr42', 'Scroll to Top')]);
+echo Html::a('&#9650;', null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'class' => 'bg-gradient-dark', 'title' => Yii::t('mr42', 'Scroll to Top')]);
 $this->endBody();
 
 echo Html::endTag('body');
