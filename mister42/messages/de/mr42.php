@@ -44,6 +44,7 @@ return [
     'CAPTCHA' => 'CAPTCHA',
     'Calculate' => 'Rechnen',
     'Calculator' => 'Rechner',
+    'Calendar' => 'Kalender',
     'Change Language' => 'Sprache ändern',
     'Changelog' => 'Änderungshistorie',
     'Code' => 'Code',

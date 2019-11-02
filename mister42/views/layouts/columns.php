@@ -31,7 +31,7 @@ echo Html::beginTag('div', ['class' => 'row']);
                 $form = ActiveForm::begin(['action' => ['articles/search'], 'method' => 'get', 'options' => ['role' => 'search']]);
                     echo $form->field(new Search(), 'keyword', [
                         'options' => ['class' => 'form-group mb-2'],
-                        'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('div', Html::submitButton(Yii::$app->icon->name('search'), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append']) . '</div>',
+                        'template' => '<div class="input-group input-group-sm">{input}' . Html::tag('div', Html::submitButton(Yii::$app->icon->name('search')->title(Yii::t('mr42', 'Search Articles…')), ['class' => 'btn btn-outline-info']), ['class' => 'input-group-append']) . '</div>',
                     ])->input('search', ['class' => 'form-control', 'name' => 'q', 'placeholder' => Yii::t('mr42', 'Search Articles…'), 'value' => Yii::$app->request->get('q')]);
                 ActiveForm::end();
             echo Html::endTag('aside');

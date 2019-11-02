@@ -53,7 +53,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
                 foreach ($tracks as $track) {
                     echo Html::beginTag('div', ['class' => 'list-group-item list-group-item-action text-truncate py-0']);
                     echo Html::tag('span', $track->track, ['class' => 'badge']);
-                    echo Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track], ['class' => 'ml-1']);
+                    echo Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track], ['class' => 'stretched-link ml-1']);
                     echo $track->nameExtra;
                     echo $track->icons;
                     echo Html::endTag('div');

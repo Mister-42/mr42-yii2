@@ -6,4 +6,5 @@
 /webroot/.htaccess
 /webroot/php.ini
 /.buildpath
+/.composer.lock
 /.php_cs.cache

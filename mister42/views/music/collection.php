@@ -31,7 +31,7 @@ foreach ($tabs as $tab => $tabdesc) {
         $$tab[] = Html::a(
             Html::img('@assets/images/blank.png', ['alt' => "{$album->artist} - {$album->title} ({$album->year})", 'class' => 'card-img-bottom', 'data-src' => Url::to(['music/collection-cover', 'id' => $album->id])]),
             "https://www.discogs.com/release/{$album->id}"
-        );
+        , ['class' => 'stretched-link']);
         $$tab[] = Html::endTag('div');
         $$tab[] = Html::endTag('div');
     }

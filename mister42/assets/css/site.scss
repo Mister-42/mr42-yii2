@@ -82,8 +82,17 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
         }
     }
 
-    &lyrics {
-        &-artists {
+    &index,
+    &lyrics-albums {
+        .list-group {
+            .list-group-item {
+                border: 0;
+            }
+        }
+    }
+
+    &lyrics- {
+        &artists {
             .list-group {
                 .list-group-item {
                     border: 0;
@@ -92,13 +101,7 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
             }
         }
 
-        &-albums {
-            .list-group {
-                .list-group-item {
-                    border: 0;
-                }
-            }
-
+        &albums {
             svg.text-muted {
                 color: $lighterBlue !important;
             }
@@ -108,8 +111,8 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
             }
         }
 
-        &-albums,
-        &-lyrics {
+        &albums,
+        &lyrics {
             .badge {
                 background-color: $lighterBlue;
                 color: $body-color;
@@ -191,6 +194,11 @@ form {
     .validating .invalid-feedback {
         display: block;
     }
+}
+
+.ui-widget-header {
+    background: none;
+    border: 0;
 }
 
 #btn-scrolltop {

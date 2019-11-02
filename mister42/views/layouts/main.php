@@ -95,7 +95,7 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
         echo Html::endTag('div');
     echo Html::endTag('div');
 echo Html::endTag('footer');
-echo Html::a('&#9650;', null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'class' => 'bg-gradient-dark', 'title' => Yii::t('mr42', 'Scroll to Top')]);
+echo Html::a('&#9650;', null, ['data-placement' => 'left', 'data-toggle' => 'tooltip', 'id' => 'btn-scrolltop', 'class' => 'bg-gradient-dark shadow', 'title' => Yii::t('mr42', 'Scroll to Top')]);
 $this->endBody();
 
 echo Html::endTag('body');

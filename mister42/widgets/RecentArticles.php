@@ -20,7 +20,7 @@ class RecentArticles extends Widget
             ->all();
 
         foreach ($articles as $article) {
-            $link = Html::a($article->title, ['articles/article', 'id' => $article->id, 'title' => $article->url], ['class' => 'card-link']);
+            $link = Html::a($article->title, ['articles/article', 'id' => $article->id, 'title' => $article->url], ['class' => 'card-link stretched-link']);
             $items[] = Html::tag('li', $link, ['class' => 'list-group-item text-truncate']);
         }
 
