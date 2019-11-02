@@ -5,13 +5,6 @@
     "license": "GPL-3.0-only",
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "config": {
-        "component-dir": "../vendor-components",
-        "vendor-dir": "../vendor",
-        "platform": {
-            "php": "7.3.6"
-        }
-    },
     "require": {
         "php": ">=7.3.0",
         "ext-dom": "*",

@@ -17,24 +17,41 @@ echo Html::tag('h1', $this->title);
 echo Html::beginTag('div', ['class' => 'row']);
     echo Html::beginTag('div', ['class' => 'col']);
         echo Html::beginTag('div', ['class' => 'card mb-3']);
-            echo Html::tag('div', Yii::t('mr42', 'Current Week'), ['class' => 'card-header']);
+            echo Html::tag('h6', Yii::t('mr42', 'Current Week'), ['class' => 'card-header']);
             echo Html::beginTag('div', ['class' => 'card-body']);
-                echo Html::tag('h2', (int) ($date->format('W')), ['class' => 'card-title display-1 font-weight-bold text-center']);
-                echo Html::beginTag('div', ['class' => 'card-text text-center']);
-                    echo Yii::t('mr42', 'This week starts at {start} and ends at {end}.', [
-                        'start' => Html::tag('span', Yii::$app->formatter->asDate($startWeek, 'full'), ['class' => 'font-weight-bold']),
-                        'end' => Html::tag('span', Yii::$app->formatter->asDate($endWeek, 'full'), ['class' => 'font-weight-bold'])
-                    ]);
-                echo Html::endTag('div');
+                echo Html::tag('h2', Yii::t('mr42', 'Week {number}', ['number' => (int) ($date->format('W'))]), ['class' => 'card-title display-1 font-weight-bold text-center mb-0']);
+            echo Html::endTag('div');
+            echo Html::beginTag('div', ['class' => 'card-footer text-center']);
+                echo Yii::t('mr42', 'This week starts at {start} and ends at {end}.', [
+                    'start' => Html::tag('span', Yii::$app->formatter->asDate($startWeek, 'full'), ['class' => 'font-weight-bold text-nowrap']),
+                    'end' => Html::tag('span', Yii::$app->formatter->asDate($endWeek, 'full'), ['class' => 'font-weight-bold text-nowrap'])
+                ]);
             echo Html::endTag('div');
         echo Html::endTag('div');
     echo Html::endTag('div');
 echo Html::endTag('div');
 
 echo Html::beginTag('div', ['class' => 'row']);
-    echo Html::beginTag('div', ['class' => 'col-xl']);
+    echo Html::beginTag('div', ['class' => 'col-xl order-xl-last']);
         echo Html::beginTag('div', ['class' => 'card mb-3']);
-            echo Html::tag('div', Yii::t('mr42', 'Upcoming Weeks'), ['class' => 'card-header']);
+            echo Html::tag('h6', Yii::t('mr42', 'Calendar'), ['class' => 'card-header']);
+            echo Html::beginTag('div', ['class' => 'card-body mx-auto p-0']);
+                echo DatePicker::widget([
+                    'clientOptions' => [
+                        'firstDay' => 1,
+                        'numberOfMonths' => 2,
+                        'showWeek' => true,
+                    ],
+                    'inline' => true,
+                    'language' => Yii::$app->language,
+                ]);
+            echo Html::endTag('div');
+        echo Html::endTag('div');
+    echo Html::endTag('div');
+
+    echo Html::beginTag('div', ['class' => 'col-xl order-xl-first']);
+        echo Html::beginTag('div', ['class' => 'card mb-3']);
+            echo Html::tag('h6', Yii::t('mr42', 'Upcoming Weeks'), ['class' => 'card-header']);
             echo Html::beginTag('ul', ['class' => 'list-group list-group-flush']);
                 for ($x = 1; $x <= 6; $x++) {
                     echo Html::beginTag('li', ['class' => 'list-group-item']);
@@ -51,24 +68,6 @@ echo Html::beginTag('div', ['class' => 'row']);
                     echo Html::endTag('li');
                 }
             echo Html::endTag('ul');
-        echo Html::endTag('div');
-
-    echo Html::endTag('div');
-
-    echo Html::beginTag('div', ['class' => 'col-xl']);
-        echo Html::beginTag('div', ['class' => 'card mb-3']);
-            echo Html::tag('div', Yii::t('mr42', 'Calendar'), ['class' => 'card-header']);
-            echo Html::beginTag('div', ['class' => 'card-body mx-auto p-0']);
-                echo DatePicker::widget([
-                    'clientOptions' => [
-                        'firstDay' => 1,
-                        'numberOfMonths' => 2,
-                        'showWeek' => true,
-                    ],
-                    'inline' => true,
-                    'language' => Yii::$app->language,
-                ]);
-            echo Html::endTag('div');
         echo Html::endTag('div');
     echo Html::endTag('div');
 echo Html::endTag('div');

@@ -1,0 +1,26 @@
+ExpiresActive On
+
+<FilesMatch "^(day-.*)\.(jpe?g|png|gif)$">
+	ExpiresDefault "modification plus 5 minutes"
+	Header set Cache-Control "max-age=300, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "^(week-.*)\.(jpe?g|png|gif)$">
+	ExpiresDefault "modification plus 30 minutes"
+	Header set Cache-Control "max-age=1800, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "^(month-.*)\.(jpe?g|png|gif)$">
+	ExpiresDefault "modification plus 1 hour"
+	Header set Cache-Control "max-age=3600, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "^(year-.*)\.(jpe?g|png|gif)$">
+	ExpiresDefault "modification plus 6 hours"
+	Header set Cache-Control "max-age=21600, must-revalidate"
+</FilesMatch>
+
+<FilesMatch "^(lustrum-.*)\.(jpe?g|png|gif)$">
+	ExpiresDefault "modification plus 1 day"
+	Header set Cache-Control "max-age=86400, must-revalidate"
+</FilesMatch>

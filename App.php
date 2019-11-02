@@ -32,7 +32,7 @@ class App
         switch (yii\helpers\ArrayHelper::getValue($_SERVER, 'SERVER_NAME')) :
             case 'mister42.me':
                 return $this->loadConfig(['mister42'], 'Web');
-        default:
+            default:
                 return $this->loadConfig(['mister42', 'mr42'], 'Web');
         endswitch;
     }

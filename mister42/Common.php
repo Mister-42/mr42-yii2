@@ -18,7 +18,7 @@ class Common
         return [
             'aliases' => [
                 '@assets' => '//s.mr42.me',
-                '@assetsroot' => __DIR__ . '/../../webassets/me.mr42.s',
+                '@assetsroot' => __DIR__ . '/../assets',
                 '@bower' => '@vendor/bower-asset',
                 '@npm' => '@vendor/npm-asset',
             ],
@@ -29,7 +29,7 @@ class Common
             'params' => $this->params,
             'runtimePath' => __DIR__ . '/../../../.cache/yii/mister42',
             'timeZone' => 'Europe/Berlin',
-            'vendorPath' => __DIR__ . '/../../vendor',
+            'vendorPath' => __DIR__ . '/../vendor',
         ];
     }
 
