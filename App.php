@@ -11,10 +11,10 @@ class App
             define('YII_ENABLE_ERROR_HANDLER', !$unitTest);
         }
 
-        $loader = require __DIR__ . '/../vendor/autoload.php';
+        $loader = require __DIR__ . '/vendor/autoload.php';
         $loader->setPsr4('mr42\\', __DIR__ . '/mr42/');
         $loader->setPsr4('mister42\\', __DIR__ . '/mister42/');
-        require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
+        require __DIR__ . '/vendor/yiisoft/yii2/Yii.php';
 
         if ($unitTest) {
             return new yii\web\Application($this->loadConfig(['mister42'], 'Web'));
@@ -29,7 +29,8 @@ class App
 
     private function getConfig(): array
     {
-        switch (yii\helpers\ArrayHelper::getValue($_SERVER, 'SERVER_NAME')) :
+        $srv = yii\helpers\ArrayHelper::getValue($_SERVER, 'SERVER_NAME');
+        switch (substr($srv, 0, 4) === 'www.' ? substr($srv, 4) : $srv) :
             case 'mister42.me':
                 return $this->loadConfig(['mister42'], 'Web');
             default:

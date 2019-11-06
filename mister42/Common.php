@@ -27,7 +27,7 @@ class Common
             'language' => 'en',
             'name' => 'Mr.42',
             'params' => $this->params,
-            'runtimePath' => __DIR__ . '/../../../.cache/yii/mister42',
+            'runtimePath' => __DIR__ . '/../.cache',
             'timeZone' => 'Europe/Berlin',
             'vendorPath' => __DIR__ . '/../vendor',
         ];
@@ -101,13 +101,6 @@ class Common
             ],
             'mailer' => [
                 'class' => 'yii\swiftmailer\Mailer',
-                'transport' => [
-                    'class' => 'Swift_SmtpTransport',
-                    'host' => $this->secrets['email']['host'],
-                    'username' => $this->secrets['email']['username'],
-                    'password' => $this->secrets['email']['password'],
-                    'encryption' => 'tls',
-                ],
             ],
             'urlManager' => [
                 'class' => 'codemix\localeurls\UrlManager',

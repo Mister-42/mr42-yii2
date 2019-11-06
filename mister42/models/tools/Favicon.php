@@ -3,6 +3,7 @@
 namespace app\models\tools;
 
 use app\models\Mailer;
+use Imagick;
 use Yii;
 use yii\helpers\FileHelper;
 
@@ -28,11 +29,27 @@ class Favicon extends \yii\base\Model
             return false;
         }
 
-        [$width, $height] = getimagesize($this->sourceImage->tempName);
-        $tmpSize = min($width, $height);
         FileHelper::createDirectory(Yii::getAlias('@assetsroot/temp'));
         $cacheFile = Yii::getAlias('@assetsroot/temp/' . uniqid('favicon') . '.ico');
-        exec("convert {$this->sourceImage->tempName} -gravity center -crop {$tmpSize}x{$tmpSize}+0+0 +repage -resize 256x256 -define icon:auto-resize=" . implode(',', $this->dimensions) . " {$cacheFile}");
+
+        $srcImg = new Imagick($this->sourceImage->tempName);
+        $tmpSize = min($srcImg->getImageGeometry());
+        $srcImg->setGravity(imagick::GRAVITY_CENTER);
+        $srcImg->cropImage($tmpSize, $tmpSize, 0, 0);
+        $srcImg->resizeImage(256, 256, Imagick::FILTER_LANCZOS, 1);
+
+        $icon = new Imagick();
+        $icon->setFormat("ico");
+        foreach ($this->dimensions as $dim) {
+            $clone = clone $srcImg;
+            $clone->scaleImage($dim, 0);
+            $icon->addImage($clone);
+            $clone->destroy();
+        }
+        $icon->writeImages($cacheFile, true);
+        $icon->destroy();
+
+        $srcImg->destroy();
         FileHelper::unlink($this->sourceImage->tempName);
 
         if ($this->recipient) {

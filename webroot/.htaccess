@@ -1,7 +1,6 @@
 Options -Indexes -MultiViews +FollowSymlinks
 AddDefaultCharset UTF-8
 SetEnv TZ Europe/Berlin
-Header always set Strict-Transport-Security "max-age=10886400; includeSubDomains; preload" env=HTTPS
 Header set Connection keep-alive
 
 <IfModule mod_rewrite.c>
@@ -35,14 +34,12 @@ Header set Connection keep-alive
 # Caching
 FileETag All
 
-<IfModule mod_headers.c>
-	<FilesMatch "\.(ico)$">
-		Header set Cache-Control "max-age=900, private, must-revalidate"
-	</FilesMatch>
+<FilesMatch "\.(ico)$">
+	Header set Cache-Control "max-age=900, private, must-revalidate"
+</FilesMatch>
 
-	# Make sure proxies don't deliver the wrong content
-	Header append Vary User-Agent env=!dont-vary
-</IfModule>
+# Make sure proxies don't deliver the wrong content
+Header append Vary User-Agent env=!dont-vary
 
 # Compression
 SetOutputFilter DEFLATE
