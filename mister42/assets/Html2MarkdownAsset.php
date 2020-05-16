@@ -1,6 +1,6 @@
 <?php
 
-namespace app\assets;
+namespace mister42\assets;
 
 use Yii;
 use yii\web\AssetBundle;
@@ -9,14 +9,14 @@ use yii\web\View;
 class Html2MarkdownAsset extends AssetBundle
 {
     public $depends = [
-        'app\assets\AppAsset',
+        'mister42\assets\AppAsset',
     ];
 
     public $js = [
-        'to-markdown.js',
+        'turndown.js',
     ];
 
-    public $sourcePath = '@bower/to-markdown/dist';
+    public $sourcePath = '@npm/turndown/dist';
 
     public function registerAssetFiles($view): void
     {

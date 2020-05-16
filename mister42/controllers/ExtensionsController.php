@@ -1,27 +1,14 @@
 <?php
 
-namespace app\controllers;
+namespace mister42\controllers;
 
-use app\assets\HighlightAsset;
-use app\apidoc\ApiRenderer;
-use app\components\object\ClassType;
-use app\models\Doc;
-use app\models\Extension;
 use Yii;
-use yii\helpers\Html;
-use yii\filters\HttpCache;
-use yii\helpers\StringHelper;
-use yii\helpers\FileHelper;
-use yii\helpers\Json;
-use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
-use yii\web\UnsupportedMediaTypeHttpException;
 use yii\filters\ContentNegotiator;
 
 class ExtensionsController extends \yii\web\Controller
 {
-    private $name;
+    private string $name;
 
     public function actionIndex($name)
     {

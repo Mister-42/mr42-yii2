@@ -1,8 +1,8 @@
 <?php
 
-use app\assets\ClipboardJsAsset;
-use app\models\ActiveForm;
-use app\models\calculator\Wpapsk;
+use mister42\assets\ClipboardJsAsset;
+use mister42\models\ActiveForm;
+use mister42\models\calculator\Wpapsk;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Progress;
 use yii\web\View;

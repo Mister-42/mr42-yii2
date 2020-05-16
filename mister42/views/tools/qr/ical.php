@@ -1,7 +1,7 @@
 <?php
 
-use app\models\ActiveForm;
-use app\widgets\TimePicker;
+use mister42\models\ActiveForm;
+use mister42\widgets\TimePicker;
 use yii\bootstrap4\Html;
 
 $tab = 1;

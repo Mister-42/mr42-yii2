@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\calculator;
+namespace mister42\models\calculator;
 
 use DateTime;
 use DateTimeZone;
@@ -9,8 +9,8 @@ use Yii;
 class Timezone extends \yii\base\Model
 {
     public $datetime;
-    public $source;
-    public $target;
+    public $source = 'Europe/Berlin';
+    public $target = 'Europe/Moscow';
 
     public function attributeLabels(): array
     {

@@ -1,7 +1,7 @@
 <?php
 
-use app\assets\AppAsset;
-use app\models\Menu;
+use mister42\assets\AppAsset;
+use mister42\models\Menu;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
@@ -18,15 +18,19 @@ echo Html::beginTag('head');
 echo Html::tag('title', $this->title);
 $this->registerMetaTag(['charset' => Yii::$app->charset]);
 $this->registerMetaTag(['name' => 'author', 'content' => Yii::$app->name]);
-$this->registerMetaTag(['name' => 'description', 'content' => Yii::$app->params['description']]);
+$this->registerMetaTag(['name' => 'description', 'content' => Yii::t('mr42', 'Sharing beautiful knowledge of the world.')]);
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
-$this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => Yii::getAlias('@assets')]);
+$this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => parse_url(Yii::getAlias('@assets'), PHP_URL_HOST)]);
 $this->registerLinkTag(['rel' => 'canonical', 'href' => Url::current([], true)]);
-$this->registerLinkTag(['rel' => 'alternate', 'href' => Url::current(['language' => ''], true), 'hreflang' => 'x-default']);
+$this->registerLinkTag(['rel' => 'alternate', 'href' => Yii::getAlias('@siteEN') . Url::to(), 'hreflang' => 'x-default']);
 foreach (array_keys(Yii::$app->params['languages']) as $lng) {
-    $this->registerLinkTag(['rel' => 'alternate', 'href' => Url::current(['language' => $lng], true), 'hreflang' => $lng]);
+    if ($lng !== Yii::$app->language) {
+        $lngAlias = '@site' . strtoupper($lng);
+        $this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => parse_url(Yii::getAlias($lngAlias), PHP_URL_HOST)]);
+        $this->registerLinkTag(['rel' => 'alternate', 'href' => Yii::getAlias($lngAlias) . Url::to(), 'hreflang' => $lng]);
+    }
 }
-$this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['/feed/rss'], true), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
+$this->registerLinkTag(['rel' => 'alternate', 'href' => Yii::$app->mr42->createUrl(['/feed/rss']), 'type' => 'application/rss+xml', 'title' => Yii::$app->name]);
 $this->registerLinkTag(['rel' => 'icon', 'sizes' => '64x64 48x48 32x32 16x16', 'type' => 'image/x-icon', 'href' => Url::to('@assets/images/favicon.ico')]);
 $this->registerLinkTag(['rel' => 'mask-icon', 'color' => Yii::$app->params['themeColor'], 'type' => 'image/x-icon', 'href' => Url::to('@assets/images/safari-pinned-tab.svg')]);
 $this->registerLinkTag(['rel' => 'apple-touch-icon', 'sizes' => '180x180', 'href' => Url::to('@assets/images/apple-touch-icon.png')]);
@@ -72,22 +76,22 @@ echo Html::tag(
 );
 
 echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
-    echo Html::beginTag('div', ['class' => 'container']);
-        echo Html::tag('div', Html::tag('span', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'align-middle']), ['class' => 'float-left']);
-        echo Html::beginTag('div', ['class' => 'float-right dropup']);
+    echo Html::beginTag('div', ['class' => 'container d-flex justify-content-between']);
+        echo Html::tag('div', Html::tag('span', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'align-middle']));
+        echo Html::beginTag('div', ['class' => 'dropup']);
             if (Yii::$app->requestedRoute !== 'site/offline') {
                 if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) {
-                    echo Html::a(Yii::$app->icon->name('html5', 'brands'), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary ml-1 hidden-xs', 'title' => Yii::t('mr42', 'Validate HTML')]);
+                    echo Html::a(Yii::$app->icon->name('html5', 'brands'), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary', 'title' => Yii::t('mr42', 'Validate HTML')]);
                 }
                 echo Html::a(Yii::$app->icon->name('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Privacy Policy')]);
-                echo Html::a(Yii::$app->icon->name('rss'), ['/feed/rss'], ['class' => 'badge badge-warning ml-1 hidden-xs', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
+                echo Html::a(Yii::$app->icon->name('rss'), Yii::$app->mr42->createUrl(['/feed/rss']), ['class' => 'badge badge-warning ml-1', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
                 echo Html::beginTag('div', ['class' => 'btn-group dropup']);
-                echo Html::a(Yii::$app->icon->name('language'), '#', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'title' => Yii::t('mr42', 'Change Language')]);
+                echo Html::a(Yii::$app->params['languages'][Yii::$app->language]['short'], '', ['aria-expanded' => 'false', 'aria-haspopup' => 'true', 'class' => 'badge badge-info ml-1 dropdown-toggle', 'data-toggle' => 'dropdown', 'title' => Yii::t('mr42', 'Change Language')]);
                 echo Html::beginTag('div', ['class' => 'dropdown-menu']);
-                foreach (Yii::$app->params['languages'] as $lng => $desc) {
-                    echo ($lng === Yii::$app->language)
-                        ? Html::tag('div', $desc . ' &#10004;', ['class' => 'disabled dropdown-item', 'lang' => $lng])
-                        : Html::a($desc, Url::current(['language' => $lng]), ['class' => 'dropdown-item', 'lang' => $lng]);
+                foreach (Yii::$app->params['languages'] as $lng => $name) {
+                    if ($lng !== Yii::$app->language) {
+                        echo Html::a($name['short'], '@site' . strtoupper($lng) . Url::to(), ['class' => 'dropdown-item', 'lang' => $lng, 'title' => $name['full']]);
+                    }
                 }
                 echo Html::endTag('div');
                 echo Html::endTag('div');

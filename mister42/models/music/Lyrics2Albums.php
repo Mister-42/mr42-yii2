@@ -1,17 +1,16 @@
 <?php
 
-namespace app\models\music;
+namespace mister42\models\music;
 
-use app\models\Image;
-use app\models\Pdf;
-use app\models\Video;
+use mister42\models\Image;
+use mister42\models\Pdf;
+use mister42\models\Video;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 
 class Lyrics2Albums extends \yii\db\ActiveRecord
 {

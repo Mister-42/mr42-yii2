@@ -1,11 +1,8 @@
 <?php
 
-namespace app\models;
+namespace mister42\models;
 
 use Imagick;
-use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 
 class Image
 {
@@ -27,7 +24,7 @@ class Image
     {
         $imagick = new Imagick();
         $imagick->readImageBlob($image);
-        $imagick->resizeImage($size, $size, Imagick::FILTER_LANCZOS, 1);
+        $imagick->resizeImage($size, $size, Imagick::FILTER_LANCZOS, 1, true);
         $imagick->stripImage();
         $imagick->setImageCompressionQuality(85);
         $imagick->setInterlaceScheme(Imagick::INTERLACE_PLANE);

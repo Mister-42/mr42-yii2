@@ -1,7 +1,7 @@
 <?php
 
-use app\models\ActiveForm;
-use app\widgets\TimePicker;
+use mister42\models\ActiveForm;
+use mister42\widgets\TimePicker;
 use yii\bootstrap4\Alert;
 use yii\bootstrap4\Html;
 
@@ -46,14 +46,14 @@ echo Html::beginTag('div', ['class' => 'row']);
                 ]);
 
             echo $form->field($model, $field . 'count', [
-                    'icon' => 'user',
+                    'icon' => $field === 'source' ? 'user' : 'user-plus',
                     'options' => ['class' => 'form-group col-md-6'],
                 ])->input('number', ['class' => 'form-control', 'tabindex' => ++$tab]);
             echo Html::endTag('div');
         }
 
         echo $form->field($model, 'action', [
-            'icon' => 'cloud',
+            'icon' => 'cloud-upload-alt',
             'options' => ['class' => 'form-group'],
         ])->dropDownList([
             'renew' => Yii::t('mr42', 'Renewing Licenses'),

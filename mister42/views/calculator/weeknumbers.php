@@ -2,7 +2,6 @@
 
 use yii\bootstrap4\Html;
 use yii\jui\DatePicker;
-use yii\jui\DatePickerLanguageAsset;
 
 $this->title = Yii::t('mr42', 'Week Numbers');
 $this->params['breadcrumbs'][] = Yii::t('mr42', 'Calculator');
@@ -39,7 +38,7 @@ echo Html::beginTag('div', ['class' => 'row']);
                 echo DatePicker::widget([
                     'clientOptions' => [
                         'firstDay' => 1,
-                        'numberOfMonths' => 2,
+                        'numberOfMonths' => 1,
                         'showWeek' => true,
                     ],
                     'inline' => true,
@@ -55,16 +54,16 @@ echo Html::beginTag('div', ['class' => 'row']);
             echo Html::beginTag('ul', ['class' => 'list-group list-group-flush']);
                 for ($x = 1; $x <= 6; $x++) {
                     echo Html::beginTag('li', ['class' => 'list-group-item']);
-                        $date->modify('+1 week');
-                        $startWeek = $date->modify('monday this week')->format('c');
-                        $endWeek = $date->modify('sunday this week')->format('c');
-                        echo Html::beginTag('span', ['class' => 'float-left text-left']);
-                            echo Yii::t('mr42', '{start} to {end}', [
+                    $date->modify('+1 week');
+                    $startWeek = $date->modify('monday this week')->format('c');
+                    $endWeek = $date->modify('sunday this week')->format('c');
+                    echo Html::beginTag('span', ['class' => 'float-left text-left']);
+                    echo Yii::t('mr42', '{start} to {end}', [
                                 'start' => Html::tag('span', Yii::$app->formatter->asDate($startWeek, 'long'), ['class' => 'text-nowrap']),
                                 'end' => Html::tag('span', Yii::$app->formatter->asDate($endWeek, 'long'), ['class' => 'text-nowrap']),
                             ]);
-                        echo Html::endTag('span');
-                        echo Html::tag('span', Yii::t('mr42', 'Week {number}', ['number' => (int) ($date->format('W'))]), ['class' => 'float-right font-weight-bold']);
+                    echo Html::endTag('span');
+                    echo Html::tag('span', Yii::t('mr42', 'Week {number}', ['number' => (int) ($date->format('W'))]), ['class' => 'float-right font-weight-bold']);
                     echo Html::endTag('li');
                 }
             echo Html::endTag('ul');

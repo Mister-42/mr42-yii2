@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\tools\qr;
+namespace mister42\models\tools\qr;
 
 use Yii;
 
-class Vcard extends \app\models\tools\Qr
+class Vcard extends \mister42\models\tools\Qr
 {
     public $birthday;
     public $email;

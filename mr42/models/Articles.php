@@ -1,11 +1,10 @@
 <?php
 
-namespace app\models;
+namespace mr42\models;
 
 class Articles extends \yii\db\ActiveRecord
 {
     const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
 
     public function afterFind(): void
     {

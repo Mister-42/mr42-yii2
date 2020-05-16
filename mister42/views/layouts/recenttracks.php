@@ -1,7 +1,7 @@
 <?php
 
-use app\widgets\Item;
-use app\widgets\WeeklyArtistChart;
+use mister42\widgets\Item;
+use mister42\widgets\WeeklyArtistChart;
 use yii\bootstrap4\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;

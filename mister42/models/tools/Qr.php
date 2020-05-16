@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\tools;
+namespace mister42\models\tools;
 
-use app\models\ActiveForm;
-use app\models\Mailer;
-use app\widgets\TimePicker;
+use mister42\models\ActiveForm;
+use mister42\models\Mailer;
+use mister42\widgets\TimePicker;
 use Mpdf\QrCode\Output;
 use Mpdf\QrCode\QrCode;
 use Yii;

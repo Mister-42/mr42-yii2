@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace mister42\models;
 
 use Mpdf\Pdf\Protection;
 use Mpdf\Pdf\Protection\UniqidGenerator;

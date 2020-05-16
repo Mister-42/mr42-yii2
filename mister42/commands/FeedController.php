@@ -1,14 +1,15 @@
 <?php
 
-namespace app\commands;
+namespace mister42\commands;
 
-use app\models\feed\Feed;
-use app\models\tools\Oui;
-use app\models\user\Profile;
-use app\models\user\RecentTracks;
-use app\models\user\User;
-use app\models\user\WeeklyArtist;
-use app\models\Webrequest;
+use mister42\models\feed\Feed;
+use mister42\models\feed\FeedData;
+use mister42\models\tools\Oui;
+use mister42\models\user\Profile;
+use mister42\models\user\RecentTracks;
+use mister42\models\user\User;
+use mister42\models\user\WeeklyArtist;
+use mister42\models\Webrequest;
 use Yii;
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
@@ -20,7 +21,7 @@ use yii\helpers\FileHelper;
 class FeedController extends Controller
 {
     public $defaultAction = 'lastfm-recent';
-    public $limit = 25;
+    public int $limit = 25;
 
     /**
      * Retrieves and stores Recent Tracks from Last.fm.
@@ -100,30 +101,43 @@ class FeedController extends Controller
     }
 
     /**
-     * Retrieves and stores an Atom or RSS feed.
+     * Retrieves and stores Atom or RSS feed.
      */
-    public function actionWebfeed(string $name, string $url, string $desc): int
+    public function actionWebfeed(string $type = null, object $data = null): int
     {
-        $count = 0;
-        $response = Webrequest::getUrl('', $url)->send();
-        if (!$response->isOK) {
-            return self::EXIT_CODE_ERROR;
+        $feeds = Feed::find()->where(['not', ['type' => null]])->andWhere(['not', ['type' => 'github']]);
+        if ($type !== null) {
+            $feeds = Feed::find()->where(['type' => $type])->andWhere(['name' => $data->name]);
         }
-        $xml = simplexml_load_string($response->content);
-        Feed::deleteAll(['feed' => $name]);
-        foreach (($xml->getName() === 'rss') ? $response->data['channel']['item'] : $response->data['entry'] as $item) {
-            $time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
 
-            $feedItem = Feed::findOne(['feed' => $name, 'time' => $time]) ?? new Feed();
-            $feedItem->feed = $name;
-            $feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
-            $feedItem->url = (string) ArrayHelper::getValue($item, $xml->getName() === 'rss' ? 'link' : 'link.@attributes.href');
-            $feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $desc), false);
-            $feedItem->time = $time;
-            $feedItem->save();
+        foreach ($feeds->all() as $feed) {
+            $count = 0;
+            if ($type === 'github') {
+                $feed->url = str_replace('{name}', $data->full_name, $feed->url);
+                $feed->url = str_replace('{branch}', $data->default_branch, $feed->url);
+            }
 
-            if (++$count === $this->limit) {
-                break;
+            $response = Webrequest::getUrl('', $feed->url)->send();
+            if (!$response->isOK) {
+                return self::EXIT_CODE_ERROR;
+            }
+
+            $xml = simplexml_load_string($response->content);
+            FeedData::deleteAll(['feed' => $feed->name]);
+            foreach (($xml->getName() === 'rss') ? $response->data['channel']['item'] : $response->data['entry'] as $item) {
+                $time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
+
+                $feedItem = new FeedData();
+                $feedItem->feed = $feed->name;
+                $feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
+                $feedItem->url = (string) ArrayHelper::getValue($item, $xml->getName() === 'rss' ? 'link' : 'link.@attributes.href');
+                $feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $feed->description), false);
+                $feedItem->time = $time;
+                $feedItem->save();
+
+                if (++$count === $this->limit) {
+                    break;
+                }
             }
         }
 

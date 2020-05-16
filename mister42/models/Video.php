@@ -1,9 +1,9 @@
 <?php
 
-namespace app\models;
+namespace mister42\models;
 
-use app\models\music\Lyrics2Albums;
-use app\models\music\Lyrics3Tracks;
+use mister42\models\music\Lyrics2Albums;
+use mister42\models\music\Lyrics3Tracks;
 use Yii;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
@@ -48,6 +48,7 @@ class Video
 
         return true;
     }
+
     public static function getEmbed(string $source, string $id, string $ratio, bool $isPlaylist = false): string
     {
         if ($source === 'vimeo') {
@@ -61,6 +62,7 @@ class Video
         if (!isset($src)) {
             return Yii::t('mr42', 'Sorry, {source} is not supported.', ['source' => $source]);
         }
+
         return Html::tag(
             'div',
             Html::tag('iframe', null, ['allowfullscreen' => true, 'class' => 'embed-responsive-item', 'src' => $src]),

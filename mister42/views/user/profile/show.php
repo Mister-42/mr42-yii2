@@ -1,6 +1,6 @@
 <?php
 
-use app\models\user\Profile;
+use mister42\models\user\Profile;
 use yii\bootstrap4\Html;
 
 $this->title = $profile->name ?? $profile->user->username;

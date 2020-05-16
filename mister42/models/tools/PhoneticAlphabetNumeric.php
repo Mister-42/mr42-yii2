@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\tools;
+namespace mister42\models\tools;
 
 class PhoneticAlphabetNumeric extends \yii\db\ActiveRecord
 {

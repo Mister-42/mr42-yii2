@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models\tools;
+namespace mister42\models\tools;
 
-use app\models\Mailer;
+use mister42\models\Mailer;
 use Imagick;
 use Yii;
 use yii\helpers\FileHelper;

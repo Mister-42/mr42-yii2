@@ -1,8 +1,8 @@
 <?php
 
-namespace app\tests;
+namespace mister42\tests;
 
-use app\models\Video;
+use mister42\models\Video;
 
 class VideoTest extends \PHPUnit\Framework\TestCase
 {

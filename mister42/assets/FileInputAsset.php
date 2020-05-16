@@ -1,10 +1,7 @@
 <?php
 
-namespace app\assets;
+namespace mister42\assets;
 
-use Yii;
-use yii\bootstrap4\Html;
-use yii\helpers\Json;
 use yii\web\AssetBundle;
 use yii\web\View;
 

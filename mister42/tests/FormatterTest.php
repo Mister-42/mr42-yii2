@@ -1,6 +1,6 @@
 <?php
 
-namespace app\tests;
+namespace mister42\tests;
 
 class FormatterTest extends \PHPUnit\Framework\TestCase
 {

@@ -15,12 +15,11 @@ $tabs = [
     'year' => ['short' => Yii::t('mr42', 'Year'), 'long' => Yii::t('mr42', 'Last Year')],
 ];
 $datatype = [
-    'tempload' => Yii::t('mr42', 'Temperature & Load'),
+    'tempload' => Yii::t('mr42', 'Temperature and Load'),
+    'storage' => Yii::t('mr42', 'Disk Space and Memory Usage'),
     'network' => Yii::t('mr42', 'Network Traffic'),
-    'memory' => Yii::t('mr42', 'Memory Usage'),
-    'diskspace' => Yii::t('mr42', 'Disk Space Usage'),
 ];
-$hosts = ['dnspi', 'musicpi'];
+$hosts = ['pi-hole', 'jukebox'];
 
 $this->registerJs(Yii::$app->formatter->jspack('jquery.unveil.js'), View::POS_END);
 $this->registerJs('$(\'a[data-toggle="tab"]\').on(\'shown.bs.tab\', function (e) {$(window).trigger("lookup")})', View::POS_END);
@@ -30,15 +29,13 @@ echo Html::tag('h1', $this->title);
 
 foreach ($tabs as $tab => $tabdesc) {
     $$tab[] = Html::beginTag('div', ['class' => 'row']);
-    $$tab[] = Html::tag('div', Html::tag('h3', $tabdesc['long'], ['class' => 'text-center mt-2']), ['class' => 'col-12']);
     foreach ($datatype as $dt => $dtdesc) {
         $$tab[] = Html::tag('h4', $dtdesc, ['class' => 'w-100 text-center mt-2 mb-0']);
         foreach ($hosts as $host) {
             $$tab[] = Html::beginTag('div', ['class' => 'col-md-6 h-100']);
-            $$tab[] = Html::tag('h5', $host, ['class' => 'text-center my-0']);
             $$tab[] = ($tab === array_key_first($tabs))
-                        ? Html::img("@assets/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
-                        : Html::img('@assets/images/loading.png', ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
+                ? Html::img("@assets/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
+                : Html::img('@assets/images/loading.png', ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
             $$tab[] = Html::endTag('div');
         }
     }

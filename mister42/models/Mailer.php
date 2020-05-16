@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace mister42\models;
 
 use mister42\Secrets;
 use Yii;
@@ -17,15 +17,11 @@ class Mailer
             ->setFrom([$secrets['params']['noreplyEmail'] => Yii::$app->name])
             ->setSubject($subject);
     }
+
     public static function sendFileHtml(string $recipient, string $subject, string $template, array $file): bool
     {
         $mail = self::compose($recipient, $subject, $template, 'html');
         $mail->attach(Yii::getAlias($file['file']), ['fileName' => $file['name']]);
-        return self::send($mail);
-    }
-
-    private static function send(Message $mail): bool
-    {
         return $mail->send();
     }
 }

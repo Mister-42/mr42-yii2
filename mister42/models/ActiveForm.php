@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace mister42\models;
 
 use Yii;
 use yii\bootstrap4\ButtonGroup;
@@ -19,6 +19,7 @@ class ActiveForm extends \thoulah\fontawesome\bootstrap4\ActiveForm
             'options' => ['class' => 'form-group float-right'],
         ]);
     }
+
     public function togglePassword($model, int $tab, array $options = []): string
     {
         $this->getView()->registerJs("var togglePassword = {lang:{hide:'" . Yii::t('mr42', 'Hide Password') . "', show:'" . Yii::t('mr42', 'Show Password') . "'}};" . Yii::$app->formatter->jspack('togglePassword.js'), View::POS_READY);

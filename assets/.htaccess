@@ -4,46 +4,46 @@ SetEnv TZ Europe/Berlin
 Header set Connection keep-alive
 
 <IfModule mod_rewrite.c>
-	RewriteEngine On
-	RewriteBase /
+        RewriteEngine On
+        RewriteBase /
 
-	RewriteCond %{HTTPS} !=on
-	RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+        RewriteCond %{HTTPS} !=on
+        RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . https://www.mister42.me/
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        # RewriteRule . https://www.mister42.me/
+        RewriteRule . index.php
 
-	# http://www.htaccesstools.com/hotlink-protection/
-	RewriteCond %{HTTP_REFERER} !^$
-	RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?m(iste)?r42.me [NC]
-	RewriteRule .*\.(jpe?g|png|gif)$ nohotlink.png [L]
+        RewriteCond %{THE_REQUEST} ^GET.*index.php [NC]
+        RewriteRule (.*?)index.php/*(.*) /$1$2 [R=301,NE,L]
+
+        # http://www.htaccesstools.com/hotlink-protection/
+        RewriteCond %{HTTP_REFERER} !^$
+        RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?m(iste)?r42.me [NC]
+        RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?mister42.de [NC]
+        RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?xn--42-mlclt0afi.xn--p1ai [NC]
+        RewriteRule .*\.(jpe?g|png|gif)$ nohotlink.png [L]
 </IfModule>
 
 # Caching
 FileETag All
 
 <IfModule mod_headers.c>
-	# http://www.fontsquirrel.com/blog/2010/11/troubleshooting-font-face-problems
-	<FilesMatch "\.(eot|otf|woff2?|ttf)$">
-		SetEnvIf Origin "^https?://(.+\.)?m(iste)?r42\.me$" ORIGIN=$0
-		Header always set Access-Control-Allow-Origin %{ORIGIN}e env=ORIGIN
-	</FilesMatch>
+        <FilesMatch "\.(jpe?g|png|gif)$">
+                Header set Cache-Control "max-age=31557600, public, must-revalidate"
+        </FilesMatch>
 
-	<FilesMatch "\.(jpe?g|png|gif|eot|otf|woff2?|ttf)$">
-		Header set Cache-Control "max-age=31557600, public, must-revalidate"
-	</FilesMatch>
+        <FilesMatch "\.(css|js)$">
+                Header set Cache-Control "max-age=31557600, must-revalidate, proxy-revalidate"
+        </FilesMatch>
 
-	<FilesMatch "\.(css|js)$">
-		Header set Cache-Control "max-age=31557600, must-revalidate, proxy-revalidate"
-	</FilesMatch>
+        <FilesMatch "\.(ico)$">
+                Header set Cache-Control "max-age=900, private, must-revalidate"
+        </FilesMatch>
 
-	<FilesMatch "\.(ico)$">
-		Header set Cache-Control "max-age=900, private, must-revalidate"
-	</FilesMatch>
-
-	# Make sure proxies don't deliver the wrong content
-	Header append Vary User-Agent env=!dont-vary
+        # Make sure proxies don't deliver the wrong content
+        Header append Vary User-Agent env=!dont-vary
 </IfModule>
 
 # Charsets

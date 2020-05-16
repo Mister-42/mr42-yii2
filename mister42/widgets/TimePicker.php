@@ -1,8 +1,8 @@
 <?php
 
-namespace app\widgets;
+namespace mister42\widgets;
 
-use app\assets\TimePickerAsset;
+use mister42\assets\TimePickerAsset;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\bootstrap4\Html;

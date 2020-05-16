@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models\articles;
+namespace mister42\models\articles;
 
-use app\models\user\User;
+use mister42\models\user\User;
 use Da\User\Validator\ReCaptchaValidator;
 use mister42\Secrets;
 use Yii;
@@ -12,7 +12,7 @@ use yii\bootstrap4\Html;
 class ArticlesComments extends \yii\db\ActiveRecord
 {
     public $captcha;
-    public $parsedContent;
+    public string $parsedContent;
 
     public function afterFind(): void
     {

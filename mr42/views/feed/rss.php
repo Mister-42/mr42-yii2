@@ -6,7 +6,7 @@ use yii\helpers\Url;
 
 $doc = new XMLWriter();
 $doc->openMemory();
-$doc->setIndent(YII_DEBUG && php_sapi_name() !== 'cli' && (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin));
+$doc->setIndent(YII_DEBUG);
 
 $doc->startDocument('1.0', 'UTF-8');
 $doc->startElement('rss');
@@ -59,7 +59,7 @@ foreach ($articles as $article) {
     }
     $doc->startElement('guid');
     $doc->writeAttribute('isPermaLink', 'true');
-    $doc->text(Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $article->id]));
+    $doc->text(Yii::$app->mr42->createUrl(['/permalink/articles', 'id' => $article->id]));
     $doc->endElement();
     $doc->writeElement('pubDate', date(DATE_RSS, $article->created));
     if ($article->source) {

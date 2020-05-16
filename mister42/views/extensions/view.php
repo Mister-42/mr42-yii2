@@ -1,9 +1,8 @@
 <?php
 
-use app\models\Doc;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\assets\HighlightAsset;
+use mister42\assets\HighlightAsset;
 
 HighlightAsset::register($this);
 $this->linkTags[] = Html::tag('base', '', ['href' => Url::to(['extensions/index', 'name' => $name]).'/']);

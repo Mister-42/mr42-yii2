@@ -1,8 +1,8 @@
 <?php
 
-namespace app\controllers;
+namespace mister42\controllers;
 
-use app\models\my\Contact;
+use mister42\models\my\Contact;
 use Yii;
 use yii\base\BaseObject;
 use yii\filters\HttpCache;
@@ -29,6 +29,7 @@ class MyController extends \yii\web\Controller
     {
         return $this->render('pi');
     }
+
     public function behaviors(): array
     {
         return [

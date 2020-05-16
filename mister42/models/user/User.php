@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\user;
+namespace mister42\models\user;
 
 class User extends \Da\User\Model\User
 {

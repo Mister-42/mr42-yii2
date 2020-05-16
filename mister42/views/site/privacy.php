@@ -8,7 +8,9 @@ $this->params['breadcrumbs'] = [$this->title];
 
 echo Html::tag('h1', $this->title);
 
-echo Html::tag('p', 'At ' . Yii::$app->name . ', accessible from ' . Url::to(['site/index'], true) . ', one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by ' . Yii::$app->name . ' and how we use it.');
+$url = Url::to(['site/index'], true);
+$hostname = idn_to_utf8(parse_url($url, PHP_URL_HOST));
+echo Html::tag('p', 'At ' . Yii::$app->name . ', accessible from ' . Html::a($hostname, $url) . ', one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by ' . Yii::$app->name . ' and how we use it.');
 echo Html::tag('p', 'If you have additional questions or require more information about our Privacy Policy, do not hesitate to ' . Html::a('contact us', ['site/contact']) . '.');
 
 echo Html::tag('h4', 'General Data Protection Regulation (GDPR)');

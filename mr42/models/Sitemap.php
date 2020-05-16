@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\feed;
+namespace mr42\models;
 
 use XMLWriter;
 use Yii;
@@ -13,7 +13,7 @@ class Sitemap
     {
         $doc = new XMLWriter();
         $doc->openMemory();
-        $doc->setIndent(YII_DEBUG && php_sapi_name() !== 'cli' && (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin));
+        $doc->setIndent(YII_DEBUG);
 
         $doc->startDocument('1.0', 'UTF-8');
         $doc->startElement('urlset');
@@ -31,13 +31,14 @@ class Sitemap
         return $doc->outputMemory();
     }
 
-    public static function lineItem(XMLWriter $doc, array $url, array $options = []): void
+    public static function lineItem(XMLWriter $doc, $url, array $options = []): void
     {
         $age = (int) ArrayHelper::remove($options, 'age', 0);
         $priority = ArrayHelper::remove($options, 'priority') ?? self::getPriority($age);
+        $url = is_array($url) ? Url::to($url) : $url;
 
         $doc->startElement('url');
-        $doc->writeElement('loc', Url::to($url, true));
+        $doc->writeElement('loc', $url);
         if ($age) {
             $doc->writeElement('lastmod', date(DATE_W3C, $age));
         }
@@ -49,13 +50,14 @@ class Sitemap
         $doc->endElement();
     }
 
-    private static function addLanguageLines(XMLWriter $doc, array $url): void
+    private static function addLanguageLines(XMLWriter $doc, string $url): void
     {
         $languages = array_keys(Yii::$app->params['languages']);
+        $path = parse_url($url, PHP_URL_PATH);
         foreach ($languages as $lng) {
-            ArrayHelper::setValue($url, 'language', $lng);
             $doc->startElement('xhtml:link');
-            $doc->writeAttribute('href', Url::to($url, true));
+            $lngAlias = '@site' . strtoupper($lng);
+            $doc->writeAttribute('href', Url::to($lngAlias) . $path);
             $doc->writeAttribute('hreflang', $lng);
             $doc->writeAttribute('rel', 'alternate');
             $doc->endElement();

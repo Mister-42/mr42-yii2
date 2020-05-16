@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\user;
+namespace mister42\models\user;
 
 class WeeklyArtist extends \yii\db\ActiveRecord
 {

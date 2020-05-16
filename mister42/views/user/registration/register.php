@@ -1,6 +1,6 @@
 <?php
 
-use app\models\ActiveForm;
+use mister42\models\ActiveForm;
 use Da\User\Widget\ReCaptchaWidget;
 use yii\bootstrap4\Html;
 

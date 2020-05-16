@@ -1,7 +1,7 @@
 <?php
 
-use app\assets\CharCounterAsset;
-use app\models\ActiveForm;
+use mister42\assets\CharCounterAsset;
+use mister42\models\ActiveForm;
 use Da\User\Widget\ReCaptchaWidget;
 use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
@@ -40,7 +40,7 @@ Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger', 'optio
         echo $form->field($model, 'content', [
             'inputTemplate' => Yii::$app->icon->activeFieldAddon('comment'),
         ])->textarea(['id' => 'formContent', 'rows' => 6, 'tabindex' => ++$tab])
-        ->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank'])]));
+        ->hint(Yii::t('mr42', 'You may use {markdown}. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->mr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank'])]));
 
         if (Yii::$app->user->isGuest) {
             echo $form->field($model, 'captcha')->widget(ReCaptchaWidget::class)->label(false);

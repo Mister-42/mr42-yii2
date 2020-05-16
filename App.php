@@ -2,7 +2,7 @@
 
 class App
 {
-    public function __construct(bool $debug = false, bool $unitTest = false)
+    public function __construct(bool $debug = false, string $unitTest = null)
     {
         header_remove('X-Powered-By');
         if ($debug) {
@@ -11,34 +11,31 @@ class App
             define('YII_ENABLE_ERROR_HANDLER', !$unitTest);
         }
 
-        $loader = require __DIR__ . '/vendor/autoload.php';
-        $loader->setPsr4('mr42\\', __DIR__ . '/mr42/');
-        $loader->setPsr4('mister42\\', __DIR__ . '/mister42/');
+        require __DIR__ . '/vendor/autoload.php';
         require __DIR__ . '/vendor/yiisoft/yii2/Yii.php';
 
-        if ($unitTest) {
-            return new yii\web\Application($this->loadConfig(['mister42'], 'Web'));
-        }
-        $app = (php_sapi_name() === 'cli')
+        $app = (PHP_SAPI === 'cli' && is_null($unitTest))
             ? new yii\console\Application($this->loadConfig(['mister42'], 'Console'))
-            : new yii\web\Application($this->getConfig());
+            : new yii\web\Application($this->getConfig($unitTest));
 
-        $exitCode = $app->run();
-        return $exitCode;
+        if ($unitTest) {
+            $components = $app->components;
+            $components['urlManager']['baseUrl'] = 'https://www.mister42.me/';
+            $app->components = $components;
+            return $app;
+        }
+
+        return $app->run();
     }
 
-    private function getConfig(): array
+    private function getConfig(?string $unitTest): array
     {
-        $srv = yii\helpers\ArrayHelper::getValue($_SERVER, 'SERVER_NAME');
-        switch (substr($srv, 0, 4) === 'www.' ? substr($srv, 4) : $srv) :
-            case 'mister42.me':
-                return $this->loadConfig(['mister42'], 'Web');
-            default:
-                return $this->loadConfig(['mister42', 'mr42'], 'Web');
-        endswitch;
+        return (yii\helpers\ArrayHelper::getValue($_SERVER, 'SERVER_NAME') === 'mr42.me')
+            ? $this->loadConfig(['mister42', 'mr42'])
+            : $this->loadConfig(['mister42', $unitTest]);
     }
 
-    private function loadConfig(array $dir, string $confFile): array
+    private function loadConfig(array $dir, string $confFile = 'Web'): array
     {
         $config = ($dir[1] ?? $dir[0]) . "\\{$confFile}";
         $common = "{$dir[0]}\\Common";

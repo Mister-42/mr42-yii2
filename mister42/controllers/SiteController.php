@@ -1,8 +1,8 @@
 <?php
 
-namespace app\controllers;
+namespace mister42\controllers;
 
-use app\models\site\Webmanifest;
+use mister42\models\site\Webmanifest;
 use Yii;
 use yii\base\BaseObject;
 use yii\filters\AccessControl;
@@ -54,6 +54,7 @@ class SiteController extends \yii\web\Controller
         Yii::$app->response->headers->add('Content-Type', 'text/plain');
         return $this->renderPartial('robotstxt');
     }
+
     public function actions(): array
     {
         return [

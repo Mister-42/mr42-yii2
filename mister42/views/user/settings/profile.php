@@ -1,8 +1,8 @@
 <?php
 
-use app\assets\CharCounterAsset;
-use app\models\ActiveForm;
-use app\widgets\TimePicker;
+use mister42\assets\CharCounterAsset;
+use mister42\models\ActiveForm;
+use mister42\widgets\TimePicker;
 use Da\User\Helper\TimezoneHelper;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
@@ -73,7 +73,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
         echo $form->field($model, 'bio', [
             'inputTemplate' => '<div id="chars" class="float-right"></div>' . Yii::$app->icon->activeFieldAddon('info-circle'),
-        ])->hint(Yii::t('mr42', 'You may use {markdown} and {age} to show your age, calculated from <nobr>{birthday}</nobr>. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank']), 'age' => '<code>%age%</code>', 'birthday' => Html::tag('code', $model->getAttributeLabel('birthday'))]))
+        ])->hint(Yii::t('mr42', 'You may use {markdown} and {age} to show your age, calculated from <nobr>{birthday}</nobr>. HTML is not allowed.', ['markdown' => Html::a(Yii::t('mr42', 'Markdown Syntax'), Yii::$app->mr42->createUrl(['/permalink/articles', 'id' => 4]), ['target' => '_blank']), 'age' => '<code>%age%</code>', 'birthday' => Html::tag('code', $model->getAttributeLabel('birthday'))]))
         ->textArea(['id' => 'formContent', 'rows' => 8, 'tabindex' => ++$tab]);
 
         echo $form->field($model, 'timezone', [

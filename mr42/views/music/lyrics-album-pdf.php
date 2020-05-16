@@ -1,6 +1,6 @@
 <?php
 
-use app\models\music\Lyrics2Albums;
+use mister42\models\music\Lyrics2Albums;
 use yii\bootstrap4\Html;
 
 echo '<bookmark content="tracklist" />';

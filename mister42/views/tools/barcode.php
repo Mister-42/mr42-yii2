@@ -1,7 +1,7 @@
 <?php
 
-use app\models\ActiveForm;
-use app\models\tools\Barcode;
+use mister42\models\ActiveForm;
+use mister42\models\tools\Barcode;
 use yii\bootstrap4\Alert;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;

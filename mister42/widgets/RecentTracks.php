@@ -1,6 +1,6 @@
 <?php
 
-namespace app\widgets;
+namespace mister42\widgets;
 
 use Yii;
 use yii\bootstrap4\Html;

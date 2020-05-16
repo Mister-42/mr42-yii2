@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\user;
+namespace mister42\models\user;
 
-use app\models\Webrequest;
-use app\widgets\Item;
-use app\widgets\RecentTracks as RecentTracksWidget;
+use mister42\models\Webrequest;
+use mister42\widgets\Item;
+use mister42\widgets\RecentTracks as RecentTracksWidget;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -49,13 +49,14 @@ class RecentTracks extends \yii\db\ActiveRecord
             if (!$response->isOK) {
                 return false;
             }
-            $count = 0;
             $playcount = (int) $response->data['recenttracks']['@attributes']['total'];
+
+            $count = 0;
             foreach ($response->data['recenttracks']['track'] as $track) {
-                $time = (bool) ArrayHelper::getValue($track, '@attributes.nowplaying', false) ? 0 : (int) strtotime($track['date']);
+                $time = ArrayHelper::getValue($track, '@attributes.nowplaying', false) ? 0 : (int) ArrayHelper::getValue($track, 'date.@attributes.uts');
                 $addTrack = self::findOne(['userid' => $profile->user_id, 'time' => $time]) ?? new self();
                 $addTrack->userid = $profile->user_id;
-                $addTrack->artist = (string) ArrayHelper::getValue($track, 'artist');
+                $addTrack->artist = (string) ArrayHelper::getValue($track, 'artist.0');
                 $addTrack->track = (string) ArrayHelper::getValue($track, 'name');
                 $addTrack->count = $playcount--;
                 $addTrack->time = $time;

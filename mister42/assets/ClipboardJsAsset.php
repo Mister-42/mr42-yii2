@@ -1,6 +1,6 @@
 <?php
 
-namespace app\assets;
+namespace mister42\assets;
 
 use Yii;
 use yii\web\AssetBundle;
@@ -9,7 +9,7 @@ use yii\web\View;
 class ClipboardJsAsset extends AssetBundle
 {
     public $depends = [
-        'app\assets\AppAsset',
+        'mister42\assets\AppAsset',
     ];
 
     public $js = [

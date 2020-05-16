@@ -1,9 +1,9 @@
 <?php
 
-namespace app\commands;
+namespace mister42\commands;
 
-use app\models\articles\Articles;
-use app\models\Console;
+use mister42\models\articles\Articles;
+use mister42\models\Console;
 use Yii;
 use yii\console\Controller;
 

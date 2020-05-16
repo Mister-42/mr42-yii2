@@ -1,17 +1,15 @@
 <?php
 
-namespace app\commands;
+namespace mister42\commands;
 
-use app\models\music\Lyrics1Artists;
-use app\models\music\Lyrics2Albums;
-use app\models\music\Lyrics3Tracks;
-use app\models\music\LyricsArtistInfo;
-use app\models\user\Profile;
-use app\models\user\User;
-use app\models\Console;
-use app\models\Image;
-use app\models\Video;
-use app\models\Webrequest;
+use mister42\models\music\Lyrics1Artists;
+use mister42\models\music\Lyrics2Albums;
+use mister42\models\music\Lyrics3Tracks;
+use mister42\models\music\LyricsArtistInfo;
+use mister42\models\Console;
+use mister42\models\Image;
+use mister42\models\Video;
+use mister42\models\Webrequest;
 use yii\helpers\ArrayHelper;
 
 /**

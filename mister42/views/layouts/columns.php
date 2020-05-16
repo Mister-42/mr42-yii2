@@ -1,15 +1,15 @@
 <?php
 
-use app\models\ActiveForm;
-use app\models\articles\Articles;
-use app\models\articles\ArticlesComments;
-use app\models\articles\Search;
-use app\widgets\Feed;
-use app\widgets\Item;
-use app\widgets\RecentArticles;
-use app\widgets\RecentChangelog;
-use app\widgets\RecentComments;
-use app\widgets\TagCloud;
+use mister42\models\ActiveForm;
+use mister42\models\articles\Articles;
+use mister42\models\articles\ArticlesComments;
+use mister42\models\articles\Search;
+use mister42\models\feed\Feed;
+use mister42\widgets\Feed as FeedWidget;
+use mister42\widgets\Item;
+use mister42\widgets\RecentArticles;
+use mister42\widgets\RecentComments;
+use mister42\widgets\TagCloud;
 use yii\bootstrap4\Html;
 use yii\caching\TagDependency;
 use yii\helpers\Inflector;
@@ -40,15 +40,18 @@ echo Html::beginTag('div', ['class' => 'row']);
         echo Html::beginTag('div', ['class' => 'row']);
             if ($isHome) {
                 echo Html::beginTag('aside', ['class' => 'col-6 d-none d-lg-block']);
-                echo Item::widget([
-                        'body' => Feed::widget(['name' => 'ScienceDaily', 'tooltip' => true]),
-                        'header' => Yii::$app->icon->name('flask')->class('mr-1') . 'ScienceDaily',
-                    ]);
+                foreach (['science', 'tech'] as $category) {
+                    $feed = Feed::find()->where(['type' => $category, 'language' => Yii::$app->language]);
+                    if ($feed->count() === '0') {
+                        $feed = Feed::find()->where(['type' => $category, 'language' => 'en']);
+                    }
 
-                echo Item::widget([
-                        'body' => Feed::widget(['name' => 'TomsHardware', 'tooltip' => true]),
-                        'header' => Yii::$app->icon->name('hammer')->class('mr-1') . 'Tom\'s Hardware',
+                    $feedData = $feed->one();
+                    echo Item::widget([
+                        'body' => FeedWidget::widget(['name' => $feedData->name, 'tooltip' => true]),
+                        'header' => Yii::$app->icon->name($feedData->icon)->class('mr-1') . $feedData->title,
                     ]);
+                }
                 echo Html::endTag('aside');
             }
 
@@ -73,7 +76,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
                 if ($isHome) {
                     echo Item::widget([
-                        'body' => Feed::widget(['limit' => 5, 'name' => 'Mr42Commits']),
+                        'body' => FeedWidget::widget(['limit' => 5, 'name' => 'Mr42Commits']),
                         'header' => Yii::$app->icon->name('github', 'brands')->class('mr-1') . Yii::t('mr42', 'Changelog'),
                     ]);
                 }

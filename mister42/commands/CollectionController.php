@@ -1,11 +1,11 @@
 <?php
 
-namespace app\commands;
+namespace mister42\commands;
 
-use app\models\music\Collection;
-use app\models\user\Profile;
-use app\models\user\User;
-use app\models\Webrequest;
+use mister42\models\music\Collection;
+use mister42\models\user\Profile;
+use mister42\models\user\User;
+use mister42\models\Webrequest;
 use yii\helpers\ArrayHelper;
 
 /**

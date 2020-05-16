@@ -1,8 +1,8 @@
 <?php
 
-use app\models\articles\Articles;
-use app\models\articles\Tags;
-use app\models\feed\Sitemap;
+use mister42\models\articles\Articles;
+use mister42\models\articles\Tags;
+use mr42\models\Sitemap;
 use yii\helpers\ArrayHelper;
 
 $doc = Sitemap::beginDoc();
@@ -16,9 +16,11 @@ foreach ($articles as $article) {
         $lastModified = max($lastModified, $comment['created']);
     }
 
+#    Sitemap::lineItem($doc, Yii::$app->mr42->createUrl(['permalink/articles', 'id' => $article->id]), ['age' => $lastModified]);
     Sitemap::lineItem($doc, ['articles/article', 'id' => $article->id, 'title' => $article->url], ['age' => $lastModified, 'locale' => true]);
     if ($article['pdf']) {
-        Sitemap::lineItem($doc, ['articles/pdf', 'id' => $article->id, 'title' => $article->url], ['age' => $lastModified]);
+        $pdfUrl = Yii::$app->mr42->createUrl(['articles/pdf', 'id' => $article->id, 'title' => $article->url], ['age' => $lastModified]);
+        Sitemap::lineItem($doc, $pdfUrl, ['age' => $lastModified]);
     }
 }
 unset($articles);
@@ -27,7 +29,7 @@ $tags = Tags::findTagWeights();
 $weight = ArrayHelper::getColumn($tags, 'weight');
 foreach ($tags as $tag => $value) {
     $lastModified = Tags::getLastUpdate($tag);
-    Sitemap::lineItem($doc, ['/articles/tag', 'tag' => $tag], ['age' => $lastModified, 'priority' => $value['weight'] / max($weight) - 0.2, 'locale' => true]);
+    Sitemap::lineItem($doc, ['articles/tag', 'tag' => $tag], ['age' => $lastModified, 'priority' => $value['weight'] / max($weight) - 0.2, 'locale' => true]);
 }
 unset($tags);
 

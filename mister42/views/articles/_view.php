@@ -1,7 +1,7 @@
 <?php
 
-use app\assets\HighlightAsset;
-use app\models\user\Profile;
+use mister42\assets\HighlightAsset;
+use mister42\models\user\Profile;
 use yii\bootstrap4\Html;
 use yii\helpers\StringHelper;
 
@@ -23,7 +23,7 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
                 ]);
             }
             if ($model->active && $model->pdf) {
-                echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['pdf', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-sm btn-outline-secondary ml-1']);
+                echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), Yii::$app->mr42->createUrl(['articles/pdf', 'id' => $model->id, 'title' => $model->url]), ['class' => 'btn btn-sm btn-outline-secondary ml-1']);
             }
             if (!$model->active) {
                 echo Html::tag('span', Yii::$app->icon->name('asterisk')->class('mr-1') . Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1']);
@@ -62,7 +62,7 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
     }
 
     echo Html::beginTag('div', ['class' => 'card-footer']);
-        $bar[] = Yii::$app->icon->name('link')->class('mr-1 text-muted') . Html::a(Yii::t('mr42', 'Permalink'), Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $model->id]));
+        $bar[] = Yii::$app->icon->name('link')->class('mr-1 text-muted') . Html::a(Yii::t('mr42', 'Permalink'), Yii::$app->mr42->createUrl(['permalink/articles', 'id' => $model->id]));
 
         $commentText = Yii::t('mr42', '{results, plural, =0{no comments yet} =1{1 comment} other{# comments}}', ['results' => count($model->comments)]);
         $bar[] = Yii::$app->icon->name('comment')->class('mr-1 text-muted') . Html::a($commentText, ['article', 'id' => $model->id, 'title' => $model->url, '#' => 'comments']);

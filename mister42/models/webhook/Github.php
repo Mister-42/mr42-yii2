@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models\webhook;
+namespace mister42\models\webhook;
 
-use app\commands\FeedController;
+use mister42\commands\FeedController;
 use Yii;
 
 class Github extends \yii\base\Model
@@ -12,7 +12,8 @@ class Github extends \yii\base\Model
         $payload = json_decode(Yii::$app->request->post('payload'));
         $controller = new FeedController(Yii::$app->controller->id, Yii::$app);
         $controller->limit = 5;
-        $controller->actionWebfeed('Mr42Commits', "https://github.com/{$payload->repository->full_name}/commits/{$payload->repository->default_branch}.atom", 'content');
+        $payload->repository->name = 'Mr42Commits';
+        $controller->actionWebfeed('github', $payload->repository);
 
         return ['status' => 'success', 'message' => 'Successfully updated.'];
     }

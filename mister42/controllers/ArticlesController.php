@@ -1,19 +1,17 @@
 <?php
 
-namespace app\controllers;
+namespace mister42\controllers;
 
-use app\models\articles\Articles;
-use app\models\articles\ArticlesComments;
-use app\models\articles\Search;
-use app\models\articles\Tags;
+use mister42\models\articles\Articles;
+use mister42\models\articles\ArticlesComments;
+use mister42\models\articles\Search;
+use mister42\models\articles\Tags;
 use Yii;
 use yii\bootstrap4\Html;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use yii\web\Response;
-use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
@@ -34,7 +32,7 @@ class ArticlesController extends \yii\web\Controller
             $this->redirect(['article', 'id' => $model->id, 'title' => $model->url], 301)->send();
         }
 
-        Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $model->id])]);
+        Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->mr42->createUrl(['/permalink/articles', 'id' => $model->id])]);
         if ($model->pdf) {
             Yii::$app->view->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['pdf', 'id' => $model->id, 'title' => $model->url], true), 'type' => 'application/pdf', 'title' => $model->title]);
         }
@@ -113,23 +111,6 @@ class ArticlesController extends \yii\web\Controller
             return Html::tag('div', Yii::t('mr42', 'Your comment has been saved. It will not be visible until approved by an administrator.'), ['class' => 'alert alert-success']);
         }
         return Html::tag('div', Yii::t('mr42', 'Something went wrong, Your comment has not been saved.'), ['class' => 'alert alert-danger']);
-    }
-
-    public function actionPdf(int $id, string $title): Response
-    {
-        $model = Articles::find()
-            ->where(['id' => $id])
-            ->one();
-
-        if (!$model->pdf) {
-            throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
-        }
-        if ($title !== $model->url) {
-            $this->redirect(['pdf', 'id' => $model->id, 'title' => $model->url], 301)->send();
-        }
-
-        $fileName = Articles::buildPdf($model);
-        return Yii::$app->response->sendFile($fileName, implode(' - ', [Yii::$app->name, $model->url]) . '.pdf');
     }
 
     public function actionSearch(string $q): string

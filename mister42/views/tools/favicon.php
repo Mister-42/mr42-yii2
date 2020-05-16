@@ -1,8 +1,8 @@
 <?php
 
-use app\assets\FileInputAsset;
-use app\assets\HighlightAsset;
-use app\models\ActiveForm;
+use mister42\assets\FileInputAsset;
+use mister42\assets\HighlightAsset;
+use mister42\models\ActiveForm;
 use yii\bootstrap4\Alert;
 use yii\bootstrap4\Html;
 use yii\helpers\Inflector;

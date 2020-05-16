@@ -1,9 +1,9 @@
 <?php
 
-use app\widgets\Lightbox;
+use mister42\widgets\Lightbox;
 use yii\bootstrap4\Html;
 
-$this->title = implode(' ', [$data[0]->artist->name, 'Lyrics']);
+$this->title = implode(' - ', [$data[0]->artist->name, Yii::t('mr42', 'Lyrics')]);
 $this->params['breadcrumbs'] = [Yii::t('mr42', 'Music')];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
 $this->params['breadcrumbs'][] = Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']);
@@ -42,7 +42,8 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
             if ($album->playlist_url) {
                 echo Html::a(Yii::$app->icon->name($album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'Play Album')]);
             }
-            echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'PDF')]);
+            $pdfUrl = Yii::$app->mr42->createUrl(['music/albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url]);
+            echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), $pdfUrl, ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'PDF')]);
             echo Html::endTag('div');
             echo Html::endTag('div');
 
@@ -68,8 +69,8 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
                     'linkOptions' => ['class' => 'd-none d-md-block my-auto'],
                     'items' => [
                         [
-                            'thumb' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '125'],
-                            'image' => ['albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800'],
+                            'thumb' => Yii::$app->mr42->createUrl(['music/albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '125']),
+                            'image' => Yii::$app->mr42->createUrl(['music/albumcover', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, 'size' => '800']),
                             'title' => implode(' - ', [$album->artist->name, $album->name]) . " ({$album->year})",
                             'group' => $album->artist->url,
                         ],

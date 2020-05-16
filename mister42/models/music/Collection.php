@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\music;
+namespace mister42\models\music;
 
-use app\models\user\Profile;
-use app\models\Image;
-use app\models\Webrequest;
+use mister42\models\user\Profile;
+use mister42\models\Image;
+use mister42\models\Webrequest;
 use Yii;
 use yii\helpers\ArrayHelper;
 

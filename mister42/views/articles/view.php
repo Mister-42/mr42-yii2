@@ -1,6 +1,6 @@
 <?php
 
-use app\models\articles\ArticlesComments;
+use mister42\models\articles\ArticlesComments;
 use yii\bootstrap4\Html;
 
 $this->title = $model->title;

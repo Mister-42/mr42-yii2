@@ -2,10 +2,12 @@
 
 namespace mister42;
 
+use yii\helpers\ArrayHelper;
+
 class Common
 {
-    private $params;
-    private $secrets;
+    private array $params;
+    private array $secrets;
 
     public function __construct()
     {
@@ -17,15 +19,19 @@ class Common
     {
         return [
             'aliases' => [
-                '@assets' => '//s.mr42.me',
+                '@assets' => '//mr42.me',
                 '@assetsroot' => __DIR__ . '/../assets',
                 '@bower' => '@vendor/bower-asset',
                 '@npm' => '@vendor/npm-asset',
+                '@mister42' =>  '@app/../mister42',
+                '@siteDE' => 'https://www.mister42.de',
+                '@siteEN' => 'https://www.mister42.me',
+                '@siteRU' => 'https://www.xn--42-mlclt0afi.xn--p1ai',
             ],
             'bootstrap' => ['log'],
             'components' => $this->getComponents(),
-            'language' => 'en',
-            'name' => 'Mr.42',
+            'language' => $this->getDomainProperty('lang'),
+            'name' => $this->getDomainProperty('title'),
             'params' => $this->params,
             'runtimePath' => __DIR__ . '/../.cache',
             'timeZone' => 'Europe/Berlin',
@@ -73,9 +79,6 @@ class Common
                 'password' => $this->secrets['MySQL']['pass'],
                 'charset' => 'utf8mb4',
                 'tablePrefix' => 'mister42_',
-                'attributes' => [
-                    \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
-                ],
                 'enableSchemaCache' => true,
                 'schemaCache' => 'fileCache',
                 'schemaCacheDuration' => 60 * 60 * 24 * 7,
@@ -84,7 +87,7 @@ class Common
                 'queryCacheDuration' => 60 * 60 * 24 * 2,
             ],
             'formatter' => [
-                'class' => 'app\models\Formatter',
+                'class' => 'mister42\models\Formatter',
             ],
             'icon' => [
                 'class' => 'thoulah\fontawesome\IconComponent',
@@ -103,15 +106,8 @@ class Common
                 'class' => 'yii\swiftmailer\Mailer',
             ],
             'urlManager' => [
-                'class' => 'codemix\localeurls\UrlManager',
+                'class' => 'yii\web\UrlManager',
                 'enablePrettyUrl' => true,
-                'ignoreLanguageUrlPatterns' => [
-                    '#^feed/(rss|sitemap)#' => '#feed/(rss|sitemap)#',
-                    '#^site/(browserconfigxml|faviconico|robotstxt|webmanifest)#' => '#site/(browserconfigxml|faviconico|robotstxt|webmanifest)#',
-                    '#^music/(albumpdf|albumcover|collection-cover)#' => '#music/(albumpdf|albumcover|collection-cover)#',
-                    '#^articles/pdf#' => '#articles/pdf#',
-                ],
-                'languages' => array_keys($this->params['languages']),
                 'normalizer' => [
                     'class' => 'yii\web\UrlNormalizer',
                 ],
@@ -122,17 +118,10 @@ class Common
                     'favicon.ico' => 'site/faviconico',
                     'robots.txt' => 'site/robotstxt',
                     'site.webmanifest' => 'site/webmanifest',
-                    'sitemap.xml' => 'feed/sitemap',
-                    'sitemap-articles.xml' => 'feed/sitemap-articles',
-                    'sitemap-lyrics.xml' => 'feed/sitemap-lyrics',
                     'extensions/<name>' => 'extensions/index',
                     'extensions/<name>/<section>' => 'extensions/view',
-                    'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>.pdf' => 'music/albumpdf',
-                    'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>-<size:.{2,5}>.jpg' => 'music/albumcover',
                     'music/lyrics/<artist:.*?>/<year:\d{4}>/<album:.*?>' => 'music/lyrics',
                     'music/lyrics/<artist:.*?>' => 'music/lyrics',
-                    'music/collection-cover/<id:.*>.jpg' => 'music/collection-cover',
-                    'articles/<id:\d+>/<title:.*?>.pdf' => 'articles/pdf',
                     'articles/<id:\d+>/<title:.*?>' => 'articles/article',
                     'articles/<id:\d+>' => 'articles/article',
                     'articles/<action:create|update|delete>/<id:.*>' => 'articles/<action>',
@@ -140,12 +129,12 @@ class Common
                     'articles/search' => 'articles/search',
                     'articles/tag/<tag:\w+>' => 'articles/tag',
                     'articles/page-<page:\d+>' => 'articles/index',
-                    '<controller:articles|calculator|extensions|feed|test|tools>' => '<controller>/index',
+                    '<controller:articles|calculator|extensions|test|tools>' => '<controller>/index',
                     'articles/<action>' => 'articles/<action>',
                     '<alias:\w+>' => 'site/<alias>',
                 ],
             ],
-            'urlManagerMr42' => [
+            'mr42' => [
                 'class' => 'yii\web\UrlManager',
                 'enablePrettyUrl' => true,
                 'showScriptName' => false,
@@ -153,5 +142,23 @@ class Common
                 'rules' => ((new \mr42\Web())->getComponents())['urlManager']['rules'],
             ],
         ];
+    }
+
+    private function getDomainProperty(string $property): string
+    {
+        $host = ArrayHelper::getValue($_SERVER, 'SERVER_NAME');
+        $domain = substr($host, 0, 4) === 'www.' ? substr($host, 4) : $host;
+        switch ($domain) :
+        case 'mister42.de':
+            $properties = ['lang' => 'de', 'title' => 'Mr.42'];
+        break;
+        case 'xn--42-mlclt0afi.xn--p1ai':
+            $properties = ['lang' => 'ru', 'title' => 'Г-н.42'];
+        break;
+        default:
+            $properties = ['lang' => 'en', 'title' => 'Mr.42'];
+        endswitch;
+
+        return $properties[$property];
     }
 }

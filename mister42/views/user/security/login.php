@@ -1,6 +1,6 @@
 <?php
 
-use app\models\ActiveForm;
+use mister42\models\ActiveForm;
 use Da\User\Widget\ConnectWidget;
 use yii\bootstrap4\Html;
 

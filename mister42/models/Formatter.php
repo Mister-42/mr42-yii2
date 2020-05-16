@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace mister42\models;
 
 use GK\JavascriptPacker;
 use voku\helper\HtmlDomParser;
@@ -29,6 +29,7 @@ class Formatter extends \yii\i18n\Formatter
             }
             $data = $dom->html();
         }
+
         return trim($data);
     }
 
@@ -37,6 +38,7 @@ class Formatter extends \yii\i18n\Formatter
         if (!file_exists($fileName = Yii::getAlias("@app/assets/js/{$file}"))) {
             return "{$file} does not exist.";
         }
+
         $cacheFile = Yii::getAlias("@runtime/assets/js/{$file}");
         if (!file_exists($cacheFile) || filemtime($cacheFile) < filemtime($fileName)) {
             FileHelper::createDirectory(Yii::getAlias('@runtime/assets/js'));
@@ -45,6 +47,7 @@ class Formatter extends \yii\i18n\Formatter
             file_put_contents($cacheFile, $jp->pack());
             touch($cacheFile, filemtime($fileName));
         }
+
         return file_get_contents($cacheFile);
     }
 

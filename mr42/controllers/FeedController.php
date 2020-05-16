@@ -1,22 +1,16 @@
 <?php
 
-namespace app\controllers;
+namespace mr42\controllers;
 
-use app\models\articles\Articles;
+use mister42\models\articles\Articles;
 use mister42\Secrets;
 use Yii;
-use yii\filters\HttpCache;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\web\Response;
 
 class FeedController extends \yii\web\Controller
 {
-    public function actionIndex(): Response
-    {
-        return $this->redirect(['rss'], 301);
-    }
-
     public function actionRss(): string
     {
         $secrets = (new Secrets())->getValues();
@@ -52,22 +46,5 @@ class FeedController extends \yii\web\Controller
     public function actionSitemapLyrics(): string
     {
         return $this->actionSitemap();
-    }
-    public function behaviors(): array
-    {
-        return [
-            [
-                'class' => HttpCache::class,
-                'enabled' => !YII_DEBUG,
-                'except' => ['index'],
-                'etagSeed' => function () {
-                    return serialize([phpversion(), Yii::$app->user->id, Articles::getLastModified()]);
-                },
-                'lastModified' => function () {
-                    return Articles::getLastModified();
-                },
-                'only' => ['rss', 'sitemap-articles'],
-            ],
-        ];
     }
 }

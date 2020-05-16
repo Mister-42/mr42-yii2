@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace mr42\controllers;
 
 use Phar;
 use PharData;

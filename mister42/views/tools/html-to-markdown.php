@@ -1,7 +1,7 @@
 <?php
 
-use app\assets\Html2MarkdownAsset;
-use app\models\articles\Articles;
+use mister42\assets\Html2MarkdownAsset;
+use mister42\models\articles\Articles;
 use yii\bootstrap4\Html;
 
 $this->title = Yii::t('mr42', 'HTML to Markdown Converter');

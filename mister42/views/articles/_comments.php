@@ -1,6 +1,6 @@
 <?php
 
-use app\models\user\User;
+use mister42\models\user\User;
 use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
 
@@ -9,6 +9,7 @@ foreach ($data->comments as $comment) {
     echo Html::beginTag('div', ['class' => 'card-header']);
     echo Html::tag(
         'div',
+        Html::a(null, null, ['class' => 'anchor', 'id' => $comment->id]) .
         Html::tag('h4', $comment->title, ['class' => 'comment-info']),
         ['class' => 'float-left']
     );
@@ -20,10 +21,10 @@ foreach ($data->comments as $comment) {
         Pjax::end();
 
         echo Html::a(Yii::$app->icon->name('trash-alt')->class('mr-1') . Yii::t('yii', 'Delete'), ['deletecomment', 'id' => $comment->id], [
-                        'class' => 'btn btn-sm btn-outline-danger ml-1',
-                        'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                        'data-method' => 'post',
-                    ]);
+            'class' => 'btn btn-sm btn-outline-danger ml-1',
+            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+            'data-method' => 'post',
+        ]);
         echo Html::endTag('div');
     }
     echo Html::endTag('div');

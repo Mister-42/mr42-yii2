@@ -1,9 +1,8 @@
 <?php
 
-use app\models\music\Collection;
+use mister42\models\music\Collection;
 use yii\bootstrap4\Tabs;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\web\View;
 
 $this->title = Yii::t('mr42', 'Collection');
@@ -11,7 +10,7 @@ $this->params['breadcrumbs'][] = Yii::t('mr42', 'Music');
 $this->params['breadcrumbs'][] = $this->title;
 
 $tabs = [
-    'collection' => Yii::t('mr42', 'Collection'),
+    'collection' => Yii::t('mr42', 'CD Collection'),
     'wishlist' => Yii::t('mr42', 'Wishlist'),
 ];
 
@@ -29,9 +28,10 @@ foreach ($tabs as $tab => $tabdesc) {
         $$tab[] = Html::tag('div', $album->artist, ['class' => 'card-header p-2']);
         $$tab[] = Html::tag('div', Html::tag('span', $album->title, ['class' => 'card-text mx-auto']), ['class' => 'card-body d-flex p-2']);
         $$tab[] = Html::a(
-            Html::img('@assets/images/blank.png', ['alt' => "{$album->artist} - {$album->title} ({$album->year})", 'class' => 'card-img-bottom', 'data-src' => Url::to(['music/collection-cover', 'id' => $album->id])]),
-            "https://www.discogs.com/release/{$album->id}"
-        , ['class' => 'stretched-link']);
+            Html::img('@assets/images/blank.png', ['alt' => "{$album->artist} - {$album->title} ({$album->year})", 'class' => 'card-img-bottom', 'data-src' => Yii::$app->mr42->createUrl(['music/collection-cover', 'id' => $album->id])]),
+            "https://www.discogs.com/release/{$album->id}",
+            ['class' => 'stretched-link']
+        );
         $$tab[] = Html::endTag('div');
         $$tab[] = Html::endTag('div');
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace app\controllers;
+namespace mr42\controllers;
 
-use app\models\Articles;
+use mr42\models\Articles;
 use Yii;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;

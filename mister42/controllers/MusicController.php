@@ -1,56 +1,28 @@
 <?php
 
-namespace app\controllers;
+namespace mister42\controllers;
 
-use app\models\music\Collection;
-use app\models\music\Lyrics1Artists;
-use app\models\music\Lyrics2Albums;
-use app\models\music\Lyrics3Tracks;
+use mister42\models\music\Collection;
+use mister42\models\music\Lyrics1Artists;
+use mister42\models\music\Lyrics2Albums;
+use mister42\models\music\Lyrics3Tracks;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 class MusicController extends \yii\web\Controller
 {
-    private $album;
-    private $artist;
-    private $data;
-    private $lastModified;
-    private $size;
-    private $year;
-
-    public function actionAlbumcover(): Response
-    {
-        if (!ArrayHelper::isIn($this->size, [125, 500, 800])) {
-            throw new NotFoundHttpException('Cover not found.');
-        }
-        [$fileName, $image] = Lyrics2Albums::getCover($this->size, $this->data);
-        return Yii::$app->response->sendContentAsFile($image, $fileName, ['mimeType' => 'image/jpeg', 'inline' => true]);
-    }
-
-    public function actionAlbumpdf(): Response
-    {
-        $pdf = Lyrics2Albums::buildPdf($this->data[0]->album);
-        return Yii::$app->response->sendFile($pdf, implode(' - ', [$this->data[0]->artist->url, $this->data[0]->album->year, $this->data[0]->album->url]) . '.pdf');
-    }
+    private ?string $album;
+    private ?string $artist;
+    private ?array $data;
+    private int $lastModified;
+    private ?int $size;
+    private ?int $year;
 
     public function actionCollection(): string
     {
         return $this->render('collection');
-    }
-
-    public function actionCollectionCover(int $id): Response
-    {
-        $album = Collection::find()->where(['id' => $id])->one();
-        if (!$album || !$album->image) {
-            $image = file_get_contents(Yii::getAlias('@assetsroot/images/nocdcover.png'));
-            return Yii::$app->response->sendContentAsFile($image, 'nocdcover.png', ['mimeType' => 'image/png', 'inline' => true]);
-        }
-
-        return Yii::$app->response->sendContentAsFile($album->image, "{$id}.jpg", ['mimeType' => 'image/jpeg', 'inline' => true]);
     }
 
     public function actionLyrics(): string
@@ -64,8 +36,6 @@ class MusicController extends \yii\web\Controller
     {
         if ($this->action->id === 'collection') {
             $this->lastModified = Collection::getLastModified();
-        } elseif ($this->action->id === 'collection-cover') {
-            $this->lastModified = Collection::getEntryLastModified(Yii::$app->request->get('id'));
         } elseif ($this->artist && $this->year && $this->album) {
             $this->data = $this->getAlbum();
             $this->lastModified = Lyrics3Tracks::getLastModified($this->artist, $this->year, $this->album);
@@ -87,7 +57,7 @@ class MusicController extends \yii\web\Controller
                 'lastModified' => function () {
                     return $this->lastModified;
                 },
-                'only' => ['index', 'albumpdf', 'albumcover', 'collection', 'collection-cover'],
+                'only' => ['index', 'collection'],
             ],
         ];
     }

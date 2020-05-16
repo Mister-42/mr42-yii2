@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\tools\qr;
+namespace mister42\models\tools\qr;
 
 use Yii;
 
-class WiFi extends \app\models\tools\Qr
+class WiFi extends \mister42\models\tools\Qr
 {
     public $authentication;
     public $hidden;

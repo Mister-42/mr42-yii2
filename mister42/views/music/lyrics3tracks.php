@@ -1,12 +1,12 @@
 <?php
 
-use app\widgets\Lightbox;
+use mister42\widgets\Lightbox;
 use yii\bootstrap4\Accordion;
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
 use yii\web\View;
 
-$this->title = implode(' - ', [$data[0]->artist->name, "{$data[0]->album->name} ({$data[0]->album->year})", 'Lyrics']);
+$this->title = implode(' - ', [$data[0]->artist->name, "{$data[0]->album->name} ({$data[0]->album->year})", Yii::t('mr42', 'Lyrics')]);
 $this->params['breadcrumbs'] = [Yii::t('mr42', 'Music')];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
 $this->params['breadcrumbs'][] = ['label' => Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']), 'url' => ['lyrics', 'artist' => $data[0]->artist->url]];
@@ -24,6 +24,7 @@ if ($data[0]->album->image_color) {
     $this->params['themeColor'] = $data[0]->album->image_color;
 }
 
+$pdfUrl = Yii::$app->mr42->createUrl(['music/albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url]);
 $items[] = [
     'label' => Html::tag('span', Html::tag('span', $data[0]->album->year, ['class' => 'badge']) . Html::tag('span', implode(' - ', [$data[0]->artist->name, $data[0]->album->name]), ['class' => 'ml-1 notranslate']), ['class' => 'h4 float-left']),
     'content' => ($data[0]->album->image)
@@ -31,8 +32,8 @@ $items[] = [
             'imageOptions' => ['class' => 'img-fluid img-thumbnail rounded', 'style' => ['background-color' => $data[0]->album->image_color]],
             'items' => [
                 [
-                    'thumb' => ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '500'],
-                    'image' => ['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '800'],
+                    'thumb' => Yii::$app->mr42->createUrl(['music/albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '500']),
+                    'image' => Yii::$app->mr42->createUrl(['music/albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => '800']),
                     'title' => implode(' - ', [$data[0]->artist->name, $data[0]->album->name]) . " ({$data[0]->album->year})",
                 ],
             ],
@@ -49,7 +50,7 @@ $items[] = [
             ? Html::a(Yii::$app->icon->name($data[0]->album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-dark ml-1'])
             : null) .
         ($data[0]->album->active
-            ? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), ['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], ['class' => 'btn btn-sm btn-outline-dark ml-1'])
+            ? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), $pdfUrl, ['class' => 'btn btn-sm btn-outline-dark ml-1'])
             : Html::tag('span', Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
     'contentOptions' => ['class' => 'text-center'],
     'options' => ['id' => 'frontCover'],

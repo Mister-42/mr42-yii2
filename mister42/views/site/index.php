@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Menu;
+use mister42\models\Menu;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 

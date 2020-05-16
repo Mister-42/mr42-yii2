@@ -1,6 +1,6 @@
 <?php
 
-use app\assets\ClipboardJsAsset;
+use mister42\assets\ClipboardJsAsset;
 use yii\bootstrap4\Html;
 use yii\web\View;
 

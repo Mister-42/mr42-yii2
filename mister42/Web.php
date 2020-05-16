@@ -4,7 +4,7 @@ namespace mister42;
 
 class Web
 {
-    private $secrets;
+    private array $secrets;
 
     public function __construct()
     {
@@ -14,11 +14,12 @@ class Web
     public function getValues(): array
     {
         $config['id'] = 'mister42';
-        //		$config['catchAll'] = in_array($_SERVER['REMOTE_ADDR'], $this->secrets['params']['specialIPs']) ? null : ['site/offline'];
+        //$config['catchAll'] = in_array($_SERVER['REMOTE_ADDR'], $this->secrets['params']['specialIPs']) ? null : ['site/offline'];
         $config['basePath'] = __DIR__;
         $config['components'] = $this->getComponents();
         $config['modules'] = $this->getModules();
         $config['params'] = (new Params())->getValues();
+        $config['controllerNamespace'] = 'mister42\controllers';
 
         if (YII_DEBUG && php_sapi_name() !== 'cli') {
             $config['bootstrap'] = ['debug'];
@@ -83,7 +84,7 @@ class Web
             'view' => [
                 'theme' => [
                     'pathMap' => [
-                        '@Da/User/resources/views' => '@app/views/user',
+                        '@Da/User/resources/views' => '@mister42/views/user',
                     ],
                 ],
             ],
@@ -98,12 +99,12 @@ class Web
                 'administrators' => ['admin'],
                 'allowAccountDelete' => false,
                 'classMap' => [
-                    'Profile' => 'app\models\user\Profile',
-                    'RegistrationForm' => 'app\models\user\RegistrationForm',
-                    'User' => 'app\models\user\User',
+                    'Profile' => 'mister42\models\user\Profile',
+                    'RegistrationForm' => 'mister42\models\user\RegistrationForm',
+                    'User' => 'mister42\models\user\User',
                 ],
                 'controllerMap' => [
-                    'profile' => ['class' => 'app\controllers\user\ProfileController'],
+                    'profile' => ['class' => 'mister42\controllers\user\ProfileController'],
                 ],
                 'mailParams' => [
                     'fromEmail' => $this->secrets['params']['noreplyEmail'],

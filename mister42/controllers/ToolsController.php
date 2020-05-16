@@ -1,12 +1,13 @@
 <?php
 
-namespace app\controllers;
+namespace mister42\controllers;
 
-use app\models\tools\Barcode;
-use app\models\tools\Favicon;
-use app\models\tools\Oui;
-use app\models\tools\PhoneticAlphabet;
-use app\models\tools\Qr;
+use mister42\models\tools\Barcode;
+use mister42\models\tools\Favicon;
+use mister42\models\tools\LoremIpsum;
+use mister42\models\tools\Oui;
+use mister42\models\tools\PhoneticAlphabet;
+use mister42\models\tools\Qr;
 use Yii;
 use yii\base\BaseObject;
 use yii\helpers\ArrayHelper;
@@ -18,8 +19,8 @@ class ToolsController extends \yii\web\Controller
     public function actionBarcode()
     {
         $model = new Barcode();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->generate();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->generate()) {
+            return $this->refresh();
         }
 
         return $this->render('barcode', [
@@ -32,7 +33,7 @@ class ToolsController extends \yii\web\Controller
         $model = new Favicon();
         if ($model->load(Yii::$app->request->post())) {
             $model->sourceImage = UploadedFile::getInstance($model, 'sourceImage');
-            if ($model->convertImage()) {
+            if ($model->validate() && $model->convertImage()) {
                 return $this->refresh();
             }
         }
@@ -52,10 +53,26 @@ class ToolsController extends \yii\web\Controller
         return $this->render('html-to-markdown');
     }
 
+    public function actionLoremIpsum()
+    {
+        $model = new LoremIpsum();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->generate()) {
+                return $this->refresh();
+            }
+        }
+
+        return $this->render('lorem-ipsum', [
+            'model' => $model,
+        ]);
+    }
+
     public function actionOui()
     {
         $model = new Oui();
-        $model->load(Yii::$app->request->post());
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            #			return $this->refresh();
+        }
 
         return $this->render('oui', [
             'model' => $model,
@@ -71,7 +88,9 @@ class ToolsController extends \yii\web\Controller
     {
         $model = new PhoneticAlphabet();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->convertText();
+            if ($model->convertText()) {
+                return $this->refresh();
+            }
         }
 
         return $this->render('phonetic-alphabet', [
@@ -87,7 +106,7 @@ class ToolsController extends \yii\web\Controller
             if (!in_array($type, $model->getTypes(true))) {
                 throw new NotFoundHttpException('Type ' . $type . ' not found.');
             }
-            $modelName = "\\app\\models\\tools\\qr\\{$type}";
+            $modelName = "\\mister42\\models\\tools\\qr\\{$type}";
             $model = new $modelName();
             $model->type = $type === 'SMS' ? 'Phone' : $type;
 
@@ -98,8 +117,8 @@ class ToolsController extends \yii\web\Controller
             }
 
             $model = ArrayHelper::merge($model, ArrayHelper::getValue(Yii::$app->request->post(), 'qr'));
-            if ($model->validate()) {
-                $model->generateQr();
+            if ($model->validate() && $model->generateQr()) {
+                return $this->refresh();
             }
 
             $qrForm = $this->renderPartial('qr/' . mb_strtolower($model->type), [
@@ -112,6 +131,7 @@ class ToolsController extends \yii\web\Controller
             'qrForm' => $qrForm ?? '',
         ]);
     }
+
     public function behaviors()
     {
         return [

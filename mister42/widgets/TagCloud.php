@@ -1,8 +1,8 @@
 <?php
 
-namespace app\widgets;
+namespace mister42\widgets;
 
-use app\models\articles\Tags;
+use mister42\models\articles\Tags;
 use Yii;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Widget;

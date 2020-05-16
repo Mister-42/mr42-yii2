@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\tools\qr;
+namespace mister42\models\tools\qr;
 
 use Yii;
 
-class Geographic extends \app\models\tools\Qr
+class Geographic extends \mister42\models\tools\Qr
 {
     public $altitude;
     public $lat;

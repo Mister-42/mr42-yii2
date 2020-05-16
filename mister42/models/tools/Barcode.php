@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models\tools;
+namespace mister42\models\tools;
 
-use app\models\Mailer;
+use mister42\models\Mailer;
 use Mpdf\Barcode as BarcodeData;
 use Yii;
 use yii\helpers\FileHelper;

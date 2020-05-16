@@ -1,8 +1,8 @@
 <?php
 
-namespace app\widgets;
+namespace mister42\widgets;
 
-use app\models\articles\ArticlesComments;
+use mister42\models\articles\ArticlesComments;
 use Yii;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Widget;
@@ -22,7 +22,7 @@ class RecentComments extends Widget
 
         foreach ($comments as $comment) {
             $draft = ($comment->active === 1) ? '' : Html::tag('sup', Yii::t('mr42', 'Draft'), ['class' => 'badge badge-info ml-1']);
-            $link = Html::a($comment->title . $draft, ['articles/article', 'id' => $comment->article->id, 'title' => $comment->article->url, '#' => 'comments'], ['class' => 'card-link stretched-link']);
+            $link = Html::a($comment->title . $draft, ['articles/article', 'id' => $comment->article->id, 'title' => $comment->article->url, '#' => $comment->id], ['class' => 'card-link stretched-link']);
             $items[] = Html::tag('li', $link, ['class' => 'list-group-item text-truncate']);
         }
 

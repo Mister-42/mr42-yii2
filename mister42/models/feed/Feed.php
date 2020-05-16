@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\feed;
+namespace mister42\models\feed;
 
 class Feed extends \yii\db\ActiveRecord
 {

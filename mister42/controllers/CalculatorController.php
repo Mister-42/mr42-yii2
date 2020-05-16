@@ -1,11 +1,11 @@
 <?php
 
-namespace app\controllers;
+namespace mister42\controllers;
 
-use app\models\calculator\Date;
-use app\models\calculator\Duration;
-use app\models\calculator\Office365;
-use app\models\calculator\Timezone;
+use mister42\models\calculator\Date;
+use mister42\models\calculator\Duration;
+use mister42\models\calculator\Office365;
+use mister42\models\calculator\Timezone;
 use Yii;
 use yii\base\BaseObject;
 use yii\filters\HttpCache;
@@ -15,8 +15,8 @@ class CalculatorController extends \yii\web\Controller
     public function actionDate()
     {
         $model = new Date();
-        if ($model->load(Yii::$app->request->post())) {
-            $model->calculate();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->calculate()) {
+            #			return $this->refresh();
         }
 
         return $this->render('date', [
@@ -27,8 +27,8 @@ class CalculatorController extends \yii\web\Controller
     public function actionDuration()
     {
         $model = new Duration();
-        if ($model->load(Yii::$app->request->post())) {
-            $model->calculate();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->calculate()) {
+            #			return $this->refresh();
         }
 
         return $this->render('duration', [
@@ -39,8 +39,8 @@ class CalculatorController extends \yii\web\Controller
     public function actionOffice365()
     {
         $model = new Office365();
-        if ($model->load(Yii::$app->request->post())) {
-            $model->calculate();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->calculate()) {
+            #			return $this->refresh();
         }
 
         return $this->render('office365', [
@@ -51,10 +51,8 @@ class CalculatorController extends \yii\web\Controller
     public function actionTimezone()
     {
         $model = new Timezone();
-        $model->source = 'Europe/Berlin';
-        $model->target = 'Europe/Moscow';
-        if ($model->load(Yii::$app->request->post())) {
-            $model->calculate();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->calculate()) {
+            #			return $this->refresh();
         }
 
         return $this->render('timezone', [
@@ -71,6 +69,7 @@ class CalculatorController extends \yii\web\Controller
     {
         return $this->render('wpapsk');
     }
+
     public function behaviors()
     {
         return [

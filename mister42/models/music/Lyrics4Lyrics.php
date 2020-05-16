@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\music;
+namespace mister42\models\music;
 
 use Yii;
 use yii\db\ActiveQuery;

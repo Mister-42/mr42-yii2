@@ -7,11 +7,10 @@ class Params
     public function getValues(): array
     {
         return [
-            'description' => 'Sharing beautiful knowledge of the world.',
             'languages' => [
-                'en' => 'English',
-                'de' => 'Deutsch',
-                'ru' => 'Русский',
+                'en' => ['full' => 'English', 'short' => 'EN'],
+                'de' => ['full' => 'Deutsch', 'short' => 'DE'],
+                'ru' => ['full' => 'Русский', 'short' => 'RU'],
             ],
             'longDomain' => 'https://www.mister42.me',
             'shortDomain' => 'https://mr42.me',

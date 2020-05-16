@@ -1,8 +1,8 @@
 <?php
 
-namespace app\controllers;
+namespace mister42\controllers;
 
-use app\models\webhook\Github;
+use mister42\models\webhook\Github;
 use mister42\Secrets;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -21,6 +21,7 @@ class WebhookController extends \yii\web\Controller
         if (!hash_equals($hash, hash_hmac($algo, file_get_contents('php://input'), $secrets['github']['hook']))) {
             throw new UnauthorizedHttpException('Access denied!');
         }
+
         $github = new Github();
         switch (Yii::$app->request->headers->get('X-GitHub-Event')) :
             case 'ping':

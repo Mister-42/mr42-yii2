@@ -1,9 +1,7 @@
 <?php
 
-namespace app\models\music;
+namespace mister42\models\music;
 
-use Yii;
-use yii\db\ActiveQuery;
 use yii\db\BatchQueryResult;
 
 class Lyrics1Artists extends \yii\db\ActiveRecord
@@ -18,6 +16,10 @@ class Lyrics1Artists extends \yii\db\ActiveRecord
 
     public static function albumsList(): BatchQueryResult
     {
+        return self::find()
+            ->getAlbums()
+            ->orderBy(['name' => SORT_ASC])
+            ->each();
         return self::find()
             ->orderBy(['name' => SORT_ASC])
             ->with('albums')

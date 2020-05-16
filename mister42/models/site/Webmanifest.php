@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\site;
+namespace mister42\models\site;
 
 use Yii;
 use yii\helpers\Url;
@@ -12,7 +12,7 @@ class Webmanifest
         return [
             'name' => Yii::$app->name,
             'short_name' => Yii::$app->name,
-            'description' => Yii::$app->params['description'],
+            'description' => Yii::t('mr42', 'Sharing beautiful knowledge of the world.'),
             'icons' => self::getIcons(['android-chrome-192x192.png', 'android-chrome-512x512.png']),
             'theme_color' => Yii::$app->params['themeColor'],
             'background_color' => '#FFFFFF',

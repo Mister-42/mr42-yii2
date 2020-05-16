@@ -10,7 +10,7 @@ class Console
             'id' => 'mister42-console',
             'aliases' => [
                 '@web' => 'https://www.mister42.me/',
-                '@webroot' => __DIR__ . '/../../webroot',
+                '@webroot' => __DIR__ . '/../webroot',
             ],
             'basePath' => __DIR__,
             'components' => [
@@ -30,7 +30,7 @@ class Console
                     ],
                 ],
             ],
-            'controllerNamespace' => 'app\commands',
+            'controllerNamespace' => 'mister42\commands',
             'modules' => [
                 'user' => \Da\User\Module::class,
             ],

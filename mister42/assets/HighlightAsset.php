@@ -1,6 +1,6 @@
 <?php
 
-namespace app\assets;
+namespace mister42\assets;
 
 use yii\web\AssetBundle;
 use yii\web\View;

@@ -1,8 +1,8 @@
 <?php
 
-namespace app\widgets;
+namespace mister42\widgets;
 
-use app\assets\LightboxAsset;
+use mister42\assets\LightboxAsset;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Widget;
 use yii\helpers\ArrayHelper;

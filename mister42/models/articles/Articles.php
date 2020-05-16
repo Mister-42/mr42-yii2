@@ -1,20 +1,19 @@
 <?php
 
-namespace app\models\articles;
+namespace mister42\models\articles;
 
-use app\models\Pdf;
-use app\models\user\Profile;
-use app\models\user\User;
+use mister42\models\Pdf;
+use mister42\models\user\Profile;
+use mister42\models\user\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 use yii\helpers\StringHelper;
-use yii\helpers\Url;
 use yii\web\AccessDeniedHttpException;
 
 class Articles extends \yii\db\ActiveRecord
 {
-    public $contentParsed;
+    public string $contentParsed;
 
     public function afterFind(): void
     {
@@ -96,7 +95,7 @@ class Articles extends \yii\db\ActiveRecord
                 'author' => $name,
                 'created' => $model->created,
                 'footer' => implode('|', ["{$tags}: {$model->tags}", "Author: {$name}", 'Page {PAGENO} of {nb}']),
-                'header' => implode('|', [Html::a(Yii::$app->name, Yii::$app->params['shortDomain']), Html::a($model->title, Yii::$app->urlManagerMr42->createUrl(['/permalink/articles', 'id' => $model->id])), date('D, j M Y', $model->updated)]),
+                'header' => implode('|', [Html::a(Yii::$app->name, Yii::$app->params['shortDomain']), Html::a($model->title, Yii::$app->mr42->createUrl(['/permalink/articles', 'id' => $model->id])), date('D, j M Y', $model->updated)]),
                 'keywords' => $model->tags,
                 'subject' => $model->title,
                 'title' => $model->title,

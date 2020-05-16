@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\articles;
+namespace mister42\models\articles;
 
 use yii\helpers\StringHelper;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace app\tests;
+namespace mister42\tests;
 
-use app\models\Image;
+use mister42\models\Image;
 
 class ImageTest extends \PHPUnit\Framework\TestCase
 {

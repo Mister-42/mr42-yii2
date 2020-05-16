@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\tools\qr;
+namespace mister42\models\tools\qr;
 
 use Yii;
 
-class FreeInput extends \app\models\tools\Qr
+class FreeInput extends \mister42\models\tools\Qr
 {
     public $qrdata;
 

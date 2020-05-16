@@ -1,8 +1,8 @@
 <?php
 
-namespace app\controllers\user;
+namespace mister42\controllers\user;
 
-use app\models\user\RecentTracks;
+use mister42\models\user\RecentTracks;
 use Da\User\Query\ProfileQuery;
 use Da\User\Query\UserQuery;
 use Yii;
@@ -14,7 +14,7 @@ use yii\web\NotFoundHttpException;
 
 class ProfileController extends \Da\User\Controller\ProfileController
 {
-    protected $userQuery;
+    protected UserQuery $userQuery;
 
     public function __construct($id, Module $module, ProfileQuery $profileQuery, UserQuery $userQuery, array $config = [])
     {

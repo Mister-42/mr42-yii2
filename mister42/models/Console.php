@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace mister42\models;
 
 class Console extends \yii\helpers\Console
 {
@@ -15,6 +15,7 @@ class Console extends \yii\helpers\Console
     {
         self::stdout(PHP_EOL);
     }
+
     public static function startProgress($done, $total, $prefix = '', $width = null): void
     {
         parent::startProgress($done, $total, self::ansiFormat($prefix, [self::BOLD, self::FG_BLUE]), $width);

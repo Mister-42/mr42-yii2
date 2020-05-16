@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\calculator;
+namespace mister42\models\calculator;
 
 use DateTime;
 use Yii;

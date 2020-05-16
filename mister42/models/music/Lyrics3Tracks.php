@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models\music;
+namespace mister42\models\music;
 
-use app\models\Video;
+use mister42\models\Video;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -87,8 +87,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord
     {
         return self::find()
             ->orderBy(['track' => SORT_ASC])
-            ->joinWith('artist')
-            ->joinWith('lyrics')
+            ->joinWith('artist', 'lyrics')
             ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
             ->andWhere('album.year=:year')
             ->andWhere(['or', 'album.name=:album', 'album.url=:album'])

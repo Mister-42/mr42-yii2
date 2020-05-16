@@ -1,10 +1,9 @@
 <?php
 
-namespace app\widgets;
+namespace mister42\widgets;
 
-use app\models\user\User;
-use app\models\user\WeeklyArtist;
-use Yii;
+use mister42\models\user\User;
+use mister42\models\user\WeeklyArtist;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Widget;
 

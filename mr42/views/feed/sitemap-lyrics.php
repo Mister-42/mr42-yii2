@@ -1,9 +1,9 @@
 <?php
 
-use app\models\feed\Sitemap;
-use app\models\music\Lyrics1Artists;
-use app\models\music\Lyrics2Albums;
-use app\models\music\Lyrics3Tracks;
+use mr42\models\Sitemap;
+use mister42\models\music\Lyrics1Artists;
+use mister42\models\music\Lyrics2Albums;
+use mister42\models\music\Lyrics3Tracks;
 
 $doc = Sitemap::beginDoc();
 
@@ -15,7 +15,8 @@ foreach (Lyrics1Artists::albumsList() as $artist) {
     foreach ($artist->albums as $album) {
         $lastModified = Lyrics3Tracks::getLastModified($album->artist->url, $album->year, $album->url);
         Sitemap::lineItem($doc, ['music/lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['age' => $lastModified, 'priority' => 0.5, 'locale' => true]);
-        Sitemap::lineItem($doc, ['music/albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['age' => $lastModified, 'priority' => 0.5]);
+        $pdfUrl = Yii::$app->mr42->createUrl(['music/albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url]);
+        Sitemap::lineItem($doc, $pdfUrl, ['age' => $lastModified, 'priority' => 0.5]);
     }
 }
 

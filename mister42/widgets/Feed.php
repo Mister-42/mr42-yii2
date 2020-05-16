@@ -1,8 +1,8 @@
 <?php
 
-namespace app\widgets;
+namespace mister42\widgets;
 
-use app\models\feed\Feed as FeedModel;
+use mister42\models\feed\FeedData as FeedDataModel;
 use Yii;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Widget;
@@ -15,7 +15,7 @@ class Feed extends Widget
 
     public function run(): string
     {
-        $items = FeedModel::find()
+        $items = FeedDataModel::find()
             ->where(['feed' => $this->name])
             ->orderBy(['time' => SORT_DESC])
             ->limit($this->limit)

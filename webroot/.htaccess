@@ -4,38 +4,35 @@ SetEnv TZ Europe/Berlin
 Header set Connection keep-alive
 
 <IfModule mod_rewrite.c>
-	RewriteEngine On
-	RewriteBase /
+    RewriteEngine On
+    RewriteBase /
 
-	RewriteCond %{HTTPS} !=on
-	RewriteCond %{HTTP_HOST} ^(www.)?mr42.me [NC,OR]
-	RewriteCond %{HTTP_HOST} ^(.+?).mister42.me [NC]
-	RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+    RewriteCond %{HTTP_HOST} !^www\.
+    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 
-	Rewritecond %{HTTP_HOST} !^mr42.me [NC]
-	RewriteCond %{HTTP_HOST} ^[^.]+\.[^.]+$
-	RewriteRule ^(.*)$ %{REQUEST_SCHEME}://www.%{HTTP_HOST}/$1 [R=301,L]
+    RedirectMatch 301 ^/de/(.*)$ https://www.mister42.de/$1
+    RedirectMatch 301 ^/en/(.*)$ https://www.mister42.me/$1
+    RedirectMatch 301 ^/ru/(.*)$ https://www.xn--42-mlclt0afi.xn--p1ai/$1
 
-	Redirect 301 /lyrics /music/lyrics
-	RedirectMatch 301 ^/(de|en|ru)/lyrics$ /$1/music/lyrics
-	RedirectMatch 301 ^/(raspberry)?pi$ /my/pi
-	RedirectMatch 301 ^/(de|en|ru)/(raspberry)?pi$ /$1/my/pi
-	RedirectMatch 301 ^/contact$ /my/contact
-	RedirectMatch 301 ^/(de|en|ru)/contact$ /$1/my/contact
+    RedirectMatch 301 ^/lyrics$ /music/lyrics
+    RedirectMatch 301 ^/lyrics/(.*).(pdf|jpg)$ https://mr42.me/music/lyrics/$1.$2
+    RedirectMatch 301 ^/(.*).(pdf|jpg)$ https://mr42.me/$1.$2
+    RedirectMatch 301 ^/(raspberry)?pi$ /my/pi
+    RedirectMatch 301 ^/contact$ /my/contact
 
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.php
 
-	RewriteCond %{THE_REQUEST} ^GET.*index.php [NC]
-	RewriteRule (.*?)index.php/*(.*) /$1$2 [R=301,NE,L]
+    RewriteCond %{THE_REQUEST} ^GET.*index.php [NC]
+    RewriteRule (.*?)index.php/*(.*) /$1$2 [R=301,NE,L]
 </IfModule>
 
 # Caching
 FileETag All
 
 <FilesMatch "\.(ico)$">
-	Header set Cache-Control "max-age=900, private, must-revalidate"
+    Header set Cache-Control "max-age=900, private, must-revalidate"
 </FilesMatch>
 
 # Make sure proxies don't deliver the wrong content
