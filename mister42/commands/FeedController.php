@@ -132,7 +132,7 @@ class FeedController extends Controller
                 $feedItem->feed = $feed->name;
                 $feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
                 $feedItem->url = (string) ArrayHelper::getValue($item, $xml->getName() === 'rss' ? 'link' : 'link.@attributes.href');
-                $feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $feed->description), false);
+                $feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $feed->description, ''), false);
                 $feedItem->time = $time;
                 $feedItem->save();
 

@@ -1,4 +1,8 @@
 build:
+    environment:
+        php:
+            version: 7.4
+            compile_options: '--enable-gd'
     nodes:
         tests: true
         analysis:
@@ -10,10 +14,11 @@ build:
             command: "true"
 filter:
     dependency_paths:
-        - "$HOME/vendor"
+        - "vendor/"
     excluded_paths:
         - "cs/"
-        - "tests/"
+        - "mister42/tests/"
+        - "mr42/tests/"
 tools:
     php_cs_fixer:
         config: { level: psr2 }
