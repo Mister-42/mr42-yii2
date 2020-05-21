@@ -99,7 +99,8 @@ class Qr extends \yii\base\Model
 
         $footer[] = Html::tag(
             'div',
-            Html::submitButton(Yii::t('mr42', 'Generate QR Code'), ['class' => 'btn btn-primary ml-1', 'tabindex' => ++$tab]),
+            Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-light shadow ml-1', 'tabindex' => $tab + 2]) .
+            Html::submitButton(Yii::t('mr42', 'Generate QR Code'), ['class' => 'btn btn-primary shadow ml-1', 'tabindex' => ++$tab]),
             ['class' => 'btn-toolbar float-right form-group']
         );
 

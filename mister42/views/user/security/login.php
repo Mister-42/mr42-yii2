@@ -34,12 +34,12 @@ echo Html::beginTag('div', ['class' => 'row']);
 
         echo $form->field($model, 'rememberMe')->checkBox(['tabindex' => ++$tab]);
 
-        echo Html::submitButton(Yii::t('usuario', 'Sign in'), ['class' => 'btn btn-primary btn-block', 'tabindex' => ++$tab]);
+        echo Html::submitButton(Yii::t('usuario', 'Sign in'), ['class' => 'btn btn-primary shadow btn-block', 'tabindex' => ++$tab]);
 
         ActiveForm::end();
 
         if ($module->enableEmailConfirmation) {
-            echo Html::tag('p', Html::a(Yii::t('usuario', 'Didn\'t receive confirmation message?'), ['/user/registration/resend']), ['class' => 'text-center']);
+            echo Html::tag('p', Html::a(Yii::t('usuario', 'Didn\'t receive confirmation message?'), ['/user/registration/resend']), ['class' => 'text-center mt-4']);
         }
 
         if ($module->enableRegistration) {

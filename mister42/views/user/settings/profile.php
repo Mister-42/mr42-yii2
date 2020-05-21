@@ -82,7 +82,7 @@ echo Html::beginTag('div', ['class' => 'row']);
 
         echo Html::tag(
             'div',
-            Html::submitButton(Yii::t('usuario', 'Save'), ['class' => 'btn btn-success', 'tabindex' => ++$tab]),
+            Html::submitButton(Yii::t('usuario', 'Save'), ['class' => 'btn btn-success shadow', 'tabindex' => ++$tab]),
             ['class' => 'btn-toolbar float-right form-group']
         );
 

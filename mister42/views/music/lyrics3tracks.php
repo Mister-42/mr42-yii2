@@ -44,13 +44,13 @@ $items[] = [
         ])
         : null,
     'footer' => ($data[0]->album->buy
-            ? Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
+            ? Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $data[0]->album->buy, ['class' => 'btn btn-sm btn-outline-dark shadow ml-1', 'title' => Yii::t('mr42', 'Buy This Album')])
             : null) .
         ($data[0]->album->playlist_url
-            ? Html::a(Yii::$app->icon->name($data[0]->album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-dark ml-1'])
+            ? Html::a(Yii::$app->icon->name($data[0]->album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $data[0]->album->playlist_url, ['class' => 'btn btn-sm btn-outline-dark shadow ml-1'])
             : null) .
         ($data[0]->album->active
-            ? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), $pdfUrl, ['class' => 'btn btn-sm btn-outline-dark ml-1'])
+            ? Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), $pdfUrl, ['class' => 'btn btn-sm btn-outline-dark shadow ml-1'])
             : Html::tag('span', Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1'])),
     'contentOptions' => ['class' => 'text-center'],
     'options' => ['id' => 'frontCover'],

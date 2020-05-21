@@ -1,6 +1,7 @@
 <?php
 
 use mister42\assets\ClipboardJsAsset;
+use mister42\models\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\web\View;
 
@@ -19,7 +20,7 @@ for ($x = 6; $x <= 64; $x++) {
 echo Html::beginTag('div', ['class' => 'row']);
     echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
         echo Html::tag('h1', $this->title);
-        echo Html::tag('div', Yii::t('mr42', 'This {title} provides an easy way to create a random password. Password generation is done client-side (on your computer) using JavaScript. <b>None</b> of this information will be sent over the network.', ['title' => $this->title]), ['class' => 'alert alert-info']);
+        echo Html::tag('div', Yii::t('mr42', 'This {title} provides an easy way to create a random password. Password generation is done client-side (on your computer) using JavaScript. <b>None</b> of this information will be sent over the network.', ['title' => $this->title]), ['class' => 'alert alert-info shadow']);
 
         echo Html::beginTag('form', ['class' => 'passform']);
             echo Html::beginTag('div', ['class' => 'form-group passform-length']);
@@ -45,8 +46,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 
             echo Html::tag(
                 'div',
-                Html::button(Yii::t('mr42', 'Generate Password'), ['class' => 'btn btn-block btn-primary', 'onclick' => 'get()']),
-                ['class' => 'btn-toolbar form-group']
+                Html::button(Yii::t('mr42', 'Generate Password'), ['class' => 'btn btn-primary shadow ml-1 suppress', 'tabindex' => ++$tab, 'onclick' => 'get()']),
+                ['class' => 'btn-toolbar float-right form-group']
             );
         echo Html::endTag('form');
     echo Html::endTag('div');

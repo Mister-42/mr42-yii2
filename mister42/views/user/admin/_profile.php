@@ -31,7 +31,7 @@ echo Html::tag(
     'div',
     Html::tag(
         'div',
-        Html::submitButton(Yii::t('usuario', 'Update'), ['class' => 'btn btn-block btn-success', 'tabindex' => ++$tab]),
+        Html::submitButton(Yii::t('usuario', 'Update'), ['class' => 'btn btn-block btn-success shadow', 'tabindex' => ++$tab]),
         ['class' => 'col-md-9 ml-auto btn-toolbar float-right']
     ),
     ['class' => 'form-group row']

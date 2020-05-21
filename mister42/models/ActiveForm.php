@@ -13,8 +13,8 @@ class ActiveForm extends \thoulah\fontawesome\bootstrap4\ActiveForm
     {
         return ButtonGroup::widget([
             'buttons' => [
-                ['label' => Yii::t('mr42', 'Reset'), 'options' => ['class' => 'btn-light ml-1', 'tabindex' => $tab + 2, 'type' => 'reset']],
-                ['label' => $text, 'options' => ['class' => 'btn-primary ml-1', 'tabindex' => ++$tab, 'type' => 'submit']]
+                ['label' => Yii::t('mr42', 'Reset'), 'options' => ['class' => 'btn-light shadow ml-1', 'tabindex' => $tab + 2, 'type' => 'reset']],
+                ['label' => $text, 'options' => ['class' => 'btn-primary shadow ml-1', 'tabindex' => ++$tab, 'type' => 'submit']]
             ],
             'options' => ['class' => 'form-group float-right'],
         ]);

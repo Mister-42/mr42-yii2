@@ -14,10 +14,10 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
             echo Html::tag('h1', $data[0]->artist->name, ['class' => 'float-left']);
             echo Html::beginTag('div', ['class' => 'float-right']);
                 if ($data[0]->artistInfo && $data[0]->artistInfo->buy) {
-                    echo Html::a(Yii::$app->icon->name('bandcamp', 'brands'), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])]);
+                    echo Html::a(Yii::$app->icon->name('bandcamp', 'brands'), $data[0]->artistInfo->buy, ['class' => 'btn btn-secondary shadow ml-1', 'title' => Yii::t('mr42', 'Buy Music of {artist}', ['artist' => $data[0]->artist->name])]);
                 }
                 if ($data[0]->artistInfo && $data[0]->artistInfo->website) {
-                    echo Html::a(Yii::$app->icon->name('globe'), $data[0]->artistInfo->website, ['class' => 'btn btn-secondary ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])]);
+                    echo Html::a(Yii::$app->icon->name('globe'), $data[0]->artistInfo->website, ['class' => 'btn btn-secondary shadow ml-1', 'title' => Yii::t('mr42', 'Website of {artist}', ['artist' => $data[0]->artist->name])]);
                 }
             echo Html::endTag('div');
         echo Html::endTag('div');
@@ -37,13 +37,13 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
             echo Html::tag('span', Html::tag('span', $album->year, ['class' => 'badge']) . Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'ml-1 notranslate']), ['class' => 'h4 float-left']);
             echo Html::beginTag('div', ['class' => 'float-right']);
             if ($album->buy) {
-                echo Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'Buy This Album')]);
+                echo Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-dark shadow ml-1', 'title' => Yii::t('mr42', 'Buy This Album')]);
             }
             if ($album->playlist_url) {
-                echo Html::a(Yii::$app->icon->name($album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'Play Album')]);
+                echo Html::a(Yii::$app->icon->name($album->playlist_source, 'brands')->class('mr-1') . Yii::t('mr42', 'Play'), $album->playlist_url, ['class' => 'btn btn-sm btn-outline-dark shadow ml-1', 'title' => Yii::t('mr42', 'Play Album')]);
             }
             $pdfUrl = Yii::$app->mr42->createUrl(['music/albumpdf', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url]);
-            echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), $pdfUrl, ['class' => 'btn btn-sm btn-outline-dark ml-1', 'title' => Yii::t('mr42', 'PDF')]);
+            echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), $pdfUrl, ['class' => 'btn btn-sm btn-outline-dark shadow ml-1', 'title' => Yii::t('mr42', 'PDF')]);
             echo Html::endTag('div');
             echo Html::endTag('div');
 

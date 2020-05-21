@@ -19,7 +19,7 @@ echo Html::beginTag('div', ['class' => 'row']);
         echo Html::tag('h1', $this->title);
         if ($qr = Yii::$app->session->getFlash('qr-success')) {
             $imgSize = min(250, $model->size);
-            Alert::begin(['options' => ['class' => 'alert-success fade show clearfix']]);
+            Alert::begin(['options' => ['class' => 'alert-success shadow fade show clearfix']]);
             echo Html::img(Url::to('@assets/temp/' . basename($qr)), ['alt' => Yii::t('mr42', '{type} QR Code', ['type' => $model->type]), 'class' => 'float-left mr-2', 'height' => $imgSize, 'width' => $imgSize]);
             echo Html::tag('div', Yii::t('mr42', 'Your QR Code has been generated successfully.'));
             echo Html::tag('div', Yii::t('mr42', 'Do not link to the image on this website directly as it will be deleted shortly.'));
@@ -27,7 +27,7 @@ echo Html::beginTag('div', ['class' => 'row']);
         }
 
         if ($bytes = Yii::$app->session->getFlash('qr-size')) {
-            Alert::begin(['options' => ['class' => 'alert-danger']]);
+            Alert::begin(['options' => ['class' => 'alert-danger shadow']]);
             echo Yii::t('mr42', 'Too much information: Try to decrease the size by {bytes} characters.', ['bytes' => $bytes]);
             Alert::end();
         }

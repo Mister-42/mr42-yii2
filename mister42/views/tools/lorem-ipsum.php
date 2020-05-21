@@ -17,7 +17,7 @@ for ($x = 5; $x <= 250; $x  = $x + 5) {
 echo Html::beginTag('div', ['class' => 'row']);
     echo Html::beginTag('div', ['class' => 'col-lg-8 mx-auto']);
         echo Html::tag('h1', $this->title);
-        echo Html::tag('div', Yii::t('mr42', 'In publishing and graphic design, lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used before final copy is available, but it may also be used to temporarily replace copy in a process called greeking, which allows designers to consider form without the meaning of the text influencing the design.'), ['class' => 'alert alert-info']);
+        echo Html::tag('div', Yii::t('mr42', 'In publishing and graphic design, lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used before final copy is available, but it may also be used to temporarily replace copy in a process called greeking, which allows designers to consider form without the meaning of the text influencing the design.'), ['class' => 'alert alert-info shadow']);
 
         $form = ActiveForm::begin();
         $tab = 0;

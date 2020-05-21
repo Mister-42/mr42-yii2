@@ -18,18 +18,18 @@ FileInputAsset::register($this);
 echo Html::beginTag('div', ['class' => 'row']);
     echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
         echo Html::tag('h1', $this->title);
-        echo Html::tag('div', Yii::t('mr42', 'A favicon (short for \'favorites icon\'), are little icons associated with a particular website, shown next to the site\'s name in the URL bar or the page\'s title on the tab of all major browsers.'), ['class' => 'alert alert-info']);
+        echo Html::tag('div', Yii::t('mr42', 'A favicon (short for \'favorites icon\'), are little icons associated with a particular website, shown next to the site\'s name in the URL bar or the page\'s title on the tab of all major browsers.'), ['class' => 'alert alert-info shadow']);
 
         foreach ($model->dimensions as $dimension) {
             $dimensions[] = $dimension . 'x' . $dimension;
         }
 
         if ($flash = Yii::$app->session->getFlash('favicon-error')) {
-            echo Alert::widget(['options' => ['class' => 'alert-danger fade show'], 'body' => $flash]);
+            echo Alert::widget(['options' => ['class' => 'alert-danger shadow fade show'], 'body' => $flash]);
         }
 
         if ($icon = Yii::$app->session->getFlash('favicon-success')) {
-            Alert::begin(['options' => ['class' => 'alert-success clearfix']]);
+            Alert::begin(['options' => ['class' => 'alert-success shadow clearfix']]);
             echo Html::img(Url::to('@assets/temp/' . $icon), ['alt' => 'favicon.ico', 'class' => 'float-left mr-2', 'height' => 64, 'width' => 64]);
             echo Html::tag('div', Yii::t('mr42', 'Your icon has been generated successfully. Save it to your website and add the code below between the &lt;head&gt; tags of your html. This will allow all major browsers to show the icon when the website is accessed and/or bookmarked.'));
             echo Html::tag('div', Yii::t('mr42', 'Do not link to the image on this website directly as it will be deleted shortly.'));

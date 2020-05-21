@@ -15,18 +15,18 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
 
         echo Html::beginTag('div', ['class' => 'float-right']);
             if ($model->belongsToViewer()) {
-                echo Html::a(Yii::$app->icon->name('edit')->class('mr-1') . Yii::t('mr42', 'Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-outline-info ml-1']);
+                echo Html::a(Yii::$app->icon->name('edit')->class('mr-1') . Yii::t('mr42', 'Edit'), ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-outline-info shadow ml-1']);
                 echo Html::a(Yii::$app->icon->name('trash-alt')->class('mr-1') . Yii::t('yii', 'Delete'), ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-sm btn-outline-danger ml-1',
+                    'class' => 'btn btn-sm btn-outline-danger shadow ml-1',
                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                     'data-method' => 'post',
                 ]);
             }
             if ($model->active && $model->pdf) {
-                echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), Yii::$app->mr42->createUrl(['articles/pdf', 'id' => $model->id, 'title' => $model->url]), ['class' => 'btn btn-sm btn-outline-secondary ml-1']);
+                echo Html::a(Yii::$app->icon->name('file-pdf')->class('mr-1') . Yii::t('mr42', 'PDF'), Yii::$app->mr42->createUrl(['articles/pdf', 'id' => $model->id, 'title' => $model->url]), ['class' => 'btn btn-sm btn-outline-secondary shadow ml-1']);
             }
             if (!$model->active) {
-                echo Html::tag('span', Yii::$app->icon->name('asterisk')->class('mr-1') . Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled ml-1']);
+                echo Html::tag('span', Yii::$app->icon->name('asterisk')->class('mr-1') . Yii::t('mr42', 'Draft'), ['class' => 'btn btn-sm btn-warning disabled shadow ml-1']);
             }
         echo Html::endTag('div');
     echo Html::endTag('div');
@@ -46,12 +46,12 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
     echo Html::endTag('div');
 
     if ($model->source || Yii::$app->controller->action->id === 'index') {
-        echo Html::beginTag('div', ['class' => 'card-footer text-right']);
+        echo Html::beginTag('div', ['class' => 'card-body text-right']);
         if ($model->source) {
-            echo Html::a(Yii::t('mr42', 'Source'), $model->source, ['class' => 'btn btn-outline-secondary']);
+            echo Html::a(Yii::t('mr42', 'Source'), $model->source, ['class' => 'btn btn-outline-secondary shadow']);
         }
         if (Yii::$app->controller->action->id === 'index') {
-            echo Html::a((mb_strpos($model->contentParsed, '[readmore]')) ? Yii::t('mr42', 'Read Full Article') : Yii::t('mr42', 'Read Article') . ' &raquo;', ['article', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-outline-info ml-2']);
+            echo Html::a((mb_strpos($model->contentParsed, '[readmore]')) ? Yii::t('mr42', 'Read Full Article') : Yii::t('mr42', 'Read Article') . ' &raquo;', ['article', 'id' => $model->id, 'title' => $model->url], ['class' => 'btn btn-outline-info shadow ml-2']);
         }
         echo Html::endTag('div');
     }

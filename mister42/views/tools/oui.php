@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 echo Html::beginTag('div', ['class' => 'row']);
     echo Html::beginTag('div', ['class' => 'col-md-12 col-lg-8 mx-auto']);
         echo Html::tag('h1', Yii::t('mr42', '{oui} Lookup', ['oui' => Html::tag('abbr', 'OUI', ['title' => Yii::t('mr42', 'Organizationally Unique Identifier')])]));
-        echo Html::beginTag('div', ['class' => 'alert alert-info']);
+        echo Html::beginTag('div', ['class' => 'alert alert-info shadow']);
             echo Html::tag('div', Yii::t('mr42', 'This OUI Lookup tool provides an easy way to look up OUIs and other MAC address prefixes. Type or paste in a OUI, MAC address, or name below.'));
         echo Html::endTag('div');
 
@@ -23,7 +23,7 @@ echo Html::beginTag('div', ['class' => 'row']);
                     ->orWhere(['like', 'name', $post['oui']]);
             $count = (int) $data->count();
 
-            Alert::begin(['options' => ['class' => ($count === 0) ? 'alert-danger fade show' : 'alert-success fade show']]);
+            Alert::begin(['options' => ['class' => ($count === 0) ? 'alert-danger fade show' : 'alert-success shadow fade show']]);
             foreach ($data->all() as $item) {
                 echo Html::tag(
                     'div',

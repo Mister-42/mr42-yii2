@@ -19,7 +19,7 @@ echo Html::beginTag('div', ['class' => 'row']);
         echo Html::tag('h1', $this->title);
 
         Pjax::begin(['enablePushState' => false, 'linkSelector' => 'pjaxtrigger']);
-            echo Html::tag('div', Yii::t('mr42', 'If you have inquiries or other questions, please fill out the following form to contact {siteName}. Thank you.', ['siteName' => Yii::$app->name]), ['class' => 'alert alert-info']);
+            echo Html::tag('div', Yii::t('mr42', 'If you have inquiries or other questions, please fill out the following form to contact {siteName}. Thank you.', ['siteName' => Yii::$app->name]), ['class' => 'alert alert-info shadow']);
 
             $form = ActiveForm::begin(['options' => ['data-pjax' => '']]);
             $tab = 0;
@@ -52,8 +52,8 @@ echo Html::beginTag('div', ['class' => 'row']);
 
             echo Html::tag(
                 'div',
-                Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-light ml-1', 'tabindex' => $tab + 2]) .
-                Html::submitButton(Yii::t('mr42', 'Send'), ['class' => 'btn btn-primary ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab]),
+                Html::resetButton(Yii::t('mr42', 'Reset'), ['class' => 'btn btn-light shadow ml-1', 'tabindex' => $tab + 2]) .
+                Html::submitButton(Yii::t('mr42', 'Send'), ['class' => 'btn btn-primary shadow ml-1', 'id' => 'pjaxtrigger', 'tabindex' => ++$tab]),
                 ['class' => 'form-group float-right btn-toolbar']
             );
 
