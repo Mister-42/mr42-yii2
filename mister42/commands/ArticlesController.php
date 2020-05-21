@@ -6,6 +6,7 @@ use mister42\models\articles\Articles;
 use mister42\models\Console;
 use Yii;
 use yii\console\Controller;
+use yii\console\ExitCode;
 
 /**
  * Handles all actions related to articles.
@@ -17,7 +18,7 @@ class ArticlesController extends Controller
     /**
      * Builds all articles PDF files, unless already cached and up-to-date.
      */
-    public function actionPdf(): void
+    public function actionPdf(): int
     {
         $query = Articles::find()->orderBy('created')->where(['pdf' => true]);
         $count = $query->count();
@@ -34,5 +35,7 @@ class ArticlesController extends Controller
         }
 
         Console::endProgress(true);
+
+        return ExitCode::OK;
     }
 }

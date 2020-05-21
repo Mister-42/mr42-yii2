@@ -6,6 +6,7 @@ use mister42\models\music\Collection;
 use mister42\models\user\Profile;
 use mister42\models\user\User;
 use mister42\models\Webrequest;
+use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -49,6 +50,6 @@ class CollectionController extends \yii\console\Controller
             }
         }
 
-        return self::EXIT_CODE_NORMAL;
+        return ExitCode::OK;
     }
 }

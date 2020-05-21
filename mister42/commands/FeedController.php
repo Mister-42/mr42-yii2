@@ -12,6 +12,7 @@ use mister42\models\user\WeeklyArtist;
 use mister42\models\Webrequest;
 use Yii;
 use yii\console\Controller;
+use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 
@@ -43,7 +44,7 @@ class FeedController extends Controller
             }
         }
 
-        return self::EXIT_CODE_NORMAL;
+        return ExitCode::OK;
     }
 
     /**
@@ -75,7 +76,7 @@ class FeedController extends Controller
             }
         }
 
-        return self::EXIT_CODE_NORMAL;
+        return ExitCode::OK;
     }
 
     /**
@@ -86,7 +87,7 @@ class FeedController extends Controller
         $file = Yii::getAlias('@runtime/oui.csv');
         $response = Webrequest::saveUrl('http://standards-oui.ieee.org/oui/oui.csv', $file);
         if (!$response->isOK) {
-            return self::EXIT_CODE_ERROR;
+            return ExitCode::IOERR;
         }
         $csv = array_map('str_getcsv', file($file));
         $csv = array_map(function ($x) {
@@ -97,7 +98,7 @@ class FeedController extends Controller
         Oui::deleteAll();
         Yii::$app->db->createCommand()->batchInsert(Oui::tableName(), ['assignment', 'name'], $csv)->execute();
         FileHelper::unlink($file);
-        return self::EXIT_CODE_NORMAL;
+        return ExitCode::OK;
     }
 
     /**
@@ -119,7 +120,7 @@ class FeedController extends Controller
 
             $response = Webrequest::getUrl('', $feed->url)->send();
             if (!$response->isOK) {
-                return self::EXIT_CODE_ERROR;
+                return ExitCode::IOERR;
             }
 
             $xml = simplexml_load_string($response->content);
@@ -141,6 +142,6 @@ class FeedController extends Controller
             }
         }
 
-        return self::EXIT_CODE_NORMAL;
+        return ExitCode::OK;
     }
 }

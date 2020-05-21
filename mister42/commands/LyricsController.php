@@ -10,6 +10,7 @@ use mister42\models\Console;
 use mister42\models\Image;
 use mister42\models\Video;
 use mister42\models\Webrequest;
+use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -24,7 +25,7 @@ class LyricsController extends \yii\console\Controller
     /**
      * Resizes all album covers to the default dimensions if they exceed this limit.
      */
-    public function actionAlbumImage(): void
+    public function actionAlbumImage(): int
     {
         $count = (int) Lyrics2Albums::find()->count();
         Console::startProgress($x = 0, $count, 'Processing Images: ');
@@ -53,9 +54,7 @@ class LyricsController extends \yii\console\Controller
                     Console::write("{$width}x{$height}", [Console::BOLD, Console::FG_GREEN]);
                 }
 
-                if ($album->image_color === null) {
-                    $album->image_color = Image::getAverageImageColor($album->image);
-                }
+                $album->image_color = $album->image_color ?? Image::getAverageImageColor($album->image);
 
                 $album->save();
                 Console::newLine();
@@ -63,12 +62,14 @@ class LyricsController extends \yii\console\Controller
         }
 
         Console::endProgress(true);
+
+        return ExitCode::OK;
     }
 
     /**
      * Builds all albums PDF files, unless already cached and up-to-date.
      */
-    public function actionAlbumPdf(): void
+    public function actionAlbumPdf(): int
     {
         $count = (int) Lyrics2Albums::find()->count();
         Console::startProgress($x = 0, $count, 'Processing PDFs: ');
@@ -86,6 +87,8 @@ class LyricsController extends \yii\console\Controller
         }
 
         Console::endProgress(true);
+
+        return ExitCode::OK;
     }
 
     /**
@@ -163,8 +166,8 @@ class LyricsController extends \yii\console\Controller
         }
 
         if ((bool) array_product($result) === true) {
-            return self::EXIT_CODE_NORMAL;
+            return ExitCode::OK;
         }
-        return self::EXIT_CODE_ERROR;
+        return ExitCode::UNSPECIFIED_ERROR;
     }
 }

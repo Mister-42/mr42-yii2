@@ -59,7 +59,7 @@ class ArticlesComments extends \yii\db\ActiveRecord
 
     public function getCommentReplies()
     {
-        return $this->hasMany(self::className(), ['parent_comment' => 'id']);
+        return $this->hasMany(self::class, ['parent_comment' => 'id']);
     }
 
     public static function getLastModified(): int
