@@ -1,7 +1,7 @@
 <?php
 
-use mr42\models\Sitemap;
 use mister42\models\Menu;
+use mr42\models\Sitemap;
 use yii\base\View;
 
 $doc = Sitemap::beginDoc();

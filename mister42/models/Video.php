@@ -12,7 +12,7 @@ class Video
 {
     public function checkYoutube(array $data, string $type): bool
     {
-        $request = Webrequest::getYoutubeApi(implode(',', ArrayHelper::getColumn($data, 'id')), $type);
+        $request = Apirequest::getYoutube(implode(',', ArrayHelper::getColumn($data, 'id')), $type);
         if (!$request->isOK || $request->data['pageInfo']['totalResults'] === 0) {
             Console::writeError('Error: Could not get response from server.', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
             return false;
@@ -27,8 +27,8 @@ class Video
             }
 
             if ($listData['status'] !== (bool) $mediaStatus) {
-                Console::write($listData['name'], [Console::FG_PURPLE], 5);
-                Console::write(self::getUrl('youtube', $listData['id'], $type === 'playlists'), [Console::FG_PURPLE], 9);
+                Console::writeError($listData['name'], [Console::FG_PURPLE], 5);
+                Console::writeError(self::getUrl('youtube', $listData['id'], $type === 'playlists'), [Console::FG_PURPLE], 9);
 
                 if ($status === false) {
                     Console::writeError('Not Found', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);

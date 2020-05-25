@@ -2,14 +2,14 @@
 
 namespace mister42\commands;
 
+use mister42\models\Apirequest;
+use mister42\models\Console;
+use mister42\models\Image;
 use mister42\models\music\Lyrics1Artists;
 use mister42\models\music\Lyrics2Albums;
 use mister42\models\music\Lyrics3Tracks;
 use mister42\models\music\LyricsArtistInfo;
-use mister42\models\Console;
-use mister42\models\Image;
 use mister42\models\Video;
-use mister42\models\Webrequest;
 use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
 
@@ -98,7 +98,7 @@ class LyricsController extends \yii\console\Controller
     {
         $query = LyricsArtistInfo::find()->where(['not', ['mbid' => null]]);
         foreach ($query->each() as $artist) {
-            $response = Webrequest::getLastfmApi('artist.getInfo', ['mbid' => $artist->mbid]);
+            $response = Apirequest::getLastfm('artist.getInfo', ['mbid' => $artist->mbid]);
 
             if (!$response->isOK || ArrayHelper::getValue($response->data, '@attributes.status') !== 'ok') {
                 Console::write($artist->parent, [Console::FG_GREEN], 5);
@@ -153,7 +153,7 @@ class LyricsController extends \yii\console\Controller
                             $result[$type][] = $video->checkYoutube($media, $type);
                     break;
                     default:
-                            Console::writeError("Checking {$source} {$type} is not supported.", [Console::BOLD, Console::FG_RED]);
+                        Console::writeError("Checking {$source} {$type} is not supported.", [Console::BOLD, Console::FG_RED]);
                     return self::EXIT_CODE_ERROR;
                     endswitch;
                 }

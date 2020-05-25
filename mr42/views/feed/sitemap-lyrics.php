@@ -1,9 +1,9 @@
 <?php
 
-use mr42\models\Sitemap;
 use mister42\models\music\Lyrics1Artists;
 use mister42\models\music\Lyrics2Albums;
 use mister42\models\music\Lyrics3Tracks;
+use mr42\models\Sitemap;
 
 $doc = Sitemap::beginDoc();
 

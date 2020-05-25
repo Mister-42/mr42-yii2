@@ -4,8 +4,8 @@ namespace mr42\controllers;
 
 use mister42\models\articles\Articles;
 use Yii;
-use yii\web\Response;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class ArticlesController extends \yii\web\Controller
 {

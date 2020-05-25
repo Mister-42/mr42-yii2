@@ -1,7 +1,7 @@
 <?php
 
-use mister42\models\ActiveForm;
 use Da\User\Widget\ReCaptchaWidget;
+use mister42\models\ActiveForm;
 use yii\bootstrap4\Html;
 
 $this->title = Yii::t('usuario', 'Sign up');

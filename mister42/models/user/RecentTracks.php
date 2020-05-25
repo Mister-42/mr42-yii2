@@ -2,7 +2,7 @@
 
 namespace mister42\models\user;
 
-use mister42\models\Webrequest;
+use mister42\models\Apirequest;
 use mister42\widgets\Item;
 use mister42\widgets\RecentTracks as RecentTracksWidget;
 use Yii;
@@ -37,6 +37,13 @@ class RecentTracks extends \yii\db\ActiveRecord
         return $lastSeen ?? 0;
     }
 
+    public function rules(): array
+    {
+        return [
+            [['userid', 'time'], 'unique', 'targetAttribute' => ['userid', 'time']],
+        ];
+    }
+
     public static function tableName(): string
     {
         return '{{%lastfm_recenttracks}}';
@@ -45,21 +52,20 @@ class RecentTracks extends \yii\db\ActiveRecord
     public function updateUser(Profile $profile, int $lastSeen)
     {
         if (isset($profile->lastfm)) {
-            $response = Webrequest::getLastfmApi('user.getrecenttracks', ['limit' => $this->limit, 'user' => $profile->lastfm]);
-            if (!$response->isOK) {
-                return false;
-            }
-            $playcount = (int) $response->data['recenttracks']['@attributes']['total'];
+            $response = Apirequest::getLastfm('user.getrecenttracks', ['limit' => $this->limit, 'user' => $profile->lastfm]);
+            $playcount = (int) ArrayHelper::getValue($response->data, 'recenttracks.@attributes.total');
 
             $count = 0;
             foreach ($response->data['recenttracks']['track'] as $track) {
-                $time = ArrayHelper::getValue($track, '@attributes.nowplaying', false) ? 0 : (int) ArrayHelper::getValue($track, 'date.@attributes.uts');
+                $nowPlaying = (bool) ArrayHelper::getValue($track, '@attributes.nowplaying', false);
+                $time = $nowPlaying ? 0 : ArrayHelper::getValue($track, 'date');
+
                 $addTrack = self::findOne(['userid' => $profile->user_id, 'time' => $time]) ?? new self();
                 $addTrack->userid = $profile->user_id;
-                $addTrack->artist = (string) ArrayHelper::getValue($track, 'artist.0');
+                $addTrack->artist = (string) ArrayHelper::getValue($track, 'artist');
                 $addTrack->track = (string) ArrayHelper::getValue($track, 'name');
                 $addTrack->count = $playcount--;
-                $addTrack->time = $time;
+                $addTrack->time = strtotime($time);
                 $addTrack->seen = $lastSeen;
                 $addTrack->save();
 

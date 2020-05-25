@@ -2,8 +2,8 @@
 
 namespace mister42\models\tools;
 
-use mister42\models\Mailer;
 use Imagick;
+use mister42\models\Mailer;
 use Yii;
 use yii\helpers\FileHelper;
 

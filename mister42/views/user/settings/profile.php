@@ -1,9 +1,9 @@
 <?php
 
+use Da\User\Helper\TimezoneHelper;
 use mister42\assets\CharCounterAsset;
 use mister42\models\ActiveForm;
 use mister42\widgets\TimePicker;
-use Da\User\Helper\TimezoneHelper;
 use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 

@@ -8,6 +8,7 @@ return PhpCsFixer\Config::create()
         'ordered_class_elements' => [
             'sortAlgorithm' => 'alpha',
         ],
+        'ordered_imports' => true,
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

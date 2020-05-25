@@ -1,7 +1,6 @@
 <?php
 
 use mister42\assets\ClipboardJsAsset;
-use mister42\models\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\web\View;
 

@@ -2,6 +2,7 @@
 
 namespace mister42\commands;
 
+use mister42\models\Apirequest;
 use mister42\models\feed\Feed;
 use mister42\models\feed\FeedData;
 use mister42\models\tools\Oui;
@@ -9,7 +10,7 @@ use mister42\models\user\Profile;
 use mister42\models\user\RecentTracks;
 use mister42\models\user\User;
 use mister42\models\user\WeeklyArtist;
-use mister42\models\Webrequest;
+use thoulah\httpclient\Client;
 use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
@@ -22,7 +23,7 @@ use yii\helpers\FileHelper;
 class FeedController extends Controller
 {
     public $defaultAction = 'lastfm-recent';
-    public int $limit = 25;
+    public int $limit = 10;
 
     /**
      * Retrieves and stores Recent Tracks from Last.fm.
@@ -36,11 +37,10 @@ class FeedController extends Controller
             if (isset($profile->lastfm)) {
                 $lastSeen = $recentTracks->lastSeen($user->id);
 
-                if (!$lastSeen) {
-                    continue;
+                if ($lastSeen) {
+                    $recentTracks->updateUser($profile, $lastSeen);
+                    usleep(200000);
                 }
-                $recentTracks->updateUser($profile, $lastSeen);
-                usleep(200000);
             }
         }
 
@@ -55,7 +55,7 @@ class FeedController extends Controller
         foreach (User::find()->where(['blocked_at' => null])->all() as $user) {
             $profile = Profile::findOne(['user_id' => $user->id]);
             if (isset($profile->lastfm)) {
-                $response = Webrequest::getLastfmApi('user.getweeklyartistchart', ['user' => $profile->lastfm, 'limit' => $this->limit]);
+                $response = Apirequest::getLastfm('user.getweeklyartistchart', ['user' => $profile->lastfm, 'limit' => $this->limit]);
                 if (!$response->isOK) {
                     continue;
                 }
@@ -85,10 +85,13 @@ class FeedController extends Controller
     public function actionOui(): int
     {
         $file = Yii::getAlias('@runtime/oui.csv');
-        $response = Webrequest::saveUrl('http://standards-oui.ieee.org/oui/oui.csv', $file);
-        if (!$response->isOK) {
+
+        $client = new Client('http://standards-oui.ieee.org/');
+        $response = $client->saveFile('oui/oui.csv', $file);
+        if (!$response) {
             return ExitCode::IOERR;
         }
+
         $csv = array_map('str_getcsv', file($file));
         $csv = array_map(function ($x) {
             return [$x[1], trim($x[2])];
@@ -111,6 +114,7 @@ class FeedController extends Controller
             $feeds = Feed::find()->where(['type' => $type])->andWhere(['name' => $data->name]);
         }
 
+        $client = new Client('');
         foreach ($feeds->all() as $feed) {
             $count = 0;
             if ($type === 'github') {
@@ -118,7 +122,7 @@ class FeedController extends Controller
                 $feed->url = str_replace('{branch}', $data->default_branch, $feed->url);
             }
 
-            $response = Webrequest::getUrl('', $feed->url)->send();
+            $response = $client->getUrl($feed->url);
             if (!$response->isOK) {
                 return ExitCode::IOERR;
             }
@@ -126,14 +130,14 @@ class FeedController extends Controller
             $xml = simplexml_load_string($response->content);
             FeedData::deleteAll(['feed' => $feed->name]);
             foreach (($xml->getName() === 'rss') ? $response->data['channel']['item'] : $response->data['entry'] as $item) {
-                $time = strtotime(ArrayHelper::getValue($item, 'pubDate') ?? ArrayHelper::getValue($item, 'updated'));
+                $desc = ArrayHelper::getValue($item, 'description') ?? ArrayHelper::getValue($item, 'content');
 
                 $feedItem = new FeedData();
                 $feedItem->feed = $feed->name;
                 $feedItem->title = (string) trim(ArrayHelper::getValue($item, 'title'));
                 $feedItem->url = (string) ArrayHelper::getValue($item, $xml->getName() === 'rss' ? 'link' : 'link.@attributes.href');
-                $feedItem->description = Yii::$app->formatter->cleanInput(ArrayHelper::getValue($item, $feed->description, ''), false);
-                $feedItem->time = $time;
+                $feedItem->description = Yii::$app->formatter->cleanInput($desc ?? '', false);
+                $feedItem->time = strtotime(ArrayHelper::getValue($item, $xml->getName() === 'rss' ? 'pubDate' : 'updated'));
                 $feedItem->save();
 
                 if (++$count === $this->limit) {

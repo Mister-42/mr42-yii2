@@ -2,9 +2,9 @@
 
 namespace mister42\controllers\user;
 
-use mister42\models\user\RecentTracks;
 use Da\User\Query\ProfileQuery;
 use Da\User\Query\UserQuery;
+use mister42\models\user\RecentTracks;
 use Yii;
 use yii\base\Module;
 use yii\filters\HttpCache;

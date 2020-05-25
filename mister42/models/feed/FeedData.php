@@ -10,6 +10,7 @@ class FeedData extends \yii\db\ActiveRecord
             [['feed', 'time'], 'unique', 'targetAttribute' => ['feed', 'time']],
         ];
     }
+
     public static function tableName(): string
     {
         return '{{x_feed_data}}';

@@ -1,9 +1,9 @@
 <?php
 
+use Da\User\Widget\ReCaptchaWidget;
 use mister42\assets\CharCounterAsset;
 use mister42\assets\FileInputAsset;
 use mister42\models\ActiveForm;
-use Da\User\Widget\ReCaptchaWidget;
 use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
 

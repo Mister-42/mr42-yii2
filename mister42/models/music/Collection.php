@@ -2,9 +2,10 @@
 
 namespace mister42\models\music;
 
-use mister42\models\user\Profile;
+use mister42\models\Apirequest;
 use mister42\models\Image;
-use mister42\models\Webrequest;
+use mister42\models\user\Profile;
+use thoulah\httpclient\Client;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -13,7 +14,7 @@ class Collection extends \yii\db\ActiveRecord
     public static function getDiscogsUrl(string $action, Profile $profile) : ?string
     {
         if ($action === 'collection') {
-            $response = Webrequest::getDiscogsApi("users/{$profile->discogs}/collection/folders?" . http_build_query(['token' => $profile->discogs_token]));
+            $response = Apirequest::getDiscogs("users/{$profile->discogs}/collection/folders?" . http_build_query(['token' => $profile->discogs_token]));
             if (!$response->isOK) {
                 return null;
             }
@@ -45,9 +46,12 @@ class Collection extends \yii\db\ActiveRecord
             if (!$collectionItem = self::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user])) {
                 $collectionItem = new self();
                 $collectionItem->image = null;
-                if ($image = ArrayHelper::getValue($item, 'basic_information.cover_image')) {
-                    $img = Webrequest::getUrl($image, '')->send();
-                    if ($img = Image::resize($img->content, 250)) {
+                $image = ArrayHelper::getValue($item, 'basic_information.cover_image');
+                if ($image) {
+                    $client = new Client('');
+                    $img = $client->getFile($image);
+                    $img = Image::resize($img->content, 250);
+                    if ($img) {
                         $collectionItem->image = $img;
                     }
                 }
@@ -71,6 +75,7 @@ class Collection extends \yii\db\ActiveRecord
 
         return $id ?? [];
     }
+
     public static function tableName(): string
     {
         return '{{%discogs_collection}}';

@@ -2,11 +2,11 @@
 
 namespace mister42\models;
 
+use Mpdf\HTMLParserMode;
+use Mpdf\Mpdf;
 use Mpdf\Pdf\Protection;
 use Mpdf\Pdf\Protection\UniqidGenerator;
 use Mpdf\Writer\BaseWriter;
-use Mpdf\HTMLParserMode;
-use Mpdf\Mpdf;
 use Yii;
 use yii\helpers\FileHelper;
 

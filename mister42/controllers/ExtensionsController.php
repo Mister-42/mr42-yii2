@@ -3,8 +3,8 @@
 namespace mister42\controllers;
 
 use Yii;
-use yii\web\NotFoundHttpException;
 use yii\filters\ContentNegotiator;
+use yii\web\NotFoundHttpException;
 
 class ExtensionsController extends \yii\web\Controller
 {

@@ -10,7 +10,6 @@
         "ext-dom": "*",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap4": "^2.0",
-        "yiisoft/yii2-httpclient": "^2.0",
         "yiisoft/yii2-jui": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.1.0",
         "bower-asset/jqueryui-timepicker-addon": "^1.6",
@@ -25,6 +24,7 @@
         "mpdf/mpdf": "^8.0",
         "mpdf/qrcode": "^1.0",
         "thoulah/yii2-fontawesome-inline": "1.1.x-dev",
+        "thoulah/yii2-httpclient": "^1.0",
         "voku/simple_html_dom": "^4.5",
         "zenorocha/clipboardjs": "^2.0"
     },

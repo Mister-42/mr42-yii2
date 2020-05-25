@@ -2,8 +2,8 @@
 
 namespace mister42\models\articles;
 
-use mister42\models\user\User;
 use Da\User\Validator\ReCaptchaValidator;
+use mister42\models\user\User;
 use mister42\Secrets;
 use Yii;
 use yii\behaviors\TimestampBehavior;
