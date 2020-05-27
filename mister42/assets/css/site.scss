@@ -228,6 +228,12 @@ footer {
     @include user-select(none);
 }
 
+@include media-breakpoint-down(md) {
+    .navbar .nav-link .icon {
+        margin-right: .25rem !important;
+    }
+}
+
 @include media-breakpoint-up(md) {
     .navbar .nav-link span::before {
         content: "\A";

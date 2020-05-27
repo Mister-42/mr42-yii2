@@ -4,7 +4,7 @@ $sass = 'sass --scss --sourcemap=none -C -t compressed -I ' . Yii::getAlias('@np
 
 return [
     'bundles' => [
-        'app\assets\AppAssetCompress',
+        'mister42\assets\AppAssetCompress',
     ],
     'cssCompressor' => $sass,
     'deleteSource' => true,
