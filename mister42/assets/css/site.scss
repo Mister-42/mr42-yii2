@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
 
     @for $i from 1 through 20 {
         &-w-#{$i} {
-                width: $i * .0625em;
+            width: $i * .0625em;
         }
     }
 

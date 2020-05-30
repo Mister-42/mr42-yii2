@@ -19,17 +19,17 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord
         $this->track = sprintf('%02d', $this->track);
         $this->nameExtra = ($this->disambiguation ? " ({$this->disambiguation})" : null) . ($this->feat ? " (feat. {$this->feat})" : null);
         $this->video_status = (bool) ($this->video_status);
-        $this->wip = (bool) ($this->wip);
+        $this->instrumental = (bool) ($this->instrumental);
         $this->video = $this->video_source && $this->video_id && $this->video_ratio && $this->video_status ? Video::getEmbed($this->video_source, $this->video_id, $this->video_ratio) : null;
 
         $icons = [];
         if ($this->video) {
             $icons[] = (string) Yii::$app->icon->name($this->video_source, 'brands')->class('text-muted ml-1')->title(Yii::t('mr42', 'Video'));
         }
-        if ($this->wip) {
-            $icons[] = (string) Yii::$app->icon->name('plus')->class('text-muted ml-1')->title(Yii::t('mr42', 'Work in Progress'));
-        } elseif (!$this->lyricid) {
+        if ($this->instrumental) {
             $icons[] = (string) Yii::$app->icon->name('music')->class('text-muted ml-1')->title(Yii::t('mr42', 'Instrumental'));
+        } elseif (!$this->lyricid) {
+            $icons[] = (string) Yii::$app->icon->name('plus')->class('text-muted ml-1')->title(Yii::t('mr42', 'Work in Progress'));
         }
         $this->icons = implode($icons);
     }
@@ -38,7 +38,7 @@ class Lyrics3Tracks extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             $this->video_status = $this->video_status ? 1 : 0;
-            $this->wip = $this->wip ? 1 : 0;
+            $this->instrumental = $this->instrumental ? 1 : 0;
             return true;
         }
         return false;

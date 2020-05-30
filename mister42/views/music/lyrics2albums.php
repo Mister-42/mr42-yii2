@@ -48,7 +48,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
             echo Html::endTag('div');
 
             echo Html::beginTag('div', ['class' => 'd-flex']);
-            echo Html::beginTag('div', ['class' => 'row card-body notranslate']);
+            echo Html::beginTag('div', ['class' => 'row card-body mw-100 notranslate']);
             foreach (array_chunk($album->tracks, ceil(count($album->tracks) / 3)) as $tracks) {
                 echo Html::beginTag('div', ['class' => 'col-md-4 list-group']);
                 foreach ($tracks as $track) {

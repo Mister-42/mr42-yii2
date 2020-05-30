@@ -17,10 +17,6 @@ class Lyrics1Artists extends \yii\db\ActiveRecord
     public static function albumsList(): BatchQueryResult
     {
         return self::find()
-            ->getAlbums()
-            ->orderBy(['name' => SORT_ASC])
-            ->each();
-        return self::find()
             ->orderBy(['name' => SORT_ASC])
             ->with('albums')
             ->each();

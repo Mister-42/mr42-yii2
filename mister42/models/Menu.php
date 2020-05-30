@@ -106,8 +106,6 @@ class Menu extends \yii\base\Model
         if ($this->isGuest()) {
             return [['label' => Yii::$app->icon->name('sign-in-alt') . Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]];
         } elseif ($this->isAdmin()) {
-            $subMenu[] = ['label' => 'Code Playground', 'url' => ['/test/index']];
-            $subMenu[] = '-';
             $subMenu[] = ['label' => Yii::t('mr42', 'Create Article'), 'url' => ['/articles/create']];
             $subMenu[] = ['label' => Yii::t('usuario', 'Manage users'), 'url' => ['/user/admin/index']];
             $subMenu[] = ['label' => Yii::t('mr42', 'PHP {version}', ['version' => PHP_VERSION]), 'url' => ['/site/php']];

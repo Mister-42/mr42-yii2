@@ -58,15 +58,15 @@ $items[] = [
 
 foreach ($data as $track) {
     $content = ($track->video)
-        ? Html::tag('div', $track->video, ['class' => ($track->lyricid || $track->wip) ? 'col-12 col-md-4 order-md-12' : 'col-12'])
+        ? Html::tag('div', $track->video, ['class' => ($track->instrumental) ? 'col-12' : 'col-12 col-md-4 order-md-12'])
         : null;
 
     $content .= Html::tag(
         'div',
-        ($track->lyricid || $track->wip || $track->video)
-            ? ($track->wip) ? Html::tag('i', 'Work in Progress') : ($track->lyricid ? $track->lyrics->lyrics : '')
-            : Yii::$app->icon->name('@assetsroot/images/instrumental.svg')->class('img-fluid')->height(250)->title(Yii::t('mr42', 'Instrumental')),
-        ['class' => $track->lyricid || $track->wip ? 'col-12 col-md-8 notranslate' : 'col-12 notranslate']
+        ($track->instrumental)
+            ? Yii::$app->icon->name('@assetsroot/images/instrumental.svg')->class('img-fluid')->height(250)->title(Yii::t('mr42', 'Instrumental'))
+            : ($track->lyricid ? $track->lyrics->lyrics : Html::tag('i', 'Work in Progress')),
+        ['class' => $track->instrumental ? 'col-12 notranslate' : 'col-12 col-md-8 notranslate']
     );
 
     $items[] = [

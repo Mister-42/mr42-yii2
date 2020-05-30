@@ -37,11 +37,7 @@ foreach ($tracks as $track) {
     echo Html::a(null, null, ['name' => $track->track]);
     echo Html::tag('h3', $track->name . $track->nameExtra);
 
-    if ($track->lyricid && !$track->wip) {
-        echo $track->lyrics->lyrics;
-    } elseif ($track->wip) {
-        echo Html::tag('i', 'Work in Progress');
-    } else {
-        echo Yii::$app->icon->name('@assetsroot/images/instrumental.svg')->class('img-fluid')->height(250)->title(Yii::t('mr42', 'Instrumental'));
-    }
+    echo ($track->instrumental)
+        ? Yii::$app->icon->name('@assetsroot/images/instrumental.svg')->class('img-fluid')->height(250)->title(Yii::t('mr42', 'Instrumental'))
+        : ($track->lyricid ? $track->lyrics->lyrics : Html::tag('i', 'Work in Progress'));
 }
