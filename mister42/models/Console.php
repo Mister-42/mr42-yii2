@@ -30,9 +30,9 @@ class Console extends \yii\helpers\Console
         }
     }
 
-    public static function writeError(string $msg, array $format): void
+    public static function writeError(string $msg, array $format, int $tabs = 1): void
     {
-        $output = self::ansiFormat($msg, $format);
+        $output = self::ansiFormat($msg, $format, $tabs);
         self::error($output);
     }
 }

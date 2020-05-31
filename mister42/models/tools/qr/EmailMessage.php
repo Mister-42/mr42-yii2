@@ -22,9 +22,10 @@ class EmailMessage extends \mister42\models\tools\Qr
 
     public function generateQr(): bool
     {
-        $data[] = $this->getDataOrOmit('TO:', $this->email, ';');
-        $data[] = $this->getDataOrOmit('SUB:', $this->subject, ';');
-        $data[] = $this->getDataOrOmit('BODY:', $this->message, ';');
+        $data = [];
+        $this->addData($data, 'TO:', $this->email, ';');
+        $this->addData($data, 'SUB:', $this->subject, ';');
+        $this->addData($data, 'BODY:', $this->message, ';');
         return parent::generate('MATMSG:' . implode($data) . ';');
     }
 

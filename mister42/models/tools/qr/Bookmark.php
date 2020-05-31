@@ -20,8 +20,9 @@ class Bookmark extends \mister42\models\tools\Qr
 
     public function generateQr(): bool
     {
-        $data[] = $this->getDataOrOmit('TITLE:', $this->title, ';');
-        $data[] = $this->getDataOrOmit('URL:', $this->url, ';');
+        $data = [];
+        $this->addData($data, 'TITLE:', $this->title, ';');
+        $this->addData($data, 'URL:', $this->url, ';');
         return parent::generate('MEBKM:' . implode($data) . ';');
     }
 

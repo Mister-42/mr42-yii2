@@ -22,10 +22,11 @@ class Geographic extends \mister42\models\tools\Qr
 
     public function generateQr(): bool
     {
-        $data[] = $this->getDataOrOmit('', $this->lat);
-        $data[] = $this->getDataOrOmit('', $this->lng);
-        $data[] = $this->getDataOrOmit('', $this->altitude);
-        return parent::generate('GEO:' . implode(',', array_filter($data)));
+        $data = [];
+        $this->addData($data, '', $this->lat);
+        $this->addData($data, '', $this->lng);
+        $this->addData($data, '', $this->altitude);
+        return parent::generate('GEO:' . implode(',', $data));
     }
 
     public function rules(): array

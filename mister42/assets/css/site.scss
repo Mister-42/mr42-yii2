@@ -59,11 +59,11 @@ h1, h2, h3, h4, h5, h6, .breadcrumb, label {
     font-size: inherit;
     height: 1em;
     overflow: visible;
-    vertical-align: -.125em;
+    vertical-align: -0.125em;
 
     @for $i from 1 through 20 {
         &-w-#{$i} {
-            width: $i * .0625em;
+            width: $i * 0.0625em;
         }
     }
 

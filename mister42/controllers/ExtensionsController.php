@@ -25,15 +25,15 @@ class ExtensionsController extends \yii\web\Controller
         $file = Yii::getAlias("@app/../html/{$name}/{$section}.html");
 
         if (!is_file($file)) {
-            return $this->extension404($name, $section);
+            throw new NotFoundHttpException('The requested page was not found.');
         }
 
         return $this->render('view', [
-                    'content' => file_get_contents($file),
-                    'name' => $name,
-                    'section' => $section,
-                    'title' => $title,
-                ]);
+            'content' => file_get_contents($file),
+            'name' => $name,
+            'section' => $section,
+            'title' => $title,
+        ]);
     }
 
     public function behaviors()

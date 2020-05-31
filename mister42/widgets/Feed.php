@@ -27,7 +27,7 @@ class Feed extends Widget
                 : Html::tag('li', Html::a($item['title'], $item['url'], ['class' => 'card-link stretched-link']), ['class' => 'list-group-item text-truncate']);
         }
 
-        return (!isset($feed))
+        return (!isset($feed) || empty($feed))
             ? Html::tag('div', Yii::t('mr42', 'No Items to Display.'), ['class' => 'ml-2'])
             : Html::tag('ul', implode($feed), ['class' => 'list-group list-group-flush']);
     }

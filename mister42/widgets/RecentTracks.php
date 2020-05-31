@@ -28,8 +28,8 @@ class RecentTracks extends Widget
             ['class' => 'list-group-item']
         );
 
-        return empty($this->tracks)
-            ? Html::tag('div', 'No Items to Display.', ['class' => 'ml-2'])
+        return (!isset($this->tracks) || empty($this->tracks))
+            ? Html::tag('div', Yii::t('mr42', 'No Items to Display.'), ['class' => 'ml-2'])
             : Html::tag('ul', implode($feed), ['class' => 'list-group list-group-flush']);
     }
 }

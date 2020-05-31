@@ -22,12 +22,13 @@ class Ical extends \mister42\models\tools\Qr
 
     public function generateQr(): bool
     {
-        $data[] = 'BEGIN:VEVENT';
-        $data[] = $this->getDataOrOmit('SUMMARY:', $this->summary);
-        $data[] = $this->getDataOrOmit('DTSTART:', $this->start ? date('Ymd\THis\Z', strtotime($this->start)) : '');
-        $data[] = $this->getDataOrOmit('DTEND:', $this->end ? date('Ymd\THis\Z', strtotime($this->end)) : '');
-        $data[] = 'END:VEVENT';
-        return parent::generate(implode("\n", array_filter($data)));
+        $data = [];
+        $this->addData($data, 'BEGIN:', 'VEVENT');
+        $this->addData($data, 'SUMMARY:', $this->summary);
+        $this->addData($data, 'DTSTART:', date('Ymd\THis\Z', strtotime($this->start)));
+        $this->addData($data, 'DTEND:', date('Ymd\THis\Z', strtotime($this->end)));
+        $this->addData($data, 'END:', 'VEVENT');
+        return parent::generate(implode("\n", $data));
     }
 
     public function rules(): array

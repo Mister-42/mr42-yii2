@@ -40,16 +40,17 @@ class MeCard extends \mister42\models\tools\Qr
 
     public function generateQr(): bool
     {
-        $data[] = $this->getDataOrOmit('N:', implode(',', [$this->lastName, $this->firstName]), ';');
-        $data[] = $this->getDataOrOmit('SOUND:', implode(',', [$this->lastSound, $this->firstSound]), ';');
-        $data[] = $this->getDataOrOmit('TEL:', $this->phone, ';');
-        $data[] = $this->getDataOrOmit('TEL-AV:', $this->videoPhone, ';');
-        $data[] = $this->getDataOrOmit('EMAIL:', $this->email, ';');
-        $data[] = $this->getDataOrOmit('NOTE:', $this->note, ';');
-        $data[] = $this->getDataOrOmit('BDAY:', $this->birthday ? date('Ymd', strtotime($this->birthday)) : '', ';');
-        $data[] = $this->getDataOrOmit('ADR:', $this->address, ';');
-        $data[] = $this->getDataOrOmit('URL:', $this->website, ';');
-        $data[] = $this->getDataOrOmit('NICKNAME:', $this->nickname, ';');
+        $data = [];
+        $this->addData($data, 'N:', implode(',', [$this->lastName, $this->firstName]), ';');
+        $this->addData($data, 'SOUND:', implode(',', [$this->lastSound, $this->firstSound]), ';');
+        $this->addData($data, 'TEL:', $this->phone, ';');
+        $this->addData($data, 'TEL-AV:', $this->videoPhone, ';');
+        $this->addData($data, 'EMAIL:', $this->email, ';');
+        $this->addData($data, 'NOTE:', $this->note, ';');
+        $this->addData($data, 'BDAY:', $this->birthday ? date('Ymd', strtotime($this->birthday)) : null, ';');
+        $this->addData($data, 'ADR:', $this->address, ';');
+        $this->addData($data, 'URL:', $this->website, ';');
+        $this->addData($data, 'NICKNAME:', $this->nickname, ';');
         return parent::generate('MECARD:' . implode($data) . ';');
     }
 

@@ -24,12 +24,13 @@ class WiFi extends \mister42\models\tools\Qr
 
     public function generateQr(): bool
     {
-        $data[] = $this->authentication !== 'none' ? "T:{$this->authentication}" : null;
-        $data[] = "S:{$this->ssid}";
+        $data = [];
+        $this->addData($data, 'T:', $this->authentication === 'none' ? null : $this->authentication);
+        $this->addData($data, 'S:', $this->ssid);
         $password = ctype_xdigit($this->password) ? $this->password : "\"{$this->password}\"";
-        $data[] = $this->authentication !== 'none' ? "P:{$password}" : null;
-        $data[] = $this->hidden ? 'H:true' : null;
-        return parent::generate('WIFI:' . implode(';', array_filter($data)) . ';');
+        $this->addData($data, 'P:', $this->authentication === 'none' ? null : $password);
+        $this->addData($data, 'H:', $this->hidden ? 'true' : null);
+        return parent::generate('WIFI:' . implode(';', $data) . ';');
     }
 
     public function rules(): array

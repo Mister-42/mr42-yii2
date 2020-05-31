@@ -25,11 +25,11 @@ class WebhookController extends \yii\web\Controller
         $github = new Github();
         switch (Yii::$app->request->headers->get('X-GitHub-Event')) :
             case 'ping':
-                return ['status' => 'success', 'message' => 'Pong!'];
-        case 'push':
-                return $github->push();
-        default:
-                throw new NotFoundHttpException('Action not found.');
+            return ['status' => 'success', 'message' => 'Pong!'];
+            case 'push':
+            return $github->push();
+            default:
+            throw new NotFoundHttpException('Action not found.');
         endswitch;
     }
 }

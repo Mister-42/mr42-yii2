@@ -24,7 +24,7 @@ class RecentArticles extends Widget
             $items[] = Html::tag('li', $link, ['class' => 'list-group-item text-truncate']);
         }
 
-        return (!isset($items))
+        return (!isset($items) || empty($items))
             ? Html::tag('div', Yii::t('mr42', 'No Items to Display.'), ['class' => 'ml-2'])
             : Html::tag('ul', implode($items), ['class' => 'list-group list-group-flush']);
     }

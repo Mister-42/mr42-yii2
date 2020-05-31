@@ -16,7 +16,7 @@ class TagCloud extends Widget
             $items[] = Html::a($tag, ['articles/tag', 'tag' => $tag], ['class' => 'mx-2', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'style' => 'font-size:' . ($data['weight'] / 10) . 'rem', 'title' => $title]);
         }
 
-        return (!isset($items))
+        return (!isset($items) || empty($items))
             ? Html::tag('div', Yii::t('mr42', 'No Items to Display.'), ['class' => 'ml-2'])
             : Html::tag('div', implode(' ', $items), ['class' => 'text-center']);
     }

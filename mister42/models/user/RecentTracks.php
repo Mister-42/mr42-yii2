@@ -34,7 +34,7 @@ class RecentTracks extends \yii\db\ActiveRecord
             self::updateAll(['seen' => time()], ['userid' => $userid]);
         }
 
-        return $lastSeen ?? 0;
+        return is_int($lastSeen) ? $lastSeen : 0;
     }
 
     public function rules(): array

@@ -44,24 +44,25 @@ class Vcard extends \mister42\models\tools\Qr
 
     public function generateQr(): bool
     {
-        $data[] = 'BEGIN:VCARD';
-        $data[] = 'VERSION:4.0';
-        $data[] = $this->getDataOrOmit('N:', implode(';', [$this->firstName, $this->lastName]));
-        $data[] = $this->getDataOrOmit('FN:', $this->fullName);
-        $data[] = $this->getDataOrOmit('ADR;TYPE=home:;;', $this->homeAddress);
-        $data[] = $this->getDataOrOmit('TEL;TYPE=home,voice;', $this->homePhone);
-        $data[] = $this->getDataOrOmit('ORG:', $this->organization);
-        $data[] = $this->getDataOrOmit('TITLE:', $this->title);
-        $data[] = $this->getDataOrOmit('ROLE:', $this->role);
-        $data[] = $this->getDataOrOmit('ADR;TYPE=work:;;', $this->workAddress);
-        $data[] = $this->getDataOrOmit('TEL;TYPE=work,voice;', $this->workPhone);
-        $data[] = $this->getDataOrOmit('EMAIL:', $this->email);
-        $data[] = $this->getDataOrOmit('URL:', $this->website);
-        $data[] = $this->getDataOrOmit('BDAY:', $this->birthday ? date('Ymd', strtotime($this->birthday)) : '');
-        $data[] = $this->getDataOrOmit('NOTE:', $this->note);
-        $data[] = 'REV:' . date('Ymd\THis\Z');
-        $data[] = 'END:VCARD';
-        return parent::generate(implode("\n", array_filter($data)));
+        $data = [];
+        $this->addData($data, 'BEGIN:', 'VCARD');
+        $this->addData($data, 'VERSION:', '4.0');
+        $this->addData($data, 'N:', implode(';', [$this->firstName, $this->lastName]));
+        $this->addData($data, 'FN:', $this->fullName);
+        $this->addData($data, 'ADR;TYPE=home:;;', $this->homeAddress);
+        $this->addData($data, 'TEL;TYPE=home,voice;', $this->homePhone);
+        $this->addData($data, 'ORG:', $this->organization);
+        $this->addData($data, 'TITLE:', $this->title);
+        $this->addData($data, 'ROLE:', $this->role);
+        $this->addData($data, 'ADR;TYPE=work:;;', $this->workAddress);
+        $this->addData($data, 'TEL;TYPE=work,voice;', $this->workPhone);
+        $this->addData($data, 'EMAIL:', $this->email);
+        $this->addData($data, 'URL:', $this->website);
+        $this->addData($data, 'BDAY:', $this->birthday ? date('Ymd', strtotime($this->birthday)) : null);
+        $this->addData($data, 'NOTE:', $this->note);
+        $this->addData($data, 'REV:', date('Ymd\THis\Z'));
+        $this->addData($data, 'END:', 'VCARD');
+        return parent::generate(implode("\n", $data));
     }
 
     public function rules(): array

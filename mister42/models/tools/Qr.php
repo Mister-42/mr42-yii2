@@ -18,6 +18,13 @@ class Qr extends \yii\base\Model
     public $size = 150;
     public $type;
 
+    public function addData(array &$var, string $label, ?string $value, string $glue = ''): void
+    {
+        if (!empty($value)) {
+            $var[] = implode([$label, $value, $glue]);
+        }
+    }
+
     public function attributeLabels(): array
     {
         return [
@@ -70,14 +77,6 @@ class Qr extends \yii\base\Model
                 'mode' => 'date',
                 'options' => ['class' => 'form-control', 'readonly' => true, 'tabindex' => $tab],
             ]);
-    }
-
-    public function getDataOrOmit(string $label, string $value, string $glue = ''): ?string
-    {
-        if ($value) {
-            return $label . $value . $glue;
-        }
-        return null;
     }
 
     public function getFormFooter(ActiveForm $form, int $tab): string

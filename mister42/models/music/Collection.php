@@ -38,12 +38,20 @@ class Collection extends \yii\db\ActiveRecord
         return strtotime($data);
     }
 
+    public function rules(): array
+    {
+        return [
+            [['id', 'user_id', 'status'], 'unique', 'targetAttribute' => ['id', 'user_id', 'status']],
+        ];
+    }
+
     public function saveCollection(int $user, array $data, string $status): array
     {
+        $id = [];
         foreach ($data as $item) {
             $id[] = (int) ArrayHelper::getValue($item, 'basic_information.id');
 
-            if (!$collectionItem = self::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user])) {
+            if (!$collectionItem = self::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user, 'status' => $status])) {
                 $collectionItem = new self();
                 $collectionItem->image = null;
                 $image = ArrayHelper::getValue($item, 'basic_information.cover_image');
@@ -73,7 +81,7 @@ class Collection extends \yii\db\ActiveRecord
             $collectionItem->save();
         }
 
-        return $id ?? [];
+        return $id;
     }
 
     public static function tableName(): string
