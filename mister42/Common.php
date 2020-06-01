@@ -130,7 +130,7 @@ class Common
                     'articles/search' => 'articles/search',
                     'articles/tag/<tag:\w+>' => 'articles/tag',
                     'articles/page-<page:\d+>' => 'articles/index',
-                    '<controller:articles|calculator|extensions|test|tools>' => '<controller>/index',
+                    '<controller:articles|calculator|extensions|tools>' => '<controller>/index',
                     'articles/<action>' => 'articles/<action>',
                     '<alias:\w+>' => 'site/<alias>',
                 ],
