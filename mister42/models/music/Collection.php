@@ -35,7 +35,7 @@ class Collection extends \yii\db\ActiveRecord
         $data = self::find()
             ->where(['status' => Yii::$app->controller->action->id])
             ->max('created');
-        return strtotime($data);
+        return is_string($data) ? strtotime($data) : 0;
     }
 
     public function rules(): array

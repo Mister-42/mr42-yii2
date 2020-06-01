@@ -5,7 +5,7 @@ use yii\bootstrap4\Html;
 
 $this->title = implode(' - ', [$data[0]->artist->name, Yii::t('mr42', 'Lyrics')]);
 $this->params['breadcrumbs'] = [Yii::t('mr42', 'Music')];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics1artists']];
 $this->params['breadcrumbs'][] = Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']);
 
 echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
@@ -34,7 +34,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
         if ($album->tracks) {
             echo Html::beginTag('div', ['class' => ['card', $album === end($data) ? 'mb-1' : 'mb-3']]);
             echo Html::beginTag('div', ['class' => array_filter(['card-header', (!$album->active) ? 'bg-warning' : null])]);
-            echo Html::tag('span', Html::tag('span', $album->year, ['class' => 'badge']) . Html::a($album->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'ml-1 notranslate']), ['class' => 'h4 float-left']);
+            echo Html::tag('span', Html::tag('span', $album->year, ['class' => 'badge']) . Html::a($album->name, ['lyrics3tracks', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'ml-1 notranslate']), ['class' => 'h4 float-left']);
             echo Html::beginTag('div', ['class' => 'float-right']);
             if ($album->buy) {
                 echo Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-dark shadow ml-1', 'title' => Yii::t('mr42', 'Buy This Album')]);
@@ -54,7 +54,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
                 foreach ($tracks as $track) {
                     echo Html::beginTag('div', ['class' => 'list-group-item list-group-item-action text-truncate py-0']);
                     echo Html::tag('span', $track->track, ['class' => 'badge']);
-                    echo Html::a($track->name, ['lyrics', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track], ['class' => 'stretched-link ml-1']);
+                    echo Html::a($track->name, ['lyrics3tracks', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url, '#' => $track->track], ['class' => 'stretched-link ml-1']);
                     echo $track->nameExtra;
                     echo $track->icons;
                     echo Html::endTag('div');

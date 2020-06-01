@@ -3,20 +3,19 @@
 use mister42\widgets\Lightbox;
 use yii\bootstrap4\Accordion;
 use yii\bootstrap4\Html;
-use yii\helpers\Url;
 use yii\web\View;
 
 $this->title = implode(' - ', [$data[0]->artist->name, "{$data[0]->album->name} ({$data[0]->album->year})", Yii::t('mr42', 'Lyrics')]);
 $this->params['breadcrumbs'] = [Yii::t('mr42', 'Music')];
-$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics']];
-$this->params['breadcrumbs'][] = ['label' => Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']), 'url' => ['lyrics', 'artist' => $data[0]->artist->url]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['lyrics1artists']];
+$this->params['breadcrumbs'][] = ['label' => Html::tag('span', $data[0]->artist->name, ['class' => 'notranslate']), 'url' => ['lyrics2albums', 'artist' => $data[0]->artist->url]];
 $this->params['breadcrumbs'][] = Html::tag('span', "{$data[0]->album->name} ({$data[0]->album->year})", ['class' => 'notranslate']);
 
 if ($data[0]->album->image) {
-    $this->registerMetaTag(['property' => 'og:image', 'content' => Url::to(['albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 800], true)]);
+    $this->registerMetaTag(['property' => 'og:image', 'content' => Yii::$app->mr42->createUrl(['music/albumcover', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url, 'size' => 800], true)]);
 }
 $this->registerMetaTag(['property' => 'og:type', 'content' => 'music.album']);
-$this->registerLinkTag(['rel' => 'alternate', 'href' => Url::to(['albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
+$this->registerLinkTag(['rel' => 'alternate', 'href' => Yii::$app->mr42->createUrl(['music/albumpdf', 'artist' => $data[0]->artist->url, 'year' => $data[0]->album->year, 'album' => $data[0]->album->url], true), 'type' => 'application/pdf', 'title' => 'PDF']);
 $this->registerJs(Yii::$app->formatter->jspack('accordionAnchor.js'), View::POS_READY);
 $this->registerJs(Yii::$app->formatter->jspack('accordionScroll.js'), View::POS_READY);
 

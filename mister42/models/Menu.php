@@ -89,7 +89,7 @@ class Menu extends \yii\base\Model
             ['label' => Yii::$app->icon->name('music') . Html::tag('span', Yii::t('mr42', 'Music')),
                 'items' => [
                     ['label' => Yii::t('mr42', 'Collection'), 'url' => ['/music/collection']],
-                    ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/music/lyrics'], 'visible' => true],
+                    ['label' => Yii::t('mr42', 'Lyrics'), 'url' => ['/music/lyrics'], 'active' => in_array(Yii::$app->requestedRoute, ['music/lyrics1artists', 'music/lyrics2albums', 'music/lyrics3tracks']), 'visible' => true],
                 ],
             ],
             ['label' => Yii::$app->icon->name('@assetsroot/images/menu/mr42.svg')->addClass(true) . Html::tag('span', Yii::$app->name),

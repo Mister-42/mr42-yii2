@@ -27,8 +27,8 @@ class Video
             }
 
             if ($listData['status'] !== (bool) $mediaStatus) {
-                Console::writeError($listData['name'], [Console::FG_PURPLE], 5);
-                Console::writeError(self::getUrl('youtube', $listData['id'], $type === 'playlists'), [Console::FG_PURPLE], 9);
+                Console::writeError($listData['name'], [Console::FG_PURPLE]);
+                Console::writeError(self::getUrl('youtube', $listData['id'], $type === 'playlists'), [Console::FG_PURPLE]);
 
                 if ($status === false) {
                     Console::writeError('Not Found', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);

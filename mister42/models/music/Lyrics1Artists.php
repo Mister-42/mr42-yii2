@@ -46,6 +46,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord
             ->max('updated');
         return strtotime($data);
     }
+
     public static function tableName(): string
     {
         return '{{%lyrics_1_artists}}';

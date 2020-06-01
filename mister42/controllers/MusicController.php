@@ -7,101 +7,84 @@ use mister42\models\music\Lyrics1Artists;
 use mister42\models\music\Lyrics2Albums;
 use mister42\models\music\Lyrics3Tracks;
 use Yii;
+use yii\base\InlineAction;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Inflector;
 use yii\web\NotFoundHttpException;
+use yii\web\Request;
 
 class MusicController extends \yii\web\Controller
 {
-    private ?string $album;
-    private ?string $artist;
-    private ?array $data;
-    private int $lastModified;
-    private ?int $size;
-    private ?int $year;
-
     public function actionCollection(): string
     {
         return $this->render('collection');
     }
 
-    public function actionLyrics(): string
+    public function actionLyrics1artists(): string
     {
-        return $this->render($this->getViewFile(), [
-            'data' => $this->data,
+        return $this->render('lyrics1artists', [
+            'data' => Lyrics1Artists::artistsList(),
+        ]);
+    }
+
+    public function actionLyrics2albums(string $artist): string
+    {
+        $albums = Lyrics2Albums::albumsList($artist);
+
+        if (count($albums) === 0) {
+            throw new NotFoundHttpException('Artist not found.');
+        }
+        if ($albums[0]->artist->url !== $artist) {
+            $this->redirect(["/{$this->module->requestedRoute}", 'artist' => $albums[0]->artist->url], 301)->send();
+        }
+
+        return $this->render('lyrics2albums', [
+            'data' => $albums,
+        ]);
+    }
+
+    public function actionLyrics3tracks(string $artist, int $year, string $album): string
+    {
+        $tracks = Lyrics3Tracks::tracksList($artist, $year, $album);
+
+        if (!ArrayHelper::keyExists(0, $tracks)) {
+            throw new NotFoundHttpException('Album not found.');
+        }
+        if ($tracks[0]->artist->url !== $artist || $tracks[0]->album->url !== $album) {
+            $this->redirect(["/{$this->module->requestedRoute}", 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url], 301)->send();
+        }
+
+        return $this->render('lyrics3tracks', [
+            'data' => $tracks,
         ]);
     }
 
     public function behaviors(): array
     {
-        if ($this->action->id === 'collection') {
-            $this->lastModified = Collection::getLastModified();
-        } elseif ($this->artist && $this->year && $this->album) {
-            $this->data = $this->getAlbum();
-            $this->lastModified = Lyrics3Tracks::getLastModified($this->artist, $this->year, $this->album);
-        } elseif ($this->artist) {
-            $this->data = $this->getArtist();
-            $this->lastModified = Lyrics2Albums::getLastModified($this->artist);
-        } else {
-            $this->data = Lyrics1Artists::artistsList();
-            $this->lastModified = Lyrics1Artists::getLastModified();
-        }
-
         return [
             [
                 'class' => \yii\filters\HttpCache::class,
                 'enabled' => !YII_DEBUG,
-                'etagSeed' => function () {
-                    return serialize([phpversion(), Yii::$app->user->id, $this->lastModified]);
+                'etagSeed' => function ($action) {
+                    return serialize([phpversion(), Yii::$app->user->id, $this->getLastModified($action, Yii::$app->request)]);
                 },
-                'lastModified' => function () {
-                    return $this->lastModified;
-                },
-                'only' => ['index', 'collection'],
+                'lastModified' => function ($action) {
+                    return $this->getLastModified($action, Yii::$app->request);
+                }
             ],
         ];
     }
 
-    public function init(): void
+    private function getLastModified(InlineAction $action, Request $request): int
     {
-        parent::init();
-        foreach (['artist', 'year', 'album', 'size'] as $val) {
-            $this->$val = Yii::$app->request->get($val);
+        switch ($action->id) {
+            case 'lyrics1artists':
+                return Lyrics1Artists::getLastModified();
+            case 'lyrics2albums':
+                return Lyrics2Albums::getLastModified($request->get('artist'));
+            case 'lyrics3tracks':
+                return Lyrics3Tracks::getLastModified($request->get('artist'), $request->get('year'), $request->get('album'));
+            default:
+                return Collection::getLastModified();
         }
-    }
-
-    private function getAlbum(): array
-    {
-        $tracks = Lyrics3Tracks::tracksList($this->artist, $this->year, $this->album);
-
-        if (!ArrayHelper::keyExists(0, $tracks)) {
-            throw new NotFoundHttpException('Album not found.');
-        }
-        if ($tracks[0]->artist->url !== $this->artist || $tracks[0]->album->url !== $this->album) {
-            $this->redirect(["/{$this->module->requestedRoute}", 'artist' => $tracks[0]->artist->url, 'year' => $tracks[0]->album->year, 'album' => $tracks[0]->album->url, 'size' => $this->size], 301)->send();
-        }
-
-        return $tracks;
-    }
-
-    private function getArtist(): array
-    {
-        $albums = Lyrics2Albums::albumsList($this->artist);
-
-        if (count($albums) === 0) {
-            throw new NotFoundHttpException('Artist not found.');
-        }
-        if ($albums[0]->artist->url !== $this->artist) {
-            $this->redirect(["/{$this->module->requestedRoute}", 'artist' => $albums[0]->artist->url], 301)->send();
-        }
-
-        return $albums;
-    }
-
-    private function getViewFile(): string
-    {
-        $class = get_class($this->data[0]);
-        $class = explode('\\', $class);
-        return Inflector::slug(end($class));
     }
 }

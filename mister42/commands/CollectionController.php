@@ -14,8 +14,6 @@ use yii\helpers\ArrayHelper;
  */
 class CollectionController extends \yii\console\Controller
 {
-    const ALBUM_IMAGE_DIMENSIONS = 1000;
-
     public $defaultAction = 'update';
 
     /**

@@ -26,7 +26,7 @@ class RecentTracks extends \yii\db\ActiveRecord
 
     public function lastSeen(int $userid, bool $update = false): int
     {
-        $lastSeen = self::find()
+        $lastSeen = (int) self::find()
             ->where(['userid' => $userid])
             ->max('seen');
 
@@ -34,7 +34,7 @@ class RecentTracks extends \yii\db\ActiveRecord
             self::updateAll(['seen' => time()], ['userid' => $userid]);
         }
 
-        return is_int($lastSeen) ? $lastSeen : 0;
+        return $lastSeen;
     }
 
     public function rules(): array
