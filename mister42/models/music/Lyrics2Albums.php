@@ -10,7 +10,6 @@ use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 
 class Lyrics2Albums extends \yii\db\ActiveRecord
 {
@@ -29,7 +28,21 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         $this->active = (bool) ($this->active);
     }
 
-    public static function albumsList(string $artist): array
+    public static function Album(string $artist, int $year, string $album): ?self
+    {
+        return self::find()
+            ->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
+            ->innerJoinWith('artist')
+            ->with('tracks')
+            ->with('lyrics')
+            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
+            ->andWhere('album.year=:year')
+            ->andWhere(['or', 'album.name=:album', 'album.url=:album'])
+            ->addParams([':artist' => $artist, ':year' => $year, ':album' => $album])
+            ->one();
+    }
+
+    public static function ArtisAlbums(string $artist): array
     {
         return self::find()
             ->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
@@ -69,7 +82,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         $pdf = new Pdf();
         return $pdf->create(
             '@runtime/PDF/lyrics/' . implode(' - ', [$album->artist->url, $album->year, $album->url]),
-            Yii::$app->controller->renderPartial('@app/views/music/lyrics-album-pdf', ['tracks' => $album->tracks]),
+            Yii::$app->controller->renderPartial('@app/../mr42/views/music/lyrics-album-pdf', ['album' => $album]),
             Lyrics3Tracks::getLastModified($album->artist->url, $album->year, $album->url),
             [
                 'author' => $album->artist->name,
@@ -99,12 +112,11 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
             ->via('artist');
     }
 
-    public static function getCover(int $size, array $album): array
+    public static function getCover(int $size, self $album): array
     {
         $fileName = null;
-        if (ArrayHelper::keyExists(0, $album)) {
-            $fileName = implode(' - ', [$album[0]->artist->url, $album[0]->album->year, $album[0]->album->url, $size]) . '.jpg';
-            $album = $album[0]->album;
+        if (!is_null($album)) {
+            $fileName = implode(' - ', [$album->artist->url, $album->year, $album->url, $size]) . '.jpg';
         }
 
         return [$fileName, Image::resize($album->image, $size)];
@@ -118,6 +130,11 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
             ->addParams([':artist' => $artist])
             ->max('album.updated');
         return (int) Yii::$app->formatter->asTimestamp($data);
+    }
+
+    public function getLyrics(): ActiveQuery
+    {
+        return $this->hasMany(Lyrics4Lyrics::class, ['id' => 'lyricid'])->via('tracks');
     }
 
     public function getTracks(): ActiveQuery

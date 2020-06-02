@@ -31,7 +31,7 @@ class MusicController extends \yii\web\Controller
     public function actionLyrics3tracks(string $artist, int $year, string $album): string
     {
         return $this->render('lyrics3tracks', [
-            'data' => $this->lyrics->getTracks($artist, $year, $album),
+            'album' => $this->lyrics->getAlbumTracks($artist, $year, $album),
         ]);
     }
 

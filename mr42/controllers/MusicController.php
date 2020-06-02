@@ -19,8 +19,8 @@ class MusicController extends \yii\web\Controller
 
     public function actionAlbumpdf(string $artist, int $year, string $album): Response
     {
-        [$fileName, $data] = $this->lyrics->getAlbumpdf($artist, $year, $album);
-        return Yii::$app->response->sendFile($fileName, implode(' - ', [$data->artist->url, $data->album->year, $data->album->url]) . '.pdf', ['inline' => true]);
+        $fileName = $this->lyrics->getAlbumPdf($artist, $year, $album);
+        return Yii::$app->response->sendFile($fileName, implode(' - ', [$artist, $year, $album]) . '.pdf', ['inline' => true]);
     }
 
     public function actionCollectionCover(int $id): Response

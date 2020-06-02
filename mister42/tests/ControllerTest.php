@@ -6,11 +6,11 @@ class ControllerTest extends \PHPUnit\Framework\TestCase
 {
     public function testMusicController(): void
     {
-        $this->assertStringContainsString('Nórdika', \Yii::$app->runAction('music/lyrics'));
-        $_GET = ['artist' => 'Nordika'];
-        $this->assertStringContainsString('Ecstasy', \Yii::$app->runAction('music/lyrics'));
-        $_GET = ['artist' => 'Nordika', 'year' => 2017, 'album' => 'Ecstasy'];
-        $this->assertStringContainsString('In oblivion…', \Yii::$app->runAction('music/lyrics'));
+        $this->assertStringContainsString('Nórdika', \Yii::$app->runAction('music/lyrics1artists'));
+        $params = ['artist' => 'Nordika'];
+        $this->assertStringContainsString('Ecstasy', \Yii::$app->runAction('music/lyrics2albums', $params));
+        $params = ['artist' => 'Nordika', 'year' => 2017, 'album' => 'Ecstasy'];
+        $this->assertStringContainsString('In oblivion…', \Yii::$app->runAction('music/lyrics3tracks', $params));
     }
 
     public function testSiteController(): void

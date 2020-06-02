@@ -18,25 +18,19 @@ class Lyrics
     
     public function getAlbumcover(string $artist, int $year, string $album, int $size): array
     {
-        if (!ArrayHelper::isIn($size, [125, 500, 800])) {
-            throw new NotFoundHttpException('Cover not found.');
-        }
-
-        $data = $this->getTracks($artist, $year, $album, $size);
+        $data = $this->getAlbumTracks($artist, $year, $album, $size);
         return Lyrics2Albums::getCover($size, $data);
     }
     
-    public function getAlbumpdf(string $artist, int $year, string $album): array
+    public function getAlbumPdf(string $artist, int $year, string $album): string
     {
-        $albums = $this->getTracks($artist, $year, $album);
-        $data = reset($albums);
-        $pdf = Lyrics2Albums::buildPdf($data->album);
-        return [$pdf, $data];
+        $data = $this->getAlbumTracks($artist, $year, $album);
+        return Lyrics2Albums::buildPdf($data);
     }
 
     public function getAlbums(string $artist): array
     {
-        $albums = Lyrics2Albums::albumsList($artist);
+        $albums = Lyrics2Albums::ArtisAlbums($artist);
 
         if (count($albums) === 0) {
             throw new NotFoundHttpException('Artist not found.');
@@ -49,6 +43,24 @@ class Lyrics
         return $albums;
     }
 
+    public function getAlbumTracks(string $artist, int $year, string $album, int $size = null): Lyrics2Albums
+    {
+        if (is_int($size) && !ArrayHelper::isIn($size, [125, 500, 800])) {
+            throw new NotFoundHttpException('Cover not found.');
+        }
+
+        $data = Lyrics2Albums::album($artist, $year, $album);
+        if (is_null($data)) {
+            throw new NotFoundHttpException('Album not found.');
+        }
+
+        if ($data->artist->url !== $artist || $data->url !== $album) {
+            $this->controller->redirect(["/{$this->controller->module->requestedRoute}", 'artist' => $data->artist->url, 'year' => $data->year, 'album' => $data->url, 'size' => $size], 301)->send();
+        }
+
+        return $data;
+    }
+
     public function getArtists(): array
     {
         return Lyrics1Artists::artistsList();
@@ -56,7 +68,6 @@ class Lyrics
 
     public function getLastModified(InlineAction $action, Request $request): int
     {
-#        var_dump($action->id);exit;
         switch ($action->id) {
             case 'lyrics1artists':
                 return Lyrics1Artists::getLastModified();
@@ -73,20 +84,5 @@ class Lyrics
             default:
                 return time();
         }
-    }
-    
-    public function getTracks(string $artist, int $year, string $album, int $size = null): array
-    {
-        $tracks = Lyrics3Tracks::tracksList($artist, $year, $album);
-
-        if (!ArrayHelper::keyExists(0, $tracks)) {
-            throw new NotFoundHttpException('Album not found.');
-        }
-        $alb = reset($tracks);
-        if ($alb->artist->url !== $artist || $alb->album->url !== $album) {
-            $this->controller->redirect(["/{$this->controller->module->requestedRoute}", 'artist' => $alb->artist->url, 'year' => $alb->album->year, 'album' => $alb->album->url, 'size' => $size], 301)->send();
-        }
-
-        return $tracks;
     }
 }

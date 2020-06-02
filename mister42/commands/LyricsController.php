@@ -5,6 +5,7 @@ namespace mister42\commands;
 use mister42\models\Apirequest;
 use mister42\models\Console;
 use mister42\models\Image;
+use mister42\models\music\Lyrics;
 use mister42\models\music\Lyrics1Artists;
 use mister42\models\music\Lyrics2Albums;
 use mister42\models\music\Lyrics3Tracks;
@@ -60,7 +61,6 @@ class LyricsController extends \yii\console\Controller
                 Console::newLine();
             }
         }
-
         Console::endProgress(true);
 
         return ExitCode::OK;
@@ -71,21 +71,19 @@ class LyricsController extends \yii\console\Controller
      */
     public function actionAlbumPdf(): int
     {
-        $count = (int) Lyrics2Albums::find()->count();
+        $lyrics = new Lyrics($this);
+        $artists = $lyrics->getArtists();
+        $count = count($artists);
+
         Console::startProgress($x = 0, $count, 'Processing PDFs: ');
-        foreach (Lyrics1Artists::albumsList() as $artist) {
-            foreach ($artist->albums as $album) {
+        foreach ($artists as $artist) {
+            $albums = $lyrics->getAlbums($artist->url);
+            $count += count($albums) - 1;
+            foreach ($albums as $album) {
                 Console::updateProgress(++$x, $count);
-                if (!$album->active || Lyrics2Albums::buildPdf($album)) {
-                    continue;
-                }
-                Console::write($artist->name, [Console::FG_PURPLE], 3);
-                Console::write($album->year, [Console::FG_GREEN]);
-                Console::write($album->name, [Console::FG_GREEN], 8);
-                Console::writeError('ERROR!', [Console::BOLD, Console::FG_RED, CONSOLE::BLINK]);
+                $lyrics->getAlbumPdf($album->artist->url, $album->year, $album->url);
             }
         }
-
         Console::endProgress(true);
 
         return ExitCode::OK;
