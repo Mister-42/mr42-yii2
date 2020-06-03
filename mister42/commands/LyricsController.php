@@ -5,7 +5,6 @@ namespace mister42\commands;
 use mister42\models\Apirequest;
 use mister42\models\Console;
 use mister42\models\Image;
-use mister42\models\music\Lyrics;
 use mister42\models\music\Lyrics1Artists;
 use mister42\models\music\Lyrics2Albums;
 use mister42\models\music\Lyrics3Tracks;
@@ -71,17 +70,20 @@ class LyricsController extends \yii\console\Controller
      */
     public function actionAlbumPdf(): int
     {
-        $lyrics = new Lyrics($this);
-        $artists = $lyrics->getArtists();
+        $artists = Lyrics1Artists::artistsList();
         $count = count($artists);
 
         Console::startProgress($x = 0, $count, 'Processing PDFs: ');
         foreach ($artists as $artist) {
-            $albums = $lyrics->getAlbums($artist->url);
+            $albums = Lyrics2Albums::getArtistAlbums($artist->url);
             $count += count($albums) - 1;
             foreach ($albums as $album) {
                 Console::updateProgress(++$x, $count);
-                $lyrics->getAlbumPdf($album->artist->url, $album->year, $album->url);
+                if (!$album->active) {
+                    continue;
+                }
+                $data = Lyrics2Albums::getAlbum($album->artist->url, $album->year, $album->url);
+                Lyrics2Albums::buildPdf($data);
             }
         }
         Console::endProgress(true);

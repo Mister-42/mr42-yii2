@@ -34,7 +34,7 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-albums']);
         if ($album->tracks) {
             echo Html::beginTag('div', ['class' => ['card', $album === end($data) ? 'mb-1' : 'mb-3']]);
             echo Html::beginTag('div', ['class' => array_filter(['card-header', (!$album->active) ? 'bg-warning' : null])]);
-            echo Html::tag('span', Html::tag('span', $album->year, ['class' => 'badge']) . Html::a($album->name, ['lyrics3tracks', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'ml-1 notranslate']), ['class' => 'h4 float-left']);
+            echo Html::tag('span', Html::tag('span', $album->year, ['class' => 'badge']) . Html::a($album->name, ['lyrics3tracks', 'artist' => $album->artist->url, 'year' => $album->year, 'album' => $album->url], ['class' => 'ml-1 notranslate']), ['class' => 'h4 text-left float-left']);
             echo Html::beginTag('div', ['class' => 'float-right']);
             if ($album->buy) {
                 echo Html::a(Yii::$app->icon->name('bandcamp', 'brands')->class('mr-1') . Yii::t('mr42', 'Buy'), $album->buy, ['class' => 'btn btn-sm btn-outline-dark shadow ml-1', 'title' => Yii::t('mr42', 'Buy This Album')]);

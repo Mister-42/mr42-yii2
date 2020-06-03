@@ -28,31 +28,6 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         $this->active = (bool) ($this->active);
     }
 
-    public static function Album(string $artist, int $year, string $album): ?self
-    {
-        return self::find()
-            ->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
-            ->innerJoinWith('artist')
-            ->with('tracks')
-            ->with('lyrics')
-            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
-            ->andWhere('album.year=:year')
-            ->andWhere(['or', 'album.name=:album', 'album.url=:album'])
-            ->addParams([':artist' => $artist, ':year' => $year, ':album' => $album])
-            ->one();
-    }
-
-    public static function ArtisAlbums(string $artist): array
-    {
-        return self::find()
-            ->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
-            ->innerJoinWith('artist', 'tracks')
-            ->with('artistInfo')
-            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
-            ->addParams([':artist' => $artist])
-            ->all();
-    }
-
     public function beforeSave($insert): bool
     {
         if (parent::beforeSave($insert)) {
@@ -101,9 +76,34 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         return new LyricsQuery(get_called_class());
     }
 
+    public static function getAlbum(string $artist, int $year, string $album): ?self
+    {
+        return self::find()
+            ->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
+            ->innerJoinWith('artist')
+            ->with('tracks')
+            ->with('lyrics')
+            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
+            ->andWhere('album.year=:year')
+            ->andWhere(['or', 'album.name=:album', 'album.url=:album'])
+            ->addParams([':artist' => $artist, ':year' => $year, ':album' => $album])
+            ->one();
+    }
+
     public function getArtist(): LyricsQuery
     {
         return $this->hasOne(Lyrics1Artists::class, ['name' => 'parent']);
+    }
+
+    public static function getArtistAlbums(string $artist): array
+    {
+        return self::find()
+            ->orderBy(['year' => SORT_DESC, 'name' => SORT_ASC])
+            ->innerJoinWith('artist', 'tracks')
+            ->with('artistInfo')
+            ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
+            ->addParams([':artist' => $artist])
+            ->all();
     }
 
     public function getArtistInfo(): ActiveQuery

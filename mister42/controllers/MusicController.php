@@ -2,13 +2,8 @@
 
 namespace mister42\controllers;
 
-use mister42\models\music\Lyrics;
-use Yii;
-
-class MusicController extends \yii\web\Controller
+class MusicController extends \mister42\controllers\music\LyricsController
 {
-    private $lyrics;
-
     public function actionCollection(): string
     {
         return $this->render('collection');
@@ -17,43 +12,21 @@ class MusicController extends \yii\web\Controller
     public function actionLyrics1artists(): string
     {
         return $this->render('lyrics1artists', [
-            'data' => $this->lyrics->getArtists(),
+            'data' => $this->getArtists(),
         ]);
     }
 
     public function actionLyrics2albums(string $artist): string
     {
         return $this->render('lyrics2albums', [
-            'data' => $this->lyrics->getAlbums($artist),
+            'data' => $this->getAlbums($artist),
         ]);
     }
 
     public function actionLyrics3tracks(string $artist, int $year, string $album): string
     {
         return $this->render('lyrics3tracks', [
-            'album' => $this->lyrics->getAlbumTracks($artist, $year, $album),
+            'album' => $this->getAlbumTracks($artist, $year, $album),
         ]);
-    }
-
-    public function behaviors(): array
-    {
-        return [
-            [
-                'class' => \yii\filters\HttpCache::class,
-                'enabled' => !YII_DEBUG,
-                'etagSeed' => function ($action) {
-                    return serialize([phpversion(), Yii::$app->user->id, $this->lyrics->getLastModified($action, Yii::$app->request)]);
-                },
-                'lastModified' => function ($action) {
-                    return $this->lyrics->getLastModified($action, Yii::$app->request);
-                }
-            ],
-        ];
-    }
-
-    public function init()
-    {
-        parent::init();
-        $this->lyrics = new Lyrics($this);
     }
 }
