@@ -65,6 +65,15 @@ class Collection extends \yii\db\ActiveRecord
                 }
             }
 
+            if ($collectionItem->image_override) {
+                $collectionItem->image = null;
+                [$width, $height] = getimagesizefromstring($collectionItem->image_override);
+                if (min($width, $height) > 250) {
+                    $collectionItem->image_override = Image::resize($collectionItem->image_override, 250);
+                    $collectionItem->image_color = null;
+                }
+            }
+
             $collectionItem->id = (int) ArrayHelper::getValue($item, 'basic_information.id');
             $collectionItem->user_id = $user;
             $collectionItem->artist = trim(preg_replace('/\([0-9]+\)/', '', ArrayHelper::getValue($item, 'basic_information.artists.0.name')));
@@ -75,7 +84,7 @@ class Collection extends \yii\db\ActiveRecord
             $collectionItem->created = Yii::$app->formatter->asDatetime(ArrayHelper::getValue($item, 'date_added'), 'yyyy-MM-dd HH:mm:ss');
 
             if ($collectionItem->image_color === null) {
-                $collectionItem->image_color = Image::getAverageImageColor($collectionItem->image);
+                $collectionItem->image_color = Image::getAverageImageColor($collectionItem->image_override ?? $collectionItem->image);
             }
 
             $collectionItem->save();

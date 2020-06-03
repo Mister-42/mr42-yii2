@@ -23,9 +23,9 @@ class MusicController extends \mister42\controllers\music\LyricsController
     public function actionCollectionCover(int $id): Response
     {
         $album = Collection::find()->where(['id' => $id])->one();
-        if (!$album || !$album->image) {
+        if (!$album || (!$album->image && !$album->image_override)) {
             return Yii::$app->response->sendFile(Yii::getAlias('@assetsroot/images/nocdcover.png'), null, ['inline' => true]);
         }
-        return Yii::$app->response->sendContentAsFile($album->image, "{$id}.jpg", ['mimeType' => 'image/jpeg', 'inline' => true]);
+        return Yii::$app->response->sendContentAsFile($album->image_override ?? $album->image, "{$id}.jpg", ['mimeType' => 'image/jpeg', 'inline' => true]);
     }
 }

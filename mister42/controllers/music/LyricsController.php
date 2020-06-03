@@ -2,6 +2,7 @@
 
 namespace mister42\controllers\music;
 
+use mister42\models\music\Collection;
 use mister42\models\music\Lyrics1Artists;
 use mister42\models\music\Lyrics2Albums;
 use mister42\models\music\Lyrics3Tracks;
@@ -34,7 +35,7 @@ class LyricsController extends \yii\web\Controller
         $data = $this->getAlbumTracks($artist, $year, $album, $size);
         return Lyrics2Albums::getCover($size, $data);
     }
-    
+
     protected function getAlbumPdf(string $artist, int $year, string $album): string
     {
         $data = $this->getAlbumTracks($artist, $year, $album);
