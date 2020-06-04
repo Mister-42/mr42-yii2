@@ -11,6 +11,20 @@ use yii\helpers\ArrayHelper;
 
 class Collection extends \yii\db\ActiveRecord
 {
+    private const ALBUM_IMAGE_DIMENSIONS = 250;
+
+    private string $artist;
+    private string $date;
+    private int $id;
+    private ?string $image;
+    private ?string $image_color;
+    private ?string $image_override;
+    private string $status;
+    private string $title;
+    private string $updated;
+    private int $user_id;
+    private int $year;
+
     public static function getDiscogsUrl(string $action, Profile $profile) : ?string
     {
         if ($action === 'collection') {
@@ -48,46 +62,37 @@ class Collection extends \yii\db\ActiveRecord
     public function saveCollection(int $user, array $data, string $status): array
     {
         $id = [];
-        foreach ($data as $item) {
-            $id[] = (int) ArrayHelper::getValue($item, 'basic_information.id');
+        foreach ($data as $discogs) {
+            $item = self::findOne(['id' => (int) ArrayHelper::getValue($discogs, 'basic_information.id'), 'user_id' => $user, 'status' => $status]) ?? new self();
 
-            if (!$collectionItem = self::findOne(['id' => (int) ArrayHelper::getValue($item, 'basic_information.id'), 'user_id' => $user, 'status' => $status])) {
-                $collectionItem = new self();
-                $collectionItem->image = null;
-                $image = ArrayHelper::getValue($item, 'basic_information.cover_image');
-                if ($image) {
-                    $client = new Client('');
-                    $img = $client->getFile($image);
-                    $img = Image::resize($img->content, 250);
-                    if ($img) {
-                        $collectionItem->image = $img;
-                    }
+            $image = ArrayHelper::getValue($discogs, 'basic_information.cover_image');
+            if (isset($item->image_override) && Image::isValid($item->image_override)) {
+                $item->image = null;
+                [$width, $height] = getimagesizefromstring($item->image_override);
+                if (min($width, $height) > self::ALBUM_IMAGE_DIMENSIONS) {
+                    $item->image_override = Image::resize($item->image_override, self::ALBUM_IMAGE_DIMENSIONS);
+                    $item->image_color = null;
                 }
+            } elseif ($image && !isset($item->image)) {
+                $client = new Client('');
+                $img = $client->getFile($image);
+                $item->image = ($img->isOk && Image::isValid($img->content)) ? Image::resize($img->content, self::ALBUM_IMAGE_DIMENSIONS) : null;
             }
 
-            if ($collectionItem->image_override) {
-                $collectionItem->image = null;
-                [$width, $height] = getimagesizefromstring($collectionItem->image_override);
-                if (min($width, $height) > 250) {
-                    $collectionItem->image_override = Image::resize($collectionItem->image_override, 250);
-                    $collectionItem->image_color = null;
-                }
+            $item->id = ArrayHelper::getValue($discogs, 'basic_information.id');
+            $item->user_id = $user;
+            $item->artist = trim(preg_replace('/\([0-9]+\)/', '', ArrayHelper::getValue($discogs, 'basic_information.artists.0.name')));
+            $item->year = ArrayHelper::getValue($discogs, 'basic_information.year');
+            $item->title = ArrayHelper::getValue($discogs, 'basic_information.title');
+            $item->status = $status;
+            $item->created = Yii::$app->formatter->asDatetime(ArrayHelper::getValue($discogs, 'date_added'), 'yyyy-MM-dd HH:mm:ss');
+
+            if (!isset($item->image_color) && (isset($item->image) || isset($item->image_override))) {
+                $item->image_color = Image::getAverageImageColor($item->image ?? $item->image_override);
             }
 
-            $collectionItem->id = (int) ArrayHelper::getValue($item, 'basic_information.id');
-            $collectionItem->user_id = $user;
-            $collectionItem->artist = trim(preg_replace('/\([0-9]+\)/', '', ArrayHelper::getValue($item, 'basic_information.artists.0.name')));
-            $collectionItem->year = (int) ArrayHelper::getValue($item, 'basic_information.year');
-            $collectionItem->title = ArrayHelper::getValue($item, 'basic_information.title');
-            $collectionItem->image_color = null;
-            $collectionItem->status = $status;
-            $collectionItem->created = Yii::$app->formatter->asDatetime(ArrayHelper::getValue($item, 'date_added'), 'yyyy-MM-dd HH:mm:ss');
-
-            if ($collectionItem->image_color === null) {
-                $collectionItem->image_color = Image::getAverageImageColor($collectionItem->image_override ?? $collectionItem->image);
-            }
-
-            $collectionItem->save();
+            $item->save();
+            $id[] = $item->id;
         }
 
         return $id;

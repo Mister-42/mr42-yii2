@@ -20,6 +20,16 @@ class Image
         return sprintf('#%02X%02X%02X', ($rgb >> 16) & 0xFF, ($rgb >> 8) & 0xFF, $rgb & 0xFF);
     }
 
+    public static function isValid(string $image): bool
+    {
+        $img = imagecreatefromstring($image);
+        $isValid = $img !== false;
+        if (is_resource($img)) {
+            imagedestroy($img);
+        }
+        return $isValid;
+    }
+
     public static function resize(string $image, int $size): string
     {
         $imagick = new Imagick();

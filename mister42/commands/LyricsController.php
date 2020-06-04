@@ -18,7 +18,7 @@ use yii\helpers\ArrayHelper;
  */
 class LyricsController extends \yii\console\Controller
 {
-    const ALBUM_IMAGE_DIMENSIONS = 1000;
+    private const ALBUM_IMAGE_DIMENSIONS = 1000;
 
     public $defaultAction = 'index';
 
