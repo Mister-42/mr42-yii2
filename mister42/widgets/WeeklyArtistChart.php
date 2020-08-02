@@ -5,9 +5,8 @@ namespace mister42\widgets;
 use mister42\models\user\User;
 use mister42\models\user\WeeklyArtist;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Widget;
 
-class WeeklyArtistChart extends Widget
+class WeeklyArtistChart extends \yii\bootstrap4\Widget
 {
     public $limit = 10;
     public $profile;

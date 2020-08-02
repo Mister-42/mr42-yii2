@@ -13,10 +13,10 @@ class Html2MarkdownAsset extends AssetBundle
     ];
 
     public $js = [
-        'turndown.js',
+        'showdown.js',
     ];
 
-    public $sourcePath = '@npm/turndown/dist';
+    public $sourcePath = '@npm/showdown/dist';
 
     public function registerAssetFiles($view): void
     {

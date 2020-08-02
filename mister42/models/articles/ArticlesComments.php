@@ -8,6 +8,7 @@ use mister42\Secrets;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
+use yii\db\Expression;
 
 class ArticlesComments extends \yii\db\ActiveRecord
 {
@@ -38,6 +39,7 @@ class ArticlesComments extends \yii\db\ActiveRecord
                 'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created',
                 'updatedAtAttribute' => null,
+                'value' => new Expression('NOW()'),
             ],
         ];
     }
@@ -64,14 +66,14 @@ class ArticlesComments extends \yii\db\ActiveRecord
 
     public static function getLastModified(): int
     {
-        return self::find()->max('created');
+        return Yii::$app->formatter->asTimestamp(self::find()->max('created'));
     }
 
     public function rules(): array
     {
         $rules = [
             [['parent', 'title', 'content'], 'required'],
-            [['parent', 'created', 'user', 'active'], 'integer'],
+            [['parent', 'user', 'active'], 'integer'],
             ['content', 'string'],
             'charCount' => ['content', 'string', 'max' => 4096],
             [['title', 'website'], 'string', 'max' => 128],

@@ -6,7 +6,7 @@ use mister42\models\music\Collection;
 use Yii;
 use yii\web\Response;
 
-class MusicController extends \mister42\controllers\music\LyricsController
+class MusicController extends \mister42\controllers\music\BaseController
 {
     public function actionAlbumcover(string $artist, int $year, string $album, int $size): Response
     {
@@ -22,7 +22,7 @@ class MusicController extends \mister42\controllers\music\LyricsController
 
     public function actionCollectionCover(int $id): Response
     {
-        $album = Collection::find()->where(['id' => $id])->one();
+        $album = Collection::getEntry($id);
         if (!$album || (!$album->image && !$album->image_override)) {
             return Yii::$app->response->sendFile(Yii::getAlias('@assetsroot/images/nocdcover.png'), null, ['inline' => true]);
         }

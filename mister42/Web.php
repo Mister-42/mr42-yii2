@@ -29,6 +29,14 @@ class Web
             ];
         }
 
+        if (YII_ENV_DEV) {
+            $config['bootstrap'] = ['gii'];
+            $config['modules']['gii'] = [
+                'class' => 'yii\gii\Module',
+                'allowedIPs' => $this->secrets['params']['specialIPs'],
+            ];
+        }
+
         return $config;
     }
 
@@ -63,7 +71,11 @@ class Web
                 'targets' => [
                     [
                         'class' => 'yii\log\DbTarget',
-                        'except' => ['yii\web\HttpException:404'],
+                        'except' => [
+                            'yii\web\HttpException:400',
+                            'yii\web\HttpException:404',
+                            'yii\web\HttpException:405',
+                        ],
                         'levels' => ['error'],
                         'logTable' => 'log_mister42_error',
                     ],

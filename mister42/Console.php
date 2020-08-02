@@ -9,13 +9,13 @@ class Console
         return [
             'id' => 'mister42-console',
             'aliases' => [
-                '@web' => 'https://www.mister42.me/',
+                '@web' => 'https://www.mister42.eu/',
                 '@webroot' => __DIR__ . '/../webroot',
             ],
             'basePath' => __DIR__,
             'components' => [
                 'urlManager' => [
-                    'baseUrl' => 'https://www.mister42.me/',
+                    'baseUrl' => 'https://www.mister42.eu/',
                 ],
             ],
             'controllerMap' => [

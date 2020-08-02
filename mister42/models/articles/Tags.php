@@ -2,6 +2,7 @@
 
 namespace mister42\models\articles;
 
+use Yii;
 use yii\helpers\StringHelper;
 
 class Tags extends Articles
@@ -24,13 +25,13 @@ class Tags extends Articles
         $data = self::find()
             ->where(['like', 'tags', $tag])
             ->max('updated');
-        return $data;
+        return Yii::$app->formatter->asTimestamp($data);
     }
 
     private static function getTags(): array
     {
         $list = [];
-        foreach (self::find()->select('tags')->all() as $tag) {
+        foreach (self::find()->select('tags')->where(['not', ['tags' => null]])->all() as $tag) {
             foreach (StringHelper::explode($tag->tags) as $item) {
                 isset($list[$item]) ? $list[$item]++ : $list[$item] = 1;
             }

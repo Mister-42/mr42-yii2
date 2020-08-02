@@ -2,6 +2,7 @@
 
 namespace mister42\models\music;
 
+use Yii;
 use yii\db\BatchQueryResult;
 
 class Lyrics1Artists extends \yii\db\ActiveRecord
@@ -10,7 +11,6 @@ class Lyrics1Artists extends \yii\db\ActiveRecord
     {
         parent::afterFind();
         $this->url = $this->url ?? $this->name;
-        $this->updated = strtotime($this->updated);
         $this->active = (bool) $this->active;
     }
 
@@ -44,7 +44,7 @@ class Lyrics1Artists extends \yii\db\ActiveRecord
     {
         $data = self::find()
             ->max('updated');
-        return strtotime($data);
+        return Yii::$app->formatter->asTimestamp($data);
     }
 
     public static function tableName(): string

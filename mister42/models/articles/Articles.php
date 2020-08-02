@@ -8,6 +8,7 @@ use mister42\models\user\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap4\Html;
+use yii\db\Expression;
 use yii\helpers\StringHelper;
 use yii\web\AccessDeniedHttpException;
 
@@ -72,6 +73,7 @@ class Articles extends \yii\db\ActiveRecord
                 'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created',
                 'updatedAtAttribute' => 'updated',
+                'value' => new Expression('NOW()'),
             ],
         ];
     }
@@ -122,16 +124,15 @@ class Articles extends \yii\db\ActiveRecord
 
     public static function getLastModified(): int
     {
-        return self::find()->max('updated');
+        return Yii::$app->formatter->asTimestamp(self::find()->max('updated'));
     }
 
     public function rules(): array
     {
         return [
             [['content', 'tags'], 'string'],
-            [['created', 'updated', 'authorId', 'pdf', 'active'], 'integer'],
+            [['authorId', 'pdf', 'active'], 'integer'],
             [['title', 'content'], 'required'],
-            [['authorId'], 'required'],
             [['title', 'url', 'source'], 'string', 'max' => 128],
             ['source', 'url', 'enableIDN' => true],
             [['url', 'source'], 'default', 'value' => null],

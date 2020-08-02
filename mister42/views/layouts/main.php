@@ -26,7 +26,7 @@ $this->registerLinkTag(['rel' => 'alternate', 'href' => Yii::getAlias('@siteEN')
 foreach (array_keys(Yii::$app->params['languages']) as $lng) {
     if ($lng !== Yii::$app->language) {
         $lngAlias = '@site' . strtoupper($lng);
-        $this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => parse_url(Yii::getAlias($lngAlias), PHP_URL_HOST)]);
+        $this->registerLinkTag(['rel' => 'dns-prefetch', 'href' => Yii::getAlias($lngAlias)]);
         $this->registerLinkTag(['rel' => 'alternate', 'href' => Yii::getAlias($lngAlias) . Url::to(), 'hreflang' => $lng]);
     }
 }
@@ -80,7 +80,7 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
         echo Html::tag('div', Html::tag('span', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'align-middle']));
         echo Html::beginTag('div', ['class' => 'dropup']);
             if (Yii::$app->requestedRoute !== 'site/offline') {
-                if (php_sapi_name() !== 'cli' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) {
+                if (Yii::$app->id === 'mister42-console' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)) {
                     echo Html::a(Yii::$app->icon->name('html5', 'brands'), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary', 'title' => Yii::t('mr42', 'Validate HTML')]);
                 }
                 echo Html::a(Yii::$app->icon->name('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Privacy Policy')]);

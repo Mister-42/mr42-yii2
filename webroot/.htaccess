@@ -1,7 +1,4 @@
-Options -Indexes -MultiViews +FollowSymlinks
-AddDefaultCharset UTF-8
 SetEnv TZ Europe/Berlin
-Header set Connection keep-alive
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -10,12 +7,20 @@ Header set Connection keep-alive
     RewriteCond %{HTTP_HOST} !^www\.
     RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 
-    RedirectMatch 301 ^/de/(.*)$ https://www.mister42.de/$1
-    RedirectMatch 301 ^/en/(.*)$ https://www.mister42.me/$1
-    RedirectMatch 301 ^/ru/(.*)$ https://www.xn--42-mlclt0afi.xn--p1ai/$1
+    RewriteCond %{HTTP_HOST} ^(www.)?mister42.me$ [NC]
+    RewriteRule ^ https://www.mister42.eu%{REQUEST_URI} [L,R=301]
 
-    RedirectMatch 301 ^/lyrics$ /music/lyrics
+    RewriteCond %{HTTP_HOST} ^(www.)?xn--42-mlclt0afi.xn--p1ai$ [NC]
+    RewriteRule ^ https://www.xn--42-glceu4aeait.xn--p1ai%{REQUEST_URI} [L,R=301]
+
+    RedirectMatch 301 ^/en/(.*)$ https://www.mister42.eu/$1
+    RedirectMatch 301 ^/de/(.*)$ https://www.mister42.de/$1
+    RedirectMatch 301 ^/ru/(.*)$ https://www.xn--42-glceu4aeait.xn--p1ai/$1
+
+    RedirectMatch 301 ^/sitemap(.*).xml https://mr42.me/sitemap$1.xml
+    RedirectMatch 301 ^/lyricsNew/(.*).(pdf|jpg)$ https://mr42.me/music/lyrics/$1.$2
     RedirectMatch 301 ^/lyrics/(.*).(pdf|jpg)$ https://mr42.me/music/lyrics/$1.$2
+    RedirectMatch 301 ^/lyrics$ /music/lyrics
     RedirectMatch 301 ^/(.*).(pdf|jpg)$ https://mr42.me/$1.$2
     RedirectMatch 301 ^/(raspberry)?pi$ /my/pi
     RedirectMatch 301 ^/contact$ /my/contact
@@ -32,7 +37,7 @@ Header set Connection keep-alive
 FileETag All
 
 <FilesMatch "\.(ico)$">
-    Header set Cache-Control "max-age=900, private, must-revalidate"
+    Header set Cache-Control "max-age=84600, private, must-revalidate"
 </FilesMatch>
 
 # Make sure proxies don't deliver the wrong content
@@ -46,3 +51,6 @@ SetEnvIfNoCase Request_URI .(?:jpe?g|png|gif)$ no-gzip dont-vary
 
 # Don't compress binaries
 SetEnvIfNoCase Request_URI .(?:exe|t?gz2?|zip|sit|rar)$ no-gzip dont-vary
+
+# Don't reveal unnecessary information
+Header unset X-Powered-By

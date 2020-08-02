@@ -4,9 +4,8 @@ namespace mister42\widgets;
 
 use Yii;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Widget;
 
-class RecentTracks extends Widget
+class RecentTracks extends \yii\bootstrap4\Widget
 {
     public $tracks;
 

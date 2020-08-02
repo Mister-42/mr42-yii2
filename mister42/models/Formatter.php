@@ -10,6 +10,12 @@ use yii\helpers\Markdown;
 
 class Formatter extends \yii\i18n\Formatter
 {
+    public function asTimeDiff($start, $end, $absolute = true): int
+    {
+        $diff = $this->asTimestamp($start) - $this->asTimestamp($end);
+        return $absolute ? abs($diff) : $diff;
+    }
+
     public function cleanInput(string $data, string $markdown = 'original', bool $allowHtml = false): string
     {
         $data = $allowHtml ? Yii::$app->formatter->asRaw(trim($data)) : Yii::$app->formatter->asHtml(trim($data), ['HTML.Allowed' => '']);

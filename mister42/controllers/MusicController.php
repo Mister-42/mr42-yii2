@@ -2,7 +2,7 @@
 
 namespace mister42\controllers;
 
-class MusicController extends \mister42\controllers\music\LyricsController
+class MusicController extends \mister42\controllers\music\BaseController
 {
     public function actionCollection(): string
     {
@@ -28,5 +28,13 @@ class MusicController extends \mister42\controllers\music\LyricsController
         return $this->render('lyrics3tracks', [
             'album' => $this->getAlbumTracks($artist, $year, $album),
         ]);
+    }
+
+    public function actionTest()
+    {
+        $model = new \mister42\models\test\Test();
+        $data = $model->getList();
+        var_dump($data);
+        exit;
     }
 }

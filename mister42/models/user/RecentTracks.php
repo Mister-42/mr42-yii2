@@ -65,7 +65,7 @@ class RecentTracks extends \yii\db\ActiveRecord
                 $addTrack->artist = (string) ArrayHelper::getValue($track, 'artist');
                 $addTrack->track = (string) ArrayHelper::getValue($track, 'name');
                 $addTrack->count = $playcount--;
-                $addTrack->time = strtotime($time);
+                $addTrack->time = Yii::$app->formatter->asTimestamp($time);
                 $addTrack->seen = $lastSeen;
                 $addTrack->save();
 

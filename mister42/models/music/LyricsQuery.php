@@ -3,7 +3,6 @@
 namespace mister42\models\music;
 
 use Yii;
-use yii\web\Request;
 
 class LyricsQuery extends \yii\db\ActiveQuery
 {
@@ -12,9 +11,10 @@ class LyricsQuery extends \yii\db\ActiveQuery
         parent::init();
         $alias = ($this->modelClass === Lyrics1Artists::class) ? 'artist' : 'album';
         $this->alias($alias);
-        $request = new Request();
-        return (php_sapi_name() === 'cli' || $request->getHostName() === 'mr42.me' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin))
-            ? $this
-            : $this->onCondition(["{$alias}.active" => true]);
+
+        $con1 = Yii::$app->id === 'mr42' && Yii::$app->controller->id !== 'feed';
+        $con2 = Yii::$app->id === 'mister42' && !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin;
+        $con3 = Yii::$app->id === 'mister42-console';
+        return ($con1 || $con2 || $con3) ? $this : $this->onCondition(["{$alias}.active" => true]);
     }
 }

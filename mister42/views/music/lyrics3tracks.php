@@ -79,6 +79,6 @@ echo Html::beginTag('div', ['class' => 'site-lyrics-lyrics']);
     echo Accordion::widget([
         'encodeLabels' => false,
         'items' => $items,
-        'itemToggleOptions' => ['class' => 'text-left notranslate'],
+        'itemToggleOptions' => ['class' => 'w-100 text-truncate text-left notranslate'],
     ]);
 echo Html::endTag('div');

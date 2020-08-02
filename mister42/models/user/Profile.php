@@ -8,6 +8,9 @@ use yii\db\ActiveRecord;
 
 class Profile extends \Da\User\Model\Profile
 {
+    public ?string $discogs;
+    public ?string $discogs_token;
+
     public function attributeLabels()
     {
         $labels = parent::attributeLabels();

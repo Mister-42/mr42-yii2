@@ -6,10 +6,9 @@ use mister42\assets\TimePickerAsset;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\bootstrap4\Html;
-use yii\jui\DatePicker;
 use yii\jui\DatePickerLanguageAsset;
 
-class TimePicker extends DatePicker
+class TimePicker extends \yii\jui\DatePicker
 {
     public $addon = 'calendar';
     public $mode = 'datetime';

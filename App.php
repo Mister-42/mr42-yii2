@@ -1,13 +1,18 @@
 <?php
 
+use yii\helpers\ArrayHelper;
+
 class App
 {
-    public function __construct(bool $debug = false, string $unitTest = null)
+    public function __construct(int $debug = 0, string $unitTest = null)
     {
         header_remove('X-Powered-By');
-        if ($debug) {
+        if ($debug !== 0) {
             error_reporting(-1);
             define('YII_DEBUG', true);
+            if ($debug === 2) {
+                define('YII_ENV', 'dev');
+            }
             define('YII_ENABLE_ERROR_HANDLER', !$unitTest);
         }
 
@@ -20,7 +25,7 @@ class App
 
         if ($unitTest) {
             $components = $app->components;
-            $components['urlManager']['baseUrl'] = 'https://www.mister42.me/';
+            $components['urlManager']['baseUrl'] = 'https://www.mister42.eu/';
             $app->components = $components;
             return $app;
         }
@@ -30,7 +35,7 @@ class App
 
     private function getConfig(?string $unitTest): array
     {
-        return (yii\helpers\ArrayHelper::getValue($_SERVER, 'SERVER_NAME') === 'mr42.me')
+        return (ArrayHelper::getValue($_SERVER, 'SERVER_NAME') === 'mr42.me')
             ? $this->loadConfig(['mister42', 'mr42'])
             : $this->loadConfig(['mister42', $unitTest]);
     }

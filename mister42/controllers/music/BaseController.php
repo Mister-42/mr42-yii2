@@ -9,9 +9,10 @@ use mister42\models\music\Lyrics3Tracks;
 use Yii;
 use yii\base\InlineAction;
 use yii\helpers\ArrayHelper;
+use yii\helpers\StringHelper;
 use yii\web\NotFoundHttpException;
 
-class LyricsController extends \yii\web\Controller
+class BaseController extends \yii\web\Controller
 {
     public function behaviors(): array
     {
@@ -21,7 +22,7 @@ class LyricsController extends \yii\web\Controller
                 'enabled' => !YII_DEBUG,
                 'etagSeed' => function ($action) {
                     $namespace = (new \ReflectionObject($this))->getNamespaceName();
-                    return serialize([phpversion(), ((strpos($namespace, 'mr42') === 0) ? 42 : Yii::$app->user->id), $this->getLastModified($action)]);
+                    return serialize([phpversion(), (StringHelper::startsWith($namespace, 'mr42') ? null : Yii::$app->user->id), $this->getLastModified($action)]);
                 },
                 'lastModified' => function ($action) {
                     return $this->getLastModified($action);
@@ -85,19 +86,24 @@ class LyricsController extends \yii\web\Controller
         $request = Yii::$app->request;
         switch ($action->id) {
             case 'lyrics1artists':
-                return Lyrics1Artists::getLastModified();
+                $lastMod = Lyrics1Artists::getLastModified();
+            break;
             case 'lyrics2albums':
-                return Lyrics2Albums::getLastModified($request->get('artist'));
+                $lastMod = Lyrics2Albums::getLastModified($request->get('artist'));
+            break;
             case 'albumcover':
             case 'albumpdf':
             case 'lyrics3tracks':
-                return Lyrics3Tracks::getLastModified($request->get('artist'), $request->get('year'), $request->get('album'));
+                $lastMod = Lyrics3Tracks::getLastModified($request->get('artist'), $request->get('year'), $request->get('album'));
+            break;
             case 'collection':
-                return Collection::getLastModified();
+                $lastMod = Collection::getLastModified();
+            break;
             case 'collection-cover':
-                return Collection::getEntryLastModified($request->get('id'));
-            default:
-                return time();
+                $lastMod = Collection::getEntryLastModified($request->get('id'));
+            break;
         }
+
+        return $lastMod ?? time();
     }
 }

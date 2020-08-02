@@ -1,6 +1,9 @@
-var turndownService = new TurndownService();
+var converter = new showdown.Converter();
 $('form').bind('keyup change', 'input, textarea', function() {
-	$('[name="output"]').val(function( index, value ) {
-		return turndownService.turndown( $('[name="input"]').val(), { gfm: $('[name="gfm"]').prop('checked') } );
-	});
+    $('[name="output"]').val(function( index, value ) {
+        if ($('[name="gfm"]').prop('checked')) {
+            converter.setFlavor('github');
+        }
+        return converter.makeMd( $('[name="input"]').val() );
+    });
 }).keyup();

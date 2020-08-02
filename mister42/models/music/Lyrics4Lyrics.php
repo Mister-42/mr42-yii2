@@ -11,7 +11,6 @@ class Lyrics4Lyrics extends \yii\db\ActiveRecord
     {
         parent::afterFind();
         $this->lyrics = Yii::$app->formatter->cleanInput($this->lyrics, 'gfm-comment');
-        $this->updated = Yii::$app->formatter->asTimestamp($this->updated);
     }
 
     public static function find(): ActiveQuery

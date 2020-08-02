@@ -1,4 +1,4 @@
-$tardisBlue:		#003865;
+$tardisBlue:		#003B6F;
 $middleBlue:		#6FACCF;
 $lighterBlue:		lighten(adjust_hue($middleBlue, 10), 20%);
 $lightBlue:             lighten(adjust_hue($middleBlue, 5), 10%);
@@ -147,6 +147,7 @@ aside {
     text-align: left;
 
     .card-header {
+        border-bottom: 0;
         font-weight: $font-weight-bold;
     }
 

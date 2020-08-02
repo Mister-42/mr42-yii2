@@ -11,12 +11,11 @@ $articles = Articles::find()->orderBy(['created' => SORT_ASC])->with('comments')
 Sitemap::lineItem($doc, ['articles/index'], ['age' => end($articles)->updated, 'priority' => 0.8, 'locale' => true]);
 
 foreach ($articles as $article) {
-    $lastModified = $article['updated'];
+    $lastModified = Yii::$app->formatter->asTimestamp($article['updated']);
     foreach ($article['comments'] as $comment) {
-        $lastModified = max($lastModified, $comment['created']);
+        $lastModified = max($lastModified, Yii::$app->formatter->asTimestamp($comment['created']));
     }
 
-#    Sitemap::lineItem($doc, Yii::$app->mr42->createUrl(['permalink/articles', 'id' => $article->id]), ['age' => $lastModified]);
     Sitemap::lineItem($doc, ['articles/article', 'id' => $article->id, 'title' => $article->url], ['age' => $lastModified, 'locale' => true]);
     if ($article['pdf']) {
         $pdfUrl = Yii::$app->mr42->createUrl(['articles/pdf', 'id' => $article->id, 'title' => $article->url], ['age' => $lastModified]);

@@ -5,9 +5,8 @@ namespace mister42\widgets;
 use mister42\models\articles\Articles;
 use Yii;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Widget;
 
-class RecentArticles extends Widget
+class RecentArticles extends \yii\bootstrap4\Widget
 {
     public $limit = 5;
 

@@ -1,60 +1,43 @@
-Options -Indexes -MultiViews +FollowSymlinks
-AddDefaultCharset UTF-8
 SetEnv TZ Europe/Berlin
-Header set Connection keep-alive
 
 <IfModule mod_rewrite.c>
-        RewriteEngine On
-        RewriteBase /
+    RewriteEngine On
+    RewriteBase /
 
-        RewriteCond %{HTTPS} !=on
-        RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-        # RewriteRule . https://www.mister42.me/
-        RewriteRule . index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.php
 
-        RewriteCond %{THE_REQUEST} ^GET.*index.php [NC]
-        RewriteRule (.*?)index.php/*(.*) /$1$2 [R=301,NE,L]
+    RewriteCond %{THE_REQUEST} ^GET.*index.php [NC]
+    RewriteRule (.*?)index.php/*(.*) /$1$2 [R=301,NE,L]
 
-        # http://www.htaccesstools.com/hotlink-protection/
-        RewriteCond %{HTTP_REFERER} !^$
-        RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?m(iste)?r42.me [NC]
-        RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?mister42.de [NC]
-        RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?xn--42-mlclt0afi.xn--p1ai [NC]
-        RewriteRule .*\.(jpe?g|png|gif)$ nohotlink.png [L]
+    # http://www.htaccesstools.com/hotlink-protection/
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?mr42.me [NC]
+    RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?mister42.(de|eu) [NC]
+    RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?xn--42-glceu4aeait.xn--p1ai [NC]
+    RewriteRule .*\.(jpe?g|png|gif)$ nohotlink.png [L]
 </IfModule>
-
-# Caching
-FileETag All
 
 <IfModule mod_headers.c>
-        <FilesMatch "\.(jpe?g|png|gif)$">
-                Header set Cache-Control "max-age=31557600, public, must-revalidate"
-        </FilesMatch>
+    <FilesMatch "\.(jpe?g|png|gif)$">
+        Header set Cache-Control "max-age=31557600, public, must-revalidate"
+    </FilesMatch>
 
-        <FilesMatch "\.(css|js)$">
-                Header set Cache-Control "max-age=31557600, must-revalidate, proxy-revalidate"
-        </FilesMatch>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=31557600, must-revalidate, proxy-revalidate"
+    </FilesMatch>
 
-        <FilesMatch "\.(ico)$">
-                Header set Cache-Control "max-age=900, private, must-revalidate"
-        </FilesMatch>
+    <FilesMatch "\.(ico)$">
+        Header set Cache-Control "max-age=84600, private, must-revalidate"
+    </FilesMatch>
 
-        # Make sure proxies don't deliver the wrong content
-        Header append Vary User-Agent env=!dont-vary
+    # Make sure proxies don't deliver the wrong content
+    Header append Vary User-Agent env=!dont-vary
+
+    # Don't reveal unnecessary information
+    Header unset X-Powered-By
 </IfModule>
-
-# Charsets
-AddCharset UTF-8 .css
-AddCharset UTF-8 .js
-
-# Compression
-SetOutputFilter DEFLATE
-
-# Don't compress images
-SetEnvIfNoCase Request_URI .(?:jpe?g|png|gif)$ no-gzip dont-vary
-
-# Don't compress binaries
-SetEnvIfNoCase Request_URI .(?:exe|t?gz2?|zip|sit|rar)$ no-gzip dont-vary

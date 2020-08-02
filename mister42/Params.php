@@ -12,7 +12,7 @@ class Params
                 'de' => ['full' => 'Deutsch', 'short' => 'DE'],
                 'ru' => ['full' => 'Русский', 'short' => 'RU'],
             ],
-            'longDomain' => 'https://www.mister42.me',
+            'longDomain' => 'https://www.mister42.eu',
             'shortDomain' => 'https://mr42.me',
             'themeColor' => '#003865',
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace mister42\models\calculator;
+namespace Mister42\models\calculator;
 
 use Yii;
 

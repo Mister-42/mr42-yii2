@@ -4,11 +4,10 @@ namespace mister42\widgets;
 
 use mister42\assets\LightboxAsset;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Widget;
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 
-class Lightbox extends Widget
+class Lightbox extends \yii\bootstrap4\Widget
 {
     public $imageOptions;
     public $items;

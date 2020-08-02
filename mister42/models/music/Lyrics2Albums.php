@@ -23,8 +23,6 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         $this->playlist_status = (bool) ($this->playlist_status);
         $this->playlist_embed = $this->playlist_source && $this->playlist_id && $this->playlist_ratio && $this->playlist_status ? Video::getEmbed($this->playlist_source, $this->playlist_id, $this->playlist_ratio, true) : null;
         $this->playlist_url = $this->playlist_source && $this->playlist_id ? Video::getUrl($this->playlist_source, $this->playlist_id, true) : null;
-        $this->created = Yii::$app->formatter->asTimestamp($this->created);
-        $this->updated = Yii::$app->formatter->asTimestamp($this->updated);
         $this->active = (bool) ($this->active);
     }
 
@@ -33,7 +31,6 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
         if (parent::beforeSave($insert)) {
             $this->url = $this->name === $this->url ? null : $this->url;
             $this->playlist_status = $this->playlist_status ? 1 : 0;
-            $this->created = $this->oldAttributes['created'];
             $this->active = $this->active ? 1 : 0;
             return true;
         }
@@ -129,7 +126,7 @@ class Lyrics2Albums extends \yii\db\ActiveRecord
             ->where(['or', 'artist.name=:artist', 'artist.url=:artist'])
             ->addParams([':artist' => $artist])
             ->max('album.updated');
-        return (int) Yii::$app->formatter->asTimestamp($data);
+        return Yii::$app->formatter->asTimestamp($data);
     }
 
     public function getLyrics(): ActiveQuery

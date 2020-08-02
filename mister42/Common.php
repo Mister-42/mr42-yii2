@@ -25,8 +25,8 @@ class Common
                 '@npm' => '@vendor/npm-asset',
                 '@mister42' =>  '@app/../mister42',
                 '@siteDE' => 'https://www.mister42.de',
-                '@siteEN' => 'https://www.mister42.me',
-                '@siteRU' => 'https://www.xn--42-mlclt0afi.xn--p1ai',
+                '@siteEN' => 'https://www.mister42.eu',
+                '@siteRU' => 'https://www.xn--42-glceu4aeait.xn--p1ai',
             ],
             'bootstrap' => ['log'],
             'components' => $this->getComponents(),
@@ -34,7 +34,7 @@ class Common
             'name' => $this->getDomainProperty('title'),
             'params' => $this->params,
             'runtimePath' => __DIR__ . '/../.cache',
-            'timeZone' => 'Europe/Berlin',
+#            'timeZone' => 'Europe/Berlin',
             'vendorPath' => __DIR__ . '/../vendor',
         ];
     }
@@ -130,7 +130,7 @@ class Common
                     'articles/search' => 'articles/search',
                     'articles/tag/<tag:\w+>' => 'articles/tag',
                     'articles/page-<page:\d+>' => 'articles/index',
-                    '<controller:articles|calculator|extensions|tools>' => '<controller>/index',
+                    '<controller:articles|calculator|tools>' => '<controller>/index',
                     'articles/<action>' => 'articles/<action>',
                     '<alias:\w+>' => 'site/<alias>',
                 ],
@@ -153,7 +153,7 @@ class Common
         case 'mister42.de':
             $properties = ['lang' => 'de', 'title' => 'Mr.42'];
         break;
-        case 'xn--42-mlclt0afi.xn--p1ai':
+        case 'xn--42-glceu4aeait.xn--p1ai':
             $properties = ['lang' => 'ru', 'title' => 'Г-н.42'];
         break;
         default:

@@ -5,9 +5,8 @@ namespace mister42\widgets;
 use mister42\models\articles\Tags;
 use Yii;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Widget;
 
-class TagCloud extends Widget
+class TagCloud extends \yii\bootstrap4\Widget
 {
     public function run(): string
     {

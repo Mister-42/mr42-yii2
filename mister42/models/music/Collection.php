@@ -13,8 +13,9 @@ class Collection extends \yii\db\ActiveRecord
 {
     private const ALBUM_IMAGE_DIMENSIONS = 250;
 
+    /*
     private string $artist;
-    private string $date;
+    private string $created;
     private int $id;
     private ?string $image;
     private ?string $image_color;
@@ -24,6 +25,7 @@ class Collection extends \yii\db\ActiveRecord
     private string $updated;
     private int $user_id;
     private int $year;
+     */
 
     public static function getDiscogsUrl(string $action, Profile $profile) : ?string
     {
@@ -38,18 +40,27 @@ class Collection extends \yii\db\ActiveRecord
         return "/users/{$profile->discogs}/wants";
     }
 
+    public static function getEntry(int $id): self
+    {
+        return self::find()
+            ->where(['id' => $id])
+            ->orderBy(['image_override' => SORT_DESC, 'updated' => SORT_DESC])
+            ->limit(1)
+            ->one();
+    }
+
     public static function getEntryLastModified(int $id): int
     {
-        $data = self::findOne(['id' => $id]);
-        return strtotime($data->created);
+        $data = self::getEntry($id);
+        return isset($data->updated) ? Yii::$app->formatter->asTimestamp($data->updated) : time();
     }
 
     public static function getLastModified(): int
     {
         $data = self::find()
             ->where(['status' => Yii::$app->controller->action->id])
-            ->max('created');
-        return is_string($data) ? strtotime($data) : 0;
+            ->max('updated');
+        return is_string($data) ? Yii::$app->formatter->asTimestamp($data) : time();
     }
 
     public function rules(): array
@@ -63,7 +74,7 @@ class Collection extends \yii\db\ActiveRecord
     {
         $id = [];
         foreach ($data as $discogs) {
-            $item = self::findOne(['id' => (int) ArrayHelper::getValue($discogs, 'basic_information.id'), 'user_id' => $user, 'status' => $status]) ?? new self();
+            $item = self::findOne(['id' => ArrayHelper::getValue($discogs, 'basic_information.id'), 'user_id' => $user, 'status' => $status]) ?? new self();
 
             $image = ArrayHelper::getValue($discogs, 'basic_information.cover_image');
             if (isset($item->image_override) && Image::isValid($item->image_override)) {

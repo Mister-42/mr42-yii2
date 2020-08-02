@@ -1,5 +1,5 @@
-$('a').attr('target', function() {
-    if(this.host !== location.host && this.host !== 'www.mister42.de' && this.host !== 'www.mister42.me' && this.host !== 'www.xn--42-mlclt0afi.xn--p1ai') {
-        return '_blank';
+for (var links = document.links, i = 0, a; a = links[i]; i++) {
+    if (a.host !== location.host && a.host !== 'www.mister42.de' && a.host !== 'www.mister42.eu' && a.host !== 'www.xn--42-glceu4aeait.xn--p1ai') {
+        a.target = '_blank';
     }
-});
+}

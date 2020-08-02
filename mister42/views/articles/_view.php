@@ -34,7 +34,7 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
     echo Html::beginTag('div', ['class' => 'card-body']);
         echo Html::beginTag('div', ['class' => 'card-subtitle text-secondary text-right']);
             echo Yii::t('mr42', 'Posted {date}', ['date' => Yii::$app->formatter->asDate($model->created)]);
-            if ($model->updated - $model->created > 3600) {
+            if (Yii::$app->formatter->asTimeDiff($model->updated, $model->created) > 3600) {
                 echo ' · ' . Yii::t('mr42', 'Updated {date}', ['date' => Yii::$app->formatter->asDate($model->updated)]);
             }
         echo Html::endTag('div');
@@ -75,10 +75,10 @@ echo Html::beginTag('article', ['class' => 'card mb-3']);
             $bar[] = Yii::$app->icon->name(count($tags) === 1 ? 'tag' : 'tags')->class('mr-1 text-muted') . implode(', ', $tagArray);
         }
 
-        $bar[] = Yii::$app->icon->name('clock')->class('mr-1 text-muted') . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->created), ['datetime' => date(DATE_W3C, $model->created)]);
+        $bar[] = Yii::$app->icon->name('clock')->class('mr-1 text-muted') . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->created), ['datetime' => date(DATE_W3C, Yii::$app->formatter->asTimestamp($model->created))]);
 
-        if ($model->updated - $model->created > 3600) {
-            $bar[] = Yii::$app->icon->name('history')->class('mr-1 text-muted') . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, $model->updated)]);
+        if (Yii::$app->formatter->asTimeDiff($model->updated, $model->created) > 3600) {
+            $bar[] = Yii::$app->icon->name('history')->class('mr-1 text-muted') . Html::tag('time', Yii::$app->formatter->asRelativeTime($model->updated), ['datetime' => date(DATE_W3C, Yii::$app->formatter->asTimestamp($model->updated))]);
         }
 
         $bar[] = Yii::$app->icon->name('user')->class('mr-1 text-muted') . Html::a($profile->name ?? $model->author->username, ['/user/profile/show', 'username' => $model->author->username]);

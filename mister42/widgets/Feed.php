@@ -2,20 +2,20 @@
 
 namespace mister42\widgets;
 
-use mister42\models\feed\FeedData as FeedDataModel;
+use mister42\models\feed\FeedData;
 use Yii;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Widget;
 
-class Feed extends Widget
+class Feed extends \yii\bootstrap4\Widget
 {
-    public $limit = 10;
-    public $name;
-    public $tooltip = false;
+    public int $limit = 10;
+    public string $name;
+    public bool $tooltip = false;
 
     public function run(): string
     {
-        $items = FeedDataModel::find()
+        $items = FeedData::find()
+            ->select(['title', 'url', 'description'])
             ->where(['feed' => $this->name])
             ->orderBy(['time' => SORT_DESC])
             ->limit($this->limit)

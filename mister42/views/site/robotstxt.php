@@ -2,6 +2,7 @@
 
 echo 'User-agent: *' . PHP_EOL;
 echo 'Disallow: /*?' . PHP_EOL;
+echo 'Disallow: /articles/page-?' . PHP_EOL;
 echo 'Allow: /' . PHP_EOL;
 echo 'Noarchive: /' . PHP_EOL;
 echo PHP_EOL;

@@ -3,10 +3,9 @@
 namespace mister42\widgets;
 
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Widget;
 use yii\helpers\ArrayHelper;
 
-class Item extends Widget
+class Item extends \yii\bootstrap4\Widget
 {
     public $body;
     public $header;

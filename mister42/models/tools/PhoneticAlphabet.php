@@ -41,17 +41,14 @@ class PhoneticAlphabet extends \yii\db\ActiveRecord
         return true;
     }
 
-    public static function getAlphabetList(string $column = '*'): array
+    public static function getAlphabetList(string $column = null): array
     {
         $list = self::find()
             ->select(['lng', 'name' => 'name_' . Yii::$app->language])
             ->orderBy('sort, name')
             ->all();
 
-        if ($column !== '*') {
-            return ArrayHelper::getColumn($list, $column);
-        }
-        return ArrayHelper::map($list, 'lng', 'name');
+        return ($column) ? ArrayHelper::getColumn($list, $column) : ArrayHelper::map($list, 'lng', 'name');
     }
 
     public function rules(): array
