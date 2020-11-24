@@ -35,7 +35,7 @@ class CollectionController extends \yii\console\Controller
                     }
                     $ids = $discogs->saveCollection($profile->user_id, $response->data[($action === 'collection') ? 'releases' : 'wants'], $action);
 
-                    for ($x = 2; $x < (int) ArrayHelper::getValue($response->data, 'pagination.pages'); $x++) {
+                    for ($x = 2; $x <= (int) ArrayHelper::getValue($response->data, 'pagination.pages'); $x++) {
                         $response = Apirequest::getDiscogs("{$url}?" . http_build_query(['page' => $x, 'token' => $profile->discogs_token]));
                         if (!$response->isOK) {
                             continue;

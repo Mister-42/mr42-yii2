@@ -23,9 +23,11 @@ class Formatter extends \yii\i18n\Formatter
             '/(vimeo):(()?[[:digit:]]+):(21by9|16by9|4by3|1by1)/U' => [$this, 'getVideo'],
             '/(youtube):((OL|PL){0,1}?[[:ascii:]]+):(21by9|16by9|4by3|1by1)/U' => [$this, 'getVideo'],
         ], $data);
+
         if ($markdown) {
             $data = Markdown::process($data, $markdown);
         }
+
         if (Yii::$app->request->isConsoleRequest || Yii::$app->controller->id !== 'feed') {
             $dom = HtmlDomParser::str_get_html($data);
             foreach ($dom->find('img') as $img) {

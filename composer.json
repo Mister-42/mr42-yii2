@@ -24,7 +24,7 @@
         "mpdf/qrcode": "^1.0",
         "thoulah/yii2-fontawesome-inline": "1.1.x-dev",
         "thoulah/yii2-httpclient": "^1.0",
-        "voku/simple_html_dom": "^4.5",
+        "voku/simple_html_dom": "^4.7",
         "zenorocha/clipboardjs": "^2.0"
     },
     "require-dev": {

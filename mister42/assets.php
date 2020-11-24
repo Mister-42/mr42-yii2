@@ -1,6 +1,6 @@
 <?php
 
-$sass = 'sass --scss --sourcemap=none -C -t compressed -I ' . Yii::getAlias('@npm/bootstrap/scss') . ' {from} {to}';
+$sass = 'sassc --style compressed --load-path ' . Yii::getAlias('@npm/bootstrap/scss') . ' {from} {to}';
 
 return [
     'bundles' => [

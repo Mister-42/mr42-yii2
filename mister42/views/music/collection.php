@@ -26,7 +26,7 @@ foreach ($tabs as $tab => $tabdesc) {
         $$tab[] = Html::beginTag('div', ['class' => 'col-12 col-sm-6 col-md-3 col-xl-2 mt-3 d-sm-flex align-items-stretch']);
         $$tab[] = Html::beginTag('div', ['class' => 'card w-100 text-center notranslate']);
         $$tab[] = Html::tag('div', $album->artist, ['class' => 'card-header p-2']);
-        $$tab[] = Html::tag('div', Html::tag('span', $album->title, ['class' => 'card-text mx-auto']), ['class' => 'card-body d-flex p-2']);
+        $$tab[] = Html::tag('div', Html::tag('span', "{$album->title} ({$album->year})", ['class' => 'card-text mx-auto']), ['class' => 'card-body d-flex p-2']);
         $$tab[] = Html::a(
             Html::img('@assets/images/blank.png', ['alt' => "{$album->artist} - {$album->title} ({$album->year})", 'class' => 'card-img-bottom', 'data-src' => Yii::$app->mr42->createUrl(['music/collection-cover', 'id' => $album->id])]),
             "https://www.discogs.com/release/{$album->id}",

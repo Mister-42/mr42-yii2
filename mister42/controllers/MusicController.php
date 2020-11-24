@@ -29,12 +29,4 @@ class MusicController extends \mister42\controllers\music\BaseController
             'album' => $this->getAlbumTracks($artist, $year, $album),
         ]);
     }
-
-    public function actionTest()
-    {
-        $model = new \mister42\models\test\Test();
-        $data = $model->getList();
-        var_dump($data);
-        exit;
-    }
 }

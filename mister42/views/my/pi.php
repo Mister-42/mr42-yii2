@@ -19,7 +19,7 @@ $datatype = [
     'storage' => Yii::t('mr42', 'Disk Space and Memory Usage'),
     'network' => Yii::t('mr42', 'Network Traffic'),
 ];
-$hosts = ['pi-hole', 'jukebox'];
+$hosts = ['pihole', 'jukebox'];
 
 $this->registerJs(Yii::$app->formatter->jspack('jquery.unveil.js'), View::POS_END);
 $this->registerJs('$(\'a[data-toggle="tab"]\').on(\'shown.bs.tab\', function (e) {$(window).trigger("lookup")})', View::POS_END);
@@ -34,8 +34,8 @@ foreach ($tabs as $tab => $tabdesc) {
         foreach ($hosts as $host) {
             $$tab[] = Html::beginTag('div', ['class' => 'col-md-6 h-100']);
             $$tab[] = ($tab === array_key_first($tabs))
-                ? Html::img("@assets/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
-                : Html::img('@assets/images/loading.png', ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("@assets/pi/{$tab}-{$host}-{$dt}.png")]);
+                ? Html::img("//rrd.mr42.me/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
+                : Html::img('@assets/images/loading.png', ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("//rrd.mr42.me/{$tab}-{$host}-{$dt}.png")]);
             $$tab[] = Html::endTag('div');
         }
     }

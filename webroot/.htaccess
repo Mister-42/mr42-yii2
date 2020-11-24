@@ -4,18 +4,21 @@ SetEnv TZ Europe/Berlin
     RewriteEngine On
     RewriteBase /
 
-    RewriteCond %{HTTP_HOST} !^www\.
-    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
-
-    RewriteCond %{HTTP_HOST} ^(www.)?mister42.me$ [NC]
+    RewriteCond %{HTTP_HOST} ^(www.)?mr42.eu$ [NC]
     RewriteRule ^ https://www.mister42.eu%{REQUEST_URI} [L,R=301]
 
-    RewriteCond %{HTTP_HOST} ^(www.)?xn--42-mlclt0afi.xn--p1ai$ [NC]
+    RewriteCond %{HTTP_HOST} ^(www.)?mr42.de$ [NC]
+    RewriteRule ^ https://www.mister42.de%{REQUEST_URI} [L,R=301]
+
+    RewriteCond %{HTTP_HOST} ^(www.)?xn---42-idd5c.xn--p1ai$ [NC]
     RewriteRule ^ https://www.xn--42-glceu4aeait.xn--p1ai%{REQUEST_URI} [L,R=301]
 
     RedirectMatch 301 ^/en/(.*)$ https://www.mister42.eu/$1
     RedirectMatch 301 ^/de/(.*)$ https://www.mister42.de/$1
     RedirectMatch 301 ^/ru/(.*)$ https://www.xn--42-glceu4aeait.xn--p1ai/$1
+
+    RewriteCond %{HTTP_HOST} !^www\.
+    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
 
     RedirectMatch 301 ^/sitemap(.*).xml https://mr42.me/sitemap$1.xml
     RedirectMatch 301 ^/lyricsNew/(.*).(pdf|jpg)$ https://mr42.me/music/lyrics/$1.$2

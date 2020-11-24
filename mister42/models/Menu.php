@@ -22,7 +22,7 @@ class Menu extends \yii\base\Model
             $menuItems[] = $menuItem;
         }
 
-        return ArrayHelper::merge($menuItems, $this->getUserMenu());
+        return ArrayHelper::merge($menuItems, $this->getMenuUser());
     }
 
     public function getUrlList($items = null): array
@@ -47,14 +47,14 @@ class Menu extends \yii\base\Model
 
     public function init(): void
     {
-        $this->menuItems = $this->getData();
+        $this->menuItems = $this->getMenu();
         if (Yii::$app->controller->action->id === 'sitemap') {
             $this->menuItems[] = ['label' => null, 'url' => ['/user/registration/register']];
             $this->menuItems[] = ['label' => null, 'url' => ['/site/privacy']];
         }
     }
 
-    private function getData(): array
+    public function getMenu(): array
     {
         return [
             ['label' => Yii::$app->icon->name('newspaper') . Html::tag('span', Yii::t('mr42', 'Articles')), 'url' => ['/articles/index'], 'visible' => true, 'active' => Yii::$app->controller->id === 'articles'],
@@ -96,7 +96,7 @@ class Menu extends \yii\base\Model
         ];
     }
 
-    private function getUserMenu(): array
+    public function getMenuUser(): array
     {
         if ($this->isGuest()) {
             return [['label' => Yii::$app->icon->name('sign-in-alt') . Html::tag('span', Yii::t('usuario', 'Login')), 'url' => ['/user/security/login'], 'visible' => true]];

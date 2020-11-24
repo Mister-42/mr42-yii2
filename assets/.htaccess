@@ -16,11 +16,14 @@ SetEnv TZ Europe/Berlin
 
     # http://www.htaccesstools.com/hotlink-protection/
     RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^http(s)?://feeds.feedburner.com [NC]
     RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?mr42.me [NC]
     RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?mister42.(de|eu) [NC]
     RewriteCond %{HTTP_REFERER} !^http(s)?://(.+\.)?xn--42-glceu4aeait.xn--p1ai [NC]
     RewriteRule .*\.(jpe?g|png|gif)$ nohotlink.png [L]
 </IfModule>
+
+FileETag All
 
 <IfModule mod_headers.c>
     <FilesMatch "\.(jpe?g|png|gif)$">

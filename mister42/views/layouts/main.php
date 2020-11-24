@@ -54,14 +54,17 @@ echo Html::beginTag('header', ['class' => 'site-header fixed-top']);
     ]);
 
     if (Yii::$app->requestedRoute !== 'site/offline') {
-        echo Nav::widget([
-            'activateParents' => true,
-            'encodeLabels' => false,
-            'items' => (new Menu())->getItemList(),
-            'options' => ['class' => 'navbar-nav ml-auto'],
-        ]);
+        foreach (['getMenu', 'getMenuUser'] as $type) {
+            echo Nav::widget([
+                'activateParents' => true,
+                'encodeLabels' => false,
+                'items' => (new Menu())->$type(),
+                'options' => ['class' => ($type === 'getMenu') ? 'navbar-nav mx-auto' : 'navbar-nav'],
+            ]);
+        }
     }
-NavBar::end();
+
+    NavBar::end();
 echo Html::endTag('header');
 
 echo Html::tag(
@@ -80,8 +83,10 @@ echo Html::beginTag('footer', ['class' => 'fixed-bottom']);
         echo Html::tag('div', Html::tag('span', '&copy; 2014-' . date('Y') . ' ' . Yii::$app->name, ['class' => 'align-middle']));
         echo Html::beginTag('div', ['class' => 'dropup']);
             if (Yii::$app->requestedRoute !== 'site/offline') {
+                $domain = str_replace('www', 'test', $_SERVER['SERVER_NAME']);
+                echo Html::a('&alpha;', "https://{$domain}/", ['class' => 'badge badge-primary', 'title' => 'Alpha']);
                 if (Yii::$app->id === 'mister42-console' || (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin)) {
-                    echo Html::a(Yii::$app->icon->name('html5', 'brands'), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary', 'title' => Yii::t('mr42', 'Validate HTML')]);
+                    echo Html::a(Yii::$app->icon->name('html5', 'brands'), 'https://validator.w3.org/check/referrer', ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Validate HTML')]);
                 }
                 echo Html::a(Yii::$app->icon->name('user-secret'), ['/site/privacy'], ['class' => 'badge badge-primary ml-1', 'title' => Yii::t('mr42', 'Privacy Policy')]);
                 echo Html::a(Yii::$app->icon->name('rss'), Yii::$app->mr42->createUrl(['/feed/rss']), ['class' => 'badge badge-warning ml-1', 'target' => '_blank', 'title' => Yii::t('mr42', 'RSS')]);
