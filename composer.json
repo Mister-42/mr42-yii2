@@ -16,7 +16,7 @@
         "npm-asset/highlightjs": "^9.0",
         "npm-asset/lightbox2": "^2.0",
         "npm-asset/showdown": "^1.9",
-        "2amigos/yii2-usuario": "~1.1.0",
+        "2amigos/yii2-usuario": "~1.5.1",
         "gkralik/php-uglifyjs": "^1.0",
         "joshtronic/php-loremipsum": "^1.0",
         "kop/yii2-scroll-pager": "^2.0",
