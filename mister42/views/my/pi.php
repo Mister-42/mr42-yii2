@@ -34,8 +34,8 @@ foreach ($tabs as $tab => $tabdesc) {
         foreach ($hosts as $host) {
             $$tab[] = Html::beginTag('div', ['class' => 'col-md-6 h-100']);
             $$tab[] = ($tab === array_key_first($tabs))
-                ? Html::img("//rrd.mr42.me/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
-                : Html::img('@assets/images/loading.png', ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("//rrd.mr42.me/{$tab}-{$host}-{$dt}.png")]);
+                ? Html::img("//test.mr42.me/pi/{$tab}-{$host}-{$dt}.png", ['alt' => yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2'])
+                : Html::img('@assets/images/loading.png', ['alt' => Yii::t('mr42', '{desc} of {host}', ['desc' => $dtdesc, 'host' => $host]) . " ({$tabdesc['long']})", 'class' => 'img-fluid mb-2', 'data-src' => Yii::getAlias("//test.mr42.me/pi/{$tab}-{$host}-{$dt}.png")]);
             $$tab[] = Html::endTag('div');
         }
     }

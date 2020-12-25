@@ -15,7 +15,7 @@ class FeedController extends \yii\web\Controller
     {
         $secrets = (new Secrets())->getValues();
         if (php_sapi_name() !== 'cli' && !StringHelper::startsWith(Yii::$app->request->headers->get('user-agent'), 'FeedBurner') && !ArrayHelper::isIn(Yii::$app->request->userIP, $secrets['params']['specialIPs'])) {
-            $this->redirect('http://feeds.feedburner.com/Mr42')->send();
+            $this->redirect('https://feeds.feedburner.com/Mr42')->send();
         }
 
         $articles = Articles::find()
