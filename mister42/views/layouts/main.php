@@ -59,7 +59,7 @@ echo Html::beginTag('header', ['class' => 'site-header fixed-top']);
                 'activateParents' => true,
                 'encodeLabels' => false,
                 'items' => (new Menu())->$type(),
-                'options' => ['class' => ($type === 'getMenu') ? 'navbar-nav mx-auto' : 'navbar-nav'],
+                'options' => ['class' => ($type === 'getMenu') ? 'navbar-nav mr-auto' : 'navbar-nav'],
             ]);
         }
     }

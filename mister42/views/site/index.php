@@ -11,13 +11,13 @@ echo Html::tag('div', Yii::t('mr42', 'This website is a hobby project. Some part
 echo Html::beginTag('div', ['class' => 'site-index']);
     echo Html::beginTag('div', ['class' => 'list-group']);
         foreach ((new Menu())->getItemList() as $item) {
-            if (!$item['visible'] || $item['visible']) {
+            if (!isset($item['visible']) || $item['visible']) {
                 echo Html::beginTag('div', ['class' => ['list-group-item list-group-item-action p-0']]);
-                echo ($item['url'])
+                echo (isset($item['url']))
                     ? Html::a(strip_tags($item['label']), $item['url'], ['class' => 'stretched-link'])
                     : strip_tags($item['label']);
 
-                if ($item['items']) {
+                if (isset($item['items'])) {
                     foreach ($item['items'] as $subItem) {
                         if (isset($subItem['url']) && (!isset($subItem['visible']) || $subItem['visible'])) {
                             echo Html::beginTag('div', ['class' => 'list-group-item list-group-item-action py-0']);

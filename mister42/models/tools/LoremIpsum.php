@@ -2,7 +2,7 @@
 
 namespace mister42\models\tools;
 
-use joshtronic\LoremIpsum as lipsum;
+use joshtronic\LoremIpsum as Lipsum;
 use Yii;
 
 class LoremIpsum extends \yii\base\Model
